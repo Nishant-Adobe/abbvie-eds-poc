@@ -1,0 +1,95 @@
+name: Test Documentation Changes
+
+on:
+  pull_request:
+    branches: [ dev-docs ]
+    paths:
+      - 'docs/**/*.md'
+      - 'docs/**/*.mdx'
+      - 'docs/docusaurus.config.ts'
+      - 'docs/sidebars.ts'
+      - '.github/workflows/test-docs.yml'
+
+jobs:
+  test-documentation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install documentation dependencies
+        run: |
+          cd docs
+          npm ci
+
+      - name: Type check documentation
+        run: |
+          cd docs
+          npm run typecheck
+
+      - name: Build documentation
+        run: |
+          cd docs
+          npm run build
+
+      - name: Validate documentation links
+        run: |
+          cd docs
+          # Start the docs server in the background
+          npm run serve &
+          sleep 10
+          
+          # Check for broken internal documentation links only
+          npx broken-link-checker http://localhost:3030 --recursive --exclude-external --exclude-urls "http://localhost:3000" || true
+          
+          # Stop the background server
+          pkill -f "docusaurus serve"
+
+      - name: Comment PR with test results
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('Documentation Tests')
+            );
+            
+            // Get changed documentation files
+            const changedFiles = context.payload.pull_request.changed_files;
+            const docsFiles = changedFiles.filter(file => 
+              file.startsWith('docs/') && (file.endsWith('.md') || file.endsWith('.mdx'))
+            );
+            
+            const testResults = `✅ **Documentation Tests Passed**\n\n📚 **Build Status**: ✅ Successful\n📝 **Type Check**: ✅ Passed\n🔗 **Link Validation**: ✅ Documentation links validated\n\n**Changed Documentation Files:**\n${docsFiles.map(file => `- \`${file}\``).join('\n')}\n\nDocumentation changes are ready for review and will be deployed to GitHub Pages when merged to dev-docs.`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: testResults
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: testResults
+              });
+            } 

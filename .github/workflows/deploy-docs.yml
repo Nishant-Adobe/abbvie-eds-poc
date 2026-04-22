@@ -1,0 +1,138 @@
+name: Deploy Documentation to External Repository
+
+on:
+  push:
+    branches: [ dev-docs ]
+    paths:
+      - 'docs/**/*.md'
+      - 'docs/**/*.mdx'
+      - 'docs/docusaurus.config.ts'
+      - 'docs/sidebars.ts'
+      - '.github/workflows/deploy-docs.yml'
+  pull_request:
+    branches: [ dev-docs ]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yml'
+      - '**/*.md'
+
+jobs:
+  # Check if documentation changes were made
+  check-docs-changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      docs-changed: ${{ steps.filter.outputs.docs }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for documentation changes
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            docs:
+              - 'docs/**/*.md'
+              - 'docs/**/*.mdx'
+              - 'docs/docusaurus.config.ts'
+              - 'docs/sidebars.ts'
+
+  # Deploy to External Repository
+  deploy-docs:
+    needs: check-docs-changes
+    if: |
+      needs.check-docs-changes.outputs.docs-changed == 'true' && 
+      github.ref == 'refs/heads/dev-docs'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: "docs-deployment"
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
+
+      - name: Install documentation dependencies
+        run: |
+          cd docs
+          npm ci
+
+      - name: Type check documentation
+        run: |
+          cd docs
+          npm run typecheck
+
+      - name: Build documentation
+        run: |
+          cd docs
+          npm run build
+
+      - name: Deploy to External Repository
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          external_repository: ${{ github.repository_owner }}/eds-multi-brand-docs
+          publish_dir: ./docs/build
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Log deployment success
+        run: |
+          echo "✅ Documentation deployed successfully!"
+          echo "📚 Live URL: https://${{ github.repository_owner }}.github.io/eds-multi-brand-docs/"
+          echo "📝 Changed files:"
+          git diff --name-only HEAD~1 HEAD | grep -E '^docs/.*\.(md|mdx)$' || echo "No markdown files changed"
+
+      - name: Create deployment summary
+        run: |
+          echo "## 📚 Documentation Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Status**: Successfully deployed to external repository" >> $GITHUB_STEP_SUMMARY
+          echo "📚 **Live URL**: https://${{ github.repository_owner }}.github.io/eds-multi-brand-docs/" >> $GITHUB_STEP_SUMMARY
+          echo "🏠 **Target Repository**: ${{ github.repository_owner }}/eds-multi-brand-docs" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Changed Documentation Files:" >> $GITHUB_STEP_SUMMARY
+          git diff --name-only HEAD~1 HEAD | grep -E '^docs/.*\.(md|mdx)$' | sed 's/^/- `/' | sed 's/$/`/' >> $GITHUB_STEP_SUMMARY || echo "- No markdown files changed" >> $GITHUB_STEP_SUMMARY
+
+  # Notify on documentation changes
+  notify-docs-changes:
+    needs: check-docs-changes
+    if: |
+      needs.check-docs-changes.outputs.docs-changed == 'true' && 
+      github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const changedFiles = context.payload.pull_request.changed_files;
+            const docsFiles = changedFiles.filter(file => 
+              file.includes('docs/') || file.endsWith('.md')
+            );
+            
+            if (docsFiles.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `📚 **Documentation Changes Detected**\n\nThis PR contains changes to documentation files:\n${docsFiles.map(file => `- \`${file}\``).join('\n')}\n\nThe documentation will be automatically deployed to \`eds-multi-brand-docs\` repository when this PR is merged to dev-docs.\n\n🌐 **Live URL**: https://${context.repo.owner}.github.io/eds-multi-brand-docs/`
+              });
+            } 
