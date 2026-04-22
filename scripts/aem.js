@@ -139,7 +139,12 @@ function setup() {
   const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
   if (scriptEl) {
     try {
-      [window.hlx.codeBasePath] = new URL(scriptEl.src).pathname.split('/scripts/scripts.js');
+      const scriptURL = new URL(scriptEl.src, window.location);
+      if (scriptURL.host === window.location.host) {
+        [window.hlx.codeBasePath] = scriptURL.pathname.split('/scripts/scripts.js');
+      } else {
+        [window.hlx.codeBasePath] = scriptURL.href.split('/scripts/scripts.js');
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error);
@@ -284,6 +289,16 @@ function getMetadata(name, doc = document) {
 }
 
 /**
+ * Returns the brand path for block/theme assets (e.g. 'abbvie/'). Used to load compiled block CSS
+ * from styles/<brand>/blocks/<blockName>/ (breakpoint tokens resolved to real media queries).
+ * @returns {string} Brand path with trailing slash, default 'abbvie/'
+ */
+function getBrandPath() {
+  const brand = getMetadata('brand')?.trim();
+  return brand ? `${brand}/` : 'abbvie/';
+}
+
+/**
  * Returns a picture element with webp and fallbacks
  * @param {string} src The image URL
  * @param {string} [alt] The image alternative text
@@ -368,6 +383,16 @@ function wrapTextNodes(block) {
   const wrap = (el) => {
     const wrapper = document.createElement('p');
     wrapper.append(...el.childNodes);
+    [...el.attributes]
+      // move the instrumentation from the cell to the new paragraph, also keep the class
+      // in case the content is a buttton and the cell the button-container
+      .filter(({ nodeName }) => nodeName === 'class'
+        || nodeName.startsWith('data-aue')
+        || nodeName.startsWith('data-richtext'))
+      .forEach(({ nodeName, nodeValue }) => {
+        wrapper.setAttribute(nodeName, nodeValue);
+        el.removeAttribute(nodeName);
+      });
     el.append(wrapper);
   };
 
@@ -457,42 +482,73 @@ function decorateIcons(element, prefix = '') {
   });
 }
 
+function applySectionStyleValue(section, value) {
+  value
+    .split(',')
+    .map((style) => toClassName(style.trim()))
+    .filter(Boolean)
+    .forEach((style) => section.classList.add(style));
+}
+
+function applySectionMetaClasses(section, sectionMeta) {
+  [...sectionMeta.classList]
+    .filter((className) => className !== 'section-metadata')
+    .forEach((className) => {
+      section.classList.add(className);
+    });
+}
+
+function applySectionMeta(section, key, value) {
+  if (!value) return;
+
+  if (key === 'style') {
+    applySectionStyleValue(section, value);
+    return;
+  }
+
+  if (key === 'section-id' || key === 'sectionid') {
+    section.id = value;
+    return;
+  }
+
+  if (key.startsWith('classes-')) {
+    applySectionStyleValue(section, value);
+    return;
+  }
+
+  section.dataset[toCamelCase(key)] = value;
+}
+
 /**
  * Decorates all sections in a container element.
  * @param {Element} main The container element
  */
 function decorateSections(main) {
-  main.querySelectorAll(':scope > div').forEach((section) => {
+  main.querySelectorAll(':scope > div:not([data-section-status])').forEach((section) => {
     const wrappers = [];
     let defaultContent = false;
     [...section.children].forEach((e) => {
-      if (e.tagName === 'DIV' || !defaultContent) {
+      if ((e.tagName === 'DIV' && e.className) || !defaultContent) {
         const wrapper = document.createElement('div');
         wrappers.push(wrapper);
-        defaultContent = e.tagName !== 'DIV';
+        defaultContent = e.tagName !== 'DIV' || !e.className;
         if (defaultContent) wrapper.classList.add('default-content-wrapper');
       }
       wrappers[wrappers.length - 1].append(e);
     });
     wrappers.forEach((wrapper) => section.append(wrapper));
     section.classList.add('section');
+    section.classList.add('abbvie-container');
     section.dataset.sectionStatus = 'initialized';
     section.style.display = 'none';
 
     // Process section metadata
     const sectionMeta = section.querySelector('div.section-metadata');
     if (sectionMeta) {
+      applySectionMetaClasses(section, sectionMeta);
       const meta = readBlockConfig(sectionMeta);
       Object.keys(meta).forEach((key) => {
-        if (key === 'style') {
-          const styles = meta.style
-            .split(',')
-            .filter((style) => style)
-            .map((style) => toClassName(style.trim()));
-          styles.forEach((style) => section.classList.add(style));
-        } else {
-          section.dataset[toCamelCase(key)] = meta[key];
-        }
+        applySectionMeta(section, key, meta[key]);
       });
       sectionMeta.parentNode.remove();
     }
@@ -539,8 +595,12 @@ async function loadBlock(block) {
   if (status !== 'loading' && status !== 'loaded') {
     block.dataset.blockStatus = 'loading';
     const { blockName } = block.dataset;
+    const brandPath = getBrandPath();
+    const baseCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
+    const brandCss = `${window.hlx.codeBasePath}/styles/${brandPath}blocks/${blockName}/${blockName}.css`;
     try {
-      const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
+      // Load brand-compiled CSS first, fall back to base if brand css not found
+      const cssLoaded = loadCSS(brandCss).catch(() => loadCSS(baseCss));
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
@@ -573,7 +633,7 @@ async function loadBlock(block) {
  */
 function decorateBlock(block) {
   const shortBlockName = block.classList[0];
-  if (shortBlockName) {
+  if (shortBlockName && !block.dataset.blockStatus) {
     block.classList.add('block');
     block.dataset.blockName = shortBlockName;
     block.dataset.blockStatus = 'initialized';
@@ -582,6 +642,8 @@ function decorateBlock(block) {
     blockWrapper.classList.add(`${shortBlockName}-wrapper`);
     const section = block.closest('.section');
     if (section) section.classList.add(`${shortBlockName}-container`);
+    // eslint-disable-next-line no-use-before-define
+    decorateButtons(block);
   }
 }
 
@@ -590,7 +652,7 @@ function decorateBlock(block) {
  * @param {Element} main The container element
  */
 function decorateBlocks(main) {
-  main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
+  main.querySelectorAll('div.section > div > div:not(.section)').forEach(decorateBlock);
 }
 
 /**

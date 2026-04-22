@@ -6,17 +6,17 @@
 
 import {
   decorateMain,
+  moveInstrumentation,
 } from '../../scripts/scripts.js';
 
 import {
   loadSections,
-  renderBlock,
-} from '../../scripts/multi-theme.js';
+} from '../../scripts/aem.js';
 
 /**
  * Loads a fragment.
  * @param {string} path The path to the fragment
- * @returns {HTMLElement} The root element of the fragment
+ * @returns {Promise<HTMLElement>} The root element of the fragment
  */
 export async function loadFragment(path) {
   if (path && path.startsWith('/')) {
@@ -42,7 +42,10 @@ export async function loadFragment(path) {
   return null;
 }
 
-export async function decorateBlock(block) {
+/**
+ * @param {Element} block
+ */
+export default async function decorate(block) {
   const link = block.querySelector('a');
   const path = link ? link.getAttribute('href') : block.textContent.trim();
   const fragment = await loadFragment(path);
@@ -50,11 +53,8 @@ export async function decorateBlock(block) {
     const fragmentSection = fragment.querySelector(':scope .section');
     if (fragmentSection) {
       block.closest('.section').classList.add(...fragmentSection.classList);
+      moveInstrumentation(block, block.parentElement);
       block.closest('.fragment').replaceWith(...fragment.childNodes);
     }
   }
-}
-
-export default async function decorate(block) {
-  renderBlock(block);
 }
