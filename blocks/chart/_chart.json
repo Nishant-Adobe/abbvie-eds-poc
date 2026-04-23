@@ -1,0 +1,104 @@
+{
+  "definitions": [
+    {
+      "title": "Chart",
+      "id": "chart",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Chart",
+              "model": "chart",
+              "filter": "chart",
+              "blockId": "id:"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Chart Data Point",
+      "id": "chart-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Chart Data Point",
+              "model": "chart-item",
+              "label": "Category Label",
+              "value": "0",
+              "valueLabel": ""
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "chart",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Overview",
+          "name": "overview"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes_type",
+          "label": "Chart Type",
+          "options": [
+            { "name": "Bar Chart (default)", "value": "" },
+            { "name": "Pie Chart", "value": "pie" }
+          ]
+        },
+        {
+          "...": "../../models/_common-properties.json#/common-prop"
+        }
+      ]
+    },
+    {
+      "id": "chart-item",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Data Point",
+          "name": "dataPoint"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "label",
+          "value": "",
+          "label": "Category Label",
+          "description": "Label displayed on the axis (bar) or legend (pie)."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "value",
+          "value": "0",
+          "label": "Numeric Value",
+          "description": "The numeric value used to calculate bar height or pie slice size."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "valueLabel",
+          "value": "",
+          "label": "Display Value",
+          "description": "Formatted value shown above the bar (e.g. '72%' or '1.2M'). Leave blank to hide."
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "chart",
+      "components": ["chart-item"]
+    }
+  ]
+}

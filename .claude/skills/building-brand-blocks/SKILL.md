@@ -14,6 +14,7 @@ This skill guides you through creating new AEM Edge Delivery blocks or modifying
 - **building-themes**: Use when brand or theme overrides need to be created alongside a block
 - **building-brand**: Use when a new brand needs to be scaffolded before brand block overrides can be added
 - **testing-blocks**: Automatically invoked after implementation for comprehensive testing
+- **token-naming**: Mandatory naming formula for all CSS custom properties — reference before adding any new tokens to block CSS
 
 ## When to Use This Skill
 

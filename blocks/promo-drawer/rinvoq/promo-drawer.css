@@ -1,0 +1,88 @@
+.promo-drawer {
+  position: fixed;
+  bottom: var(--safety-bar-collapsed-height, 120px);
+  left: 0;
+  z-index: var(--z-index-promo-drawer, 200);
+  display: flex;
+  align-items: flex-end;
+}
+
+.promo-drawer.right {
+  left: auto;
+  right: 0;
+  flex-direction: row-reverse;
+}
+
+.promo-drawer-handle {
+  background-color: var(--promo-drawer-handle-bg, var(--link-color, #0057cc));
+  color: var(--promo-drawer-handle-color, #fff);
+  border: none;
+  cursor: pointer;
+  font-size: var(--body-font-size-s, 0.875rem);
+  font-weight: 600;
+  padding: var(--spacing-12, 12px) var(--spacing-8, 8px);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  border-radius: 4px 4px 0 0;
+  transform: rotate(180deg);
+}
+
+.promo-drawer.right .promo-drawer-handle {
+  transform: none;
+}
+
+.promo-drawer-panel {
+  background-color: var(--promo-drawer-panel-bg, #fff);
+  border: 1px solid var(--promo-drawer-border, #e0e0e0);
+  box-shadow: 2px 0 8px rgb(0 0 0 / 12%);
+  max-width: 320px;
+  width: 100vw;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: var(--spacing-24, 24px);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.promo-drawer.right .promo-drawer-panel {
+  box-shadow: -2px 0 8px rgb(0 0 0 / 12%);
+  transform: translateX(100%);
+}
+
+.promo-drawer.is-open .promo-drawer-panel {
+  transform: translateX(0);
+}
+
+.promo-drawer-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: var(--spacing-12, 12px);
+  right: var(--spacing-12, 12px);
+  width: 24px;
+  height: 24px;
+}
+
+.promo-drawer-close::before,
+.promo-drawer-close::after {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: currentcolor;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.promo-drawer-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.promo-drawer-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Rinvoq promo-drawer overrides */

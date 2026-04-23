@@ -1,0 +1,106 @@
+{
+  "definitions": [
+    {
+      "title": "Quick Poll",
+      "id": "quick-poll",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Quick Poll",
+              "model": "quick-poll",
+              "filter": "quick-poll",
+              "blockId": "id:"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Poll Option",
+      "id": "quick-poll-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Poll Option",
+              "model": "quick-poll-item",
+              "optionLabel": "Option text",
+              "optionId": "option-a"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "quick-poll",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Overview",
+          "name": "overview"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "question",
+          "value": "",
+          "label": "Poll Question",
+          "description": "The question presented to the visitor."
+        },
+        {
+          "component": "tab",
+          "label": "Settings",
+          "name": "settings"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "api",
+          "value": "",
+          "label": "API Endpoint",
+          "description": "Optional endpoint to submit votes and receive aggregated results. Leave blank for client-side only mode."
+        },
+        {
+          "...": "../../models/_common-properties.json#/common-prop"
+        }
+      ]
+    },
+    {
+      "id": "quick-poll-item",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Option",
+          "name": "option"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "optionLabel",
+          "value": "",
+          "label": "Option Label",
+          "description": "Text shown on the poll option button."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "optionId",
+          "value": "",
+          "label": "Option ID",
+          "description": "Unique identifier sent to the API when this option is selected."
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "quick-poll",
+      "components": ["quick-poll-item"]
+    }
+  ]
+}

@@ -13,6 +13,7 @@ This skill guides you through everything required to introduce a new brand ident
 - **building-blocks**: Use when a new block needs to be created for this brand. The scaffold automatically creates brand folders for all brands in `brand-config.json` when a block is scaffolded.
 - **building-brand-blocks**: Use when implementing block-level visual overrides specific to this brand — editing `_{block}.css` partials, brand `block-config.js`, or brand+theme CSS. The scaffold creates empty override partials for all existing blocks.
 - **ue-component-model**: Use to expose `brand` as a page-level `select` field in Universal Editor after the brand is registered.
+- **token-naming**: Full token naming formula, segment definitions, intent vs appearance rules, anti-patterns, and responsive token patterns. Reference before authoring any new CSS custom properties.
 
 ---
 
@@ -121,11 +122,11 @@ The most important step. Edit **`styles/{brand}/_tokens.css`** — the scaffold 
   --heading-font-family: 'Brand Display', roboto-condensed-fallback, sans-serif;
   --nav-height: 72px;
 
-  /* New brand-specific tokens — follow W3C Design Token naming */
-  --color-brand-primary: #0057cc;
-  --color-brand-accent: #ff6600;
-  --color-brand-surface: #f0f4ff;
-  --color-brand-on-surface: #111111;
+  /* New brand-specific tokens — follow EDS Token Naming Guide */
+  --color-primary-bg: #0057cc;
+  --color-accent-bg: #ff6600;
+  --color-surface-subtle: #f0f4ff;
+  --color-text-on-surface: #111111;
 }
 ```
 
@@ -135,46 +136,70 @@ The most important step. Edit **`styles/{brand}/_tokens.css`** — the scaffold 
 - Font sizes: `--body-font-size-m/s/xs`, `--heading-font-size-xxl/xl/l/m/s/xs`
 - Nav: `--nav-height`
 
-**W3C Design Token naming rules for new tokens:**
+**Token naming rules for new tokens — see `token-naming` skill for the full guide.**
 
-All new tokens introduced at brand, theme, or block level must follow the [W3C Design Token Community Group](https://www.w3.org/community/design-tokens/) format:
+All new tokens introduced at brand, theme, or block level must follow the EDS Token Naming formula:
 
 ```
---{type}-{semantic-group}-{variant}
+--{system}-{type}-{category}-{device?}-{attribute}
 ```
 
-| Type prefix | Used for |
+`system` and `type` are omitted for conciseness at the global and component layers. Use the full prefix only for alias tokens where the namespace matters.
+
+| Segment | Values |
 |---|---|
-| `--color-` | All color values |
-| `--font-family-` | Font stack declarations |
-| `--font-size-` | Size values for text |
-| `--font-weight-` | Weight values |
-| `--spacing-` | Margin, padding, gap |
-| `--border-` | Border width, radius, style |
-| `--shadow-` | Box or text shadows |
-| `--motion-` | Duration, easing |
+| `category` | `color` · `spacing` · `typography` · `border` · `shadow` · `motion` · `z-index` · `opacity` |
+| `device` _(optional)_ | `mobile` · `desktop` · `tablet` — only when value differs per breakpoint |
+| `attribute` | `bg` · `text` · `border` · `border-radius` · `font-size` · `font-family` · `font-weight` · `padding-y` · `padding-x` · `gap` · `shadow` |
 
 ```css
-/* CORRECT — type prefix first, semantic group, then variant */
---color-brand-primary: #0057cc;
---color-brand-surface: #f0f4ff;
+/* CORRECT — intent-based names, attribute as last segment */
+--color-primary-bg: #0057cc;
+--color-surface-subtle: #f0f4ff;
 --color-text-inverse: #ffffff;
 --font-family-display: 'Brand Display', serif;
---font-size-display-l: 3rem;
---spacing-section-gap: 4rem;
+--font-size-heading-lg: 3rem;
+--section-padding-y-mobile: var(--spacing-48);
+--section-padding-y-desktop: var(--spacing-96);
 --border-radius-card: 8px;
 --shadow-card-default: 0 2px 8px rgb(0 0 0 / 12%);
 
-/* WRONG — no type prefix */
---brand-primary: #0057cc;
---brand-surface: #f0f4ff;
+/* WRONG — appearance-based (what it looks like, not what it does) */
+--red-button: ...
+--light-gray-bg: ...
+--big-text: ...
 
-/* WRONG — brand or theme name embedded in the token name */
---roy-primary: #0057cc;
---bright-background: #fffde7;
+/* WRONG — brand/theme name embedded in alias tokens */
+--abbvie-color-primary: ...
+--bright-background: ...
+
+/* WRONG — raw value encoded in the name */
+--color-hex-fa0f00: ...
+
+/* WRONG — more than 4 segments */
+--color-brand-primary-dark-hover: ...
 ```
 
-Token names must be portable: they must make sense in any brand or theme context and must not encode the brand or theme name.
+**Responsive tokens:** when a value differs by breakpoint, create a `-mobile` / `-desktop` pair in the alias layer rather than hardcoding values inside media queries:
+
+```css
+/* styles/{brand}/_tokens.css */
+:root {
+  --section-padding-y-mobile:  var(--spacing-48);
+  --section-padding-y-desktop: var(--spacing-96);
+}
+```
+
+```css
+/* blocks/my-block/my-block.css */
+.my-block { --block-padding-y: var(--section-padding-y-mobile); }
+
+@media (min-width: 900px) {
+  .my-block { --block-padding-y: var(--section-padding-y-desktop); }
+}
+```
+
+Token names must describe **intent** (what it does), not **appearance** (what it looks like). If swapping the brand would make the name misleading, it is named wrong.
 
 ### Step 4: Add Brand Fonts
 

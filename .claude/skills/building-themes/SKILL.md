@@ -12,6 +12,7 @@ This skill guides you through managing the multi-brand and multi-theme system in
 - **building-blocks**: Use when a new block needs to be created as part of a theme or brand implementation
 - **building-brand-blocks**: Use when adding block-level brand/theme CSS overrides alongside a new or existing block
 - **content-driven-development**: Use when brand/theme work is driven by a new content requirement
+- **token-naming**: Mandatory naming formula for all CSS custom properties — reference before authoring any tokens in `_tokens.css` files
 
 ## When to Use This Skill
 

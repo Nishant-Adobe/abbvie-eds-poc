@@ -3232,51 +3232,51 @@
             "value": ""
           },
           {
-            "name": "Two Columns — Equal Split, Double Divider (5/1/5/1)",
+            "name": "Two Columns \u2014 Equal Split, Double Divider (5/1/5/1)",
             "value": "grid-5-5"
           },
           {
-            "name": "Two Columns — Right Slightly Wider, With Divider (5/1/6)",
+            "name": "Two Columns \u2014 Right Slightly Wider, With Divider (5/1/6)",
             "value": "grid-5-6"
           },
           {
-            "name": "Two Columns — Left Slightly Wider, With Divider (6/1/5)",
+            "name": "Two Columns \u2014 Left Slightly Wider, With Divider (6/1/5)",
             "value": "grid-6-5"
           },
           {
-            "name": "Two Columns — Dominant Left, With Divider (7/1/4)",
+            "name": "Two Columns \u2014 Dominant Left, With Divider (7/1/4)",
             "value": "grid-7-4"
           },
           {
-            "name": "Two Columns — Strong Left, With Divider (8/1/3)",
+            "name": "Two Columns \u2014 Strong Left, With Divider (8/1/3)",
             "value": "grid-8-3"
           },
           {
-            "name": "Two Columns — Equal (50/50)",
+            "name": "Two Columns \u2014 Equal (50/50)",
             "value": "grid-6-6"
           },
           {
-            "name": "Two Columns — Main Content with Two Sidebars (8/2/2)",
+            "name": "Two Columns \u2014 Main Content with Two Sidebars (8/2/2)",
             "value": "grid-8-2-2"
           },
           {
-            "name": "Two Columns — Narrow Left, Wide Right (1/5/6)",
+            "name": "Two Columns \u2014 Narrow Left, Wide Right (1/5/6)",
             "value": "grid-1-5-6"
           },
           {
-            "name": "Two Columns — Framed Equal (1/5/5/1)",
+            "name": "Two Columns \u2014 Framed Equal (1/5/5/1)",
             "value": "grid-1-5-5-1"
           },
           {
-            "name": "Two Columns — Narrow Left, Wide Right (1/5)",
+            "name": "Two Columns \u2014 Narrow Left, Wide Right (1/5)",
             "value": "grid-1-5"
           },
           {
-            "name": "Three Columns — Equal (4/4/4)",
+            "name": "Three Columns \u2014 Equal (4/4/4)",
             "value": "grid-4-4-4"
           },
           {
-            "name": "Four Columns — Equal (3/3/3/3)",
+            "name": "Four Columns \u2014 Equal (3/3/3/3)",
             "value": "grid-3-3-3-3"
           }
         ]
@@ -5149,11 +5149,11 @@
             "value": "single-column"
           },
           {
-            "name": "Two Columns – stack on mobile",
+            "name": "Two Columns \u2013 stack on mobile",
             "value": "two-columns-stack"
           },
           {
-            "name": "Two columns – do not stack on mobile",
+            "name": "Two columns \u2013 do not stack on mobile",
             "value": "two-columns-nostack"
           }
         ],
@@ -5172,7 +5172,7 @@
         "name": "fontIcon",
         "label": "Icon",
         "value": "",
-        "description": "Icon applied to every link when Variant is Icons. Works for all link sources — the only icon option when using Child Pages.",
+        "description": "Icon applied to every link when Variant is Icons. Works for all link sources \u2014 the only icon option when using Child Pages.",
         "condition": {
           "or": [
             {
@@ -8607,6 +8607,1148 @@
             "value": "lang:uk"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "safety-bar",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "richtext",
+        "name": "abbreviated",
+        "value": "",
+        "label": "Abbreviated ISI",
+        "description": "Short Important Safety Information shown in the collapsed bar.",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "fullContent",
+        "value": "",
+        "label": "Full ISI Content",
+        "description": "Complete Important Safety Information shown when expanded. Only used with 'expandable' variant.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_variant",
+        "label": "Variant",
+        "options": [
+          {
+            "name": "Default (static bar)",
+            "value": ""
+          },
+          {
+            "name": "Expandable (toggle full ISI)",
+            "value": "expandable"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "anchor-nav",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ariaLabel",
+        "value": "Page sections",
+        "label": "Nav Aria Label",
+        "description": "Accessible label for the navigation landmark."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "anchor-nav-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "value": "",
+        "label": "Link Label",
+        "description": "Text displayed in the navigation for this link."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "targetId",
+        "value": "",
+        "label": "Target Section ID",
+        "description": "The id attribute of the target section element (without the # prefix)."
+      }
+    ]
+  },
+  {
+    "id": "promo-drawer",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "handleLabel",
+        "value": "Savings",
+        "label": "Handle Label",
+        "description": "Text shown on the drawer handle tab."
+      },
+      {
+        "component": "richtext",
+        "name": "drawerContent",
+        "value": "",
+        "label": "Drawer Content",
+        "description": "Content displayed inside the drawer panel.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_variant",
+        "label": "Variant",
+        "options": [
+          {
+            "name": "Default (left side)",
+            "value": ""
+          },
+          {
+            "name": "Right side",
+            "value": "right"
+          },
+          {
+            "name": "Show once per session",
+            "value": "once"
+          },
+          {
+            "name": "Right + Once",
+            "value": "right once"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "dismissible",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Content",
+        "description": "Rich text content for the dismissible banner. A close button is added automatically.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_variant",
+        "label": "Variant",
+        "options": [
+          {
+            "name": "Default (inline)",
+            "value": ""
+          },
+          {
+            "name": "Sticky (fixed top)",
+            "value": "sticky"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "hotspot",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Image",
+        "name": "image"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "hotspot-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Point Title",
+        "description": "Accessible label for the hotspot button."
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Panel Content",
+        "description": "Content shown in the tooltip panel when the hotspot is activated.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Position",
+        "name": "position"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "left",
+        "value": "50%",
+        "label": "Left Position (%)",
+        "description": "Horizontal position of the hotspot as a percentage of the image width."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "top",
+        "value": "50%",
+        "label": "Top Position (%)",
+        "description": "Vertical position of the hotspot as a percentage of the image height."
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "position",
+        "label": "Panel Direction",
+        "options": [
+          {
+            "name": "Top Right",
+            "value": "top-right"
+          },
+          {
+            "name": "Top Left",
+            "value": "top-left"
+          },
+          {
+            "name": "Bottom Right",
+            "value": "bottom-right"
+          },
+          {
+            "name": "Bottom Left",
+            "value": "bottom-left"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tooltip",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "term",
+        "value": "",
+        "label": "Term",
+        "description": "The word or phrase the tooltip is attached to."
+      },
+      {
+        "component": "richtext",
+        "name": "definition",
+        "value": "",
+        "label": "Definition",
+        "description": "Content displayed in the tooltip panel.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_position",
+        "label": "Panel Position",
+        "options": [
+          {
+            "name": "Top (default)",
+            "value": ""
+          },
+          {
+            "name": "Bottom",
+            "value": "bottom"
+          },
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "image-compare",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Before Image",
+        "name": "before"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "beforeImage",
+        "label": "Before Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "beforeImageAlt",
+        "value": "",
+        "label": "Before Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "beforeLabel",
+        "value": "Before",
+        "label": "Before Label",
+        "description": "Caption shown over the before image."
+      },
+      {
+        "component": "tab",
+        "label": "After Image",
+        "name": "after"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "afterImage",
+        "label": "After Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "afterImageAlt",
+        "value": "",
+        "label": "After Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "afterLabel",
+        "value": "After",
+        "label": "After Label",
+        "description": "Caption shown over the after image."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "sticky-sidebar",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Main Content",
+        "name": "main"
+      },
+      {
+        "component": "richtext",
+        "name": "mainContent",
+        "value": "",
+        "label": "Main Content",
+        "description": "Primary content area. Enter a fragment URL to load an authored fragment, or add content directly.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Sidebar",
+        "name": "sidebar"
+      },
+      {
+        "component": "richtext",
+        "name": "sidebarContent",
+        "value": "",
+        "label": "Sidebar Content",
+        "description": "Sticky sidebar content. Enter a fragment URL to load an authored fragment, or add content directly.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_variant",
+        "label": "Sidebar Position",
+        "options": [
+          {
+            "name": "Right (default)",
+            "value": ""
+          },
+          {
+            "name": "Left",
+            "value": "left"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "chart",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_type",
+        "label": "Chart Type",
+        "options": [
+          {
+            "name": "Bar Chart (default)",
+            "value": ""
+          },
+          {
+            "name": "Pie Chart",
+            "value": "pie"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "chart-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Data Point",
+        "name": "dataPoint"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "value": "",
+        "label": "Category Label",
+        "description": "Label displayed on the axis (bar) or legend (pie)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "value",
+        "value": "0",
+        "label": "Numeric Value",
+        "description": "The numeric value used to calculate bar height or pie slice size."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "valueLabel",
+        "value": "",
+        "label": "Display Value",
+        "description": "Formatted value shown above the bar (e.g. '72%' or '1.2M'). Leave blank to hide."
+      }
+    ]
+  },
+  {
+    "id": "quick-poll",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "value": "",
+        "label": "Poll Question",
+        "description": "The question presented to the visitor."
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "api",
+        "value": "",
+        "label": "API Endpoint",
+        "description": "Optional endpoint to submit votes and receive aggregated results. Leave blank for client-side only mode."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "quick-poll-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Option",
+        "name": "option"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "optionLabel",
+        "value": "",
+        "label": "Option Label",
+        "description": "Text shown on the poll option button."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "optionId",
+        "value": "",
+        "label": "Option ID",
+        "description": "Unique identifier sent to the API when this option is selected."
+      }
+    ]
+  },
+  {
+    "id": "info-tree",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "value": "",
+        "label": "Question",
+        "description": "The question or prompt shown to the visitor."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "info-tree-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Answer",
+        "name": "answer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "answerLabel",
+        "value": "",
+        "label": "Answer Button Label",
+        "description": "Text shown on the option button."
+      },
+      {
+        "component": "richtext",
+        "name": "answerContent",
+        "value": "",
+        "label": "Answer Content",
+        "description": "Rich text content revealed when this answer option is selected.",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "doctor-locator",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "Find a Doctor",
+        "label": "Heading"
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "api",
+        "value": "",
+        "label": "API Endpoint",
+        "description": "URL of the doctor search API. Receives ?zip=&limit= query parameters."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "placeholder",
+        "value": "Enter ZIP code",
+        "label": "ZIP Input Placeholder"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "no-results",
+        "value": "No results found.",
+        "label": "No Results Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error",
+        "value": "An error occurred. Please try again.",
+        "label": "Error Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "results-per-page",
+        "value": "5",
+        "label": "Results Per Page"
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "formulary-lookup",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "description",
+        "value": "",
+        "label": "Description",
+        "description": "Optional introductory text shown above the state dropdown."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "state-label",
+        "value": "Select your state",
+        "label": "State Dropdown Label"
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "api",
+        "value": "",
+        "label": "API Endpoint",
+        "description": "URL of the formulary lookup API. Receives ?state= query parameter."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "no-results",
+        "value": "No coverage information found.",
+        "label": "No Results Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error",
+        "value": "An error occurred. Please try again.",
+        "label": "Error Message"
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "send-mail",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Form Heading"
+      },
+      {
+        "component": "tab",
+        "label": "Field Labels",
+        "name": "labels"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "from-name-label",
+        "value": "Your name",
+        "label": "Sender Name Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "from-email-label",
+        "value": "Your email",
+        "label": "Sender Email Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "to-name-label",
+        "value": "Recipient name",
+        "label": "Recipient Name Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "to-email-label",
+        "value": "Recipient email",
+        "label": "Recipient Email Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "submit-label",
+        "value": "Send",
+        "label": "Submit Button Label"
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "api",
+        "value": "",
+        "label": "API Endpoint",
+        "description": "URL that receives the POST request with form data."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "success",
+        "value": "Your message has been sent!",
+        "label": "Success Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error",
+        "value": "Unable to send. Please try again.",
+        "label": "Error Message"
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "brand-explorer",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "barLabel",
+        "value": "Explore AbbVie",
+        "label": "Bar Label",
+        "description": "Text shown on the fixed bottom bar trigger button."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "brand-explorer-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Brand",
+        "name": "brand"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logo",
+        "label": "Brand Logo",
+        "description": "Optional brand logo image.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logoAlt",
+        "value": "",
+        "label": "Logo Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brandName",
+        "value": "",
+        "label": "Brand Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brandUrl",
+        "value": "",
+        "label": "Brand URL",
+        "description": "Link destination for this brand card."
+      }
+    ]
+  },
+  {
+    "id": "drcom-widget",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading",
+        "description": "Optional heading shown above the Dr.com widget."
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "partner-id",
+        "value": "",
+        "label": "Partner ID",
+        "description": "Required. The Dr.com partner site ID provided by Doctor.com."
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "api-env",
+        "label": "API Environment",
+        "options": [
+          {
+            "name": "Production",
+            "value": "prod"
+          },
+          {
+            "name": "Staging / Test",
+            "value": "test"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "ugc-detail",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Identity",
+        "name": "identity"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "portrait",
+        "label": "Portrait Photo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "portraitAlt",
+        "value": "",
+        "label": "Portrait Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "name",
+        "value": "",
+        "label": "Patient Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Condition / Title",
+        "description": "Secondary line shown below the name (e.g. 'Living with moderate plaque psoriasis')."
+      },
+      {
+        "component": "tab",
+        "label": "Story",
+        "name": "story"
+      },
+      {
+        "component": "richtext",
+        "name": "story",
+        "value": "",
+        "label": "Story Quote",
+        "description": "Patient quote or narrative. Rendered as a blockquote.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Before / After",
+        "name": "comparison"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "beforeImage",
+        "label": "Before Image",
+        "description": "Optional. Leave blank to hide the comparison section.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "beforeImageAlt",
+        "value": "",
+        "label": "Before Image Alt Text"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "afterImage",
+        "label": "After Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "afterImageAlt",
+        "value": "",
+        "label": "After Image Alt Text"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_variant",
+        "label": "Layout",
+        "options": [
+          {
+            "name": "Default (left-aligned)",
+            "value": ""
+          },
+          {
+            "name": "Centered",
+            "value": "centered"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "banner-ad",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Google Ad Manager",
+        "name": "gpt"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ad-unit",
+        "value": "",
+        "label": "Ad Unit Path",
+        "description": "Google Ad Manager ad unit path (e.g. /12345/brand/leaderboard). Leave blank if using HTML embed mode."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "width",
+        "value": "",
+        "label": "Ad Width (px)",
+        "description": "Slot width in pixels (e.g. 728). Leave blank for fluid sizing."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "height",
+        "value": "",
+        "label": "Ad Height (px)",
+        "description": "Slot height in pixels (e.g. 90). Leave blank for fluid sizing."
+      },
+      {
+        "component": "tab",
+        "label": "HTML Embed",
+        "name": "embed"
+      },
+      {
+        "component": "richtext",
+        "name": "embedCode",
+        "value": "",
+        "label": "Embed Code",
+        "description": "Paste third-party ad embed HTML here. Add variant class 'html' to the block to activate this mode instead of GPT.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_mode",
+        "label": "Ad Mode",
+        "options": [
+          {
+            "name": "Google Ad Manager (GPT)",
+            "value": ""
+          },
+          {
+            "name": "HTML Embed (third-party tag)",
+            "value": "html"
+          }
+        ]
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
       }
     ]
   }
