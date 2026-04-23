@@ -9,15 +9,15 @@
 
 .safety-bar {
   pointer-events: all;
-  background-color: var(--safety-bar-bg, #f5f5f5);
-  border-top: 1px solid var(--safety-bar-border, #ccc);
-  max-height: var(--safety-bar-collapsed-height, 120px);
+  background-color: var(--safety-bar-bg, #fff);
+  border-top: 3px solid var(--safety-bar-border, #ccc);
+  max-height: var(--safety-bar-collapsed-height, 14rem);
   overflow: hidden;
   transition: max-height 0.3s ease, transform 0.3s ease;
 }
 
 .safety-bar.is-expanded {
-  max-height: var(--safety-bar-expanded-height, 50vh);
+  max-height: var(--safety-bar-expanded-height, 60vh);
   overflow-y: auto;
 }
 
@@ -26,15 +26,29 @@
 }
 
 .safety-bar-abbreviated {
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
-  font-size: var(--body-font-size-xs, 0.75rem);
+  padding: var(--spacing-12, 1.2rem) var(--spacing-24, 2.4rem);
+  font-size: var(--body-font-size-xs, 1.4rem);
   line-height: 1.5;
   position: relative;
 }
 
+.safety-bar-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background: linear-gradient(to bottom, transparent, var(--safety-bar-fade-color, #fff));
+  pointer-events: none;
+}
+
+.safety-bar.is-expanded .safety-bar-fade {
+  display: none;
+}
+
 .safety-bar-full {
-  padding: var(--spacing-16, 16px) var(--spacing-24, 24px);
-  font-size: var(--body-font-size-xs, 0.75rem);
+  padding: var(--spacing-16, 1.6rem) var(--spacing-24, 2.4rem);
+  font-size: var(--body-font-size-xs, 1.4rem);
   line-height: 1.6;
   display: none;
 }
@@ -45,22 +59,57 @@
 
 .safety-bar-toggle {
   position: absolute;
-  top: var(--spacing-12, 12px);
-  right: var(--spacing-24, 24px);
+  top: var(--spacing-12, 1.2rem);
+  right: var(--spacing-24, 2.4rem);
   background: none;
-  border: 1px solid currentcolor;
+  border: 1px solid var(--safety-bar-toggle-color, currentcolor);
+  color: var(--safety-bar-toggle-color, inherit);
   cursor: pointer;
-  font-size: var(--body-font-size-xs, 0.75rem);
-  padding: 2px 8px;
-  border-radius: 2px;
+  font-size: var(--body-font-size-xs, 1.4rem);
+  padding: 0.2rem 0.8rem;
+  border-radius: 0.2rem;
 }
 
 .safety-bar-toggle::after {
-  content: 'Expand';
+  content: 'Expand ISI';
 }
 
 .safety-bar-toggle[aria-expanded='true']::after {
-  content: 'Collapse';
+  content: 'Collapse ISI';
+}
+
+@media (min-width: 744px) {
+  .safety-bar {
+    max-height: var(--safety-bar-collapsed-height-tablet, 12rem);
+  }
+
+  .safety-bar.is-expanded {
+    max-height: var(--safety-bar-expanded-height-tablet, 50vh);
+  }
+}
+
+@media (min-width: 1024px) {
+  .safety-bar {
+    max-height: var(--safety-bar-collapsed-height-desktop, 10rem);
+  }
+
+  .safety-bar.is-expanded {
+    max-height: var(--safety-bar-expanded-height-desktop, 40vh);
+  }
+
+  .safety-bar-abbreviated {
+    padding: var(--spacing-16, 1.6rem) var(--spacing-55, 5.5rem);
+  }
+
+  .safety-bar-full {
+    padding: var(--spacing-20, 2rem) var(--spacing-55, 5.5rem);
+  }
 }
 
 /* Rinvoq safety bar overrides */
+:root {
+  --safety-bar-bg: #fff;
+  --safety-bar-border: #5c1325;
+  --safety-bar-fade-color: #fff;
+  --safety-bar-toggle-color: #5c1325;
+}
