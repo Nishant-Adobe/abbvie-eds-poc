@@ -106,6 +106,27 @@
   }
 }
 
+/* Inline ISI — stays in page flow, full content always visible */
+.safety-bar-inline .safety-bar {
+  max-height: none;
+  overflow: visible;
+  transform: none;
+  transition: none;
+}
+
+.safety-bar-inline .safety-bar-toggle,
+.safety-bar-inline .safety-bar-fade {
+  display: none;
+}
+
+.safety-bar-inline .safety-bar-full {
+  display: block;
+}
+
+.safety-bar-inline .safety-bar-abbreviated {
+  padding-right: var(--spacing-24, 2.4rem);
+}
+
 /* Rinvoq safety bar overrides */
 :root {
   --safety-bar-bg: #fff;
