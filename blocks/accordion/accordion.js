@@ -219,8 +219,9 @@ export default async function decorate(block) {
     // decorate accordion item
     const details = document.createElement('details');
     moveInstrumentation(row, details);
-    // Use the third column for additional classes on the details element (UE only)
-    details.className = `${(row.children[2]?.textContent.trim() || '').replaceAll(',', '')}`;
+    // accordion-item is always required; third column adds extra classes (UE only)
+    const extraClasses = (row.children[2]?.textContent.trim() || '').replaceAll(',', '');
+    details.className = extraClasses ? `accordion-item ${extraClasses}` : 'accordion-item';
     if (details.classList.contains('defaultopen')) {
       summary.classList.add(cfg.collapseIcon);
       details.setAttribute('open', '');
