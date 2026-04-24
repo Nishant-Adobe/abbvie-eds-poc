@@ -2,3 +2,4 @@
 export default async function getBlockConfigs() {
   return { flags: {}, variations: [], decorations: {} };
 }
+// v2.4 updated
