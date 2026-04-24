@@ -152,7 +152,7 @@ export default function decorate(block) {
   projectNum.textContent = 'US-MULT-250253';
   content.append(projectNum);
 
-  block.replaceChildren(bar, content);
+  block.replaceChildren(content, bar);
 
   const section = block.closest('.section');
   if (section) {
