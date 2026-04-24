@@ -1,4 +1,4 @@
-// v2.6 — keep UE child items visible, only hide property rows
+// v2.7 — parse UE child items into accordion, hide all original rows
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -9,14 +9,13 @@ export default function decorate(block) {
   const brands = [];
   let projectNumber = 'US-MULT-250253';
 
-  // Detect format: plain.html has rows with multiple cells, UE xwalk has single-cell rows
+  // Detect format: plain.html rows have multiple cells
   const firstRowCells = rows[0]?.children?.length || 0;
   const isTableFormat = firstRowCells > 1
     || rows[0]?.querySelector('a')
     || rows[0]?.querySelector('img, picture');
 
   if (isTableFormat) {
-    // plain.html format: row 0 = bar label + utility links, rows 1+ = brands/indications
     const [barRow, ...restRows] = rows;
     const barCells = [...barRow.children];
     barLabel = barCells[0]?.textContent.trim() || barLabel;
@@ -41,46 +40,78 @@ export default function decorate(block) {
         };
         brands.push(currentBrand);
       } else if (currentBrand) {
-        const indicationName = cells[0]?.textContent.trim();
-        const indicationUrl = cells[1]?.textContent.trim() || '#';
+        const name = cells[0]?.textContent.trim();
+        const url = cells[1]?.textContent.trim() || '#';
         const severity = cells[2]?.textContent.trim().toLowerCase() || '';
-        if (indicationName) {
-          currentBrand.indications.push({ name: indicationName, url: indicationUrl, severity });
-        }
+        if (name) currentBrand.indications.push({ name, url, severity });
       }
     });
   } else {
-    // UE xwalk format: each field is a separate row as plain text
-    const texts = rows.map((r) => r.textContent.trim());
-    for (let i = 0; i < texts.length; i += 1) {
-      const val = texts[i];
-      if (val.startsWith('http') && i === 0) logoUrl = val;
-      else if (!val.startsWith('http') && !utilityLinks.length && val && val !== barLabel) {
-        // Try to detect bar label (first non-URL text)
-        if (i <= 2 && !val.includes('Contact') && !val.includes('Prescribing') && !val.includes('Patient') && !val.startsWith('US-')) {
-          barLabel = val;
+    // UE xwalk format: parse block properties and child items
+    let currentBrand = null;
+
+    rows.forEach((row) => {
+      const comp = row.getAttribute('data-aue-component');
+      const texts = [...row.children].map((c) => c.textContent.trim());
+      const images = row.querySelectorAll('img, picture');
+
+      if (comp === 'demo-brand-explorer-brand') {
+        const img = images.length ? images[0].cloneNode(true) : null;
+        const allTexts = [...row.querySelectorAll('p, div')].map((el) => el.textContent.trim()).filter(Boolean);
+        const urlEl = row.querySelector('a');
+        const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
+        const brandName = allTexts.find((t) => !t.startsWith('http') && !t.startsWith('#') && t.length < 30) || 'Brand';
+        const brandColor = allTexts.find((t) => t.startsWith('#') && t.length <= 7) || '';
+
+        currentBrand = {
+          image: img,
+          name: brandName,
+          safetyText: '',
+          url: brandUrl,
+          color: brandColor,
+          indications: [],
+        };
+        brands.push(currentBrand);
+      } else if (comp === 'demo-brand-explorer-indication' && currentBrand) {
+        const allTexts = [...row.querySelectorAll('p, div')].map((el) => el.textContent.trim()).filter(Boolean);
+        const urlEl = row.querySelector('a');
+        const indUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
+        const indName = allTexts.find((t) => !t.startsWith('http')) || 'Indication';
+
+        currentBrand.indications.push({ name: indName, url: indUrl, severity: '' });
+      } else if (!comp) {
+        // Block-level property row
+        const text = row.textContent.trim();
+        const link = row.querySelector('a');
+        if (link && !text.startsWith('US-')) {
+          const linkText = link.textContent.trim();
+          if (['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'].includes(linkText)) {
+            utilityLinks.push({ text: linkText, href: link.href, target: linkText.includes('Contact') ? '_self' : '_blank' });
+          }
+        }
+        if (text.startsWith('US-')) projectNumber = text;
+        if (text && !text.startsWith('http') && !text.startsWith('US-') && !text.includes('Contact') && !text.includes('Prescribing') && !text.includes('Patient')) {
+          if (texts.length === 0 || rows.indexOf(row) <= 2) barLabel = text;
         }
       }
-    }
+    });
 
-    // Extract utility links: pairs of (text, URL)
+    // Try reading bar label and utility links from plain text rows
+    const allTexts = rows.filter((r) => !r.getAttribute('data-aue-component')).map((r) => r.textContent.trim());
     const knownLinks = ['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'];
-    for (let i = 0; i < texts.length - 1; i += 1) {
-      if (knownLinks.includes(texts[i]) && texts[i + 1]?.startsWith('http')) {
-        utilityLinks.push({
-          text: texts[i],
-          href: texts[i + 1],
-          target: texts[i].includes('Contact') ? '_self' : '_blank',
-        });
+    for (let i = 0; i < allTexts.length - 1; i += 1) {
+      if (knownLinks.includes(allTexts[i]) && allTexts[i + 1]?.startsWith('http') && !utilityLinks.find((l) => l.text === allTexts[i])) {
+        utilityLinks.push({ text: allTexts[i], href: allTexts[i + 1], target: allTexts[i].includes('Contact') ? '_self' : '_blank' });
       }
     }
 
-    // Extract project number
-    const pn = texts.find((t) => t.startsWith('US-'));
-    if (pn) projectNumber = pn;
+    const labelCandidate = allTexts.find((t) => t && !t.startsWith('http') && !t.startsWith('US-') && !knownLinks.includes(t) && t.length < 40);
+    if (labelCandidate) barLabel = labelCandidate;
+
+    const urlCandidate = allTexts.find((t) => t.startsWith('http'));
+    if (urlCandidate) logoUrl = urlCandidate;
   }
 
-  // Fallback utility links
   if (!utilityLinks.length) {
     utilityLinks.push(
       { text: 'Contact Medical Info', href: '#', target: '_self' },
@@ -88,6 +119,9 @@ export default function decorate(block) {
       { text: 'Patient Site', href: '/patientsite', target: '_blank' },
     );
   }
+
+  // Hide ALL original rows
+  rows.forEach((row) => { row.style.display = 'none'; });
 
   // Build bar
   const bar = document.createElement('div');
@@ -128,7 +162,7 @@ export default function decorate(block) {
 
   bar.append(barLeft, barRight);
 
-  // Contact Medical Info modal
+  // Modal
   const modal = document.createElement('div');
   modal.className = 'demo-brand-explorer-modal';
   modal.hidden = true;
@@ -148,27 +182,16 @@ export default function decorate(block) {
   `;
   document.body.append(modal);
 
-  function openModal() {
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    modal.hidden = true;
-    document.body.style.overflow = '';
-  }
+  function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
 
   modal.querySelector('.demo-brand-explorer-modal-close').addEventListener('click', closeModal);
   modal.querySelector('.demo-brand-explorer-modal-no').addEventListener('click', closeModal);
   modal.querySelector('.demo-brand-explorer-modal-overlay').addEventListener('click', closeModal);
   modal.querySelector('.demo-brand-explorer-modal-yes').addEventListener('click', closeModal);
-
   barRight.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-modal="contact-medical"]');
-    if (trigger) {
-      e.preventDefault();
-      openModal();
-    }
+    if (trigger) { e.preventDefault(); openModal(); }
   });
 
   // Content panel
@@ -183,7 +206,6 @@ export default function decorate(block) {
   closeBtn.innerHTML = 'Close <span class="demo-brand-explorer-close-icon"></span>';
   content.append(closeBtn);
 
-  // Accordions
   const accordions = document.createElement('div');
   accordions.className = 'demo-brand-explorer-accordions';
 
@@ -199,11 +221,13 @@ export default function decorate(block) {
     bladeLink.href = brand.url;
     bladeLink.className = 'demo-brand-explorer-blade-link';
 
-    const img = brand.image.tagName === 'IMG' ? brand.image : brand.image.querySelector('img');
-    if (img) {
-      img.className = 'demo-brand-explorer-brand-img';
-      img.loading = 'lazy';
-      bladeLink.append(img);
+    if (brand.image) {
+      const img = brand.image.tagName === 'IMG' ? brand.image : brand.image.querySelector('img');
+      if (img) {
+        img.className = 'demo-brand-explorer-brand-img';
+        img.loading = 'lazy';
+        bladeLink.append(img);
+      }
     }
     blade.append(bladeLink);
 
@@ -218,7 +242,6 @@ export default function decorate(block) {
     separator.className = 'demo-brand-explorer-separator';
     if (brand.color) separator.style.backgroundColor = brand.color;
     blade.append(separator);
-
     accordion.append(blade);
 
     const links = document.createElement('div');
@@ -228,9 +251,7 @@ export default function decorate(block) {
       const a = document.createElement('a');
       a.href = ind.url;
       a.className = 'demo-brand-explorer-indication';
-      if (ind.severity) {
-        a.classList.add(`demo-brand-explorer-indication--${ind.severity}`);
-      }
+      if (ind.severity) a.classList.add(`demo-brand-explorer-indication--${ind.severity}`);
       a.textContent = ind.name;
       links.append(a);
     });
@@ -252,19 +273,11 @@ export default function decorate(block) {
   projectNum.textContent = projectNumber;
   content.append(projectNum);
 
-  // Hide property rows but keep UE child items (Brand Entry, Indication Link) visible
-  rows.forEach((row) => {
-    const isChildItem = row.getAttribute('data-aue-component') === 'demo-brand-explorer-brand'
-      || row.getAttribute('data-aue-component') === 'demo-brand-explorer-indication';
-    if (!isChildItem) row.style.display = 'none';
-  });
   block.prepend(content);
   block.append(bar);
 
   const section = block.closest('.section');
-  if (section) {
-    section.classList.add('demo-brand-explorer-section');
-  }
+  if (section) section.classList.add('demo-brand-explorer-section');
 
   // Toggle
   function open() {
@@ -284,16 +297,12 @@ export default function decorate(block) {
   }
 
   browseBtn.addEventListener('click', () => {
-    if (block.classList.contains('is-open')) close();
-    else open();
+    if (block.classList.contains('is-open')) close(); else open();
   });
-
   closeBtn.addEventListener('click', close);
-
   document.addEventListener('click', (e) => {
     if (block.classList.contains('is-open') && !block.contains(e.target)) close();
   });
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && block.classList.contains('is-open')) close();
   });
@@ -304,14 +313,9 @@ export default function decorate(block) {
     const clickedBlade = e.target.closest('.demo-brand-explorer-blade');
     if (!clickedBlade) return;
     e.preventDefault();
-
     const parentAccordion = clickedBlade.closest('.demo-brand-explorer-accordion');
     const wasActive = parentAccordion.classList.contains('is-active');
-
-    accordions.querySelectorAll('.demo-brand-explorer-accordion').forEach((acc) => {
-      acc.classList.remove('is-active');
-    });
-
+    accordions.querySelectorAll('.demo-brand-explorer-accordion').forEach((acc) => acc.classList.remove('is-active'));
     if (!wasActive) parentAccordion.classList.add('is-active');
   });
 }
