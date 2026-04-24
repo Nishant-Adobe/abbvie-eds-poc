@@ -1,4 +1,4 @@
-// v2.5 — preserve UE instrumentation, hide original rows instead of replacing
+// v2.6 — keep UE child items visible, only hide property rows
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -252,8 +252,12 @@ export default function decorate(block) {
   projectNum.textContent = projectNumber;
   content.append(projectNum);
 
-  // Hide original rows but keep them in DOM for UE instrumentation
-  rows.forEach((row) => { row.style.display = 'none'; });
+  // Hide property rows but keep UE child items (Brand Entry, Indication Link) visible
+  rows.forEach((row) => {
+    const isChildItem = row.getAttribute('data-aue-component') === 'demo-brand-explorer-brand'
+      || row.getAttribute('data-aue-component') === 'demo-brand-explorer-indication';
+    if (!isChildItem) row.style.display = 'none';
+  });
   block.prepend(content);
   block.append(bar);
 
