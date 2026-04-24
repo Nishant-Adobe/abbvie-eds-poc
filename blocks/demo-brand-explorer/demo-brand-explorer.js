@@ -1,4 +1,4 @@
-// v2.4 — handles both plain.html table format and UE xwalk property format
+// v2.5 — preserve UE instrumentation, hide original rows instead of replacing
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -252,7 +252,10 @@ export default function decorate(block) {
   projectNum.textContent = projectNumber;
   content.append(projectNum);
 
-  block.replaceChildren(content, bar);
+  // Hide original rows but keep them in DOM for UE instrumentation
+  rows.forEach((row) => { row.style.display = 'none'; });
+  block.prepend(content);
+  block.append(bar);
 
   const section = block.closest('.section');
   if (section) {
