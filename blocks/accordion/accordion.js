@@ -1,5 +1,6 @@
 import { resolveImageReference, moveInstrumentation } from '../../scripts/scripts.js';
 import decorateExternalLinksUtility, { applyCommonProps } from '../../scripts/utils.js';
+import { loadFragment } from '../fragment/fragment.js';
 /*
  * Accordion Block
  * Recreate an accordion
@@ -166,9 +167,32 @@ function closeAllExceptCurrent(block) {
   }
 }
 
-export default function decorate(block) {
+// Resolve fragment path from a row — works in both UE (via instrumentation attr) and published pages.
+function getFragmentPath(row) {
+  const ueCell = row.querySelector('[data-aue-prop="fragment"]');
+  if (ueCell) {
+    const link = ueCell.querySelector('a');
+    return (link ? link.getAttribute('href') : ueCell.textContent.trim()) || null;
+  }
+  // Published mode: scan cells from the end for an AEM page path
+  for (let i = row.children.length - 1; i >= 2; i -= 1) {
+    const cell = row.children[i];
+    const link = cell.querySelector('a');
+    if (link) {
+      const href = link.getAttribute('href');
+      if (href?.startsWith('/')) return href;
+    }
+    const text = cell.textContent.trim();
+    if (text.startsWith('/') && !text.includes(' ')) return text;
+  }
+  return null;
+}
+
+export default async function decorate(block) {
   applyCommonProps(block);
   const cfg = gteConfigIcons(block);
+
+  const fragmentQueue = [];
 
   [...block.children].forEach((row) => {
     // decorate accordion item label
@@ -188,6 +212,9 @@ export default function decorate(block) {
     }
     const ariaExpandLabel = row.children[3]?.textContent.trim() || '';
     const ariaCollapseLabel = row.children[4]?.textContent.trim() || '';
+
+    // collect fragment path before DOM manipulation removes cells from the row
+    const fragmentPath = getFragmentPath(row);
 
     // decorate accordion item
     const details = document.createElement('details');
@@ -223,6 +250,8 @@ export default function decorate(block) {
 
     details.append(summary, body);
     row.replaceWith(details);
+
+    if (fragmentPath) fragmentQueue.push({ body, fragmentPath });
   });
 
   // decorate accordion heading
@@ -238,4 +267,14 @@ export default function decorate(block) {
 
   // Decorate external links across the entire block
   decorateExternalLinksUtility(block);
+
+  // Load and inject fragment content into blade bodies
+  await Promise.all(fragmentQueue.map(async ({ body: bladeBody, fragmentPath: path }) => {
+    const fragment = await loadFragment(path);
+    if (!fragment) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'accordion-item-fragment';
+    fragment.querySelectorAll(':scope .section > *').forEach((el) => wrapper.appendChild(el));
+    bladeBody.appendChild(wrapper);
+  }));
 }
