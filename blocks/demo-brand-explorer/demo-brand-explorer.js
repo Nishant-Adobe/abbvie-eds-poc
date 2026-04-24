@@ -1,32 +1,86 @@
-// v2.4 — full decoration in all modes including UE
+// v2.4 — handles both plain.html table format and UE xwalk property format
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
 
-  const [barRow, ...restRows] = rows;
-  const barCells = [...barRow.children];
-  const barLabel = barCells[0]?.textContent.trim() || 'Immunology Therapies';
-
+  let barLabel = 'Immunology Therapies';
+  let logoUrl = 'https://www.abbvie.com';
   const utilityLinks = [];
-  for (let i = 1; i < barCells.length; i += 1) {
-    const a = barCells[i]?.querySelector('a');
-    if (a) utilityLinks.push({ text: a.textContent.trim(), href: a.href, target: a.target || '_self' });
-  }
+  const brands = [];
+  let projectNumber = 'US-MULT-250253';
 
-  // UE xwalk stores fields as separate rows — try reading utility links from block rows
-  if (!utilityLinks.length && rows.length > 3) {
-    const fieldTexts = rows.map((r) => r.textContent.trim());
-    for (let i = 0; i < fieldTexts.length - 1; i += 1) {
-      const text = fieldTexts[i];
-      const nextVal = fieldTexts[i + 1];
-      if (text && nextVal && (nextVal.startsWith('http') || nextVal.startsWith('/'))) {
-        if (['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'].includes(text)) {
-          utilityLinks.push({ text, href: nextVal, target: text.includes('Contact') ? '_self' : '_blank' });
+  // Detect format: plain.html has rows with multiple cells, UE xwalk has single-cell rows
+  const firstRowCells = rows[0]?.children?.length || 0;
+  const isTableFormat = firstRowCells > 1
+    || rows[0]?.querySelector('a')
+    || rows[0]?.querySelector('img, picture');
+
+  if (isTableFormat) {
+    // plain.html format: row 0 = bar label + utility links, rows 1+ = brands/indications
+    const [barRow, ...restRows] = rows;
+    const barCells = [...barRow.children];
+    barLabel = barCells[0]?.textContent.trim() || barLabel;
+
+    for (let i = 1; i < barCells.length; i += 1) {
+      const a = barCells[i]?.querySelector('a');
+      if (a) utilityLinks.push({ text: a.textContent.trim(), href: a.href, target: a.target || '_self' });
+    }
+
+    let currentBrand = null;
+    restRows.forEach((row) => {
+      const cells = [...row.children];
+      const hasImage = cells[0]?.querySelector('img, picture');
+      if (hasImage) {
+        currentBrand = {
+          image: hasImage.cloneNode(true),
+          name: cells[1]?.textContent.trim() || '',
+          safetyText: cells[2]?.innerHTML.trim() || '',
+          url: cells[3]?.textContent.trim() || '#',
+          color: cells[4]?.textContent.trim() || '',
+          indications: [],
+        };
+        brands.push(currentBrand);
+      } else if (currentBrand) {
+        const indicationName = cells[0]?.textContent.trim();
+        const indicationUrl = cells[1]?.textContent.trim() || '#';
+        const severity = cells[2]?.textContent.trim().toLowerCase() || '';
+        if (indicationName) {
+          currentBrand.indications.push({ name: indicationName, url: indicationUrl, severity });
+        }
+      }
+    });
+  } else {
+    // UE xwalk format: each field is a separate row as plain text
+    const texts = rows.map((r) => r.textContent.trim());
+    for (let i = 0; i < texts.length; i += 1) {
+      const val = texts[i];
+      if (val.startsWith('http') && i === 0) logoUrl = val;
+      else if (!val.startsWith('http') && !utilityLinks.length && val && val !== barLabel) {
+        // Try to detect bar label (first non-URL text)
+        if (i <= 2 && !val.includes('Contact') && !val.includes('Prescribing') && !val.includes('Patient') && !val.startsWith('US-')) {
+          barLabel = val;
         }
       }
     }
+
+    // Extract utility links: pairs of (text, URL)
+    const knownLinks = ['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'];
+    for (let i = 0; i < texts.length - 1; i += 1) {
+      if (knownLinks.includes(texts[i]) && texts[i + 1]?.startsWith('http')) {
+        utilityLinks.push({
+          text: texts[i],
+          href: texts[i + 1],
+          target: texts[i].includes('Contact') ? '_self' : '_blank',
+        });
+      }
+    }
+
+    // Extract project number
+    const pn = texts.find((t) => t.startsWith('US-'));
+    if (pn) projectNumber = pn;
   }
 
+  // Fallback utility links
   if (!utilityLinks.length) {
     utilityLinks.push(
       { text: 'Contact Medical Info', href: '#', target: '_self' },
@@ -35,34 +89,7 @@ export default function decorate(block) {
     );
   }
 
-  const brands = [];
-  let currentBrand = null;
-
-  restRows.forEach((row) => {
-    const cells = [...row.children];
-    const hasImage = cells[0]?.querySelector('img, picture');
-
-    if (hasImage) {
-      currentBrand = {
-        image: hasImage.cloneNode(true),
-        name: cells[1]?.textContent.trim() || '',
-        safetyText: cells[2]?.innerHTML.trim() || '',
-        url: cells[3]?.textContent.trim() || '#',
-        color: cells[4]?.textContent.trim() || '',
-        indications: [],
-      };
-      brands.push(currentBrand);
-    } else if (currentBrand) {
-      const indicationName = cells[0]?.textContent.trim();
-      const indicationUrl = cells[1]?.textContent.trim() || '#';
-      const severity = cells[2]?.textContent.trim().toLowerCase() || '';
-      if (indicationName) {
-        currentBrand.indications.push({ name: indicationName, url: indicationUrl, severity });
-      }
-    }
-  });
-
-  // Bar
+  // Build bar
   const bar = document.createElement('div');
   bar.className = 'demo-brand-explorer-bar';
 
@@ -70,7 +97,7 @@ export default function decorate(block) {
   barLeft.className = 'demo-brand-explorer-left';
 
   const logoLink = document.createElement('a');
-  logoLink.href = 'https://www.abbvie.com';
+  logoLink.href = logoUrl;
   logoLink.target = '_blank';
   logoLink.className = 'demo-brand-explorer-logo-link';
   logoLink.setAttribute('aria-label', 'AbbVie');
@@ -222,7 +249,7 @@ export default function decorate(block) {
 
   const projectNum = document.createElement('div');
   projectNum.className = 'demo-brand-explorer-project-number';
-  projectNum.textContent = 'US-MULT-250253';
+  projectNum.textContent = projectNumber;
   content.append(projectNum);
 
   block.replaceChildren(content, bar);
