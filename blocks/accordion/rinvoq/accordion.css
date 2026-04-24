@@ -553,9 +553,145 @@
         line-height: var(--line-height-24);
     }
 }
+/* ---- Variation: Compact ---- */
+.accordion.accordion-compact summary {
+    padding: var(--spacing-16) var(--spacing-00);
+}
+.accordion.accordion-compact .accordion-item-body {
+    padding: var(--spacing-12) var(--spacing-00);
+}
+.accordion.accordion-compact .accordion-item-label p {
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-22);
+}
+/* ---- Variation: Bordered ---- */
+.accordion.accordion-bordered .accordion-item {
+    border: var(--border-02) solid var(--footer-seperator-color);
+    border-radius: var(--border-radius-04);
+    margin-bottom: var(--spacing-10);
+}
+.accordion.accordion-bordered .accordion-item-body {
+    padding: var(--spacing-00) var(--spacing-24) var(--spacing-24);
+}
+.accordion.accordion-bordered summary {
+    padding-left: var(--spacing-24);
+    padding-right: var(--spacing-24);
+}
+/* ---- Variation: Flush ---- */
+.accordion.accordion-flush .accordion-item:first-child {
+    border-top: none;
+}
+.accordion.accordion-flush summary {
+    padding-left: var(--spacing-00);
+    padding-right: var(--spacing-00);
+}
+.accordion.accordion-flush .accordion-item-body {
+    padding-left: var(--spacing-00);
+    padding-right: var(--spacing-00);
+}
 @media (width >= 1440px) {
     .section.accordion-container {
         padding-left: var(--spacing-00);
         padding-right: var(--spacing-00);
     }
+}
+/* ---- Variation: Single-expand ---- */
+/* Explicit × close button — visible only when the blade is open */
+.accordion.single .accordion-item-close {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-20);
+    line-height: 1;
+    padding: var(--spacing-00) var(--spacing-03);
+    color: inherit;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+.accordion.single .accordion-item[open] .accordion-item-close {
+    display: inline-flex;
+    align-items: center;
+}
+.accordion.single .accordion-item-close:hover {
+    opacity: 0.7;
+}
+/* ---- Variation: FAQ ---- */
+/* Multi-blade with grouped questions (Linzess, Rinvoq DTC) */
+.accordion.faq summary {
+    padding: var(--spacing-20) var(--spacing-00);
+}
+.accordion.faq .accordion-item-label p {
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-700);
+    line-height: var(--line-height-22);
+}
+.accordion.faq .accordion-item-body .accordion-item-body-text {
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-22);
+}
+@media (width >= 744px) {
+    .accordion.faq .accordion-item-label p {
+        font-size: var(--font-size-18);
+        line-height: var(--line-height-24);
+    }
+}
+/* ---- Variation: Fiesta ---- */
+/* Brand-specific gradient blade styling (Mavyret, RinvoqHCP) */
+.accordion.fiesta {
+    background: var(--accordion-fiesta-bg, linear-gradient(135deg, #6b2472 0%, #9b3a7a 50%, #c85a8a 100%));
+    border-radius: var(--border-radius-04, 4px);
+    padding: var(--spacing-32);
+}
+.accordion.fiesta .accordion-item {
+    border-bottom-color: rgb(255 255 255 / 30%);
+}
+.accordion.fiesta summary,
+.accordion.fiesta .accordion-item-label p,
+.accordion.fiesta .accordion-item-label h2,
+.accordion.fiesta .accordion-item-label h3,
+.accordion.fiesta .accordion-item-label h4,
+.accordion.fiesta .accordion-item-label h5,
+.accordion.fiesta .accordion-item-label h6 {
+    color: var(--light-color, #fff);
+}
+.accordion.fiesta .accordion-item-body .accordion-item-body-text {
+    color: var(--light-color, #fff);
+}
+.accordion.fiesta .accordion-item-body a,
+.accordion.fiesta .accordion-item-body a.button {
+    background-image: linear-gradient(
+        180deg,
+        var(--light-color, #fff) 50%,
+        var(--light-color, #fff) 0
+    );
+    color: var(--light-color, #fff);
+}
+.accordion.fiesta .accordion-item-body :where(a:hover) {
+    color: var(--text-color);
+}
+.accordion.fiesta .accordion-expand-all {
+    color: var(--light-color, #fff);
+}
+/* ---- Item heading alignment ---- */
+.accordion-item.heading-left .accordion-item-label,
+.accordion-item.heading-left .accordion-item-label-text {
+    text-align: left;
+}
+.accordion-item.heading-center .accordion-item-label,
+.accordion-item.heading-center .accordion-item-label-text {
+    text-align: center;
+    justify-content: center;
+}
+.accordion-item.heading-right .accordion-item-label,
+.accordion-item.heading-right .accordion-item-label-text {
+    text-align: right;
+    justify-content: flex-end;
+}
+/* ---- Variation: White BG ---- */
+/* White background variant (Venclexta) */
+.accordion.white-bg {
+    background-color: var(--background-color, #fff);
+    padding: var(--spacing-24) var(--spacing-32);
+    border-radius: var(--border-radius-04, 4px);
 }

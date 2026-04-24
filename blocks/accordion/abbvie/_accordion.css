@@ -1,1 +1,102 @@
 @import '../accordion.css';
+
+/* AbbVie Accordion — "Pivotal trials" variant
+   Matches the original skyrizihcp.com accordion styling with
+   light-blue section background, white text, underlined blade header,
+   and single-expand behavior. */
+
+/* ---- Section-level background (applied via section metadata) ---- */
+.section.accordion-pivotal-container {
+  background-color: #d1f1fc;
+  padding: 20px 0;
+}
+
+/* ---- Blade header bar ---- */
+.accordion.single summary.accordion-item-label {
+  padding: 10px 40px 10px 15px;
+  border-bottom: none;
+}
+
+.accordion.single .accordion-item {
+  border-bottom: none;
+}
+
+.accordion.single .accordion-item-label .accordion-item-label-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: underline;
+  line-height: 16px;
+  text-align: right;
+}
+
+/* ---- Accordion body content ---- */
+.accordion.single .accordion-item-body {
+  padding: 20px 15px 0;
+}
+
+.accordion.single .accordion-item-body .accordion-item-body-text {
+  color: #fff;
+}
+
+.accordion.single .accordion-item-body h4 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.accordion.single .accordion-item-body p {
+  color: #fff;
+  font-size: 14.4px;
+  line-height: 16px;
+}
+
+.accordion.single .accordion-item-body strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ---- Close button (×) styling ---- */
+.accordion.single .accordion-item-close {
+  color: #fff;
+  font-size: 20.8px;
+}
+
+/* ---- Hover state ---- */
+.accordion.single .accordion-item-label:hover {
+  background: transparent;
+}
+
+/* ---- Icon styling ---- */
+.accordion.single summary.accordion-item-label::after {
+  color: #fff;
+}
+
+/* ---- Links inside accordion body ---- */
+.accordion.single .accordion-item-body a,
+.accordion.single .accordion-item-body a.button {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+  background: none;
+}
+
+.accordion.single .accordion-item-body a:hover {
+  background: none;
+  opacity: 0.8;
+  color: #fff;
+}
+
+@media (width >= 744px) {
+  .accordion.single .accordion-item-label .accordion-item-label-text {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+@media (width >= 1024px) {
+  .accordion.single .accordion-item-label .accordion-item-label-text {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
