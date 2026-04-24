@@ -1,0 +1,379 @@
+/* demo-brand-explorer — fixed bottom multi-brand navigator */
+
+.demo-brand-explorer-section {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.demo-brand-explorer-section .default-content-wrapper,
+.demo-brand-explorer-section .demo-brand-explorer-wrapper {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+.demo-brand-explorer {
+  position: relative;
+  background: #fff;
+  color: #21406d;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+/* Reset abbvie-container grid-column overrides inside this block */
+
+.demo-brand-explorer div {
+  grid-column: auto;
+}
+
+/* ── bar ─────────────────────────────────────────────────────── */
+
+.demo-brand-explorer-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  color: #fff;
+  background: #071d49;
+  box-sizing: border-box;
+}
+
+.demo-brand-explorer-bar a:any-link {
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.demo-brand-explorer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.demo-brand-explorer-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ── browse button ───────────────────────────────────────────── */
+
+.demo-brand-explorer .demo-brand-explorer-browse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: #fff;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  line-height: 16px;
+  padding: 12px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  appearance: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+.demo-brand-explorer .demo-brand-explorer-browse:hover {
+  background: transparent;
+  background-color: transparent;
+}
+
+.demo-brand-explorer-browse::after {
+  content: '\2795';
+  font-size: 12px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.demo-brand-explorer.is-open .demo-brand-explorer-browse::after {
+  content: '\2796';
+}
+
+/* ── close button ────────────────────────────────────────────── */
+
+.demo-brand-explorer .demo-brand-explorer-close {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  z-index: 10;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: #071d49;
+  font-size: 0;
+  font-family: Arial, sans-serif;
+  padding: 12px;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  appearance: none;
+  box-shadow: none;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.demo-brand-explorer .demo-brand-explorer-close:hover {
+  background: transparent;
+  background-color: transparent;
+}
+
+.demo-brand-explorer-close::before,
+.demo-brand-explorer-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  background: #071d49;
+}
+
+.demo-brand-explorer-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.demo-brand-explorer-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* ── content panel ───────────────────────────────────────────── */
+
+.demo-brand-explorer-content {
+  width: 100%;
+  padding: 0 15px;
+  background: #fff;
+  position: relative;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  box-sizing: border-box;
+  border-top: 1px solid #d8d8d8;
+}
+
+.demo-brand-explorer-content a:any-link {
+  color: #071d49;
+  text-decoration: none;
+}
+
+.demo-brand-explorer-bar a:any-link:hover {
+  text-decoration: underline;
+}
+
+.demo-brand-explorer.is-open .demo-brand-explorer-content {
+  max-height: 80vh;
+  padding: 30px 15px 20px;
+  overflow-y: auto;
+}
+
+/* ── accordions grid ─────────────────────────────────────────── */
+
+.demo-brand-explorer-accordions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+/* ── accordion item ──────────────────────────────────────────── */
+
+.demo-brand-explorer-accordion {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* ── blade (brand header) ────────────────────────────────────── */
+
+.demo-brand-explorer-blade {
+  position: relative;
+  cursor: default;
+}
+
+.demo-brand-explorer-blade-link {
+  display: block;
+  text-decoration: none;
+}
+
+.demo-brand-explorer-brand-img {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.demo-brand-explorer-subtitle {
+  font-size: 11px;
+  line-height: 14px;
+  color: #21406d;
+  margin: 8px 0 0;
+}
+
+.demo-brand-explorer-subtitle p {
+  font-size: 11px;
+  line-height: 14px;
+  margin: 0;
+}
+
+.demo-brand-explorer-subtitle b,
+.demo-brand-explorer-subtitle strong {
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.demo-brand-explorer-separator {
+  border: none;
+  border-top: 1px solid #d8d8d8;
+  margin: 10px 0;
+}
+
+/* ── indication links ────────────────────────────────────────── */
+
+.demo-brand-explorer-links {
+  display: block;
+}
+
+/* stylelint-disable selector-class-pattern */
+
+.demo-brand-explorer-indication {
+  display: block;
+  width: 100%;
+  color: #071d49;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+  line-height: 16px;
+  text-decoration: none;
+  padding: 6px 12px 6px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.demo-brand-explorer-indication::before {
+  font-size: 10px;
+  font-weight: 400;
+  color: #21406d;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.demo-brand-explorer-indication--moderate::before {
+  content: 'Moderate to Severe';
+}
+
+.demo-brand-explorer-indication--active::before {
+  content: 'Active';
+}
+
+.demo-brand-explorer-indication--refractory::before {
+  content: 'Refractory, Moderate to Severe';
+}
+
+.demo-brand-explorer-indication--noninfectious::before {
+  content: 'Non-infectious';
+}
+
+/* stylelint-enable selector-class-pattern */
+
+.demo-brand-explorer-indication:hover {
+  text-decoration: underline;
+}
+
+/* ── visit link ──────────────────────────────────────────────── */
+
+.demo-brand-explorer-visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #071d49;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+  line-height: 16px;
+  text-decoration: none;
+  padding: 12px 0 16px;
+  cursor: pointer;
+}
+
+.demo-brand-explorer-visit::after {
+  content: '\203A';
+  font-size: 20px;
+  line-height: 1;
+}
+
+.demo-brand-explorer-visit:hover {
+  text-decoration: underline;
+}
+
+/* ── mobile responsive ──────────────────────────────────────── */
+
+@media (width <= 895px) {
+  .demo-brand-explorer-bar {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+
+  .demo-brand-explorer-left {
+    border-bottom: none;
+    padding: 8px 0;
+  }
+
+  .demo-brand-explorer-right {
+    display: none;
+  }
+
+  .demo-brand-explorer-accordions {
+    display: block;
+  }
+
+  .demo-brand-explorer-blade {
+    cursor: pointer;
+  }
+
+  .demo-brand-explorer-blade::after {
+    content: '\25BC';
+    position: absolute;
+    top: 12px;
+    right: 0;
+    font-size: 10px;
+    color: #21406d;
+    transition: transform 0.3s ease;
+  }
+
+  .demo-brand-explorer-accordion.is-active .demo-brand-explorer-blade::after {
+    transform: rotate(180deg);
+  }
+
+  .demo-brand-explorer-links {
+    display: none;
+    padding-top: 10px;
+  }
+
+  .demo-brand-explorer-accordion.is-active .demo-brand-explorer-links {
+    display: block;
+  }
+}
+
+/* ── tablet ─────────────────────────────────────────────────── */
+
+@media (width >= 896px) and (width <= 1219px) {
+  .demo-brand-explorer-accordions {
+    gap: 24px;
+  }
+}
+
+/* rinvoq demo-brand-explorer overrides */
