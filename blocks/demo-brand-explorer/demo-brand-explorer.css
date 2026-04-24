@@ -45,6 +45,8 @@
   background: #071d49;
   box-sizing: border-box;
   gap: 8px;
+  position: relative;
+  z-index: 2;
 }
 
 .demo-brand-explorer-left {
@@ -215,12 +217,14 @@
   overflow: hidden;
   transition: max-height 0.4s ease, padding 0.4s ease;
   box-sizing: border-box;
+  pointer-events: none;
 }
 
 .demo-brand-explorer.is-open .demo-brand-explorer-content {
   max-height: 80vh;
   padding: 30px 20px 20px;
   overflow-y: auto;
+  pointer-events: auto;
 }
 
 /* ── accordions grid ─────────────────────────────────────────── */
