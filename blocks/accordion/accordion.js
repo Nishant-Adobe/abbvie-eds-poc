@@ -28,26 +28,47 @@ function getIconImage(row) {
  * 11: ariaExpandAllLabel
  * 12: ariaCollapseAllLabel
  */
+const CONFIG_DEFAULTS = {
+  headingText: '',
+  expandAllText: 'Expand All',
+  collapseAllText: 'Collapse All',
+  expandAllIcon: 'icon-plus',
+  collapseAllIcon: 'icon-minus',
+  expandIcon: 'item-icon-plus',
+  collapseIcon: 'item-icon-minus',
+  expandAllIconImage: null,
+  collapseAllIconImage: null,
+  expandIconImage: null,
+  collapseIconImage: null,
+  ariaExpandAllLabel: '',
+  ariaCollapseAllLabel: '',
+};
+
 function gteConfigIcons(block) {
+  // UE-authored blocks prepend 13 single-column config rows before accordion items.
+  // Block-table-authored blocks (Col 1: title | Col 2: content) have no config header.
+  // Detect UE mode: first row has exactly 1 column AND total rows exceed 13.
+  const firstRow = block.children[0];
+  const isUEMode = firstRow && firstRow.children.length === 1 && block.children.length > 13;
+  if (!isUEMode) return { ...CONFIG_DEFAULTS };
+
   const headingText = block.children[0].textContent.trim();
-  const expandAllText = block.children[1].textContent.trim();
-  const collapseAllText = block.children[2].textContent.trim();
-  const expandAllIcon = `icon-${block.children[3].textContent.trim()}`;
-  const collapseAllIcon = `icon-${block.children[4].textContent.trim()}`;
-  const expandIcon = `item-icon-${block.children[5].textContent.trim()}`;
-  const collapseIcon = `item-icon-${block.children[6].textContent.trim()}`;
+  const expandAllText = block.children[1]?.textContent.trim() || CONFIG_DEFAULTS.expandAllText;
+  const collapseAllText = block.children[2]?.textContent.trim() || CONFIG_DEFAULTS.collapseAllText;
+  const expandAllIcon = `icon-${block.children[3]?.textContent.trim() || 'plus'}`;
+  const collapseAllIcon = `icon-${block.children[4]?.textContent.trim() || 'minus'}`;
+  const expandIcon = `item-icon-${block.children[5]?.textContent.trim() || 'plus'}`;
+  const collapseIcon = `item-icon-${block.children[6]?.textContent.trim() || 'minus'}`;
   const expandAllIconImage = getIconImage(block.children[7]);
   const collapseAllIconImage = getIconImage(block.children[8]);
   const expandIconImage = getIconImage(block.children[9]);
   const collapseIconImage = getIconImage(block.children[10]);
-  const ariaExpandAllLabel = block.children[11].textContent.trim();
-  const ariaCollapseAllLabel = block.children[12].textContent.trim();
+  const ariaExpandAllLabel = block.children[11]?.textContent.trim() || '';
+  const ariaCollapseAllLabel = block.children[12]?.textContent.trim() || '';
 
   // clean config rows
   [...block.children].forEach((child, index) => {
-    if (index <= 12) {
-      child.remove();
-    }
+    if (index <= 12) child.remove();
   });
 
   return {
@@ -128,7 +149,10 @@ function addExpandCollapseAllButton(block, cfg) {
 }
 
 function closeAllExceptCurrent(block) {
-  if (!block.classList.contains('allowmultipleopen')) {
+  const isMulti = block.classList.contains('allowmultipleopen')
+    || block.classList.contains('multi')
+    || block.classList.contains('faq');
+  if (!isMulti) {
     const details = block.querySelectorAll('details.accordion-item');
     details.forEach((detail) => {
       detail.addEventListener('toggle', () => {
@@ -162,14 +186,14 @@ export default function decorate(block) {
     if (body.firstElementChild) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
-    const ariaExpandLabel = row.children[3].textContent.trim() || '';
-    const ariaCollapseLabel = row.children[4].textContent.trim() || '';
+    const ariaExpandLabel = row.children[3]?.textContent.trim() || '';
+    const ariaCollapseLabel = row.children[4]?.textContent.trim() || '';
 
     // decorate accordion item
     const details = document.createElement('details');
     moveInstrumentation(row, details);
-    // Use the third column for additional classes on the details element
-    details.className = `${row.children[2].textContent.trim().replaceAll(',', '')}`;
+    // Use the third column for additional classes on the details element (UE only)
+    details.className = `${(row.children[2]?.textContent.trim() || '').replaceAll(',', '')}`;
     if (details.classList.contains('defaultopen')) {
       summary.classList.add(cfg.collapseIcon);
       details.setAttribute('open', '');

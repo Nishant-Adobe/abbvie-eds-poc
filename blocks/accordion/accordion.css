@@ -665,3 +665,79 @@
         padding-right: var(--spacing-00);
     }
 }
+
+/* ---- Variation: FAQ ---- */
+/* Multi-blade with grouped questions (Linzess, Rinvoq DTC) */
+.accordion.faq summary {
+    padding: var(--spacing-20) var(--spacing-00);
+}
+
+.accordion.faq .accordion-item-label p {
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-700);
+    line-height: var(--line-height-22);
+}
+
+.accordion.faq .accordion-item-body .accordion-item-body-text {
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-22);
+}
+
+@media (width >= 744px) {
+    .accordion.faq .accordion-item-label p {
+        font-size: var(--font-size-18);
+        line-height: var(--line-height-24);
+    }
+}
+
+/* ---- Variation: Fiesta ---- */
+/* Brand-specific gradient blade styling (Mavyret, RinvoqHCP) */
+.accordion.fiesta {
+    background: var(--accordion-fiesta-bg, linear-gradient(135deg, #6b2472 0%, #9b3a7a 50%, #c85a8a 100%));
+    border-radius: var(--border-radius-04, 4px);
+    padding: var(--spacing-32);
+}
+
+.accordion.fiesta .accordion-item {
+    border-bottom-color: rgb(255 255 255 / 30%);
+}
+
+.accordion.fiesta summary,
+.accordion.fiesta .accordion-item-label p,
+.accordion.fiesta .accordion-item-label h2,
+.accordion.fiesta .accordion-item-label h3,
+.accordion.fiesta .accordion-item-label h4,
+.accordion.fiesta .accordion-item-label h5,
+.accordion.fiesta .accordion-item-label h6 {
+    color: var(--light-color, #fff);
+}
+
+.accordion.fiesta .accordion-item-body .accordion-item-body-text {
+    color: var(--light-color, #fff);
+}
+
+.accordion.fiesta .accordion-item-body a,
+.accordion.fiesta .accordion-item-body a.button {
+    background-image: linear-gradient(
+        180deg,
+        var(--light-color, #fff) 50%,
+        var(--light-color, #fff) 0
+    );
+    color: var(--light-color, #fff);
+}
+
+.accordion.fiesta .accordion-item-body :where(a:hover) {
+    color: var(--text-color);
+}
+
+.accordion.fiesta .accordion-expand-all {
+    color: var(--light-color, #fff);
+}
+
+/* ---- Variation: White BG ---- */
+/* White background variant (Venclexta) */
+.accordion.white-bg {
+    background-color: var(--background-color, #fff);
+    padding: var(--spacing-24) var(--spacing-32);
+    border-radius: var(--border-radius-04, 4px);
+}
