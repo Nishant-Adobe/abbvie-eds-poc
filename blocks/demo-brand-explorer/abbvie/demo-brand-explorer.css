@@ -35,6 +35,7 @@
 }
 
 /* ── bar ─────────────────────────────────────────────────────── */
+
 .demo-brand-explorer-bar {
   display: flex;
   flex-direction: row;
@@ -66,16 +67,12 @@
   text-decoration: none;
 }
 
-.demo-brand-explorer-content a:any-link {
-  color: #071d49;
-  text-decoration: none;
-}
-
 .demo-brand-explorer-bar a:any-link:hover {
   text-decoration: underline;
 }
 
 /* ── AbbVie logo ─────────────────────────────────────────────── */
+
 .demo-brand-explorer-logo-link {
   display: flex;
   align-items: center;
@@ -89,6 +86,7 @@
 }
 
 /* ── browse button ───────────────────────────────────────────── */
+
 .demo-brand-explorer .demo-brand-explorer-browse {
   display: inline-flex;
   align-items: center;
@@ -147,6 +145,7 @@
 }
 
 /* ── close button ────────────────────────────────────────────── */
+
 .demo-brand-explorer .demo-brand-explorer-close {
   position: absolute;
   top: 12px;
@@ -205,6 +204,7 @@
 }
 
 /* ── content panel ───────────────────────────────────────────── */
+
 .demo-brand-explorer-content {
   width: 100%;
   padding: 0 20px;
@@ -216,6 +216,11 @@
   box-sizing: border-box;
 }
 
+.demo-brand-explorer-content a:any-link {
+  color: #071d49;
+  text-decoration: none;
+}
+
 .demo-brand-explorer.is-open .demo-brand-explorer-content {
   max-height: 80vh;
   padding: 30px 20px 20px;
@@ -223,6 +228,7 @@
 }
 
 /* ── accordions grid ─────────────────────────────────────────── */
+
 .demo-brand-explorer-accordions {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -235,6 +241,7 @@
 }
 
 /* ── blade (brand header) ────────────────────────────────────── */
+
 .demo-brand-explorer-blade {
   position: relative;
   cursor: default;
@@ -271,6 +278,7 @@
 }
 
 /* ── colored separator bar ───────────────────────────────────── */
+
 .demo-brand-explorer-separator {
   border: none;
   height: 10px;
@@ -279,11 +287,13 @@
 }
 
 /* ── indication links ────────────────────────────────────────── */
+
 .demo-brand-explorer-links {
   display: block;
 }
 
 /* stylelint-disable selector-class-pattern */
+
 .demo-brand-explorer-indication {
   display: block;
   width: 100%;
@@ -329,6 +339,7 @@
 }
 
 /* ── visit link with circle arrow ────────────────────────────── */
+
 .demo-brand-explorer-visit {
   display: inline-flex;
   align-items: center;
@@ -370,6 +381,7 @@
 }
 
 /* ── project number ──────────────────────────────────────────── */
+
 .demo-brand-explorer-project-number {
   font-size: 11px;
   color: #21406d;
@@ -378,6 +390,7 @@
 }
 
 /* ── mobile responsive ──────────────────────────────────────── */
+
 @media (width <= 895px) {
   .demo-brand-explorer-bar {
     flex-direction: column;
@@ -430,8 +443,11 @@
 }
 
 /* ── tablet ─────────────────────────────────────────────────── */
+
 @media (width >= 896px) and (width <= 1219px) {
   .demo-brand-explorer-accordions {
     gap: 24px;
   }
 }
+
+/* abbvie demo-brand-explorer overrides */
