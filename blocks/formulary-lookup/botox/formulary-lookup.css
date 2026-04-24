@@ -1,3 +1,5 @@
+/* --- Formulary Lookup Block --- */
+
 .formulary-lookup-heading {
   margin-bottom: var(--spacing-8, 8px);
 }
@@ -21,31 +23,118 @@
   width: 100%;
   max-width: 400px;
   margin-bottom: var(--spacing-16, 16px);
+  background: var(--background-color, #fff);
+  color: var(--text-color, inherit);
 }
+
+/* --- County cascading dropdown (dynamic variant) --- */
+
+.formulary-lookup-county-wrapper {
+  margin-bottom: var(--spacing-16, 16px);
+}
+
+/* --- ZIP code input (zip variant) --- */
+
+.formulary-lookup-zip-form {
+  margin: 0;
+}
+
+.formulary-lookup-input-group {
+  display: flex;
+  gap: var(--spacing-8, 8px);
+  max-width: 400px;
+  margin-bottom: var(--spacing-16, 16px);
+}
+
+.formulary-lookup-zip-input {
+  border: 1px solid var(--formulary-border, #ccc);
+  border-radius: 4px;
+  font-size: var(--body-font-size-m, 1rem);
+  padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
+  flex: 1;
+  min-width: 0;
+}
+
+.formulary-lookup-submit {
+  background: var(--formulary-submit-bg, var(--link-color, #0057cc));
+  border: none;
+  border-radius: 4px;
+  color: var(--formulary-submit-color, #fff);
+  cursor: pointer;
+  font-size: var(--body-font-size-m, 1rem);
+  font-weight: 600;
+  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
+  white-space: nowrap;
+  transition: background 200ms;
+}
+
+.formulary-lookup-submit:hover {
+  opacity: 0.9;
+}
+
+.formulary-lookup-submit:focus-visible {
+  outline: 2px solid var(--color-focus, #0057cc);
+  outline-offset: 2px;
+}
+
+/* --- Status / loading --- */
 
 .formulary-lookup-status {
   font-size: var(--body-font-size-s, 0.875rem);
   min-height: 1.5em;
 }
 
+.formulary-lookup-loading {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--formulary-border, #e0e0e0);
+  border-top-color: var(--link-color, #0057cc);
+  border-radius: 50%;
+  animation: formulary-spin 0.8s linear infinite;
+}
+
+@keyframes formulary-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Results --- */
+
 .formulary-lookup-results {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12, 12px);
   margin-top: var(--spacing-16, 16px);
 }
 
-.formulary-plan {
-  border: 1px solid var(--formulary-border, #e0e0e0);
-  border-radius: 4px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 4px;
-  padding: var(--spacing-16, 16px);
+/* --- Table --- */
+
+.formulary-results-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.formulary-plan-name {
-  grid-column: 1 / -1;
+.formulary-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--body-font-size-s, 0.875rem);
+}
+
+.formulary-results-table th,
+.formulary-results-table td {
+  border: 1px solid var(--formulary-border, #e0e0e0);
+  padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
+  text-align: left;
+}
+
+.formulary-results-table thead th {
+  background: var(--formulary-thead-bg, #f5f5f5);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.formulary-results-table tbody tr:nth-child(even) {
+  background: var(--formulary-row-alt-bg, #fafafa);
+}
+
+.formulary-results-table tbody tr:hover {
+  background: var(--formulary-row-hover-bg, #f0f0f0);
 }
 
 .formulary-plan-tier {
@@ -54,6 +143,85 @@
   color: #fff;
   font-size: var(--body-font-size-xs, 0.75rem);
   padding: 2px 8px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* --- Pagination --- */
+
+.formulary-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-16, 16px);
+  margin-top: var(--spacing-16, 16px);
+  padding: var(--spacing-8, 8px) 0;
+}
+
+.formulary-pagination-btn {
+  background: var(--formulary-submit-bg, var(--link-color, #0057cc));
+  border: none;
+  border-radius: 4px;
+  color: var(--formulary-submit-color, #fff);
+  cursor: pointer;
+  font-size: var(--body-font-size-s, 0.875rem);
+  font-weight: 600;
+  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
+  transition: background 200ms;
+}
+
+.formulary-pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.formulary-pagination-btn:focus-visible {
+  outline: 2px solid var(--color-focus, #0057cc);
+  outline-offset: 2px;
+}
+
+.formulary-pagination-btn:not(:disabled):hover {
+  opacity: 0.9;
+}
+
+.formulary-pagination-info {
+  font-size: var(--body-font-size-s, 0.875rem);
+  white-space: nowrap;
+}
+
+/* --- Mobile responsive --- */
+
+@media (width <= 600px) {
+  .formulary-lookup-select {
+    max-width: 100%;
+  }
+
+  .formulary-lookup-input-group {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .formulary-lookup-submit {
+    width: 100%;
+  }
+
+  .formulary-pagination {
+    flex-wrap: wrap;
+    gap: var(--spacing-8, 8px);
+  }
+
+  .formulary-pagination-btn {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .formulary-lookup-loading {
+    animation: none;
+    border-top-color: var(--formulary-border, #e0e0e0);
+    opacity: 0.6;
+  }
 }
 
 /* Botox formulary-lookup overrides */

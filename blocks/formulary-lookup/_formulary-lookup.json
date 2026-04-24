@@ -10,7 +10,8 @@
             "template": {
               "name": "Formulary Lookup",
               "model": "formulary-lookup",
-              "blockId": "id:"
+              "blockId": "id:",
+              "classes": ""
             }
           }
         }
@@ -27,6 +28,17 @@
           "name": "content"
         },
         {
+          "component": "select",
+          "name": "classes",
+          "label": "Variant",
+          "description": "Default: state dropdown. Dynamic: state + county cascading dropdowns. ZIP Code: ZIP code input with submit.",
+          "options": [
+            { "name": "Default (State Dropdown)", "value": "" },
+            { "name": "Dynamic (State + County)", "value": "dynamic" },
+            { "name": "ZIP Code", "value": "zip" }
+          ]
+        },
+        {
           "component": "text",
           "valueType": "string",
           "name": "heading",
@@ -39,7 +51,7 @@
           "name": "description",
           "value": "",
           "label": "Description",
-          "description": "Optional introductory text shown above the state dropdown."
+          "description": "Optional introductory text shown above the form."
         },
         {
           "component": "text",
@@ -47,6 +59,30 @@
           "name": "state-label",
           "value": "Select your state",
           "label": "State Dropdown Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "county-label",
+          "value": "Select your county",
+          "label": "County Dropdown Label",
+          "description": "Only used in Dynamic variant."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "zip-label",
+          "value": "Enter your ZIP code",
+          "label": "ZIP Code Input Label",
+          "description": "Only used in ZIP Code variant."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "submit-label",
+          "value": "Search",
+          "label": "Submit Button Label",
+          "description": "Only used in ZIP Code variant."
         },
         {
           "component": "tab",
@@ -59,7 +95,23 @@
           "name": "api",
           "value": "",
           "label": "API Endpoint",
-          "description": "URL of the formulary lookup API. Receives ?state= query parameter."
+          "description": "Formulary lookup API URL. Receives ?state=, ?state=&county=, or ?zip= query parameters depending on variant."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "recaptcha-key",
+          "value": "",
+          "label": "reCAPTCHA Site Key",
+          "description": "Google reCAPTCHA v3 site key. If provided, a token is sent with each API request."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "results-per-page",
+          "value": "10",
+          "label": "Results Per Page",
+          "description": "Number of results displayed per page in the results table."
         },
         {
           "component": "text",
@@ -74,6 +126,14 @@
           "name": "error",
           "value": "An error occurred. Please try again.",
           "label": "Error Message"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "analyticsId",
+          "value": "",
+          "label": "Analytics ID",
+          "description": "Value for data-analytics attribute on the submit/select action."
         },
         {
           "...": "../../models/_common-properties.json#/common-prop"
