@@ -433,3 +433,126 @@
     gap: 24px;
   }
 }
+
+/* ── contact medical modal ───────────────────────────────────── */
+.demo-brand-explorer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-brand-explorer-modal:not([hidden]) {
+  display: flex;
+}
+
+.demo-brand-explorer-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 60%);
+}
+
+.demo-brand-explorer-modal-dialog {
+  position: relative;
+  background: #fff;
+  max-width: 700px;
+  width: 90%;
+  padding: 50px 40px 40px;
+  text-align: center;
+  border-top: 6px solid #00a8e1;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
+}
+
+.demo-brand-explorer-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: #e8e8e8;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
+}
+
+.demo-brand-explorer-modal-close::before,
+.demo-brand-explorer-modal-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 2px;
+  background: #333;
+}
+
+.demo-brand-explorer-modal-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.demo-brand-explorer-modal-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.demo-brand-explorer-modal-title {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #071d49;
+  margin: 0 0 24px;
+}
+
+.demo-brand-explorer-modal-text {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  margin: 0 0 32px;
+}
+
+.demo-brand-explorer-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.demo-brand-explorer-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  padding: 14px 40px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.demo-brand-explorer-modal-yes {
+  background: #071d49;
+  color: #fff;
+  border: 2px solid #071d49;
+}
+
+.demo-brand-explorer-modal-yes:hover {
+  background: #0a2a6b;
+}
+
+.demo-brand-explorer-modal-no {
+  background: #fff;
+  color: #071d49;
+  border: 2px solid #071d49;
+}
+
+.demo-brand-explorer-modal-no:hover {
+  background: #f5f5f5;
+}

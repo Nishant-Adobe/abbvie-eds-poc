@@ -68,10 +68,57 @@ export default function decorate(block) {
     a.href = link.href;
     a.textContent = link.text;
     a.target = link.target;
+    if (link.text.toLowerCase().includes('contact medical')) {
+      a.href = '#';
+      a.dataset.modal = 'contact-medical';
+    }
     barRight.append(a);
   });
 
   bar.append(barLeft, barRight);
+
+  // Contact Medical Info modal
+  const modal = document.createElement('div');
+  modal.className = 'demo-brand-explorer-modal';
+  modal.hidden = true;
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.innerHTML = `
+    <div class="demo-brand-explorer-modal-overlay"></div>
+    <div class="demo-brand-explorer-modal-dialog">
+      <button class="demo-brand-explorer-modal-close" aria-label="Close modal"></button>
+      <h2 class="demo-brand-explorer-modal-title">You are about to enter a site that is for U.S. Healthcare Professionals Only.</h2>
+      <p class="demo-brand-explorer-modal-text">By selecting "Yes" below, you certify that you are a Healthcare Professional and that you wish to proceed to the Healthcare Professionals Only section on the AbbVie Medical Information site. Products or treatments described on this site are available in the U.S. but may not be available in all other countries. I am a licensed Healthcare Professional and wish to proceed to the Healthcare Professionals Only AbbVie Medical Information Site.</p>
+      <div class="demo-brand-explorer-modal-actions">
+        <a class="demo-brand-explorer-modal-btn demo-brand-explorer-modal-yes" href="https://www.abbviemedinfo.com" target="_blank">YES</a>
+        <button class="demo-brand-explorer-modal-btn demo-brand-explorer-modal-no">NO</button>
+      </div>
+    </div>
+  `;
+  document.body.append(modal);
+
+  function openModal() {
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  modal.querySelector('.demo-brand-explorer-modal-close').addEventListener('click', closeModal);
+  modal.querySelector('.demo-brand-explorer-modal-no').addEventListener('click', closeModal);
+  modal.querySelector('.demo-brand-explorer-modal-overlay').addEventListener('click', closeModal);
+  modal.querySelector('.demo-brand-explorer-modal-yes').addEventListener('click', closeModal);
+
+  barRight.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-modal="contact-medical"]');
+    if (trigger) {
+      e.preventDefault();
+      openModal();
+    }
+  });
 
   const content = document.createElement('div');
   content.className = 'demo-brand-explorer-content';
