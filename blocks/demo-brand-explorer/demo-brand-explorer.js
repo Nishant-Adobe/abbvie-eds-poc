@@ -1,8 +1,8 @@
-// v2.2 — skip decoration in UE edit mode so authors can add child items
-import { shouldRunOutsideAuthorEdit } from '../../scripts/utils.js';
+// v2.3 — skip decoration in UE/author so authors can add child items
+import { isUniversalEditor } from '../../scripts/utils.js';
 
 export default function decorate(block) {
-  if (!shouldRunOutsideAuthorEdit()) return;
+  if (isUniversalEditor()) return;
 
   const rows = [...block.children];
   if (!rows.length) return;
