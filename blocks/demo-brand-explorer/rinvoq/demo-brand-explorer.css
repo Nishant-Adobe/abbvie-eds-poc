@@ -1,9 +1,7 @@
-/* demo-brand-explorer — fixed bottom multi-brand navigator */
+/* demo-brand-explorer — multi-brand navigator */
 
 .demo-brand-explorer-section {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   z-index: 100;
   margin: 0;
@@ -27,7 +25,7 @@
   line-height: 16px;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 .demo-brand-explorer div {
@@ -64,6 +62,11 @@
 .demo-brand-explorer-bar a:any-link {
   color: #fff;
   font-size: 13px;
+  text-decoration: none;
+}
+
+.demo-brand-explorer-content a:any-link {
+  color: #071d49;
   text-decoration: none;
 }
 
@@ -214,11 +217,6 @@
   overflow: hidden;
   transition: max-height 0.4s ease, padding 0.4s ease;
   box-sizing: border-box;
-}
-
-.demo-brand-explorer-content a:any-link {
-  color: #071d49;
-  text-decoration: none;
 }
 
 .demo-brand-explorer.is-open .demo-brand-explorer-content {
