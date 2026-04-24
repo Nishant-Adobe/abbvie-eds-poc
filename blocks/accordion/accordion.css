@@ -666,6 +666,30 @@
     }
 }
 
+/* ---- Variation: Single-expand ---- */
+/* Explicit × close button — visible only when the blade is open */
+.accordion.single .accordion-item-close {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-20);
+    line-height: 1;
+    padding: var(--spacing-00) var(--spacing-03);
+    color: inherit;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.accordion.single .accordion-item[open] .accordion-item-close {
+    display: inline-flex;
+    align-items: center;
+}
+
+.accordion.single .accordion-item-close:hover {
+    opacity: 0.7;
+}
+
 /* ---- Variation: FAQ ---- */
 /* Multi-blade with grouped questions (Linzess, Rinvoq DTC) */
 .accordion.faq summary {
@@ -732,6 +756,24 @@
 
 .accordion.fiesta .accordion-expand-all {
     color: var(--light-color, #fff);
+}
+
+/* ---- Item heading alignment ---- */
+.accordion-item.heading-left .accordion-item-label,
+.accordion-item.heading-left .accordion-item-label-text {
+    text-align: left;
+}
+
+.accordion-item.heading-center .accordion-item-label,
+.accordion-item.heading-center .accordion-item-label-text {
+    text-align: center;
+    justify-content: center;
+}
+
+.accordion-item.heading-right .accordion-item-label,
+.accordion-item.heading-right .accordion-item-label-text {
+    text-align: right;
+    justify-content: flex-end;
 }
 
 /* ---- Variation: White BG ---- */

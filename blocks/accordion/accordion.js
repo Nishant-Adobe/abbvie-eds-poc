@@ -150,9 +150,13 @@ function addExpandCollapseAllButton(block, cfg) {
 }
 
 function closeAllExceptCurrent(block) {
-  const isMulti = block.classList.contains('allowmultipleopen')
+  // 'single' explicitly enforces single-expand even if other classes are present
+  const isSingleExplicit = block.classList.contains('single');
+  const isMulti = !isSingleExplicit && (
+    block.classList.contains('allowmultipleopen')
     || block.classList.contains('multi')
-    || block.classList.contains('faq');
+    || block.classList.contains('faq')
+  );
   if (!isMulti) {
     const details = block.querySelectorAll('details.accordion-item');
     details.forEach((detail) => {
@@ -210,8 +214,11 @@ export default async function decorate(block) {
     if (body.firstElementChild) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
-    const ariaExpandLabel = row.children[3]?.textContent.trim() || '';
-    const ariaCollapseLabel = row.children[4]?.textContent.trim() || '';
+    // UE mode: read aria labels via instrumentation attr; published: fall back to fixed columns
+    const ariaExpandCell = row.querySelector('[data-aue-prop="ariaExpandLabel"]');
+    const ariaCollapseCell = row.querySelector('[data-aue-prop="ariaCollapseLabel"]');
+    const ariaExpandLabel = (ariaExpandCell ?? row.children[3])?.textContent.trim() || '';
+    const ariaCollapseLabel = (ariaCollapseCell ?? row.children[4])?.textContent.trim() || '';
 
     // collect fragment path before DOM manipulation removes cells from the row
     const fragmentPath = getFragmentPath(row);
@@ -219,10 +226,21 @@ export default async function decorate(block) {
     // decorate accordion item
     const details = document.createElement('details');
     moveInstrumentation(row, details);
-    // accordion-item is always required; third column adds extra classes (UE only)
-    const extraClasses = (row.children[2]?.textContent.trim() || '').replaceAll(',', '');
+
+    // Scan all cells for "defaultopen" — avoids fragile fixed-index assumptions when
+    // image/fragment fields insert extra columns before the classes column (UE mode).
+    const isDefaultOpen = [...row.children].some((cell) => cell.textContent
+      .trim().toLowerCase().split(/[\s,]+/).includes('defaultopen'));
+    // Extra classes: children[2] is the classes column in block-table mode.
+    // Guard against non-class content (paths, rich text) leaking in from UE columns.
+    const candidate = row.children[2]?.textContent.trim() || '';
+    const isCssClassTokens = /^([a-z][a-z0-9-]*[\s,]*)*$/.test(candidate);
+    const extraClasses = isCssClassTokens
+      ? candidate.replaceAll(',', ' ').replace(/defaultopen/gi, '').trim()
+      : '';
     details.className = extraClasses ? `accordion-item ${extraClasses}` : 'accordion-item';
-    if (details.classList.contains('defaultopen')) {
+
+    if (isDefaultOpen) {
       summary.classList.add(cfg.collapseIcon);
       details.setAttribute('open', '');
       details.setAttribute('aria-label', ariaExpandLabel);
@@ -248,6 +266,20 @@ export default async function decorate(block) {
       summary.classList.toggle(cfg.collapseIcon, details.open);
       summary.classList.toggle(cfg.expandIcon, !details.open);
     });
+
+    // Single variant: add an explicit × close button to the right of the summary
+    if (block.classList.contains('single')) {
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'accordion-item-close';
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Close');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // prevent summary from re-toggling
+        details.open = false;
+      });
+      summary.appendChild(closeBtn);
+    }
 
     details.append(summary, body);
     row.replaceWith(details);
