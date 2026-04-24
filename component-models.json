@@ -9526,8 +9526,24 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Overview",
-        "name": "overview"
+        "label": "Bar Settings",
+        "name": "barSettings"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logoImage",
+        "label": "Bar Logo",
+        "description": "Logo image displayed on the left side of the bar (e.g., AbbVie logo).",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logoUrl",
+        "value": "https://www.abbvie.com",
+        "label": "Logo Link URL",
+        "description": "URL the bar logo links to."
       },
       {
         "component": "text",
@@ -9535,7 +9551,67 @@
         "name": "barLabel",
         "value": "Immunology Therapies",
         "label": "Bar Label",
-        "description": "Text shown on the fixed bottom bar toggle button."
+        "description": "Text shown on the toggle button next to the logo."
+      },
+      {
+        "component": "tab",
+        "label": "Utility Links",
+        "name": "utilityLinks"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "utilityLink1Text",
+        "value": "Contact Medical Info",
+        "label": "Utility Link 1 Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "utilityLink1Url",
+        "value": "",
+        "label": "Utility Link 1 URL"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "utilityLink2Text",
+        "value": "Full Prescribing Information",
+        "label": "Utility Link 2 Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "utilityLink2Url",
+        "value": "",
+        "label": "Utility Link 2 URL"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "utilityLink3Text",
+        "value": "Patient Site",
+        "label": "Utility Link 3 Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "utilityLink3Url",
+        "value": "",
+        "label": "Utility Link 3 URL"
+      },
+      {
+        "component": "tab",
+        "label": "Footer",
+        "name": "footer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "projectNumber",
+        "value": "US-MULT-250253",
+        "label": "Project Number",
+        "description": "Regulatory project number shown at the bottom of the panel."
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
@@ -9543,7 +9619,7 @@
     ]
   },
   {
-    "id": "demo-brand-explorer-item",
+    "id": "demo-brand-explorer-brand",
     "fields": [
       {
         "component": "tab",
@@ -9553,15 +9629,15 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "logo",
+        "name": "brandLogo",
         "label": "Brand Logo",
-        "description": "Brand product logo image.",
+        "description": "Product logo image (e.g., RINVOQ, SKYRIZI, HUMIRA).",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "logoAlt",
+        "name": "brandLogoAlt",
         "value": "",
         "label": "Logo Alt Text"
       },
@@ -9570,15 +9646,8 @@
         "valueType": "string",
         "name": "brandName",
         "value": "",
-        "label": "Brand Name"
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "safetyText",
-        "value": "",
-        "label": "Safety Text",
-        "description": "Optional safety disclaimer text shown under the brand logo."
+        "label": "Brand Name",
+        "description": "Brand name shown in the Visit link (e.g., RINVOQ, SKYRIZI)."
       },
       {
         "component": "text",
@@ -9586,7 +9655,63 @@
         "name": "brandUrl",
         "value": "",
         "label": "Brand URL",
-        "description": "Link destination for this brand."
+        "description": "Link destination for the brand logo and Visit link."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brandColor",
+        "value": "",
+        "label": "Brand Color",
+        "description": "Hex color for separator bar and visit arrow (e.g., #ffd41d, #00a8e1, #931947)."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "safetyText",
+        "value": "",
+        "label": "Safety Text",
+        "description": "Optional safety disclaimer shown below the brand logo."
+      }
+    ]
+  },
+  {
+    "id": "demo-brand-explorer-indication",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Indication",
+        "name": "indication"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "indicationName",
+        "value": "",
+        "label": "Indication Name",
+        "description": "Name of the therapeutic indication (e.g., Rheumatoid Arthritis)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "indicationUrl",
+        "value": "",
+        "label": "Indication URL",
+        "description": "Link for this indication."
+      },
+      {
+        "component": "select",
+        "name": "severityType",
+        "value": "",
+        "label": "Severity Prefix",
+        "description": "Severity label shown above the indication name.",
+        "options": [
+          { "name": "None", "value": "" },
+          { "name": "Moderate to Severe", "value": "moderate" },
+          { "name": "Active", "value": "active" },
+          { "name": "Refractory, Moderate to Severe", "value": "refractory" },
+          { "name": "Non-infectious", "value": "noninfectious" }
+        ]
       }
     ]
   },
