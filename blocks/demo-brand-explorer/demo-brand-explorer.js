@@ -1,9 +1,5 @@
-// v2.3 — skip decoration in UE/author so authors can add child items
-import { isUniversalEditor } from '../../scripts/utils.js';
-
+// v2.4 — full decoration in all modes including UE
 export default function decorate(block) {
-  if (isUniversalEditor()) return;
-
   const rows = [...block.children];
   if (!rows.length) return;
 
