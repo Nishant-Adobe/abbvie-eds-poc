@@ -1,3 +1,4 @@
+// v2.1 — utility links visible in UE, xwalk row reading, default fallback
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -10,6 +11,28 @@ export default function decorate(block) {
   for (let i = 1; i < barCells.length; i += 1) {
     const a = barCells[i]?.querySelector('a');
     if (a) utilityLinks.push({ text: a.textContent.trim(), href: a.href, target: a.target || '_self' });
+  }
+
+  // UE xwalk stores fields as separate rows — try reading utility links from block rows
+  if (!utilityLinks.length && rows.length > 3) {
+    const fieldTexts = rows.map((r) => r.textContent.trim());
+    for (let i = 0; i < fieldTexts.length - 1; i += 1) {
+      const text = fieldTexts[i];
+      const nextVal = fieldTexts[i + 1];
+      if (text && nextVal && (nextVal.startsWith('http') || nextVal.startsWith('/'))) {
+        if (['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'].includes(text)) {
+          utilityLinks.push({ text, href: nextVal, target: text.includes('Contact') ? '_self' : '_blank' });
+        }
+      }
+    }
+  }
+
+  if (!utilityLinks.length) {
+    utilityLinks.push(
+      { text: 'Contact Medical Info', href: '#', target: '_self' },
+      { text: 'Full Prescribing Information', href: '/prescribinginfo', target: '_blank' },
+      { text: 'Patient Site', href: '/patientsite', target: '_blank' },
+    );
   }
 
   const brands = [];
@@ -39,6 +62,7 @@ export default function decorate(block) {
     }
   });
 
+  // Bar
   const bar = document.createElement('div');
   bar.className = 'demo-brand-explorer-bar';
 
@@ -120,6 +144,7 @@ export default function decorate(block) {
     }
   });
 
+  // Content panel
   const content = document.createElement('div');
   content.className = 'demo-brand-explorer-content';
   content.id = 'demo-brand-explorer-content';
@@ -131,6 +156,7 @@ export default function decorate(block) {
   closeBtn.innerHTML = 'Close <span class="demo-brand-explorer-close-icon"></span>';
   content.append(closeBtn);
 
+  // Accordions
   const accordions = document.createElement('div');
   accordions.className = 'demo-brand-explorer-accordions';
 
@@ -206,6 +232,7 @@ export default function decorate(block) {
     section.classList.add('demo-brand-explorer-section');
   }
 
+  // Toggle
   function open() {
     content.hidden = false;
     requestAnimationFrame(() => {
@@ -237,6 +264,7 @@ export default function decorate(block) {
     if (e.key === 'Escape' && block.classList.contains('is-open')) close();
   });
 
+  // Mobile accordion
   accordions.addEventListener('click', (e) => {
     if (window.innerWidth >= 896) return;
     const clickedBlade = e.target.closest('.demo-brand-explorer-blade');
