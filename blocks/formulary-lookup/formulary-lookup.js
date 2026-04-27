@@ -103,8 +103,8 @@ function createZipForm(config) {
   btn.className = 'formulary-lookup-submit';
   btn.textContent = config['submit-label'] || 'Search';
 
-  inputGroup.append(input);
-  form.append(label, inputGroup, btn);
+  inputGroup.append(input, btn);
+  form.append(label, inputGroup);
   return { form, input };
 }
 
@@ -439,12 +439,15 @@ function buildZipVariant(config, section, status, results) {
   applyAnalytics(submitBtn, config);
 
   const filter = createFilterDropdown(config);
-  if (filter) form.append(filter.wrapper);
-
   const indications = createIndicationRadio(config);
-  if (indications) form.append(indications);
 
-  form.append(submitBtn);
+  if (filter || indications) {
+    submitBtn.remove();
+    if (filter) form.append(filter.wrapper);
+    if (indications) form.append(indications);
+    form.append(submitBtn);
+  }
+
   section.append(form);
 
   form.addEventListener('submit', async (e) => {

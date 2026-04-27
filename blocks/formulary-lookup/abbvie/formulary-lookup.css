@@ -3,54 +3,54 @@
 /* SkyriziHCP formulary-lookup overrides */
 
 .formulary-lookup {
-  --formulary-text-color: rgb(33, 64, 109);
+  --formulary-text-color: rgb(33 64 109);
   --formulary-text-align: center;
-
-  /* Input */
-  --formulary-input-max-width: 300px;
+  --formulary-input-max-width: 600px;
   --formulary-input-height: 42px;
-  --formulary-input-border: 1px solid rgb(194, 194, 194);
+  --formulary-input-border: 1px solid rgb(194 194 194);
   --formulary-input-border-radius: 2px;
-  --formulary-input-padding: 12px 35px 12px 15px;
-  --formulary-input-font-size: 14.4px;
-
-  /* Submit button — navy pill with search icon */
-  --formulary-submit-bg: rgb(7, 29, 73);
-  --formulary-submit-border: 1px solid rgb(7, 29, 73);
+  --formulary-input-padding: 12px 15px;
+  --formulary-input-font-size: 14px;
+  --formulary-submit-bg: rgb(7 29 73);
+  --formulary-submit-border: 1px solid rgb(7 29 73);
   --formulary-submit-border-radius: 30px;
-  --formulary-submit-width: 240px;
   --formulary-submit-height: 44px;
-  --formulary-submit-padding: 14px 46px 14px 46px;
+  --formulary-submit-padding: 14px 50px 14px 30px;
   --formulary-submit-font-size: 14px;
-  --formulary-submit-font-weight: 400;
+  --formulary-submit-font-weight: 700;
   --formulary-submit-icon-display: inline-block;
-  --formulary-submit-icon-right: 24px;
-
-  /* Heading */
-  --formulary-heading-font-size: 20px;
+  --formulary-submit-icon-right: 20px;
+  --formulary-heading-font-size: 16px;
   --formulary-heading-font-weight: 400;
-  --formulary-heading-color: rgb(33, 64, 109);
-  --formulary-heading-margin-bottom: 8px;
+  --formulary-heading-color: rgb(33 64 109);
+  --formulary-heading-margin-bottom: 16px;
   --formulary-heading-line-height: 20px;
-
-  /* Error */
-  --formulary-error-color: rgb(235, 60, 54);
-
-  /* reCAPTCHA notice */
-  --formulary-captcha-font-size: 11.2px;
-
-  /* Results */
+  --formulary-label-font-size: 16px;
+  --formulary-label-font-weight: 400;
+  --formulary-label-color: rgb(33 64 109);
+  --formulary-error-color: rgb(235 60 54);
+  --formulary-captcha-font-size: 11px;
   --formulary-results-border-radius: 4px;
-  --formulary-results-box-shadow: rgba(16, 164, 222, 0.2) 0px 5px 15px 0px;
+  --formulary-results-box-shadow: rgb(16 164 222 / 20%) 0 5px 15px 0;
   --formulary-results-header-font-weight: 700;
 }
 
 .formulary-lookup .formulary-lookup-input-group {
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 8px;
+  max-width: 600px;
   margin-inline: auto;
 }
 
 .formulary-lookup .formulary-lookup-zip-input {
-  width: 300px;
-  flex: none;
+  flex: 1;
+  min-width: 200px;
+}
+
+.formulary-lookup .formulary-lookup-disclaimer {
+  font-size: 13px;
+  max-width: 700px;
+  margin-inline: auto;
 }
