@@ -1,10 +1,33 @@
 /* --- Before After Gallery Block --- */
 
+.before-after-gallery {
+  background: var(--gallery-bg, transparent);
+  color: var(--gallery-text-color, var(--color-text, inherit));
+  padding: var(--gallery-padding, 0);
+  border-radius: var(--gallery-border-radius, 0);
+}
+
 .before-after-gallery-heading {
   margin-bottom: var(--spacing-8, 8px);
+  color: var(--gallery-heading-color, inherit);
+  font-size: var(--gallery-heading-font-size, var(--heading-font-size-m, 1.5rem));
+  text-align: var(--gallery-heading-text-align, inherit);
 }
 
 .before-after-gallery-description {
+  margin-bottom: var(--spacing-16, 16px);
+  text-align: var(--gallery-heading-text-align, inherit);
+}
+
+/* --- Instruction text below slider --- */
+
+.before-after-gallery-instruction {
+  background: var(--gallery-instruction-bg, rgb(0 0 0 / 70%));
+  color: var(--gallery-instruction-color, #fff);
+  font-size: var(--gallery-instruction-font-size, var(--body-font-size-s, 0.875rem));
+  font-weight: 600;
+  text-align: center;
+  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
   margin-bottom: var(--spacing-16, 16px);
 }
 
@@ -12,31 +35,34 @@
 
 .before-after-gallery-tabs {
   display: flex;
-  gap: var(--spacing-8, 8px);
+  gap: var(--gallery-tab-gap, 0);
   margin-bottom: var(--spacing-16, 16px);
+  border: var(--gallery-tab-bar-border, 2px solid var(--color-border, #ccc));
+  border-radius: var(--gallery-tab-bar-radius, 999px);
+  overflow: hidden;
 }
 
 .before-after-gallery-tab {
-  background: var(--color-light-bg, #f5f5f5);
-  border: 2px solid var(--color-border, #ccc);
-  border-radius: 4px;
-  color: var(--color-text, inherit);
+  background: var(--gallery-tab-bg, var(--color-light-bg, #f5f5f5));
+  border: none;
+  color: var(--gallery-tab-color, var(--color-text, inherit));
   cursor: pointer;
-  font-size: var(--body-font-size-s, 0.875rem);
+  font-size: var(--gallery-tab-font-size, var(--body-font-size-s, 0.875rem));
   font-weight: 600;
-  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
-  transition: background 200ms, border-color 200ms;
+  padding: var(--gallery-tab-padding, var(--spacing-8, 8px) var(--spacing-16, 16px));
+  transition: background 200ms, color 200ms;
+  flex: 1;
+  text-align: center;
 }
 
 .before-after-gallery-tab.is-active {
-  background: var(--color-primary, #071d49);
-  border-color: var(--color-primary, #071d49);
-  color: var(--color-text-inverse, #fff);
+  background: var(--gallery-tab-active-bg, var(--color-primary, #071d49));
+  color: var(--gallery-tab-active-color, var(--color-text-inverse, #fff));
 }
 
 .before-after-gallery-tab:focus-visible {
   outline: 2px solid var(--color-focus, #0057cc);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
 /* --- Toggle variant (pill buttons) --- */
@@ -57,7 +83,7 @@
   user-select: none;
   cursor: col-resize;
   touch-action: none;
-  margin-bottom: var(--spacing-16, 16px);
+  margin-bottom: 0;
 }
 
 /* --- After image (base layer, full width) --- */
@@ -137,8 +163,8 @@
 
 .before-after-gallery-label-before,
 .before-after-gallery-label-after {
-  background: rgb(0 0 0 / 60%);
-  color: #fff;
+  background: var(--gallery-label-bg, rgb(0 0 0 / 60%));
+  color: var(--gallery-label-color, #fff);
   font-size: var(--body-font-size-xs, 0.75rem);
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -151,18 +177,21 @@
 
 .before-after-gallery-prompt {
   position: absolute;
-  top: 50%;
+  top: var(--gallery-prompt-top, 12px);
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgb(0 0 0 / 70%);
-  color: #fff;
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
-  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
-  border-radius: 4px;
+  transform: translateX(-50%);
+  background: var(--gallery-prompt-bg, rgb(0 0 0 / 70%));
+  color: var(--gallery-prompt-color, #fff);
+  font-size: var(--gallery-prompt-font-size, var(--body-font-size-xs, 0.75rem));
+  font-weight: 700;
+  padding: var(--gallery-prompt-padding, 6px 16px);
+  border-radius: var(--gallery-prompt-radius, 4px);
   pointer-events: none;
   z-index: 3;
   transition: opacity 400ms;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .before-after-gallery-prompt.is-hidden {
@@ -175,13 +204,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: var(--spacing-8, 8px);
-  margin-bottom: var(--spacing-16, 16px);
+  padding: var(--spacing-8, 8px) 0;
 }
 
 .before-after-gallery-thumb {
   position: relative;
   border: 3px solid transparent;
-  border-radius: 4px;
+  border-radius: var(--gallery-thumb-radius, 4px);
   cursor: pointer;
   overflow: hidden;
   padding: 0;
@@ -190,7 +219,7 @@
 }
 
 .before-after-gallery-thumb.is-active {
-  border-color: var(--color-primary, #071d49);
+  border-color: var(--gallery-thumb-active-border, var(--color-primary, #071d49));
 }
 
 .before-after-gallery-thumb:focus-visible {
@@ -202,6 +231,8 @@
   width: 100%;
   height: auto;
   display: block;
+  aspect-ratio: var(--gallery-thumb-aspect, auto);
+  object-fit: cover;
 }
 
 .before-after-gallery-thumb-label {
@@ -209,24 +240,24 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgb(0 0 0 / 60%);
-  color: #fff;
-  font-size: var(--body-font-size-xs, 0.75rem);
+  background: var(--gallery-thumb-label-bg, rgb(0 0 0 / 60%));
+  color: var(--gallery-thumb-label-color, #fff);
+  font-size: var(--gallery-thumb-label-font-size, var(--body-font-size-s, 0.875rem));
   font-weight: 700;
-  padding: 4px 8px;
-  text-align: center;
+  padding: var(--gallery-thumb-label-padding, 6px 8px);
+  text-align: left;
 }
 
 .before-after-gallery-thumb-sublabel {
   position: absolute;
-  bottom: 22px;
+  bottom: var(--gallery-thumb-sublabel-bottom, 28px);
   left: 0;
   right: 0;
-  background: rgb(0 0 0 / 40%);
-  color: #fff;
-  font-size: 0.625rem;
+  background: var(--gallery-thumb-sublabel-bg, rgb(0 0 0 / 40%));
+  color: var(--gallery-thumb-sublabel-color, #fff);
+  font-size: var(--gallery-thumb-sublabel-font-size, 0.625rem);
   padding: 2px 8px;
-  text-align: center;
+  text-align: left;
 }
 
 /* --- Mobile responsive --- */
@@ -234,15 +265,11 @@
 @media (width <= 600px) {
   .before-after-gallery-tabs {
     flex-direction: column;
+    border-radius: var(--gallery-tab-bar-radius, 8px);
   }
 
   .before-after-gallery-thumbnails {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .before-after-gallery-handle::before {
-    width: 44px;
-    height: 44px;
   }
 }
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Before After Gallery Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/blocks/before-after-gallery/before-after-gallery.css">
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 40px 20px; background: #fff; color: #333; display: block !important; }
+    main { max-width: 900px; margin: 0 auto; }
+    h1 { text-align: center; margin-bottom: 32px; font-size: 24px; color: #333; }
+    .before-after-gallery { color: #333; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Before-After Gallery Preview</h1>
+    <div class="before-after-gallery toggle block" data-block-name="before-after-gallery" data-block-status="loaded">
+      <div><div>slider prompt</div><div>CLICK AND DRAG TO SEE RESULTS</div></div>
+      <div><div>before label prefix</div><div>BEFORE</div></div>
+      <div><div>after label prefix</div><div>AFTER</div></div>
+      <div><div>instruction text</div><div>Click on an image to see RINVOQ in action</div></div>
+      <div><div>tab 1 label</div><div>View Adult Results</div></div>
+      <div><div>tab 1 image 1 thumbnail</div><div><img src="/test-assets/before-after/legs-thumb.svg" alt="Legs"></div></div>
+      <div><div>tab 1 image 1 label</div><div>Legs</div></div>
+      <div><div>tab 1 image 1 sub label</div><div>75% clearance</div></div>
+      <div><div>tab 1 image 1 before</div><div><img src="/test-assets/before-after/legs-before.svg" alt="Before treatment - Legs"></div></div>
+      <div><div>tab 1 image 1 after</div><div><img src="/test-assets/before-after/legs-after.svg" alt="After treatment - Legs"></div></div>
+      <div><div>tab 1 image 2 thumbnail</div><div><img src="/test-assets/before-after/arms-thumb.svg" alt="Arms"></div></div>
+      <div><div>tab 1 image 2 label</div><div>Arms</div></div>
+      <div><div>tab 1 image 2 sub label</div><div>75% clearance</div></div>
+      <div><div>tab 1 image 2 before</div><div><img src="/test-assets/before-after/arms-before.svg" alt="Before treatment - Arms"></div></div>
+      <div><div>tab 1 image 2 after</div><div><img src="/test-assets/before-after/arms-after.svg" alt="After treatment - Arms"></div></div>
+      <div><div>tab 1 image 3 thumbnail</div><div><img src="/test-assets/before-after/back-thumb.svg" alt="Back"></div></div>
+      <div><div>tab 1 image 3 label</div><div>Back</div></div>
+      <div><div>tab 1 image 3 sub label</div><div>90% clearance</div></div>
+      <div><div>tab 1 image 3 before</div><div><img src="/test-assets/before-after/back-before.svg" alt="Before treatment - Back"></div></div>
+      <div><div>tab 1 image 3 after</div><div><img src="/test-assets/before-after/back-after.svg" alt="After treatment - Back"></div></div>
+      <div><div>tab 1 image 4 thumbnail</div><div><img src="/test-assets/before-after/ankles-thumb.svg" alt="Ankles/Feet"></div></div>
+      <div><div>tab 1 image 4 label</div><div>Ankles/Feet</div></div>
+      <div><div>tab 1 image 4 sub label</div><div>90% clearance</div></div>
+      <div><div>tab 1 image 4 before</div><div><img src="/test-assets/before-after/ankles-before.svg" alt="Before treatment - Ankles"></div></div>
+      <div><div>tab 1 image 4 after</div><div><img src="/test-assets/before-after/ankles-after.svg" alt="After treatment - Ankles"></div></div>
+      <div><div>tab 2 label</div><div>View Adolescent (12-17) Results</div></div>
+      <div><div>tab 2 image 1 thumbnail</div><div><img src="/test-assets/before-after/legs-thumb.svg" alt="Teen Legs"></div></div>
+      <div><div>tab 2 image 1 label</div><div>Legs</div></div>
+      <div><div>tab 2 image 1 sub label</div><div>75% clearance</div></div>
+      <div><div>tab 2 image 1 before</div><div><img src="/test-assets/before-after/legs-before.svg" alt="Before treatment - Teen Legs"></div></div>
+      <div><div>tab 2 image 1 after</div><div><img src="/test-assets/before-after/legs-after.svg" alt="After treatment - Teen Legs"></div></div>
+      <div><div>tab 2 image 2 thumbnail</div><div><img src="/test-assets/before-after/arms-thumb.svg" alt="Teen Arms"></div></div>
+      <div><div>tab 2 image 2 label</div><div>Arms</div></div>
+      <div><div>tab 2 image 2 sub label</div><div>75% clearance</div></div>
+      <div><div>tab 2 image 2 before</div><div><img src="/test-assets/before-after/arms-before.svg" alt="Before treatment - Teen Arms"></div></div>
+      <div><div>tab 2 image 2 after</div><div><img src="/test-assets/before-after/arms-after.svg" alt="After treatment - Teen Arms"></div></div>
+    </div>
+  </main>
+  <script type="module">
+    import decorate from '/blocks/before-after-gallery/before-after-gallery.js';
+    const block = document.querySelector('.before-after-gallery');
+    if (block) decorate(block);
+  </script>
+</body>
+</html>
