@@ -1,4 +1,4 @@
-// v1.2 — brand-explorer with UE child item parsing
+// v1.3 — brand-explorer with UE child item parsing
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
