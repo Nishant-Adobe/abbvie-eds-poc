@@ -1,4 +1,4 @@
-// v1.4 — logo as text path, no duplicate in tree
+// v1.5 — logo as reference image picker
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -56,20 +56,11 @@ export default function decorate(block) {
           .map((el) => el.textContent.trim()).filter(Boolean);
         const urlEl = row.querySelector('a');
         const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
-        const brandName = allTexts.find((t) => !t.startsWith('http') && !t.startsWith('/content') && t.length < 30) || '';
+        const brandName = allTexts.find((t) => !t.startsWith('http') && t.length < 30) || '';
         const therapeuticArea = allTexts.find((t) => ['Immunology', 'Dermatology', 'Gastroenterology', 'Rheumatology', 'Ophthalmology'].includes(t)) || '';
         const descEl = row.querySelector('[data-aue-prop="description"]');
         const description = descEl?.innerHTML.trim() || '';
-        const logoPath = allTexts.find((t) => t.startsWith('/content/dam') || t.endsWith('.png') || t.endsWith('.svg') || t.endsWith('.jpg')) || '';
-
-        let brandImage = img ? img.cloneNode(true) : null;
-        if (!brandImage && logoPath) {
-          const newImg = document.createElement('img');
-          newImg.src = logoPath;
-          newImg.alt = brandName;
-          newImg.loading = 'lazy';
-          brandImage = newImg;
-        }
+        const brandImage = img ? img.cloneNode(true) : null;
 
         brands.push({
           image: brandImage,
