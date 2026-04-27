@@ -295,7 +295,16 @@ function getMetadata(name, doc = document) {
  */
 function getBrandPath() {
   const brand = getMetadata('brand')?.trim();
-  return brand ? `${brand}/` : 'abbvie/';
+  if (brand) return `${brand}/`;
+  const path = window.location.pathname.toLowerCase();
+  // Check specific sub-brands before generic ones
+  const knownBrands = ['rinvoq-hcp', 'rinvoq-dtc', 'skyrizi-hcp', 'skyrizi-dtc', 'botox', 'linzess', 'venclexta', 'mavyret'];
+  const pathBrand = knownBrands.find((b) => path.includes(b));
+  if (pathBrand) return `${pathBrand}/`;
+  // Plain 'rinvoq' or 'skyrizi' path → default to HCP variant
+  if (path.includes('rinvoq')) return 'rinvoq-hcp/';
+  if (path.includes('skyrizi')) return 'skyrizi-hcp/';
+  return 'abbvie/';
 }
 
 /**

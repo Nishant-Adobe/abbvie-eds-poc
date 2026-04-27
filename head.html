@@ -1,10 +1,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <script>
-    const knownBrands = ['rinvoq', 'skyrizi', 'abbvie', 'botox', 'linzess', 'venclexta', 'mavyret'];
+    const _path = window.location.pathname.toLowerCase();
+    const _subBrands = ['rinvoq-hcp', 'rinvoq-dtc', 'skyrizi-hcp', 'skyrizi-dtc', 'botox', 'linzess', 'venclexta', 'mavyret'];
     const brandCode = [...document.head.querySelectorAll(`meta[name="brand"]`)]
       .map((m) => m.content)
       .join(', ')
-      || knownBrands.find((b) => window.location.pathname.toLowerCase().includes(b))
+      || _subBrands.find((b) => _path.includes(b))
+      || (_path.includes('rinvoq') ? 'rinvoq-hcp' : '')
+      || (_path.includes('skyrizi') ? 'skyrizi-hcp' : '')
       || '';
     const themeCode = [...document.head.querySelectorAll(`meta[name="theme"]`)]
       .map((m) => m.content)
