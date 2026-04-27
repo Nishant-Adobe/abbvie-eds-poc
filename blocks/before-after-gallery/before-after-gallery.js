@@ -1,45 +1,72 @@
-function parseConfig(block) {
+function parseBlock(block) {
   const config = {};
-  const tabs = [];
-  let currentTab = null;
+  const items = [];
+  let currentItem = null;
+
+  const configFields = new Set([
+    'heading', 'description', 'sliderPrompt',
+    'beforeLabelPrefix', 'afterLabelPrefix', 'anchorId', 'analyticsId',
+    'classes', 'variant',
+  ]);
+
+  const itemFields = new Set([
+    'tabLabel', 'thumbnail', 'thumbnailAlt', 'thumbnailLabel',
+    'thumbnailSubLabel', 'beforeImage', 'beforeAlt', 'afterImage', 'afterAlt',
+  ]);
 
   [...block.children].forEach((row) => {
     const cells = [...row.children];
-    const key = cells[0]?.textContent.trim();
-    const val = cells[1]?.innerHTML?.trim() || cells[1]?.textContent?.trim() || '';
-    const camelKey = key.replace(/[-\s]+(.)/g, (_, c) => c.toUpperCase()).replace(/^(.)/, (c) => c.toLowerCase());
+    const rawKey = cells[0]?.textContent?.trim() || '';
+    const camelKey = rawKey
+      .replace(/[-\s]+(.)/g, (_, c) => c.toUpperCase())
+      .replace(/^(.)/, (c) => c.toLowerCase());
 
-    if (camelKey === 'tab') {
-      currentTab = { tabLabel: val, openDefault: false, images: [] };
-      tabs.push(currentTab);
-    } else if (camelKey === 'openDefault' && currentTab) {
-      currentTab.openDefault = val === 'true';
-    } else if (camelKey === 'image' && currentTab) {
-      currentTab.images.push({});
-    } else if (currentTab && currentTab.images.length > 0) {
-      const img = currentTab.images[currentTab.images.length - 1];
-      if (camelKey === 'thumbnail' || camelKey === 'beforeImage' || camelKey === 'afterImage') {
-        const imgEl = cells[1]?.querySelector('img');
-        img[camelKey] = imgEl?.src || val;
-        if (camelKey === 'thumbnail') img.thumbnailAlt = imgEl?.alt || '';
-        if (camelKey === 'beforeImage') img.beforeAlt = imgEl?.alt || '';
-        if (camelKey === 'afterImage') img.afterAlt = imgEl?.alt || '';
+    if (camelKey === 'tabLabel' || camelKey === 'tab-label') {
+      currentItem = { tabLabel: cells[1]?.textContent?.trim() || '' };
+      items.push(currentItem);
+      return;
+    }
+
+    if (currentItem && itemFields.has(camelKey)) {
+      const imgEl = cells[1]?.querySelector('img, picture img');
+      if (imgEl && (camelKey === 'thumbnail' || camelKey === 'beforeImage' || camelKey === 'afterImage')) {
+        currentItem[camelKey] = imgEl.src || '';
+        const altKey = camelKey.replace('Image', '') + 'Alt';
+        if (!currentItem[altKey]) currentItem[altKey] = imgEl.alt || '';
       } else {
-        img[camelKey] = val;
+        currentItem[camelKey] = cells[1]?.textContent?.trim() || '';
       }
-    } else {
-      config[camelKey] = val;
+      return;
+    }
+
+    if (configFields.has(camelKey) || !currentItem) {
+      if (camelKey === 'description') {
+        config[camelKey] = cells[1]?.innerHTML?.trim() || '';
+      } else {
+        config[camelKey] = cells[1]?.textContent?.trim() || '';
+      }
     }
   });
 
-  if (!tabs.some((t) => t.openDefault) && tabs.length) tabs[0].openDefault = true;
-  config.tabs = tabs;
+  const tabMap = new Map();
+  items.forEach((item) => {
+    const label = item.tabLabel || 'Default';
+    if (!tabMap.has(label)) tabMap.set(label, []);
+    tabMap.get(label).push(item);
+  });
+
+  config.tabs = [...tabMap.entries()].map(([label, images], i) => ({
+    tabLabel: label,
+    openDefault: i === 0,
+    images,
+  }));
+
   return config;
 }
 
 function buildTabs(config, isToggle, onTabSwitch) {
   const nav = document.createElement('div');
-  nav.className = `before-after-gallery-tabs${isToggle ? ' before-after-gallery-toggle' : ''}`;
+  nav.className = 'before-after-gallery-tabs' + (isToggle ? ' before-after-gallery-toggle' : '');
   nav.setAttribute('role', 'tablist');
 
   config.tabs.forEach((tab, i) => {
@@ -47,8 +74,8 @@ function buildTabs(config, isToggle, onTabSwitch) {
     btn.className = 'before-after-gallery-tab';
     btn.setAttribute('role', 'tab');
     btn.setAttribute('aria-selected', String(tab.openDefault));
-    btn.setAttribute('aria-controls', `bag-panel-${i}`);
-    btn.id = `bag-tab-${i}`;
+    btn.setAttribute('aria-controls', 'bag-panel-' + i);
+    btn.id = 'bag-tab-' + i;
     btn.textContent = tab.tabLabel;
     if (tab.openDefault) btn.classList.add('is-active');
 
@@ -63,10 +90,10 @@ function buildTabs(config, isToggle, onTabSwitch) {
     });
 
     btn.addEventListener('keydown', (e) => {
-      const tabs = [...nav.querySelectorAll('.before-after-gallery-tab')];
-      const idx = tabs.indexOf(btn);
-      if (e.key === 'ArrowRight') tabs[(idx + 1) % tabs.length]?.focus();
-      if (e.key === 'ArrowLeft') tabs[(idx - 1 + tabs.length) % tabs.length]?.focus();
+      const allTabs = [...nav.querySelectorAll('.before-after-gallery-tab')];
+      const idx = allTabs.indexOf(btn);
+      if (e.key === 'ArrowRight') allTabs[(idx + 1) % allTabs.length]?.focus();
+      if (e.key === 'ArrowLeft') allTabs[(idx - 1 + allTabs.length) % allTabs.length]?.focus();
     });
 
     nav.append(btn);
@@ -84,7 +111,7 @@ function buildThumbnails(images, onSelect) {
     thumb.className = 'before-after-gallery-thumb';
     thumb.type = 'button';
     if (i === 0) thumb.classList.add('is-active');
-    thumb.setAttribute('aria-label', img.thumbnailLabel || `Image ${i + 1}`);
+    thumb.setAttribute('aria-label', img.thumbnailLabel || 'Image ' + (i + 1));
 
     if (img.thumbnail) {
       const pic = document.createElement('img');
@@ -158,29 +185,27 @@ function buildSlider(config) {
 
   const prompt = document.createElement('div');
   prompt.className = 'before-after-gallery-prompt';
-  prompt.textContent = config.sliderPrompt || 'Click and drag to see results';
+  prompt.textContent = config.sliderPrompt || 'CLICK AND DRAG TO SEE RESULTS';
 
   slider.append(afterEl, beforeEl, labels, handle, prompt);
 
   function setPosition(pct) {
-    const clamped = Math.max(0, Math.min(100, pct));
-    slider.style.setProperty('--compare-position', `${clamped}%`);
+    var clamped = Math.max(0, Math.min(100, pct));
+    slider.style.setProperty('--compare-position', clamped + '%');
     handle.setAttribute('aria-valuenow', String(Math.round(clamped)));
   }
 
   setPosition(50);
 
   function getPercent(clientX) {
-    const rect = slider.getBoundingClientRect();
+    var rect = slider.getBoundingClientRect();
     return ((clientX - rect.left) / rect.width) * 100;
   }
 
-  let dragging = false;
+  var dragging = false;
 
   function hidePrompt() {
-    if (prompt.parentElement) {
-      prompt.classList.add('is-hidden');
-    }
+    if (prompt.parentElement) prompt.classList.add('is-hidden');
   }
 
   slider.addEventListener('pointerdown', (e) => {
@@ -198,7 +223,7 @@ function buildSlider(config) {
   slider.addEventListener('pointercancel', () => { dragging = false; });
 
   handle.addEventListener('keydown', (e) => {
-    const current = parseFloat(slider.style.getPropertyValue('--compare-position') || '50');
+    var current = parseFloat(slider.style.getPropertyValue('--compare-position') || '50');
     if (e.key === 'ArrowLeft') { setPosition(current - 5); hidePrompt(); }
     if (e.key === 'ArrowRight') { setPosition(current + 5); hidePrompt(); }
   });
@@ -211,44 +236,54 @@ function buildSlider(config) {
     setPosition(50);
   }
 
-  return { slider, loadImages };
+  return { slider: slider, loadImages: loadImages };
 }
 
 export default function decorate(block) {
-  const config = parseConfig(block);
-  const isToggle = block.classList.contains('toggle');
+  var config = parseBlock(block);
+  var isToggle = block.classList.contains('toggle');
 
   if (config.anchorId) block.id = config.anchorId;
   if (config.analyticsId) block.setAttribute('data-analytics', config.analyticsId);
 
-  const wrapper = document.createElement('div');
+  var wrapper = document.createElement('div');
   wrapper.className = 'before-after-gallery-wrapper';
 
   if (config.heading) {
-    const h2 = document.createElement('h2');
+    var h2 = document.createElement('h2');
     h2.className = 'before-after-gallery-heading';
     h2.textContent = config.heading;
     wrapper.append(h2);
   }
 
   if (config.description) {
-    const desc = document.createElement('div');
+    var desc = document.createElement('div');
     desc.className = 'before-after-gallery-description';
     desc.innerHTML = config.description;
     wrapper.append(desc);
   }
 
-  const { slider, loadImages } = buildSlider(config);
-  const content = document.createElement('div');
+  if (!config.tabs.length) {
+    var msg = document.createElement('p');
+    msg.className = 'before-after-gallery-empty';
+    msg.textContent = 'Add Before After Gallery Items to display the gallery.';
+    wrapper.append(msg);
+    block.replaceChildren(wrapper);
+    return;
+  }
+
+  var result = buildSlider(config);
+  var slider = result.slider;
+  var loadImages = result.loadImages;
+  var content = document.createElement('div');
   content.className = 'before-after-gallery-content';
 
-  let activeTabIdx = config.tabs.findIndex((t) => t.openDefault);
-  if (activeTabIdx < 0) activeTabIdx = 0;
+  content.append(slider);
 
-  let thumbnailGrid = null;
+  var thumbnailGrid = null;
 
   function renderTab(tabIdx) {
-    const tab = config.tabs[tabIdx];
+    var tab = config.tabs[tabIdx];
     if (!tab) return;
     if (thumbnailGrid) thumbnailGrid.remove();
     thumbnailGrid = buildThumbnails(tab.images, (imgIdx) => {
@@ -259,16 +294,14 @@ export default function decorate(block) {
   }
 
   if (config.tabs.length > 1) {
-    const tabs = buildTabs(config, isToggle, (idx) => {
-      activeTabIdx = idx;
+    var tabs = buildTabs(config, isToggle, (idx) => {
       renderTab(idx);
     });
     wrapper.append(tabs);
   }
 
-  content.append(slider);
   wrapper.append(content);
-  renderTab(activeTabIdx);
+  renderTab(0);
 
   block.replaceChildren(wrapper);
 }
