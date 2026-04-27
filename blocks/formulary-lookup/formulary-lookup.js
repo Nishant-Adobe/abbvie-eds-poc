@@ -94,6 +94,7 @@ function createZipForm(config) {
   input.pattern = '[0-9]{5}';
   input.inputMode = 'numeric';
   input.maxLength = 5;
+  input.placeholder = config['zip-placeholder'] || '';
   input.setAttribute('aria-label', config['zip-label'] || 'Enter your ZIP code');
   input.required = true;
 
@@ -102,8 +103,8 @@ function createZipForm(config) {
   btn.className = 'formulary-lookup-submit';
   btn.textContent = config['submit-label'] || 'Search';
 
-  inputGroup.append(input, btn);
-  form.append(label, inputGroup);
+  inputGroup.append(input);
+  form.append(label, inputGroup, btn);
   return { form, input };
 }
 
@@ -128,8 +129,9 @@ function showLoading(status) {
   status.append(spinner);
 }
 
-function showMessage(status, msg) {
+function showMessage(status, msg, isError = false) {
   status.textContent = msg;
+  status.classList.toggle('error', isError);
 }
 
 function renderResultsTable(plans, results, config, page) {
@@ -246,7 +248,7 @@ function buildDefaultVariant(config, section, status, results) {
     }
     results.innerHTML = '';
     if (!config.api) {
-      showMessage(status, config.error || 'Lookup not configured.');
+      showMessage(status, config.error || 'Lookup not configured.', true);
       return;
     }
     showLoading(status);
@@ -260,7 +262,7 @@ function buildDefaultVariant(config, section, status, results) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.');
+      showMessage(status, config.error || 'An error occurred. Please try again.', true);
     }
   });
 }
@@ -309,7 +311,7 @@ function buildDynamicVariant(config, section, status, results) {
       });
       countySelect.disabled = false;
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.');
+      showMessage(status, config.error || 'An error occurred. Please try again.', true);
     }
   });
 
@@ -333,14 +335,116 @@ function buildDynamicVariant(config, section, status, results) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.');
+      showMessage(status, config.error || 'An error occurred. Please try again.', true);
     }
   });
 }
 
+function createIcon(config) {
+  if (!config.icon) return null;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'formulary-lookup-icon';
+  const img = document.createElement('img');
+  img.src = config.icon;
+  img.alt = '';
+  img.loading = 'lazy';
+  wrapper.append(img);
+  return wrapper;
+}
+
+function createRecaptchaNotice(config) {
+  if (!config['recaptcha-notice']) return null;
+  const div = document.createElement('div');
+  div.className = 'formulary-lookup-recaptcha-notice';
+  div.innerHTML = config['recaptcha-notice'];
+  return div;
+}
+
+function createDisclaimer(config) {
+  if (!config.disclaimer) return null;
+  const div = document.createElement('div');
+  div.className = 'formulary-lookup-disclaimer';
+  div.innerHTML = config.disclaimer;
+  return div;
+}
+
+function createFilterDropdown(config) {
+  if (!config['filter-label']) return null;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'formulary-lookup-filter';
+
+  const label = document.createElement('label');
+  label.className = 'formulary-lookup-label';
+  label.htmlFor = 'formulary-filter';
+  label.textContent = config['filter-label'];
+
+  const select = document.createElement('select');
+  select.id = 'formulary-filter';
+  select.setAttribute('aria-label', config['filter-label']);
+
+  const defaultOpt = document.createElement('option');
+  defaultOpt.value = '';
+  defaultOpt.textContent = config['filter-label'];
+  select.append(defaultOpt);
+
+  const options = (config['filter-options'] || '').split(',').map((o) => o.trim()).filter(Boolean);
+  options.forEach((opt) => {
+    const option = document.createElement('option');
+    option.value = opt;
+    option.textContent = opt;
+    select.append(option);
+  });
+
+  wrapper.append(label, select);
+  return { wrapper, select };
+}
+
+function createIndicationRadio(config) {
+  if (!config['indication-label'] || !config.indications) return null;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'formulary-lookup-indications';
+
+  const heading = document.createElement('h3');
+  heading.className = 'formulary-lookup-indications-heading';
+  heading.textContent = config['indication-label'];
+
+  const group = document.createElement('div');
+  group.className = 'formulary-lookup-indications-group';
+
+  const items = config.indications.split(',').map((o) => o.trim()).filter(Boolean);
+  items.forEach((item, i) => {
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'formulary-indication';
+    radio.id = `formulary-ind-${i}`;
+    radio.value = item;
+    if (i === 0) radio.checked = true;
+
+    const label = document.createElement('label');
+    label.htmlFor = `formulary-ind-${i}`;
+    label.textContent = item;
+
+    const container = document.createElement('label');
+    container.append(radio, document.createTextNode(` ${item}`));
+    group.append(container);
+  });
+
+  wrapper.append(heading, group);
+  return wrapper;
+}
+
 function buildZipVariant(config, section, status, results) {
   const { form, input } = createZipForm(config);
-  applyAnalytics(form.querySelector('.formulary-lookup-submit'), config);
+  const submitBtn = form.querySelector('.formulary-lookup-submit');
+  applyAnalytics(submitBtn, config);
+
+  const filter = createFilterDropdown(config);
+  if (filter) form.append(filter.wrapper);
+
+  const indications = createIndicationRadio(config);
+  if (indications) form.append(indications);
+
+  form.append(submitBtn);
   section.append(form);
 
   form.addEventListener('submit', async (e) => {
@@ -349,17 +453,25 @@ function buildZipVariant(config, section, status, results) {
     results.innerHTML = '';
 
     if (!/^\d{5}$/.test(zip)) {
-      showMessage(status, 'Please enter a valid 5-digit ZIP code.');
+      showMessage(status, 'Please enter a valid 5-digit ZIP code.', true);
       return;
     }
     if (!config.api) {
-      showMessage(status, config.error || 'Lookup not configured.');
+      showMessage(status, config.error || 'Lookup not configured.', true);
       return;
     }
 
+    let url = `${config.api}?zip=${encodeURIComponent(zip)}`;
+    if (filter) {
+      const filterVal = filter.select.value;
+      if (filterVal) url += `&filter=${encodeURIComponent(filterVal)}`;
+    }
+    const indicationRadio = form.querySelector('input[name="formulary-indication"]:checked');
+    if (indicationRadio) url += `&indication=${encodeURIComponent(indicationRadio.value)}`;
+
     showLoading(status);
     try {
-      const data = await fetchWithRecaptcha(`${config.api}?zip=${encodeURIComponent(zip)}`, config);
+      const data = await fetchWithRecaptcha(url, config);
       const plans = data.plans || data.results || data || [];
       if (!plans.length) {
         showMessage(status, config['no-results'] || 'No coverage information found.');
@@ -368,7 +480,7 @@ function buildZipVariant(config, section, status, results) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.');
+      showMessage(status, config.error || 'An error occurred. Please try again.', true);
     }
   });
 }
@@ -381,6 +493,9 @@ export default async function decorate(block) {
   const section = document.createElement('div');
   section.className = 'formulary-lookup-form';
 
+  const icon = createIcon(config);
+  if (icon) section.append(icon);
+
   if (config.heading) {
     const h2 = document.createElement('h2');
     h2.className = 'formulary-lookup-heading';
@@ -391,7 +506,7 @@ export default async function decorate(block) {
   if (config.description) {
     const p = document.createElement('p');
     p.className = 'formulary-lookup-description';
-    p.textContent = config.description;
+    p.innerHTML = config.description;
     section.append(p);
   }
 
@@ -406,6 +521,13 @@ export default async function decorate(block) {
     buildDefaultVariant(config, section, status, results);
   }
 
+  const recaptchaNotice = createRecaptchaNotice(config);
+  if (recaptchaNotice) section.append(recaptchaNotice);
+
   section.append(status, results);
+
+  const disclaimer = createDisclaimer(config);
+  if (disclaimer) section.append(disclaimer);
+
   block.replaceChildren(section);
 }

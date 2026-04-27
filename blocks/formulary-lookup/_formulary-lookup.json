@@ -28,15 +28,24 @@
           "name": "content"
         },
         {
-          "component": "select",
+          "component": "multiselect",
           "name": "classes",
-          "label": "Variant",
-          "description": "Default: state dropdown. Dynamic: state + county cascading dropdowns. ZIP Code: ZIP code input with submit.",
+          "label": "Variant & Layout",
+          "description": "Select variant and optional layout modifiers. Default: state dropdown. Dynamic: state + county. ZIP: ZIP code input. Card: white card with shadow. Centered: centered layout.",
           "options": [
-            { "name": "Default (State Dropdown)", "value": "" },
             { "name": "Dynamic (State + County)", "value": "dynamic" },
-            { "name": "ZIP Code", "value": "zip" }
+            { "name": "ZIP Code", "value": "zip" },
+            { "name": "Card Container", "value": "card" },
+            { "name": "Centered Layout", "value": "centered" }
           ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "icon",
+          "value": "",
+          "label": "Icon",
+          "description": "Optional icon image displayed above the heading."
         },
         {
           "component": "text",
@@ -46,8 +55,7 @@
           "label": "Heading"
         },
         {
-          "component": "text",
-          "valueType": "string",
+          "component": "richtext",
           "name": "description",
           "value": "",
           "label": "Description",
@@ -79,10 +87,50 @@
         {
           "component": "text",
           "valueType": "string",
+          "name": "zip-placeholder",
+          "value": "",
+          "label": "ZIP Code Placeholder",
+          "description": "Placeholder text for the ZIP code input (e.g., '00000' or 'Enter a Zip Code')."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
           "name": "submit-label",
           "value": "Search",
           "label": "Submit Button Label",
           "description": "Only used in ZIP Code variant."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "filter-label",
+          "value": "",
+          "label": "Filter Dropdown Label",
+          "description": "Label for optional filter dropdown (e.g., 'Select a filter'). Leave empty to hide."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "filter-options",
+          "value": "",
+          "label": "Filter Options",
+          "description": "Comma-separated filter options (e.g., 'Commercial,Medicare,State Medicaid')."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "indication-label",
+          "value": "",
+          "label": "Indication Label",
+          "description": "Label for indication radio group (e.g., 'Choose Indication'). Leave empty to hide."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "indications",
+          "value": "",
+          "label": "Indications",
+          "description": "Comma-separated indication values (e.g., 'AD,PsA,Ps')."
         },
         {
           "component": "tab",
@@ -126,6 +174,20 @@
           "name": "error",
           "value": "An error occurred. Please try again.",
           "label": "Error Message"
+        },
+        {
+          "component": "richtext",
+          "name": "recaptcha-notice",
+          "value": "",
+          "label": "reCAPTCHA Notice Text",
+          "description": "Legal text shown below the form (e.g., 'This site is protected by reCAPTCHA...')."
+        },
+        {
+          "component": "richtext",
+          "name": "disclaimer",
+          "value": "",
+          "label": "Disclaimer Text",
+          "description": "Coverage disclaimer text shown below the results area."
         },
         {
           "component": "text",
