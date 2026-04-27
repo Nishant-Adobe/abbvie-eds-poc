@@ -1,0 +1,2612 @@
+diff --git a/.migration/plans/before-after-gallery-block.md b/.migration/plans/before-after-gallery-block.md
+new file mode 100644
+index 0000000..73d0dfb
+--- /dev/null
++++ b/.migration/plans/before-after-gallery-block.md
+@@ -0,0 +1,262 @@
++# Before-After Gallery Block — Implementation Plan
++
++## Overview
++
++Build a new `before-after-gallery` block for AEM Edge Delivery Services (XWalk/UE authoring). This is a **P1 HIGH complexity** interactive block used on **SkyriziHCP** and **Rinvoq DTC** (2 pages across 38). It combines a draggable before/after image slider with tab toggles (e.g., Week 16/52 or Adult/Adolescent) and thumbnail navigation for multiple body areas.
++
++## Source Site DOM Analysis
++
++### SkyriziHCP (`skyrizihcp.com/dermatology/psoriasis-efficacy/before-and-after`)
++
++**Gallery wrapper**: `abbv-tabs.risa-tabs-images.abbv-tabs-images` — uses the AEM Tabs component as the outer container.
++
++**Structure**:
++- **Tabs component** (`abbv-tabs.risa-tabs-images`) contains two tab panels: Week 16 and Week 52
++- Each tab panel contains a `.risa-tabs-images__pic-container` with 3 children:
++  1. `.image-compare-slider` → `.abbv-img-slider` (the before/after slider)
++  2. `.columns` → `.abbv-row-container` (before/after labels + patient info)
++  3. `.container` → thumbnail carousel (9 patient thumbnails)
++- **20 total sliders**: 10 per week timepoint (one per patient)
++- Week toggle: `a[href="#week-16"]` / `a[href="#week-52"]` anchor links
++
++**Slider DOM** (`.abbv-img-slider`):
++```html
++<div class="abbv-img-slider" data-slide-direction="horizontal" data-start-point="50%">
++  <img src="patient-illinois-week-16.jpg" alt="After">
++  <div class="img-alt-container" style="width: 50%">
++    <img src="patient-illinois-week-0.jpg" alt="Before">
++  </div>
++  <span class="slider-handle abbv-icon-swap_horiz" style="left: 50%"
++        data-digitaldata="{...analytics JSON...}"></span>
++</div>
++```
++
++**Labels**: "BEFORE | WEEK 0" and "AFTER | WEEK 16" in paragraph elements. "Patient from Illinois" attribution.
++
++**Thumbnails**: 9 patient images per week, horizontal scrollable row. Each thumbnail shows the before image as a clickable preview.
++
++### Rinvoq DTC (`rinvoq.com/atopic-dermatitis/rinvoq-results/eczema-pictures`)
++
++**Gallery wrapper**: `.before-after-video-hero` (hero background container) → `.slider-comparison-container` → `.adults-slider-container`/`.view-adolecents-slider`.
++
++**Structure**:
++- **Toggle buttons**: `.toggle-pictures-slider` container with two links: "View Adult Results" / "View Adolescent (12-17) Results"
++- **Adult section** (`.adults-slider-container.view-adults-slider`): 4 sliders (`.slider1-1` through `.slider1-4`)
++- **Adolescent section** (`.view-adolecents-slider`): separate set of sliders (`.slider2-1`, `.slider2-2`, etc.)
++- **6 total sliders**: 4 adult + 2 adolescent (fewer body areas than SkyriziHCP)
++
++**Thumbnail grid**: `.slider-thumbnails-container` → `.slider-thumbnails.adults` containing 4 thumbnails per group. Each thumbnail has:
++- Thumbnail image with clearance percentage label ("Legs / 75% clearance")
++- Trigger class: `.trigger1-slider1`, `.trigger1-slider2`, etc.
++- Active state: `.border-thumbnails-active` class on `.thumbnail1-1`, etc.
++
++**JavaScript interaction** (`abbvAction.addAction`):
++```js
++abbvAction.addAction('.trigger1-slider1', 'click', [
++  'removeClass|hide-slider-tab|.slider1-1',
++  'addClass|border-thumbnails-active|.thumbnail1-1',
++  'addClass|hide-slider-tab|.slider1-2',
++  'removeClass|border-thumbnails-active|.thumbnail1-2',
++  // ... hide all other sliders, deactivate all other thumbnails
++]);
++```
++
++Pattern: clicking a thumbnail shows that slider (remove `hide-slider-tab`/`d-none`) and hides all others. Thumbnail gets `border-thumbnails-active` class.
++
++**Slider DOM** (identical pattern to SkyriziHCP): `.abbv-img-slider` with `data-slide-direction="horizontal"` and `data-start-point="50%"`.
++
++**Clearance badges**: Each thumbnail shows "75% clearance" or "90% clearance" as overlaid text.
++
++### Key Differences Between Sites
++
++| Feature | SkyriziHCP | Rinvoq DTC |
++|---|---|---|
++| Tab toggle | Week 16 / Week 52 (timepoints) | Adult / Adolescent (age groups) |
++| Patients per tab | 9 (from different US states) | 4 (body areas with clearance %) |
++| Tab implementation | AEM Tabs component (`abbv-tabs`) | Custom toggle links + show/hide |
++| Thumbnail layout | Horizontal scrollable carousel | 2×2 grid with clearance badges |
++| Labels | "BEFORE \| WEEK 0" / "AFTER \| WEEK 16" | Before/After text + clearance % |
++| Patient attribution | "Patient from [State]" + doctor credit | None visible |
++| Thumbnail active state | Visual highlight | `.border-thumbnails-active` class |
++
++## Architecture Decision
++
++**New block `before-after-gallery`** — self-contained, does NOT modify `image-compare`. Reasons:
++- Both source sites compose the gallery from multiple AEM primitives (tabs + image-compare-slider + columns + containers + actions JS); EDS consolidates into a single semantic block
++- The gallery manages tabs, thumbnails, and active image set state internally
++- The slider reuses the proven `--compare-position` CSS pattern from the existing `image-compare` block
++- `image-compare` remains available for standalone single-comparison use (e.g., Venclexta)
++
++## Spec-Aligned Component Model
++
++### Variants (`classes` field)
++| Value | CSS Class | Description | Brand Example |
++|---|---|---|---|
++| — | Default | Tab strip + thumbnail grid + slider | SkyriziHCP (Week 16/52) |
++| `toggle` | `.before-after-gallery-toggle` | Two-state toggle buttons instead of tab strip | Rinvoq DTC (Adult/Adolescent) |
++
++### Component Model Fields
++| Field | Type | Notes |
++|---|---|---|
++| `classes` | select | `toggle` variant |
++| `heading` | text | Gallery heading (e.g., "See Actual Patients Treated With SKYRIZI") |
++| `description` | richtext | Introductory text below heading |
++| `sliderPrompt` | text | Instruction overlay (default: "Click and drag to see results") |
++| `beforeLabelPrefix` | text | Before label prefix (e.g., "BEFORE \| WEEK 0") |
++| `afterLabelPrefix` | text | After label prefix template (e.g., "AFTER \| ") — tab label appended |
++| `anchorId` | text | Deep-link anchor ID |
++| `analyticsId` | text | `data-analytics` on gallery wrapper |
++| `tabs` | model | Tab/toggle items (repeating) |
++| ↳ `tabLabel` | text | Tab button text (e.g., "Week 16", "View Adult Results") |
++| ↳ `openDefault` | boolean | Active tab on load |
++| ↳ `images` | model | Image pairs for this tab (repeating) |
++| ↳↳ `thumbnail` | reference | Thumbnail image for grid navigation |
++| ↳↳ `thumbnailAlt` | text | Thumbnail alt text |
++| ↳↳ `thumbnailLabel` | text | Primary label (e.g., "Legs", "Patient from Illinois") |
++| ↳↳ `thumbnailSubLabel` | text | Secondary label (e.g., "75% clearance", "Dr. Meyer Horn") |
++| ↳↳ `beforeImage` | reference | Before state full image |
++| ↳↳ `beforeAlt` | text | Before image alt (required) |
++| ↳↳ `afterImage` | reference | After state full image |
++| ↳↳ `afterAlt` | text | After image alt (required) |
++
++### Functional Requirements (from source DOM + spec)
++- Tab/toggle navigation switches between complete image sets (timepoints or age groups)
++- Thumbnail grid shows all body areas/patients for the active tab; clicking a thumbnail loads that pair into the main slider
++- Main slider: draggable before/after comparison with CSS `clip-path`/`--compare-position`
++- Slider handle: mouse drag, touch drag, keyboard (ArrowLeft/ArrowRight) — same as existing `image-compare` block
++- ARIA: `role="slider"` on handle, `role="tablist"`/`role="tab"` on tabs, `aria-selected`, `aria-controls`
++- First thumbnail active by default on load
++- Prompt text shown until first drag interaction, then hidden
++- `prefers-reduced-motion`: disable smooth transitions
++- Responsive: thumbnails stack 2-column on mobile; slider full-width
++- All label text authored — zero hardcoded copy in JS
++- Handle icon: CSS `::before` with swap arrows SVG (from `abbv-icon-swap_horiz`)
++
++## File Structure
++
++```
++blocks/before-after-gallery/
++├── before-after-gallery.js          # Tabs + thumbnails + slider orchestration
++├── before-after-gallery.css         # All styles: tabs, thumbnails, slider, responsive
++├── _before-after-gallery.json       # UE component definition, model, filters
++├── block-config.js                  # Empty scaffold
++├── abbvie/                          # Brand override scaffold
++│   ├── _before-after-gallery.css
++│   ├── before-after-gallery.css
++│   └── block-config.js
++├── botox/                           # Brand override scaffold
++│   ├── _before-after-gallery.css
++│   ├── before-after-gallery.css
++│   └── block-config.js
++└── rinvoq/                          # Brand override scaffold
++    ├── _before-after-gallery.css
++    ├── before-after-gallery.css
++    └── block-config.js
++```
++
++## CSS Classes (JS-produced)
++
++```
++before-after-gallery                    (block wrapper)
++before-after-gallery-heading            (h2 heading)
++before-after-gallery-description        (intro richtext)
++before-after-gallery-tabs               (tab bar container)
++before-after-gallery-tab                (individual tab button)
++before-after-gallery-tab.is-active      (active tab state)
++before-after-gallery-content            (active tab's content wrapper)
++before-after-gallery-slider             (main comparison area)
++before-after-gallery-after              (after image layer — full width base)
++before-after-gallery-before             (before image layer — clipped via --compare-position)
++before-after-gallery-handle             (drag handle line + circle)
++before-after-gallery-prompt             (drag instruction overlay text)
++before-after-gallery-labels             (before/after text labels container)
++before-after-gallery-label-before       (before label text)
++before-after-gallery-label-after        (after label text)
++before-after-gallery-attribution        (patient/doctor attribution text)
++before-after-gallery-thumbnails         (thumbnail grid)
++before-after-gallery-thumb              (individual thumbnail card)
++before-after-gallery-thumb.is-active    (selected thumbnail state)
++before-after-gallery-thumb-image        (thumbnail image)
++before-after-gallery-thumb-label        (primary label overlay — "Legs")
++before-after-gallery-thumb-sublabel     (secondary label — "75% clearance")
++```
++
++## Source CSS Reference (from AEM)
++
++Key styles from the source sites to replicate:
++- **Slider handle**: `.slider-handle.abbv-icon-swap_horiz` — white circular handle with swap arrows icon, positioned at `left: var(--compare-position)`
++- **Before image overlay**: `.img-alt-container` — `position: absolute; width: var(--compare-position); overflow: hidden`
++- **Thumbnail active**: `.border-thumbnails-active` — border highlight on selected thumbnail
++- **Tab toggle (Rinvoq)**: `.toggle-pictures-slider` — horizontal flex row of toggle links
++- **Hide/show**: `.hide-slider-tab` / `.d-none` — display toggling for slider panels
++
++## Checklist
++
++### Phase 1: UE Component Model
++- [ ] Create `_before-after-gallery.json` with definition, model (tabs → images nested model), and empty filters
++- [ ] Add `before-after-gallery` to `component-definition.json` (Blocks group)
++- [ ] Add `before-after-gallery` model to `component-models.json`
++- [ ] Add `before-after-gallery` to section and grid-section filters in `component-filters.json`
++
++### Phase 2: JavaScript Implementation
++- [ ] Create `before-after-gallery.js` with `decorate(block)` export
++- [ ] Implement config parsing from block rows (camelCase keys: tabs → images)
++- [ ] Build tab/toggle navigation with ARIA tablist pattern (`role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`)
++- [ ] Build thumbnail grid with click-to-select behavior (show selected slider, hide others, toggle `.is-active`)
++- [ ] Build main before/after slider reusing `--compare-position` CSS custom property pattern
++- [ ] Implement drag handle: `pointerdown` + `pointermove` + `pointerup` event handling (replaces separate mouse/touch)
++- [ ] Implement keyboard support: ArrowLeft/ArrowRight on slider handle, Tab between thumbnails
++- [ ] Add authored prompt text overlay that hides after first drag interaction
++- [ ] Wire tab switching: swap thumbnail set + reset slider to first image pair
++- [ ] Wire thumbnail click: swap main slider before/after images + update labels
++- [ ] Render before/after labels and attribution text from authored fields
++- [ ] Apply `anchorId` to block wrapper and `analyticsId` as `data-analytics`
++- [ ] Ensure first tab and first thumbnail are active on load
++
++### Phase 3: CSS Implementation
++- [ ] Create `before-after-gallery.css` with all styles
++- [ ] Style tab bar: horizontal button strip with brand-color active state (matching `risa-tabs-images` and `toggle-pictures-slider`)
++- [ ] Style toggle variant: two-button toggle with active highlight (pill shape)
++- [ ] Style main slider container: `position: relative; overflow: hidden; user-select: none`
++- [ ] Style after image layer: `display: block; width: 100%`
++- [ ] Style before image layer: `position: absolute; inset: 0; width: var(--compare-position); overflow: hidden`
++- [ ] Style handle: 4px white line + 40px circular indicator with swap arrows SVG icon
++- [ ] Style thumbnail grid: CSS grid `repeat(auto-fill, minmax(140px, 1fr))` — 4-col desktop, 2-col mobile
++- [ ] Style thumbnail active state: border highlight (`.is-active`)
++- [ ] Style thumbnail labels: positioned at bottom with semi-transparent overlay
++- [ ] Style thumbnail sublabel: smaller text for clearance percentage
++- [ ] Style drag prompt: centered overlay text, pointer-events none, fades out
++- [ ] Style before/after text labels: positioned absolute inside slider
++- [ ] Add `prefers-reduced-motion` fallback
++- [ ] Add mobile responsive breakpoint (thumbnails 2-col, handle 44px touch target)
++
++### Phase 4: Brand Overrides & Build
++- [ ] Create `block-config.js` (empty scaffold)
++- [ ] Create brand override directories (abbvie, botox, rinvoq) with scaffolded `_before-after-gallery.css` + `block-config.js`
++- [ ] Run `gulp createBrandCSS` to compile brand override CSS
++- [ ] Run ESLint on JS
++- [ ] Run Stylelint on CSS
++
++### Phase 5: Testing & Validation
++- [ ] Inject test block via browser DevTools on localhost:3000 homepage
++- [ ] Verify two tabs render with correct labels
++- [ ] Verify tab switching swaps thumbnail grid and resets slider
++- [ ] Verify thumbnail click swaps main slider images and updates labels
++- [ ] Verify slider drag works (mouse + touch via PointerEvents + keyboard arrows)
++- [ ] Verify toggle variant renders correctly (pill buttons)
++- [ ] Verify ARIA attributes: tablist, tab, slider roles with correct aria-selected/aria-controls/aria-valuenow
++- [ ] Verify mobile layout: thumbnails 2-col grid, slider full-width, handle touch-friendly (44px)
++- [ ] Verify prompt text appears on load and hides after first drag
++- [ ] Verify `prefers-reduced-motion` disables transitions
++
++## Risk & Complexity Notes
++- **HIGH complexity** — nested repeating UE model (tabs → images), three interaction systems (tabs, thumbnails, slider), responsive layout
++- SkyriziHCP has 10 patients per tab (20 sliders total) — the EDS block only renders ONE slider at a time and swaps images on thumbnail click, so performance is much better than the source site's 20 pre-rendered sliders
++- Nested `model` fields require careful UE authoring UX — two levels of repeating content (tabs containing image sets)
++- PointerEvents API used instead of separate mouse/touch handlers — cleaner, better browser support
++- No external libraries — pure CSS + vanilla JS
++- Brand-specific styling (SkyriziHCP navy/arctic theme vs Rinvoq DTC purple) handled entirely via CSS custom properties (`--brand-primary`, `--color-accent`)
++
++---
++
++*This plan requires Execute mode for implementation.*
+diff --git a/blocks/before-after-gallery/_before-after-gallery.json b/blocks/before-after-gallery/_before-after-gallery.json
+new file mode 100644
+index 0000000..056b218
+--- /dev/null
++++ b/blocks/before-after-gallery/_before-after-gallery.json
+@@ -0,0 +1,192 @@
++{
++  "definitions": [
++    {
++      "title": "Before After Gallery",
++      "id": "before-after-gallery",
++      "plugins": {
++        "xwalk": {
++          "page": {
++            "resourceType": "core/franklin/components/block/v1/block",
++            "template": {
++              "name": "Before After Gallery",
++              "model": "before-after-gallery",
++              "blockId": "id:",
++              "classes": ""
++            }
++          }
++        }
++      }
++    }
++  ],
++  "models": [
++    {
++      "id": "before-after-gallery",
++      "fields": [
++        {
++          "component": "tab",
++          "label": "Content",
++          "name": "content"
++        },
++        {
++          "component": "select",
++          "name": "classes",
++          "label": "Variant",
++          "description": "Default: tab strip navigation. Toggle: two-state pill buttons.",
++          "options": [
++            { "name": "Default (Tab Strip)", "value": "" },
++            { "name": "Toggle Buttons", "value": "toggle" }
++          ]
++        },
++        {
++          "component": "text",
++          "valueType": "string",
++          "name": "heading",
++          "value": "",
++          "label": "Heading"
++        },
++        {
++          "component": "richtext",
++          "name": "description",
++          "value": "",
++          "label": "Description",
++          "description": "Introductory text below the heading."
++        },
++        {
++          "component": "text",
++          "valueType": "string",
++          "name": "sliderPrompt",
++          "value": "Click and drag to see results",
++          "label": "Slider Prompt",
++          "description": "Instruction text shown over the slider until first interaction."
++        },
++        {
++          "component": "text",
++          "valueType": "string",
++          "name": "beforeLabelPrefix",
++          "value": "BEFORE",
++          "label": "Before Label",
++          "description": "Label shown on the before side of the slider."
++        },
++        {
++          "component": "text",
++          "valueType": "string",
++          "name": "afterLabelPrefix",
++          "value": "AFTER",
++          "label": "After Label",
++          "description": "Label shown on the after side of the slider."
++        },
++        {
++          "component": "tab",
++          "label": "Tabs & Images",
++          "name": "tabsConfig"
++        },
++        {
++          "component": "model",
++          "name": "tabs",
++          "label": "Gallery Tabs",
++          "fields": [
++            {
++              "component": "text",
++              "valueType": "string",
++              "name": "tabLabel",
++              "value": "",
++              "label": "Tab Label",
++              "description": "Button text (e.g. 'Week 16', 'View Adult Results')."
++            },
++            {
++              "component": "boolean",
++              "name": "openDefault",
++              "label": "Active by Default"
++            },
++            {
++              "component": "model",
++              "name": "images",
++              "label": "Image Pairs",
++              "fields": [
++                {
++                  "component": "reference",
++                  "valueType": "string",
++                  "name": "thumbnail",
++                  "label": "Thumbnail Image"
++                },
++                {
++                  "component": "text",
++                  "valueType": "string",
++                  "name": "thumbnailAlt",
++                  "value": "",
++                  "label": "Thumbnail Alt Text"
++                },
++                {
++                  "component": "text",
++                  "valueType": "string",
++                  "name": "thumbnailLabel",
++                  "value": "",
++                  "label": "Thumbnail Label",
++                  "description": "Primary label (e.g. 'Legs', 'Patient from Illinois')."
++                },
++                {
++                  "component": "text",
++                  "valueType": "string",
++                  "name": "thumbnailSubLabel",
++                  "value": "",
++                  "label": "Thumbnail Sub-Label",
++                  "description": "Secondary label (e.g. '75% clearance')."
++                },
++                {
++                  "component": "reference",
++                  "valueType": "string",
++                  "name": "beforeImage",
++                  "label": "Before Image"
++                },
++                {
++                  "component": "text",
++                  "valueType": "string",
++                  "name": "beforeAlt",
++                  "value": "",
++                  "label": "Before Image Alt Text"
++                },
++                {
++                  "component": "reference",
++                  "valueType": "string",
++                  "name": "afterImage",
++                  "label": "After Image"
++                },
++                {
++                  "component": "text",
++                  "valueType": "string",
++                  "name": "afterAlt",
++                  "value": "",
++                  "label": "After Image Alt Text"
++                }
++              ]
++            }
++          ]
++        },
++        {
++          "component": "tab",
++          "label": "Configuration",
++          "name": "config"
++        },
++        {
++          "component": "text",
++          "valueType": "string",
++          "name": "anchorId",
++          "value": "",
++          "label": "Anchor ID"
++        },
++        {
++          "component": "text",
++          "valueType": "string",
++          "name": "analyticsId",
++          "value": "",
++          "label": "Analytics ID",
++          "description": "Value for data-analytics attribute."
++        },
++        {
++          "...": "../../models/_common-properties.json#/common-prop"
++        }
++      ]
++    }
++  ],
++  "filters": []
++}
+diff --git a/blocks/before-after-gallery/abbvie/_before-after-gallery.css b/blocks/before-after-gallery/abbvie/_before-after-gallery.css
+new file mode 100644
+index 0000000..26d7792
+--- /dev/null
++++ b/blocks/before-after-gallery/abbvie/_before-after-gallery.css
+@@ -0,0 +1,3 @@
++@import '../before-after-gallery.css';
++
++/* Abbvie before-after-gallery overrides */
+diff --git a/blocks/before-after-gallery/abbvie/before-after-gallery.css b/blocks/before-after-gallery/abbvie/before-after-gallery.css
+new file mode 100644
+index 0000000..a2dd4fd
+--- /dev/null
++++ b/blocks/before-after-gallery/abbvie/before-after-gallery.css
+@@ -0,0 +1,263 @@
++/* --- Before After Gallery Block --- */
++
++.before-after-gallery-heading {
++  margin-bottom: var(--spacing-8, 8px);
++}
++
++.before-after-gallery-description {
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- Tab bar --- */
++
++.before-after-gallery-tabs {
++  display: flex;
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-tab {
++  background: var(--color-light-bg, #f5f5f5);
++  border: 2px solid var(--color-border, #ccc);
++  border-radius: 4px;
++  color: var(--color-text, inherit);
++  cursor: pointer;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  transition: background 200ms, border-color 200ms;
++}
++
++.before-after-gallery-tab.is-active {
++  background: var(--color-primary, #071d49);
++  border-color: var(--color-primary, #071d49);
++  color: var(--color-text-inverse, #fff);
++}
++
++.before-after-gallery-tab:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++/* --- Toggle variant (pill buttons) --- */
++
++.before-after-gallery-toggle .before-after-gallery-tab {
++  border-radius: 999px;
++  flex: 1;
++  text-align: center;
++}
++
++/* --- Slider container --- */
++
++.before-after-gallery-slider {
++  --compare-position: 50%;
++
++  position: relative;
++  overflow: hidden;
++  user-select: none;
++  cursor: col-resize;
++  touch-action: none;
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- After image (base layer, full width) --- */
++
++.before-after-gallery-after {
++  display: block;
++  line-height: 0;
++}
++
++.before-after-gallery-after img {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++/* --- Before image (clipped overlay) --- */
++
++.before-after-gallery-before {
++  position: absolute;
++  inset: 0;
++  overflow: hidden;
++  width: var(--compare-position);
++}
++
++.before-after-gallery-before img {
++  width: 100%;
++  height: 100%;
++  object-fit: cover;
++  object-position: left;
++  display: block;
++}
++
++/* --- Drag handle --- */
++
++.before-after-gallery-handle {
++  position: absolute;
++  top: 0;
++  bottom: 0;
++  left: var(--compare-position);
++  transform: translateX(-50%);
++  width: 4px;
++  background-color: var(--gallery-handle-color, #fff);
++  cursor: col-resize;
++  z-index: 2;
++}
++
++.before-after-gallery-handle::before {
++  content: '';
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  width: 44px;
++  height: 44px;
++  background-color: var(--gallery-handle-color, #fff);
++  border-radius: 50%;
++  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
++  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
++  background-repeat: no-repeat;
++  background-position: center;
++  background-size: 24px;
++}
++
++/* --- Before/After labels --- */
++
++.before-after-gallery-labels {
++  position: absolute;
++  bottom: var(--spacing-12, 12px);
++  left: 0;
++  right: 0;
++  display: flex;
++  justify-content: space-between;
++  padding: 0 var(--spacing-12, 12px);
++  pointer-events: none;
++  z-index: 1;
++}
++
++.before-after-gallery-label-before,
++.before-after-gallery-label-after {
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  letter-spacing: 0.05em;
++  padding: 4px 10px;
++  border-radius: 2px;
++  text-transform: uppercase;
++}
++
++/* --- Drag prompt overlay --- */
++
++.before-after-gallery-prompt {
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  background: rgb(0 0 0 / 70%);
++  color: #fff;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  border-radius: 4px;
++  pointer-events: none;
++  z-index: 3;
++  transition: opacity 400ms;
++}
++
++.before-after-gallery-prompt.is-hidden {
++  opacity: 0;
++}
++
++/* --- Thumbnail grid --- */
++
++.before-after-gallery-thumbnails {
++  display: grid;
++  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-thumb {
++  position: relative;
++  border: 3px solid transparent;
++  border-radius: 4px;
++  cursor: pointer;
++  overflow: hidden;
++  padding: 0;
++  background: none;
++  transition: border-color 200ms;
++}
++
++.before-after-gallery-thumb.is-active {
++  border-color: var(--color-primary, #071d49);
++}
++
++.before-after-gallery-thumb:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++.before-after-gallery-thumb-image {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++.before-after-gallery-thumb-label {
++  position: absolute;
++  bottom: 0;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  padding: 4px 8px;
++  text-align: center;
++}
++
++.before-after-gallery-thumb-sublabel {
++  position: absolute;
++  bottom: 22px;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 40%);
++  color: #fff;
++  font-size: 0.625rem;
++  padding: 2px 8px;
++  text-align: center;
++}
++
++/* --- Mobile responsive --- */
++
++@media (width <= 600px) {
++  .before-after-gallery-tabs {
++    flex-direction: column;
++  }
++
++  .before-after-gallery-thumbnails {
++    grid-template-columns: repeat(2, 1fr);
++  }
++
++  .before-after-gallery-handle::before {
++    width: 44px;
++    height: 44px;
++  }
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .before-after-gallery-prompt {
++    transition: none;
++  }
++
++  .before-after-gallery-tab {
++    transition: none;
++  }
++
++  .before-after-gallery-thumb {
++    transition: none;
++  }
++}
++
++/* Abbvie before-after-gallery overrides */
+diff --git a/blocks/before-after-gallery/abbvie/block-config.js b/blocks/before-after-gallery/abbvie/block-config.js
+new file mode 100644
+index 0000000..e87ef8a
+--- /dev/null
++++ b/blocks/before-after-gallery/abbvie/block-config.js
+@@ -0,0 +1,3 @@
++export default async function getBlockConfigs() {
++  return { flags: {}, variations: [], decorations: {} };
++}
+diff --git a/blocks/before-after-gallery/before-after-gallery.css b/blocks/before-after-gallery/before-after-gallery.css
+new file mode 100644
+index 0000000..c54281a
+--- /dev/null
++++ b/blocks/before-after-gallery/before-after-gallery.css
+@@ -0,0 +1,261 @@
++/* --- Before After Gallery Block --- */
++
++.before-after-gallery-heading {
++  margin-bottom: var(--spacing-8, 8px);
++}
++
++.before-after-gallery-description {
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- Tab bar --- */
++
++.before-after-gallery-tabs {
++  display: flex;
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-tab {
++  background: var(--color-light-bg, #f5f5f5);
++  border: 2px solid var(--color-border, #ccc);
++  border-radius: 4px;
++  color: var(--color-text, inherit);
++  cursor: pointer;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  transition: background 200ms, border-color 200ms;
++}
++
++.before-after-gallery-tab.is-active {
++  background: var(--color-primary, #071d49);
++  border-color: var(--color-primary, #071d49);
++  color: var(--color-text-inverse, #fff);
++}
++
++.before-after-gallery-tab:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++/* --- Toggle variant (pill buttons) --- */
++
++.before-after-gallery-toggle .before-after-gallery-tab {
++  border-radius: 999px;
++  flex: 1;
++  text-align: center;
++}
++
++/* --- Slider container --- */
++
++.before-after-gallery-slider {
++  --compare-position: 50%;
++
++  position: relative;
++  overflow: hidden;
++  user-select: none;
++  cursor: col-resize;
++  touch-action: none;
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- After image (base layer, full width) --- */
++
++.before-after-gallery-after {
++  display: block;
++  line-height: 0;
++}
++
++.before-after-gallery-after img {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++/* --- Before image (clipped overlay) --- */
++
++.before-after-gallery-before {
++  position: absolute;
++  inset: 0;
++  overflow: hidden;
++  width: var(--compare-position);
++}
++
++.before-after-gallery-before img {
++  width: 100%;
++  height: 100%;
++  object-fit: cover;
++  object-position: left;
++  display: block;
++}
++
++/* --- Drag handle --- */
++
++.before-after-gallery-handle {
++  position: absolute;
++  top: 0;
++  bottom: 0;
++  left: var(--compare-position);
++  transform: translateX(-50%);
++  width: 4px;
++  background-color: var(--gallery-handle-color, #fff);
++  cursor: col-resize;
++  z-index: 2;
++}
++
++.before-after-gallery-handle::before {
++  content: '';
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  width: 44px;
++  height: 44px;
++  background-color: var(--gallery-handle-color, #fff);
++  border-radius: 50%;
++  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
++  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
++  background-repeat: no-repeat;
++  background-position: center;
++  background-size: 24px;
++}
++
++/* --- Before/After labels --- */
++
++.before-after-gallery-labels {
++  position: absolute;
++  bottom: var(--spacing-12, 12px);
++  left: 0;
++  right: 0;
++  display: flex;
++  justify-content: space-between;
++  padding: 0 var(--spacing-12, 12px);
++  pointer-events: none;
++  z-index: 1;
++}
++
++.before-after-gallery-label-before,
++.before-after-gallery-label-after {
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  letter-spacing: 0.05em;
++  padding: 4px 10px;
++  border-radius: 2px;
++  text-transform: uppercase;
++}
++
++/* --- Drag prompt overlay --- */
++
++.before-after-gallery-prompt {
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  background: rgb(0 0 0 / 70%);
++  color: #fff;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  border-radius: 4px;
++  pointer-events: none;
++  z-index: 3;
++  transition: opacity 400ms;
++}
++
++.before-after-gallery-prompt.is-hidden {
++  opacity: 0;
++}
++
++/* --- Thumbnail grid --- */
++
++.before-after-gallery-thumbnails {
++  display: grid;
++  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-thumb {
++  position: relative;
++  border: 3px solid transparent;
++  border-radius: 4px;
++  cursor: pointer;
++  overflow: hidden;
++  padding: 0;
++  background: none;
++  transition: border-color 200ms;
++}
++
++.before-after-gallery-thumb.is-active {
++  border-color: var(--color-primary, #071d49);
++}
++
++.before-after-gallery-thumb:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++.before-after-gallery-thumb-image {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++.before-after-gallery-thumb-label {
++  position: absolute;
++  bottom: 0;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  padding: 4px 8px;
++  text-align: center;
++}
++
++.before-after-gallery-thumb-sublabel {
++  position: absolute;
++  bottom: 22px;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 40%);
++  color: #fff;
++  font-size: 0.625rem;
++  padding: 2px 8px;
++  text-align: center;
++}
++
++/* --- Mobile responsive --- */
++
++@media (width <= 600px) {
++  .before-after-gallery-tabs {
++    flex-direction: column;
++  }
++
++  .before-after-gallery-thumbnails {
++    grid-template-columns: repeat(2, 1fr);
++  }
++
++  .before-after-gallery-handle::before {
++    width: 44px;
++    height: 44px;
++  }
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .before-after-gallery-prompt {
++    transition: none;
++  }
++
++  .before-after-gallery-tab {
++    transition: none;
++  }
++
++  .before-after-gallery-thumb {
++    transition: none;
++  }
++}
+diff --git a/blocks/before-after-gallery/before-after-gallery.js b/blocks/before-after-gallery/before-after-gallery.js
+new file mode 100644
+index 0000000..3ef746c
+--- /dev/null
++++ b/blocks/before-after-gallery/before-after-gallery.js
+@@ -0,0 +1,274 @@
++function parseConfig(block) {
++  const config = {};
++  const tabs = [];
++  let currentTab = null;
++
++  [...block.children].forEach((row) => {
++    const cells = [...row.children];
++    const key = cells[0]?.textContent.trim();
++    const val = cells[1]?.innerHTML?.trim() || cells[1]?.textContent?.trim() || '';
++    const camelKey = key.replace(/[-\s]+(.)/g, (_, c) => c.toUpperCase()).replace(/^(.)/, (c) => c.toLowerCase());
++
++    if (camelKey === 'tab') {
++      currentTab = { tabLabel: val, openDefault: false, images: [] };
++      tabs.push(currentTab);
++    } else if (camelKey === 'openDefault' && currentTab) {
++      currentTab.openDefault = val === 'true';
++    } else if (camelKey === 'image' && currentTab) {
++      currentTab.images.push({});
++    } else if (currentTab && currentTab.images.length > 0) {
++      const img = currentTab.images[currentTab.images.length - 1];
++      if (camelKey === 'thumbnail' || camelKey === 'beforeImage' || camelKey === 'afterImage') {
++        const imgEl = cells[1]?.querySelector('img');
++        img[camelKey] = imgEl?.src || val;
++        if (camelKey === 'thumbnail') img.thumbnailAlt = imgEl?.alt || '';
++        if (camelKey === 'beforeImage') img.beforeAlt = imgEl?.alt || '';
++        if (camelKey === 'afterImage') img.afterAlt = imgEl?.alt || '';
++      } else {
++        img[camelKey] = val;
++      }
++    } else {
++      config[camelKey] = val;
++    }
++  });
++
++  if (!tabs.some((t) => t.openDefault) && tabs.length) tabs[0].openDefault = true;
++  config.tabs = tabs;
++  return config;
++}
++
++function buildTabs(config, isToggle, onTabSwitch) {
++  const nav = document.createElement('div');
++  nav.className = `before-after-gallery-tabs${isToggle ? ' before-after-gallery-toggle' : ''}`;
++  nav.setAttribute('role', 'tablist');
++
++  config.tabs.forEach((tab, i) => {
++    const btn = document.createElement('button');
++    btn.className = 'before-after-gallery-tab';
++    btn.setAttribute('role', 'tab');
++    btn.setAttribute('aria-selected', String(tab.openDefault));
++    btn.setAttribute('aria-controls', `bag-panel-${i}`);
++    btn.id = `bag-tab-${i}`;
++    btn.textContent = tab.tabLabel;
++    if (tab.openDefault) btn.classList.add('is-active');
++
++    btn.addEventListener('click', () => {
++      nav.querySelectorAll('.before-after-gallery-tab').forEach((b) => {
++        b.classList.remove('is-active');
++        b.setAttribute('aria-selected', 'false');
++      });
++      btn.classList.add('is-active');
++      btn.setAttribute('aria-selected', 'true');
++      onTabSwitch(i);
++    });
++
++    btn.addEventListener('keydown', (e) => {
++      const tabs = [...nav.querySelectorAll('.before-after-gallery-tab')];
++      const idx = tabs.indexOf(btn);
++      if (e.key === 'ArrowRight') tabs[(idx + 1) % tabs.length]?.focus();
++      if (e.key === 'ArrowLeft') tabs[(idx - 1 + tabs.length) % tabs.length]?.focus();
++    });
++
++    nav.append(btn);
++  });
++
++  return nav;
++}
++
++function buildThumbnails(images, onSelect) {
++  const grid = document.createElement('div');
++  grid.className = 'before-after-gallery-thumbnails';
++
++  images.forEach((img, i) => {
++    const thumb = document.createElement('button');
++    thumb.className = 'before-after-gallery-thumb';
++    thumb.type = 'button';
++    if (i === 0) thumb.classList.add('is-active');
++    thumb.setAttribute('aria-label', img.thumbnailLabel || `Image ${i + 1}`);
++
++    if (img.thumbnail) {
++      const pic = document.createElement('img');
++      pic.className = 'before-after-gallery-thumb-image';
++      pic.src = img.thumbnail;
++      pic.alt = img.thumbnailAlt || img.thumbnailLabel || '';
++      pic.loading = 'lazy';
++      thumb.append(pic);
++    }
++
++    if (img.thumbnailLabel) {
++      const lbl = document.createElement('span');
++      lbl.className = 'before-after-gallery-thumb-label';
++      lbl.textContent = img.thumbnailLabel;
++      thumb.append(lbl);
++    }
++
++    if (img.thumbnailSubLabel) {
++      const sub = document.createElement('span');
++      sub.className = 'before-after-gallery-thumb-sublabel';
++      sub.textContent = img.thumbnailSubLabel;
++      thumb.append(sub);
++    }
++
++    thumb.addEventListener('click', () => {
++      grid.querySelectorAll('.before-after-gallery-thumb').forEach((t) => t.classList.remove('is-active'));
++      thumb.classList.add('is-active');
++      onSelect(i);
++    });
++
++    grid.append(thumb);
++  });
++
++  return grid;
++}
++
++function buildSlider(config) {
++  const slider = document.createElement('div');
++  slider.className = 'before-after-gallery-slider';
++
++  const afterEl = document.createElement('div');
++  afterEl.className = 'before-after-gallery-after';
++  const afterImg = document.createElement('img');
++  afterImg.setAttribute('aria-hidden', 'true');
++  afterEl.append(afterImg);
++
++  const beforeEl = document.createElement('div');
++  beforeEl.className = 'before-after-gallery-before';
++  const beforeImg = document.createElement('img');
++  beforeImg.setAttribute('aria-hidden', 'true');
++  beforeEl.append(beforeImg);
++
++  const labels = document.createElement('div');
++  labels.className = 'before-after-gallery-labels';
++  const lblBefore = document.createElement('span');
++  lblBefore.className = 'before-after-gallery-label-before';
++  lblBefore.textContent = config.beforeLabelPrefix || 'BEFORE';
++  const lblAfter = document.createElement('span');
++  lblAfter.className = 'before-after-gallery-label-after';
++  lblAfter.textContent = config.afterLabelPrefix || 'AFTER';
++  labels.append(lblBefore, lblAfter);
++
++  const handle = document.createElement('div');
++  handle.className = 'before-after-gallery-handle';
++  handle.setAttribute('role', 'slider');
++  handle.setAttribute('aria-label', config.sliderPrompt || 'Drag to compare');
++  handle.setAttribute('aria-valuenow', '50');
++  handle.setAttribute('aria-valuemin', '0');
++  handle.setAttribute('aria-valuemax', '100');
++  handle.setAttribute('tabindex', '0');
++
++  const prompt = document.createElement('div');
++  prompt.className = 'before-after-gallery-prompt';
++  prompt.textContent = config.sliderPrompt || 'Click and drag to see results';
++
++  slider.append(afterEl, beforeEl, labels, handle, prompt);
++
++  function setPosition(pct) {
++    const clamped = Math.max(0, Math.min(100, pct));
++    slider.style.setProperty('--compare-position', `${clamped}%`);
++    handle.setAttribute('aria-valuenow', String(Math.round(clamped)));
++  }
++
++  setPosition(50);
++
++  function getPercent(clientX) {
++    const rect = slider.getBoundingClientRect();
++    return ((clientX - rect.left) / rect.width) * 100;
++  }
++
++  let dragging = false;
++
++  function hidePrompt() {
++    if (prompt.parentElement) {
++      prompt.classList.add('is-hidden');
++    }
++  }
++
++  slider.addEventListener('pointerdown', (e) => {
++    dragging = true;
++    slider.setPointerCapture(e.pointerId);
++    setPosition(getPercent(e.clientX));
++    hidePrompt();
++  });
++
++  slider.addEventListener('pointermove', (e) => {
++    if (dragging) setPosition(getPercent(e.clientX));
++  });
++
++  slider.addEventListener('pointerup', () => { dragging = false; });
++  slider.addEventListener('pointercancel', () => { dragging = false; });
++
++  handle.addEventListener('keydown', (e) => {
++    const current = parseFloat(slider.style.getPropertyValue('--compare-position') || '50');
++    if (e.key === 'ArrowLeft') { setPosition(current - 5); hidePrompt(); }
++    if (e.key === 'ArrowRight') { setPosition(current + 5); hidePrompt(); }
++  });
++
++  function loadImages(imageData) {
++    afterImg.src = imageData.afterImage || '';
++    afterImg.alt = imageData.afterAlt || '';
++    beforeImg.src = imageData.beforeImage || '';
++    beforeImg.alt = imageData.beforeAlt || '';
++    setPosition(50);
++  }
++
++  return { slider, loadImages };
++}
++
++export default function decorate(block) {
++  const config = parseConfig(block);
++  const isToggle = block.classList.contains('toggle');
++
++  if (config.anchorId) block.id = config.anchorId;
++  if (config.analyticsId) block.setAttribute('data-analytics', config.analyticsId);
++
++  const wrapper = document.createElement('div');
++  wrapper.className = 'before-after-gallery-wrapper';
++
++  if (config.heading) {
++    const h2 = document.createElement('h2');
++    h2.className = 'before-after-gallery-heading';
++    h2.textContent = config.heading;
++    wrapper.append(h2);
++  }
++
++  if (config.description) {
++    const desc = document.createElement('div');
++    desc.className = 'before-after-gallery-description';
++    desc.innerHTML = config.description;
++    wrapper.append(desc);
++  }
++
++  const { slider, loadImages } = buildSlider(config);
++  const content = document.createElement('div');
++  content.className = 'before-after-gallery-content';
++
++  let activeTabIdx = config.tabs.findIndex((t) => t.openDefault);
++  if (activeTabIdx < 0) activeTabIdx = 0;
++
++  let thumbnailGrid = null;
++
++  function renderTab(tabIdx) {
++    const tab = config.tabs[tabIdx];
++    if (!tab) return;
++    if (thumbnailGrid) thumbnailGrid.remove();
++    thumbnailGrid = buildThumbnails(tab.images, (imgIdx) => {
++      loadImages(tab.images[imgIdx]);
++    });
++    content.append(thumbnailGrid);
++    if (tab.images.length) loadImages(tab.images[0]);
++  }
++
++  if (config.tabs.length > 1) {
++    const tabs = buildTabs(config, isToggle, (idx) => {
++      activeTabIdx = idx;
++      renderTab(idx);
++    });
++    wrapper.append(tabs);
++  }
++
++  content.append(slider);
++  wrapper.append(content);
++  renderTab(activeTabIdx);
++
++  block.replaceChildren(wrapper);
++}
+diff --git a/blocks/before-after-gallery/block-config.js b/blocks/before-after-gallery/block-config.js
+new file mode 100644
+index 0000000..e87ef8a
+--- /dev/null
++++ b/blocks/before-after-gallery/block-config.js
+@@ -0,0 +1,3 @@
++export default async function getBlockConfigs() {
++  return { flags: {}, variations: [], decorations: {} };
++}
+diff --git a/blocks/before-after-gallery/botox/_before-after-gallery.css b/blocks/before-after-gallery/botox/_before-after-gallery.css
+new file mode 100644
+index 0000000..8941b0c
+--- /dev/null
++++ b/blocks/before-after-gallery/botox/_before-after-gallery.css
+@@ -0,0 +1,3 @@
++@import '../before-after-gallery.css';
++
++/* Botox before-after-gallery overrides */
+diff --git a/blocks/before-after-gallery/botox/before-after-gallery.css b/blocks/before-after-gallery/botox/before-after-gallery.css
+new file mode 100644
+index 0000000..869f13d
+--- /dev/null
++++ b/blocks/before-after-gallery/botox/before-after-gallery.css
+@@ -0,0 +1,263 @@
++/* --- Before After Gallery Block --- */
++
++.before-after-gallery-heading {
++  margin-bottom: var(--spacing-8, 8px);
++}
++
++.before-after-gallery-description {
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- Tab bar --- */
++
++.before-after-gallery-tabs {
++  display: flex;
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-tab {
++  background: var(--color-light-bg, #f5f5f5);
++  border: 2px solid var(--color-border, #ccc);
++  border-radius: 4px;
++  color: var(--color-text, inherit);
++  cursor: pointer;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  transition: background 200ms, border-color 200ms;
++}
++
++.before-after-gallery-tab.is-active {
++  background: var(--color-primary, #071d49);
++  border-color: var(--color-primary, #071d49);
++  color: var(--color-text-inverse, #fff);
++}
++
++.before-after-gallery-tab:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++/* --- Toggle variant (pill buttons) --- */
++
++.before-after-gallery-toggle .before-after-gallery-tab {
++  border-radius: 999px;
++  flex: 1;
++  text-align: center;
++}
++
++/* --- Slider container --- */
++
++.before-after-gallery-slider {
++  --compare-position: 50%;
++
++  position: relative;
++  overflow: hidden;
++  user-select: none;
++  cursor: col-resize;
++  touch-action: none;
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- After image (base layer, full width) --- */
++
++.before-after-gallery-after {
++  display: block;
++  line-height: 0;
++}
++
++.before-after-gallery-after img {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++/* --- Before image (clipped overlay) --- */
++
++.before-after-gallery-before {
++  position: absolute;
++  inset: 0;
++  overflow: hidden;
++  width: var(--compare-position);
++}
++
++.before-after-gallery-before img {
++  width: 100%;
++  height: 100%;
++  object-fit: cover;
++  object-position: left;
++  display: block;
++}
++
++/* --- Drag handle --- */
++
++.before-after-gallery-handle {
++  position: absolute;
++  top: 0;
++  bottom: 0;
++  left: var(--compare-position);
++  transform: translateX(-50%);
++  width: 4px;
++  background-color: var(--gallery-handle-color, #fff);
++  cursor: col-resize;
++  z-index: 2;
++}
++
++.before-after-gallery-handle::before {
++  content: '';
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  width: 44px;
++  height: 44px;
++  background-color: var(--gallery-handle-color, #fff);
++  border-radius: 50%;
++  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
++  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
++  background-repeat: no-repeat;
++  background-position: center;
++  background-size: 24px;
++}
++
++/* --- Before/After labels --- */
++
++.before-after-gallery-labels {
++  position: absolute;
++  bottom: var(--spacing-12, 12px);
++  left: 0;
++  right: 0;
++  display: flex;
++  justify-content: space-between;
++  padding: 0 var(--spacing-12, 12px);
++  pointer-events: none;
++  z-index: 1;
++}
++
++.before-after-gallery-label-before,
++.before-after-gallery-label-after {
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  letter-spacing: 0.05em;
++  padding: 4px 10px;
++  border-radius: 2px;
++  text-transform: uppercase;
++}
++
++/* --- Drag prompt overlay --- */
++
++.before-after-gallery-prompt {
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  background: rgb(0 0 0 / 70%);
++  color: #fff;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  border-radius: 4px;
++  pointer-events: none;
++  z-index: 3;
++  transition: opacity 400ms;
++}
++
++.before-after-gallery-prompt.is-hidden {
++  opacity: 0;
++}
++
++/* --- Thumbnail grid --- */
++
++.before-after-gallery-thumbnails {
++  display: grid;
++  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-thumb {
++  position: relative;
++  border: 3px solid transparent;
++  border-radius: 4px;
++  cursor: pointer;
++  overflow: hidden;
++  padding: 0;
++  background: none;
++  transition: border-color 200ms;
++}
++
++.before-after-gallery-thumb.is-active {
++  border-color: var(--color-primary, #071d49);
++}
++
++.before-after-gallery-thumb:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++.before-after-gallery-thumb-image {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++.before-after-gallery-thumb-label {
++  position: absolute;
++  bottom: 0;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  padding: 4px 8px;
++  text-align: center;
++}
++
++.before-after-gallery-thumb-sublabel {
++  position: absolute;
++  bottom: 22px;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 40%);
++  color: #fff;
++  font-size: 0.625rem;
++  padding: 2px 8px;
++  text-align: center;
++}
++
++/* --- Mobile responsive --- */
++
++@media (width <= 600px) {
++  .before-after-gallery-tabs {
++    flex-direction: column;
++  }
++
++  .before-after-gallery-thumbnails {
++    grid-template-columns: repeat(2, 1fr);
++  }
++
++  .before-after-gallery-handle::before {
++    width: 44px;
++    height: 44px;
++  }
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .before-after-gallery-prompt {
++    transition: none;
++  }
++
++  .before-after-gallery-tab {
++    transition: none;
++  }
++
++  .before-after-gallery-thumb {
++    transition: none;
++  }
++}
++
++/* Botox before-after-gallery overrides */
+diff --git a/blocks/before-after-gallery/botox/block-config.js b/blocks/before-after-gallery/botox/block-config.js
+new file mode 100644
+index 0000000..e87ef8a
+--- /dev/null
++++ b/blocks/before-after-gallery/botox/block-config.js
+@@ -0,0 +1,3 @@
++export default async function getBlockConfigs() {
++  return { flags: {}, variations: [], decorations: {} };
++}
+diff --git a/blocks/before-after-gallery/rinvoq/_before-after-gallery.css b/blocks/before-after-gallery/rinvoq/_before-after-gallery.css
+new file mode 100644
+index 0000000..8e76a07
+--- /dev/null
++++ b/blocks/before-after-gallery/rinvoq/_before-after-gallery.css
+@@ -0,0 +1,3 @@
++@import '../before-after-gallery.css';
++
++/* Rinvoq before-after-gallery overrides */
+diff --git a/blocks/before-after-gallery/rinvoq/before-after-gallery.css b/blocks/before-after-gallery/rinvoq/before-after-gallery.css
+new file mode 100644
+index 0000000..8bea616
+--- /dev/null
++++ b/blocks/before-after-gallery/rinvoq/before-after-gallery.css
+@@ -0,0 +1,263 @@
++/* --- Before After Gallery Block --- */
++
++.before-after-gallery-heading {
++  margin-bottom: var(--spacing-8, 8px);
++}
++
++.before-after-gallery-description {
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- Tab bar --- */
++
++.before-after-gallery-tabs {
++  display: flex;
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-tab {
++  background: var(--color-light-bg, #f5f5f5);
++  border: 2px solid var(--color-border, #ccc);
++  border-radius: 4px;
++  color: var(--color-text, inherit);
++  cursor: pointer;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  transition: background 200ms, border-color 200ms;
++}
++
++.before-after-gallery-tab.is-active {
++  background: var(--color-primary, #071d49);
++  border-color: var(--color-primary, #071d49);
++  color: var(--color-text-inverse, #fff);
++}
++
++.before-after-gallery-tab:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++/* --- Toggle variant (pill buttons) --- */
++
++.before-after-gallery-toggle .before-after-gallery-tab {
++  border-radius: 999px;
++  flex: 1;
++  text-align: center;
++}
++
++/* --- Slider container --- */
++
++.before-after-gallery-slider {
++  --compare-position: 50%;
++
++  position: relative;
++  overflow: hidden;
++  user-select: none;
++  cursor: col-resize;
++  touch-action: none;
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++/* --- After image (base layer, full width) --- */
++
++.before-after-gallery-after {
++  display: block;
++  line-height: 0;
++}
++
++.before-after-gallery-after img {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++/* --- Before image (clipped overlay) --- */
++
++.before-after-gallery-before {
++  position: absolute;
++  inset: 0;
++  overflow: hidden;
++  width: var(--compare-position);
++}
++
++.before-after-gallery-before img {
++  width: 100%;
++  height: 100%;
++  object-fit: cover;
++  object-position: left;
++  display: block;
++}
++
++/* --- Drag handle --- */
++
++.before-after-gallery-handle {
++  position: absolute;
++  top: 0;
++  bottom: 0;
++  left: var(--compare-position);
++  transform: translateX(-50%);
++  width: 4px;
++  background-color: var(--gallery-handle-color, #fff);
++  cursor: col-resize;
++  z-index: 2;
++}
++
++.before-after-gallery-handle::before {
++  content: '';
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  width: 44px;
++  height: 44px;
++  background-color: var(--gallery-handle-color, #fff);
++  border-radius: 50%;
++  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
++  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
++  background-repeat: no-repeat;
++  background-position: center;
++  background-size: 24px;
++}
++
++/* --- Before/After labels --- */
++
++.before-after-gallery-labels {
++  position: absolute;
++  bottom: var(--spacing-12, 12px);
++  left: 0;
++  right: 0;
++  display: flex;
++  justify-content: space-between;
++  padding: 0 var(--spacing-12, 12px);
++  pointer-events: none;
++  z-index: 1;
++}
++
++.before-after-gallery-label-before,
++.before-after-gallery-label-after {
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  letter-spacing: 0.05em;
++  padding: 4px 10px;
++  border-radius: 2px;
++  text-transform: uppercase;
++}
++
++/* --- Drag prompt overlay --- */
++
++.before-after-gallery-prompt {
++  position: absolute;
++  top: 50%;
++  left: 50%;
++  transform: translate(-50%, -50%);
++  background: rgb(0 0 0 / 70%);
++  color: #fff;
++  font-size: var(--body-font-size-s, 0.875rem);
++  font-weight: 600;
++  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
++  border-radius: 4px;
++  pointer-events: none;
++  z-index: 3;
++  transition: opacity 400ms;
++}
++
++.before-after-gallery-prompt.is-hidden {
++  opacity: 0;
++}
++
++/* --- Thumbnail grid --- */
++
++.before-after-gallery-thumbnails {
++  display: grid;
++  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
++  gap: var(--spacing-8, 8px);
++  margin-bottom: var(--spacing-16, 16px);
++}
++
++.before-after-gallery-thumb {
++  position: relative;
++  border: 3px solid transparent;
++  border-radius: 4px;
++  cursor: pointer;
++  overflow: hidden;
++  padding: 0;
++  background: none;
++  transition: border-color 200ms;
++}
++
++.before-after-gallery-thumb.is-active {
++  border-color: var(--color-primary, #071d49);
++}
++
++.before-after-gallery-thumb:focus-visible {
++  outline: 2px solid var(--color-focus, #0057cc);
++  outline-offset: 2px;
++}
++
++.before-after-gallery-thumb-image {
++  width: 100%;
++  height: auto;
++  display: block;
++}
++
++.before-after-gallery-thumb-label {
++  position: absolute;
++  bottom: 0;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 60%);
++  color: #fff;
++  font-size: var(--body-font-size-xs, 0.75rem);
++  font-weight: 700;
++  padding: 4px 8px;
++  text-align: center;
++}
++
++.before-after-gallery-thumb-sublabel {
++  position: absolute;
++  bottom: 22px;
++  left: 0;
++  right: 0;
++  background: rgb(0 0 0 / 40%);
++  color: #fff;
++  font-size: 0.625rem;
++  padding: 2px 8px;
++  text-align: center;
++}
++
++/* --- Mobile responsive --- */
++
++@media (width <= 600px) {
++  .before-after-gallery-tabs {
++    flex-direction: column;
++  }
++
++  .before-after-gallery-thumbnails {
++    grid-template-columns: repeat(2, 1fr);
++  }
++
++  .before-after-gallery-handle::before {
++    width: 44px;
++    height: 44px;
++  }
++}
++
++@media (prefers-reduced-motion: reduce) {
++  .before-after-gallery-prompt {
++    transition: none;
++  }
++
++  .before-after-gallery-tab {
++    transition: none;
++  }
++
++  .before-after-gallery-thumb {
++    transition: none;
++  }
++}
++
++/* Rinvoq before-after-gallery overrides */
+diff --git a/blocks/before-after-gallery/rinvoq/block-config.js b/blocks/before-after-gallery/rinvoq/block-config.js
+new file mode 100644
+index 0000000..e87ef8a
+--- /dev/null
++++ b/blocks/before-after-gallery/rinvoq/block-config.js
+@@ -0,0 +1,3 @@
++export default async function getBlockConfigs() {
++  return { flags: {}, variations: [], decorations: {} };
++}
+diff --git a/blocks/formulary-lookup/_formulary-lookup.json b/blocks/formulary-lookup/_formulary-lookup.json
+index 38a3f8d..ef4fc11 100644
+--- a/blocks/formulary-lookup/_formulary-lookup.json
++++ b/blocks/formulary-lookup/_formulary-lookup.json
+@@ -31,7 +31,7 @@
+           "component": "select",
+           "name": "classes",
+           "label": "Variant",
+-          "description": "Default: state dropdown. Dynamic: state + county cascading dropdowns. ZIP Code: ZIP code input with submit.",
++          "description": "Default: static JSON / single state dropdown. Dynamic: state + county cascading dropdowns via API. ZIP Code: ZIP code input with submit.",
+           "options": [
+             { "name": "Default (State Dropdown)", "value": "" },
+             { "name": "Dynamic (State + County)", "value": "dynamic" },
+@@ -56,14 +56,14 @@
+         {
+           "component": "text",
+           "valueType": "string",
+-          "name": "state-label",
++          "name": "stateLabel",
+           "value": "Select your state",
+           "label": "State Dropdown Label"
+         },
+         {
+           "component": "text",
+           "valueType": "string",
+-          "name": "county-label",
++          "name": "countyLabel",
+           "value": "Select your county",
+           "label": "County Dropdown Label",
+           "description": "Only used in Dynamic variant."
+@@ -71,7 +71,7 @@
+         {
+           "component": "text",
+           "valueType": "string",
+-          "name": "zip-label",
++          "name": "zipLabel",
+           "value": "Enter your ZIP code",
+           "label": "ZIP Code Input Label",
+           "description": "Only used in ZIP Code variant."
+@@ -79,10 +79,9 @@
+         {
+           "component": "text",
+           "valueType": "string",
+-          "name": "submit-label",
++          "name": "submitLabel",
+           "value": "Search",
+-          "label": "Submit Button Label",
+-          "description": "Only used in ZIP Code variant."
++          "label": "Submit Button Label"
+         },
+         {
+           "component": "tab",
+@@ -90,43 +89,46 @@
+           "name": "config"
+         },
+         {
+-          "component": "text",
+-          "valueType": "string",
+-          "name": "api",
+-          "value": "",
++          "component": "select",
++          "name": "apiEndpoint",
+           "label": "API Endpoint",
+-          "description": "Formulary lookup API URL. Receives ?state=, ?state=&county=, or ?zip= query parameters depending on variant."
++          "description": "Environment for the formulary lookup API. Resolved to URL via brand metadata.",
++          "options": [
++            { "name": "Production", "value": "prod" },
++            { "name": "Stage", "value": "stage" },
++            { "name": "Integration", "value": "int" }
++          ]
+         },
+         {
+           "component": "text",
+           "valueType": "string",
+-          "name": "recaptcha-key",
++          "name": "dataPath",
+           "value": "",
+-          "label": "reCAPTCHA Site Key",
+-          "description": "Google reCAPTCHA v3 site key. If provided, a token is sent with each API request."
+-        },
+-        {
+-          "component": "text",
+-          "valueType": "string",
+-          "name": "results-per-page",
+-          "value": "10",
+-          "label": "Results Per Page",
+-          "description": "Number of results displayed per page in the results table."
++          "label": "Static Data Path",
++          "description": "DAM path to static JSON file for non-dynamic mode. Used when no API endpoint is selected."
+         },
+         {
+           "component": "text",
+           "valueType": "string",
+-          "name": "no-results",
++          "name": "noResultsMsg",
+           "value": "No coverage information found.",
+           "label": "No Results Message"
+         },
+         {
+           "component": "text",
+           "valueType": "string",
+-          "name": "error",
++          "name": "errorMsg",
+           "value": "An error occurred. Please try again.",
+           "label": "Error Message"
+         },
++        {
++          "component": "text",
++          "valueType": "string",
++          "name": "anchorId",
++          "value": "",
++          "label": "Anchor ID",
++          "description": "Deep-link ID on the block wrapper."
++        },
+         {
+           "component": "text",
+           "valueType": "string",
+diff --git a/blocks/formulary-lookup/formulary-lookup.js b/blocks/formulary-lookup/formulary-lookup.js
+index 27bfce4..a7ef176 100644
+--- a/blocks/formulary-lookup/formulary-lookup.js
++++ b/blocks/formulary-lookup/formulary-lookup.js
+@@ -1,4 +1,5 @@
+ import { getRecaptchaToken } from '../eds-form/recaptcha.js';
++import { getMetadata } from '../../scripts/aem.js';
+ 
+ const US_STATES = [
+   ['Alabama', 'AL'], ['Alaska', 'AK'], ['Arizona', 'AZ'], ['Arkansas', 'AR'], ['California', 'CA'],
+@@ -17,22 +18,33 @@ function parseConfig(block) {
+   const config = {};
+   [...block.children].forEach((row) => {
+     const cells = [...row.children];
+-    const key = cells[0]?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+-    config[key] = cells[1]?.textContent.trim() || cells[0]?.textContent.trim();
++    const key = cells[0]?.textContent.trim();
++    const camelKey = key.replace(/[-\s]+(.)/g, (_, c) => c.toUpperCase()).replace(/^(.)/, (c) => c.toLowerCase());
++    config[camelKey] = cells[1]?.textContent.trim() || '';
+   });
+   return config;
+ }
+ 
++function resolveApiUrl(config) {
++  const env = config.apiEndpoint;
++  if (!env) return '';
++  const metaKey = `formulary-api-${env}`;
++  const url = getMetadata(metaKey);
++  if (url) return url;
++  const fallback = getMetadata('formulary-api');
++  return fallback || '';
++}
++
+ function createStateSelect(config, id) {
+   const label = document.createElement('label');
+   label.className = 'formulary-lookup-label';
+   label.htmlFor = id;
+-  label.textContent = config['state-label'] || 'Select your state';
++  label.textContent = config.stateLabel || 'Select your state';
+ 
+   const select = document.createElement('select');
+   select.id = id;
+   select.className = 'formulary-lookup-select';
+-  select.setAttribute('aria-label', config['state-label'] || 'Select your state');
++  select.setAttribute('aria-label', config.stateLabel || 'Select your state');
+ 
+   const defaultOpt = document.createElement('option');
+   defaultOpt.value = '';
+@@ -57,12 +69,12 @@ function createCountySelect(config, id) {
+   const label = document.createElement('label');
+   label.className = 'formulary-lookup-label';
+   label.htmlFor = id;
+-  label.textContent = config['county-label'] || 'Select your county';
++  label.textContent = config.countyLabel || 'Select your county';
+ 
+   const select = document.createElement('select');
+   select.id = id;
+   select.className = 'formulary-lookup-select';
+-  select.setAttribute('aria-label', config['county-label'] || 'Select your county');
++  select.setAttribute('aria-label', config.countyLabel || 'Select your county');
+   select.disabled = true;
+ 
+   const defaultOpt = document.createElement('option');
+@@ -82,7 +94,7 @@ function createZipForm(config) {
+   const label = document.createElement('label');
+   label.className = 'formulary-lookup-label';
+   label.htmlFor = 'formulary-zip';
+-  label.textContent = config['zip-label'] || 'Enter your ZIP code';
++  label.textContent = config.zipLabel || 'Enter your ZIP code';
+ 
+   const inputGroup = document.createElement('div');
+   inputGroup.className = 'formulary-lookup-input-group';
+@@ -94,13 +106,13 @@ function createZipForm(config) {
+   input.pattern = '[0-9]{5}';
+   input.inputMode = 'numeric';
+   input.maxLength = 5;
+-  input.setAttribute('aria-label', config['zip-label'] || 'Enter your ZIP code');
++  input.setAttribute('aria-label', config.zipLabel || 'Enter your ZIP code');
+   input.required = true;
+ 
+   const btn = document.createElement('button');
+   btn.type = 'submit';
+   btn.className = 'formulary-lookup-submit';
+-  btn.textContent = config['submit-label'] || 'Search';
++  btn.textContent = config.submitLabel || 'Search';
+ 
+   inputGroup.append(input, btn);
+   form.append(label, inputGroup);
+@@ -134,7 +146,7 @@ function showMessage(status, msg) {
+ 
+ function renderResultsTable(plans, results, config, page) {
+   results.innerHTML = '';
+-  const perPage = parseInt(config['results-per-page'], 10) || 10;
++  const perPage = parseInt(config.resultsPerPage, 10) || 10;
+   const totalPages = Math.ceil(plans.length / perPage);
+   const currentPage = Math.min(Math.max(page, 1), totalPages);
+   const start = (currentPage - 1) * perPage;
+@@ -190,11 +202,7 @@ function renderResultsTable(plans, results, config, page) {
+     info.className = 'formulary-pagination-info';
+     const showStart = start + 1;
+     const showEnd = Math.min(start + perPage, plans.length);
+-    const template = config['pagination-label'] || 'Showing {start}–{end} of {total}';
+-    info.textContent = template
+-      .replace('{start}', showStart)
+-      .replace('{end}', showEnd)
+-      .replace('{total}', plans.length);
++    info.textContent = `Showing ${showStart}–${showEnd} of ${plans.length}`;
+ 
+     const nextBtn = document.createElement('button');
+     nextBtn.type = 'button';
+@@ -211,14 +219,15 @@ function renderResultsTable(plans, results, config, page) {
+   }
+ }
+ 
+-async function fetchWithRecaptcha(url, config) {
++async function fetchWithRecaptcha(url) {
+   const headers = {};
+-  if (config['recaptcha-key']) {
++  const recaptchaKey = getMetadata('recaptcha-site-key');
++  if (recaptchaKey) {
+     try {
+-      const token = await getRecaptchaToken(config['recaptcha-key'], 'formulary_lookup');
++      const token = await getRecaptchaToken(recaptchaKey, 'formulary_lookup');
+       headers['x-recaptcha-token'] = token;
+     } catch {
+-      // proceed without token if reCAPTCHA fails
++      // proceed without token
+     }
+   }
+   const resp = await fetch(url, { headers });
+@@ -227,12 +236,23 @@ async function fetchWithRecaptcha(url, config) {
+ }
+ 
+ function applyAnalytics(el, config) {
+-  if (config.analyticsid) {
+-    el.setAttribute('data-analytics', config.analyticsid);
++  if (config.analyticsId) {
++    el.setAttribute('data-analytics', config.analyticsId);
++  }
++}
++
++async function loadStaticData(config) {
++  if (!config.dataPath) return null;
++  try {
++    const resp = await fetch(config.dataPath);
++    if (!resp.ok) return null;
++    return resp.json();
++  } catch {
++    return null;
+   }
+ }
+ 
+-function buildDefaultVariant(config, section, status, results) {
++function buildDefaultVariant(config, apiUrl, section, status, results) {
+   const { label, select } = createStateSelect(config, 'formulary-state');
+   applyAnalytics(select, config);
+   section.append(label, select);
+@@ -245,27 +265,35 @@ function buildDefaultVariant(config, section, status, results) {
+       return;
+     }
+     results.innerHTML = '';
+-    if (!config.api) {
+-      showMessage(status, config.error || 'Lookup not configured.');
++
++    if (!apiUrl && !config.dataPath) {
++      showMessage(status, config.errorMsg || 'Lookup not configured.');
+       return;
+     }
++
+     showLoading(status);
+     try {
+-      const data = await fetchWithRecaptcha(`${config.api}?state=${encodeURIComponent(state)}`, config);
++      let data;
++      if (apiUrl) {
++        data = await fetchWithRecaptcha(`${apiUrl}?state=${encodeURIComponent(state)}`);
++      } else {
++        const staticData = await loadStaticData(config);
++        data = staticData?.[state] || { plans: [] };
++      }
+       const plans = data.plans || data.results || data || [];
+       if (!plans.length) {
+-        showMessage(status, config['no-results'] || 'No coverage information found.');
++        showMessage(status, config.noResultsMsg || 'No coverage information found.');
+         return;
+       }
+       showMessage(status, '');
+       renderResultsTable(plans, results, config, 1);
+     } catch {
+-      showMessage(status, config.error || 'An error occurred. Please try again.');
++      showMessage(status, config.errorMsg || 'An error occurred. Please try again.');
+     }
+   });
+ }
+ 
+-function buildDynamicVariant(config, section, status, results) {
++function buildDynamicVariant(config, apiUrl, section, status, results) {
+   const { label: stateLabel, select: stateSelect } = createStateSelect(config, 'formulary-state');
+   const { wrapper: countyWrapper, select: countySelect } = createCountySelect(config, 'formulary-county');
+   applyAnalytics(countySelect, config);
+@@ -282,7 +310,7 @@ function buildDynamicVariant(config, section, status, results) {
+     defaultOpt.textContent = '— Select a county —';
+     countySelect.append(defaultOpt);
+ 
+-    if (!state || !config.api) {
++    if (!state || !apiUrl) {
+       countyWrapper.hidden = true;
+       countySelect.disabled = true;
+       return;
+@@ -293,10 +321,10 @@ function buildDynamicVariant(config, section, status, results) {
+     showLoading(status);
+ 
+     try {
+-      const data = await fetchWithRecaptcha(`${config.api}?state=${encodeURIComponent(state)}&list=counties`, config);
++      const data = await fetchWithRecaptcha(`${apiUrl}?state=${encodeURIComponent(state)}&list=counties`);
+       const counties = data.counties || data.results || data || [];
+       if (!counties.length) {
+-        showMessage(status, config['no-results'] || 'No counties found for this state.');
++        showMessage(status, config.noResultsMsg || 'No counties found for this state.');
+         return;
+       }
+       showMessage(status, '');
+@@ -309,7 +337,7 @@ function buildDynamicVariant(config, section, status, results) {
+       });
+       countySelect.disabled = false;
+     } catch {
+-      showMessage(status, config.error || 'An error occurred. Please try again.');
++      showMessage(status, config.errorMsg || 'An error occurred. Please try again.');
+     }
+   });
+ 
+@@ -317,28 +345,27 @@ function buildDynamicVariant(config, section, status, results) {
+     const state = stateSelect.value;
+     const county = countySelect.value;
+     results.innerHTML = '';
+-    if (!county || !state || !config.api) return;
++    if (!county || !state || !apiUrl) return;
+ 
+     showLoading(status);
+     try {
+       const data = await fetchWithRecaptcha(
+-        `${config.api}?state=${encodeURIComponent(state)}&county=${encodeURIComponent(county)}`,
+-        config,
++        `${apiUrl}?state=${encodeURIComponent(state)}&county=${encodeURIComponent(county)}`,
+       );
+       const plans = data.plans || data.results || data || [];
+       if (!plans.length) {
+-        showMessage(status, config['no-results'] || 'No coverage information found.');
++        showMessage(status, config.noResultsMsg || 'No coverage information found.');
+         return;
+       }
+       showMessage(status, '');
+       renderResultsTable(plans, results, config, 1);
+     } catch {
+-      showMessage(status, config.error || 'An error occurred. Please try again.');
++      showMessage(status, config.errorMsg || 'An error occurred. Please try again.');
+     }
+   });
+ }
+ 
+-function buildZipVariant(config, section, status, results) {
++function buildZipVariant(config, apiUrl, section, status, results) {
+   const { form, input } = createZipForm(config);
+   applyAnalytics(form.querySelector('.formulary-lookup-submit'), config);
+   section.append(form);
+@@ -352,23 +379,23 @@ function buildZipVariant(config, section, status, results) {
+       showMessage(status, 'Please enter a valid 5-digit ZIP code.');
+       return;
+     }
+-    if (!config.api) {
+-      showMessage(status, config.error || 'Lookup not configured.');
++    if (!apiUrl) {
++      showMessage(status, config.errorMsg || 'Lookup not configured.');
+       return;
+     }
+ 
+     showLoading(status);
+     try {
+-      const data = await fetchWithRecaptcha(`${config.api}?zip=${encodeURIComponent(zip)}`, config);
++      const data = await fetchWithRecaptcha(`${apiUrl}?zip=${encodeURIComponent(zip)}`);
+       const plans = data.plans || data.results || data || [];
+       if (!plans.length) {
+-        showMessage(status, config['no-results'] || 'No coverage information found.');
++        showMessage(status, config.noResultsMsg || 'No coverage information found.');
+         return;
+       }
+       showMessage(status, '');
+       renderResultsTable(plans, results, config, 1);
+     } catch {
+-      showMessage(status, config.error || 'An error occurred. Please try again.');
++      showMessage(status, config.errorMsg || 'An error occurred. Please try again.');
+     }
+   });
+ }
+@@ -377,6 +404,11 @@ export default async function decorate(block) {
+   const config = parseConfig(block);
+   const isDynamic = block.classList.contains('dynamic');
+   const isZip = block.classList.contains('zip');
++  const apiUrl = resolveApiUrl(config);
++
++  if (config.anchorId) {
++    block.id = config.anchorId;
++  }
+ 
+   const section = document.createElement('div');
+   section.className = 'formulary-lookup-form';
+@@ -399,11 +431,11 @@ export default async function decorate(block) {
+   const results = createResultsContainer();
+ 
+   if (isZip) {
+-    buildZipVariant(config, section, status, results);
++    buildZipVariant(config, apiUrl, section, status, results);
+   } else if (isDynamic) {
+-    buildDynamicVariant(config, section, status, results);
++    buildDynamicVariant(config, apiUrl, section, status, results);
+   } else {
+-    buildDefaultVariant(config, section, status, results);
++    buildDefaultVariant(config, apiUrl, section, status, results);
+   }
+ 
+   section.append(status, results);
+diff --git a/component-definition.json b/component-definition.json
+index 75050f0..cc23c4a 100644
+--- a/component-definition.json
++++ b/component-definition.json
+@@ -1226,6 +1226,23 @@
+             }
+           }
+         },
++        {
++          "title": "Before After Gallery",
++          "id": "before-after-gallery",
++          "plugins": {
++            "xwalk": {
++              "page": {
++                "resourceType": "core/franklin/components/block/v1/block",
++                "template": {
++                  "name": "Before After Gallery",
++                  "model": "before-after-gallery",
++                  "blockId": "id:",
++                  "classes": ""
++                }
++              }
++            }
++          }
++        },
+         {
+           "title": "Image Compare",
+           "id": "image-compare",
+diff --git a/component-filters.json b/component-filters.json
+index b065d76..a7d9153 100644
+--- a/component-filters.json
++++ b/component-filters.json
+@@ -49,7 +49,8 @@
+       "custom-image",
+       "news-feed",
+       "pipeline-utility-nav",
+-      "formulary-lookup"
++      "formulary-lookup",
++      "before-after-gallery"
+     ]
+   },
+   {
+@@ -93,7 +94,8 @@
+       "custom-image",
+       "news-feed",
+       "pipeline-utility-nav",
+-      "formulary-lookup"
++      "formulary-lookup",
++      "before-after-gallery"
+     ]
+   },
+   {
+diff --git a/component-models.json b/component-models.json
+index 5ce71b0..17ddfab 100644
+--- a/component-models.json
++++ b/component-models.json
+@@ -8963,6 +8963,122 @@
+       }
+     ]
+   },
++  {
++    "id": "before-after-gallery",
++    "fields": [
++      {
++        "component": "tab",
++        "label": "Content",
++        "name": "content"
++      },
++      {
++        "component": "select",
++        "name": "classes",
++        "label": "Variant",
++        "description": "Default: tab strip navigation. Toggle: two-state pill buttons.",
++        "options": [
++          { "name": "Default (Tab Strip)", "value": "" },
++          { "name": "Toggle Buttons", "value": "toggle" }
++        ]
++      },
++      {
++        "component": "text",
++        "valueType": "string",
++        "name": "heading",
++        "value": "",
++        "label": "Heading"
++      },
++      {
++        "component": "richtext",
++        "name": "description",
++        "value": "",
++        "label": "Description",
++        "description": "Introductory text below the heading."
++      },
++      {
++        "component": "text",
++        "valueType": "string",
++        "name": "sliderPrompt",
++        "value": "Click and drag to see results",
++        "label": "Slider Prompt"
++      },
++      {
++        "component": "text",
++        "valueType": "string",
++        "name": "beforeLabelPrefix",
++        "value": "BEFORE",
++        "label": "Before Label"
++      },
++      {
++        "component": "text",
++        "valueType": "string",
++        "name": "afterLabelPrefix",
++        "value": "AFTER",
++        "label": "After Label"
++      },
++      {
++        "component": "tab",
++        "label": "Tabs & Images",
++        "name": "tabsConfig"
++      },
++      {
++        "component": "model",
++        "name": "tabs",
++        "label": "Gallery Tabs",
++        "fields": [
++          {
++            "component": "text",
++            "valueType": "string",
++            "name": "tabLabel",
++            "value": "",
++            "label": "Tab Label"
++          },
++          {
++            "component": "boolean",
++            "name": "openDefault",
++            "label": "Active by Default"
++          },
++          {
++            "component": "model",
++            "name": "images",
++            "label": "Image Pairs",
++            "fields": [
++              { "component": "reference", "valueType": "string", "name": "thumbnail", "label": "Thumbnail Image" },
++              { "component": "text", "valueType": "string", "name": "thumbnailAlt", "value": "", "label": "Thumbnail Alt" },
++              { "component": "text", "valueType": "string", "name": "thumbnailLabel", "value": "", "label": "Thumbnail Label" },
++              { "component": "text", "valueType": "string", "name": "thumbnailSubLabel", "value": "", "label": "Thumbnail Sub-Label" },
++              { "component": "reference", "valueType": "string", "name": "beforeImage", "label": "Before Image" },
++              { "component": "text", "valueType": "string", "name": "beforeAlt", "value": "", "label": "Before Alt" },
++              { "component": "reference", "valueType": "string", "name": "afterImage", "label": "After Image" },
++              { "component": "text", "valueType": "string", "name": "afterAlt", "value": "", "label": "After Alt" }
++            ]
++          }
++        ]
++      },
++      {
++        "component": "tab",
++        "label": "Configuration",
++        "name": "config"
++      },
++      {
++        "component": "text",
++        "valueType": "string",
++        "name": "anchorId",
++        "value": "",
++        "label": "Anchor ID"
++      },
++      {
++        "component": "text",
++        "valueType": "string",
++        "name": "analyticsId",
++        "value": "",
++        "label": "Analytics ID"
++      },
++      {
++        "...": "../../models/_common-properties.json#/common-prop"
++      }
++    ]
++  },
+   {
+     "id": "image-compare",
+     "fields": [
+@@ -9323,7 +9439,7 @@
+         "component": "select",
+         "name": "classes",
+         "label": "Variant",
+-        "description": "Default: state dropdown. Dynamic: state + county cascading dropdowns. ZIP Code: ZIP code input with submit.",
++        "description": "Default: static JSON / single state dropdown. Dynamic: state + county cascading dropdowns via API. ZIP Code: ZIP code input with submit.",
+         "options": [
+           { "name": "Default (State Dropdown)", "value": "" },
+           { "name": "Dynamic (State + County)", "value": "dynamic" },
+@@ -9348,14 +9464,14 @@
+       {
+         "component": "text",
+         "valueType": "string",
+-        "name": "state-label",
++        "name": "stateLabel",
+         "value": "Select your state",
+         "label": "State Dropdown Label"
+       },
+       {
+         "component": "text",
+         "valueType": "string",
+-        "name": "county-label",
++        "name": "countyLabel",
+         "value": "Select your county",
+         "label": "County Dropdown Label",
+         "description": "Only used in Dynamic variant."
+@@ -9363,7 +9479,7 @@
+       {
+         "component": "text",
+         "valueType": "string",
+-        "name": "zip-label",
++        "name": "zipLabel",
+         "value": "Enter your ZIP code",
+         "label": "ZIP Code Input Label",
+         "description": "Only used in ZIP Code variant."
+@@ -9371,10 +9487,9 @@
+       {
+         "component": "text",
+         "valueType": "string",
+-        "name": "submit-label",
++        "name": "submitLabel",
+         "value": "Search",
+-        "label": "Submit Button Label",
+-        "description": "Only used in ZIP Code variant."
++        "label": "Submit Button Label"
+       },
+       {
+         "component": "tab",
+@@ -9382,43 +9497,46 @@
+         "name": "config"
+       },
+       {
+-        "component": "text",
+-        "valueType": "string",
+-        "name": "api",
+-        "value": "",
++        "component": "select",
++        "name": "apiEndpoint",
+         "label": "API Endpoint",
+-        "description": "Formulary lookup API URL. Receives ?state=, ?state=&county=, or ?zip= query parameters depending on variant."
++        "description": "Environment for the formulary lookup API. Resolved to URL via brand metadata.",
++        "options": [
++          { "name": "Production", "value": "prod" },
++          { "name": "Stage", "value": "stage" },
++          { "name": "Integration", "value": "int" }
++        ]
+       },
+       {
+         "component": "text",
+         "valueType": "string",
+-        "name": "recaptcha-key",
++        "name": "dataPath",
+         "value": "",
+-        "label": "reCAPTCHA Site Key",
+-        "description": "Google reCAPTCHA v3 site key. If provided, a token is sent with each API request."
+-      },
+-      {
+-        "component": "text",
+-        "valueType": "string",
+-        "name": "results-per-page",
+-        "value": "10",
+-        "label": "Results Per Page",
+-        "description": "Number of results displayed per page in the results table."
++        "label": "Static Data Path",
++        "description": "DAM path to static JSON file for non-dynamic mode. Used when no API endpoint is selected."
+       },
+       {
+         "component": "text",
+         "valueType": "string",
+-        "name": "no-results",
++        "name": "noResultsMsg",
+         "value": "No coverage information found.",
+         "label": "No Results Message"
+       },
+       {
+         "component": "text",
+         "valueType": "string",
+-        "name": "error",
++        "name": "errorMsg",
+         "value": "An error occurred. Please try again.",
+         "label": "Error Message"
+       },
++      {
++        "component": "text",
++        "valueType": "string",
++        "name": "anchorId",
++        "value": "",
++        "label": "Anchor ID",
++        "description": "Deep-link ID on the block wrapper."
++      },
+       {
+         "component": "text",
+         "valueType": "string",
