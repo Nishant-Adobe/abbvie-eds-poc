@@ -25,7 +25,7 @@ function getPlayer(id) {
   return null;
 }
 
-function buildThumbnailCard(item, index, isActive) {
+function buildThumbnailCard(item, index, isActive, isCardsLayout) {
   const card = document.createElement('button');
   card.type = 'button';
   card.className = 'cvp-playlist-item';
@@ -43,10 +43,17 @@ function buildThumbnailCard(item, index, isActive) {
     playIcon.setAttribute('aria-hidden', 'true');
     thumbWrap.append(playIcon);
 
+    if (isCardsLayout && item.title) {
+      const overlayTitle = document.createElement('span');
+      overlayTitle.className = 'cvp-playlist-overlay-title';
+      overlayTitle.textContent = item.title;
+      thumbWrap.append(overlayTitle);
+    }
+
     card.append(thumbWrap);
   }
 
-  if (item.title) {
+  if (!isCardsLayout && item.title) {
     const title = document.createElement('span');
     title.className = 'cvp-playlist-item-title';
     title.textContent = item.title;
@@ -144,7 +151,8 @@ export async function decorateBlock(block) {
   const accountId = block.dataset.accountId || '';
   const playerId = block.dataset.playerId || DEFAULT_PLAYER;
   const enableCaptions = block.dataset.enableCaptions === 'true';
-  const playlistLayout = block.dataset.playlistLayout || 'bottom';
+  const playlistLayout = block.dataset.playlistLayout || 'cards';
+  const isCardsLayout = playlistLayout === 'cards';
 
   const items = parsePlaylistItems(block);
   if (!items.length) return;
@@ -186,7 +194,7 @@ export async function decorateBlock(block) {
   playlistArea.setAttribute('aria-label', 'Video playlist');
 
   items.forEach((item, index) => {
-    const card = buildThumbnailCard(item, index, index === 0);
+    const card = buildThumbnailCard(item, index, index === 0, isCardsLayout);
     card.setAttribute('role', 'tab');
     card.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
     card.id = `cvp-tab-${playerCount + 1}-${index}`;
@@ -213,8 +221,10 @@ export async function decorateBlock(block) {
     playlistArea.append(card);
   });
 
-  // Scroll controls for horizontal playlist
-  if (playlistLayout === 'top' || playlistLayout === 'bottom') {
+  // Assemble layout
+  if (isCardsLayout) {
+    block.append(playlistArea, playerArea);
+  } else if (playlistLayout === 'top' || playlistLayout === 'bottom') {
     const scrollWrapper = document.createElement('div');
     scrollWrapper.className = 'cvp-playlist-scroll-wrapper';
 
