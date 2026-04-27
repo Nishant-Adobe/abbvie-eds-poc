@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "id": "page-metadata",
     "fields": [
@@ -8966,34 +8966,159 @@
   {
     "id": "before-after-gallery",
     "fields": [
-      {"component":"tab","label":"Content","name":"content"},
-      {"component":"select","name":"classes","label":"Variant","options":[{"name":"Default (Tab Strip)","value":""},{"name":"Toggle Buttons","value":"toggle"}]},
-      {"component":"text","valueType":"string","name":"heading","value":"","label":"Heading"},
-      {"component":"richtext","name":"description","value":"","label":"Description"},
-      {"component":"text","valueType":"string","name":"sliderPrompt","value":"Click and drag to see results","label":"Slider Prompt"},
-      {"component":"text","valueType":"string","name":"beforeLabelPrefix","value":"BEFORE","label":"Before Label"},
-      {"component":"text","valueType":"string","name":"afterLabelPrefix","value":"AFTER","label":"After Label"},
-      {"component":"tab","label":"Tabs and Images","name":"tabsConfig"},
-      {"component":"model","name":"tabs","label":"Gallery Tabs","fields":[
-        {"component":"text","valueType":"string","name":"tabLabel","value":"","label":"Tab Label"},
-        {"component":"boolean","name":"openDefault","label":"Active by Default"},
-        {"component":"model","name":"images","label":"Image Pairs","fields":[
-          {"component":"reference","valueType":"string","name":"thumbnail","label":"Thumbnail Image"},
-          {"component":"text","valueType":"string","name":"thumbnailAlt","value":"","label":"Thumbnail Alt"},
-          {"component":"text","valueType":"string","name":"thumbnailLabel","value":"","label":"Thumbnail Label"},
-          {"component":"text","valueType":"string","name":"thumbnailSubLabel","value":"","label":"Sub Label"},
-          {"component":"reference","valueType":"string","name":"beforeImage","label":"Before Image"},
-          {"component":"text","valueType":"string","name":"beforeAlt","value":"","label":"Before Alt"},
-          {"component":"reference","valueType":"string","name":"afterImage","label":"After Image"},
-          {"component":"text","valueType":"string","name":"afterAlt","value":"","label":"After Alt"}
-        ]}
-      ]},
-      {"component":"tab","label":"Configuration","name":"config"},
-      {"component":"text","valueType":"string","name":"anchorId","value":"","label":"Anchor ID"},
-      {"component":"text","valueType":"string","name":"analyticsId","value":"","label":"Analytics ID"},
-      {"...":"../../models/_common-properties.json#/common-prop"}
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Variant",
+        "options": [
+          {
+            "name": "Default (Tab Strip)",
+            "value": ""
+          },
+          {
+            "name": "Toggle Buttons",
+            "value": "toggle"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "value": "",
+        "label": "Description"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "sliderPrompt",
+        "value": "Click and drag to see results",
+        "label": "Slider Prompt"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "beforeLabelPrefix",
+        "value": "BEFORE",
+        "label": "Before Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "afterLabelPrefix",
+        "value": "AFTER",
+        "label": "After Label"
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "analyticsId",
+        "value": "",
+        "label": "Analytics ID"
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
     ]
-    
+  },
+  {
+    "id": "before-after-gallery-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Image Pair",
+        "name": "imagePair"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabLabel",
+        "value": "",
+        "label": "Tab/Group Label",
+        "description": "Items with same label are grouped into one tab."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "thumbnail",
+        "label": "Thumbnail Image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "thumbnailAlt",
+        "value": "",
+        "label": "Thumbnail Alt"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "thumbnailLabel",
+        "value": "",
+        "label": "Thumbnail Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "thumbnailSubLabel",
+        "value": "",
+        "label": "Sub Label"
+      },
+      {
+        "component": "tab",
+        "label": "Before/After Images",
+        "name": "images"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "beforeImage",
+        "label": "Before Image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "beforeAlt",
+        "value": "",
+        "label": "Before Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "afterImage",
+        "label": "After Image"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "afterAlt",
+        "value": "",
+        "label": "After Alt"
+      }
+    ]
   },
   {
     "id": "image-compare",
@@ -9357,9 +9482,18 @@
         "label": "Variant",
         "description": "Default: state dropdown. Dynamic: state + county cascading dropdowns. ZIP Code: ZIP code input with submit.",
         "options": [
-          { "name": "Default (State Dropdown)", "value": "" },
-          { "name": "Dynamic (State + County)", "value": "dynamic" },
-          { "name": "ZIP Code", "value": "zip" }
+          {
+            "name": "Default (State Dropdown)",
+            "value": ""
+          },
+          {
+            "name": "Dynamic (State + County)",
+            "value": "dynamic"
+          },
+          {
+            "name": "ZIP Code",
+            "value": "zip"
+          }
         ]
       },
       {
@@ -9844,4 +9978,3 @@
     ]
   }
 ]
-
