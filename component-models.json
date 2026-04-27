@@ -8973,11 +8973,27 @@
       {"component":"text","valueType":"string","name":"sliderPrompt","value":"Click and drag to see results","label":"Slider Prompt"},
       {"component":"text","valueType":"string","name":"beforeLabelPrefix","value":"BEFORE","label":"Before Label"},
       {"component":"text","valueType":"string","name":"afterLabelPrefix","value":"AFTER","label":"After Label"},
+      {"component":"tab","label":"Tabs and Images","name":"tabsConfig"},
+      {"component":"model","name":"tabs","label":"Gallery Tabs","fields":[
+        {"component":"text","valueType":"string","name":"tabLabel","value":"","label":"Tab Label"},
+        {"component":"boolean","name":"openDefault","label":"Active by Default"},
+        {"component":"model","name":"images","label":"Image Pairs","fields":[
+          {"component":"reference","valueType":"string","name":"thumbnail","label":"Thumbnail Image"},
+          {"component":"text","valueType":"string","name":"thumbnailAlt","value":"","label":"Thumbnail Alt"},
+          {"component":"text","valueType":"string","name":"thumbnailLabel","value":"","label":"Thumbnail Label"},
+          {"component":"text","valueType":"string","name":"thumbnailSubLabel","value":"","label":"Sub Label"},
+          {"component":"reference","valueType":"string","name":"beforeImage","label":"Before Image"},
+          {"component":"text","valueType":"string","name":"beforeAlt","value":"","label":"Before Alt"},
+          {"component":"reference","valueType":"string","name":"afterImage","label":"After Image"},
+          {"component":"text","valueType":"string","name":"afterAlt","value":"","label":"After Alt"}
+        ]}
+      ]},
       {"component":"tab","label":"Configuration","name":"config"},
       {"component":"text","valueType":"string","name":"anchorId","value":"","label":"Anchor ID"},
       {"component":"text","valueType":"string","name":"analyticsId","value":"","label":"Analytics ID"},
       {"...":"../../models/_common-properties.json#/common-prop"}
     ]
+    
   },
   {
     "id": "image-compare",
