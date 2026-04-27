@@ -9534,7 +9534,7 @@
         "valueType": "string",
         "name": "logoImage",
         "label": "Bar Logo",
-        "description": "Logo image displayed on the left side of the bar (e.g., AbbVie logo).",
+        "description": "Logo image displayed on the left side of the bar.",
         "multi": false
       },
       {
@@ -9542,21 +9542,14 @@
         "valueType": "string",
         "name": "logoUrl",
         "value": "https://www.abbvie.com",
-        "label": "Logo Link URL",
-        "description": "URL the bar logo links to."
+        "label": "Logo Link URL"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "barLabel",
         "value": "Immunology Therapies",
-        "label": "Bar Label",
-        "description": "Text shown on the toggle button next to the logo."
-      },
-      {
-        "component": "tab",
-        "label": "Utility Links",
-        "name": "utilityLinks"
+        "label": "Bar Label"
       },
       {
         "component": "text",
@@ -9601,117 +9594,159 @@
         "label": "Utility Link 3 URL"
       },
       {
-        "component": "tab",
-        "label": "Footer",
-        "name": "footer"
-      },
-      {
         "component": "text",
         "valueType": "string",
         "name": "projectNumber",
         "value": "US-MULT-250253",
-        "label": "Project Number",
-        "description": "Regulatory project number shown at the bottom of the panel."
+        "label": "Project Number"
       },
       {
-        "...": "../../models/_common-properties.json#/common-prop"
-      }
-    ]
-  },
-  {
-    "id": "demo-brand-explorer-brand",
-    "fields": [
-      {
         "component": "tab",
-        "label": "Brand",
-        "name": "brand"
+        "label": "Brand 1",
+        "name": "brand1Tab"
       },
       {
         "component": "reference",
         "valueType": "string",
-        "name": "brandLogo",
-        "label": "Brand Logo",
-        "description": "Product logo image (e.g., RINVOQ, SKYRIZI, HUMIRA).",
+        "name": "brand1Logo",
+        "label": "Brand 1 Logo",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "brandLogoAlt",
-        "value": "",
-        "label": "Logo Alt Text"
+        "name": "brand1Name",
+        "value": "RINVOQ",
+        "label": "Brand 1 Name"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "brandName",
-        "value": "",
-        "label": "Brand Name",
-        "description": "Brand name shown in the Visit link (e.g., RINVOQ, SKYRIZI)."
+        "name": "brand1Url",
+        "value": "https://www.rinvoqhcp.com/",
+        "label": "Brand 1 URL"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "brandUrl",
-        "value": "",
-        "label": "Brand URL",
-        "description": "Link destination for the brand logo and Visit link."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "brandColor",
-        "value": "",
-        "label": "Brand Color",
-        "description": "Hex color for separator bar and visit arrow (e.g., #ffd41d, #00a8e1, #931947)."
+        "name": "brand1Color",
+        "value": "#ffd41d",
+        "label": "Brand 1 Color",
+        "description": "Hex color for separator bar"
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "safetyText",
+        "name": "brand1Safety",
         "value": "",
-        "label": "Safety Text",
-        "description": "Optional safety disclaimer shown below the brand logo."
-      }
-    ]
-  },
-  {
-    "id": "demo-brand-explorer-indication",
-    "fields": [
+        "label": "Brand 1 Safety Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brand1Indications",
+        "value": "Rheumatoid Arthritis|https://www.rinvoqhcp.com/rheumatoid-arthritis|moderate\nPsoriatic Arthritis|https://www.rinvoqhcp.com/psoriatic-arthritis|active\nAnkylosing Spondylitis|https://www.rinvoqhcp.com/axspa|active\nAtopic Dermatitis|https://www.rinvoqhcp.com/atopic-dermatitis|refractory\nUlcerative Colitis|https://www.rinvoqhcp.com/ulcerative-colitis|moderate\nCrohn's Disease|https://www.rinvoqhcp.com/crohns-disease|moderate",
+        "label": "Brand 1 Indications",
+        "description": "One per line: Name|URL|severity (moderate/active/refractory/noninfectious)"
+      },
       {
         "component": "tab",
-        "label": "Indication",
-        "name": "indication"
+        "label": "Brand 2",
+        "name": "brand2Tab"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "brand2Logo",
+        "label": "Brand 2 Logo",
+        "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "indicationName",
-        "value": "",
-        "label": "Indication Name",
-        "description": "Name of the therapeutic indication (e.g., Rheumatoid Arthritis)."
+        "name": "brand2Name",
+        "value": "SKYRIZI",
+        "label": "Brand 2 Name"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "indicationUrl",
-        "value": "",
-        "label": "Indication URL",
-        "description": "Link for this indication."
+        "name": "brand2Url",
+        "value": "https://www.skyrizihcp.com/",
+        "label": "Brand 2 URL"
       },
       {
-        "component": "select",
-        "name": "severityType",
+        "component": "text",
+        "valueType": "string",
+        "name": "brand2Color",
+        "value": "#00a8e1",
+        "label": "Brand 2 Color"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "brand2Safety",
         "value": "",
-        "label": "Severity Prefix",
-        "description": "Severity label shown above the indication name.",
-        "options": [
-          { "name": "None", "value": "" },
-          { "name": "Moderate to Severe", "value": "moderate" },
-          { "name": "Active", "value": "active" },
-          { "name": "Refractory, Moderate to Severe", "value": "refractory" },
-          { "name": "Non-infectious", "value": "noninfectious" }
-        ]
+        "label": "Brand 2 Safety Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brand2Indications",
+        "value": "Plaque Psoriasis|https://www.skyrizihcp.com/dermatology|moderate\nPsoriatic Arthritis|https://www.skyrizihcp.com/rheumatology|active\nUlcerative Colitis|https://www.skyrizihcp.com/gastroenterology/ulcerative-colitis|moderate\nCrohn's Disease|https://www.skyrizihcp.com/gastroenterology/crohns-disease|moderate",
+        "label": "Brand 2 Indications",
+        "description": "One per line: Name|URL|severity"
+      },
+      {
+        "component": "tab",
+        "label": "Brand 3",
+        "name": "brand3Tab"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "brand3Logo",
+        "label": "Brand 3 Logo",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brand3Name",
+        "value": "HUMIRA",
+        "label": "Brand 3 Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brand3Url",
+        "value": "https://www.humirapro.com/",
+        "label": "Brand 3 URL"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brand3Color",
+        "value": "#931947",
+        "label": "Brand 3 Color"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "brand3Safety",
+        "value": "",
+        "label": "Brand 3 Safety Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "brand3Indications",
+        "value": "Hidradenitis Suppurativa|https://www.humirapro.com/hidradenitis-suppurativa|moderate\nJuvenile Idiopathic Arthritis|https://www.humirapro.com/jia|moderate\nPediatric Uveitis|https://www.humirapro.com/uveitis-pediatric|noninfectious\nUveitis (Adult)|https://www.humirapro.com/uveitis|noninfectious",
+        "label": "Brand 3 Indications",
+        "description": "One per line: Name|URL|severity"
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
       }
     ]
   },
