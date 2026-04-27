@@ -9751,5 +9751,86 @@
         "...": "../../models/_common-properties.json#/common-prop"
       }
     ]
+  },
+  {
+    "id": "carousel-video-playlist",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Playlist Layout",
+        "options": [
+          { "name": "Cards Grid (default)", "value": "" },
+          { "name": "Bottom", "value": "bottom" },
+          { "name": "Top", "value": "top" },
+          { "name": "Left Sidebar", "value": "left" },
+          { "name": "Right Sidebar", "value": "right" }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "accountId",
+        "label": "Brightcove Account",
+        "options": [
+          { "name": "Default", "value": "" }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "playerId",
+        "value": "",
+        "label": "Brightcove Player ID"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "enableCaptions",
+        "value": false,
+        "label": "Enable Captions"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      }
+    ]
+  },
+  {
+    "id": "carousel-video-playlist-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "videoId",
+        "value": "",
+        "label": "Brightcove Video ID"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "thumbnail",
+        "label": "Thumbnail Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Video Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "transcriptHref",
+        "value": "",
+        "label": "Transcript URL"
+      }
+    ]
   }
 ]
