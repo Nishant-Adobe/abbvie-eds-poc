@@ -1,10 +1,10 @@
-// v1.0 — brand-explorer with skyrizihcp.com styling
+// v1.2 — brand-explorer with UE child item parsing
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
 
   let barLabel = 'Immunology Therapies';
-  let logoUrl = 'https://www.abbvie.com';
+  const logoUrl = 'https://www.abbvie.com';
   const utilityLinks = [];
   const brands = [];
   let projectNumber = 'US-MULT-250253';
@@ -47,96 +47,38 @@ export default function decorate(block) {
       }
     });
   } else {
-    // UE xwalk properties-only format: all data in flat property rows
-    const allTexts = rows.map((r) => r.textContent.trim());
-    const allImages = {};
+    // UE xwalk format: parse child items + block properties from rows
+    rows.forEach((row) => {
+      const comp = row.getAttribute('data-aue-component');
+      if (comp === 'brand-explorer-item') {
+        const img = row.querySelector('img, picture');
+        const allTexts = [...row.querySelectorAll('p, div, span')]
+          .map((el) => el.textContent.trim()).filter(Boolean);
+        const urlEl = row.querySelector('a');
+        const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
+        const brandName = allTexts.find((t) => !t.startsWith('http') && t.length < 30) || '';
+        const therapeuticArea = allTexts.find((t) => ['Immunology', 'Dermatology', 'Gastroenterology', 'Rheumatology', 'Ophthalmology'].includes(t)) || '';
+        const descEl = row.querySelector('[data-aue-prop="description"]');
+        const description = descEl?.innerHTML.trim() || '';
 
-    // Collect images — match them to brands by position
-    rows.forEach((row, idx) => {
-      const img = row.querySelector('img, picture');
-      if (img) allImages[idx] = img.cloneNode(true);
-    });
-
-    // Find bar label
-    const labelCandidate = allTexts.find((t) => t && !t.startsWith('http') && !t.startsWith('#') && !t.startsWith('US-') && !t.includes('|') && t.length < 40 && !['Contact Medical Info', 'Full Prescribing Information', 'Patient Site', 'RINVOQ', 'SKYRIZI', 'HUMIRA'].includes(t));
-    if (labelCandidate) barLabel = labelCandidate;
-
-    // Find logo URL
-    const firstUrl = allTexts.find((t) => t.startsWith('http'));
-    if (firstUrl) logoUrl = firstUrl;
-
-    // Find utility links
-    const knownLinks = ['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'];
-    for (let i = 0; i < allTexts.length - 1; i += 1) {
-      if (knownLinks.includes(allTexts[i])) {
-        const nextUrl = allTexts[i + 1];
-        if (nextUrl?.startsWith('http')) {
-          utilityLinks.push({ text: allTexts[i], href: nextUrl, target: allTexts[i].includes('Contact') ? '_self' : '_blank' });
-        }
-      }
-    }
-
-    // Find project number
-    const pn = allTexts.find((t) => t.startsWith('US-'));
-    if (pn) projectNumber = pn;
-
-    // Find brands by known names or pattern
-    const brandNames = ['RINVOQ', 'SKYRIZI', 'HUMIRA'];
-    const foundBrands = [];
-
-    for (let i = 0; i < allTexts.length; i += 1) {
-      const text = allTexts[i];
-      if (brandNames.includes(text) || (text && allTexts[i + 1]?.startsWith('http') && !knownLinks.includes(text) && !text.startsWith('US-') && text !== barLabel && text.length < 20 && !text.includes('|'))) {
-        const brandName = text;
-        const brandUrl = allTexts[i + 1]?.startsWith('http') ? allTexts[i + 1] : '#';
-        const brandColor = allTexts.slice(i, i + 5).find((t) => t.startsWith('#') && t.length <= 7) || '';
-
-        // Find indications: look for pipe-delimited text nearby
-        const indicationsText = allTexts.slice(i, i + 10).find((t) => t.includes('|'));
-        const indications = [];
-        if (indicationsText) {
-          indicationsText.split('\n').forEach((line) => {
-            const parts = line.split('|').map((p) => p.trim());
-            if (parts[0]) {
-              indications.push({
-                name: parts[0],
-                url: parts[1] || '#',
-                severity: parts[2] || '',
-              });
-            }
-          });
-        }
-
-        // Find safety text: look for richtext/bold content
-        let safetyText = '';
-        for (let j = i; j < Math.min(i + 8, rows.length); j += 1) {
-          const bold = rows[j]?.querySelector('b, strong');
-          if (bold) {
-            safetyText = rows[j].innerHTML;
-            break;
-          }
-        }
-
-        // Find logo image for this brand
-        let brandImage = null;
-        const imageKeys = Object.keys(allImages).map(Number).sort((a, b) => a - b);
-        const brandIdx = foundBrands.length;
-        if (imageKeys[brandIdx] !== undefined) {
-          brandImage = allImages[imageKeys[brandIdx]];
-        }
-
-        foundBrands.push({
-          image: brandImage,
+        brands.push({
+          image: img ? img.cloneNode(true) : null,
           name: brandName,
-          safetyText,
+          therapeuticArea,
+          description,
+          safetyText: '',
           url: brandUrl,
-          color: brandColor,
-          indications,
+          color: '',
+          indications: [],
         });
+      } else if (!comp) {
+        const text = row.textContent.trim();
+        if (text && !text.startsWith('http') && !text.startsWith('US-') && text.length < 40) {
+          barLabel = text;
+        }
+        if (text.startsWith('US-')) projectNumber = text;
       }
-    }
-
-    foundBrands.forEach((b) => brands.push(b));
+    });
   }
 
   if (!utilityLinks.length) {
