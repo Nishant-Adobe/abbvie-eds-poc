@@ -7,7 +7,10 @@ import {
 } from './aem.js';
 
 export function getBrandCode() {
-  return getMetadata('brand') || '';
+  const metaBrand = getMetadata('brand')?.trim();
+  if (metaBrand) return metaBrand;
+  const knownBrands = ['rinvoq', 'skyrizi', 'abbvie', 'botox', 'linzess', 'venclexta', 'mavyret'];
+  return knownBrands.find((b) => window.location.pathname.toLowerCase().includes(b)) || '';
 }
 
 const brandCode = getBrandCode();
