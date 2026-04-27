@@ -1,226 +1,347 @@
-/*
- * brand-explorer
- * Multi-brand product navigator with therapeutic filter tabs.
- *
- * Variants:
- *   - (default): Full explorer with therapeutic filter tabs
- *   - cards: Brand card grid layout
- *   - nav: Navigation link list
- *
- * Authoring model (table format):
- *   | brand-explorer           |
- *   | Bar label text           |                                    ← row 0
- *   | [logo] | Brand | Area | Description | /url |                 ← row 1..n
- */
-
-import { moveInstrumentation } from '../../scripts/scripts.js';
-
-function parseIndications(row) {
-  const cells = [...row.children];
-  const imgEl = cells[0]?.querySelector('img, picture');
-  const name = (imgEl ? cells[1] : cells[0])?.textContent.trim();
-  const therapeuticArea = (imgEl ? cells[2] : cells[1])?.textContent.trim() || '';
-  const description = (imgEl ? cells[3] : cells[2])?.innerHTML.trim() || '';
-  const url = (imgEl ? cells[4] : cells[3])?.textContent.trim() || '#';
-
-  return {
-    imgEl: imgEl ? imgEl.cloneNode(true) : null,
-    name: name || '',
-    therapeuticArea,
-    description,
-    url,
-  };
-}
-
-function buildFilterTabs(brands, container) {
-  const areas = [...new Set(brands.map((b) => b.therapeuticArea).filter(Boolean))];
-  if (areas.length <= 1) return;
-
-  const tabBar = document.createElement('div');
-  tabBar.className = 'brand-explorer-tabs';
-
-  const allTab = document.createElement('button');
-  allTab.className = 'brand-explorer-tab is-active';
-  allTab.textContent = 'All';
-  allTab.dataset.filter = '';
-  tabBar.append(allTab);
-
-  areas.forEach((area) => {
-    const tab = document.createElement('button');
-    tab.className = 'brand-explorer-tab';
-    tab.textContent = area;
-    tab.dataset.filter = area;
-    tabBar.append(tab);
-  });
-
-  tabBar.addEventListener('click', (e) => {
-    const tab = e.target.closest('.brand-explorer-tab');
-    if (!tab) return;
-    tabBar.querySelectorAll('.brand-explorer-tab').forEach((t) => t.classList.remove('is-active'));
-    tab.classList.add('is-active');
-
-    const { filter } = tab.dataset;
-    container.querySelectorAll('.brand-explorer-item').forEach((item) => {
-      item.style.display = (!filter || item.dataset.area === filter) ? '' : 'none';
-    });
-  });
-
-  // eslint-disable-next-line consistent-return
-  return tabBar;
-}
-
-function buildCard(brand) {
-  const li = document.createElement('li');
-  li.className = 'brand-explorer-item';
-  if (brand.therapeuticArea) li.dataset.area = brand.therapeuticArea;
-
-  const a = document.createElement('a');
-  a.href = brand.url;
-  a.className = 'brand-explorer-link';
-
-  if (brand.imgEl) {
-    const img = brand.imgEl.tagName === 'IMG' ? brand.imgEl : brand.imgEl.querySelector('img');
-    if (img) {
-      img.className = 'brand-explorer-logo';
-      img.loading = 'lazy';
-      a.append(img);
-    }
-  }
-
-  const label = document.createElement('span');
-  label.className = 'brand-explorer-name';
-  label.textContent = brand.name;
-  a.append(label);
-
-  if (brand.therapeuticArea) {
-    const area = document.createElement('span');
-    area.className = 'brand-explorer-area';
-    area.textContent = brand.therapeuticArea;
-    a.append(area);
-  }
-
-  if (brand.description) {
-    const desc = document.createElement('div');
-    desc.className = 'brand-explorer-description';
-    desc.innerHTML = brand.description;
-    a.append(desc);
-  }
-
-  li.append(a);
-  return li;
-}
-
-function buildNavItem(brand) {
-  const li = document.createElement('li');
-  li.className = 'brand-explorer-item';
-  if (brand.therapeuticArea) li.dataset.area = brand.therapeuticArea;
-
-  const a = document.createElement('a');
-  a.href = brand.url;
-  a.className = 'brand-explorer-nav-link';
-  a.textContent = brand.name;
-  li.append(a);
-  return li;
-}
-
+// v1.0 — brand-explorer with skyrizihcp.com styling
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
 
-  const isCards = block.classList.contains('cards');
-  const isNav = block.classList.contains('nav');
+  let barLabel = 'Immunology Therapies';
+  let logoUrl = 'https://www.abbvie.com';
+  const utilityLinks = [];
+  const brands = [];
+  let projectNumber = 'US-MULT-250253';
 
-  const [labelRow, ...brandRows] = rows;
-  const barLabel = labelRow.textContent.trim() || 'Explore AbbVie';
+  // Detect format: plain.html rows have multiple cells
+  const firstRowCells = rows[0]?.children?.length || 0;
+  const isTableFormat = firstRowCells > 1
+    || rows[0]?.querySelector('a')
+    || rows[0]?.querySelector('img, picture');
 
-  const brands = brandRows.map((row) => {
-    const brand = parseIndications(row);
-    moveInstrumentation(row, row);
-    return brand;
-  }).filter((b) => b.name);
+  if (isTableFormat) {
+    const [barRow, ...restRows] = rows;
+    const barCells = [...barRow.children];
+    barLabel = barCells[0]?.textContent.trim() || barLabel;
 
-  // Bar
+    for (let i = 1; i < barCells.length; i += 1) {
+      const a = barCells[i]?.querySelector('a');
+      if (a) utilityLinks.push({ text: a.textContent.trim(), href: a.href, target: a.target || '_self' });
+    }
+
+    let currentBrand = null;
+    restRows.forEach((row) => {
+      const cells = [...row.children];
+      const hasImage = cells[0]?.querySelector('img, picture');
+      if (hasImage) {
+        currentBrand = {
+          image: hasImage.cloneNode(true),
+          name: cells[1]?.textContent.trim() || '',
+          safetyText: cells[2]?.innerHTML.trim() || '',
+          url: cells[3]?.textContent.trim() || '#',
+          color: cells[4]?.textContent.trim() || '',
+          indications: [],
+        };
+        brands.push(currentBrand);
+      } else if (currentBrand) {
+        const name = cells[0]?.textContent.trim();
+        const url = cells[1]?.textContent.trim() || '#';
+        const severity = cells[2]?.textContent.trim().toLowerCase() || '';
+        if (name) currentBrand.indications.push({ name, url, severity });
+      }
+    });
+  } else {
+    // UE xwalk properties-only format: all data in flat property rows
+    const allTexts = rows.map((r) => r.textContent.trim());
+    const allImages = {};
+
+    // Collect images — match them to brands by position
+    rows.forEach((row, idx) => {
+      const img = row.querySelector('img, picture');
+      if (img) allImages[idx] = img.cloneNode(true);
+    });
+
+    // Find bar label
+    const labelCandidate = allTexts.find((t) => t && !t.startsWith('http') && !t.startsWith('#') && !t.startsWith('US-') && !t.includes('|') && t.length < 40 && !['Contact Medical Info', 'Full Prescribing Information', 'Patient Site', 'RINVOQ', 'SKYRIZI', 'HUMIRA'].includes(t));
+    if (labelCandidate) barLabel = labelCandidate;
+
+    // Find logo URL
+    const firstUrl = allTexts.find((t) => t.startsWith('http'));
+    if (firstUrl) logoUrl = firstUrl;
+
+    // Find utility links
+    const knownLinks = ['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'];
+    for (let i = 0; i < allTexts.length - 1; i += 1) {
+      if (knownLinks.includes(allTexts[i])) {
+        const nextUrl = allTexts[i + 1];
+        if (nextUrl?.startsWith('http')) {
+          utilityLinks.push({ text: allTexts[i], href: nextUrl, target: allTexts[i].includes('Contact') ? '_self' : '_blank' });
+        }
+      }
+    }
+
+    // Find project number
+    const pn = allTexts.find((t) => t.startsWith('US-'));
+    if (pn) projectNumber = pn;
+
+    // Find brands by known names or pattern
+    const brandNames = ['RINVOQ', 'SKYRIZI', 'HUMIRA'];
+    const foundBrands = [];
+
+    for (let i = 0; i < allTexts.length; i += 1) {
+      const text = allTexts[i];
+      if (brandNames.includes(text) || (text && allTexts[i + 1]?.startsWith('http') && !knownLinks.includes(text) && !text.startsWith('US-') && text !== barLabel && text.length < 20 && !text.includes('|'))) {
+        const brandName = text;
+        const brandUrl = allTexts[i + 1]?.startsWith('http') ? allTexts[i + 1] : '#';
+        const brandColor = allTexts.slice(i, i + 5).find((t) => t.startsWith('#') && t.length <= 7) || '';
+
+        // Find indications: look for pipe-delimited text nearby
+        const indicationsText = allTexts.slice(i, i + 10).find((t) => t.includes('|'));
+        const indications = [];
+        if (indicationsText) {
+          indicationsText.split('\n').forEach((line) => {
+            const parts = line.split('|').map((p) => p.trim());
+            if (parts[0]) {
+              indications.push({
+                name: parts[0],
+                url: parts[1] || '#',
+                severity: parts[2] || '',
+              });
+            }
+          });
+        }
+
+        // Find safety text: look for richtext/bold content
+        let safetyText = '';
+        for (let j = i; j < Math.min(i + 8, rows.length); j += 1) {
+          const bold = rows[j]?.querySelector('b, strong');
+          if (bold) {
+            safetyText = rows[j].innerHTML;
+            break;
+          }
+        }
+
+        // Find logo image for this brand
+        let brandImage = null;
+        const imageKeys = Object.keys(allImages).map(Number).sort((a, b) => a - b);
+        const brandIdx = foundBrands.length;
+        if (imageKeys[brandIdx] !== undefined) {
+          brandImage = allImages[imageKeys[brandIdx]];
+        }
+
+        foundBrands.push({
+          image: brandImage,
+          name: brandName,
+          safetyText,
+          url: brandUrl,
+          color: brandColor,
+          indications,
+        });
+      }
+    }
+
+    foundBrands.forEach((b) => brands.push(b));
+  }
+
+  if (!utilityLinks.length) {
+    utilityLinks.push(
+      { text: 'Contact Medical Info', href: '#', target: '_self' },
+      { text: 'Full Prescribing Information', href: '/prescribinginfo', target: '_blank' },
+      { text: 'Patient Site', href: '/patientsite', target: '_blank' },
+    );
+  }
+
+  // Hide all original rows
+  rows.forEach((row) => { row.style.display = 'none'; });
+
+  // Build bar
   const bar = document.createElement('div');
   bar.className = 'brand-explorer-bar';
 
-  const trigger = document.createElement('button');
-  trigger.className = 'brand-explorer-trigger';
-  trigger.setAttribute('aria-expanded', 'false');
-  trigger.setAttribute('aria-controls', 'brand-explorer-panel');
-  trigger.textContent = barLabel;
-  bar.append(trigger);
+  const barLeft = document.createElement('div');
+  barLeft.className = 'brand-explorer-left';
 
-  // Panel
-  const panel = document.createElement('div');
-  panel.className = 'brand-explorer-panel';
-  panel.id = 'brand-explorer-panel';
-  panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-label', barLabel);
-  panel.hidden = true;
+  const logoLink = document.createElement('a');
+  logoLink.href = logoUrl;
+  logoLink.target = '_blank';
+  logoLink.className = 'brand-explorer-logo-link';
+  logoLink.setAttribute('aria-label', 'AbbVie');
+  logoLink.innerHTML = '<svg viewBox="0 0 124.4 21.5" class="brand-explorer-abbvie-logo"><g><path fill="currentColor" d="M123.8,20.8c0-1.3-0.8-1.8-2-1.8c-0.7,0-9.2,0-9.2,0c-4.5,0-5.6-2.7-5.8-4.4c0,0,9.5,0,12.5,0c3.8,0,5-2.8,5-4.6c0-1.9-1.2-4.6-5-4.6c-3.4,0-6.9,0-6.9,0c-6.5,0-8.6,4.4-8.6,8c0,3.9,2.4,8,8.6,8h11.4C123.8,21.5,123.8,20.9,123.8,20.8z M112.6,7.8c1,0,4.6,0,6,0c2.2,0,2.7,1.3,2.7,2.2c0,0.8-0.5,2.2-2.7,2.2c-1.5,0-12,0-12,0C106.8,10.8,108.1,7.8,112.6,7.8z M85.9,20.5c-0.7,0.9-1,1.3-1.7,1.3c-0.9,0-1.1-0.4-1.7-1.3c-1.4-2-9.8-15-9.8-15s0.6,0,1.2,0c2,0,2.6,0.9,3.2,1.9c0.5,0.8,7.3,11.2,7.3,11.2s6.4-9.9,7.3-11.3c0.6-0.9,1.4-1.8,3.3-1.8c0.4,0,0.9,0,0.9,0S87.1,18.9,85.9,20.5z M22.8,21.5c-1.5,0-2.1-0.6-2.3-1.8L20.1,18c-0.4,0.7-2.4,3.5-6.8,3.5c0,0-2.2,0-4.5,0c-6.8,0-8.7-4.6-8.7-8c0-3.8,2.3-8,8.7-8c1.3,0,2.7,0,4.8,0c4.9,0,7.6,2.8,8.2,6.3c0.5,2.9,1.8,9.7,1.8,9.7S23.3,21.5,22.8,21.5z M12.9,8c-1.6,0-2,0-3.8,0C4.5,8,3,10.9,3,13.5S4.5,19,9.1,19c1.9,0,2.5,0,3.8,0c4.8,0,6.1-3,6.1-5.5C19,11.3,17.8,8,12.9,8z M99,2.9c0.7,0,1.4-0.4,1.4-1.3c0-0.2,0-0.4,0-0.5c0-0.8-0.7-1.3-1.4-1.3c-0.7,0-1.4,0.4-1.4,1.3c0,0.1,0,0.3,0,0.5C97.6,2.5,98.3,2.9,99,2.9z M97.7,5.5c0,0,0.4,0,0.6,0c1.3,0,2.1,0.7,2.1,2.1c0,0.2,0,13.9,0,13.9s-0.3,0-0.6,0c-1.3,0-2.1-0.8-2.1-2.2C97.7,19.2,97.7,5.5,97.7,5.5z M28.1,7.8c0.6-0.6,2.4-2.3,5.9-2.3c0,0,2.2,0,4.5,0c6.8,0,8.8,4.6,8.8,8c0,3.8-2.4,8-8.8,8c-1.3,0-2.7,0-4.8,0c-4.9,0-8.4-3.1-8.4-8c0-1.6,0-13.4,0-13.4s0.5,0,0.8,0c1.4,0,2,0.7,2,1.9C28.1,2.2,28.1,7.8,28.1,7.8z M34.4,19c1.6,0,2,0,3.8,0c4.5,0,6.1-2.9,6.1-5.5S42.8,8,38.2,8c-1.9,0-2.5,0-3.8,0c-4.8,0-6.1,3-6.1,5.5C28.2,15.7,29.5,19,34.4,19z M53.2,7.8c0.6-0.6,2.4-2.3,5.9-2.3c0,0,2.2,0,4.5,0c6.8,0,8.7,4.6,8.7,8c0,3.8-2.3,8-8.7,8c-1.3,0-2.7,0-4.8,0c-4.9,0-8.4-3.1-8.4-8c0-1.6,0-13.4,0-13.4s0.5,0,0.8,0c1.4,0,2,0.7,2,1.9C53.2,2.2,53.2,7.8,53.2,7.8z M59.5,19c1.6,0,2,0,3.8,0c4.6,0,6.1-2.9,6.1-5.5S67.9,8,63.3,8c-1.9,0-2.4,0-3.8,0c-4.8,0-6.1,3-6.1,5.5C53.3,15.7,54.6,19,59.5,19z"/></g></svg>';
+  barLeft.append(logoLink);
+
+  const browseBtn = document.createElement('button');
+  browseBtn.className = 'brand-explorer-browse';
+  browseBtn.setAttribute('aria-expanded', 'false');
+  browseBtn.setAttribute('aria-controls', 'brand-explorer-content');
+  browseBtn.innerHTML = `<span>${barLabel}</span><span class="brand-explorer-browse-icon"></span>`;
+  barLeft.append(browseBtn);
+
+  const barRight = document.createElement('div');
+  barRight.className = 'brand-explorer-right';
+
+  utilityLinks.forEach((link) => {
+    const a = document.createElement('a');
+    a.href = link.href;
+    a.textContent = link.text;
+    a.target = link.target;
+    if (link.text.toLowerCase().includes('contact medical')) {
+      a.href = '#';
+      a.dataset.modal = 'contact-medical';
+    }
+    barRight.append(a);
+  });
+
+  bar.append(barLeft, barRight);
+
+  // Modal
+  const modal = document.createElement('div');
+  modal.className = 'brand-explorer-modal';
+  modal.hidden = true;
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.innerHTML = `
+    <div class="brand-explorer-modal-overlay"></div>
+    <div class="brand-explorer-modal-dialog">
+      <button class="brand-explorer-modal-close" aria-label="Close modal"></button>
+      <h2 class="brand-explorer-modal-title">You are about to enter a site that is for U.S. Healthcare Professionals Only.</h2>
+      <p class="brand-explorer-modal-text">By selecting "Yes" below, you certify that you are a Healthcare Professional and that you wish to proceed to the Healthcare Professionals Only section on the AbbVie Medical Information site. Products or treatments described on this site are available in the U.S. but may not be available in all other countries. I am a licensed Healthcare Professional and wish to proceed to the Healthcare Professionals Only AbbVie Medical Information Site.</p>
+      <div class="brand-explorer-modal-actions">
+        <a class="brand-explorer-modal-btn brand-explorer-modal-yes" href="https://www.abbviemedinfo.com" target="_blank">YES</a>
+        <button class="brand-explorer-modal-btn brand-explorer-modal-no">NO</button>
+      </div>
+    </div>
+  `;
+  document.body.append(modal);
+
+  function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
+  modal.querySelector('.brand-explorer-modal-close').addEventListener('click', closeModal);
+  modal.querySelector('.brand-explorer-modal-no').addEventListener('click', closeModal);
+  modal.querySelector('.brand-explorer-modal-overlay').addEventListener('click', closeModal);
+  modal.querySelector('.brand-explorer-modal-yes').addEventListener('click', closeModal);
+  barRight.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-modal="contact-medical"]');
+    if (trigger) { e.preventDefault(); openModal(); }
+  });
+
+  // Content panel
+  const content = document.createElement('div');
+  content.className = 'brand-explorer-content';
+  content.id = 'brand-explorer-content';
+  content.hidden = true;
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'brand-explorer-close';
   closeBtn.setAttribute('aria-label', 'Close brand explorer');
-  panel.append(closeBtn);
+  closeBtn.innerHTML = 'Close <span class="brand-explorer-close-icon"></span>';
+  content.append(closeBtn);
 
-  // Therapeutic filter tabs (only for default variant)
-  if (!isCards && !isNav) {
-    const grid = document.createElement('ul');
-    grid.className = 'brand-explorer-grid';
-    const tabBar = buildFilterTabs(brands, grid);
-    if (tabBar) panel.append(tabBar);
-    brands.forEach((brand) => grid.append(buildCard(brand)));
-    panel.append(grid);
-  } else if (isCards) {
-    const grid = document.createElement('ul');
-    grid.className = 'brand-explorer-grid brand-explorer-cards';
-    brands.forEach((brand) => grid.append(buildCard(brand)));
-    panel.append(grid);
-  } else if (isNav) {
-    const list = document.createElement('ul');
-    list.className = 'brand-explorer-nav-list';
-    brands.forEach((brand) => list.append(buildNavItem(brand)));
-    panel.append(list);
-  }
+  const accordions = document.createElement('div');
+  accordions.className = 'brand-explorer-accordions';
 
-  // Anchor ID
-  const anchorRow = rows.find((r) => r.textContent.trim().startsWith('id:'));
-  if (anchorRow) {
-    const anchorId = anchorRow.textContent.trim().replace('id:', '').trim();
-    if (anchorId) block.id = anchorId;
-  }
+  brands.forEach((brand) => {
+    const brandSlug = brand.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const accordion = document.createElement('div');
+    accordion.className = `brand-explorer-accordion brand-explorer-accordion--${brandSlug}`;
 
-  block.replaceChildren(bar, panel);
+    const blade = document.createElement('div');
+    blade.className = 'brand-explorer-blade';
+
+    const bladeLink = document.createElement('a');
+    bladeLink.href = brand.url;
+    bladeLink.className = 'brand-explorer-blade-link';
+
+    if (brand.image) {
+      const img = brand.image.tagName === 'IMG' ? brand.image : brand.image.querySelector('img');
+      if (img) {
+        img.className = 'brand-explorer-brand-img';
+        img.loading = 'lazy';
+        bladeLink.append(img);
+      }
+    }
+    blade.append(bladeLink);
+
+    if (brand.safetyText) {
+      const subtitle = document.createElement('div');
+      subtitle.className = 'brand-explorer-subtitle';
+      subtitle.innerHTML = brand.safetyText;
+      blade.append(subtitle);
+    }
+
+    const separator = document.createElement('hr');
+    separator.className = 'brand-explorer-separator';
+    if (brand.color) separator.style.backgroundColor = brand.color;
+    blade.append(separator);
+    accordion.append(blade);
+
+    const links = document.createElement('div');
+    links.className = 'brand-explorer-links';
+
+    brand.indications.forEach((ind) => {
+      const a = document.createElement('a');
+      a.href = ind.url;
+      a.className = 'brand-explorer-indication';
+      if (ind.severity) a.classList.add(`brand-explorer-indication--${ind.severity}`);
+      a.textContent = ind.name;
+      links.append(a);
+    });
+
+    const visitLink = document.createElement('a');
+    visitLink.href = brand.url;
+    visitLink.className = 'brand-explorer-visit';
+    visitLink.innerHTML = `Visit ${brand.name} <span class="brand-explorer-visit-arrow" ${brand.color ? `style="background-color:${brand.color}"` : ''}></span>`;
+    links.append(visitLink);
+
+    accordion.append(links);
+    accordions.append(accordion);
+  });
+
+  content.append(accordions);
+
+  const projectNum = document.createElement('div');
+  projectNum.className = 'brand-explorer-project-number';
+  projectNum.textContent = projectNumber;
+  content.append(projectNum);
+
+  block.prepend(content);
+  block.append(bar);
 
   const section = block.closest('.section');
-  if (section) {
-    section.classList.add('brand-explorer-section');
-    document.body.append(section);
-  }
+  if (section) section.classList.add('brand-explorer-section');
 
-  // Toggle logic
+  // Toggle
   function open() {
-    panel.hidden = false;
-    trigger.setAttribute('aria-expanded', 'true');
-    block.classList.add('is-open');
-    closeBtn.focus();
+    content.hidden = false;
+    requestAnimationFrame(() => {
+      block.classList.add('is-open');
+      browseBtn.setAttribute('aria-expanded', 'true');
+      closeBtn.focus();
+    });
   }
 
   function close() {
     block.classList.remove('is-open');
-    trigger.setAttribute('aria-expanded', 'false');
-    panel.addEventListener('transitionend', () => { panel.hidden = true; }, { once: true });
-    trigger.focus();
+    browseBtn.setAttribute('aria-expanded', 'false');
+    content.addEventListener('transitionend', () => { content.hidden = true; }, { once: true });
+    browseBtn.focus();
   }
 
-  trigger.addEventListener('click', () => {
-    if (block.classList.contains('is-open')) close();
-    else open();
+  browseBtn.addEventListener('click', () => {
+    if (block.classList.contains('is-open')) close(); else open();
   });
-
   closeBtn.addEventListener('click', close);
-
+  document.addEventListener('click', (e) => {
+    if (block.classList.contains('is-open') && !block.contains(e.target)) close();
+  });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && block.classList.contains('is-open')) close();
+  });
+
+  // Mobile accordion
+  accordions.addEventListener('click', (e) => {
+    if (window.innerWidth >= 896) return;
+    const clickedBlade = e.target.closest('.brand-explorer-blade');
+    if (!clickedBlade) return;
+    e.preventDefault();
+    const parentAccordion = clickedBlade.closest('.brand-explorer-accordion');
+    const wasActive = parentAccordion.classList.contains('is-active');
+    accordions.querySelectorAll('.brand-explorer-accordion').forEach((acc) => acc.classList.remove('is-active'));
+    if (!wasActive) parentAccordion.classList.add('is-active');
   });
 }
