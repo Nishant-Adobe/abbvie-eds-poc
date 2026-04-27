@@ -9,12 +9,12 @@
   /* Card variant tokens */
   --formulary-card-bg: #fff;
   --formulary-card-border-radius: 10px;
-  --formulary-card-box-shadow: rgb(0 0 0 / 25%) 2px 1px 8px 0px;
+  --formulary-card-box-shadow: rgb(0 0 0 / 25%) 2px 1px 8px 0;
   --formulary-card-padding: 24px;
 
   /* Heading */
   --formulary-heading-font-size: 20px;
-  --formulary-heading-font-weight: 600;
+  --formulary-heading-font-weight: 700;
   --formulary-heading-color: rgb(37 40 42);
   --formulary-heading-margin-bottom: 32px;
   --formulary-heading-line-height: 25px;
@@ -32,32 +32,34 @@
   --formulary-form-max-width: 390px;
 
   /* Input — rounded */
-  --formulary-input-max-width: 388px;
-  --formulary-input-height: 45px;
+  --formulary-input-max-width: 390px;
+  --formulary-input-height: 48px;
   --formulary-input-border: 1px solid rgb(135 137 138);
   --formulary-input-border-radius: 10px;
-  --formulary-input-padding: 12px;
-  --formulary-input-margin-bottom: 31px;
+  --formulary-input-padding: 14px 12px;
+  --formulary-input-margin-bottom: 24px;
   --formulary-input-font-size: 16px;
 
   /* Floating label */
   --formulary-label-position: absolute;
-  --formulary-label-font-size: 14px;
+  --formulary-label-display: block;
+  --formulary-label-font-size: 12px;
   --formulary-label-font-weight: 400;
   --formulary-label-bg: #fff;
-  --formulary-label-padding: 0 3px 0 2px;
-  --formulary-label-top: -10px;
+  --formulary-label-padding: 0 4px;
+  --formulary-label-top: -8px;
   --formulary-label-left: 12px;
   --formulary-label-z-index: 1;
-  --formulary-label-line-height: 21px;
+  --formulary-label-line-height: 16px;
   --formulary-label-color: rgb(70 72 74);
+  --formulary-label-margin-bottom: 0;
 
   /* Submit button — magenta pill with search icon */
   --formulary-submit-bg: rgb(144 18 74);
   --formulary-submit-border: none;
   --formulary-submit-border-radius: 100px;
-  --formulary-submit-height: 49px;
-  --formulary-submit-padding: 15px 66px 15px 32px;
+  --formulary-submit-height: 48px;
+  --formulary-submit-padding: 12px 55px 12px 24px;
   --formulary-submit-font-size: 16px;
   --formulary-submit-font-weight: 700;
   --formulary-submit-icon-display: inline-block;
@@ -68,36 +70,58 @@
   --formulary-error-font-size: 12px;
 
   /* reCAPTCHA notice */
-  --formulary-captcha-font-size: 11.2px;
+  --formulary-captcha-font-size: 11px;
 }
 
-/* Ensure input-group and select have relative positioning for floating labels */
-.formulary-lookup .formulary-lookup-input-group,
-.formulary-lookup .formulary-lookup-select {
+/* Input group stacks vertically — no inline button */
+.formulary-lookup .formulary-lookup-input-group {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  max-width: 390px;
+  margin-inline: auto;
   position: relative;
 }
 
-/* Center the zip form container */
+/* ZIP input fills full width */
+.formulary-lookup .formulary-lookup-zip-input {
+  width: 100%;
+  max-width: 390px;
+  flex: none;
+}
+
+/* Center the zip form */
 .formulary-lookup .formulary-lookup-zip-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.formulary-lookup .formulary-lookup-input-group {
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
+/* Filter + indication centered at 390px */
+.formulary-lookup .formulary-lookup-filter {
+  max-width: 390px;
+  margin-inline: auto;
 }
 
-.formulary-lookup .formulary-lookup-zip-input {
-  width: 388px;
-  max-width: 388px;
-  flex: none;
-  margin-bottom: 31px;
+.formulary-lookup .formulary-lookup-filter select {
+  width: 100%;
+  max-width: 390px;
 }
 
-/* Submit button centered below inputs */
+.formulary-lookup .formulary-lookup-indications {
+  max-width: 390px;
+  margin-inline: auto;
+}
+
+/* Submit centered */
 .formulary-lookup .formulary-lookup-submit {
-  margin: 12px 0;
+  margin: 16px auto;
+  display: block;
+}
+
+/* Disclaimer */
+.formulary-lookup .formulary-lookup-disclaimer {
+  font-size: 14px;
+  max-width: 390px;
+  margin-inline: auto;
 }

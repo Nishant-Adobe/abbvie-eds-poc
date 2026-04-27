@@ -3,63 +3,76 @@
 /* Mavyret HCP formulary-lookup overrides */
 
 .formulary-lookup {
-  --formulary-text-color: rgb(0, 0, 0);
+  --formulary-text-color: rgb(0 0 0);
   --formulary-text-align: center;
 
-  /* Input — black border, tight radius */
-  --formulary-input-max-width: 388px;
-  --formulary-input-height: 47px;
-  --formulary-input-border: 2px solid rgb(0, 0, 0);
-  --formulary-input-border-radius: 2px;
-  --formulary-input-padding: 12px 35px 12px 15px;
-  --formulary-input-font-size: 16px;
-  --formulary-input-color: rgb(0, 0, 0);
+  /* Input — thin border, centered */
+  --formulary-input-max-width: 300px;
+  --formulary-input-height: 40px;
+  --formulary-input-border: 1px solid rgb(170 170 170);
+  --formulary-input-border-radius: 4px;
+  --formulary-input-padding: 8px 12px;
+  --formulary-input-font-size: 14px;
+  --formulary-input-color: rgb(0 0 0);
 
-  /* Heading */
-  --formulary-heading-font-size: 1.5rem;
+  /* Heading — normal weight, larger */
+  --formulary-heading-font-size: 22px;
   --formulary-heading-font-weight: 400;
-  --formulary-heading-color: rgb(0, 0, 0);
+  --formulary-heading-color: rgb(0 0 0);
   --formulary-heading-margin-bottom: 16px;
+  --formulary-heading-line-height: 1.3;
 
-  /* Label */
-  --formulary-label-font-size: 16px;
-  --formulary-label-font-weight: 400;
+  /* Label — standard */
+  --formulary-label-font-size: 14px;
+  --formulary-label-font-weight: 600;
 
-  /* Submit button — white bg, orange border + shadow */
-  --formulary-submit-bg: rgb(255, 255, 255);
-  --formulary-submit-color: rgb(83, 87, 88);
-  --formulary-submit-border: 2px solid rgb(230, 84, 0);
-  --formulary-submit-border-radius: 0;
-  --formulary-submit-font-size: 18px;
-  --formulary-submit-font-weight: 600;
-  --formulary-submit-padding: 8px 16px;
-  --formulary-submit-box-shadow: rgb(230, 84, 0) -2px 2px 8px 0px;
-
-  /* Dropdown list items */
-  --formulary-select-option-color: rgb(7, 29, 73);
+  /* Submit button — bordered link style */
+  --formulary-submit-bg: transparent;
+  --formulary-submit-color: rgb(51 51 51);
+  --formulary-submit-border: 1px solid rgb(170 170 170);
+  --formulary-submit-border-radius: 4px;
+  --formulary-submit-font-size: 14px;
+  --formulary-submit-font-weight: 400;
+  --formulary-submit-padding: 8px 28px 8px 16px;
+  --formulary-submit-height: auto;
 }
 
-/* Center the form content within the block */
+/* Center the form */
 .formulary-lookup .formulary-lookup-form {
-  max-width: 388px;
+  max-width: 400px;
   margin-inline: auto;
-  text-align: left;
 }
 
-/* Select dropdown full-width within container */
+/* Select centered */
 .formulary-lookup .formulary-lookup-select {
-  width: 100%;
-  max-width: 388px;
+  margin-inline: auto;
 }
 
-/* Submit hidden by default (Mavyret uses link instead) — show when needed */
+/* Submit — link-like with > arrow */
 .formulary-lookup .formulary-lookup-submit {
-  margin: 12px auto;
+  margin: 16px auto;
   display: block;
+  position: relative;
+}
+
+.formulary-lookup .formulary-lookup-submit::after {
+  content: "\203A";
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  height: auto;
+  background: none;
+  mask-image: none;
+  font-size: 18px;
+  color: inherit;
+  line-height: 1;
 }
 
 .formulary-lookup .formulary-lookup-submit:hover {
   opacity: 1;
-  background: rgb(230, 84, 0);
+  background: rgb(51 51 51);
   color: #fff;
 }
