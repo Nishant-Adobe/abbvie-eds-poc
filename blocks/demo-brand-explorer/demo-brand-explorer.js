@@ -1,4 +1,4 @@
-// v2.7 — parse UE child items into accordion, hide all original rows
+// v3.0 — properties-only model, parse brand data from property rows
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -47,69 +47,96 @@ export default function decorate(block) {
       }
     });
   } else {
-    // UE xwalk format: parse block properties and child items
-    let currentBrand = null;
+    // UE xwalk properties-only format: all data in flat property rows
+    const allTexts = rows.map((r) => r.textContent.trim());
+    const allImages = {};
 
-    rows.forEach((row) => {
-      const comp = row.getAttribute('data-aue-component');
-      const texts = [...row.children].map((c) => c.textContent.trim());
-      const images = row.querySelectorAll('img, picture');
-
-      if (comp === 'demo-brand-explorer-brand') {
-        const img = images.length ? images[0].cloneNode(true) : null;
-        const allTexts = [...row.querySelectorAll('p, div')].map((el) => el.textContent.trim()).filter(Boolean);
-        const urlEl = row.querySelector('a');
-        const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
-        const brandName = allTexts.find((t) => !t.startsWith('http') && !t.startsWith('#') && t.length < 30) || 'Brand';
-        const brandColor = allTexts.find((t) => t.startsWith('#') && t.length <= 7) || '';
-
-        currentBrand = {
-          image: img,
-          name: brandName,
-          safetyText: '',
-          url: brandUrl,
-          color: brandColor,
-          indications: [],
-        };
-        brands.push(currentBrand);
-      } else if (comp === 'demo-brand-explorer-indication' && currentBrand) {
-        const allTexts = [...row.querySelectorAll('p, div')].map((el) => el.textContent.trim()).filter(Boolean);
-        const urlEl = row.querySelector('a');
-        const indUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
-        const indName = allTexts.find((t) => !t.startsWith('http')) || 'Indication';
-
-        currentBrand.indications.push({ name: indName, url: indUrl, severity: '' });
-      } else if (!comp) {
-        // Block-level property row
-        const text = row.textContent.trim();
-        const link = row.querySelector('a');
-        if (link && !text.startsWith('US-')) {
-          const linkText = link.textContent.trim();
-          if (['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'].includes(linkText)) {
-            utilityLinks.push({ text: linkText, href: link.href, target: linkText.includes('Contact') ? '_self' : '_blank' });
-          }
-        }
-        if (text.startsWith('US-')) projectNumber = text;
-        if (text && !text.startsWith('http') && !text.startsWith('US-') && !text.includes('Contact') && !text.includes('Prescribing') && !text.includes('Patient')) {
-          if (texts.length === 0 || rows.indexOf(row) <= 2) barLabel = text;
-        }
-      }
+    // Collect images — match them to brands by position
+    rows.forEach((row, idx) => {
+      const img = row.querySelector('img, picture');
+      if (img) allImages[idx] = img.cloneNode(true);
     });
 
-    // Try reading bar label and utility links from plain text rows
-    const allTexts = rows.filter((r) => !r.getAttribute('data-aue-component')).map((r) => r.textContent.trim());
+    // Find bar label
+    const labelCandidate = allTexts.find((t) => t && !t.startsWith('http') && !t.startsWith('#') && !t.startsWith('US-') && !t.includes('|') && t.length < 40 && !['Contact Medical Info', 'Full Prescribing Information', 'Patient Site', 'RINVOQ', 'SKYRIZI', 'HUMIRA'].includes(t));
+    if (labelCandidate) barLabel = labelCandidate;
+
+    // Find logo URL
+    const firstUrl = allTexts.find((t) => t.startsWith('http'));
+    if (firstUrl) logoUrl = firstUrl;
+
+    // Find utility links
     const knownLinks = ['Contact Medical Info', 'Full Prescribing Information', 'Patient Site'];
     for (let i = 0; i < allTexts.length - 1; i += 1) {
-      if (knownLinks.includes(allTexts[i]) && allTexts[i + 1]?.startsWith('http') && !utilityLinks.find((l) => l.text === allTexts[i])) {
-        utilityLinks.push({ text: allTexts[i], href: allTexts[i + 1], target: allTexts[i].includes('Contact') ? '_self' : '_blank' });
+      if (knownLinks.includes(allTexts[i])) {
+        const nextUrl = allTexts[i + 1];
+        if (nextUrl?.startsWith('http')) {
+          utilityLinks.push({ text: allTexts[i], href: nextUrl, target: allTexts[i].includes('Contact') ? '_self' : '_blank' });
+        }
       }
     }
 
-    const labelCandidate = allTexts.find((t) => t && !t.startsWith('http') && !t.startsWith('US-') && !knownLinks.includes(t) && t.length < 40);
-    if (labelCandidate) barLabel = labelCandidate;
+    // Find project number
+    const pn = allTexts.find((t) => t.startsWith('US-'));
+    if (pn) projectNumber = pn;
 
-    const urlCandidate = allTexts.find((t) => t.startsWith('http'));
-    if (urlCandidate) logoUrl = urlCandidate;
+    // Find brands by known names or pattern
+    const brandNames = ['RINVOQ', 'SKYRIZI', 'HUMIRA'];
+    const foundBrands = [];
+
+    for (let i = 0; i < allTexts.length; i += 1) {
+      const text = allTexts[i];
+      if (brandNames.includes(text) || (text && allTexts[i + 1]?.startsWith('http') && !knownLinks.includes(text) && !text.startsWith('US-') && text !== barLabel && text.length < 20 && !text.includes('|'))) {
+        const brandName = text;
+        const brandUrl = allTexts[i + 1]?.startsWith('http') ? allTexts[i + 1] : '#';
+        const brandColor = allTexts.slice(i, i + 5).find((t) => t.startsWith('#') && t.length <= 7) || '';
+
+        // Find indications: look for pipe-delimited text nearby
+        const indicationsText = allTexts.slice(i, i + 10).find((t) => t.includes('|'));
+        const indications = [];
+        if (indicationsText) {
+          indicationsText.split('\n').forEach((line) => {
+            const parts = line.split('|').map((p) => p.trim());
+            if (parts[0]) {
+              indications.push({
+                name: parts[0],
+                url: parts[1] || '#',
+                severity: parts[2] || '',
+              });
+            }
+          });
+        }
+
+        // Find safety text: look for richtext/bold content
+        let safetyText = '';
+        for (let j = i; j < Math.min(i + 8, rows.length); j += 1) {
+          const bold = rows[j]?.querySelector('b, strong');
+          if (bold) {
+            safetyText = rows[j].innerHTML;
+            break;
+          }
+        }
+
+        // Find logo image for this brand
+        let brandImage = null;
+        const imageKeys = Object.keys(allImages).map(Number).sort((a, b) => a - b);
+        const brandIdx = foundBrands.length;
+        if (imageKeys[brandIdx] !== undefined) {
+          brandImage = allImages[imageKeys[brandIdx]];
+        }
+
+        foundBrands.push({
+          image: brandImage,
+          name: brandName,
+          safetyText,
+          url: brandUrl,
+          color: brandColor,
+          indications,
+        });
+      }
+    }
+
+    foundBrands.forEach((b) => brands.push(b));
   }
 
   if (!utilityLinks.length) {
@@ -120,7 +147,7 @@ export default function decorate(block) {
     );
   }
 
-  // Hide ALL original rows
+  // Hide all original rows
   rows.forEach((row) => { row.style.display = 'none'; });
 
   // Build bar
@@ -184,7 +211,6 @@ export default function decorate(block) {
 
   function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
   function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
-
   modal.querySelector('.demo-brand-explorer-modal-close').addEventListener('click', closeModal);
   modal.querySelector('.demo-brand-explorer-modal-no').addEventListener('click', closeModal);
   modal.querySelector('.demo-brand-explorer-modal-overlay').addEventListener('click', closeModal);
