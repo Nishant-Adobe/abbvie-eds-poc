@@ -502,7 +502,7 @@ export default async function decorate(block) {
   if (config.heading) {
     const h2 = document.createElement('h2');
     h2.className = 'formulary-lookup-heading';
-    h2.textContent = config.heading;
+    h2.innerHTML = config.heading;
     section.append(h2);
   }
 

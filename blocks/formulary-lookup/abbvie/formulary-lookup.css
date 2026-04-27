@@ -5,12 +5,16 @@
 .formulary-lookup {
   --formulary-text-color: rgb(33 64 109);
   --formulary-text-align: center;
+
+  /* Input — wide inline with button */
   --formulary-input-max-width: 600px;
   --formulary-input-height: 42px;
   --formulary-input-border: 1px solid rgb(194 194 194);
   --formulary-input-border-radius: 2px;
   --formulary-input-padding: 12px 15px;
   --formulary-input-font-size: 14px;
+
+  /* Submit button — navy pill with search icon */
   --formulary-submit-bg: rgb(7 29 73);
   --formulary-submit-border: 1px solid rgb(7 29 73);
   --formulary-submit-border-radius: 30px;
@@ -20,21 +24,33 @@
   --formulary-submit-font-weight: 700;
   --formulary-submit-icon-display: inline-block;
   --formulary-submit-icon-right: 20px;
+
+  /* Heading */
   --formulary-heading-font-size: 16px;
   --formulary-heading-font-weight: 400;
   --formulary-heading-color: rgb(33 64 109);
   --formulary-heading-margin-bottom: 16px;
   --formulary-heading-line-height: 20px;
+  --formulary-heading-text-transform: uppercase;
+
+  /* Label — match heading style for SkyriziHCP */
   --formulary-label-font-size: 16px;
   --formulary-label-font-weight: 400;
   --formulary-label-color: rgb(33 64 109);
+
+  /* Error */
   --formulary-error-color: rgb(235 60 54);
+
+  /* reCAPTCHA notice */
   --formulary-captcha-font-size: 11px;
+
+  /* Results */
   --formulary-results-border-radius: 4px;
   --formulary-results-box-shadow: rgb(16 164 222 / 20%) 0 5px 15px 0;
   --formulary-results-header-font-weight: 700;
 }
 
+/* Input group — inline flex row with gap */
 .formulary-lookup .formulary-lookup-input-group {
   display: flex;
   flex-direction: row;
@@ -44,11 +60,13 @@
   margin-inline: auto;
 }
 
+/* ZIP input takes remaining space */
 .formulary-lookup .formulary-lookup-zip-input {
   flex: 1;
   min-width: 200px;
 }
 
+/* Disclaimer text */
 .formulary-lookup .formulary-lookup-disclaimer {
   font-size: 13px;
   max-width: 700px;
