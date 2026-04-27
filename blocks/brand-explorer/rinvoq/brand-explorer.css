@@ -1,3 +1,5 @@
+/* brand-explorer — multi-brand product navigator */
+
 .brand-explorer-section {
   position: fixed;
   bottom: 0;
@@ -11,7 +13,7 @@
   flex-direction: column;
 }
 
-/* ── bar ─────────────────────────────────────────────────────────────────── */
+/* ── bar ─────────────────────────────────────────────────────── */
 
 .brand-explorer-bar {
   align-items: center;
@@ -35,7 +37,7 @@
 }
 
 .brand-explorer-trigger::after {
-  content: '▲';
+  content: '\25B2';
   display: inline-block;
   font-size: 0.625rem;
   transition: transform 0.3s ease;
@@ -45,7 +47,7 @@
   transform: rotate(180deg);
 }
 
-/* ── panel ───────────────────────────────────────────────────────────────── */
+/* ── panel ───────────────────────────────────────────────────── */
 
 .brand-explorer-panel {
   background-color: var(--brand-explorer-panel-bg, #fff);
@@ -57,7 +59,7 @@
 }
 
 .brand-explorer.is-open .brand-explorer-panel {
-  max-height: 50vh;
+  max-height: 80vh;
   overflow-y: auto;
 }
 
@@ -92,12 +94,44 @@
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-/* ── grid ────────────────────────────────────────────────────────────────── */
+/* ── therapeutic filter tabs ─────────────────────────────────── */
+
+.brand-explorer-tabs {
+  display: flex;
+  gap: var(--spacing-4, 4px);
+  padding: var(--spacing-16, 16px) var(--spacing-24, 24px) 0;
+  border-bottom: 1px solid var(--brand-explorer-border, #e0e0e0);
+  overflow-x: auto;
+}
+
+.brand-explorer-tab {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-color, #111);
+  cursor: pointer;
+  font-size: var(--body-font-size-s, 0.875rem);
+  font-weight: 600;
+  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.brand-explorer-tab:hover {
+  color: var(--link-color, #0057cc);
+}
+
+.brand-explorer-tab.is-active {
+  border-bottom-color: var(--link-color, #0057cc);
+  color: var(--link-color, #0057cc);
+}
+
+/* ── grid (default + cards variant) ──────────────────────────── */
 
 .brand-explorer-grid {
   display: grid;
   gap: var(--spacing-24, 24px);
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   list-style: none;
   margin: 0 auto;
   max-width: var(--section-width, 1200px);
@@ -132,6 +166,89 @@
   font-size: var(--body-font-size-s, 0.875rem);
   font-weight: 600;
   text-align: center;
+}
+
+.brand-explorer-area {
+  color: var(--text-color-muted, #666);
+  font-size: var(--body-font-size-xs, 0.75rem);
+  text-align: center;
+}
+
+.brand-explorer-description {
+  color: var(--text-color-muted, #666);
+  font-size: var(--body-font-size-xs, 0.75rem);
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ── cards variant ───────────────────────────────────────────── */
+
+.brand-explorer-cards {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--spacing-32, 32px);
+}
+
+.brand-explorer-cards .brand-explorer-link {
+  padding: var(--spacing-24, 24px);
+}
+
+.brand-explorer-cards .brand-explorer-logo {
+  height: 56px;
+}
+
+.brand-explorer-cards .brand-explorer-name {
+  font-size: var(--body-font-size-m, 1rem);
+}
+
+/* ── nav variant ─────────────────────────────────────────────── */
+
+.brand-explorer-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  list-style: none;
+  margin: 0 auto;
+  max-width: var(--section-width, 1200px);
+  padding: var(--spacing-16, 16px) var(--spacing-24, 24px);
+}
+
+.brand-explorer-nav-link {
+  border-bottom: 1px solid var(--brand-explorer-border, #e0e0e0);
+  color: var(--text-color, #111);
+  display: block;
+  font-size: var(--body-font-size-m, 1rem);
+  font-weight: 600;
+  padding: var(--spacing-12, 12px) var(--spacing-8, 8px);
+  text-decoration: none;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.brand-explorer-nav-link:hover {
+  background-color: var(--brand-explorer-hover-bg, #f5f5f5);
+  color: var(--link-color, #0057cc);
+}
+
+/* ── responsive ──────────────────────────────────────────────── */
+
+@media (width <= 767px) {
+  .brand-explorer-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--spacing-16, 16px);
+    padding: var(--spacing-24, 24px) var(--spacing-16, 16px);
+  }
+
+  .brand-explorer-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-explorer-tabs {
+    padding: var(--spacing-8, 8px) var(--spacing-16, 16px) 0;
+  }
+
+  .brand-explorer-tab {
+    font-size: var(--body-font-size-xs, 0.75rem);
+    padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
+  }
 }
 
 /* rinvoq brand-explorer overrides */

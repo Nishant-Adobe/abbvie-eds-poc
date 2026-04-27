@@ -9469,6 +9469,26 @@
         "name": "overview"
       },
       {
+        "component": "select",
+        "name": "classes",
+        "value": "",
+        "label": "Variant",
+        "description": "Visual layout variant.",
+        "options": [
+          { "name": "Default (Full explorer with filter tabs)", "value": "" },
+          { "name": "Cards (Grid layout)", "value": "cards" },
+          { "name": "Navigation (Link list)", "value": "nav" }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID",
+        "description": "Optional anchor ID for deep linking."
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "barLabel",
@@ -9494,7 +9514,7 @@
         "valueType": "string",
         "name": "logo",
         "label": "Brand Logo",
-        "description": "Optional brand logo image.",
+        "description": "Brand logo image.",
         "multi": false
       },
       {
@@ -9509,7 +9529,24 @@
         "valueType": "string",
         "name": "brandName",
         "value": "",
-        "label": "Brand Name"
+        "label": "Brand Name",
+        "description": "Brand display name."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "therapeuticArea",
+        "value": "",
+        "label": "Therapeutic Area",
+        "description": "Category for filter tabs (e.g., Immunology, Dermatology)."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "description",
+        "value": "",
+        "label": "Description",
+        "description": "Brand short description."
       },
       {
         "component": "text",
@@ -9517,7 +9554,7 @@
         "name": "brandUrl",
         "value": "",
         "label": "Brand URL",
-        "description": "Link destination for this brand card."
+        "description": "Link to brand site."
       }
     ]
   },
