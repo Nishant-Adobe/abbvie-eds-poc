@@ -3,6 +3,7 @@ export default async function getBlockConfigs() {
     flags: {
       submitIconEnabled: false,
       autoSubmitOnStateChange: false,
+      disclaimerModal: true,
     },
     variations: [],
     decorations: {},

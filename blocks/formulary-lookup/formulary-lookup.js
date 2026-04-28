@@ -5,6 +5,7 @@ const DEFAULT_FLAGS = {
   showIcon: true,
   showRecaptchaNotice: true,
   showDisclaimer: true,
+  disclaimerModal: false,
   submitIconEnabled: false,
   headingTag: 'h2',
   autoSubmitOnStateChange: true,
@@ -474,12 +475,45 @@ function createRecaptchaNotice(config) {
   return div;
 }
 
-function createDisclaimer(config) {
+function createDisclaimer(config, asModal = false) {
   if (!config.disclaimer) return null;
-  const div = document.createElement('div');
-  div.className = 'formulary-lookup-disclaimer';
-  div.innerHTML = config.disclaimer;
-  return div;
+  if (!asModal) {
+    const div = document.createElement('div');
+    div.className = 'formulary-lookup-disclaimer';
+    div.innerHTML = config.disclaimer;
+    return div;
+  }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'formulary-lookup-disclaimer-overlay';
+  overlay.hidden = true;
+
+  const modal = document.createElement('div');
+  modal.className = 'formulary-lookup-disclaimer-modal';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'formulary-lookup-disclaimer-close';
+  closeBtn.setAttribute('aria-label', 'Close disclaimer');
+  closeBtn.textContent = '✕';
+
+  const content = document.createElement('div');
+  content.className = 'formulary-lookup-disclaimer';
+  content.innerHTML = config.disclaimer;
+
+  modal.append(content, closeBtn);
+  overlay.append(modal);
+
+  function close() {
+    overlay.hidden = true;
+  }
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+
+  overlay.open = () => { overlay.hidden = false; };
+  return overlay;
 }
 
 function createFilterDropdown(config) {
@@ -717,8 +751,14 @@ export default async function decorate(block) {
   section.append(status, results);
 
   if (flags.showDisclaimer !== false) {
-    const disclaimer = createDisclaimer(config);
-    if (disclaimer) section.append(disclaimer);
+    const isModal = !!flags.disclaimerModal;
+    const disclaimer = createDisclaimer(config, isModal);
+    if (disclaimer) {
+      section.append(disclaimer);
+      if (isModal && disclaimer.open) {
+        disclaimer.open();
+      }
+    }
   }
 
   block.replaceChildren(section);
