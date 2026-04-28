@@ -1,4 +1,4 @@
-// v2.0 — fix barLabel extraction from UE
+// v3.0 — support delivered xwalk format
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
