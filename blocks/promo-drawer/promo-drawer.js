@@ -12,9 +12,13 @@ function setCookie(name, value, days) {
   document.cookie = `${name}=${value}${expires}; path=/`;
 }
 
+function isContentRow(row) {
+  return row.querySelector('p, picture, ul, ol, table');
+}
+
 function readConfig(block) {
   const rows = [...block.children];
-  const configRows = rows.filter((r) => r.children.length < 2 && !r.querySelector('picture'));
+  const configRows = rows.filter((r) => !isContentRow(r));
   const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
   return {
     handleLabel: values[0] || 'Savings',
@@ -25,9 +29,7 @@ function readConfig(block) {
 }
 
 function readContentRow(block) {
-  return [...block.children].find(
-    (r) => r.children.length >= 2 || r.querySelector('picture'),
-  ) || null;
+  return [...block.children].find((r) => isContentRow(r)) || null;
 }
 
 export async function decorateBlock(block) {
