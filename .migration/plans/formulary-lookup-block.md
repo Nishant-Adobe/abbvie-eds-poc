@@ -1,91 +1,52 @@
-Let me analyze the source HTML and screenshot in detail to understand all the visual elements and their styling.Now let me look at the source screenshot carefully. The SkyriziHCP page has more than just the formulary block — it has:
+# SkyriziHCP Formulary Lookup — ZIP + Button Alignment Fix
 
-1. A **section heading**: "PLANS LISTING SKYRIZI AS PREFERRED* FOR Ps IN YOUR COUNTY" (teal/blue color)
-2. A **blue dotted divider** line
-3. A **description**: "SEE WHICH PLANS IN YOUR AREA INCLUDE SKYRIZI ON THEIR PREFERRED DRUG **FORMULARY**"
-4. The **ZIP input + button** inline
-5. **reCAPTCHA notice**
-6. **Disclaimer** (bold + regular paragraphs)
-7. Another **gray dotted divider**
-8. **"BRIDGE PROGRAM ELIGIBILITY"** heading with sub-text
-9. **"BRIDGE PROGRAM"** CTA button
+## Problem
 
-The formulary block itself handles items 3-6. Items 1-2 and 7-9 are separate content above/below the block (section heading, dividers, additional rich text, CTAs). These are default content elements in the EDS section, not part of the formulary-lookup block.
+In the UE preview, the ZIP code input field and "LOOK UP STATUS" button are not aligned on the same horizontal row. The button appears offset/below the input instead of sitting directly beside it at the same vertical level.
 
-Let me also examine the exact styling gaps between our current preview and the source screenshot.# SkyriziHCP Formulary Lookup — Pixel-Perfect Replication Plan
+### Root Cause
 
-## Source Analysis
+The abbvie brand CSS sets `.formulary-lookup-input-group` to `flex-direction: row` with `align-items: stretch` and `max-width: 600px`. This should work, but:
 
-The screenshot shows the full SkyriziHCP coverage/access section from `skyrizihcp.com`. It contains **multiple content elements** within a styled section, not just the formulary-lookup block:
+1. The input and button may have different intrinsic heights (input `42px` via `--formulary-input-height`, button `44px` via `--formulary-submit-height`)
+2. `align-items: stretch` forces both to match the tallest element — but the button's padding/border may cause slight offset
+3. The fix is to use `align-items: center` to vertically center both items on the same row
 
-### Source Section Structure (top to bottom)
+### Current Abbvie CSS (`styles/abbvie/blocks/formulary-lookup/formulary-lookup.css`)
+```css
+.formulary-lookup .formulary-lookup-input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 8px;
+  max-width: 600px;
+  margin-inline: auto;
+}
+```
 
-| # | Element | Source Class | EDS Equivalent |
-|---|---------|-------------|----------------|
-| 1 | Section heading | `.c-risa-pri h2` — teal/cyan text | Default content `<h2>` with section-level brand color |
-| 2 | Blue dotted divider | `.divider--blue` image-text component | Default content horizontal rule or separator block |
-| 3 | Description text | `.abbv-rich-text .fs-20 .fwb` — bold 20px centered | Formulary block `heading` field (already authored) |
-| 4 | ZIP input + "LOOK UP STATUS" button | `.abbv-formulary-zipcode` + `.abbv-button-secondary` | Formulary block `zip` variant (already working) |
-| 5 | reCAPTCHA notice | `.abbv-badgeless-captcha` — small centered text | Formulary block `recaptcha-notice` field |
-| 6 | Disclaimer | `.abbv-rich-text .abbv-width-90pc` — bold first paragraph, regular second | Formulary block `disclaimer` field |
-| 7 | Gray dotted divider | `.divider--gray` | Default content horizontal rule |
-| 8 | "BRIDGE PROGRAM ELIGIBILITY" | `.abbv-rich-text h2` — bold centered | Default content `<h2>` + `<p>` |
-| 9 | "BRIDGE PROGRAM" CTA | `.abbv-button-primary` modal trigger | CTA block or default content link |
+### Target
+Both the ZIP input and the submit button should be on the **exact same horizontal line**, vertically centered, with the input taking the remaining space and the button at fixed width.
 
-### What the Formulary Block Handles (items 3-6)
-The block itself renders correctly — heading, ZIP input, button, reCAPTCHA, disclaimer. The visual gaps are:
+## Files to Change
 
-1. **Section-level background**: Light blue/white card-like container with padding — this is the parent `.abbv-background-container` section styling, not block CSS
-2. **Disclaimer bold first paragraph**: The source has the first disclaimer paragraph in bold — need `<strong>` wrapping in the authored content
-3. **Heading "FORMULARY" highlight**: Already authored with `<strong>` but may need color highlight (the source shows it with a different background/color) — looking more carefully, it appears bold-only, which we already have
+### 1. `styles/abbvie/blocks/formulary-lookup/formulary-lookup.css`
+- Change `align-items: stretch` → `align-items: center` on `.formulary-lookup-input-group`
+- Ensure both input and button have matching height (`--formulary-input-height: 44px` and `--formulary-submit-height: 44px`)
 
-### What's Outside the Block (items 1-2, 7-9)
-These are separate content elements that need to be authored as default content or separate blocks in the same section:
-- Section heading ("PLANS LISTING SKYRIZI...")
-- Dividers (horizontal rules)
-- Bridge Program section (heading + text + CTA)
-
-## CSS Gaps in Abbvie Brand Override
-
-Comparing the source screenshot to the current local preview:
-
-| Property | Current | Source Screenshot | Fix |
-|---|---|---|---|
-| Disclaimer first paragraph | Regular weight | **Bold** | Author with `<strong>` wrapping in content |
-| Disclaimer max-width | `700px` | ~90% of container (`abbv-width-90pc`) | Change to `max-width: 90%` or keep `700px` (close enough) |
-| Heading "FORMULARY" | `<strong>` (bold) | Bold + possibly highlighted | OK — bold matches |
-| Section container | No background styling | Light blue/white card background | Section-level CSS, not block |
-
-## Content Updates
-
-The `formulary-skyrizi.plain.html` needs:
-1. **Disclaimer**: Wrap first paragraph in `<strong>` to match source
-2. **Section heading + dividers + Bridge Program**: Add as default content above and below the block within the same section
+### 2. `blocks/formulary-lookup/abbvie/formulary-lookup.css` (sync copy)
+- Same change to keep in sync
 
 ## Checklist
 
-### Content Authoring
-- [ ] **1.1** Update `content/formulary-skyrizi.plain.html` — wrap first disclaimer paragraph text in `<strong>` tags
-- [ ] **1.2** Add section heading "PLANS LISTING SKYRIZI AS PREFERRED* FOR Ps IN YOUR COUNTY" as default content `<h2>` above the block
-- [ ] **1.3** Add horizontal rule dividers (blue dotted + gray dotted) as `<hr>` elements
-- [ ] **1.4** Add "BRIDGE PROGRAM ELIGIBILITY" heading + description + CTA button below the block
-
-### CSS — Abbvie Brand Override
-- [ ] **2.1** Add section heading color token for teal/cyan heading (`color: var(--skyrizi-heading-color)` or direct value)
-- [ ] **2.2** Style `<hr>` elements within the section as dotted blue/gray dividers
-- [ ] **2.3** Verify disclaimer `max-width` and bold paragraph rendering
-
-### CSS — Base Block
-- [ ] **2.4** Ensure `.formulary-lookup-disclaimer strong` or `.formulary-lookup-disclaimer p:first-child` bold styling works
-
-### Verification
-- [ ] **3.1** Preview full SkyriziHCP page with all content elements and compare against source screenshot
-- [ ] **3.2** Verify dividers, heading colors, disclaimer bold, and CTA button styling
+- [ ] **1.1** Update `styles/abbvie/blocks/formulary-lookup/formulary-lookup.css` — change `align-items: stretch` to `align-items: center` on `.formulary-lookup-input-group`
+- [ ] **1.2** Ensure input height and button height match (`44px` both) in the abbvie token overrides
+- [ ] **1.3** Sync the same change to `blocks/formulary-lookup/abbvie/formulary-lookup.css`
+- [ ] **1.4** Preview SkyriziHCP page — verify ZIP input and button are perfectly aligned on the same row
+- [ ] **1.5** Commit and push to `formulary-lookup` branch for UE to pick up
 
 ---
 
 ## Notes
-- The section-level background (light blue container) is outside the formulary-lookup block scope. It would be a section-level style class (e.g., `section-metadata: style = light-blue-bg`) applied to the parent `<div class="section">`.
-- The "BRIDGE PROGRAM" CTA button styling depends on the project's global button/CTA styles, not the formulary block CSS.
-- The divider styling (blue/gray dotted lines) may require a separator block or styled `<hr>` elements.
+- The base CSS `.formulary-lookup-input-group` already uses `display: flex` with `gap`. The abbvie override adds `flex-direction: row` explicitly and sets `max-width: 600px`.
+- After the fix, the layout should match the source screenshot: input on the left taking remaining space, navy pill button on the right, both vertically centered.
 - **Execution requires switching to Execute mode.**
