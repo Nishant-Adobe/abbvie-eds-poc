@@ -79,52 +79,6 @@
 /* ============================================================
    Variant: center — collapsed content is center aligned
    ============================================================ */
-.safety-bar.center .safety-bar-abbreviated {
-  text-align: center;
-}
-
-/* ============================================================
-   Variant: split — collapsed is two-column grid
-   ============================================================ */
-.safety-bar.split .safety-bar-abbreviated {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-24, 2.4rem);
-  text-align: left;
-  padding-right: 5rem;
-}
-
-.safety-bar.split.is-expanded .safety-bar-abbreviated {
-  display: none;
-}
-
-.safety-bar.split .safety-bar-col1,
-.safety-bar.split .safety-bar-col2 {
-  min-width: 0;
-}
-
-/* ============================================================
-   Responsive breakpoints
-   ============================================================ */
-@media (width >= 1024px) {
-  .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
-  }
-
-  .safety-bar-toggle {
-    right: 1.6rem;
-  }
-
-  .safety-bar-full {
-    padding: 2rem 5.5rem;
-    max-height: 50vh;
-  }
-
-  .safety-bar.split .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
-  }
-}
-
 /* ============================================================
    Inline ISI — in-page instance shows only full ISI content
    ============================================================ */
@@ -160,10 +114,56 @@
   position: static;
 }
 
+.safety-bar.center .safety-bar-abbreviated {
+  text-align: center;
+}
+
+/* ============================================================
+   Variant: split — collapsed is two-column grid
+   ============================================================ */
+.safety-bar.split .safety-bar-abbreviated {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-24, 2.4rem);
+  text-align: left;
+  padding-right: 5rem;
+}
+
+.safety-bar.split .safety-bar-col1,
+.safety-bar.split .safety-bar-col2 {
+  min-width: 0;
+}
+
 .safety-bar.is-expanded .safety-bar-full {
   display: block;
 }
 
 .safety-bar.is-expanded .safety-bar-abbreviated {
   display: none;
+}
+
+.safety-bar.split.is-expanded .safety-bar-abbreviated {
+  display: none;
+}
+
+/* ============================================================
+   Responsive breakpoints
+   ============================================================ */
+@media (width >= 1024px) {
+  .safety-bar-abbreviated {
+    padding: 1.6rem 6rem 1.6rem 5.5rem;
+  }
+
+  .safety-bar-toggle {
+    right: 1.6rem;
+  }
+
+  .safety-bar-full {
+    padding: 2rem 5.5rem;
+    max-height: 50vh;
+  }
+
+  .safety-bar.split .safety-bar-abbreviated {
+    padding: 1.6rem 6rem 1.6rem 5.5rem;
+  }
 }
