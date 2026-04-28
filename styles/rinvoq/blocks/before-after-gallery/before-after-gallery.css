@@ -1,65 +1,111 @@
 @import '../../../../blocks/before-after-gallery/before-after-gallery.css';
 
-/* RinvoqDTC before-after-gallery overrides */
+/* RinvoqDTC before-after-gallery overrides — pixel-matched */
 
 .before-after-gallery {
-  /* Tabs — pill toggle with white active, transparent inactive */
-  --gallery-tab-bg: transparent;
-  --gallery-tab-color: rgb(70 72 74);
-  --gallery-tab-active-bg: #fff;
-  --gallery-tab-active-color: rgb(37 40 42);
-  --gallery-tab-bar-border: 2px solid rgb(70 72 74);
-  --gallery-tab-bar-radius: 999px;
-  --gallery-tab-font-size: 14px;
+  /* Tabs — magenta active, white inactive */
+  --gallery-tab-bg: #fff;
+  --gallery-tab-color: rgb(144 18 74);
+  --gallery-tab-active-bg: rgb(144 18 74);
+  --gallery-tab-active-color: #fff;
+  --gallery-tab-bar-border: 1px solid rgb(144 18 74);
+  --gallery-tab-bar-radius: 5px;
+  --gallery-tab-font-size: 16px;
   --gallery-tab-padding: 12px 24px;
+
+  /* Slider — 765px max-width, centered */
+  --gallery-slider-max-width: 765px;
+
+  /* Labels at TOP of slider, green/teal bg */
+  --gallery-label-top: 0;
+  --gallery-label-bottom: auto;
+  --gallery-label-bg: rgb(100 160 80 / 70%);
+  --gallery-label-color: #fff;
+
+  /* Image overlay text */
+  --gallery-overlay-bottom: 16px;
+  --gallery-overlay-font-size: 13px;
+  --gallery-overlay-color: rgb(37 40 42);
 
   /* Thumbnails */
   --gallery-thumb-active-border: rgb(218 170 0);
-  --gallery-thumb-radius: 8px;
+  --gallery-thumb-radius: 0;
   --gallery-thumb-label-bg: rgb(0 0 0 / 50%);
   --gallery-thumb-label-color: #fff;
   --gallery-thumb-label-font-size: 14px;
-  --gallery-thumb-label-padding: 8px 10px;
-  --gallery-thumb-sublabel-bg: transparent;
+  --gallery-thumb-label-padding: 6px 8px;
+  --gallery-thumb-sublabel-bg: rgb(0 0 0 / 30%);
   --gallery-thumb-sublabel-color: #fff;
   --gallery-thumb-sublabel-font-size: 11px;
-  --gallery-thumb-sublabel-bottom: 30px;
-  --gallery-thumb-aspect: 4/3;
+  --gallery-thumb-sublabel-bottom: 28px;
 
-  /* Prompt overlay */
-  --gallery-prompt-bg: rgb(80 80 80 / 85%);
-  --gallery-prompt-color: #fff;
+  /* Prompt — dark bg, gold text */
+  --gallery-prompt-bg: rgb(37 40 42);
+  --gallery-prompt-color: rgb(218 170 0);
   --gallery-prompt-font-size: 11px;
-  --gallery-prompt-padding: 8px 16px;
-  --gallery-prompt-radius: 4px;
-  --gallery-prompt-top: 8px;
+  --gallery-prompt-radius: 0;
+  --gallery-prompt-top: auto;
 
   /* Instruction text bar */
   --gallery-instruction-bg: rgb(37 40 42);
   --gallery-instruction-color: #fff;
-  --gallery-instruction-font-size: 14px;
+  --gallery-instruction-font-size: 16px;
 
   /* Handle */
-  --gallery-handle-color: #fff;
-
-  /* Labels */
-  --gallery-label-bg: rgb(0 0 0 / 50%);
-  --gallery-label-color: #fff;
+  --gallery-handle-color: rgb(0 190 230);
 
   /* Heading */
   --gallery-heading-text-align: center;
 }
 
-/* Tab toggle — active state has subtle shadow */
-.before-after-gallery .before-after-gallery-tab.is-active {
-  box-shadow: 0 1px 4px rgb(0 0 0 / 15%);
+/* Prompt at bottom-center of slider */
+.before-after-gallery .before-after-gallery-prompt {
+  top: auto;
+  bottom: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 16px;
 }
 
-/* Prompt — add arrows icon before text */
 .before-after-gallery .before-after-gallery-prompt::before {
-  content: "\2039\2039 \2194 \203A\203A";
+  content: "\2039\2039 \2B0C \203A\203A";
   display: block;
-  font-size: 18px;
-  letter-spacing: 2px;
-  margin-bottom: 2px;
+  font-size: 20px;
+  letter-spacing: 3px;
+}
+
+/* Tab first/last child radius */
+.before-after-gallery .before-after-gallery-tab:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.before-after-gallery .before-after-gallery-tab:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+/* Thumbnails — flex row, centered, matching source sizing */
+.before-after-gallery .before-after-gallery-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 765px;
+  margin-inline: auto;
+  padding: 16px 0;
+}
+
+.before-after-gallery .before-after-gallery-thumb {
+  width: 140px;
+  flex: 0 0 auto;
+}
+
+/* Tabs below thumbnails — add top margin */
+.before-after-gallery .before-after-gallery-tabs {
+  max-width: 765px;
+  margin-inline: auto;
+  margin-top: 16px;
 }

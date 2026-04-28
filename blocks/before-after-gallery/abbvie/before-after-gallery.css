@@ -3,55 +3,98 @@
 /* SkyriziHCP before-after-gallery overrides */
 
 .before-after-gallery {
-  /* Dark navy background */
-  --gallery-bg: rgb(0 51 102);
+  --gallery-bg: linear-gradient(135deg, rgb(0 80 150), rgb(0 51 102));
   --gallery-text-color: #fff;
-  --gallery-padding: 24px;
+  --gallery-padding: 32px 24px;
   --gallery-border-radius: 0;
 
   /* Heading */
-  --gallery-heading-color: #fff;
-  --gallery-heading-font-size: 18px;
-  --gallery-heading-text-align: center;
+  --gallery-heading-color: rgb(27 162 218);
+  --gallery-heading-font-size: 14px;
+  --gallery-heading-text-align: left;
 
-  /* Tabs — dark navy bar style */
-  --gallery-tab-bg: rgb(0 40 80);
-  --gallery-tab-color: #fff;
-  --gallery-tab-active-bg: rgb(33 64 109);
-  --gallery-tab-active-color: #fff;
-  --gallery-tab-bar-border: none;
-  --gallery-tab-bar-radius: 0;
-  --gallery-tab-font-size: 16px;
-  --gallery-tab-padding: 12px 20px;
-
-  /* Thumbnails — no visible thumbnails in SkyriziHCP, but style for consistency */
-  --gallery-thumb-active-border: rgb(27 162 218);
-  --gallery-thumb-label-bg: rgb(0 0 0 / 50%);
-
-  /* Prompt */
-  --gallery-prompt-bg: rgb(0 0 0 / 60%);
-  --gallery-prompt-color: #fff;
-  --gallery-prompt-font-size: 11px;
-
-  /* Instruction text */
-  --gallery-instruction-bg: rgb(0 40 80);
-  --gallery-instruction-color: #fff;
-
-  /* Handle — white on dark bg */
-  --gallery-handle-color: #fff;
+  /* Handle — cyan */
+  --gallery-handle-color: rgb(0 190 230);
 
   /* Labels */
-  --gallery-label-bg: rgb(0 0 0 / 50%);
+  --gallery-label-bg: rgb(0 0 0 / 40%);
   --gallery-label-color: #fff;
+
+  /* Prompt */
+  --gallery-prompt-bg: rgb(0 0 0 / 50%);
+  --gallery-prompt-color: #fff;
+
+  /* Thumbnails */
+  --gallery-thumb-active-border: rgb(0 190 230);
+  --gallery-thumb-radius: 2px;
+  --gallery-split-thumb-width: 110px;
+  --gallery-thumb-label-bg: transparent;
+  --gallery-thumb-label-color: #fff;
+  --gallery-thumb-label-font-size: 0;
+  --gallery-thumb-sublabel-bg: transparent;
+  --gallery-thumb-sublabel-font-size: 0;
+
+  /* CTA button — white outlined */
+  --gallery-cta-border: 2px solid #fff;
+  --gallery-cta-radius: 0;
+  --gallery-cta-hover-bg: rgb(255 255 255 / 20%);
 }
 
-/* Tab bar — full width across dark bg */
-.before-after-gallery .before-after-gallery-tabs {
-  border-radius: 0;
+/* Description column styling */
+.before-after-gallery .before-after-gallery-heading {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.before-after-gallery .before-after-gallery-description {
+  color: #fff;
+}
+
+.before-after-gallery .before-after-gallery-description p {
+  margin-bottom: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.before-after-gallery .before-after-gallery-description .h1 {
+  font-size: 14px;
+  color: rgb(27 162 218);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.before-after-gallery .before-after-gallery-description .h2 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.before-after-gallery .before-after-gallery-description hr {
   border: none;
-  background: rgb(0 40 80);
+  border-top: 3px solid rgb(218 170 0);
+  margin: 12px 0;
+  width: 60%;
 }
 
-.before-after-gallery .before-after-gallery-tab {
-  border-radius: 0;
+/* Below-slider labels */
+.before-after-gallery .before-after-gallery-below-labels {
+  color: #fff;
+  font-size: 12px;
+}
+
+/* Patient info */
+.before-after-gallery .before-after-gallery-patient-info {
+  color: #fff;
+  font-size: 13px;
+}
+
+/* CTA icon */
+.before-after-gallery .before-after-gallery-cta::after {
+  content: "\25B6";
+  margin-left: 8px;
+  font-size: 10px;
 }

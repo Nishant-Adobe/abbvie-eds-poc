@@ -84,6 +84,8 @@
   cursor: col-resize;
   touch-action: none;
   margin-bottom: 0;
+  max-width: var(--gallery-slider-max-width, none);
+  margin-inline: auto;
 }
 
 /* --- After image (base layer, full width) --- */
@@ -151,9 +153,7 @@
 
 .before-after-gallery-labels {
   position: absolute;
-  bottom: var(--spacing-12, 12px);
-  left: 0;
-  right: 0;
+  inset: var(--gallery-label-top, auto) 0 var(--gallery-label-bottom, var(--spacing-12, 12px)) 0;
   display: flex;
   justify-content: space-between;
   padding: 0 var(--spacing-12, 12px);
@@ -171,6 +171,23 @@
   padding: 4px 10px;
   border-radius: 2px;
   text-transform: uppercase;
+}
+
+/* --- Image text overlay (clinical text on slider) --- */
+
+.before-after-gallery-image-overlay {
+  position: absolute;
+  bottom: var(--gallery-overlay-bottom, 12px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: var(--gallery-overlay-font-size, 13px);
+  font-weight: 700;
+  color: var(--gallery-overlay-color, var(--gallery-text-color, #333));
+  padding: var(--gallery-overlay-padding, 8px 16px);
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1.4;
 }
 
 /* --- Drag prompt overlay --- */
@@ -260,9 +277,94 @@
   text-align: left;
 }
 
+/* --- Split variant (two-column: description + slider) --- */
+
+.before-after-gallery.split .before-after-gallery-columns {
+  display: flex;
+  gap: var(--spacing-16, 16px);
+  align-items: flex-start;
+}
+
+.before-after-gallery.split .before-after-gallery-desc-col {
+  flex: 0 0 40%;
+  max-width: 40%;
+}
+
+.before-after-gallery.split .before-after-gallery-slider-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.before-after-gallery-below-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-8, 8px) 0;
+  font-size: var(--body-font-size-xs, 0.75rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.before-after-gallery-patient-info {
+  font-size: var(--body-font-size-s, 0.875rem);
+  padding: var(--spacing-4, 4px) 0;
+}
+
+.before-after-gallery-cta {
+  display: inline-block;
+  margin-top: var(--spacing-16, 16px);
+  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
+  border: var(--gallery-cta-border, 2px solid currentcolor);
+  border-radius: var(--gallery-cta-radius, 4px);
+  color: inherit;
+  font-size: var(--body-font-size-s, 0.875rem);
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  transition: background 200ms, color 200ms;
+}
+
+.before-after-gallery-cta:hover {
+  background: var(--gallery-cta-hover-bg, rgb(255 255 255 / 20%));
+}
+
+/* Split thumbnails: horizontal scroll row */
+.before-after-gallery.split .before-after-gallery-thumbnails {
+  display: flex;
+  overflow-x: auto;
+  gap: var(--spacing-8, 8px);
+  padding: var(--spacing-8, 8px) 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.before-after-gallery.split .before-after-gallery-thumb {
+  flex: 0 0 auto;
+  width: var(--gallery-split-thumb-width, 100px);
+}
+
+.before-after-gallery.split .before-after-gallery-thumb-image {
+  width: 100%;
+  height: auto;
+}
+
+/* Hide overlay labels in split mode (uses below-labels instead) */
+.before-after-gallery.split .before-after-gallery-labels {
+  display: none;
+}
+
 /* --- Mobile responsive --- */
 
 @media (width <= 600px) {
+  .before-after-gallery.split .before-after-gallery-columns {
+    flex-direction: column;
+  }
+
+  .before-after-gallery.split .before-after-gallery-desc-col {
+    flex: none;
+    max-width: 100%;
+  }
+
   .before-after-gallery-tabs {
     flex-direction: column;
     border-radius: var(--gallery-tab-bar-radius, 8px);
