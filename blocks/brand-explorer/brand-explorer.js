@@ -1,4 +1,4 @@
-// v1.7 — auto brand colors, full skyrizihcp styling
+// v1.8 — fix brand name extraction for auto colors
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -56,7 +56,9 @@ export default function decorate(block) {
           .map((el) => el.textContent.trim()).filter(Boolean);
         const urlEl = row.querySelector('a');
         const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
-        const brandName = allTexts.find((t) => !t.startsWith('http') && !t.startsWith('#') && !t.includes('|') && t.length < 30) || '';
+        const brandNameEl = row.querySelector('[data-aue-prop="brandName"]');
+        const brandName = brandNameEl?.textContent.trim()
+          || allTexts.find((t) => !t.startsWith('http') && !t.startsWith('#') && !t.includes('|') && t.length < 30) || '';
         const therapeuticArea = allTexts.find((t) => ['Immunology', 'Dermatology', 'Gastroenterology', 'Rheumatology', 'Ophthalmology'].includes(t)) || '';
         const descEl = row.querySelector('[data-aue-prop="description"]');
         const description = descEl?.innerHTML.trim() || '';
