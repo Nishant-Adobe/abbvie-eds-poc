@@ -12,24 +12,19 @@ function setCookie(name, value, days) {
   document.cookie = `${name}=${value}${expires}; path=/`;
 }
 
-function isContentRow(row) {
-  return row.querySelector('p, picture, ul, ol, table');
+function getCellText(row) {
+  return row?.firstElementChild?.textContent?.trim() || '';
 }
 
-function readConfig(block) {
+function readBlock(block) {
   const rows = [...block.children];
-  const configRows = rows.filter((r) => !isContentRow(r));
-  const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
   return {
-    handleLabel: values[0] || 'Savings',
-    heading: values[1] || '',
-    closeLabel: values[2] || 'Close',
-    anchorId: values[3] || '',
+    handleLabel: getCellText(rows[0]) || 'Savings',
+    heading: getCellText(rows[1]) || '',
+    contentRow: rows[2] || null,
+    closeLabel: getCellText(rows[3]) || 'Close',
+    anchorId: getCellText(rows[4]) || '',
   };
-}
-
-function readContentRow(block) {
-  return [...block.children].find((r) => isContentRow(r)) || null;
 }
 
 export async function decorateBlock(block) {
@@ -38,8 +33,7 @@ export async function decorateBlock(block) {
   const isOnce = block.classList.contains('once');
   const isOnceClosed = block.classList.contains('once-closed');
 
-  const cfg = readConfig(block);
-  const contentRow = readContentRow(block);
+  const cfg = readBlock(block);
 
   const drawerId = cfg.anchorId || block.id || 'promo-drawer';
   const cookieKey = `promo-drawer-${drawerId}`;
@@ -82,7 +76,7 @@ export async function decorateBlock(block) {
     panel.append(h3);
   }
 
-  if (contentRow) panel.append(contentRow);
+  if (cfg.contentRow) panel.append(cfg.contentRow);
 
   block.append(handle, panel);
 
