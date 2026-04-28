@@ -29,10 +29,10 @@
   --formulary-heading-accent-width: 80%;
 
   /* Form max-width for centered layout */
-  --formulary-form-max-width: 390px;
+  --formulary-form-max-width: 500px;
 
   /* Input — rounded */
-  --formulary-input-max-width: 390px;
+  --formulary-input-max-width: 500px;
   --formulary-input-height: 48px;
   --formulary-input-border: 1px solid rgb(135 137 138);
   --formulary-input-border-radius: 10px;
@@ -78,7 +78,7 @@
   flex-direction: column;
   align-items: stretch;
   gap: 0;
-  max-width: 390px;
+  max-width: 500px;
   margin-inline: auto;
   position: relative;
 }
@@ -86,7 +86,7 @@
 /* ZIP input fills full width */
 .formulary-lookup .formulary-lookup-zip-input {
   width: 100%;
-  max-width: 390px;
+  max-width: 500px;
   flex: none;
 }
 
@@ -97,9 +97,9 @@
   align-items: center;
 }
 
-/* Filter + indication centered at 390px */
+/* Filter + indication centered at 500px */
 .formulary-lookup .formulary-lookup-filter {
-  max-width: 390px;
+  max-width: 500px;
   margin-inline: auto;
 }
 
@@ -113,25 +113,35 @@
 }
 
 .formulary-lookup .formulary-lookup-filter-option:has(input:checked) {
-  background: rgb(200 220 255);
+  background: rgb(255 243 200);
+}
+
+.formulary-lookup .formulary-lookup-filter-option input[type="checkbox"] {
+  accent-color: rgb(218 170 0);
+}
+
+.formulary-lookup .formulary-lookup-filter-clear {
+  color: rgb(218 170 0);
 }
 
 .formulary-lookup .formulary-lookup-indications {
-  max-width: 390px;
+  max-width: 500px;
   margin-inline: auto;
 }
 
-/* Submit — full-width pill, centered */
+.formulary-lookup .formulary-lookup-indications-group input[type="radio"] {
+  accent-color: rgb(144 18 74);
+}
+
+/* Submit — auto-width pill, centered */
 .formulary-lookup .formulary-lookup-submit {
   margin: 16px auto;
   display: block;
-  width: 100%;
-  max-width: 390px;
 }
 
 /* Disclaimer */
 .formulary-lookup .formulary-lookup-disclaimer {
   font-size: 14px;
-  max-width: 390px;
+  max-width: 500px;
   margin-inline: auto;
 }
