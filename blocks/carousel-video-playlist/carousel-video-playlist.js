@@ -63,30 +63,30 @@ function buildThumbnailCard(item, index, isActive, isCardsLayout) {
   return card;
 }
 
-function getCellText(row) {
-  return row?.firstElementChild?.textContent?.trim() || '';
+function isItemRow(row) {
+  return row.children.length >= 2 && row.querySelector('picture');
 }
 
 function readBlockConfig(block) {
   const rows = [...block.children];
+  const configRows = rows.filter((r) => !isItemRow(r));
+  const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
   return {
-    playlistLayout: getCellText(rows[0]) || 'cards',
-    accountId: getCellText(rows[1]) || '',
-    playerId: getCellText(rows[2]) || DEFAULT_PLAYER,
-    enableCaptions: getCellText(rows[3]) === 'true',
-    anchorId: getCellText(rows[4]) || '',
+    playlistLayout: values[0] || 'cards',
+    accountId: values[1] || '',
+    enableCaptions: values.includes('true'),
+    anchorId: values.find((v) => v && v !== 'true' && !v.includes('/') && values.indexOf(v) > 1) || '',
   };
 }
 
 function parsePlaylistItems(block) {
   const items = [];
   const rows = [...block.children];
-  const configFieldCount = 4;
 
-  rows.slice(configFieldCount).forEach((row) => {
+  rows.forEach((row) => {
+    if (!isItemRow(row)) return;
+
     const cells = [...row.children];
-    if (cells.length < 2) return;
-
     const videoId = cells[0]?.textContent?.trim() || '';
     if (!videoId) return;
 
@@ -166,8 +166,9 @@ function switchVideo(container, videoId) {
 export async function decorateBlock(block) {
   const cfg = readBlockConfig(block);
   const {
-    accountId, playerId, enableCaptions, playlistLayout,
+    accountId, enableCaptions, playlistLayout,
   } = cfg;
+  const playerId = DEFAULT_PLAYER;
   const isCardsLayout = playlistLayout === 'cards';
 
   const items = parsePlaylistItems(block);
