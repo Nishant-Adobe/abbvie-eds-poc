@@ -167,12 +167,13 @@ export default function decorate(block) {
     <div class="brand-explorer-modal-overlay"></div>
     <div class="brand-explorer-modal-dialog">
       <button class="brand-explorer-modal-close" aria-label="Close modal"></button>
-      <h2 class="brand-explorer-modal-title">You are about to enter a site that is for U.S. Healthcare Professionals Only.</h2>
+      <h2 class="brand-explorer-modal-title">You are about to enter a site that is for U.S. Healthcare Professionals only.</h2>
       <p class="brand-explorer-modal-text">By selecting "Yes" below, you certify that you are a Healthcare Professional and that you wish to proceed to the Healthcare Professionals Only section on the AbbVie Medical Information site. Products or treatments described on this site are available in the U.S. but may not be available in all other countries. I am a licensed Healthcare Professional and wish to proceed to the Healthcare Professionals Only AbbVie Medical Information Site.</p>
       <div class="brand-explorer-modal-actions">
-        <a class="brand-explorer-modal-btn brand-explorer-modal-yes" href="https://www.abbviemedinfo.com" target="_blank">YES</a>
-        <button class="brand-explorer-modal-btn brand-explorer-modal-no">NO</button>
+        <a class="brand-explorer-modal-btn brand-explorer-modal-yes" href="https://www.abbviemedinfo.com" target="_blank">Yes</a>
+        <button class="brand-explorer-modal-btn brand-explorer-modal-no">No</button>
       </div>
+      <p class="brand-explorer-modal-project">US-SKZ-220057</p>
     </div>
   `;
   document.body.append(modal);
