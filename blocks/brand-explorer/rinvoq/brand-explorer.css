@@ -360,10 +360,25 @@
 
 /* stylelint-enable selector-class-pattern */
 
+/* stylelint-disable selector-class-pattern, no-descending-specificity */
+
 .brand-explorer-indication:hover {
-  color: #21406d;
   text-decoration: none;
 }
+
+.brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
+  color: #b8860b;
+}
+
+.brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
+  color: #0088b5;
+}
+
+.brand-explorer-accordion--humira .brand-explorer-indication:hover {
+  color: #931947;
+}
+
+/* stylelint-enable selector-class-pattern, no-descending-specificity */
 
 /* ── visit link with circle arrow ────────────────────────────── */
 
@@ -632,8 +647,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
-  padding: 12px 36px;
+  min-width: 160px;
+  padding: 16px 50px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   font-weight: 700;
