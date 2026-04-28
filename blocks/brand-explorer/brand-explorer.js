@@ -47,24 +47,89 @@ export default function decorate(block) {
       }
     });
   } else {
-    // UE xwalk format: parse child items + block properties from rows
-    rows.forEach((row) => {
-      const comp = row.getAttribute('data-aue-component');
-      if (comp === 'brand-explorer-item') {
-        const img = row.querySelector('img, picture');
-        const allTexts = [...row.querySelectorAll('p, div, span')]
-          .map((el) => el.textContent.trim()).filter(Boolean);
-        const urlEl = row.querySelector('a');
-        const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
-        const brandNameEl = row.querySelector('[data-aue-prop="brandName"]');
-        const brandName = brandNameEl?.textContent.trim()
-          || allTexts.find((t) => !t.startsWith('http') && !t.startsWith('#') && !t.includes('|') && t.length < 30) || '';
-        const therapeuticArea = allTexts.find((t) => ['Immunology', 'Dermatology', 'Gastroenterology', 'Rheumatology', 'Ophthalmology'].includes(t)) || '';
-        const descEl = row.querySelector('[data-aue-prop="description"]');
-        const description = descEl?.innerHTML.trim() || '';
-        const safetyEl = row.querySelector('[data-aue-prop="safetyText"]');
-        let safetyText = safetyEl?.innerHTML.trim() || '';
-        if (!safetyText) {
+    // Delivered xwalk format: each field is a flat single-cell row
+    // Block-level fields come first, then brand entry rows (identified by having a picture)
+    const flatValues = rows.map((row) => {
+      const img = row.querySelector('img, picture');
+      const link = row.querySelector('a');
+      const cells = [...row.children];
+      const text = row.textContent.trim();
+      return {
+        el: row, img, link, cells, text,
+      };
+    });
+
+    // Parse block-level fields (rows before first brand entry)
+    let i = 0;
+    while (i < flatValues.length && !flatValues[i].img) {
+      const { text, link } = flatValues[i];
+      if (text && !link && text !== '#' && !text.startsWith('US-')
+        && !text.startsWith('http') && !barLabel) {
+        // skip empty rows, first non-empty non-link text is barLabel
+      } else if (text && !link && !text.startsWith('http') && !text.startsWith('US-')
+        && text !== '#') {
+        const nextVal = flatValues[i + 1];
+        if (nextVal?.link) {
+          utilityLinks.push({
+            text,
+            href: nextVal.link.href,
+            target: text.toLowerCase().includes('contact') ? '_self' : '_blank',
+          });
+          i += 1; // skip the URL row
+        } else if (!barLabel || barLabel === 'Immunology Therapies') {
+          barLabel = text;
+        }
+      } else if (text.startsWith('US-')) {
+        projectNumber = text;
+      }
+      i += 1;
+    }
+
+    // Parse brand entries (rows with a picture element, multi-cell)
+    while (i < flatValues.length) {
+      const { img, cells } = flatValues[i];
+      if (img && cells.length > 1) {
+        const brandName = cells[1]?.textContent.trim() || '';
+        const safetyText = cells[2]?.innerHTML.trim() || '';
+        const brandUrl = cells[4]?.querySelector('a')?.href
+          || cells[4]?.textContent.trim() || '#';
+        const brandColor = cells[3]?.textContent.trim() || '';
+        const indicationsRaw = cells[5]?.textContent.trim() || '';
+        const indications = [];
+        if (indicationsRaw) {
+          indicationsRaw.split('\n').forEach((line) => {
+            const parts = line.split('|').map((p) => p.trim());
+            if (parts[0]) {
+              indications.push({ name: parts[0], url: parts[1] || '#', severity: parts[2] || '' });
+            }
+          });
+        }
+        brands.push({
+          image: img.cloneNode(true),
+          name: brandName,
+          safetyText,
+          url: brandUrl,
+          color: brandColor,
+          indications,
+        });
+      }
+      i += 1;
+    }
+
+    // Also try UE editor format with data-aue-component attributes
+    if (!brands.length) {
+      rows.forEach((row) => {
+        const comp = row.getAttribute('data-aue-component');
+        if (comp === 'brand-explorer-item') {
+          const img = row.querySelector('img, picture');
+          const allTexts = [...row.querySelectorAll('p, div, span')]
+            .map((el) => el.textContent.trim()).filter(Boolean);
+          const urlEl = row.querySelector('a');
+          const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
+          const brandNameEl = row.querySelector('[data-aue-prop="brandName"]');
+          const brandName = brandNameEl?.textContent.trim()
+            || allTexts.find((t) => !t.startsWith('http') && !t.startsWith('#') && !t.includes('|') && t.length < 30) || '';
+          let safetyText = '';
           row.querySelectorAll('p, div, span, b, strong').forEach((el) => {
             if (safetyText) return;
             const txt = el.textContent.trim().toLowerCase();
@@ -72,38 +137,33 @@ export default function decorate(block) {
               safetyText = el.innerHTML.trim() || el.textContent.trim();
             }
           });
-        }
-        const brandColor = allTexts.find((t) => t.startsWith('#') && t.length <= 7) || '';
-        const brandImage = img ? img.cloneNode(true) : null;
-
-        const indications = [];
-        const indicationsText = allTexts.find((t) => t.includes('|'));
-        if (indicationsText) {
-          indicationsText.split('\n').forEach((line) => {
-            const parts = line.split('|').map((p) => p.trim());
-            if (parts[0]) {
-              indications.push({ name: parts[0], url: parts[1] || '#', severity: parts[2] || '' });
-            }
+          const brandColor = allTexts.find((t) => t.startsWith('#') && t.length <= 7) || '';
+          const indications = [];
+          const indicationsText = allTexts.find((t) => t.includes('|'));
+          if (indicationsText) {
+            indicationsText.split('\n').forEach((line) => {
+              const parts = line.split('|').map((p) => p.trim());
+              if (parts[0]) {
+                indications.push({ name: parts[0], url: parts[1] || '#', severity: parts[2] || '' });
+              }
+            });
+          }
+          brands.push({
+            image: img ? img.cloneNode(true) : null,
+            name: brandName,
+            safetyText,
+            url: brandUrl,
+            color: brandColor,
+            indications,
           });
+        } else if (!comp) {
+          const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
+          if (barLabelEl) barLabel = barLabelEl.textContent.trim();
+          const text = row.textContent.trim();
+          if (text.startsWith('US-')) projectNumber = text;
         }
-
-        brands.push({
-          image: brandImage,
-          name: brandName,
-          therapeuticArea,
-          description,
-          safetyText,
-          url: brandUrl,
-          color: brandColor,
-          indications,
-        });
-      } else if (!comp) {
-        const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
-        if (barLabelEl) barLabel = barLabelEl.textContent.trim();
-        const text = row.textContent.trim();
-        if (text.startsWith('US-')) projectNumber = text;
-      }
-    });
+      });
+    }
   }
 
   if (!utilityLinks.length) {
