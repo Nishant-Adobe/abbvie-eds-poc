@@ -13,12 +13,28 @@ const US_STATES = [
   ['Virginia', 'VA'], ['Washington', 'WA'], ['West Virginia', 'WV'], ['Wisconsin', 'WI'], ['Wyoming', 'WY'],
 ];
 
+const RICHTEXT_KEYS = new Set(['recaptcha-notice', 'disclaimer']);
+const INLINE_HTML_KEYS = new Set(['heading', 'description']);
+
+function unwrapSingleP(html) {
+  const trimmed = html.trim();
+  const match = trimmed.match(/^<p>([\s\S]*)<\/p>$/i);
+  return match ? match[1].trim() : trimmed;
+}
+
 function parseConfig(block) {
   const config = {};
   [...block.children].forEach((row) => {
     const cells = [...row.children];
     const key = cells[0]?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
-    config[key] = cells[1]?.textContent.trim() || cells[0]?.textContent.trim();
+    const valueCell = cells[1] || cells[0];
+    if (RICHTEXT_KEYS.has(key)) {
+      config[key] = valueCell?.innerHTML.trim() || '';
+    } else if (INLINE_HTML_KEYS.has(key)) {
+      config[key] = unwrapSingleP(valueCell?.innerHTML.trim() || '');
+    } else {
+      config[key] = valueCell?.textContent.trim() || '';
+    }
   });
   return config;
 }
