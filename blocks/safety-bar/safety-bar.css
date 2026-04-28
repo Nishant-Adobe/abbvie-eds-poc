@@ -1,7 +1,7 @@
 /* ============================================================
-   Safety Bar — Base Styles
+   Safety Bar - Base Styles
    Variants: default (left-aligned), center, split (2-col collapsed)
-   All variants: bottom sticky, expandable with + / − toggle
+   All variants: bottom sticky, expandable with + / - toggle
    ============================================================ */
 
 /* === Fixed section wrapper === */
@@ -19,7 +19,7 @@
   transform: translateY(110%);
 }
 
-/* === Core block — auto-sizes to content, no fixed height === */
+/* === Core block - auto-sizes to content, no fixed height === */
 .safety-bar {
   pointer-events: all;
   background-color: var(--safety-bar-bg, #fff);
@@ -48,7 +48,7 @@
   overflow-y: auto;
 }
 
-/* === Toggle button: top-right, + / − === */
+/* === Toggle button: top-right, + / - === */
 .safety-bar-toggle {
   position: absolute;
   top: 1.2rem;
@@ -73,14 +73,11 @@
 }
 
 .safety-bar-toggle[aria-expanded='true']::after {
-  content: '−';
+  content: '-';
 }
 
 /* ============================================================
-   Variant: center — collapsed content is center aligned
-   ============================================================ */
-/* ============================================================
-   Inline ISI — in-page instance shows only full ISI content
+   Inline ISI - in-page instance shows only full ISI content
    ============================================================ */
 .safety-bar-inline .safety-bar {
   transform: none;
@@ -114,12 +111,15 @@
   position: static;
 }
 
+/* ============================================================
+   Variant: center - collapsed content is center aligned
+   ============================================================ */
 .safety-bar.center .safety-bar-abbreviated {
   text-align: center;
 }
 
 /* ============================================================
-   Variant: split — collapsed is two-column grid
+   Variant: split - collapsed is two-column grid
    ============================================================ */
 .safety-bar.split .safety-bar-abbreviated {
   display: grid;
