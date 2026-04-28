@@ -86,15 +86,16 @@ export default function decorate(block) {
     }
 
     // Parse brand entries (rows with a picture element, multi-cell)
+    // Cell order from model: 0=logo, 1=brandName, 2=therapeuticArea, 3=description,
+    //                        4=brandUrl, 5=safetyText, 6=indications
     while (i < flatValues.length) {
       const { img, cells } = flatValues[i];
       if (img && cells.length > 1) {
         const brandName = cells[1]?.textContent.trim() || '';
-        const safetyText = cells[2]?.innerHTML.trim() || '';
         const brandUrl = cells[4]?.querySelector('a')?.href
           || cells[4]?.textContent.trim() || '#';
-        const brandColor = cells[3]?.textContent.trim() || '';
-        const indicationsRaw = cells[5]?.textContent.trim() || '';
+        const safetyText = cells[5]?.innerHTML.trim() || '';
+        const indicationsRaw = cells[6]?.textContent.trim() || '';
         const indications = [];
         if (indicationsRaw) {
           indicationsRaw.split('\n').forEach((line) => {
@@ -109,7 +110,7 @@ export default function decorate(block) {
           name: brandName,
           safetyText,
           url: brandUrl,
-          color: brandColor,
+          color: '',
           indications,
         });
       }
