@@ -37,21 +37,34 @@
   --formulary-submit-height: auto;
 }
 
-/* Center the form */
+/* Form — stacked column layout, narrow centered */
 .formulary-lookup .formulary-lookup-form {
-  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 350px;
   margin-inline: auto;
 }
 
-/* Select centered */
+/* Label left-aligned within centered form */
+.formulary-lookup .formulary-lookup-label {
+  align-self: flex-start;
+}
+
+/* Select — full width of form, block display */
 .formulary-lookup .formulary-lookup-select {
+  display: block;
+  width: 100%;
+  max-width: 300px;
   margin-inline: auto;
 }
 
-/* Submit — link-like with > arrow */
+/* Submit — matches select width, stacked below */
 .formulary-lookup .formulary-lookup-submit {
   margin: 16px auto;
   display: block;
+  width: 100%;
+  max-width: 300px;
   position: relative;
 }
 
@@ -75,4 +88,12 @@
   opacity: 1;
   background: rgb(70 140 40);
   color: #fff;
+}
+
+/* Disclaimer — constrained width */
+.formulary-lookup .formulary-lookup-disclaimer {
+  font-size: 13px;
+  max-width: 350px;
+  margin-inline: auto;
+  text-align: center;
 }
