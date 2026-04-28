@@ -110,8 +110,8 @@ export default function decorate(block) {
   if (!utilityLinks.length) {
     utilityLinks.push(
       { text: 'Contact Medical Info', href: '#', target: '_self' },
-      { text: 'Full Prescribing Information', href: '/prescribinginfo', target: '_blank' },
-      { text: 'Patient Site', href: '/patientsite', target: '_blank' },
+      { text: 'Full Prescribing Information', href: 'https://www.rxabbvie.com/pdf/skyrizi_pi.pdf', target: '_blank' },
+      { text: 'Patient Site', href: 'https://www.skyrizi.com', target: '_blank' },
     );
   }
 
