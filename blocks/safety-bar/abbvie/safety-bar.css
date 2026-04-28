@@ -1,6 +1,6 @@
 /* ============================================================
    Safety Bar — Base Styles
-   Variants: default (right-aligned), center, split (2-col collapsed)
+   Variants: default (left-aligned), center, split (2-col collapsed)
    All variants: bottom sticky, expandable with + / − toggle
    ============================================================ */
 
@@ -12,29 +12,23 @@
   left: 0;
   z-index: var(--z-index-safety-bar, 500);
   pointer-events: none;
+  transition: transform 0.3s ease;
 }
 
-/* === Core block === */
+.safety-bar-section.is-hidden {
+  transform: translateY(110%);
+}
+
+/* === Core block — auto-sizes to content, no fixed height === */
 .safety-bar {
   pointer-events: all;
   background-color: var(--safety-bar-bg, #fff);
   border-top: 3px solid var(--safety-bar-border, #ccc);
-  max-height: var(--safety-bar-collapsed-height, 14rem);
-  overflow: hidden;
-  transition: max-height 0.3s ease, transform 0.3s ease;
+  position: relative;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.safety-bar.is-expanded {
-  max-height: var(--safety-bar-expanded-height, 70vh);
-  overflow-y: auto;
-}
-
-.safety-bar.is-hidden {
-  transform: translateY(110%);
-}
-
-/* === Collapsed / abbreviated area — default: right aligned === */
+/* === Collapsed / abbreviated area === */
 .safety-bar-abbreviated {
   padding: 1.2rem 5rem 1.2rem 2.4rem;
   font-size: var(--body-font-size-xs, 1.4rem);
@@ -43,20 +37,26 @@
   text-align: left;
 }
 
-/* === Full ISI / expanded content — right aligned === */
+/* === Full ISI / expanded content === */
 .safety-bar-full {
   padding: 1.6rem 2.4rem;
   font-size: var(--body-font-size-xs, 1.4rem);
   line-height: 1.6;
   display: none;
   text-align: left;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .safety-bar.is-expanded .safety-bar-full {
   display: block;
 }
 
-/* === Toggle button: + / − === */
+.safety-bar.is-expanded .safety-bar-abbreviated {
+  display: none;
+}
+
+/* === Toggle button: top-right, + / − === */
 .safety-bar-toggle {
   position: absolute;
   top: 1.2rem;
@@ -110,25 +110,7 @@
 /* ============================================================
    Responsive breakpoints
    ============================================================ */
-@media (min-width: 744px) {
-  .safety-bar {
-    max-height: var(--safety-bar-collapsed-height-tablet, 12rem);
-  }
-
-  .safety-bar.is-expanded {
-    max-height: var(--safety-bar-expanded-height-tablet, 65vh);
-  }
-}
-
 @media (min-width: 1024px) {
-  .safety-bar {
-    max-height: var(--safety-bar-collapsed-height-desktop, 10rem);
-  }
-
-  .safety-bar.is-expanded {
-    max-height: var(--safety-bar-expanded-height-desktop, 60vh);
-  }
-
   .safety-bar-abbreviated {
     padding: 1.6rem 6rem 1.6rem 5.5rem;
   }
@@ -139,6 +121,7 @@
 
   .safety-bar-full {
     padding: 2rem 5.5rem;
+    max-height: 50vh;
   }
 
   .safety-bar.split .safety-bar-abbreviated {
@@ -150,10 +133,7 @@
    Inline ISI — in-page instance shows only full ISI content
    ============================================================ */
 .safety-bar-inline .safety-bar {
-  max-height: none;
-  overflow: visible;
   transform: none;
-  transition: none;
   box-shadow: none;
   position: static;
 }
@@ -164,6 +144,8 @@
 
 .safety-bar-inline .safety-bar-full {
   display: block;
+  max-height: none;
+  overflow-y: visible;
 }
 
 .safety-bar-inline .safety-bar-abbreviated {
