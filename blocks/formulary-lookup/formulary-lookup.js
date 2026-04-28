@@ -1,4 +1,32 @@
 import { getRecaptchaToken } from '../eds-form/recaptcha.js';
+import { getMetadata } from '../../scripts/aem.js';
+
+const DEFAULT_FLAGS = {
+  showIcon: true,
+  showRecaptchaNotice: true,
+  showDisclaimer: true,
+  submitIconEnabled: false,
+  headingTag: 'h2',
+  autoSubmitOnStateChange: true,
+};
+
+async function loadFormularyConfig() {
+  const brand = getMetadata('brand')?.trim();
+  const imports = [
+    import('./block-config.js').catch(() => null),
+  ];
+  if (brand) {
+    imports.push(import(`./${brand}/block-config.js`).catch(() => null));
+  }
+  const [globalMod, brandMod] = await Promise.all(imports);
+  const globalCfg = globalMod ? await globalMod.default() : {};
+  const brandCfg = brandMod ? await brandMod.default() : {};
+  return {
+    ...DEFAULT_FLAGS,
+    ...globalCfg.flags,
+    ...brandCfg.flags,
+  };
+}
 
 const US_STATES = [
   ['Alabama', 'AL'], ['Alaska', 'AK'], ['Arizona', 'AZ'], ['Arkansas', 'AR'], ['California', 'CA'],
@@ -16,26 +44,62 @@ const US_STATES = [
 const RICHTEXT_KEYS = new Set(['recaptcha-notice', 'disclaimer']);
 const INLINE_HTML_KEYS = new Set(['heading', 'description']);
 
+const FIELD_ORDER = [
+  'icon', 'heading', 'description', 'state-label', 'county-label',
+  'zip-label', 'zip-placeholder', 'submit-label', 'filter-label', 'filter-options',
+  'indication-label', 'indications', 'api', 'recaptcha-key', 'results-per-page',
+  'no-results', 'error', 'recaptcha-notice', 'disclaimer', 'analyticsid',
+];
+
 function unwrapSingleP(html) {
   const trimmed = html.trim();
-  const match = trimmed.match(/^<p>([\s\S]*)<\/p>$/i);
+  const match = trimmed.match(/^<p[^>]*>([\s\S]*)<\/p>$/i);
   return match ? match[1].trim() : trimmed;
+}
+
+function readValue(key, cell) {
+  if (RICHTEXT_KEYS.has(key)) return cell?.innerHTML.trim() || '';
+  if (INLINE_HTML_KEYS.has(key)) return unwrapSingleP(cell?.innerHTML.trim() || '');
+  return cell?.textContent.trim() || '';
+}
+
+function findPropKey(cell) {
+  const prop = cell?.dataset?.aueProp || cell?.dataset?.richtextProp;
+  if (prop) return prop;
+  const child = cell?.querySelector('[data-aue-prop],[data-richtext-prop]');
+  return child?.dataset?.aueProp || child?.dataset?.richtextProp || '';
+}
+
+function isUEMode(block) {
+  const rows = [...block.children];
+  if (!rows.length) return false;
+  const firstRow = rows[0];
+  const cells = [...firstRow.children];
+  if (cells.length === 1) return true;
+  if (cells.length === 2 && findPropKey(cells[0])) return true;
+  return false;
 }
 
 function parseConfig(block) {
   const config = {};
-  [...block.children].forEach((row) => {
-    const cells = [...row.children];
-    const key = cells[0]?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
-    const valueCell = cells[1] || cells[0];
-    if (RICHTEXT_KEYS.has(key)) {
-      config[key] = valueCell?.innerHTML.trim() || '';
-    } else if (INLINE_HTML_KEYS.has(key)) {
-      config[key] = unwrapSingleP(valueCell?.innerHTML.trim() || '');
-    } else {
-      config[key] = valueCell?.textContent.trim() || '';
-    }
-  });
+  const rows = [...block.children];
+
+  if (isUEMode(block)) {
+    rows.forEach((row, i) => {
+      const cell = row.children[0];
+      const key = findPropKey(cell) || (i < FIELD_ORDER.length ? FIELD_ORDER[i] : '');
+      if (!key) return;
+      const normalKey = key.toLowerCase().replace(/\s+/g, '-');
+      config[normalKey] = readValue(normalKey, cell);
+    });
+  } else {
+    rows.forEach((row) => {
+      const cells = [...row.children];
+      const key = cells[0]?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+      const valueCell = cells[1] || cells[0];
+      config[key] = readValue(key, valueCell);
+    });
+  }
   return config;
 }
 
@@ -269,7 +333,7 @@ function applyAnalytics(el, config) {
   }
 }
 
-function buildDefaultVariant(config, section, status, results) {
+function buildDefaultVariant(config, section, status, results, flags) {
   const { label, select } = createStateSelect(config, 'formulary-state');
   applyAnalytics(select, config);
   section.append(label, select);
@@ -307,11 +371,12 @@ function buildDefaultVariant(config, section, status, results) {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'formulary-lookup-submit';
+    if (flags.submitIconEnabled) btn.classList.add('has-icon');
     btn.textContent = config['submit-label'];
     applyAnalytics(btn, config);
     section.append(btn);
     btn.addEventListener('click', lookupState);
-  } else {
+  } else if (flags.autoSubmitOnStateChange !== false) {
     select.addEventListener('change', lookupState);
   }
 }
@@ -542,9 +607,10 @@ function createIndicationRadio(config) {
   return wrapper;
 }
 
-function buildZipVariant(config, section, status, results) {
+function buildZipVariant(config, section, status, results, flags) {
   const { form, input } = createZipForm(config);
   const submitBtn = form.querySelector('.formulary-lookup-submit');
+  if (flags.submitIconEnabled) submitBtn.classList.add('has-icon');
   applyAnalytics(submitBtn, config);
 
   const filter = createFilterDropdown(config);
@@ -599,31 +665,33 @@ function buildZipVariant(config, section, status, results) {
 
 export default async function decorate(block) {
   const config = parseConfig(block);
+  const flags = await loadFormularyConfig();
   const isDynamic = block.classList.contains('dynamic');
   const isZip = block.classList.contains('zip');
 
   const section = document.createElement('div');
   section.className = 'formulary-lookup-form';
 
-  const icon = createIcon(config);
+  const icon = flags.showIcon !== false ? createIcon(config) : null;
   const hasHeading = !!config.heading;
+  const hTag = flags.headingTag || 'h2';
 
   if (icon && hasHeading) {
     const header = document.createElement('div');
     header.className = 'formulary-lookup-header';
     header.append(icon);
-    const h2 = document.createElement('h2');
-    h2.className = 'formulary-lookup-heading';
-    h2.innerHTML = config.heading;
-    header.append(h2);
+    const heading = document.createElement(hTag);
+    heading.className = 'formulary-lookup-heading';
+    heading.innerHTML = config.heading;
+    header.append(heading);
     section.append(header);
   } else {
     if (icon) section.append(icon);
     if (hasHeading) {
-      const h2 = document.createElement('h2');
-      h2.className = 'formulary-lookup-heading';
-      h2.innerHTML = config.heading;
-      section.append(h2);
+      const heading = document.createElement(hTag);
+      heading.className = 'formulary-lookup-heading';
+      heading.innerHTML = config.heading;
+      section.append(heading);
     }
   }
 
@@ -638,20 +706,24 @@ export default async function decorate(block) {
   const results = createResultsContainer();
 
   if (isZip) {
-    buildZipVariant(config, section, status, results);
+    buildZipVariant(config, section, status, results, flags);
   } else if (isDynamic) {
     buildDynamicVariant(config, section, status, results);
   } else {
-    buildDefaultVariant(config, section, status, results);
+    buildDefaultVariant(config, section, status, results, flags);
   }
 
-  const recaptchaNotice = createRecaptchaNotice(config);
-  if (recaptchaNotice) section.append(recaptchaNotice);
+  if (flags.showRecaptchaNotice !== false) {
+    const recaptchaNotice = createRecaptchaNotice(config);
+    if (recaptchaNotice) section.append(recaptchaNotice);
+  }
 
   section.append(status, results);
 
-  const disclaimer = createDisclaimer(config);
-  if (disclaimer) section.append(disclaimer);
+  if (flags.showDisclaimer !== false) {
+    const disclaimer = createDisclaimer(config);
+    if (disclaimer) section.append(disclaimer);
+  }
 
   block.replaceChildren(section);
 }
