@@ -11,7 +11,37 @@
               "name": "Brand Explorer",
               "model": "brand-explorer",
               "filter": "brand-explorer",
-              "blockId": "id:"
+              "blockId": "id:",
+              "barLabel": "Explore AbbVie",
+              "brand_explorer_rinvoq": {
+                "name": "Brand Entry",
+                "model": "brand-explorer-item",
+                "brandName": "RINVOQ",
+                "brandUrl": "https://www.rinvoqhcp.com/",
+                "therapeuticArea": "Immunology",
+                "description": "Treatment for rheumatoid arthritis, psoriatic arthritis, and more.",
+                "safetyText": "<b>Please see Important Safety Information, including BOXED WARNING on Serious Infections, Mortality, Malignancies, Major Adverse Cardiovascular Events, and Thrombosis.</b>",
+                "indications": "Rheumatoid Arthritis|https://www.rinvoqhcp.com/rheumatoid-arthritis|moderate\nPsoriatic Arthritis|https://www.rinvoqhcp.com/psoriatic-arthritis|active\nAnkylosing Spondylitis|https://www.rinvoqhcp.com/axspa|active\nNon-radiographic Axial Spondyloarthritis|https://www.rinvoqhcp.com/axspa|active\nGiant Cell Arteritis|https://www.rinvoqhcp.com/giant-cell-arteritis|\nAtopic Dermatitis|https://www.rinvoqhcp.com/atopic-dermatitis|refractory\nUlcerative Colitis|https://www.rinvoqhcp.com/ulcerative-colitis|moderate\nCrohn's Disease|https://www.rinvoqhcp.com/crohns-disease|moderate"
+              },
+              "brand_explorer_skyrizi": {
+                "name": "Brand Entry",
+                "model": "brand-explorer-item",
+                "brandName": "SKYRIZI",
+                "brandUrl": "https://www.skyrizihcp.com/",
+                "therapeuticArea": "Immunology",
+                "description": "Treatment for plaque psoriasis, psoriatic arthritis, and more.",
+                "indications": "Plaque Psoriasis|https://www.skyrizihcp.com/dermatology|moderate\nPsoriatic Arthritis|https://www.skyrizihcp.com/rheumatology|active\nUlcerative Colitis|https://www.skyrizihcp.com/gastroenterology/ulcerative-colitis|moderate\nCrohn's Disease|https://www.skyrizihcp.com/gastroenterology/crohns-disease|moderate"
+              },
+              "brand_explorer_humira": {
+                "name": "Brand Entry",
+                "model": "brand-explorer-item",
+                "brandName": "HUMIRA",
+                "brandUrl": "https://www.humirapro.com/",
+                "therapeuticArea": "Immunology",
+                "description": "Treatment for multiple immunological conditions.",
+                "safetyText": "<b>Please see Important Safety Information, including BOXED WARNING on Serious Infections and Malignancy.</b>",
+                "indications": "Hidradenitis Suppurativa|https://www.humirapro.com/hidradenitis-suppurativa|moderate\nJuvenile Idiopathic Arthritis|https://www.humirapro.com/jia|moderate\nPediatric Crohn's Disease|https://www.humirapro.com/pediatric-crohns-disease|moderate\nPediatric Ulcerative Colitis|https://www.humirapro.com/pediatric-ulcerative-colitis|moderate\nPediatric Uveitis|https://www.humirapro.com/uveitis-pediatric|noninfectious\nUveitis (Adult)|https://www.humirapro.com/uveitis|noninfectious\nOther Indications|https://www.humirapro.com/|"
+              }
             }
           }
         }
@@ -131,6 +161,32 @@
           "value": "",
           "label": "Brand URL",
           "description": "Link to brand site."
+        },
+        {
+          "component": "tab",
+          "label": "Safety",
+          "name": "safetyTab"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "safetyText",
+          "value": "",
+          "label": "Safety Text",
+          "description": "Safety disclaimer shown below the brand logo."
+        },
+        {
+          "component": "tab",
+          "label": "Indications",
+          "name": "indicationsTab"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "indications",
+          "value": "",
+          "label": "Indications",
+          "description": "One per line: Name|URL|severity (moderate/active/refractory/noninfectious). Example: Rheumatoid Arthritis|https://www.rinvoqhcp.com/rheumatoid-arthritis|moderate"
         }
       ]
     }

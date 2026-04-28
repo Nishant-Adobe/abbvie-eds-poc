@@ -1,4 +1,4 @@
-// v1.5 — logo as reference image picker
+// v1.7 — auto brand colors, full skyrizihcp styling
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -56,21 +56,35 @@ export default function decorate(block) {
           .map((el) => el.textContent.trim()).filter(Boolean);
         const urlEl = row.querySelector('a');
         const brandUrl = urlEl?.href || allTexts.find((t) => t.startsWith('http')) || '#';
-        const brandName = allTexts.find((t) => !t.startsWith('http') && t.length < 30) || '';
+        const brandName = allTexts.find((t) => !t.startsWith('http') && !t.startsWith('#') && !t.includes('|') && t.length < 30) || '';
         const therapeuticArea = allTexts.find((t) => ['Immunology', 'Dermatology', 'Gastroenterology', 'Rheumatology', 'Ophthalmology'].includes(t)) || '';
         const descEl = row.querySelector('[data-aue-prop="description"]');
         const description = descEl?.innerHTML.trim() || '';
+        const safetyEl = row.querySelector('[data-aue-prop="safetyText"]');
+        const safetyText = safetyEl?.innerHTML.trim() || '';
+        const brandColor = allTexts.find((t) => t.startsWith('#') && t.length <= 7) || '';
         const brandImage = img ? img.cloneNode(true) : null;
+
+        const indications = [];
+        const indicationsText = allTexts.find((t) => t.includes('|'));
+        if (indicationsText) {
+          indicationsText.split('\n').forEach((line) => {
+            const parts = line.split('|').map((p) => p.trim());
+            if (parts[0]) {
+              indications.push({ name: parts[0], url: parts[1] || '#', severity: parts[2] || '' });
+            }
+          });
+        }
 
         brands.push({
           image: brandImage,
           name: brandName,
           therapeuticArea,
           description,
-          safetyText: '',
+          safetyText,
           url: brandUrl,
-          color: '',
-          indications: [],
+          color: brandColor,
+          indications,
         });
       } else if (!comp) {
         const text = row.textContent.trim();
@@ -207,9 +221,12 @@ export default function decorate(block) {
       blade.append(subtitle);
     }
 
+    const brandColors = { rinvoq: '#ffd41d', skyrizi: '#00a8e1', humira: '#931947' };
+    const autoColor = brandColors[brand.name.toLowerCase()] || '';
+
     const separator = document.createElement('hr');
     separator.className = 'brand-explorer-separator';
-    if (brand.color) separator.style.backgroundColor = brand.color;
+    if (autoColor) separator.style.backgroundColor = autoColor;
     blade.append(separator);
     accordion.append(blade);
 
@@ -228,7 +245,7 @@ export default function decorate(block) {
     const visitLink = document.createElement('a');
     visitLink.href = brand.url;
     visitLink.className = 'brand-explorer-visit';
-    visitLink.innerHTML = `Visit ${brand.name} <span class="brand-explorer-visit-arrow" ${brand.color ? `style="background-color:${brand.color}"` : ''}></span>`;
+    visitLink.innerHTML = `Visit ${brand.name} <span class="brand-explorer-visit-arrow" ${autoColor ? `style="background-color:${autoColor}"` : ''}></span>`;
     links.append(visitLink);
 
     accordion.append(links);
