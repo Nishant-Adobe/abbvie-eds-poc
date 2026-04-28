@@ -1,9 +1,12 @@
 export default function decorate(block) {
   const rows = [...block.children];
   const isOnce = block.classList.contains('once');
-  const drawerId = `promo-drawer-${Math.random().toString(36).slice(2, 7)}`;
+  const drawerId = block.dataset.blockId?.replace('id:', '').trim()
+    || block.id
+    || 'promo-drawer';
+  const storageKey = `promo-drawer-${drawerId}`;
 
-  if (isOnce && sessionStorage.getItem(drawerId) === 'dismissed') {
+  if (isOnce && sessionStorage.getItem(storageKey) === 'dismissed') {
     block.remove();
     return;
   }
@@ -41,7 +44,7 @@ export default function decorate(block) {
   function close() {
     block.classList.remove('is-open');
     handle.setAttribute('aria-expanded', 'false');
-    if (isOnce) sessionStorage.setItem(drawerId, 'dismissed');
+    if (isOnce) sessionStorage.setItem(storageKey, 'dismissed');
   }
 
   handle.addEventListener('click', () => {
@@ -51,8 +54,14 @@ export default function decorate(block) {
 
   closeBtn.addEventListener('click', close);
 
-  // Auto-open on first visit
-  if (!isOnce || !sessionStorage.getItem(drawerId)) {
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && block.classList.contains('is-open')) {
+      close();
+      handle.focus();
+    }
+  });
+
+  if (!isOnce || !sessionStorage.getItem(storageKey)) {
     setTimeout(open, 1500);
   }
 }
