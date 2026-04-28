@@ -8711,57 +8711,51 @@
     "id": "promo-drawer",
     "fields": [
       {
-        "component": "tab",
-        "label": "Content",
-        "name": "content"
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variants",
+        "options": [
+          { "name": "Right side", "value": "right" },
+          { "name": "Auto-open on load", "value": "autoopen" },
+          { "name": "Show once (hide after first view)", "value": "once" },
+          { "name": "Show until closed", "value": "once-closed" }
+        ]
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "handleLabel",
         "value": "Savings",
-        "label": "Handle Label",
-        "description": "Text shown on the drawer handle tab."
+        "label": "Handle Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Drawer Heading"
       },
       {
         "component": "richtext",
-        "name": "drawerContent",
+        "name": "content",
         "value": "",
         "label": "Drawer Content",
-        "description": "Content displayed inside the drawer panel.",
         "valueType": "string"
       },
       {
-        "component": "tab",
-        "label": "Settings",
-        "name": "settings"
-      },
-      {
-        "component": "select",
+        "component": "text",
         "valueType": "string",
-        "name": "classes_variant",
-        "label": "Variant",
-        "options": [
-          {
-            "name": "Default (left side)",
-            "value": ""
-          },
-          {
-            "name": "Right side",
-            "value": "right"
-          },
-          {
-            "name": "Show once per session",
-            "value": "once"
-          },
-          {
-            "name": "Right + Once",
-            "value": "right once"
-          }
-        ]
+        "name": "closeLabel",
+        "value": "Close",
+        "label": "Close Button Label"
       },
       {
-        "...": "../../models/_common-properties.json#/common-prop"
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
       }
     ]
   },
