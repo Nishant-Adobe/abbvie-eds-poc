@@ -63,11 +63,27 @@ function buildThumbnailCard(item, index, isActive, isCardsLayout) {
   return card;
 }
 
+function getCellText(row) {
+  return row?.firstElementChild?.textContent?.trim() || '';
+}
+
+function readBlockConfig(block) {
+  const rows = [...block.children];
+  return {
+    playlistLayout: getCellText(rows[0]) || 'cards',
+    accountId: getCellText(rows[1]) || '',
+    playerId: getCellText(rows[2]) || DEFAULT_PLAYER,
+    enableCaptions: getCellText(rows[3]) === 'true',
+    anchorId: getCellText(rows[4]) || '',
+  };
+}
+
 function parsePlaylistItems(block) {
   const items = [];
   const rows = [...block.children];
+  const configFieldCount = 4;
 
-  rows.forEach((row) => {
+  rows.slice(configFieldCount).forEach((row) => {
     const cells = [...row.children];
     if (cells.length < 2) return;
 
@@ -148,10 +164,10 @@ function switchVideo(container, videoId) {
 }
 
 export async function decorateBlock(block) {
-  const accountId = block.dataset.accountId || '';
-  const playerId = block.dataset.playerId || DEFAULT_PLAYER;
-  const enableCaptions = block.dataset.enableCaptions === 'true';
-  const playlistLayout = block.dataset.playlistLayout || 'cards';
+  const cfg = readBlockConfig(block);
+  const {
+    accountId, playerId, enableCaptions, playlistLayout,
+  } = cfg;
   const isCardsLayout = playlistLayout === 'cards';
 
   const items = parsePlaylistItems(block);
