@@ -579,11 +579,12 @@
   background: #fff;
   max-width: 700px;
   width: 90%;
-  padding: 50px 60px 30px;
+  padding: 40px 20px;
   text-align: center;
   border-top: none;
   box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
   border-radius: 0;
+  overflow-y: hidden;
 }
 
 .brand-explorer-modal-close {
@@ -621,58 +622,62 @@
 
 .brand-explorer-modal-title {
   font-family: Arial, sans-serif;
-  font-size: 28px;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 2rem;
   color: #071d49;
-  margin: 0 0 24px;
+  margin: 32px 0;
+  padding-right: 0;
 }
 
 .brand-explorer-modal-text {
   font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.65;
-  color: #333;
-  margin: 0 0 32px;
+  font-size: clamp(0.75rem, 2.7vw, 1rem);
+  line-height: 1.5;
+  color: #071d49;
+  margin: 0 auto 8px;
+  width: 90%;
 }
 
 .brand-explorer-modal-actions {
   display: flex;
   justify-content: center;
   gap: 12px;
+  margin-top: 24px;
   margin-bottom: 24px;
 }
 
 .brand-explorer-modal-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 160px;
-  padding: 16px 50px;
+  display: inline-block;
   font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
+  line-height: 1rem;
   letter-spacing: 0;
-  border-radius: 30px;
+  padding: 14px 50px;
+  border-radius: 1.875rem;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  transition: background 0.3s linear;
 }
 
 .brand-explorer-modal-yes {
   background: #071d49;
   color: #fff;
-  border: 2px solid #071d49;
+  border: 1px solid #555;
 }
 
 .brand-explorer-modal-yes:hover {
-  background: #0a2a6b;
+  background: #1c2d49;
 }
 
 .brand-explorer-modal-no {
   background: #fff;
   color: #071d49;
-  border: 1px solid #071d49;
+  border: 1px solid #555;
 }
 
 .brand-explorer-modal-no:hover {
