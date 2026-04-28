@@ -65,11 +65,11 @@ export default function decorate(block) {
         const safetyEl = row.querySelector('[data-aue-prop="safetyText"]');
         let safetyText = safetyEl?.innerHTML.trim() || '';
         if (!safetyText) {
-          const boldEls = row.querySelectorAll('b, strong');
-          boldEls.forEach((b) => {
-            const txt = b.textContent.trim();
-            if (txt.toLowerCase().includes('safety information') || txt.toLowerCase().includes('boxed warning')) {
-              safetyText = b.closest('p, div')?.innerHTML.trim() || b.outerHTML;
+          row.querySelectorAll('p, div, span, b, strong').forEach((el) => {
+            if (safetyText) return;
+            const txt = el.textContent.trim().toLowerCase();
+            if (txt.includes('safety information') || txt.includes('boxed warning')) {
+              safetyText = el.innerHTML.trim() || el.textContent.trim();
             }
           });
         }
