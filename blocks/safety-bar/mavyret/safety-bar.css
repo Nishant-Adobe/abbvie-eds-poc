@@ -1,7 +1,7 @@
 /* ============================================================
    Safety Bar — Base Styles
-   Variants: default, expandable, split, floating, floating-v1,
-             floating-v2, inline, indication-swap
+   Variants: default (right-aligned), center, split (2-col collapsed)
+   All variants: bottom sticky, expandable with + / − toggle
    ============================================================ */
 
 /* === Fixed section wrapper === */
@@ -26,7 +26,7 @@
 }
 
 .safety-bar.is-expanded {
-  max-height: var(--safety-bar-expanded-height, 60vh);
+  max-height: var(--safety-bar-expanded-height, 70vh);
   overflow-y: auto;
 }
 
@@ -34,142 +34,78 @@
   transform: translateY(110%);
 }
 
-/* === Abbreviated / minimized content === */
+/* === Collapsed / abbreviated area — default: right aligned === */
 .safety-bar-abbreviated {
-  padding: var(--spacing-12, 1.2rem) var(--spacing-24, 2.4rem);
+  padding: 1.2rem 5rem 1.2rem 2.4rem;
   font-size: var(--body-font-size-xs, 1.4rem);
   line-height: 1.5;
   position: relative;
+  text-align: right;
 }
 
-/* === Fade gradient === */
-.safety-bar-fade {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 4rem;
-  background: linear-gradient(to bottom, transparent, var(--safety-bar-fade-color, #fff));
-  pointer-events: none;
-}
-
-.safety-bar.is-expanded .safety-bar-fade {
-  display: none;
-}
-
-/* === Full / expanded content === */
+/* === Full ISI / expanded content — right aligned === */
 .safety-bar-full {
-  padding: var(--spacing-16, 1.6rem) var(--spacing-24, 2.4rem);
+  padding: 1.6rem 2.4rem;
   font-size: var(--body-font-size-xs, 1.4rem);
   line-height: 1.6;
   display: none;
+  text-align: right;
 }
 
 .safety-bar.is-expanded .safety-bar-full {
   display: block;
 }
 
-/* === Expand / Collapse toggle button === */
+/* === Toggle button: + / − === */
 .safety-bar-toggle {
   position: absolute;
-  top: var(--spacing-12, 1.2rem);
-  right: var(--spacing-24, 2.4rem);
+  top: 50%;
+  right: 1.2rem;
+  transform: translateY(-50%);
   background: none;
-  border: 1px solid var(--safety-bar-toggle-color, currentcolor);
+  border: 2px solid var(--safety-bar-toggle-color, currentcolor);
   color: var(--safety-bar-toggle-color, inherit);
   cursor: pointer;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  padding: 0.2rem 0.8rem;
-  border-radius: 0.2rem;
+  font-size: 1.8rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0;
+  line-height: 1;
 }
 
 .safety-bar-toggle::after {
-  content: 'Expand ISI';
+  content: '+';
 }
 
 .safety-bar-toggle[aria-expanded='true']::after {
-  content: 'Collapse ISI';
+  content: '−';
 }
 
 /* ============================================================
-   Variant: split — two-column abbreviated area
+   Variant: center — collapsed content is center aligned
+   ============================================================ */
+.safety-bar.center .safety-bar-abbreviated {
+  text-align: center;
+}
+
+/* ============================================================
+   Variant: split — collapsed is two-column grid
    ============================================================ */
 .safety-bar.split .safety-bar-abbreviated {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-24, 2.4rem);
-  align-items: start;
+  text-align: left;
+  padding-right: 5rem;
 }
 
 .safety-bar.split .safety-bar-col1,
 .safety-bar.split .safety-bar-col2 {
   min-width: 0;
-}
-
-.safety-bar.split .safety-bar-fade {
-  display: none;
-}
-
-/* ============================================================
-   Variant: floating — right-anchored floating panel
-   ============================================================ */
-.safety-bar.floating {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  left: auto;
-  width: min(42rem, calc(100vw - 4rem));
-  border-top: none;
-  border: 2px solid var(--safety-bar-border, #ccc);
-  border-radius: var(--safety-bar-border-radius, 0.4rem);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.safety-bar.floating.is-hidden {
-  transform: translateY(calc(100% + 2rem));
-}
-
-/* ============================================================
-   Variant: floating-v1 — left-anchored floating panel
-   ============================================================ */
-.safety-bar.floating-v1 {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  right: auto;
-  width: min(42rem, calc(100vw - 4rem));
-  border-top: none;
-  border: 2px solid var(--safety-bar-border, #ccc);
-  border-radius: var(--safety-bar-border-radius, 0.4rem);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.safety-bar.floating-v1.is-hidden {
-  transform: translateY(calc(100% + 2rem));
-}
-
-/* ============================================================
-   Variant: floating-v2 — compact bottom-right floating panel
-   ============================================================ */
-.safety-bar.floating-v2 {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  left: auto;
-  width: min(36rem, calc(100vw - 4rem));
-  max-height: var(--safety-bar-collapsed-height, 14rem);
-  border-top: none;
-  border: 2px solid var(--safety-bar-border, #ccc);
-  border-radius: var(--safety-bar-border-radius, 0.4rem);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.safety-bar.floating-v2.is-expanded {
-  max-height: var(--safety-bar-expanded-height, 60vh);
-}
-
-.safety-bar.floating-v2.is-hidden {
-  transform: translateY(calc(100% + 2rem));
 }
 
 /* ============================================================
@@ -181,7 +117,7 @@
   }
 
   .safety-bar.is-expanded {
-    max-height: var(--safety-bar-expanded-height-tablet, 50vh);
+    max-height: var(--safety-bar-expanded-height-tablet, 65vh);
   }
 }
 
@@ -191,29 +127,28 @@
   }
 
   .safety-bar.is-expanded {
-    max-height: var(--safety-bar-expanded-height-desktop, 40vh);
+    max-height: var(--safety-bar-expanded-height-desktop, 60vh);
   }
 
   .safety-bar-abbreviated {
-    padding: var(--spacing-16, 1.6rem) var(--spacing-55, 5.5rem);
+    padding: 1.6rem 6rem 1.6rem 5.5rem;
   }
 
   .safety-bar-toggle {
-    top: var(--spacing-16, 1.6rem);
-    right: var(--spacing-55, 5.5rem);
+    right: 1.6rem;
   }
 
   .safety-bar-full {
-    padding: var(--spacing-20, 2rem) var(--spacing-55, 5.5rem);
+    padding: 2rem 5.5rem;
   }
 
   .safety-bar.split .safety-bar-abbreviated {
-    padding: var(--spacing-16, 1.6rem) var(--spacing-55, 5.5rem);
+    padding: 1.6rem 6rem 1.6rem 5.5rem;
   }
 }
 
 /* ============================================================
-   Inline ISI — stays in page flow, full content always visible
+   Inline ISI — in-page instance shows only full ISI content
    ============================================================ */
 .safety-bar-inline .safety-bar {
   max-height: none;
@@ -224,8 +159,7 @@
   position: static;
 }
 
-.safety-bar-inline .safety-bar-toggle,
-.safety-bar-inline .safety-bar-fade {
+.safety-bar-inline .safety-bar-toggle {
   display: none;
 }
 
@@ -241,10 +175,9 @@
   position: static;
 }
 
-/* Mavyret HCP safety bar overrides — dark navy background, white text */
+/* Mavyret safety bar overrides — dark navy background, white text */
 :root {
   --safety-bar-bg: #0c2556;
   --safety-bar-border: #1ba2da;
-  --safety-bar-fade-color: #0c2556;
   --safety-bar-toggle-color: #fff;
 }

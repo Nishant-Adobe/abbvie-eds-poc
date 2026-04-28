@@ -28,26 +28,26 @@
         },
         {
           "component": "richtext",
-          "name": "minimizedDesktop",
+          "name": "collapsedContent",
           "value": "",
-          "label": "Minimized Content (Desktop)",
-          "description": "Abbreviated ISI shown in the collapsed bar. Also used as the first column in the 'split' variant.",
+          "label": "Collapsed Content",
+          "description": "Text shown in the bar when collapsed. For the 'split' variant, this is the left column.",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "minimizedDesktopCol2",
+          "name": "collapsedContentCol2",
           "value": "",
-          "label": "Minimized Content – Column 2 (Split only)",
-          "description": "Second column content for the abbreviated area. Only used with the 'split' variant.",
+          "label": "Collapsed Content – Column 2 (Split only)",
+          "description": "Right column content in collapsed state. Only used with the 'split' variant.",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "maximizedContent",
+          "name": "expandedContent",
           "value": "",
-          "label": "Full ISI Content",
-          "description": "Complete Important Safety Information shown when expanded. Required for the 'expandable' variant.",
+          "label": "Expanded Full ISI Content",
+          "description": "Complete Important Safety Information displayed when the bar is expanded.",
           "valueType": "string"
         },
         {
@@ -61,24 +61,10 @@
           "name": "classes_variant",
           "label": "Variant",
           "options": [
-            { "name": "Default (sticky bottom bar)", "value": "" },
-            { "name": "Expandable (with expand/collapse toggle)", "value": "expandable" },
-            { "name": "Split (two-column abbreviated area)", "value": "split" },
-            { "name": "Split + Expandable", "value": "split expandable" },
-            { "name": "Floating – Right (expandable panel)", "value": "floating expandable" },
-            { "name": "Floating V1 – Left (expandable panel)", "value": "floating-v1 expandable" },
-            { "name": "Floating V2 – Compact right (expandable panel)", "value": "floating-v2 expandable" },
-            { "name": "Inline Only (no sticky bar, full ISI in page flow)", "value": "inline" },
-            { "name": "Indication Swap (multi-indication ISI)", "value": "indication-swap" }
+            { "name": "Default – single column, right aligned", "value": "" },
+            { "name": "Center – single column, collapsed center aligned", "value": "center" },
+            { "name": "Split – two-column collapsed, single-column expanded", "value": "split" }
           ]
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "indicationTarget",
-          "label": "Indication Target ID",
-          "description": "Unique identifier for this ISI block used with the 'indication-swap' variant (e.g. 'indication-1'). Must match the value dispatched in the 'safety-bar:indication-change' event.",
-          "value": ""
         },
         {
           "...": "../../models/_common-properties.json#/common-prop"
