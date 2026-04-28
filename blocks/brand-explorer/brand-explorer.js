@@ -98,10 +98,9 @@ export default function decorate(block) {
           indications,
         });
       } else if (!comp) {
+        const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
+        if (barLabelEl) barLabel = barLabelEl.textContent.trim();
         const text = row.textContent.trim();
-        if (text && !text.startsWith('http') && !text.startsWith('US-') && text.length < 40) {
-          barLabel = text;
-        }
         if (text.startsWith('US-')) projectNumber = text;
       }
     });
