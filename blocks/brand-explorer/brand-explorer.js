@@ -63,7 +63,16 @@ export default function decorate(block) {
         const descEl = row.querySelector('[data-aue-prop="description"]');
         const description = descEl?.innerHTML.trim() || '';
         const safetyEl = row.querySelector('[data-aue-prop="safetyText"]');
-        const safetyText = safetyEl?.innerHTML.trim() || '';
+        let safetyText = safetyEl?.innerHTML.trim() || '';
+        if (!safetyText) {
+          const boldEls = row.querySelectorAll('b, strong');
+          boldEls.forEach((b) => {
+            const txt = b.textContent.trim();
+            if (txt.toLowerCase().includes('safety information') || txt.toLowerCase().includes('boxed warning')) {
+              safetyText = b.closest('p, div')?.innerHTML.trim() || b.outerHTML;
+            }
+          });
+        }
         const brandColor = allTexts.find((t) => t.startsWith('#') && t.length <= 7) || '';
         const brandImage = img ? img.cloneNode(true) : null;
 
