@@ -142,37 +142,52 @@ function renderResultsTable(plans, results, config, page) {
   const start = (currentPage - 1) * perPage;
   const slice = plans.slice(start, start + perPage);
 
-  const tableWrapper = document.createElement('div');
-  tableWrapper.className = 'formulary-results-table-wrapper';
+  const heading = document.createElement('h3');
+  heading.className = 'formulary-results-heading';
+  heading.textContent = 'Formulary Status Results';
+  results.append(heading);
 
-  const table = document.createElement('table');
-  table.className = 'formulary-results-table';
+  const list = document.createElement('div');
+  list.className = 'formulary-results-list';
+  list.setAttribute('role', 'table');
+  list.setAttribute('aria-label', 'Insurance Plans');
 
-  const thead = document.createElement('thead');
-  thead.innerHTML = '<tr><th>Name</th><th>Tier</th><th>Details</th></tr>';
-  table.append(thead);
-
-  const tbody = document.createElement('tbody');
-  slice.forEach((plan) => {
-    const tr = document.createElement('tr');
-    tr.className = 'formulary-results-row';
-    const tdName = document.createElement('td');
-    tdName.textContent = plan.name || '';
-    const tdTier = document.createElement('td');
-    if (plan.tier) {
-      const badge = document.createElement('span');
-      badge.className = 'formulary-plan-tier';
-      badge.textContent = `Tier ${plan.tier}`;
-      tdTier.append(badge);
-    }
-    const tdDetail = document.createElement('td');
-    tdDetail.textContent = plan.detail || '';
-    tr.append(tdName, tdTier, tdDetail);
-    tbody.append(tr);
+  const header = document.createElement('div');
+  header.className = 'formulary-results-header';
+  header.setAttribute('role', 'rowgroup');
+  ['Plan Name', 'Plan Type', 'Status'].forEach((t) => {
+    const col = document.createElement('div');
+    col.className = 'formulary-results-col';
+    col.setAttribute('role', 'columnheader');
+    col.textContent = t;
+    header.append(col);
   });
-  table.append(tbody);
-  tableWrapper.append(table);
-  results.append(tableWrapper);
+  list.append(header);
+
+  slice.forEach((plan) => {
+    const row = document.createElement('div');
+    row.className = 'formulary-results-row';
+    row.setAttribute('role', 'row');
+
+    const colName = document.createElement('div');
+    colName.className = 'formulary-results-col formulary-col-name';
+    colName.setAttribute('role', 'cell');
+    colName.textContent = plan.name || '';
+
+    const colType = document.createElement('div');
+    colType.className = 'formulary-results-col formulary-col-type';
+    colType.setAttribute('role', 'cell');
+    colType.textContent = plan.type || plan.tier || '';
+
+    const colStatus = document.createElement('div');
+    colStatus.className = 'formulary-results-col formulary-col-status';
+    colStatus.setAttribute('role', 'cell');
+    colStatus.textContent = plan.status || plan.detail || '';
+
+    row.append(colName, colType, colStatus);
+    list.append(row);
+  });
+  results.append(list);
 
   if (totalPages > 1) {
     const pagination = document.createElement('div');
@@ -181,34 +196,38 @@ function renderResultsTable(plans, results, config, page) {
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
     prevBtn.className = 'formulary-pagination-btn';
-    prevBtn.textContent = 'Previous';
     prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.innerHTML = '&#8249;';
     prevBtn.disabled = currentPage <= 1;
     prevBtn.addEventListener('click', () => {
       renderResultsTable(plans, results, config, currentPage - 1);
     });
 
-    const info = document.createElement('span');
-    info.className = 'formulary-pagination-info';
-    const showStart = start + 1;
-    const showEnd = Math.min(start + perPage, plans.length);
-    const template = config['pagination-label'] || 'Showing {start}–{end} of {total}';
-    info.textContent = template
-      .replace('{start}', showStart)
-      .replace('{end}', showEnd)
-      .replace('{total}', plans.length);
+    pagination.append(prevBtn);
+    for (let p = 1; p <= totalPages; p += 1) {
+      const pageBtn = document.createElement('button');
+      pageBtn.type = 'button';
+      pageBtn.className = 'formulary-pagination-num';
+      if (p === currentPage) pageBtn.classList.add('is-active');
+      pageBtn.textContent = p;
+      pageBtn.setAttribute('aria-label', `Page ${p}`);
+      pageBtn.addEventListener('click', () => {
+        renderResultsTable(plans, results, config, p);
+      });
+      pagination.append(pageBtn);
+    }
 
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
     nextBtn.className = 'formulary-pagination-btn';
-    nextBtn.textContent = 'Next';
     nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.innerHTML = '&#8250;';
     nextBtn.disabled = currentPage >= totalPages;
     nextBtn.addEventListener('click', () => {
       renderResultsTable(plans, results, config, currentPage + 1);
     });
 
-    pagination.append(prevBtn, info, nextBtn);
+    pagination.append(nextBtn);
     results.append(pagination);
   }
 }
@@ -373,30 +392,90 @@ function createFilterDropdown(config) {
   const wrapper = document.createElement('div');
   wrapper.className = 'formulary-lookup-filter';
 
-  const label = document.createElement('label');
-  label.className = 'formulary-lookup-label';
-  label.htmlFor = 'formulary-filter';
-  label.textContent = config['filter-label'];
+  const anchor = document.createElement('div');
+  anchor.className = 'formulary-lookup-filter-anchor';
+  anchor.setAttribute('tabindex', '0');
+  anchor.setAttribute('role', 'button');
+  anchor.setAttribute('aria-expanded', 'false');
+  anchor.setAttribute('aria-label', config['filter-label']);
 
-  const select = document.createElement('select');
-  select.id = 'formulary-filter';
-  select.setAttribute('aria-label', config['filter-label']);
+  const anchorText = document.createElement('span');
+  anchorText.className = 'formulary-lookup-filter-text';
+  anchorText.textContent = config['filter-label'];
 
-  const defaultOpt = document.createElement('option');
-  defaultOpt.value = '';
-  defaultOpt.textContent = config['filter-label'];
-  select.append(defaultOpt);
+  const clearBtn = document.createElement('button');
+  clearBtn.type = 'button';
+  clearBtn.className = 'formulary-lookup-filter-clear';
+  clearBtn.setAttribute('aria-label', 'Clear filter');
+  clearBtn.textContent = '✕';
+  clearBtn.hidden = true;
 
-  const options = (config['filter-options'] || '').split(',').map((o) => o.trim()).filter(Boolean);
-  options.forEach((opt) => {
-    const option = document.createElement('option');
-    option.value = opt;
-    option.textContent = opt;
-    select.append(option);
+  anchor.append(anchorText, clearBtn);
+
+  const panel = document.createElement('div');
+  panel.className = 'formulary-lookup-filter-panel';
+  panel.hidden = true;
+
+  const opts = (config['filter-options'] || '')
+    .split(',').map((o) => o.trim()).filter(Boolean);
+  opts.forEach((opt, i) => {
+    const item = document.createElement('label');
+    item.className = 'formulary-lookup-filter-option';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.value = opt;
+    cb.id = `formulary-filter-${i}`;
+    item.append(cb, document.createTextNode(` ${opt}`));
+    panel.append(item);
   });
 
-  wrapper.append(label, select);
-  return { wrapper, select };
+  wrapper.append(anchor, panel);
+
+  function getSelected() {
+    return [...panel.querySelectorAll('input:checked')]
+      .map((cb) => cb.value);
+  }
+
+  anchor.addEventListener('click', (e) => {
+    if (e.target === clearBtn) return;
+    const open = panel.hidden;
+    panel.hidden = !open;
+    anchor.setAttribute('aria-expanded', String(open));
+    wrapper.classList.toggle('is-open', open);
+  });
+
+  clearBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    panel.querySelectorAll('input').forEach((cb) => {
+      cb.checked = false;
+    });
+    clearBtn.hidden = true;
+    anchorText.textContent = config['filter-label'];
+    panel.hidden = true;
+    anchor.setAttribute('aria-expanded', 'false');
+    wrapper.classList.remove('is-open');
+  });
+
+  panel.addEventListener('change', () => {
+    const sel = getSelected();
+    if (sel.length) {
+      anchorText.textContent = sel.join(', ');
+      clearBtn.hidden = false;
+    } else {
+      anchorText.textContent = config['filter-label'];
+      clearBtn.hidden = true;
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!wrapper.contains(e.target) && !panel.hidden) {
+      panel.hidden = true;
+      anchor.setAttribute('aria-expanded', 'false');
+      wrapper.classList.remove('is-open');
+    }
+  });
+
+  return { wrapper, getSelected };
 }
 
 function createIndicationRadio(config) {
@@ -466,8 +545,8 @@ function buildZipVariant(config, section, status, results) {
 
     let url = `${config.api}?zip=${encodeURIComponent(zip)}`;
     if (filter) {
-      const filterVal = filter.select.value;
-      if (filterVal) url += `&filter=${encodeURIComponent(filterVal)}`;
+      const sel = filter.getSelected();
+      if (sel.length) url += `&filter=${encodeURIComponent(sel.join(','))}`;
     }
     const indicationRadio = form.querySelector('input[name="formulary-indication"]:checked');
     if (indicationRadio) url += `&indication=${encodeURIComponent(indicationRadio.value)}`;
