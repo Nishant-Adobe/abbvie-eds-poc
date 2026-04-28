@@ -1,3 +1,10 @@
 export default async function getBlockConfigs() {
-  return { flags: {}, variations: [], decorations: {} };
+  return {
+    flags: {
+      submitIconEnabled: false,
+      autoSubmitOnStateChange: false,
+    },
+    variations: [],
+    decorations: {},
+  };
 }
