@@ -28,18 +28,26 @@
         },
         {
           "component": "richtext",
-          "name": "abbreviated",
+          "name": "minimizedDesktop",
           "value": "",
-          "label": "Abbreviated ISI",
-          "description": "Short Important Safety Information shown in the collapsed bar.",
+          "label": "Minimized Content (Desktop)",
+          "description": "Abbreviated ISI shown in the collapsed bar. Also used as the first column in the 'split' variant.",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "fullContent",
+          "name": "minimizedDesktopCol2",
+          "value": "",
+          "label": "Minimized Content – Column 2 (Split only)",
+          "description": "Second column content for the abbreviated area. Only used with the 'split' variant.",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "maximizedContent",
           "value": "",
           "label": "Full ISI Content",
-          "description": "Complete Important Safety Information shown when expanded. Only used with 'expandable' variant.",
+          "description": "Complete Important Safety Information shown when expanded. Required for the 'expandable' variant.",
           "valueType": "string"
         },
         {
@@ -53,9 +61,24 @@
           "name": "classes_variant",
           "label": "Variant",
           "options": [
-            { "name": "Default (static bar)", "value": "" },
-            { "name": "Expandable (toggle full ISI)", "value": "expandable" }
+            { "name": "Default (sticky bottom bar)", "value": "" },
+            { "name": "Expandable (with expand/collapse toggle)", "value": "expandable" },
+            { "name": "Split (two-column abbreviated area)", "value": "split" },
+            { "name": "Split + Expandable", "value": "split expandable" },
+            { "name": "Floating – Right (expandable panel)", "value": "floating expandable" },
+            { "name": "Floating V1 – Left (expandable panel)", "value": "floating-v1 expandable" },
+            { "name": "Floating V2 – Compact right (expandable panel)", "value": "floating-v2 expandable" },
+            { "name": "Inline Only (no sticky bar, full ISI in page flow)", "value": "inline" },
+            { "name": "Indication Swap (multi-indication ISI)", "value": "indication-swap" }
           ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "indicationTarget",
+          "label": "Indication Target ID",
+          "description": "Unique identifier for this ISI block used with the 'indication-swap' variant (e.g. 'indication-1'). Must match the value dispatched in the 'safety-bar:indication-change' event.",
+          "value": ""
         },
         {
           "...": "../../models/_common-properties.json#/common-prop"

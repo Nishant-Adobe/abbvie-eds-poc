@@ -1,12 +1,20 @@
+/* ============================================================
+   Safety Bar — Base Styles
+   Variants: default, expandable, split, floating, floating-v1,
+             floating-v2, inline, indication-swap
+   ============================================================ */
+
+/* === Fixed section wrapper === */
 .safety-bar-section {
+  width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
   z-index: var(--z-index-safety-bar, 500);
   pointer-events: none;
 }
 
+/* === Core block === */
 .safety-bar {
   pointer-events: all;
   background-color: var(--safety-bar-bg, #fff);
@@ -14,6 +22,7 @@
   max-height: var(--safety-bar-collapsed-height, 14rem);
   overflow: hidden;
   transition: max-height 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .safety-bar.is-expanded {
@@ -22,9 +31,10 @@
 }
 
 .safety-bar.is-hidden {
-  transform: translateY(100%);
+  transform: translateY(110%);
 }
 
+/* === Abbreviated / minimized content === */
 .safety-bar-abbreviated {
   padding: var(--spacing-12, 1.2rem) var(--spacing-24, 2.4rem);
   font-size: var(--body-font-size-xs, 1.4rem);
@@ -32,6 +42,7 @@
   position: relative;
 }
 
+/* === Fade gradient === */
 .safety-bar-fade {
   position: absolute;
   bottom: 0;
@@ -46,6 +57,7 @@
   display: none;
 }
 
+/* === Full / expanded content === */
 .safety-bar-full {
   padding: var(--spacing-16, 1.6rem) var(--spacing-24, 2.4rem);
   font-size: var(--body-font-size-xs, 1.4rem);
@@ -57,6 +69,7 @@
   display: block;
 }
 
+/* === Expand / Collapse toggle button === */
 .safety-bar-toggle {
   position: absolute;
   top: var(--spacing-12, 1.2rem);
@@ -78,6 +91,90 @@
   content: 'Collapse ISI';
 }
 
+/* ============================================================
+   Variant: split — two-column abbreviated area
+   ============================================================ */
+.safety-bar.split .safety-bar-abbreviated {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-24, 2.4rem);
+  align-items: start;
+}
+
+.safety-bar.split .safety-bar-col1,
+.safety-bar.split .safety-bar-col2 {
+  min-width: 0;
+}
+
+.safety-bar.split .safety-bar-fade {
+  display: none;
+}
+
+/* ============================================================
+   Variant: floating — right-anchored floating panel
+   ============================================================ */
+.safety-bar.floating {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  left: auto;
+  width: min(42rem, calc(100vw - 4rem));
+  border-top: none;
+  border: 2px solid var(--safety-bar-border, #ccc);
+  border-radius: var(--safety-bar-border-radius, 0.4rem);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.safety-bar.floating.is-hidden {
+  transform: translateY(calc(100% + 2rem));
+}
+
+/* ============================================================
+   Variant: floating-v1 — left-anchored floating panel
+   ============================================================ */
+.safety-bar.floating-v1 {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  right: auto;
+  width: min(42rem, calc(100vw - 4rem));
+  border-top: none;
+  border: 2px solid var(--safety-bar-border, #ccc);
+  border-radius: var(--safety-bar-border-radius, 0.4rem);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.safety-bar.floating-v1.is-hidden {
+  transform: translateY(calc(100% + 2rem));
+}
+
+/* ============================================================
+   Variant: floating-v2 — compact bottom-right floating panel
+   ============================================================ */
+.safety-bar.floating-v2 {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  left: auto;
+  width: min(36rem, calc(100vw - 4rem));
+  max-height: var(--safety-bar-collapsed-height, 14rem);
+  border-top: none;
+  border: 2px solid var(--safety-bar-border, #ccc);
+  border-radius: var(--safety-bar-border-radius, 0.4rem);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.safety-bar.floating-v2.is-expanded {
+  max-height: var(--safety-bar-expanded-height, 60vh);
+}
+
+.safety-bar.floating-v2.is-hidden {
+  transform: translateY(calc(100% + 2rem));
+}
+
+/* ============================================================
+   Responsive breakpoints
+   ============================================================ */
 @media (min-width: 744px) {
   .safety-bar {
     max-height: var(--safety-bar-collapsed-height-tablet, 12rem);
@@ -101,17 +198,30 @@
     padding: var(--spacing-16, 1.6rem) var(--spacing-55, 5.5rem);
   }
 
+  .safety-bar-toggle {
+    top: var(--spacing-16, 1.6rem);
+    right: var(--spacing-55, 5.5rem);
+  }
+
   .safety-bar-full {
     padding: var(--spacing-20, 2rem) var(--spacing-55, 5.5rem);
   }
+
+  .safety-bar.split .safety-bar-abbreviated {
+    padding: var(--spacing-16, 1.6rem) var(--spacing-55, 5.5rem);
+  }
 }
 
-/* Inline ISI — stays in page flow, full content always visible */
+/* ============================================================
+   Inline ISI — stays in page flow, full content always visible
+   ============================================================ */
 .safety-bar-inline .safety-bar {
   max-height: none;
   overflow: visible;
   transform: none;
   transition: none;
+  box-shadow: none;
+  position: static;
 }
 
 .safety-bar-inline .safety-bar-toggle,
@@ -125,6 +235,10 @@
 
 .safety-bar-inline .safety-bar-abbreviated {
   padding-right: var(--spacing-24, 2.4rem);
+}
+
+.safety-bar-inline.safety-bar-section {
+  position: static;
 }
 
 /* Rinvoq safety bar overrides */
