@@ -1,107 +1,14 @@
-/* Rinvoq HCP — promo-drawer: base + brand overrides (compiled) */
+/* Rinvoq HCP — promo-drawer (merged base + brand overrides) */
 
-/* ── Base styles ── */
 .promo-drawer {
   position: fixed;
+  right: 0;
+  left: auto;
   bottom: var(--safety-bar-collapsed-height, 120px);
-  left: 0;
-  z-index: var(--z-index-promo-drawer, 200);
+  z-index: 999;
   display: flex;
-  align-items: flex-end;
-}
-
-.promo-drawer.right {
-  left: auto;
-  right: 0;
-  flex-direction: row-reverse;
-}
-
-.promo-drawer-handle {
-  background-color: var(--promo-drawer-handle-bg, var(--link-color, #0057cc));
-  color: var(--promo-drawer-handle-color, #fff);
-  border: none;
-  cursor: pointer;
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
-  padding: var(--spacing-12, 12px) var(--spacing-8, 8px);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  border-radius: 4px 4px 0 0;
-  transform: rotate(180deg);
-}
-
-.promo-drawer.right .promo-drawer-handle {
-  transform: none;
-}
-
-.promo-drawer-panel {
-  background-color: var(--promo-drawer-panel-bg, #fff);
-  border: 1px solid var(--promo-drawer-border, #e0e0e0);
-  box-shadow: 2px 0 8px rgb(0 0 0 / 12%);
-  max-width: 320px;
-  width: 100vw;
-  max-height: 60vh;
-  overflow-y: auto;
-  padding: var(--spacing-24, 24px);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  position: relative;
-}
-
-.promo-drawer.right .promo-drawer-panel {
-  box-shadow: -2px 0 8px rgb(0 0 0 / 12%);
-  transform: translateX(100%);
-}
-
-.promo-drawer.is-open .promo-drawer-panel {
-  transform: translateX(0);
-}
-
-.promo-drawer-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  top: var(--spacing-12, 12px);
-  right: var(--spacing-12, 12px);
-  width: 24px;
-  height: 24px;
-}
-
-.promo-drawer-close::before,
-.promo-drawer-close::after {
-  content: '';
-  display: block;
-  width: 16px;
-  height: 2px;
-  background: currentcolor;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
-
-.promo-drawer-close::before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.promo-drawer-close::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-/* ── Rinvoq HCP overrides: right-side drawer, slides as one unit ── */
-/*
-  The whole container (handle + panel) translates right by the panel width
-  so only the handle tab peeks out. On open it slides fully into view.
-  Clicking X removes .is-open → container slides back right.
-*/
-
-.promo-drawer {
-  right: 0;
-  left: auto;
-  bottom: var(--safety-bar-collapsed-height, 120px);
   flex-direction: row;
   align-items: stretch;
-  z-index: 999;
   transform: translateX(380px);
   transition: transform 0.35s ease;
 }
@@ -119,6 +26,8 @@
 .promo-drawer-handle {
   background-color: #90124a;
   color: #fff;
+  border: none;
+  cursor: pointer;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);
@@ -133,6 +42,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
+}
+
+.promo-drawer-handle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -3px;
 }
 
 .promo-drawer.right .promo-drawer-handle {
@@ -151,6 +66,16 @@
   transform: none;
   transition: none;
   position: relative;
+  color: #25282a;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.promo-drawer-panel p {
+  color: #25282a;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 16px;
 }
 
 .promo-drawer.right .promo-drawer-panel {
@@ -160,13 +85,6 @@
 
 .promo-drawer.is-open .promo-drawer-panel {
   transform: none;
-}
-
-.promo-drawer-panel,
-.promo-drawer-panel p {
-  color: #25282a;
-  font-size: 0.9rem;
-  line-height: 1.5;
 }
 
 .promo-drawer-panel strong,
@@ -183,10 +101,6 @@
   font-size: 1.1rem;
   margin: 0 0 12px;
   line-height: 1.3;
-}
-
-.promo-drawer-panel p {
-  margin: 0 0 16px;
 }
 
 .promo-drawer-panel a {
@@ -209,10 +123,51 @@
 }
 
 .promo-drawer-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: var(--spacing-12, 12px);
+  right: var(--spacing-12, 12px);
+  width: 24px;
+  height: 24px;
   color: #25282a;
+  outline: none;
   transition: color 0.2s ease;
+}
+
+.promo-drawer-close:focus-visible {
+  outline: 2px solid #25282a;
+  outline-offset: 2px;
 }
 
 .promo-drawer-close:hover {
   color: #90124a;
+}
+
+.promo-drawer-close::before,
+.promo-drawer-close::after {
+  content: '';
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: currentcolor;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.promo-drawer-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.promo-drawer-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-drawer,
+  .promo-drawer-panel {
+    transition: none;
+  }
 }
