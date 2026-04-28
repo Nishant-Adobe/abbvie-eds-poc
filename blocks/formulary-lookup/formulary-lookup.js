@@ -1,32 +1,4 @@
 import { getRecaptchaToken } from '../eds-form/recaptcha.js';
-import { getMetadata } from '../../scripts/aem.js';
-
-const DEFAULT_FLAGS = {
-  showIcon: true,
-  showRecaptchaNotice: true,
-  showDisclaimer: true,
-  submitIconEnabled: false,
-  headingTag: 'h2',
-  autoSubmitOnStateChange: true,
-};
-
-async function loadFormularyConfig() {
-  const brand = getMetadata('brand')?.trim();
-  const imports = [
-    import('./block-config.js').catch(() => null),
-  ];
-  if (brand) {
-    imports.push(import(`./${brand}/block-config.js`).catch(() => null));
-  }
-  const [globalMod, brandMod] = await Promise.all(imports);
-  const globalCfg = globalMod ? await globalMod.default() : {};
-  const brandCfg = brandMod ? await brandMod.default() : {};
-  return {
-    ...DEFAULT_FLAGS,
-    ...globalCfg.flags,
-    ...brandCfg.flags,
-  };
-}
 
 const US_STATES = [
   ['Alabama', 'AL'], ['Alaska', 'AK'], ['Arizona', 'AZ'], ['Arkansas', 'AR'], ['California', 'CA'],
@@ -41,65 +13,13 @@ const US_STATES = [
   ['Virginia', 'VA'], ['Washington', 'WA'], ['West Virginia', 'WV'], ['Wisconsin', 'WI'], ['Wyoming', 'WY'],
 ];
 
-const RICHTEXT_KEYS = new Set(['recaptcha-notice', 'disclaimer']);
-const INLINE_HTML_KEYS = new Set(['heading', 'description']);
-
-const FIELD_ORDER = [
-  'icon', 'heading', 'description', 'state-label', 'county-label',
-  'zip-label', 'zip-placeholder', 'submit-label', 'filter-label', 'filter-options',
-  'indication-label', 'indications', 'api', 'recaptcha-key', 'results-per-page',
-  'no-results', 'error', 'recaptcha-notice', 'disclaimer', 'analyticsid',
-];
-
-function unwrapSingleP(html) {
-  const trimmed = html.trim();
-  const match = trimmed.match(/^<p[^>]*>([\s\S]*)<\/p>$/i);
-  return match ? match[1].trim() : trimmed;
-}
-
-function readValue(key, cell) {
-  if (RICHTEXT_KEYS.has(key)) return cell?.innerHTML.trim() || '';
-  if (INLINE_HTML_KEYS.has(key)) return unwrapSingleP(cell?.innerHTML.trim() || '');
-  return cell?.textContent.trim() || '';
-}
-
-function findPropKey(cell) {
-  const prop = cell?.dataset?.aueProp || cell?.dataset?.richtextProp;
-  if (prop) return prop;
-  const child = cell?.querySelector('[data-aue-prop],[data-richtext-prop]');
-  return child?.dataset?.aueProp || child?.dataset?.richtextProp || '';
-}
-
-function isUEMode(block) {
-  const rows = [...block.children];
-  if (!rows.length) return false;
-  const firstRow = rows[0];
-  const cells = [...firstRow.children];
-  if (cells.length === 1) return true;
-  if (cells.length === 2 && findPropKey(cells[0])) return true;
-  return false;
-}
-
 function parseConfig(block) {
   const config = {};
-  const rows = [...block.children];
-
-  if (isUEMode(block)) {
-    rows.forEach((row, i) => {
-      const cell = row.children[0];
-      const key = findPropKey(cell) || (i < FIELD_ORDER.length ? FIELD_ORDER[i] : '');
-      if (!key) return;
-      const normalKey = key.toLowerCase().replace(/\s+/g, '-');
-      config[normalKey] = readValue(normalKey, cell);
-    });
-  } else {
-    rows.forEach((row) => {
-      const cells = [...row.children];
-      const key = cells[0]?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
-      const valueCell = cells[1] || cells[0];
-      config[key] = readValue(key, valueCell);
-    });
-  }
+  [...block.children].forEach((row) => {
+    const cells = [...row.children];
+    const key = cells[0]?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+    config[key] = cells[1]?.textContent.trim() || cells[0]?.textContent.trim();
+  });
   return config;
 }
 
@@ -222,52 +142,37 @@ function renderResultsTable(plans, results, config, page) {
   const start = (currentPage - 1) * perPage;
   const slice = plans.slice(start, start + perPage);
 
-  const heading = document.createElement('h3');
-  heading.className = 'formulary-results-heading';
-  heading.textContent = 'Formulary Status Results';
-  results.append(heading);
+  const tableWrapper = document.createElement('div');
+  tableWrapper.className = 'formulary-results-table-wrapper';
 
-  const list = document.createElement('div');
-  list.className = 'formulary-results-list';
-  list.setAttribute('role', 'table');
-  list.setAttribute('aria-label', 'Insurance Plans');
+  const table = document.createElement('table');
+  table.className = 'formulary-results-table';
 
-  const header = document.createElement('div');
-  header.className = 'formulary-results-header';
-  header.setAttribute('role', 'rowgroup');
-  ['Plan Name', 'Plan Type', 'Status'].forEach((t) => {
-    const col = document.createElement('div');
-    col.className = 'formulary-results-col';
-    col.setAttribute('role', 'columnheader');
-    col.textContent = t;
-    header.append(col);
-  });
-  list.append(header);
+  const thead = document.createElement('thead');
+  thead.innerHTML = '<tr><th>Name</th><th>Tier</th><th>Details</th></tr>';
+  table.append(thead);
 
+  const tbody = document.createElement('tbody');
   slice.forEach((plan) => {
-    const row = document.createElement('div');
-    row.className = 'formulary-results-row';
-    row.setAttribute('role', 'row');
-
-    const colName = document.createElement('div');
-    colName.className = 'formulary-results-col formulary-col-name';
-    colName.setAttribute('role', 'cell');
-    colName.textContent = plan.name || '';
-
-    const colType = document.createElement('div');
-    colType.className = 'formulary-results-col formulary-col-type';
-    colType.setAttribute('role', 'cell');
-    colType.textContent = plan.type || plan.tier || '';
-
-    const colStatus = document.createElement('div');
-    colStatus.className = 'formulary-results-col formulary-col-status';
-    colStatus.setAttribute('role', 'cell');
-    colStatus.textContent = plan.status || plan.detail || '';
-
-    row.append(colName, colType, colStatus);
-    list.append(row);
+    const tr = document.createElement('tr');
+    tr.className = 'formulary-results-row';
+    const tdName = document.createElement('td');
+    tdName.textContent = plan.name || '';
+    const tdTier = document.createElement('td');
+    if (plan.tier) {
+      const badge = document.createElement('span');
+      badge.className = 'formulary-plan-tier';
+      badge.textContent = `Tier ${plan.tier}`;
+      tdTier.append(badge);
+    }
+    const tdDetail = document.createElement('td');
+    tdDetail.textContent = plan.detail || '';
+    tr.append(tdName, tdTier, tdDetail);
+    tbody.append(tr);
   });
-  results.append(list);
+  table.append(tbody);
+  tableWrapper.append(table);
+  results.append(tableWrapper);
 
   if (totalPages > 1) {
     const pagination = document.createElement('div');
@@ -276,38 +181,34 @@ function renderResultsTable(plans, results, config, page) {
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
     prevBtn.className = 'formulary-pagination-btn';
+    prevBtn.textContent = 'Previous';
     prevBtn.setAttribute('aria-label', 'Previous page');
-    prevBtn.innerHTML = '&#8249;';
     prevBtn.disabled = currentPage <= 1;
     prevBtn.addEventListener('click', () => {
       renderResultsTable(plans, results, config, currentPage - 1);
     });
 
-    pagination.append(prevBtn);
-    for (let p = 1; p <= totalPages; p += 1) {
-      const pageBtn = document.createElement('button');
-      pageBtn.type = 'button';
-      pageBtn.className = 'formulary-pagination-num';
-      if (p === currentPage) pageBtn.classList.add('is-active');
-      pageBtn.textContent = p;
-      pageBtn.setAttribute('aria-label', `Page ${p}`);
-      pageBtn.addEventListener('click', () => {
-        renderResultsTable(plans, results, config, p);
-      });
-      pagination.append(pageBtn);
-    }
+    const info = document.createElement('span');
+    info.className = 'formulary-pagination-info';
+    const showStart = start + 1;
+    const showEnd = Math.min(start + perPage, plans.length);
+    const template = config['pagination-label'] || 'Showing {start}–{end} of {total}';
+    info.textContent = template
+      .replace('{start}', showStart)
+      .replace('{end}', showEnd)
+      .replace('{total}', plans.length);
 
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
     nextBtn.className = 'formulary-pagination-btn';
+    nextBtn.textContent = 'Next';
     nextBtn.setAttribute('aria-label', 'Next page');
-    nextBtn.innerHTML = '&#8250;';
     nextBtn.disabled = currentPage >= totalPages;
     nextBtn.addEventListener('click', () => {
       renderResultsTable(plans, results, config, currentPage + 1);
     });
 
-    pagination.append(nextBtn);
+    pagination.append(prevBtn, info, nextBtn);
     results.append(pagination);
   }
 }
@@ -333,14 +234,12 @@ function applyAnalytics(el, config) {
   }
 }
 
-function buildDefaultVariant(config, section, status, results, flags) {
+function buildDefaultVariant(config, section, status, results) {
   const { label, select } = createStateSelect(config, 'formulary-state');
   applyAnalytics(select, config);
   section.append(label, select);
 
-  const hasSubmitBtn = !!config['submit-label'];
-
-  async function lookupState() {
+  select.addEventListener('change', async () => {
     const state = select.value;
     if (!state) {
       results.innerHTML = '';
@@ -365,20 +264,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
     } catch {
       showMessage(status, config.error || 'An error occurred. Please try again.', true);
     }
-  }
-
-  if (hasSubmitBtn) {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'formulary-lookup-submit';
-    if (flags.submitIconEnabled) btn.classList.add('has-icon');
-    btn.textContent = config['submit-label'];
-    applyAnalytics(btn, config);
-    section.append(btn);
-    btn.addEventListener('click', lookupState);
-  } else if (flags.autoSubmitOnStateChange !== false) {
-    select.addEventListener('change', lookupState);
-  }
+  });
 }
 
 function buildDynamicVariant(config, section, status, results) {
@@ -483,94 +369,34 @@ function createDisclaimer(config) {
 }
 
 function createFilterDropdown(config) {
-  if (!config['filter-label']) return null;
+  if (!config['filter-dropdown-label']) return null;
   const wrapper = document.createElement('div');
   wrapper.className = 'formulary-lookup-filter';
 
-  const anchor = document.createElement('div');
-  anchor.className = 'formulary-lookup-filter-anchor';
-  anchor.setAttribute('tabindex', '0');
-  anchor.setAttribute('role', 'button');
-  anchor.setAttribute('aria-expanded', 'false');
-  anchor.setAttribute('aria-label', config['filter-label']);
+  const label = document.createElement('label');
+  label.className = 'formulary-lookup-label';
+  label.htmlFor = 'formulary-filter';
+  label.textContent = config['filter-label'];
 
-  const anchorText = document.createElement('span');
-  anchorText.className = 'formulary-lookup-filter-text';
-  anchorText.textContent = config['filter-label'];
+  const select = document.createElement('select');
+  select.id = 'formulary-filter';
+  select.setAttribute('aria-label', config['filter-label']);
 
-  const clearBtn = document.createElement('button');
-  clearBtn.type = 'button';
-  clearBtn.className = 'formulary-lookup-filter-clear';
-  clearBtn.setAttribute('aria-label', 'Clear filter');
-  clearBtn.textContent = '✕';
-  clearBtn.hidden = true;
+  const defaultOpt = document.createElement('option');
+  defaultOpt.value = '';
+  defaultOpt.textContent = config['filter-dropdown-label'];
+  select.append(defaultOpt);
 
-  anchor.append(anchorText, clearBtn);
-
-  const panel = document.createElement('div');
-  panel.className = 'formulary-lookup-filter-panel';
-  panel.hidden = true;
-
-  const opts = (config['filter-options'] || '')
-    .split(',').map((o) => o.trim()).filter(Boolean);
-  opts.forEach((opt, i) => {
-    const item = document.createElement('label');
-    item.className = 'formulary-lookup-filter-option';
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.value = opt;
-    cb.id = `formulary-filter-${i}`;
-    item.append(cb, document.createTextNode(` ${opt}`));
-    panel.append(item);
+  const options = (config['filter-options'] || '').split(',').map((o) => o.trim()).filter(Boolean);
+  options.forEach((opt) => {
+    const option = document.createElement('option');
+    option.value = opt;
+    option.textContent = opt;
+    select.append(option);
   });
 
-  wrapper.append(anchor, panel);
-
-  function getSelected() {
-    return [...panel.querySelectorAll('input:checked')]
-      .map((cb) => cb.value);
-  }
-
-  anchor.addEventListener('click', (e) => {
-    if (e.target === clearBtn) return;
-    const open = panel.hidden;
-    panel.hidden = !open;
-    anchor.setAttribute('aria-expanded', String(open));
-    wrapper.classList.toggle('is-open', open);
-  });
-
-  clearBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    panel.querySelectorAll('input').forEach((cb) => {
-      cb.checked = false;
-    });
-    clearBtn.hidden = true;
-    anchorText.textContent = config['filter-label'];
-    panel.hidden = true;
-    anchor.setAttribute('aria-expanded', 'false');
-    wrapper.classList.remove('is-open');
-  });
-
-  panel.addEventListener('change', () => {
-    const sel = getSelected();
-    if (sel.length) {
-      anchorText.textContent = sel.join(', ');
-      clearBtn.hidden = false;
-    } else {
-      anchorText.textContent = config['filter-label'];
-      clearBtn.hidden = true;
-    }
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!wrapper.contains(e.target) && !panel.hidden) {
-      panel.hidden = true;
-      anchor.setAttribute('aria-expanded', 'false');
-      wrapper.classList.remove('is-open');
-    }
-  });
-
-  return { wrapper, getSelected };
+  wrapper.append(label, select);
+  return { wrapper, select };
 }
 
 function createIndicationRadio(config) {
@@ -607,10 +433,9 @@ function createIndicationRadio(config) {
   return wrapper;
 }
 
-function buildZipVariant(config, section, status, results, flags) {
+function buildZipVariant(config, section, status, results) {
   const { form, input } = createZipForm(config);
   const submitBtn = form.querySelector('.formulary-lookup-submit');
-  if (flags.submitIconEnabled) submitBtn.classList.add('has-icon');
   applyAnalytics(submitBtn, config);
 
   const filter = createFilterDropdown(config);
@@ -641,8 +466,8 @@ function buildZipVariant(config, section, status, results, flags) {
 
     let url = `${config.api}?zip=${encodeURIComponent(zip)}`;
     if (filter) {
-      const sel = filter.getSelected();
-      if (sel.length) url += `&filter=${encodeURIComponent(sel.join(','))}`;
+      const filterVal = filter.select.value;
+      if (filterVal) url += `&filter=${encodeURIComponent(filterVal)}`;
     }
     const indicationRadio = form.querySelector('input[name="formulary-indication"]:checked');
     if (indicationRadio) url += `&indication=${encodeURIComponent(indicationRadio.value)}`;
@@ -665,34 +490,24 @@ function buildZipVariant(config, section, status, results, flags) {
 
 export default async function decorate(block) {
   const config = parseConfig(block);
-  const flags = await loadFormularyConfig();
+
+  console.log("block",block);
+  console.log("config",config);
+
   const isDynamic = block.classList.contains('dynamic');
   const isZip = block.classList.contains('zip');
 
   const section = document.createElement('div');
   section.className = 'formulary-lookup-form';
 
-  const icon = flags.showIcon !== false ? createIcon(config) : null;
-  const hasHeading = !!config.heading;
-  const hTag = flags.headingTag || 'h2';
+  const icon = createIcon(config);
+  if (icon) section.append(icon);
 
-  if (icon && hasHeading) {
-    const header = document.createElement('div');
-    header.className = 'formulary-lookup-header';
-    header.append(icon);
-    const heading = document.createElement(hTag);
-    heading.className = 'formulary-lookup-heading';
-    heading.innerHTML = config.heading;
-    header.append(heading);
-    section.append(header);
-  } else {
-    if (icon) section.append(icon);
-    if (hasHeading) {
-      const heading = document.createElement(hTag);
-      heading.className = 'formulary-lookup-heading';
-      heading.innerHTML = config.heading;
-      section.append(heading);
-    }
+  if (config.heading) {
+    const h2 = document.createElement('h2');
+    h2.className = 'formulary-lookup-heading';
+    h2.innerHTML = config.heading;
+    section.append(h2);
   }
 
   if (config.description) {
@@ -706,24 +521,20 @@ export default async function decorate(block) {
   const results = createResultsContainer();
 
   if (isZip) {
-    buildZipVariant(config, section, status, results, flags);
+    buildZipVariant(config, section, status, results);
   } else if (isDynamic) {
     buildDynamicVariant(config, section, status, results);
   } else {
-    buildDefaultVariant(config, section, status, results, flags);
+    buildDefaultVariant(config, section, status, results);
   }
 
-  if (flags.showRecaptchaNotice !== false) {
-    const recaptchaNotice = createRecaptchaNotice(config);
-    if (recaptchaNotice) section.append(recaptchaNotice);
-  }
+  const recaptchaNotice = createRecaptchaNotice(config);
+  if (recaptchaNotice) section.append(recaptchaNotice);
 
   section.append(status, results);
 
-  if (flags.showDisclaimer !== false) {
-    const disclaimer = createDisclaimer(config);
-    if (disclaimer) section.append(disclaimer);
-  }
+  const disclaimer = createDisclaimer(config);
+  if (disclaimer) section.append(disclaimer);
 
   block.replaceChildren(section);
 }
