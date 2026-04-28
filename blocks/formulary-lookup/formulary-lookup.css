@@ -68,8 +68,31 @@
   height: auto;
 }
 
+/* --- Header (icon + heading side-by-side) --- */
+
+.formulary-lookup-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+  margin-bottom: var(--formulary-heading-margin-bottom, var(--spacing-8, 8px));
+}
+
+.formulary-lookup-header .formulary-lookup-icon {
+  margin-bottom: 0;
+  margin-inline: 0;
+  flex-shrink: 0;
+}
+
+.formulary-lookup-header .formulary-lookup-heading {
+  margin-bottom: 0;
+}
+
 .formulary-lookup.centered .formulary-lookup-icon {
   margin-inline: auto;
+}
+
+.formulary-lookup.centered .formulary-lookup-header {
+  justify-content: center;
 }
 
 /* --- Labels --- */

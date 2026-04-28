@@ -274,7 +274,9 @@ function buildDefaultVariant(config, section, status, results) {
   applyAnalytics(select, config);
   section.append(label, select);
 
-  select.addEventListener('change', async () => {
+  const hasSubmitBtn = !!config['submit-label'];
+
+  async function lookupState() {
     const state = select.value;
     if (!state) {
       results.innerHTML = '';
@@ -299,7 +301,19 @@ function buildDefaultVariant(config, section, status, results) {
     } catch {
       showMessage(status, config.error || 'An error occurred. Please try again.', true);
     }
-  });
+  }
+
+  if (hasSubmitBtn) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'formulary-lookup-submit';
+    btn.textContent = config['submit-label'];
+    applyAnalytics(btn, config);
+    section.append(btn);
+    btn.addEventListener('click', lookupState);
+  } else {
+    select.addEventListener('change', lookupState);
+  }
 }
 
 function buildDynamicVariant(config, section, status, results) {
@@ -592,13 +606,25 @@ export default async function decorate(block) {
   section.className = 'formulary-lookup-form';
 
   const icon = createIcon(config);
-  if (icon) section.append(icon);
+  const hasHeading = !!config.heading;
 
-  if (config.heading) {
+  if (icon && hasHeading) {
+    const header = document.createElement('div');
+    header.className = 'formulary-lookup-header';
+    header.append(icon);
     const h2 = document.createElement('h2');
     h2.className = 'formulary-lookup-heading';
     h2.innerHTML = config.heading;
-    section.append(h2);
+    header.append(h2);
+    section.append(header);
+  } else {
+    if (icon) section.append(icon);
+    if (hasHeading) {
+      const h2 = document.createElement('h2');
+      h2.className = 'formulary-lookup-heading';
+      h2.innerHTML = config.heading;
+      section.append(h2);
+    }
   }
 
   if (config.description) {
