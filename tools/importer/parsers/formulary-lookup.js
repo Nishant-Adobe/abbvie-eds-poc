@@ -28,14 +28,12 @@ const FORMULARY_INNER = [
   '.abbv-formulary-dynamic',
 ];
 
+function matchesAny(element, selectors) {
+  return selectors.some((sel) => element.matches?.(sel) || element.querySelector?.(sel));
+}
+
 export function detect(element) {
-  for (const sel of CONTAINER_SELECTORS) {
-    if (element.matches?.(sel) || element.querySelector?.(sel)) return true;
-  }
-  for (const sel of FORMULARY_INNER) {
-    if (element.matches?.(sel) || element.querySelector?.(sel)) return true;
-  }
-  return false;
+  return matchesAny(element, CONTAINER_SELECTORS) || matchesAny(element, FORMULARY_INNER);
 }
 
 function q(el, selector) {
@@ -44,16 +42,6 @@ function q(el, selector) {
 
 function qa(el, selector) {
   return [...el.querySelectorAll(selector)];
-}
-
-function text(el, selector) {
-  const t = q(el, selector);
-  return t?.textContent?.trim() || '';
-}
-
-function html(el, selector) {
-  const t = q(el, selector);
-  return t?.innerHTML?.trim() || '';
 }
 
 function determineVariants(el) {
@@ -97,11 +85,12 @@ function extractHeading(el) {
     'h3',
     'h2',
   ];
-  for (const sel of selectors) {
+  const found = selectors.reduce((result, sel) => {
+    if (result) return result;
     const heading = q(el, sel);
-    if (heading && heading.textContent.trim()) return heading.innerHTML.trim();
-  }
-  return '';
+    return (heading && heading.textContent.trim()) ? heading.innerHTML.trim() : null;
+  }, null);
+  return found || '';
 }
 
 function extractDescription(el) {
@@ -150,14 +139,16 @@ function extractSubmitLabel(el) {
     'button[class*="submit"]',
     'input[type="submit"]',
   ];
-  for (const sel of selectors) {
+  const found = selectors.reduce((result, sel) => {
+    if (result) return result;
     const btn = q(el, sel);
     if (btn) {
       const label = btn.textContent.trim().replace(/\s+/g, ' ');
       if (label) return label;
     }
-  }
-  return '';
+    return null;
+  }, null);
+  return found || '';
 }
 
 function extractZipLabel(el) {
@@ -214,10 +205,11 @@ function extractStateLabel(el) {
   }
 
   const labels = qa(el, 'label');
-  for (const label of labels) {
+  const matchedLabel = labels.find((label) => {
     const t = label.textContent.trim().toLowerCase();
-    if (t.includes('state') || t.includes('select')) return label.textContent.trim();
-  }
+    return t.includes('state') || t.includes('select');
+  });
+  if (matchedLabel) return matchedLabel.textContent.trim();
 
   const stateInput = q(el, '.abbv-state-input, .formulary-dropdown-input');
   if (stateInput) {
@@ -282,13 +274,11 @@ function extractRecaptchaNotice(el) {
   if (notice) return notice.innerHTML.trim();
 
   const nodes = qa(el, 'p, div, span');
-  for (const node of nodes) {
+  const match = nodes.find((node) => {
     const t = node.textContent;
-    if (t.includes('reCAPTCHA') && t.includes('Privacy Policy')) {
-      return node.innerHTML.trim();
-    }
-  }
-  return '';
+    return t.includes('reCAPTCHA') && t.includes('Privacy Policy');
+  });
+  return match ? match.innerHTML.trim() : '';
 }
 
 function extractDisclaimer(el) {
@@ -307,21 +297,19 @@ function extractDisclaimer(el) {
   ];
 
   const nodes = qa(el, 'p, div');
-  for (const node of nodes) {
+  const match = nodes.find((node) => {
     const t = node.textContent;
-    for (const pattern of patterns) {
-      if (t.includes(pattern)) return node.innerHTML.trim();
-    }
-  }
-  return '';
+    return patterns.some((pattern) => t.includes(pattern));
+  });
+  return match ? match.innerHTML.trim() : '';
 }
 
 function extractRecaptchaKey(el) {
   const script = q(el, 'script[src*="recaptcha"]');
   if (script) {
     const src = script.getAttribute('src') || '';
-    const match = src.match(/render=([A-Za-z0-9_-]+)/);
-    if (match) return match[1];
+    const srcMatch = src.match(/render=([A-Za-z0-9_-]+)/);
+    if (srcMatch) return srcMatch[1];
   }
 
   const dataConfig = q(el, '[data-config]');
@@ -333,10 +321,13 @@ function extractRecaptchaKey(el) {
   }
 
   const scripts = qa(el, 'script');
-  for (const s of scripts) {
+  const found = scripts.find((s) => {
     const content = s.textContent;
-    const match = content.match(/recaptcha[^"]*?["']([A-Za-z0-9_-]{30,})["']/i);
-    if (match) return match[1];
+    return content.match(/recaptcha[^"]*?["']([A-Za-z0-9_-]{30,})["']/i);
+  });
+  if (found) {
+    const keyMatch = found.textContent.match(/recaptcha[^"]*?["']([A-Za-z0-9_-]{30,})["']/i);
+    if (keyMatch) return keyMatch[1];
   }
   return '';
 }
