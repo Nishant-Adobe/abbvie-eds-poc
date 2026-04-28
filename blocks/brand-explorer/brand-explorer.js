@@ -98,10 +98,13 @@ export default function decorate(block) {
         const indicationsRaw = cells[6]?.textContent.trim() || '';
         const indications = [];
         if (indicationsRaw) {
-          indicationsRaw.split('\n').forEach((line) => {
+          const lines = indicationsRaw.includes('\n')
+            ? indicationsRaw.split('\n')
+            : indicationsRaw.split(/(?<=\|(?:moderate|active|refractory|noninfectious|blank))\s+/i);
+          lines.forEach((line) => {
             const parts = line.split('|').map((p) => p.trim());
             if (parts[0]) {
-              indications.push({ name: parts[0], url: parts[1] || '#', severity: parts[2] || '' });
+              indications.push({ name: parts[0], url: parts[1] || '#', severity: (parts[2] || '').toLowerCase() });
             }
           });
         }
@@ -265,9 +268,11 @@ export default function decorate(block) {
   accordions.className = 'brand-explorer-accordions';
 
   brands.forEach((brand) => {
-    const brandSlug = brand.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const brandSlug = brand.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const accordion = document.createElement('div');
-    accordion.className = `brand-explorer-accordion brand-explorer-accordion--${brandSlug}`;
+    accordion.className = brandSlug
+      ? `brand-explorer-accordion brand-explorer-accordion--${brandSlug}`
+      : 'brand-explorer-accordion';
 
     const blade = document.createElement('div');
     blade.className = 'brand-explorer-blade';
