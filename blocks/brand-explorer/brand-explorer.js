@@ -5,7 +5,10 @@ function isEditorMode() {
 }
 
 export default function decorate(block) {
-  if (isEditorMode()) return;
+  if (isEditorMode()) {
+    block.classList.add('brand-explorer--editor');
+    return;
+  }
 
   const rows = [...block.children];
   if (!rows.length) return;

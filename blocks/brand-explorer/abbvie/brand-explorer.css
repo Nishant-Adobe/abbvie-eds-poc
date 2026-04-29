@@ -1,137 +1,745 @@
+/* brand-explorer — multi-brand navigator v3.0 */
+
 .brand-explorer-section {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  z-index: var(--z-index-brand-explorer, 300);
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.brand-explorer-section .default-content-wrapper,
+.brand-explorer-section .brand-explorer-wrapper {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
 }
 
 .brand-explorer {
+  position: relative;
+  background: var(--background-color, #fff);
+  color: var(--text-color, #071d49);
+  font-family: var(--body-font-family, Arial, sans-serif);
+  font-size: 14px;
+  line-height: 16px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
-/* ── bar ─────────────────────────────────────────────────────────────────── */
+.brand-explorer div {
+  grid-column: auto;
+}
+
+/* ── bar ─────────────────────────────────────────────────────── */
 
 .brand-explorer-bar {
-  align-items: center;
-  background-color: var(--brand-explorer-bar-bg, var(--dark-color, #2b2b2b));
-  color: var(--brand-explorer-bar-color, #fff);
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 15px;
+  color: var(--color-white, #fff);
+  background: var(--color-navy-dark, #071d49);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
 }
 
-.brand-explorer-trigger {
+.brand-explorer-left {
+  display: flex;
   align-items: center;
-  background: none;
-  border: none;
-  color: inherit;
+  gap: 10px;
+  padding: 10px 0;
+  flex-shrink: 0;
+}
+
+.brand-explorer-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 10px 0;
+}
+
+.brand-explorer-bar a:any-link {
+  color: var(--color-white, #fff);
+  font-size: 0.9rem;
+  text-decoration: none;
   cursor: pointer;
-  display: flex;
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
-  gap: var(--spacing-8, 8px);
-  padding: var(--spacing-8, 8px) var(--spacing-24, 24px);
 }
 
-.brand-explorer-trigger::after {
-  content: '▲';
+.brand-explorer-right a:any-link {
+  padding: 8px 0;
   display: inline-block;
-  font-size: 0.625rem;
-  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 3;
 }
 
-.brand-explorer.is-open .brand-explorer-trigger::after {
-  transform: rotate(180deg);
+.brand-explorer-content a:any-link {
+  color: var(--text-color, #071d49);
+  text-decoration: none;
 }
 
-/* ── panel ───────────────────────────────────────────────────────────────── */
+.brand-explorer-bar a:any-link:hover {
+  text-decoration: underline;
+}
 
-.brand-explorer-panel {
-  background-color: var(--brand-explorer-panel-bg, #fff);
-  border-top: 1px solid var(--brand-explorer-border, #e0e0e0);
+/* ── AbbVie logo ─────────────────────────────────────────────── */
+
+.brand-explorer-logo-link {
+  display: flex;
+  align-items: center;
+}
+
+.brand-explorer-abbvie-logo {
+  width: 86px;
+  height: auto;
+  fill: var(--color-white, #fff);
+  color: var(--color-white, #fff);
+}
+
+/* ── browse button ───────────────────────────────────────────── */
+
+.brand-explorer .brand-explorer-browse {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--color-white, #fff);
+  font-size: 0.9rem;
+  font-family: var(--body-font-family, Arial, sans-serif);
+  line-height: 1;
+  padding: 12px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  appearance: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+.brand-explorer .brand-explorer-browse:hover {
+  background: transparent;
+  background-color: transparent;
+}
+
+.brand-explorer-browse-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-white, #fff);
+  border-radius: 50%;
+  position: relative;
+}
+
+.brand-explorer-browse-icon::before,
+.brand-explorer-browse-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--color-white, #fff);
+}
+
+.brand-explorer-browse-icon::before {
+  width: 10px;
+  height: 2px;
+}
+
+.brand-explorer-browse-icon::after {
+  width: 2px;
+  height: 10px;
+}
+
+.brand-explorer.is-open .brand-explorer-browse-icon::after {
+  display: none;
+}
+
+/* ── close button ────────────────────────────────────────────── */
+
+.brand-explorer .brand-explorer-close {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--text-color, #071d49);
+  font-size: 14px;
+  font-family: var(--body-font-family, Arial, sans-serif);
+  padding: 8px 0;
+  cursor: pointer;
+  appearance: none;
+  box-shadow: none;
+  line-height: 1;
+}
+
+.brand-explorer .brand-explorer-close:hover {
+  background: transparent;
+  background-color: transparent;
+}
+
+.brand-explorer-close-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--text-color, #071d49);
+  border-radius: 50%;
+  position: relative;
+}
+
+.brand-explorer-close-icon::before,
+.brand-explorer-close-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--text-color, #071d49);
+}
+
+.brand-explorer-close-icon::before {
+  width: 12px;
+  height: 2px;
+  transform: rotate(45deg);
+}
+
+.brand-explorer-close-icon::after {
+  width: 12px;
+  height: 2px;
+  transform: rotate(-45deg);
+}
+
+/* ── content panel ───────────────────────────────────────────── */
+
+.brand-explorer-content {
+  width: 100%;
+  padding: 0 20px;
+  background: var(--background-color, #fff);
+  position: relative;
   max-height: 0;
   overflow: hidden;
-  position: relative;
-  transition: max-height 0.35s ease;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
-.brand-explorer.is-open .brand-explorer-panel {
-  max-height: 50vh;
+.brand-explorer.is-open .brand-explorer-content {
+  max-height: 80vh;
+  padding: 30px 20px 20px;
   overflow-y: auto;
+  pointer-events: auto;
 }
 
-.brand-explorer-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  top: var(--spacing-12, 12px);
-  right: var(--spacing-16, 16px);
-  width: 28px;
-  height: 28px;
+/* ── accordions grid ─────────────────────────────────────────── */
+
+.brand-explorer-accordions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
 }
 
-.brand-explorer-close::before,
-.brand-explorer-close::after {
-  content: '';
-  background: currentcolor;
+.brand-explorer-accordion {
+  position: relative;
+  padding-right: 20px;
+  border-right: 1px solid #d8d8d8;
+}
+
+.brand-explorer-accordion:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* ── blade (brand header) ────────────────────────────────────── */
+
+.brand-explorer-blade {
+  position: relative;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;
+}
+
+.brand-explorer-blade-link {
   display: block;
-  height: 2px;
-  left: 50%;
+  text-decoration: none;
+}
+
+.brand-explorer-brand-img {
+  max-height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+.brand-explorer-subtitle {
+  font-size: 11px;
+  line-height: 14px;
+  color: #21406d;
+  margin: 10px 0 0;
+}
+
+.brand-explorer-subtitle p {
+  font-size: 11px;
+  line-height: 14px;
+  margin: 0;
+}
+
+.brand-explorer-subtitle b,
+.brand-explorer-subtitle strong {
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* ── colored separator bar ───────────────────────────────────── */
+
+.brand-explorer-separator {
+  border: none;
+  height: 10px;
+  margin-top: auto;
+  margin-bottom: 12px;
+  background: var(--color-border-default, #ccc);
+}
+
+/* ── indication links ────────────────────────────────────────── */
+
+.brand-explorer-links {
+  display: block;
+}
+
+/* stylelint-disable selector-class-pattern */
+
+.brand-explorer-indication {
+  display: block;
+  width: 100%;
+  color: var(--text-color, #071d49);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--body-font-family, Arial, sans-serif);
+  line-height: 16px;
+  text-decoration: none;
+  padding: 6px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.brand-explorer-indication::before {
+  font-size: 10px;
+  font-weight: 400;
+  color: #21406d;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.brand-explorer-indication--moderate::before {
+  content: 'Moderate to Severe';
+}
+
+.brand-explorer-indication--active::before {
+  content: 'Active';
+}
+
+.brand-explorer-indication--refractory::before {
+  content: 'Refractory, Moderate to Severe';
+}
+
+.brand-explorer-indication--noninfectious::before {
+  content: 'Non-infectious';
+}
+
+/* stylelint-enable selector-class-pattern */
+
+/* stylelint-disable selector-class-pattern, no-descending-specificity */
+
+.brand-explorer-indication:hover {
+  text-decoration: none;
+}
+
+.brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
+  color: #b8860b;
+}
+
+.brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
+  color: #0088b5;
+}
+
+.brand-explorer-accordion--humira .brand-explorer-indication:hover {
+  color: #931947;
+}
+
+/* stylelint-enable selector-class-pattern, no-descending-specificity */
+
+/* ── visit link with circle arrow ────────────────────────────── */
+
+.brand-explorer-visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-color, #071d49);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--body-font-family, Arial, sans-serif);
+  line-height: 16px;
+  text-decoration: none;
+  padding: 16px 0 8px;
+  cursor: pointer;
+}
+
+.brand-explorer-visit-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: var(--text-color, #071d49);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.brand-explorer-visit-arrow::after {
+  content: '>';
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white, #fff);
+  line-height: 1;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+
+.brand-explorer-visit-arrow--dark::after {
+  color: var(--text-color, #071d49);
+}
+
+.brand-explorer-visit:hover {
+  text-decoration: underline;
+}
+
+/* ── project number ──────────────────────────────────────────── */
+
+.brand-explorer-project-number {
+  font-size: 11px;
+  color: #21406d;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+/* ── tablet ─────────────────────────────────────────────────── */
+
+@media (width <= 1219px) {
+  .brand-explorer-accordions {
+    gap: 24px;
+  }
+}
+
+@media (width <= 1023px) {
+  .brand-explorer-accordions {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+/* ── small tablet / large mobile ─────────────────────────────── */
+
+@media (width <= 895px) {
+  .brand-explorer-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 15px;
+  }
+
+  .brand-explorer-left {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
+
+  .brand-explorer-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px 20px;
+    padding: 12px 0;
+    border-top: 1px solid rgb(255 255 255 / 20%);
+  }
+
+  .brand-explorer-accordions {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .brand-explorer-blade {
+    cursor: pointer;
+  }
+
+  .brand-explorer-blade::after {
+    content: '\25BC';
+    position: absolute;
+    top: 12px;
+    right: 0;
+    font-size: 10px;
+    color: #21406d;
+    transition: transform 0.3s ease;
+  }
+
+  .brand-explorer-accordion.is-active .brand-explorer-blade::after {
+    transform: rotate(180deg);
+  }
+
+  .brand-explorer-links {
+    display: none;
+    padding-top: 10px;
+  }
+
+  .brand-explorer-accordion.is-active .brand-explorer-links {
+    display: block;
+  }
+
+  .brand-explorer-accordion {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .brand-explorer .brand-explorer-close {
+    top: 8px;
+    right: 10px;
+    font-size: 12px;
+  }
+
+  .brand-explorer-modal-dialog {
+    padding: 40px 20px 30px;
+    width: 95%;
+  }
+
+  .brand-explorer-modal-title {
+    font-size: 20px;
+  }
+}
+
+/* ── phone ───────────────────────────────────────────────────── */
+
+@media (width <= 480px) {
+  .brand-explorer-bar a:any-link {
+    font-size: 0.8rem;
+  }
+
+  .brand-explorer .brand-explorer-browse {
+    font-size: 0.8rem;
+  }
+
+  .brand-explorer-right {
+    gap: 6px 16px;
+    justify-content: center;
+  }
+
+  .brand-explorer-abbvie-logo {
+    width: 70px;
+  }
+}
+
+/* ── contact medical modal ───────────────────────────────────── */
+
+.brand-explorer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-explorer-modal:not([hidden]) {
+  display: flex;
+}
+
+.brand-explorer-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 60%);
+}
+
+.brand-explorer-modal-dialog {
+  position: relative;
+  background: var(--background-color, #fff);
+  max-width: 700px;
+  width: 90%;
+  padding: 40px 20px;
+  text-align: center;
+  border-top: none;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
+  border-radius: 0;
+  overflow-y: hidden;
+}
+
+.brand-explorer-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--color-border-default, #ccc);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
+}
+
+.brand-explorer-modal-close::before,
+.brand-explorer-modal-close::after {
+  content: '';
   position: absolute;
   top: 50%;
+  left: 50%;
   width: 16px;
+  height: 1.5px;
+  background: var(--text-color, #071d49);
 }
 
-.brand-explorer-close::before {
+.brand-explorer-modal-close::before {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.brand-explorer-close::after {
+.brand-explorer-modal-close::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-/* ── grid ────────────────────────────────────────────────────────────────── */
-
-.brand-explorer-grid {
-  display: grid;
-  gap: var(--spacing-24, 24px);
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  list-style: none;
-  margin: 0 auto;
-  max-width: var(--section-width, 1200px);
-  padding: var(--spacing-32, 32px) var(--spacing-24, 24px);
+.brand-explorer-modal-title {
+  font-family: var(--body-font-family, Arial, sans-serif);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 700;
+  line-height: 2rem;
+  color: var(--text-color, #071d49);
+  margin: 32px 0;
+  padding-right: 0;
 }
 
-.brand-explorer-link {
-  align-items: center;
-  border: 1px solid var(--brand-explorer-item-border, #e0e0e0);
-  border-radius: 4px;
-  color: var(--text-color, #111);
+.brand-explorer-modal-text {
+  font-family: var(--body-font-family, Arial, sans-serif);
+  font-size: clamp(0.75rem, 2.7vw, 1rem);
+  line-height: 1.5;
+  color: var(--text-color, #071d49);
+  margin: 0 auto 8px;
+  width: 90%;
+}
+
+.brand-explorer-modal-actions {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8, 8px);
-  padding: var(--spacing-16, 16px);
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.brand-explorer-modal-btn,
+.brand-explorer-modal .brand-explorer-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  padding: 0;
+  margin: 0;
+  font-family: var(--body-font-family, Arial, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  border-radius: 1.875rem;
+  cursor: pointer;
   text-decoration: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.brand-explorer-link:hover {
-  border-color: var(--link-color, #0057cc);
-  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
-}
-
-.brand-explorer-logo {
-  height: 40px;
-  object-fit: contain;
-  width: auto;
-}
-
-.brand-explorer-name {
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
   text-align: center;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  transition: background 0.3s linear;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.brand-explorer-modal-yes {
+  background: var(--text-color, #071d49);
+  color: var(--color-white, #fff);
+  border: 1px solid var(--text-color, #071d49);
+}
+
+.brand-explorer-modal-yes:hover {
+  background: #1c2d49;
+}
+
+.brand-explorer-modal-no {
+  background: var(--background-color, #fff);
+  color: var(--text-color, #071d49);
+  border: 1px solid var(--color-text-muted, #555);
+}
+
+.brand-explorer-modal-no:hover {
+  background: #f5f5f5;
+}
+
+.brand-explorer-modal-project {
+  font-size: 12px;
+  color: #333;
+  text-align: left;
+  margin: 0;
+}
+
+/* ── modal buttons: stack only on small phones ──────────────── */
+
+@media (width <= 400px) {
+  .brand-explorer-modal-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-explorer-modal-btn,
+  .brand-explorer-modal .brand-explorer-modal-btn {
+    width: 100%;
+  }
+}
+
+/* ── UE editor mode ─────────────────────────────────────────── */
+
+/* stylelint-disable selector-class-pattern */
+
+.brand-explorer--editor {
+  display: block;
+  padding: 16px;
+  border: 1px dashed var(--color-border-default, #ccc);
+  background: var(--background-color, #fff);
+  min-height: 60px;
+}
+
+.brand-explorer--editor > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border-default, #ccc);
+}
+
+.brand-explorer--editor > div:last-child {
+  border-bottom: none;
+}
+
+.brand-explorer--editor img {
+  max-height: 40px;
+  width: auto;
 }
 
 /* abbvie brand-explorer overrides */
