@@ -599,9 +599,9 @@ async function loadBlock(block) {
     try {
       const cssLoaded = brandPath
         ? Promise.all([
-            loadCSS(baseCss),
-            loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${brandPath}${blockName}.css`).catch(() => {}),
-          ])
+          loadCSS(baseCss),
+          loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${brandPath}${blockName}.css`).catch(() => {}),
+        ])
         : loadCSS(baseCss);
       const decorationComplete = new Promise((resolve) => {
         (async () => {
