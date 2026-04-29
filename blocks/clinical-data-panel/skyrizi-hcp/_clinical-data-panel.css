@@ -1,12 +1,11 @@
 @import '../clinical-data-panel.css';
 
 /* Skyrizi HCP — clinical-data-panel brand overrides
-   Source: skyrizihcp.com/dermatology efficacy pages
-   Teal accent (.c-risa-pri): #1ba2da
-   Bold font (.fwb): Univers LT W01_67 Bold
-   Primary text: #21406d
-   CTA text: #071d49
-   Muted text: #50535c */
+   Source: skyrizihcp.com/dermatology/psoriasis-efficacy/skyrizi-vs-cosentyx
+   Teal accent: #1ba2da (rgb 27,162,218)
+   Dark navy: #21406d (rgb 33,64,109)
+   CTA navy: #071d49 (rgb 7,29,73)
+   Muted: #50535c */
 
 .clinical-data-panel {
     font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
@@ -35,49 +34,61 @@
 .clinical-data-panel-footnotes p {
     margin: 0 0 4px;
     padding: 0;
-    font-size: 14px;
-    line-height: 1.4;
+    font-family: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+    font-size: 26px;
+    line-height: 30px;
     color: #21406d;
 }
 
-/* Dosing text: "SKYRIZI 5 doses in year one" — first paragraphs are large teal */
-.clinical-data-panel-footnotes p:first-child,
-.clinical-data-panel-footnotes p:nth-child(2) {
-    font-family: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
+/* First paragraph: "SKYRIZI 5 doses in year one" — teal */
+.clinical-data-panel-footnotes p:first-child {
     color: #1ba2da;
-    line-height: 1.3;
     margin-bottom: 8px;
     margin-top: 4px;
 }
 
-/* "STUDY DESIGN:" label — teal bold */
+/* Second paragraph: "and COSENTYX 16 doses..." — dark navy */
+.clinical-data-panel-footnotes p:nth-child(2) {
+    color: #21406d;
+    margin-bottom: 8px;
+}
+
+/* Third paragraph: "STUDY DESIGN:" — teal, smaller */
 .clinical-data-panel-footnotes p:nth-child(3) {
-    font-family: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
-    font-weight: 700;
-    color: #1ba2da;
     font-size: 14px;
+    line-height: 1.4;
+    color: #1ba2da;
     margin-top: 16px;
     margin-bottom: 8px;
 }
 
-/* Study body text — standard navy */
+/* Fourth paragraph: study body text — navy, regular weight */
 .clinical-data-panel-footnotes p:nth-child(4) {
+    font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
     font-size: 14px;
-    color: #21406d;
+    font-weight: 400;
     line-height: 1.5;
+    color: #21406d;
     margin-bottom: 8px;
 }
 
-/* Abbreviations — small gray (last paragraph) */
+/* Last paragraph: abbreviations — small gray */
 .clinical-data-panel-footnotes p:last-child {
+    font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
     font-size: 12.8px;
+    font-weight: 400;
+    line-height: 1.4;
     color: #50535c;
     margin-top: 16px;
 }
 
-/* Bold/strong text inside footnotes — teal accent */
+/* Underlined drug names inside dosing text */
+.clinical-data-panel-footnotes u,
+.clinical-data-panel-footnotes .u {
+    text-decoration: underline;
+}
+
+/* Bold/strong text — teal accent */
 .clinical-data-panel-footnotes strong {
     color: #1ba2da;
     font-family: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
