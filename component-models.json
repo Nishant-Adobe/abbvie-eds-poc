@@ -3232,51 +3232,51 @@
             "value": ""
           },
           {
-            "name": "Two Columns \u2014 Equal Split, Double Divider (5/1/5/1)",
+            "name": "Two Columns — Equal Split, Double Divider (5/1/5/1)",
             "value": "grid-5-5"
           },
           {
-            "name": "Two Columns \u2014 Right Slightly Wider, With Divider (5/1/6)",
+            "name": "Two Columns — Right Slightly Wider, With Divider (5/1/6)",
             "value": "grid-5-6"
           },
           {
-            "name": "Two Columns \u2014 Left Slightly Wider, With Divider (6/1/5)",
+            "name": "Two Columns — Left Slightly Wider, With Divider (6/1/5)",
             "value": "grid-6-5"
           },
           {
-            "name": "Two Columns \u2014 Dominant Left, With Divider (7/1/4)",
+            "name": "Two Columns — Dominant Left, With Divider (7/1/4)",
             "value": "grid-7-4"
           },
           {
-            "name": "Two Columns \u2014 Strong Left, With Divider (8/1/3)",
+            "name": "Two Columns — Strong Left, With Divider (8/1/3)",
             "value": "grid-8-3"
           },
           {
-            "name": "Two Columns \u2014 Equal (50/50)",
+            "name": "Two Columns — Equal (50/50)",
             "value": "grid-6-6"
           },
           {
-            "name": "Two Columns \u2014 Main Content with Two Sidebars (8/2/2)",
+            "name": "Two Columns — Main Content with Two Sidebars (8/2/2)",
             "value": "grid-8-2-2"
           },
           {
-            "name": "Two Columns \u2014 Narrow Left, Wide Right (1/5/6)",
+            "name": "Two Columns — Narrow Left, Wide Right (1/5/6)",
             "value": "grid-1-5-6"
           },
           {
-            "name": "Two Columns \u2014 Framed Equal (1/5/5/1)",
+            "name": "Two Columns — Framed Equal (1/5/5/1)",
             "value": "grid-1-5-5-1"
           },
           {
-            "name": "Two Columns \u2014 Narrow Left, Wide Right (1/5)",
+            "name": "Two Columns — Narrow Left, Wide Right (1/5)",
             "value": "grid-1-5"
           },
           {
-            "name": "Three Columns \u2014 Equal (4/4/4)",
+            "name": "Three Columns — Equal (4/4/4)",
             "value": "grid-4-4-4"
           },
           {
-            "name": "Four Columns \u2014 Equal (3/3/3/3)",
+            "name": "Four Columns — Equal (3/3/3/3)",
             "value": "grid-3-3-3-3"
           }
         ]
@@ -5149,11 +5149,11 @@
             "value": "single-column"
           },
           {
-            "name": "Two Columns \u2013 stack on mobile",
+            "name": "Two Columns – stack on mobile",
             "value": "two-columns-stack"
           },
           {
-            "name": "Two columns \u2013 do not stack on mobile",
+            "name": "Two columns – do not stack on mobile",
             "value": "two-columns-nostack"
           }
         ],
@@ -5172,7 +5172,7 @@
         "name": "fontIcon",
         "label": "Icon",
         "value": "",
-        "description": "Icon applied to every link when Variant is Icons. Works for all link sources \u2014 the only icon option when using Child Pages.",
+        "description": "Icon applied to every link when Variant is Icons. Works for all link sources — the only icon option when using Child Pages.",
         "condition": {
           "or": [
             {
@@ -8983,6 +8983,10 @@
           {
             "name": "Toggle Buttons",
             "value": "toggle"
+          },
+          {
+            "name": "Split (Text + Slider Side-by-Side)",
+            "value": "split"
           }
         ]
       },
@@ -9328,6 +9332,26 @@
     "id": "image-compare",
     "fields": [
       {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Variant",
+        "description": "Orientation and mobile visibility options.",
+        "options": [
+          {
+            "name": "Horizontal (default)",
+            "value": ""
+          },
+          {
+            "name": "Vertical",
+            "value": "vertical"
+          },
+          {
+            "name": "Hidden on Mobile",
+            "value": "mobile-hidden"
+          }
+        ]
+      },
+      {
         "component": "tab",
         "label": "Before Image",
         "name": "before"
@@ -9342,9 +9366,10 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "beforeImageAlt",
+        "name": "beforeAlt",
         "value": "",
-        "label": "Before Image Alt Text"
+        "label": "Before Image Alt Text",
+        "description": "Required. Describes the before state."
       },
       {
         "component": "text",
@@ -9352,7 +9377,7 @@
         "name": "beforeLabel",
         "value": "Before",
         "label": "Before Label",
-        "description": "Caption shown over the before image."
+        "description": "Overlay label on before side."
       },
       {
         "component": "tab",
@@ -9369,9 +9394,10 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "afterImageAlt",
+        "name": "afterAlt",
         "value": "",
-        "label": "After Image Alt Text"
+        "label": "After Image Alt Text",
+        "description": "Required. Describes the after state."
       },
       {
         "component": "text",
@@ -9379,7 +9405,39 @@
         "name": "afterLabel",
         "value": "After",
         "label": "After Label",
-        "description": "Caption shown over the after image."
+        "description": "Overlay label on after side."
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "select",
+        "name": "initialPosition",
+        "label": "Initial Position",
+        "description": "Where the slider starts. Default is 50%.",
+        "options": [
+          {
+            "name": "25%",
+            "value": "25"
+          },
+          {
+            "name": "50% (default)",
+            "value": "50"
+          },
+          {
+            "name": "75%",
+            "value": "75"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
