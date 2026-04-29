@@ -1,74 +1,70 @@
 @import '../brand-explorer.css';
 
-/* Rinvoq HCP — brand-explorer overrides
-   Source: rinvoqhcp.com
-   Font: Graphik / Helvetica Neue / Arial
-   Text: #46484a | Accent: #4a0080 (purple) | Bar: #25282a
-   Separator colors per brand column */
+/* Rinvoq HCP — brand-explorer overrides */
 
 .brand-explorer {
-    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
-    color: #46484a;
+  font-family: var(--body-font-family);
+  color: var(--text-color);
 }
 
 .brand-explorer-bar {
-    background-color: #25282a;
+  background-color: var(--color-charcoal);
 }
 
 .brand-explorer-trigger {
-    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-family: var(--body-font-family);
 }
 
 .brand-explorer-link {
-    color: #46484a;
-    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
 }
 
 .brand-explorer-link:hover {
-    border-color: #4a0080;
+  border-color: var(--color-brand-primary);
 }
 
 .brand-explorer-name {
-    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
-    font-weight: 600;
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-semibold);
 }
-
 
 /* stylelint-disable selector-class-pattern */
 
 /* Brand-specific separator and hover colors */
+
 .brand-explorer-accordion--rinvoq .brand-explorer-separator {
-    background-color: #ffd41d;
+  background-color: var(--color-brand-accent);
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
-    color: #b8860b;
+  color: #b8860b; /* kept because no token */
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-visit-arrow {
-    background-color: #ffd41d;
+  background-color: var(--color-brand-accent);
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-separator {
-    background-color: #00a8e1;
+  background-color: #00a8e1; /* no token */
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
-    color: #0088b5;
+  color: #0088b5;
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-visit-arrow {
-    background-color: #00a8e1;
+  background-color: #00a8e1;
 }
 
 .brand-explorer-accordion--humira .brand-explorer-separator {
-    background-color: #931947;
+  background-color: #931947;
 }
 
 .brand-explorer-accordion--humira .brand-explorer-indication:hover {
-    color: #931947;
+  color: #931947;
 }
 
 .brand-explorer-accordion--humira .brand-explorer-visit-arrow {
-    background-color: #931947;
+  background-color: #931947;
 }
