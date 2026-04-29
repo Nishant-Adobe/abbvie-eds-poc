@@ -597,9 +597,10 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     const brandPath = getBrandPath();
     const baseCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
+    // brand CSS loaded from blocks/{block}/{brand}/{block}.css
+    const brandBlockCss = `${window.hlx.codeBasePath}/blocks/`
+      + `${blockName}/${brandPath}${blockName}.css`;
     try {
-      const brandBlockCss = `${window.hlx.codeBasePath}/blocks/`
-        + `${blockName}/${brandPath}${blockName}.css`;
       const cssLoaded = brandPath
         ? Promise.all([
           loadCSS(baseCss),
