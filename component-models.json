@@ -9522,196 +9522,81 @@
     ]
   },
   {
-    "id": "demo-brand-explorer",
+    "id": "clinical-data-panel",
     "fields": [
       {
         "component": "tab",
-        "label": "Bar Settings",
-        "name": "barSettings"
+        "label": "Chart",
+        "name": "chartTab"
       },
       {
-        "component": "reference",
+        "component": "text",
         "valueType": "string",
-        "name": "logoImage",
-        "label": "Bar Logo",
-        "description": "Logo image displayed on the left side of the bar (e.g., AbbVie logo).",
+        "name": "title",
+        "value": "",
+        "label": "Chart Title",
+        "description": "Heading above the chart (e.g., NRI ANALYSIS). Leave empty to hide."
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "chartDesktop",
+        "label": "Chart Image (Desktop)",
+        "description": "Chart image for desktop (>=985px). Required.",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "chartTablet",
+        "label": "Chart Image (Tablet)",
+        "description": "Chart image for tablet (601-984px). Optional.",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "chartMobile",
+        "label": "Chart Image (Mobile)",
+        "description": "Chart image for mobile (<=600px). Optional.",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "logoUrl",
-        "value": "https://www.abbvie.com",
-        "label": "Logo Link URL",
-        "description": "URL the bar logo links to."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "barLabel",
-        "value": "Immunology Therapies",
-        "label": "Bar Label",
-        "description": "Text shown on the toggle button next to the logo."
+        "name": "chartAlt",
+        "value": "",
+        "label": "Chart Alt Text",
+        "description": "Descriptive alt text for screen readers."
       },
       {
         "component": "tab",
-        "label": "Utility Links",
-        "name": "utilityLinks"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "utilityLink1Text",
-        "value": "Contact Medical Info",
-        "label": "Utility Link 1 Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "utilityLink1Url",
-        "value": "",
-        "label": "Utility Link 1 URL"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "utilityLink2Text",
-        "value": "Full Prescribing Information",
-        "label": "Utility Link 2 Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "utilityLink2Url",
-        "value": "",
-        "label": "Utility Link 2 URL"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "utilityLink3Text",
-        "value": "Patient Site",
-        "label": "Utility Link 3 Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "utilityLink3Url",
-        "value": "",
-        "label": "Utility Link 3 URL"
-      },
-      {
-        "component": "tab",
-        "label": "Footer",
-        "name": "footer"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "projectNumber",
-        "value": "US-MULT-250253",
-        "label": "Project Number",
-        "description": "Regulatory project number shown at the bottom of the panel."
-      },
-      {
-        "...": "../../models/_common-properties.json#/common-prop"
-      }
-    ]
-  },
-  {
-    "id": "demo-brand-explorer-brand",
-    "fields": [
-      {
-        "component": "tab",
-        "label": "Brand",
-        "name": "brand"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "brandLogo",
-        "label": "Brand Logo",
-        "description": "Product logo image (e.g., RINVOQ, SKYRIZI, HUMIRA).",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "brandLogoAlt",
-        "value": "",
-        "label": "Logo Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "brandName",
-        "value": "",
-        "label": "Brand Name",
-        "description": "Brand name shown in the Visit link (e.g., RINVOQ, SKYRIZI)."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "brandUrl",
-        "value": "",
-        "label": "Brand URL",
-        "description": "Link destination for the brand logo and Visit link."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "brandColor",
-        "value": "",
-        "label": "Brand Color",
-        "description": "Hex color for separator bar and visit arrow (e.g., #ffd41d, #00a8e1, #931947)."
+        "label": "Footnotes",
+        "name": "footnotesTab"
       },
       {
         "component": "richtext",
         "valueType": "string",
-        "name": "safetyText",
+        "name": "footnotes",
         "value": "",
-        "label": "Safety Text",
-        "description": "Optional safety disclaimer shown below the brand logo."
-      }
-    ]
-  },
-  {
-    "id": "demo-brand-explorer-indication",
-    "fields": [
-      {
-        "component": "tab",
-        "label": "Indication",
-        "name": "indication"
+        "label": "Footnotes",
+        "description": "p-values, study methodology, disclosures. Leave empty to hide."
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "indicationName",
+        "name": "studyDesignLabel",
         "value": "",
-        "label": "Indication Name",
-        "description": "Name of the therapeutic indication (e.g., Rheumatoid Arthritis)."
+        "label": "Study Design Link Text",
+        "description": "CTA text. Leave empty to hide."
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "indicationUrl",
+        "name": "studyDesignLink",
         "value": "",
-        "label": "Indication URL",
-        "description": "Link for this indication."
-      },
-      {
-        "component": "select",
-        "name": "severityType",
-        "value": "",
-        "label": "Severity Prefix",
-        "description": "Severity label shown above the indication name.",
-        "options": [
-          { "name": "None", "value": "" },
-          { "name": "Moderate to Severe", "value": "moderate" },
-          { "name": "Active", "value": "active" },
-          { "name": "Refractory, Moderate to Severe", "value": "refractory" },
-          { "name": "Non-infectious", "value": "noninfectious" }
-        ]
+        "label": "Study Design URL or Modal ID",
+        "description": "URL to navigate, or #modal-id to open a modal."
       }
     ]
   },
