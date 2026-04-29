@@ -299,7 +299,11 @@ export default function decorate(block) {
     }
 
     const brandColors = { rinvoq: '#ffd41d', skyrizi: '#00a8e1', humira: '#931947' };
-    const autoColor = brandColors[brand.name.toLowerCase()] || '';
+    const nameLower = brand.name.toLowerCase().replace(/[®™]/g, '');
+    const autoColor = Object.keys(brandColors).reduce((c, key) => {
+      if (nameLower.includes(key)) return brandColors[key];
+      return c;
+    }, '');
 
     const separator = document.createElement('hr');
     separator.className = 'brand-explorer-separator';

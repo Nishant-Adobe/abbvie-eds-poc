@@ -712,7 +712,8 @@
 /* Rinvoq HCP — brand-explorer overrides
    Source: rinvoqhcp.com
    Font: Graphik / Helvetica Neue / Arial
-   Text: #46484a | Accent: #4a0080 (purple) | Bar: #25282a */
+   Text: #46484a | Accent: #4a0080 (purple) | Bar: #25282a
+   Separator colors per brand column */
 
 .brand-explorer {
     font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
@@ -739,4 +740,44 @@
 .brand-explorer-name {
     font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
     font-weight: 600;
+}
+
+/* stylelint-disable selector-class-pattern */
+
+/* Brand-specific separator and hover colors */
+
+.brand-explorer-accordion--rinvoq .brand-explorer-separator {
+    background-color: #ffd41d;
+}
+
+.brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
+    color: #b8860b;
+}
+
+.brand-explorer-accordion--rinvoq .brand-explorer-visit-arrow {
+    background-color: #ffd41d;
+}
+
+.brand-explorer-accordion--skyrizi .brand-explorer-separator {
+    background-color: #00a8e1;
+}
+
+.brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
+    color: #0088b5;
+}
+
+.brand-explorer-accordion--skyrizi .brand-explorer-visit-arrow {
+    background-color: #00a8e1;
+}
+
+.brand-explorer-accordion--humira .brand-explorer-separator {
+    background-color: #931947;
+}
+
+.brand-explorer-accordion--humira .brand-explorer-indication:hover {
+    color: #931947;
+}
+
+.brand-explorer-accordion--humira .brand-explorer-visit-arrow {
+    background-color: #931947;
 }
