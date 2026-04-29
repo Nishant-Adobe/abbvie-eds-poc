@@ -295,7 +295,7 @@ function getMetadata(name, doc = document) {
  */
 function getBrandPath() {
   const brand = getMetadata('brand')?.trim();
-  return brand ? `${brand}/` : '';
+  return brand ? `${brand}/` : 'abbvie/';
 }
 
 /**
@@ -597,16 +597,10 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     const brandPath = getBrandPath();
     const baseCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
-    // brand CSS loaded from blocks/{block}/{brand}/{block}.css
-    const brandBlockCss = `${window.hlx.codeBasePath}/blocks/`
-      + `${blockName}/${brandPath}${blockName}.css`;
+    const brandCss = `${window.hlx.codeBasePath}/styles/${brandPath}blocks/${blockName}/${blockName}.css`;
     try {
-      const cssLoaded = brandPath
-        ? Promise.all([
-          loadCSS(baseCss),
-          loadCSS(brandBlockCss).catch(() => {}),
-        ])
-        : loadCSS(baseCss);
+      // Load brand-compiled CSS first, fall back to base if brand css not found
+      const cssLoaded = loadCSS(brandCss).catch(() => loadCSS(baseCss));
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {
