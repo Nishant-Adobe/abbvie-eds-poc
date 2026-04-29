@@ -35,28 +35,43 @@ export default function decorate(block) {
       }
     });
   } else {
-    const flatValues = rows.map((row) => ({
-      img: row.querySelector('img, picture'),
-      text: row.textContent.trim(),
-      html: row.innerHTML.trim(),
-    }));
+    // Xwalk delivered format: fields in model order, one per row
+    // Row order: title, chartDesktop, chartTablet, chartMobile, chartAlt,
+    //            footnotes, studyDesignLabel, studyDesignLink
+    rows.forEach((row, idx) => {
+      const img = row.querySelector('img, picture');
+      const text = row.textContent.trim();
+      const html = row.querySelector(':scope > div')?.innerHTML?.trim() || '';
 
-    flatValues.forEach((val) => {
-      if (val.img) {
-        const imgEl = val.img.tagName === 'IMG' ? val.img : val.img.querySelector('img');
-        if (!images.desktop) {
-          images.desktop = val.img.cloneNode(true);
-          if (imgEl?.alt) chartAlt = imgEl.alt;
-        } else if (!images.tablet) images.tablet = val.img.cloneNode(true);
-        else if (!images.mobile) images.mobile = val.img.cloneNode(true);
+      switch (idx) {
+        case 0:
+          title = text;
+          break;
+        case 1:
+          if (img) images.desktop = img.cloneNode(true);
+          break;
+        case 2:
+          if (img) images.tablet = img.cloneNode(true);
+          break;
+        case 3:
+          if (img) images.mobile = img.cloneNode(true);
+          break;
+        case 4:
+          chartAlt = text;
+          break;
+        case 5:
+          footnotes = html;
+          break;
+        case 6:
+          studyDesignLabel = text;
+          break;
+        case 7:
+          studyDesignLink = text;
+          break;
+        default:
+          break;
       }
     });
-
-    const texts = flatValues.filter((v) => !v.img && v.text);
-    if (texts.length > 0) title = texts[0].text;
-    if (texts.length > 1) footnotes = texts[1].html;
-    if (texts.length > 2) studyDesignLabel = texts[2].text;
-    if (texts.length > 3) studyDesignLink = texts[3].text;
   }
 
   rows.forEach((row) => { row.style.display = 'none'; });
@@ -91,11 +106,11 @@ export default function decorate(block) {
   }
 
   if (images.desktop) {
-    const desktopSrc = images.desktop.tagName === 'IMG' ? images.desktop : images.desktop.querySelector('img');
-    if (desktopSrc) {
+    const desktopEl = images.desktop.tagName === 'IMG' ? images.desktop : images.desktop.querySelector('img');
+    if (desktopEl) {
       const img = document.createElement('img');
-      img.src = desktopSrc.src;
-      img.alt = chartAlt || desktopSrc.alt || '';
+      img.src = desktopEl.src;
+      img.alt = chartAlt || desktopEl.alt || '';
       img.loading = 'lazy';
       img.className = 'clinical-data-panel-chart';
       picture.append(img);
@@ -110,15 +125,18 @@ export default function decorate(block) {
     figure.append(figcaption);
   }
 
-  if (studyDesignLabel && studyDesignLink) {
+  if (studyDesignLabel) {
     const cta = document.createElement('a');
     cta.className = 'clinical-data-panel-cta';
     cta.textContent = studyDesignLabel;
-    if (studyDesignLink.startsWith('#')) {
+    if (studyDesignLink && studyDesignLink.startsWith('#')) {
       cta.href = '#';
       cta.dataset.modalId = studyDesignLink.substring(1);
-    } else {
+    } else if (studyDesignLink) {
       cta.href = studyDesignLink;
+    } else {
+      cta.href = '#';
+      cta.setAttribute('role', 'button');
     }
     figure.append(cta);
   }
