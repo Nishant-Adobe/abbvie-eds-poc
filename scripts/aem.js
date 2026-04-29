@@ -289,9 +289,8 @@ function getMetadata(name, doc = document) {
 }
 
 /**
- * Returns the brand path for block/theme assets (e.g. 'abbvie/'). Used to load compiled block CSS
- * from styles/<brand>/blocks/<blockName>/ (breakpoint tokens resolved to real media queries).
- * @returns {string} Brand path with trailing slash, default 'abbvie/'
+ * Returns the brand path for block assets (e.g. 'abbvie/'). Empty string when no brand is authored.
+ * @returns {string} Brand path with trailing slash, or empty string
  */
 function getBrandPath() {
   const brand = getMetadata('brand')?.trim();
@@ -597,14 +596,11 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     const brandPath = getBrandPath();
     const baseCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
-    // brand CSS loaded from blocks/{block}/{brand}/{block}.css
-    const brandBlockCss = `${window.hlx.codeBasePath}/blocks/`
-      + `${blockName}/${brandPath}${blockName}.css`;
     try {
       const cssLoaded = brandPath
         ? Promise.all([
           loadCSS(baseCss),
-          loadCSS(brandBlockCss).catch(() => {}),
+          loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${brandPath}${blockName}.css`).catch(() => {}),
         ])
         : loadCSS(baseCss);
       const decorationComplete = new Promise((resolve) => {

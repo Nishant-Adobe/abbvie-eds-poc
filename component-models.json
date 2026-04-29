@@ -56,6 +56,17 @@
         ]
       },
       {
+        "component": "select",
+        "valueType": "string",
+        "name": "brand",
+        "label": "Brand",
+        "options": [
+          { "name": "AbbVie (default)", "value": "" },
+          { "name": "Rinvoq", "value": "rinvoq" },
+          { "name": "Botox", "value": "botox" }
+        ]
+      },
+      {
         "component": "boolean",
         "valueType": "boolean",
         "name": "hideFromNavigation",
@@ -8632,18 +8643,26 @@
       },
       {
         "component": "richtext",
-        "name": "abbreviated",
+        "name": "collapsedContent",
         "value": "",
-        "label": "Abbreviated ISI",
-        "description": "Short Important Safety Information shown in the collapsed bar.",
+        "label": "Collapsed Content",
+        "description": "Text shown in the bar when collapsed. For the 'split' variant, this is the left column.",
         "valueType": "string"
       },
       {
         "component": "richtext",
-        "name": "fullContent",
+        "name": "collapsedContentCol2",
         "value": "",
-        "label": "Full ISI Content",
-        "description": "Complete Important Safety Information shown when expanded. Only used with 'expandable' variant.",
+        "label": "Collapsed Content – Column 2 (Split only)",
+        "description": "Right column content in collapsed state. Only used with the 'split' variant.",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "expandedContent",
+        "value": "",
+        "label": "Expanded Full ISI Content",
+        "description": "Complete Important Safety Information displayed when the bar is expanded.",
         "valueType": "string"
       },
       {
@@ -8658,12 +8677,16 @@
         "label": "Variant",
         "options": [
           {
-            "name": "Default (static bar)",
+            "name": "Default – single column, right aligned",
             "value": ""
           },
           {
-            "name": "Expandable (toggle full ISI)",
-            "value": "expandable"
+            "name": "Center – single column, collapsed center aligned",
+            "value": "center"
+          },
+          {
+            "name": "Split – two-column collapsed, single-column expanded",
+            "value": "split"
           }
         ]
       },
@@ -8723,57 +8746,51 @@
     "id": "promo-drawer",
     "fields": [
       {
-        "component": "tab",
-        "label": "Content",
-        "name": "content"
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variants",
+        "options": [
+          { "name": "Right side", "value": "right" },
+          { "name": "Auto-open on load", "value": "autoopen" },
+          { "name": "Show once (hide after first view)", "value": "once" },
+          { "name": "Show until closed", "value": "once-closed" }
+        ]
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "handleLabel",
         "value": "Savings",
-        "label": "Handle Label",
-        "description": "Text shown on the drawer handle tab."
+        "label": "Handle Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Drawer Heading"
       },
       {
         "component": "richtext",
-        "name": "drawerContent",
+        "name": "drawerBody",
         "value": "",
         "label": "Drawer Content",
-        "description": "Content displayed inside the drawer panel.",
         "valueType": "string"
       },
       {
-        "component": "tab",
-        "label": "Settings",
-        "name": "settings"
-      },
-      {
-        "component": "select",
+        "component": "text",
         "valueType": "string",
-        "name": "classes_variant",
-        "label": "Variant",
-        "options": [
-          {
-            "name": "Default (left side)",
-            "value": ""
-          },
-          {
-            "name": "Right side",
-            "value": "right"
-          },
-          {
-            "name": "Show once per session",
-            "value": "once"
-          },
-          {
-            "name": "Right + Once",
-            "value": "right once"
-          }
-        ]
+        "name": "closeLabel",
+        "value": "Close",
+        "label": "Close Button Label"
       },
       {
-        "...": "../../models/_common-properties.json#/common-prop"
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
       }
     ]
   },
