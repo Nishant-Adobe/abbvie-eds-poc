@@ -1,34 +1,35 @@
 /* Venclexta — Safety Bar Brand Overrides
-   Collapsed: white bg, navy top border, split two-column layout, navy/blue headings
-   Expanded:  white bg, navy/blue headings
+   Collapsed: white bg, brand teal top border, teal headings + toggle
+   Expanded:  white bg, teal headings, Graphik Bold font
 */
 
 .safety-bar {
-  background-color: #fff;
-  border-top: 3px solid #003087;
-  color: #1a1a1a;
+  background-color: var(--background-color);
+  border-top: 3px solid var(--color-border-brand);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
 }
 
 .safety-bar-abbreviated h2,
 .safety-bar-abbreviated h3,
 .safety-bar-abbreviated strong,
 .safety-bar-abbreviated b {
-  color: #003087;
+  color: var(--color-brand-primary);
 }
 
 .safety-bar-toggle {
-  border-color: #003087;
-  color: #003087;
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
 }
 
-/* Expanded state */
 .safety-bar.is-expanded .safety-bar-full h2,
 .safety-bar.is-expanded .safety-bar-full h3 {
-  color: #003087;
-  font-weight: 700;
+  color: var(--color-brand-primary);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
 }
 
 .safety-bar.is-expanded .safety-bar-full strong,
 .safety-bar.is-expanded .safety-bar-full b {
-  color: #003087;
+  color: var(--color-brand-primary);
 }

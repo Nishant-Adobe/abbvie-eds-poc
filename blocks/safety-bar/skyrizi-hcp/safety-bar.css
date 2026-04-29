@@ -1,50 +1,39 @@
 /* Skyrizi HCP — Safety Bar Brand Overrides
-   Collapsed: deep navy bg, white text + toggle
-   Expanded:  light blue bg, dark navy text
+   Collapsed: dark navy bg (footer color), white text + toggle
+   Expanded:  light teal-grey bg, brand primary text
 */
 
 .safety-bar {
-  background-color: #001f5b;
-  border-top-color: #001f5b;
-  color: #fff;
+  background-color: var(--color-background-footer);
+  border-top-color: var(--color-background-footer);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
 }
 
-.safety-bar-abbreviated,
-.safety-bar-abbreviated p,
 .safety-bar-abbreviated strong,
 .safety-bar-abbreviated b {
-  color: #fff;
-  font-weight: 700;
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
 }
 
 .safety-bar-toggle {
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--color-text-on-dark);
+  color: var(--color-text-on-dark);
 }
 
-/* Expanded state */
 .safety-bar.is-expanded {
-  background-color: #c5e8f3;
+  background-color: var(--color-background-blue);
+  color: var(--color-text-black);
 }
 
-.safety-bar.is-expanded .safety-bar-full {
-  color: #001f5b;
-}
-
-.safety-bar.is-expanded .safety-bar-full p,
-.safety-bar.is-expanded .safety-bar-full strong,
 .safety-bar.is-expanded .safety-bar-full h2,
 .safety-bar.is-expanded .safety-bar-full h3 {
-  color: #001f5b;
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
 }
 
 .safety-bar.is-expanded .safety-bar-toggle {
-  border-color: #001f5b;
-  color: #001f5b;
-}
-
-/* Inline ISI */
-.safety-bar-inline .safety-bar {
-  background-color: #c5e8f3;
-  color: #001f5b;
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
 }

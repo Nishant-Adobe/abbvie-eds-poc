@@ -1,31 +1,32 @@
 /* Rinvoq DTC — Safety Bar Brand Overrides
-   Collapsed: white bg, gold top border, dark text, dark toggle
-   Expanded:  white bg, gold underline on headings, coral close button
+   Collapsed: white bg, gold top border, charcoal text
+   Expanded:  white bg, gold underline on headings, plum close toggle
 */
 
 .safety-bar {
-  background-color: #fff;
-  border-top: 3px solid #ffd100;
-  color: #1a1a1a;
+  background-color: var(--background-color);
+  border-top: 3px solid var(--color-border-safety);
+  color: var(--color-text-heading);
+  font-family: var(--body-font-family);
 }
 
 .safety-bar-toggle {
-  border-color: #1a1a1a;
-  color: #1a1a1a;
+  border-color: var(--color-text-heading);
+  color: var(--color-text-heading);
 }
 
-/* Expanded state */
 .safety-bar.is-expanded .safety-bar-full h2,
 .safety-bar.is-expanded .safety-bar-full h3 {
-  color: #1a1a1a;
-  font-weight: 700;
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
   text-decoration: underline;
-  text-decoration-color: #ffd100;
+  text-decoration-color: var(--color-brand-accent);
   text-decoration-thickness: 3px;
   text-underline-offset: 3px;
 }
 
 .safety-bar.is-expanded .safety-bar-toggle {
-  border-color: #c9003f;
-  color: #c9003f;
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
 }
