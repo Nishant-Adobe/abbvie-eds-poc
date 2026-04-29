@@ -326,7 +326,15 @@ export default function decorate(block) {
     const visitLink = document.createElement('a');
     visitLink.href = brand.url;
     visitLink.className = 'brand-explorer-visit';
-    visitLink.innerHTML = `Visit ${brand.name} <span class="brand-explorer-visit-arrow" ${autoColor ? `style="background-color:${autoColor}"` : ''}></span>`;
+    const arrowDark = autoColor === '#ffd41d';
+    const arrowStyle = autoColor
+      ? `background-color:${autoColor}`
+      : '';
+    const arrowClass = arrowDark
+      ? 'brand-explorer-visit-arrow brand-explorer-visit-arrow--dark'
+      : 'brand-explorer-visit-arrow';
+    visitLink.innerHTML = `Visit ${brand.name} `
+      + `<span class="${arrowClass}" ${arrowStyle ? `style="${arrowStyle}"` : ''}></span>`;
     links.append(visitLink);
 
     accordion.append(links);
