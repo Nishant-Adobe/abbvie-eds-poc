@@ -1,5 +1,12 @@
 // v3.0 — support delivered xwalk format
+function isEditorMode() {
+  return document.documentElement.hasAttribute('data-aue-resource')
+    || document.querySelector('.adobe-ue-edit') !== null;
+}
+
 export default function decorate(block) {
+  if (isEditorMode()) return;
+
   const rows = [...block.children];
   if (!rows.length) return;
 
