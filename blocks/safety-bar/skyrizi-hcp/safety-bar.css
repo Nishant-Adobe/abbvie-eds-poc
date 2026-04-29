@@ -1,0 +1,39 @@
+/* Skyrizi HCP — Safety Bar Brand Overrides
+   Collapsed: dark navy bg (footer color), white text + toggle
+   Expanded:  light teal-grey bg, brand primary text
+*/
+
+.safety-bar {
+  background-color: var(--color-background-footer);
+  border-top-color: var(--color-background-footer);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+}
+
+.safety-bar-abbreviated strong,
+.safety-bar-abbreviated b {
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+}
+
+.safety-bar-toggle {
+  border-color: var(--color-text-on-dark);
+  color: var(--color-text-on-dark);
+}
+
+.safety-bar.is-expanded {
+  background-color: var(--color-background-blue);
+  color: var(--color-text-black);
+}
+
+.safety-bar.is-expanded .safety-bar-full h2,
+.safety-bar.is-expanded .safety-bar-full h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+}
+
+.safety-bar.is-expanded .safety-bar-toggle {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
