@@ -1,4 +1,4 @@
-/* brand-explorer — multi-brand navigator v1.2 */
+/* brand-explorer — multi-brand navigator v3.0 */
 
 .brand-explorer-section {
   position: relative;
@@ -521,15 +521,6 @@
   .brand-explorer-modal-title {
     font-size: 20px;
   }
-
-  .brand-explorer-modal-actions {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .brand-explorer-modal-btn {
-    width: 100%;
-  }
 }
 
 /* ── phone ───────────────────────────────────────────────────── */
@@ -641,19 +632,25 @@
 
 .brand-explorer-modal-actions {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   gap: 12px;
   margin-top: 24px;
   margin-bottom: 24px;
 }
 
-.brand-explorer-modal-btn {
+.brand-explorer-modal-btn,
+.brand-explorer-modal .brand-explorer-modal-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 160px;
   height: 48px;
+  min-height: 48px;
+  max-height: 48px;
   padding: 0;
+  margin: 0;
   font-family: Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 700;
@@ -666,6 +663,8 @@
   text-transform: capitalize;
   box-sizing: border-box;
   transition: background 0.3s linear;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .brand-explorer-modal-yes {
@@ -695,4 +694,49 @@
   margin: 0;
 }
 
-/* rinvoq brand-explorer overrides */
+/* ── modal buttons: stack only on small phones ──────────────── */
+
+@media (width <= 400px) {
+  .brand-explorer-modal-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-explorer-modal-btn,
+  .brand-explorer-modal .brand-explorer-modal-btn {
+    width: 100%;
+  }
+}
+
+/* Rinvoq HCP — brand-explorer overrides
+   Source: rinvoqhcp.com
+   Font: Graphik / Helvetica Neue / Arial
+   Text: #46484a | Accent: #4a0080 (purple) | Bar: #25282a */
+
+.brand-explorer {
+    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+    color: #46484a;
+}
+
+.brand-explorer-bar {
+    background-color: #25282a;
+}
+
+.brand-explorer-trigger {
+    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+}
+
+.brand-explorer-link {
+    color: #46484a;
+    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+}
+
+.brand-explorer-link:hover {
+    border-color: #4a0080;
+}
+
+.brand-explorer-name {
+    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-weight: 600;
+}
