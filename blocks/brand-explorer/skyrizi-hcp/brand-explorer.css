@@ -19,9 +19,9 @@
 
 .brand-explorer {
   position: relative;
-  background: #fff;
-  color: #21406d;
-  font-family: Arial, sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
   font-size: 14px;
   line-height: 16px;
   box-sizing: border-box;
@@ -42,8 +42,8 @@
   align-items: center;
   width: 100%;
   padding: 0 15px;
-  color: #fff;
-  background: #25282a;
+  color: var(--color-white);
+  background: var(--color-navy-dark);
   box-sizing: border-box;
   position: relative;
   z-index: 2;
@@ -67,7 +67,7 @@
 }
 
 .brand-explorer-bar a:any-link {
-  color: #fff;
+  color: var(--color-white);
   font-size: 0.9rem;
   text-decoration: none;
   cursor: pointer;
@@ -81,7 +81,7 @@
 }
 
 .brand-explorer-content a:any-link {
-  color: #071d49;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -99,8 +99,8 @@
 .brand-explorer-abbvie-logo {
   width: 86px;
   height: auto;
-  fill: #fff;
-  color: #fff;
+  fill: var(--color-white);
+  color: var(--color-white);
 }
 
 /* ── browse button ───────────────────────────────────────────── */
@@ -113,9 +113,9 @@
   background-color: transparent;
   border: none;
   border-radius: 0;
-  color: #fff;
+  color: var(--color-white);
   font-size: 0.9rem;
-  font-family: Arial, sans-serif;
+  font-family: var(--body-font-family);
   line-height: 1;
   padding: 12px 0;
   cursor: pointer;
@@ -136,7 +136,7 @@
   justify-content: center;
   width: 22px;
   height: 22px;
-  border: 2px solid #fff;
+  border: 2px solid var(--color-white);
   border-radius: 50%;
   position: relative;
 }
@@ -145,7 +145,7 @@
 .brand-explorer-browse-icon::after {
   content: '';
   position: absolute;
-  background: #fff;
+  background: var(--color-white);
 }
 
 .brand-explorer-browse-icon::before {
@@ -176,9 +176,9 @@
   background-color: transparent;
   border: none;
   border-radius: 0;
-  color: #071d49;
+  color: var(--text-color);
   font-size: 14px;
-  font-family: Arial, sans-serif;
+  font-family: var(--body-font-family);
   padding: 8px 0;
   cursor: pointer;
   appearance: none;
@@ -197,7 +197,7 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  border: 2px solid #071d49;
+  border: 2px solid var(--text-color);
   border-radius: 50%;
   position: relative;
 }
@@ -206,7 +206,7 @@
 .brand-explorer-close-icon::after {
   content: '';
   position: absolute;
-  background: #071d49;
+  background: var(--text-color);
 }
 
 .brand-explorer-close-icon::before {
@@ -226,7 +226,7 @@
 .brand-explorer-content {
   width: 100%;
   padding: 0 20px;
-  background: #fff;
+  background: var(--background-color);
   position: relative;
   max-height: 0;
   overflow: hidden;
@@ -309,7 +309,7 @@
   height: 10px;
   margin-top: auto;
   margin-bottom: 12px;
-  background: #ccc;
+  background: var(--color-border-default);
 }
 
 /* ── indication links ────────────────────────────────────────── */
@@ -323,10 +323,10 @@
 .brand-explorer-indication {
   display: block;
   width: 100%;
-  color: #071d49;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 700;
-  font-family: Arial, sans-serif;
+  font-family: var(--body-font-family);
   line-height: 16px;
   text-decoration: none;
   padding: 6px 0;
@@ -386,10 +386,10 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #071d49;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 700;
-  font-family: Arial, sans-serif;
+  font-family: var(--body-font-family);
   line-height: 16px;
   text-decoration: none;
   padding: 16px 0 8px;
@@ -403,7 +403,7 @@
   width: 27px;
   height: 27px;
   border-radius: 50%;
-  background: #071d49;
+  background: var(--text-color);
   position: relative;
   flex-shrink: 0;
 }
@@ -412,14 +412,14 @@
   content: '>';
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: var(--color-white);
   line-height: 1;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
 
 .brand-explorer-visit-arrow--dark::after {
-  color: #071d49;
+  color: var(--text-color);
 }
 
 .brand-explorer-visit:hover {
@@ -571,7 +571,7 @@
 
 .brand-explorer-modal-dialog {
   position: relative;
-  background: #fff;
+  background: var(--background-color);
   max-width: 700px;
   width: 90%;
   padding: 40px 20px;
@@ -589,7 +589,7 @@
   width: 40px;
   height: 40px;
   background: transparent;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border-default);
   border-radius: 50%;
   cursor: pointer;
   padding: 0;
@@ -604,7 +604,7 @@
   left: 50%;
   width: 16px;
   height: 1.5px;
-  background: #071d49;
+  background: var(--text-color);
 }
 
 .brand-explorer-modal-close::before {
@@ -616,20 +616,20 @@
 }
 
 .brand-explorer-modal-title {
-  font-family: Arial, sans-serif;
+  font-family: var(--body-font-family);
   font-size: clamp(1.25rem, 3vw, 1.75rem);
   font-weight: 700;
   line-height: 2rem;
-  color: #071d49;
+  color: var(--text-color);
   margin: 32px 0;
   padding-right: 0;
 }
 
 .brand-explorer-modal-text {
-  font-family: Arial, sans-serif;
+  font-family: var(--body-font-family);
   font-size: clamp(0.75rem, 2.7vw, 1rem);
   line-height: 1.5;
-  color: #071d49;
+  color: var(--text-color);
   margin: 0 auto 8px;
   width: 90%;
 }
@@ -655,7 +655,7 @@
   max-height: 48px;
   padding: 0;
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: var(--body-font-family);
   font-size: 0.875rem;
   font-weight: 700;
   line-height: 1;
@@ -672,9 +672,9 @@
 }
 
 .brand-explorer-modal-yes {
-  background: #071d49;
-  color: #fff;
-  border: 1px solid #071d49;
+  background: var(--text-color);
+  color: var(--color-white);
+  border: 1px solid var(--text-color);
 }
 
 .brand-explorer-modal-yes:hover {
@@ -682,9 +682,9 @@
 }
 
 .brand-explorer-modal-no {
-  background: #fff;
-  color: #071d49;
-  border: 1px solid #555;
+  background: var(--background-color);
+  color: var(--text-color);
+  border: 1px solid var(--color-text-muted);
 }
 
 .brand-explorer-modal-no:hover {
@@ -720,29 +720,29 @@
    Separator: #00a8e1 (sky blue) | Hover: #0088b5 */
 
 .brand-explorer {
-    font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
-    color: #21406d;
+    font-family: var(--body-font-family);
+    color: var(--text-color);
 }
 
 .brand-explorer-bar {
-    background-color: #25282a;
+    background-color: var(--color-background-footer);
 }
 
 .brand-explorer-trigger {
-    font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    font-family: var(--body-font-family);
 }
 
 .brand-explorer-link {
-    color: #21406d;
-    font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    color: var(--text-color);
+    font-family: var(--body-font-family);
 }
 
 .brand-explorer-link:hover {
-    border-color: #1ba2da;
+    border-color: var(--color-brand-accent-blue);
 }
 
 .brand-explorer-name {
-    font-family: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+    font-family: var(--heading-font-family);
 }
 
 /* stylelint-disable selector-class-pattern */
