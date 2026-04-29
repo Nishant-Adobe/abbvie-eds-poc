@@ -1,31 +1,66 @@
-/* Rinvoq (DTC) — Safety Bar Brand Overrides
-   Collapsed: white bg, gold top border, dark text, dark toggle
-   Expanded:  white bg, gold underline on headings, coral close button
-*/
+.safety-bar-section {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: var(--z-index-safety-bar, 500);
+  pointer-events: none;
+}
 
 .safety-bar {
-  background-color: #fff;
-  border-top: 3px solid #ffd100;
-  color: #1a1a1a;
+  pointer-events: all;
+  background-color: var(--safety-bar-bg, #f5f5f5);
+  border-top: 1px solid var(--safety-bar-border, #ccc);
+  max-height: var(--safety-bar-collapsed-height, 120px);
+  overflow: hidden;
+  transition: max-height 0.3s ease, transform 0.3s ease;
+}
+
+.safety-bar.is-expanded {
+  max-height: var(--safety-bar-expanded-height, 50vh);
+  overflow-y: auto;
+}
+
+.safety-bar.is-hidden {
+  transform: translateY(100%);
+}
+
+.safety-bar-abbreviated {
+  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  font-size: var(--body-font-size-xs, 0.75rem);
+  line-height: 1.5;
+  position: relative;
+}
+
+.safety-bar-full {
+  padding: var(--spacing-16, 16px) var(--spacing-24, 24px);
+  font-size: var(--body-font-size-xs, 0.75rem);
+  line-height: 1.6;
+  display: none;
+}
+
+.safety-bar.is-expanded .safety-bar-full {
+  display: block;
 }
 
 .safety-bar-toggle {
-  border-color: #1a1a1a;
-  color: #1a1a1a;
+  position: absolute;
+  top: var(--spacing-12, 12px);
+  right: var(--spacing-24, 24px);
+  background: none;
+  border: 1px solid currentcolor;
+  cursor: pointer;
+  font-size: var(--body-font-size-xs, 0.75rem);
+  padding: 2px 8px;
+  border-radius: 2px;
 }
 
-/* Expanded state */
-.safety-bar.is-expanded .safety-bar-full h2,
-.safety-bar.is-expanded .safety-bar-full h3 {
-  color: #1a1a1a;
-  font-weight: 700;
-  text-decoration: underline;
-  text-decoration-color: #ffd100;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 3px;
+.safety-bar-toggle::after {
+  content: 'Expand';
 }
 
-.safety-bar.is-expanded .safety-bar-toggle {
-  border-color: #c9003f;
-  color: #c9003f;
+.safety-bar-toggle[aria-expanded='true']::after {
+  content: 'Collapse';
 }
+
+/* Rinvoq safety bar overrides */
