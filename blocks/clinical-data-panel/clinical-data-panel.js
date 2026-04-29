@@ -79,7 +79,12 @@ export default function decorate(block) {
   if (title) {
     const heading = document.createElement('p');
     heading.className = 'clinical-data-panel-title';
-    heading.textContent = title;
+    const titleRow = rows[0]?.querySelector(':scope > div');
+    if (titleRow?.querySelector('sup')) {
+      heading.innerHTML = titleRow.innerHTML;
+    } else {
+      heading.innerHTML = title.replace(/(\d+[,.*†‡§‖¶#]*)$/g, '<sup>$1</sup>');
+    }
     figure.append(heading);
   }
 
