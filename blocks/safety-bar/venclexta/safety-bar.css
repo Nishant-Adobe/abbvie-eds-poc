@@ -1,172 +1,34 @@
-/* ============================================================
-   Safety Bar — Base Styles
-   Variants: default (left-aligned), center, split (2-col collapsed)
-   All variants: bottom sticky, expandable with + / − toggle
-   ============================================================ */
+/* Venclexta — Safety Bar Brand Overrides
+   Collapsed: white bg, navy top border, split two-column layout, navy/blue headings
+   Expanded:  white bg, navy/blue headings
+*/
 
-/* === Fixed section wrapper === */
-.safety-bar-section {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: var(--z-index-safety-bar, 500);
-  pointer-events: none;
-  transition: transform 0.3s ease;
-}
-
-.safety-bar-section.is-hidden {
-  transform: translateY(110%);
-}
-
-/* === Core block — auto-sizes to content, no fixed height === */
 .safety-bar {
-  pointer-events: all;
-  background-color: var(--safety-bar-bg, #fff);
-  border-top: 3px solid var(--safety-bar-border, #ccc);
-  position: relative;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-top: 3px solid #003087;
+  color: #1a1a1a;
 }
 
-/* === Collapsed / abbreviated area === */
-.safety-bar-abbreviated {
-  padding: 1.2rem 5rem 1.2rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.5;
-  position: relative;
-  text-align: left;
+.safety-bar-abbreviated h2,
+.safety-bar-abbreviated h3,
+.safety-bar-abbreviated strong,
+.safety-bar-abbreviated b {
+  color: #003087;
 }
 
-/* === Full ISI / expanded content === */
-.safety-bar-full {
-  padding: 1.6rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.6;
-  display: none;
-  text-align: left;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-
-.safety-bar.is-expanded .safety-bar-full {
-  display: block;
-}
-
-.safety-bar.is-expanded .safety-bar-abbreviated {
-  display: none;
-}
-
-/* === Toggle button: top-right, + / − === */
 .safety-bar-toggle {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  background: none;
-  border: 2px solid var(--safety-bar-toggle-color, currentcolor);
-  color: var(--safety-bar-toggle-color, inherit);
-  cursor: pointer;
-  font-size: 1.8rem;
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  padding: 0;
-  line-height: 1;
+  border-color: #003087;
+  color: #003087;
 }
 
-.safety-bar-toggle::after {
-  content: '+';
+/* Expanded state */
+.safety-bar.is-expanded .safety-bar-full h2,
+.safety-bar.is-expanded .safety-bar-full h3 {
+  color: #003087;
+  font-weight: 700;
 }
 
-.safety-bar-toggle[aria-expanded='true']::after {
-  content: '−';
-}
-
-/* ============================================================
-   Variant: center — collapsed content is center aligned
-   ============================================================ */
-.safety-bar.center .safety-bar-abbreviated {
-  text-align: center;
-}
-
-/* ============================================================
-   Variant: split — collapsed is two-column grid
-   ============================================================ */
-.safety-bar.split .safety-bar-abbreviated {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-24, 2.4rem);
-  text-align: left;
-  padding-right: 5rem;
-}
-
-.safety-bar.split.is-expanded .safety-bar-abbreviated {
-  display: none;
-}
-
-.safety-bar.split .safety-bar-col1,
-.safety-bar.split .safety-bar-col2 {
-  min-width: 0;
-}
-
-/* ============================================================
-   Responsive breakpoints
-   ============================================================ */
-@media (min-width: 1024px) {
-  .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
-  }
-
-  .safety-bar-toggle {
-    right: 1.6rem;
-  }
-
-  .safety-bar-full {
-    padding: 2rem 5.5rem;
-    max-height: 50vh;
-  }
-
-  .safety-bar.split .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
-  }
-}
-
-/* ============================================================
-   Inline ISI — in-page instance shows only full ISI content
-   ============================================================ */
-.safety-bar-inline .safety-bar {
-  transform: none;
-  box-shadow: none;
-  position: static;
-}
-
-.safety-bar-inline .safety-bar-toggle {
-  display: none;
-}
-
-.safety-bar-inline .safety-bar-full {
-  display: block;
-  max-height: none;
-  overflow-y: visible;
-}
-
-.safety-bar-inline .safety-bar-abbreviated {
-  display: none;
-}
-
-.safety-bar-inline .safety-bar-abbreviated-col2 {
-  display: none;
-}
-
-.safety-bar-inline.safety-bar-section {
-  position: static;
-}
-
-/* Venclexta safety bar overrides — gold border on light grey background */
-:root {
-  --safety-bar-bg: #f5f5f5;
-  --safety-bar-border: #ffd100;
-  --safety-bar-toggle-color: #005272;
+.safety-bar.is-expanded .safety-bar-full strong,
+.safety-bar.is-expanded .safety-bar-full b {
+  color: #003087;
 }

@@ -1,4 +1,4 @@
-function buildToggle(stickyBlock) {
+function buildToggle(stickyBlock, onToggle) {
   const toggle = document.createElement('button');
   toggle.className = 'safety-bar-toggle';
   toggle.setAttribute('aria-expanded', 'false');
@@ -12,7 +12,9 @@ function buildToggle(stickyBlock) {
       'aria-label',
       expanded ? 'Expand Important Safety Information' : 'Collapse Important Safety Information',
     );
-    stickyBlock.classList.toggle('is-expanded', !expanded);
+    const nextExpanded = !expanded;
+    stickyBlock.classList.toggle('is-expanded', nextExpanded);
+    onToggle(nextExpanded);
   });
 
   return toggle;
@@ -53,20 +55,36 @@ export default function decorate(block) {
   const isSplit = block.classList.contains('split');
   const { collapsed, collapsedCol2, expanded } = extractContentFields(block, isSplit);
 
-  // Mark inline section — CSS hides abbreviated row, shows only full content
-  const inlineSection = block.closest('.section');
-  inlineSection.classList.add('safety-bar-inline');
+  // Hide the source section — it only feeds the sticky bar, not rendered in-page
+  block.closest('.section').hidden = true;
 
-  if (collapsed) collapsed.classList.add('safety-bar-abbreviated');
-  if (collapsedCol2) collapsedCol2.classList.add('safety-bar-abbreviated-col2');
-  if (expanded) expanded.classList.add('safety-bar-full');
-
-  // Build the sticky floating bar cloned from this block
+  // Build the sticky floating bar
   const stickySection = document.createElement('div');
   stickySection.className = 'section safety-bar-section';
 
   const stickyBlock = document.createElement('div');
   stickyBlock.className = [...block.classList].join(' ');
+  let fullEl;
+
+  const syncExpandedContent = (isExpanded) => {
+    if (!expanded) return;
+
+    if (isExpanded) {
+      if (!fullEl) {
+        fullEl = document.createElement('div');
+        fullEl.className = 'safety-bar-full';
+        fullEl.id = 'safety-bar-full-content';
+        fullEl.innerHTML = expanded.innerHTML;
+      }
+
+      if (!stickyBlock.contains(fullEl)) {
+        stickyBlock.append(fullEl);
+      }
+      return;
+    }
+
+    fullEl?.remove();
+  };
 
   const abbrevEl = document.createElement('div');
   abbrevEl.className = 'safety-bar-abbreviated';
@@ -87,27 +105,8 @@ export default function decorate(block) {
 
   stickyBlock.append(abbrevEl);
 
-  if (expanded) {
-    const fullEl = document.createElement('div');
-    fullEl.className = 'safety-bar-full';
-    fullEl.id = 'safety-bar-full-content';
-    fullEl.innerHTML = expanded.innerHTML;
-    stickyBlock.append(fullEl);
-  }
-
-  stickyBlock.append(buildToggle(stickyBlock));
+  stickyBlock.append(buildToggle(stickyBlock, syncExpandedContent));
 
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
-
-  // Hide sticky bar while any part of the inline ISI section is in view.
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        stickySection.classList.toggle('is-hidden', entry.isIntersecting && entry.intersectionRatio > 0);
-      });
-    },
-    { threshold: 0 },
-  );
-  observer.observe(inlineSection);
 }

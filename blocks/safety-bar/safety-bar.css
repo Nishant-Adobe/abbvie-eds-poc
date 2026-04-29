@@ -15,6 +15,12 @@
   transition: transform 0.3s ease;
 }
 
+/* Hide the authored in-page safety bar source block at all times.
+   JS reads its content and renders the sticky clone separately. */
+.safety-bar-container {
+  display: none !important;
+}
+
 .safety-bar-section.is-hidden {
   transform: translateY(110%);
 }
