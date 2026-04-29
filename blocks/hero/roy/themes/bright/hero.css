@@ -3,22 +3,26 @@
   max-width: var(--content-max-width-wide);
   background: transparent;
 }
+
 /* AbbVie Hero — White overlap panel on hero image */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: var(--spacing-00);
 }
+
 /* Navy-overlap hero: pull wrapper into section padding so bg image shows */
 .hero-navy {
   padding-bottom: var(--spacing-00);
   margin-bottom: var(--spacing-32);
   background-color: var(--color-white);
 }
+
 .hero-navy .hero-wrapper {
   margin: var(--spacing-n40) -3.5rem var(--spacing-00);
   max-width: none;
   overflow: hidden;
 }
+
 @media (width >= 744px) {
   .hero-navy .hero-wrapper {
     margin: -5.6rem -7rem var(--spacing-00);
@@ -29,6 +33,7 @@
     margin-bottom: var(--spacing-80);
   }
 }
+
 @media (width >= 1024px) {
   .hero-navy .hero-wrapper {
     margin: -8rem -5.5rem 0;
@@ -38,11 +43,13 @@
    border-top-left-radius: var(--spacing-80);
   }
 }
+
 /* Height-tall variant — taller hero image area matching live site .height-tall */
 .height-tall .hero > :where(div):first-child {
   min-height: var(--hero-tall-image-container-height);
   padding: var(--spacing-00);
 }
+
 .height-tall .hero > :where(div):first-child :where(img) {
   position: absolute;
   inset: var(--spacing-00);
@@ -51,10 +58,12 @@
   max-height: none;
   object-fit: cover;
 }
+
 /* Breadcrumbs inside hero text panel */
 .hero .hero-breadcrumbs {
   margin-bottom: var(--spacing-32);
 }
+
 .hero-breadcrumbs :where(ol) {
   display: flex;
   flex-flow: wrap;
@@ -64,6 +73,7 @@
   gap: var(--spacing-08);
   align-items: baseline;
 }
+
 .hero-breadcrumbs :where(ol li) {
   font-family: var(--roboto-bold-font-family);
   font-size: var(--font-size-14);
@@ -75,6 +85,7 @@
   display: flex;
   align-items: flex-end;
 }
+
 /* Chevron separator — scaled to match text cap height and vertically centred */
 .hero-breadcrumbs :where(ol li):not(:last-child)::after {
   content: '\203A';
@@ -84,26 +95,31 @@
   vertical-align: middle;
   line-height: 1;
 }
+
 .hero-breadcrumbs :where(li a) {
   color: var(--text-color);
   font-weight: var(--font-weight-700);
   font-size: inherit;
   text-decoration: none;
 }
+
 /* Current page — muted gray, no link */
 .hero-breadcrumbs :where(ol li)[aria-current] {
   color: var(--color-gray-dark);
   font-weight: var(--font-weight-700);
 }
+
 .hero {
   position: relative;
   display: flex;
   flex-direction: column;
 }
+
 /* Remove gradient overlay — AbbVie uses white panel instead */
 .hero::after {
   display: none;
 }
+
 /* Image container — natural flow, not absolute */
 .hero > div:first-child {
   position: relative;
@@ -114,17 +130,21 @@
   padding-left: var(--spacing-55);
   padding-right: var(--spacing-55);
 }
+
 .section-wide .hero > :where(div):first-child {
     margin: 0;
     padding-left: 0;
     padding-right: 0;
 }
+
 .hero.no-padding > :where(div):first-child{
   padding: var(--spacing-00);
 }
+
 .hero picture {
   display: block;
 }
+
 .hero img {
   object-fit: cover;
   width: 100%;
@@ -133,6 +153,7 @@
   border-top-left-radius: var(--border-top-left-radius);
   max-height: var(--hero-image-container-height);
 }
+
 /* Text container — white overlap panel */
 .hero > div:nth-child(2) {
  /*  display: flex;
@@ -145,6 +166,7 @@
   padding-bottom: var(--spacing-00);
   max-width: calc(100vw - var(--spacing-40));
 }
+
 /* font-weight: inherit prevents browser UA bold, defers to F37 Lineca Medium's own weight */
 .hero h1 {
   margin: var(--spacing-00) var(--spacing-00) var(--spacing-08);
@@ -153,15 +175,18 @@
   color: var(--text-color);
   font-family: var(--heading-font-family-bold);
 }
+
 /* Roboto Small (300 light) for all hero paragraphs */
 .hero p {
   margin: var(--spacing-00);
   padding-bottom: var(--spacing-16);
 }
+
 .navy-overlap .hero:where(:not(.body-unica-32-reg)) :where(p) {
     font-size: var(--font-size-16);
     line-height: var(--line-height-22);
 }
+
 /* Height-tall hero paragraph — larger font matching body-unica-32-reg scale
    Uses higher specificity to override navy-overlap when both are present */
 .navy-overlap.height-tall .hero :where(p),
@@ -170,10 +195,12 @@
   line-height: var(--line-height-26);
   margin-top: var(--spacing-08);
 }
+
 .hero.light-font p {
   font-family: var(--roboto-light-font-family);
   font-weight: var(--font-weight-300);
 }
+
 .hero a.button {
   background: none;
   font-family: var(--roboto-bold-font-family);
@@ -189,11 +216,13 @@
   margin: var(--spacing-16) 0 0;
   border: 0;
 }
+
 .hero :where(a).button:hover {
   color: var(--link-hover-color);
   cursor: pointer;
   background: none;
 }
+
 @media (width >= 744px) {
   .hero > div:first-child {
     min-height: var(--hero-image-container-height);
@@ -242,6 +271,7 @@
     line-height: var(--line-height-40);
   }
 }
+
 @media (width >= 1024px) {
     .hero > div:first-child {
       min-height: var(--hero-image-container-height);
@@ -283,16 +313,19 @@
     line-height: 4rem;
   }
 }
+
 /* =====================================================
    Hero Profile Variant — no hero image, navy band
    Authoring: use block name "Hero (profile)"
    ===================================================== */
+
 /* Section override — full-width so navy band spans edge-to-edge */
 .hero-container,
 .hero-profile-section {
   max-width: var(--content-max-width-wide);
   margin-bottom: var(--spacing-32);
 }
+
 /* Profile breadcrumbs — uppercase, 14px to match live site */
 .hero.profile .hero-breadcrumbs :where(ol li) {
   font-size: var(--font-size-14);
@@ -300,10 +333,13 @@
   text-transform: uppercase;
   font-weight: var(--font-weight-700);
 }
+
 .profile .hero-breadcrumbs :where(ol li)[aria-current] {
   font-weight: var(--font-weight-700);
 }
+
 /* Profile breadcrumb separator — inherits base styling */
+
 /* Navy background band replaces hero image */
 .hero.profile > :where(div):first-child {
   background-color: var(--color-navy-dark);
@@ -312,29 +348,36 @@
    min-height: var(--hero-profile-container-height);
    margin: var(--spacing-00);
 }
+
 .profile.purple-overlap > :where(div):first-child {
  background-color: var(--color-accent-purple);
 }
+
 .large-radius .hero > :where(div):first-child {
  border-top-left-radius: var(--border-top-radius);
 }
+
 .medium-radius .hero > :where(div):first-child {
   border-top-left-radius: var(--border-top-radius-medium);
 }
+
 .hero.profile > :where(div):first-child :where(picture),
 .hero.profile > :where(div):first-child :where(img) {
   display: none;
 }
+
 /* White overlap card — profile spacing */
 .hero.profile > :where(div):nth-child(2) {
   margin-top: var(--spacing-n48);
   padding: var(--spacing-32) var(--spacing-20) var(--spacing-00);
 }
+
 /* Subtitle — Roboto Small, weight 300 (matches --roboto-small-font-family) */
 .hero.profile.light-font :where(p) {
   font-family: var(--roboto-small-font-family);
   font-weight: var(--font-weight-300);
 }
+
 @media (width >= 744px) {
 .hero.profile > :where(div):nth-child(2) {
   margin-top: var(--spacing-n64);
@@ -345,6 +388,7 @@
 margin-bottom: var(--spacing-80);
 }
 }
+
 @media (width >= 1024px) {
   .hero-profile-section {
     margin-bottom: var(--spacing-00);
@@ -365,6 +409,7 @@ margin-bottom: var(--spacing-80);
     max-width: 85%;
   }
 }
+
 /* hero grid */
 .hero .hero-text-container {
   width: 100%;
@@ -373,9 +418,11 @@ margin-bottom: var(--spacing-80);
   grid-template-columns: repeat(6, 1fr);
   align-self: center;
 }
+
 .hero .cmp-container-x-large {
   grid-column: 1 / span 6;
 }
+
 @media (width >= 744px) {
 .hero .hero-text-container {
     grid-template-columns: repeat(8, 1fr);
@@ -386,6 +433,7 @@ margin-bottom: var(--spacing-80);
   grid-column: 1 / span 8;
 }
 }
+
 @media (width >= 1024px) {
 .hero .hero-text-container {
     grid-template-columns: repeat(12, 1fr);
@@ -395,11 +443,13 @@ margin-bottom: var(--spacing-80);
   grid-column: 2 / span 10;
 }
 }
+
 /* =====================================================
    Hero Landing Variant — full-bleed image with gradient overlay
    Authoring: use block name "Hero (landing)"
    Matches abbvie.com homepage hero 1:1 across breakpoints
    ===================================================== */
+
 /* Section override — edge-to-edge, no bottom margin */
 .hero-landing-section {
   max-width: var(--content-max-width-wide);
@@ -408,18 +458,22 @@ margin-bottom: var(--spacing-80);
   margin-bottom: var(--spacing-00);
   padding: var(--spacing-00);
 }
+
 .hero-landing-section:where(:has(.fragment-wrapper)) {
   margin-bottom: var(--spacing-32);
 }
+
 .fragment-wrapper .hero-landing-section {
     margin-right: auto;
     margin-left: auto;
 }
+
 .hero-landing-section .hero-wrapper {
   margin: var(--spacing-00);
   max-width: none;
   overflow: hidden;
 }
+
 /* Block root — min-height for hero image area; grows with press-releases content */
 .hero.landing {
   position: relative;
@@ -429,6 +483,7 @@ margin-bottom: var(--spacing-80);
   min-height: var(--hero-landing-container-height);
   border-top-left-radius: var(--border-top-left-radius);
 }
+
 /* Re-enable gradient overlay via ::after — fixed height covers image area only */
 .hero.landing::after {
   display: block;
@@ -443,6 +498,7 @@ margin-bottom: var(--spacing-80);
   pointer-events: none;
   border-top-left-radius: var(--border-top-left-radius);
 }
+
 /* Image container — fixed height covers image area only */
 .hero.landing > :where(div):first-child {
   position: absolute;
@@ -457,6 +513,7 @@ margin-bottom: var(--spacing-80);
   z-index: var(--z-index-0);
   border-top-left-radius: var(--border-top-left-radius);
 }
+
 .hero.landing picture {
   position: absolute;
   inset: var(--spacing-00);
@@ -464,6 +521,7 @@ margin-bottom: var(--spacing-80);
   width: 100%;
   height: 100%;
 }
+
 .hero.landing img {
   position: absolute;
   inset: var(--spacing-00);
@@ -475,11 +533,13 @@ margin-bottom: var(--spacing-80);
   border-top-left-radius: var(--border-radius-00);
   max-height: none;
 }
+
 /* Disable grid for landing — use direct padding for text offset */
 .hero.landing .hero-text-container {
   display: block;
   align-self: stretch;
 }
+
 /* Text container — positioned over image, text starts at padding-top */
 .hero.landing > :where(div):nth-child(2) {
   position: relative;
@@ -492,6 +552,7 @@ margin-bottom: var(--spacing-80);
   display: block;
   box-sizing: border-box;
 }
+
 /* Text colours — white on dark overlay */
 .hero.landing h1 {
   color: var(--color-white);
@@ -499,14 +560,17 @@ margin-bottom: var(--spacing-80);
   line-height: var(--line-height-34);
   margin-bottom: var(--spacing-16);
 }
+
 .hero.landing p {
   color: var(--color-white);
   margin-bottom: var(--spacing-16);
 }
+
 /* CTA link — blue, uppercase, no background */
 .hero.landing .button-container {
 padding: var(--spacing-00);
 }
+
 .hero.landing :where(a).button {
   color: var(--hero-button-color);
   background: none;
@@ -521,20 +585,25 @@ padding: var(--spacing-00);
   padding: var(--spacing-00) var(--spacing-02) var(--spacing-03);
   margin: var(--spacing-00);
 }
+
 .hero.landing :where(a.button):hover {
   color: var(--hero-button-hover-color);
   background: none;
 }
+
 /* Landing breadcrumbs — white text on dark overlay */
 .hero.landing .hero-breadcrumbs :where(ol li) {
   color: var(--color-white);
 }
+
 .hero.landing .hero-breadcrumbs :where(li a) {
   color: var(--color-white);
 }
+
 .landing .hero-breadcrumbs :where(ol li)[aria-current] {
   color: rgb(255 255 255 / 60%);
 }
+
 /* ---- Tablet (>=744px) ---- */
 @media (width >= 744px) {
 .hero-landing-section:where(:has(.fragment-wrapper)) {
@@ -569,6 +638,7 @@ padding: var(--spacing-00);
   font-size: var(--font-size-14)
   }
 }
+
 /* ---- Desktop (>=1024px) ---- */
 @media (width >= 1024px) {
   .hero-landing-section {
@@ -599,11 +669,13 @@ padding: var(--spacing-00);
     line-height: var(--line-height-24);
     }
 }
+
 /* =====================================================
    Landing hero — Press-releases wrapper (white overlap box)
    Matches abbvie.com .homepage-overlap > .cmp-container
    Uses same margin/width pattern as profile variant text panel
    ===================================================== */
+
 /* ---- Mobile (base) ---- */
 .hero.landing .hero-press-releases-container {
   background-color: var(--color-white);
@@ -613,9 +685,11 @@ padding: var(--spacing-00);
   position: relative;
   color: var(--text-color);
 }
+
 .hero.landing .hero-press-releases-container :where(p) {
 color: inherit;
 }
+
 /* ---- Tablet (>=744px) ---- */
 @media (width >= 744px) {
   .hero.landing .hero-press-releases-container {
@@ -624,6 +698,7 @@ color: inherit;
     padding: var(--spacing-56) var(--spacing-70) var(--spacing-00);
   }
 }
+
 /* ---- Desktop (>=1024px) — profile-like auto centering ---- */
 @media (width >= 1024px) {
   .hero.landing .hero-press-releases-container {
@@ -632,7 +707,9 @@ color: inherit;
     padding: var(--spacing-80) var(--spacing-55) var(--spacing-00);
   }
 }
+
 /* Brand-specific overrides for hero block */
+
 /* .hero {
   h1 {
     background-color: red;
@@ -640,7 +717,9 @@ color: inherit;
 
 
 } */
+
 /* Brand-specific overrides for roy block */
+
 /* .roy {
   h1 {
     background-color: red;
