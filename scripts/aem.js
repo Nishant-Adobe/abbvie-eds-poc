@@ -295,7 +295,6 @@ function getMetadata(name, doc = document) {
  */
 function getBrandPath() {
   const brand = getMetadata('brand')?.trim();
-  // return brand ? `${brand}/` : 'abbvie/';
   return brand ? `${brand}/` : '';
 }
 
@@ -598,10 +597,7 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     const brandPath = getBrandPath();
     const baseCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
-    // old: brandCss loaded from styles/{brand}/blocks/{block}/{block}.css
     try {
-      // Load brand-compiled CSS first, fall back to base if brand css not found
-      // const cssLoaded = loadCSS(brandCss).catch(() => loadCSS(baseCss));
       const brandBlockCss = `${window.hlx.codeBasePath}/blocks/`
         + `${blockName}/${brandPath}${blockName}.css`;
       const cssLoaded = brandPath
