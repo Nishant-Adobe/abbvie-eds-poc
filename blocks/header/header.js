@@ -149,13 +149,21 @@ function parseUl(ul) {
     let subChildren = [];
     let hasP = false;
     Array.from(li.childNodes).forEach((node) => {
-      if (node.tagName === 'P') { textTitle = node.textContent.trim(); hasP = true; }
-      else if (node.tagName === 'UL') { subChildren = parseUl(node); }
+      if (node.tagName === 'P') {
+        textTitle = node.textContent.trim();
+        hasP = true;
+      } else if (node.tagName === 'UL') {
+        subChildren = parseUl(node);
+      }
     });
     if (!hasP) {
       const a = li.querySelector('a');
-      if (a) { textTitle = a.textContent.trim() || a.getAttribute('title') || ''; link = a.getAttribute('href') || '#'; }
-      else { textTitle = li.textContent.trim(); }
+      if (a) {
+        textTitle = a.textContent.trim() || a.getAttribute('title') || '';
+        link = a.getAttribute('href') || '#';
+      } else {
+        textTitle = li.textContent.trim();
+      }
     }
     children.push({ title: textTitle, path: link, children: subChildren });
   });
@@ -184,17 +192,24 @@ async function buildMegaMenu(block) {
     if (a) return a;
     const p = div.querySelector('p');
     const heading = div.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading && p) return { heading: heading.textContent.trim(), paragraph: p.textContent.trim() };
+    if (heading && p) {
+      return { heading: heading.textContent.trim(), paragraph: p.textContent.trim() };
+    }
     if (heading) return heading.textContent.trim();
     if (p) return p.textContent.trim();
     return '';
   });
   const [
     megaMenuTitle, megaMenuDescription, megaMenuCta, megaMenuDashboardLinks,
-    megaMenuCardTitle, megaMenuCardContent, megaMenuCardCta, megaMenuDashboardCard, dashboardCardType,
+    megaMenuCardTitle, megaMenuCardContent, megaMenuCardCta,
+    megaMenuDashboardCard, dashboardCardType,
   ] = tagsValues;
 
-  const primaryCardData = { title: megaMenuCardTitle, cardContent: megaMenuCardContent, link: megaMenuCardCta };
+  const primaryCardData = {
+    title: megaMenuCardTitle,
+    cardContent: megaMenuCardContent,
+    link: megaMenuCardCta,
+  };
   const secondaryCardData = await getSecondCardData(megaMenuDashboardCard?.title);
   const dashboardLinks = megaMenuDashboardLinks?.querySelectorAll('li');
   const wrapper = document.createElement('div');
@@ -228,7 +243,9 @@ async function buildMegaMenu(block) {
     const card = document.createElement('div');
     card.className = 'mega-card';
     const appendIfExists = (parent, tag, classType, content) => {
-      if (content) parent.appendChild(createElement(tag, { className: classType, textContent: content }));
+      if (content) {
+        parent.appendChild(createElement(tag, { className: classType, textContent: content }));
+      }
     };
     if (isPrimary) {
       appendIfExists(card, 'p', 'mega-card-title', data?.title);
@@ -397,8 +414,13 @@ function createSearchForm(block) {
   const input = createElement('input', {
     className: 'search-input',
     attributes: {
-      type: 'search', autocomplete: 'off', spellcheck: 'false',
-      size: '10', maxlength: '100', 'aria-label': text, name: 'q',
+      type: 'search',
+      autocomplete: 'off',
+      spellcheck: 'false',
+      size: '10',
+      maxlength: '100',
+      'aria-label': text,
+      name: 'q',
       'aria-describedby': 'search-alert-text',
     },
   });
@@ -457,7 +479,9 @@ function buildMenuItem(block, isNavigation = false) {
     const isParsedUl = languageLinkData?.querySelector('.navigation-item');
     const subMenuContainer = mainDiv.querySelector('.submenu-level-1');
     if (subMenuContainer && isDesktop.matches) subMenuContainer.classList.add('mega-menu-minimize');
-    if (isNavigation && !isParsedUl) await buildLevelTwoNavigations(button, languageLinkData, block);
+    if (isNavigation && !isParsedUl) {
+      await buildLevelTwoNavigations(button, languageLinkData, block);
+    }
     const expanded = li.getAttribute('aria-expanded') === 'true';
     const nav = document.querySelector('nav');
     if (block.classList.contains('search')) {
@@ -803,7 +827,6 @@ export default async function decorate(block) {
   const toolBlocks = [...header.querySelectorAll(
     '.navigation-content[data-type="language-links"], .navigation-content[data-type="search"]',
   )];
-  const searchBlock = header.querySelector('.navigation-content[data-type="search"]');
   const ctaBlock = header.querySelector('.navigation-content[data-type="cta-group"]');
 
   const navWrapper = document.createElement('div');
