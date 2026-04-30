@@ -1,72 +1,49 @@
 @import '../brand-explorer.css';
 
-/* Skyrizi HCP — brand-explorer overrides (token-based where available) */
+/* Skyrizi HCP — brand-explorer overrides */
 
 .brand-explorer {
-    font-family: var(--body-font-family);
-    color: var(--text-color);
+  --be-color-text: var(--text-color, #21406d);
+  --be-color-text-light: #21406d;
+  --be-color-bar-bg: var(--color-background-footer, #003b52);
+  --be-font-body: var(--body-font-family, 'Red Hat Display', sans-serif);
+  --be-font-heading: var(--heading-font-family, 'Red Hat Display', sans-serif);
 }
-
-.brand-explorer-bar {    
-  background-color: #25282a;
-}
-
-.brand-explorer-trigger {
-    font-family: var(--body-font-family);
-}
-
-.brand-explorer-link {
-    color: var(--text-color);
-    font-family: var(--body-font-family);
-}
-
-.brand-explorer-link:hover {
-    border-color: var(--color-brand-accent-teal);
-}
-
-.brand-explorer-name {
-    font-family: var(--heading-font-family-bold);
-}
-
 
 /* stylelint-disable selector-class-pattern */
 
-/* Brand-specific separator and hover colors */
-
 .brand-explorer-accordion--skyrizi .brand-explorer-separator {
-    background-color: var(--color-brand-accent-blue);
+  background-color: #00a8e1;
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
-    color: var(--color-brand-primary);
+  color: #0088b5;
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-visit-arrow {
-    background-color: var(--color-brand-accent-blue);
+  background-color: #00a8e1;
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-separator {
-    background-color: var(--color-brand-accent);
+  background-color: #ffd41d;
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
-    color: var(--color-brand-accent);
+  color: #b8860b;
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-visit-arrow {
-    background-color: var(--color-brand-accent);
+  background-color: #ffd41d;
 }
 
-/* No tokens exist → keep hardcoded */
-
 .brand-explorer-accordion--humira .brand-explorer-separator {
-    background-color: #931947;
+  background-color: #931947;
 }
 
 .brand-explorer-accordion--humira .brand-explorer-indication:hover {
-    color: #931947;
+  color: #931947;
 }
 
 .brand-explorer-accordion--humira .brand-explorer-visit-arrow {
-    background-color: #931947;
+  background-color: #931947;
 }

@@ -1,163 +1,774 @@
+/* brand-explorer — multi-brand navigator v3.0 */
 
-@import '../../../styles/skyrizi-hcp/tokens.css';
-
-/* Skyrizi HCP — brand-explorer overrides */
-
-.brand-explorer {
-  font-family: var(--body-font-family);
-  color: var(--text-color);
-  background: var(--background-color);
+.brand-explorer-section {
+  position: relative;
+  width: 100%;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  display: block;
 }
 
+.brand-explorer-section .default-content-wrapper,
+.brand-explorer-section .brand-explorer-wrapper {
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+.brand-explorer {
+  --be-color-bg: var(--background-color, #fff);
+  --be-color-text: var(--text-color, #071d49);
+  --be-color-text-light: #21406d;
+  --be-color-bar-bg: #25282a;
+  --be-color-bar-text: #fff;
+  --be-color-border: #d8d8d8;
+  --be-color-border-mobile: #e0e0e0;
+  --be-color-separator: #ccc;
+  --be-color-muted: #50535c;
+  --be-color-btn-hover: #1c2d49;
+  --be-color-btn-no-border: #555;
+  --be-color-btn-no-hover: #f5f5f5;
+  --be-font-body: var(--body-font-family, Arial, sans-serif);
+  --be-font-heading: var(--heading-font-family, Arial, sans-serif);
+  --be-font-size-body: 14px;
+  --be-font-size-small: 11px;
+  --be-font-size-bar: 0.9rem;
+  --be-font-weight-bold: var(--font-weight-700, 700);
+  --be-font-weight-normal: var(--font-weight-400, 400);
+  --be-line-height-body: 16px;
+  --be-line-height-small: 14px;
+
+  position: relative;
+  background: var(--be-color-bg);
+  color: var(--be-color-text-light);
+  font-family: var(--be-font-body);
+  font-size: var(--be-font-size-body);
+  line-height: var(--be-line-height-body);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-explorer div {
+  grid-column: auto;
+}
+
+/* ── bar ─────────────────────────────────────────────────────── */
+
 .brand-explorer-bar {
-  color: var(--color-text-on-dark);
-  background-color: #25282a;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 15px;
+  color: var(--be-color-bar-text);
+  background: var(--be-color-bar-bg);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+}
+
+.brand-explorer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  flex-shrink: 0;
+}
+
+.brand-explorer-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 10px 0;
 }
 
 .brand-explorer-bar a:any-link {
-  color: var(--color-text-on-dark);
+  color: var(--be-color-bar-text);
+  font-size: var(--be-font-size-bar);
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.brand-explorer-content {
-  background: var(--background-color);
+.brand-explorer-right a:any-link {
+  padding: 8px 0;
+  display: inline-block;
+  position: relative;
+  z-index: 3;
 }
 
 .brand-explorer-content a:any-link {
-  color: var(--color-text-black);
+  color: var(--be-color-text);
+  text-decoration: none;
 }
 
+.brand-explorer-bar a:any-link:hover {
+  text-decoration: underline;
+}
+
+/* ── AbbVie logo ─────────────────────────────────────────────── */
+
+.brand-explorer-logo-link {
+  display: flex;
+  align-items: center;
+}
+
+.brand-explorer-abbvie-logo {
+  width: 86px;
+  height: auto;
+  fill: var(--be-color-bar-text);
+  color: var(--be-color-bar-text);
+}
+
+/* ── browse button ───────────────────────────────────────────── */
+
 .brand-explorer .brand-explorer-browse {
-  color: var(--color-text-on-dark);
-  font-family: var(--body-font-family);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--be-color-bar-text);
+  font-size: var(--be-font-size-bar);
+  font-family: var(--be-font-body);
+  line-height: 1;
+  padding: 12px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  appearance: none;
+  box-shadow: none;
+  margin: 0;
+}
+
+.brand-explorer .brand-explorer-browse:hover {
+  background: transparent;
+  background-color: transparent;
 }
 
 .brand-explorer-browse-icon {
-  border-color: var(--color-text-on-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--be-color-bar-text);
+  border-radius: 50%;
+  position: relative;
 }
 
 .brand-explorer-browse-icon::before,
 .brand-explorer-browse-icon::after {
-  background: var(--color-text-on-dark);
+  content: '';
+  position: absolute;
+  background: var(--be-color-bar-text);
 }
 
+.brand-explorer-browse-icon::before {
+  width: 10px;
+  height: 2px;
+}
+
+.brand-explorer-browse-icon::after {
+  width: 2px;
+  height: 10px;
+}
+
+.brand-explorer.is-open .brand-explorer-browse-icon::after {
+  display: none;
+}
+
+/* ── close button ────────────────────────────────────────────── */
+
 .brand-explorer .brand-explorer-close {
-  color: var(--color-text-black);
-  font-family: var(--body-font-family);
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: var(--be-color-text);
+  font-size: var(--be-font-size-body);
+  font-family: var(--be-font-body);
+  padding: 8px 0;
+  cursor: pointer;
+  appearance: none;
+  box-shadow: none;
+  line-height: 1;
+}
+
+.brand-explorer .brand-explorer-close:hover {
+  background: transparent;
+  background-color: transparent;
 }
 
 .brand-explorer-close-icon {
-  border-color: var(--color-text-black);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--be-color-text);
+  border-radius: 50%;
+  position: relative;
 }
 
 .brand-explorer-close-icon::before,
 .brand-explorer-close-icon::after {
-  background: var(--color-text-black);
+  content: '';
+  position: absolute;
+  background: var(--be-color-text);
 }
 
-.brand-explorer-subtitle,
-.brand-explorer-indication::before,
-.brand-explorer-project-number {
-  color: var(--color-brand-primary);
+.brand-explorer-close-icon::before {
+  width: 12px;
+  height: 2px;
+  transform: rotate(45deg);
 }
+
+.brand-explorer-close-icon::after {
+  width: 12px;
+  height: 2px;
+  transform: rotate(-45deg);
+}
+
+/* ── content panel ───────────────────────────────────────────── */
+
+.brand-explorer-content {
+  width: 100%;
+  padding: 0 20px;
+  background: var(--be-color-bg);
+  position: relative;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.brand-explorer.is-open .brand-explorer-content {
+  max-height: 80vh;
+  padding: 30px 20px 20px;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+/* ── accordions grid ─────────────────────────────────────────── */
+
+.brand-explorer-accordions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+}
+
+.brand-explorer-accordion {
+  position: relative;
+  padding-right: 20px;
+  border-right: 1px solid var(--be-color-border);
+}
+
+.brand-explorer-accordion:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* ── blade (brand header) ────────────────────────────────────── */
+
+.brand-explorer-blade {
+  position: relative;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;
+}
+
+.brand-explorer-blade-link {
+  display: block;
+  text-decoration: none;
+}
+
+.brand-explorer-brand-img {
+  max-height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+.brand-explorer-subtitle {
+  font-size: var(--be-font-size-small);
+  line-height: var(--be-line-height-small);
+  color: var(--be-color-text-light);
+  margin: 10px 0 0;
+}
+
+.brand-explorer-subtitle p {
+  font-size: var(--be-font-size-small);
+  line-height: var(--be-line-height-small);
+  margin: 0;
+}
+
+.brand-explorer-subtitle b,
+.brand-explorer-subtitle strong {
+  font-weight: var(--be-font-weight-bold);
+  font-size: var(--be-font-size-small);
+}
+
+/* ── colored separator bar ───────────────────────────────────── */
+
+.brand-explorer-separator {
+  border: none;
+  height: 10px;
+  margin-top: auto;
+  margin-bottom: 12px;
+  background: var(--be-color-separator);
+}
+
+/* ── indication links ────────────────────────────────────────── */
+
+.brand-explorer-links {
+  display: block;
+}
+
+/* stylelint-disable selector-class-pattern */
 
 .brand-explorer-indication {
-  color: var(--color-text-black);
-  font-family: var(--body-font-family);
-  font-weight: var(--font-weight-heading);
+  display: block;
+  width: 100%;
+  color: var(--be-color-text);
+  font-size: var(--be-font-size-body);
+  font-weight: var(--be-font-weight-bold);
+  font-family: var(--be-font-body);
+  line-height: var(--be-line-height-body);
+  text-decoration: none;
+  padding: 6px 0;
+  cursor: pointer;
+  position: relative;
 }
 
+.brand-explorer-indication::before {
+  font-size: 10px;
+  font-weight: var(--be-font-weight-normal);
+  color: var(--be-color-text-light);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.brand-explorer-indication--moderate::before {
+  content: 'Moderate to Severe';
+}
+
+.brand-explorer-indication--active::before {
+  content: 'Active';
+}
+
+.brand-explorer-indication--refractory::before {
+  content: 'Refractory, Moderate to Severe';
+}
+
+.brand-explorer-indication--noninfectious::before {
+  content: 'Non-infectious';
+}
+
+/* stylelint-enable selector-class-pattern */
+
+/* stylelint-disable selector-class-pattern, no-descending-specificity */
+
+.brand-explorer-indication:hover {
+  text-decoration: none;
+}
+
+.brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
+  color: #b8860b;
+}
+
+.brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
+  color: #0088b5;
+}
+
+.brand-explorer-accordion--humira .brand-explorer-indication:hover {
+  color: #931947;
+}
+
+/* stylelint-enable selector-class-pattern, no-descending-specificity */
+
+/* ── visit link with circle arrow ────────────────────────────── */
+
 .brand-explorer-visit {
-  color: var(--color-text-black);
-  font-family: var(--body-font-family);
-  font-weight: var(--font-weight-heading);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--be-color-text);
+  font-size: var(--be-font-size-body);
+  font-weight: var(--be-font-weight-bold);
+  font-family: var(--be-font-body);
+  line-height: var(--be-line-height-body);
+  text-decoration: none;
+  padding: 16px 0 8px;
+  cursor: pointer;
 }
 
 .brand-explorer-visit-arrow {
-  background: var(--color-text-black);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: var(--be-color-text);
+  position: relative;
+  flex-shrink: 0;
 }
 
 .brand-explorer-visit-arrow::after {
-  color: var(--color-text-on-dark);
+  content: '>';
+  font-size: var(--be-font-size-body);
+  font-weight: var(--be-font-weight-bold);
+  color: var(--be-color-bar-text);
+  line-height: 1;
 }
+
+/* stylelint-disable-next-line selector-class-pattern */
 
 .brand-explorer-visit-arrow--dark::after {
-  color: var(--color-text-black);
+  color: var(--be-color-text);
 }
 
-.brand-explorer-blade::after {
-  color: var(--color-brand-primary);
+.brand-explorer-visit:hover {
+  text-decoration: underline;
+}
+
+/* ── project number ──────────────────────────────────────────── */
+
+.brand-explorer-project-number {
+  font-size: var(--be-font-size-small);
+  color: var(--be-color-text-light);
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+/* ── tablet ─────────────────────────────────────────────────── */
+
+@media (width <= 1219px) {
+  .brand-explorer-accordions {
+    gap: 24px;
+  }
+}
+
+@media (width <= 1023px) {
+  .brand-explorer-accordions {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
+
+/* ── small tablet / large mobile ─────────────────────────────── */
+
+@media (width <= 895px) {
+  .brand-explorer-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 15px;
+  }
+
+  .brand-explorer-left {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 0;
+  }
+
+  .brand-explorer-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px 20px;
+    padding: 12px 0;
+    border-top: 1px solid rgb(255 255 255 / 20%);
+  }
+
+  .brand-explorer-accordions {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .brand-explorer-blade {
+    cursor: pointer;
+  }
+
+  .brand-explorer-blade::after {
+    content: '\25BC';
+    position: absolute;
+    top: 12px;
+    right: 0;
+    font-size: 10px;
+    color: var(--be-color-text-light);
+    transition: transform 0.3s ease;
+  }
+
+  .brand-explorer-accordion.is-active .brand-explorer-blade::after {
+    transform: rotate(180deg);
+  }
+
+  .brand-explorer-links {
+    display: none;
+    padding-top: 10px;
+  }
+
+  .brand-explorer-accordion.is-active .brand-explorer-links {
+    display: block;
+  }
+
+  .brand-explorer-accordion {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--be-color-border-mobile);
+  }
+
+  .brand-explorer .brand-explorer-close {
+    top: 8px;
+    right: 10px;
+    font-size: 12px;
+  }
+
+  .brand-explorer-modal-dialog {
+    padding: 40px 20px 30px;
+    width: 95%;
+  }
+
+  .brand-explorer-modal-title {
+    font-size: 20px;
+  }
+}
+
+/* ── phone ───────────────────────────────────────────────────── */
+
+@media (width <= 480px) {
+  .brand-explorer-bar a:any-link {
+    font-size: 0.8rem;
+  }
+
+  .brand-explorer .brand-explorer-browse {
+    font-size: 0.8rem;
+  }
+
+  .brand-explorer-right {
+    gap: 6px 16px;
+    justify-content: center;
+  }
+
+  .brand-explorer-abbvie-logo {
+    width: 70px;
+  }
+}
+
+/* ── contact medical modal ───────────────────────────────────── */
+
+.brand-explorer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-explorer-modal:not([hidden]) {
+  display: flex;
 }
 
 .brand-explorer-modal-overlay {
-  background: var(--color-overlay-dark);
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 60%);
 }
 
 .brand-explorer-modal-dialog {
-  background: var(--background-color);
+  position: relative;
+  background: var(--be-color-bg);
+  max-width: 700px;
+  width: 90%;
+  padding: 40px 20px;
+  text-align: center;
+  border-top: none;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
+  border-radius: 0;
+  overflow-y: hidden;
 }
 
 .brand-explorer-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
   background: transparent;
-  border-color: var(--color-border-default);
+  border: 1px solid var(--be-color-separator);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
 }
 
 .brand-explorer-modal-close::before,
 .brand-explorer-modal-close::after {
-  background: var(--color-text-black);
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 1.5px;
+  background: var(--be-color-text);
 }
 
-.brand-explorer-modal-title,
+.brand-explorer-modal-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.brand-explorer-modal-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.brand-explorer-modal-title {
+  font-family: var(--be-font-body);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: var(--be-font-weight-bold);
+  line-height: 2rem;
+  color: var(--be-color-text);
+  margin: 32px 0;
+  padding-right: 0;
+}
+
 .brand-explorer-modal-text {
-  font-family: var(--body-font-family);
-  color: var(--color-text-black);
+  font-family: var(--be-font-body);
+  font-size: clamp(0.75rem, 2.7vw, 1rem);
+  line-height: 1.5;
+  color: var(--be-color-text);
+  margin: 0 auto 8px;
+  width: 90%;
+}
+
+.brand-explorer-modal-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .brand-explorer-modal-btn,
 .brand-explorer-modal .brand-explorer-modal-btn {
-  font-family: var(--body-font-family);
-  font-weight: var(--font-weight-heading);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  padding: 0;
+  margin: 0;
+  font-family: var(--be-font-body);
+  font-size: 0.875rem;
+  font-weight: var(--be-font-weight-bold);
+  line-height: 1;
+  letter-spacing: 0;
+  border-radius: 1.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  transition: background 0.3s linear;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .brand-explorer-modal-yes {
-  background: var(--color-text-black);
-  color: var(--color-text-on-dark);
-  border-color: var(--color-text-black);
+  background: var(--be-color-text);
+  color: var(--be-color-bar-text);
+  border: 1px solid var(--be-color-text);
+}
+
+.brand-explorer-modal-yes:hover {
+  background: var(--be-color-btn-hover);
 }
 
 .brand-explorer-modal-no {
-  background: var(--background-color);
-  color: var(--color-text-black);
-  border-color: var(--color-border-dark);
+  background: var(--be-color-bg);
+  color: var(--be-color-text);
+  border: 1px solid var(--be-color-btn-no-border);
+}
+
+.brand-explorer-modal-no:hover {
+  background: var(--be-color-btn-no-hover);
 }
 
 .brand-explorer-modal-project {
-  color: var(--color-text-legal);
+  font-size: 12px;
+  color: var(--be-color-muted);
+  text-align: left;
+  margin: 0;
 }
 
-/* Brand-specific separator and hover colors */
+/* ── modal buttons: stack only on small phones ──────────────── */
+
+@media (width <= 400px) {
+  .brand-explorer-modal-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-explorer-modal-btn,
+  .brand-explorer-modal .brand-explorer-modal-btn {
+    width: 100%;
+  }
+}
+
+/* Skyrizi HCP — brand-explorer overrides */
+
+.brand-explorer {
+  --be-color-text: var(--text-color, #21406d);
+  --be-color-text-light: #21406d;
+  --be-color-bar-bg: var(--color-background-footer, #003b52);
+  --be-font-body: var(--body-font-family, 'Red Hat Display', sans-serif);
+  --be-font-heading: var(--heading-font-family, 'Red Hat Display', sans-serif);
+}
+
+/* stylelint-disable selector-class-pattern */
 
 .brand-explorer-accordion--skyrizi .brand-explorer-separator {
-  background-color: var(--color-brand-accent-blue);
+  background-color: #00a8e1;
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
-  color: var(--color-brand-accent-blue);
+  color: #0088b5;
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-visit-arrow {
-  background-color: var(--color-brand-accent-blue);
+  background-color: #00a8e1;
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-separator {
-  background-color: var(--color-brand-accent);
+  background-color: #ffd41d;
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
-  color: var(--color-brand-accent);
+  color: #b8860b;
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-visit-arrow {
-  background-color: var(--color-brand-accent);
+  background-color: #ffd41d;
 }
 
 .brand-explorer-accordion--humira .brand-explorer-separator {
