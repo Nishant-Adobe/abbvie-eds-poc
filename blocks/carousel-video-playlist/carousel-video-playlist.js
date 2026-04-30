@@ -281,7 +281,7 @@ function renderPlaylist(opts) {
 
 function assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout) {
   if (isCardsLayout) {
-    block.append(playlistArea, playerArea);
+    block.append(playerArea, playlistArea);
   } else if (playlistLayout === 'top' || playlistLayout === 'bottom') {
     const scrollWrapper = document.createElement('div');
     scrollWrapper.className = 'cvp-playlist-scroll-wrapper';
@@ -393,12 +393,7 @@ export async function decorateBlock(block) {
         });
       });
 
-      // Insert playlist before player area
-      if (isCardsLayout) {
-        block.prepend(playlistArea);
-      } else {
-        assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
-      }
+      assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
 
       // Listen for playlist item changes
       bcPlayer.on('playlistitem', () => {
