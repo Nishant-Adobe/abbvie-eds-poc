@@ -597,7 +597,7 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     const brandPath = getBrandPath();
     const baseCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
-    const brandCss = `${window.hlx.codeBasePath}/styles/${brandPath}blocks/${blockName}/${blockName}.css`;
+    const brandCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${brandPath}${blockName}.css`;
     try {
       // Load brand-compiled CSS first, fall back to base if brand css not found
       const cssLoaded = loadCSS(brandCss).catch(() => loadCSS(baseCss));
