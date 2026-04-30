@@ -197,7 +197,12 @@ function applySectionBackground(section, idx, allSections) {
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
-  await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  const brand = getMetadata('brand')?.trim();
+  const base = loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  const brandFonts = brand
+    ? loadCSS(`${window.hlx.codeBasePath}/styles/${brand}/fonts.css`).catch(() => {})
+    : Promise.resolve();
+  await Promise.all([base, brandFonts]);
   try {
     if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
   } catch (e) {
