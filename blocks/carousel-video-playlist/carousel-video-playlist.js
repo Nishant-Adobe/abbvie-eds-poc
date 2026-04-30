@@ -33,25 +33,34 @@ function buildThumbnailCard(item, index, isActive, isCardsLayout) {
   card.setAttribute('aria-label', `Play ${item.title || `Video ${index + 1}`}`);
   card.dataset.index = index;
 
+  const thumbWrap = document.createElement('div');
+  thumbWrap.className = 'cvp-playlist-thumb';
+
   if (item.thumbnail) {
-    const thumbWrap = document.createElement('div');
-    thumbWrap.className = 'cvp-playlist-thumb';
-    thumbWrap.append(item.thumbnail.cloneNode(true));
-
-    const playIcon = document.createElement('span');
-    playIcon.className = 'cvp-playlist-play-icon';
-    playIcon.setAttribute('aria-hidden', 'true');
-    thumbWrap.append(playIcon);
-
-    if (isCardsLayout && item.title) {
-      const overlayTitle = document.createElement('span');
-      overlayTitle.className = 'cvp-playlist-overlay-title';
-      overlayTitle.textContent = item.title;
-      thumbWrap.append(overlayTitle);
+    if (typeof item.thumbnail === 'string') {
+      const img = document.createElement('img');
+      img.src = item.thumbnail;
+      img.alt = item.title || '';
+      img.loading = 'lazy';
+      thumbWrap.append(img);
+    } else {
+      thumbWrap.append(item.thumbnail.cloneNode(true));
     }
-
-    card.append(thumbWrap);
   }
+
+  const playIcon = document.createElement('span');
+  playIcon.className = 'cvp-playlist-play-icon';
+  playIcon.setAttribute('aria-hidden', 'true');
+  thumbWrap.append(playIcon);
+
+  if (isCardsLayout && item.title) {
+    const overlayTitle = document.createElement('span');
+    overlayTitle.className = 'cvp-playlist-overlay-title';
+    overlayTitle.textContent = item.title;
+    thumbWrap.append(overlayTitle);
+  }
+
+  card.append(thumbWrap);
 
   if (!isCardsLayout && item.title) {
     const title = document.createElement('span');
@@ -74,8 +83,8 @@ function readBlockConfig(block) {
   return {
     playlistLayout: values[0] || 'cards',
     accountId: values[1] || '',
+    playlistId: values[2] || '',
     enableCaptions: values.includes('true'),
-    anchorId: values.find((v) => v && v !== 'true' && !v.includes('/') && values.indexOf(v) > 1) || '',
   };
 }
 
@@ -103,14 +112,58 @@ function parsePlaylistItems(block) {
   return items;
 }
 
-function initPlayer(container, account, player, videoId, enableCaptions) {
+function initPlaylistPlayer(container, account, player, playlistId, enableCaptions, onReady) {
+  playerCount += 1;
+  const id = `cvp-player-${playerCount}`;
+
+  const videoEl = document.createElement('video-js');
+  videoEl.id = id;
+  videoEl.setAttribute('data-account', account);
+  videoEl.setAttribute('data-player', player);
+  videoEl.setAttribute('data-embed', 'default');
+  videoEl.setAttribute('data-playlist-id', playlistId);
+  videoEl.setAttribute('controls', '');
+  videoEl.className = 'video-js cvp-player';
+
+  container.append(videoEl);
+
+  loadBrightcoveScript(account, player).then(() => {
+    if (typeof window.bc === 'function') {
+      window.bc(videoEl);
+    }
+
+    const configure = () => {
+      const bcPlayer = getPlayer(id);
+      if (!bcPlayer) {
+        requestAnimationFrame(configure);
+        return;
+      }
+      bcPlayer.ready(function ready() {
+        if (!enableCaptions) {
+          const tracks = this.textTracks();
+          if (tracks) {
+            for (let i = 0; i < tracks.length; i += 1) {
+              if (tracks[i].kind === 'captions' || tracks[i].kind === 'subtitles') {
+                tracks[i].mode = 'disabled';
+              }
+            }
+          }
+        }
+        if (typeof onReady === 'function') onReady(this);
+      });
+    };
+    configure();
+  });
+}
+
+function initSinglePlayer(container, account, player, videoId, enableCaptions) {
   if (container.querySelector('video-js')) return;
 
   playerCount += 1;
-  const playerId = `cvp-player-${playerCount}`;
+  const id = `cvp-player-${playerCount}`;
 
   const videoEl = document.createElement('video-js');
-  videoEl.id = playerId;
+  videoEl.id = id;
   videoEl.setAttribute('data-account', account);
   videoEl.setAttribute('data-player', player);
   videoEl.setAttribute('data-embed', 'default');
@@ -126,12 +179,12 @@ function initPlayer(container, account, player, videoId, enableCaptions) {
     }
 
     const configure = () => {
-      const bcPlayer = getPlayer(playerId);
+      const bcPlayer = getPlayer(id);
       if (!bcPlayer) {
         requestAnimationFrame(configure);
         return;
       }
-      bcPlayer.ready(function onReady() {
+      bcPlayer.ready(function ready() {
         if (!enableCaptions) {
           const tracks = this.textTracks();
           if (tracks) {
@@ -163,48 +216,10 @@ function switchVideo(container, videoId) {
   });
 }
 
-export async function decorateBlock(block) {
-  const cfg = readBlockConfig(block);
+function renderPlaylist(opts) {
   const {
-    accountId, enableCaptions, playlistLayout,
-  } = cfg;
-  const playerId = DEFAULT_PLAYER;
-  const isCardsLayout = playlistLayout === 'cards';
-
-  const items = parsePlaylistItems(block);
-  if (!items.length) return;
-
-  block.textContent = '';
-  block.classList.add(`cvp-layout-${playlistLayout}`);
-
-  // Main player area
-  const playerArea = document.createElement('div');
-  playerArea.className = 'cvp-player-area';
-
-  const videoContainer = document.createElement('div');
-  videoContainer.className = 'cvp-video-container';
-  playerArea.append(videoContainer);
-
-  // Active video title
-  const activeTitle = document.createElement('h3');
-  activeTitle.className = 'cvp-active-title';
-  activeTitle.textContent = items[0].title || '';
-  playerArea.append(activeTitle);
-
-  // Transcript link for active video
-  const transcriptLink = document.createElement('a');
-  transcriptLink.className = 'cvp-transcript-link';
-  transcriptLink.target = '_blank';
-  transcriptLink.rel = 'noopener noreferrer';
-  transcriptLink.textContent = 'View Transcript';
-  if (items[0].transcriptHref) {
-    transcriptLink.href = items[0].transcriptHref;
-  } else {
-    transcriptLink.hidden = true;
-  }
-  playerArea.append(transcriptLink);
-
-  // Playlist area
+    items, isCardsLayout, videoContainer, activeTitle, transcriptLink,
+  } = opts;
   const playlistArea = document.createElement('div');
   playlistArea.className = 'cvp-playlist';
   playlistArea.setAttribute('role', 'tablist');
@@ -238,7 +253,33 @@ export async function decorateBlock(block) {
     playlistArea.append(card);
   });
 
-  // Assemble layout
+  // Keyboard navigation
+  playlistArea.addEventListener('keydown', (e) => {
+    const tabs = [...playlistArea.querySelectorAll('.cvp-playlist-item')];
+    const current = tabs.indexOf(document.activeElement);
+    if (current < 0) return;
+
+    let next = -1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      next = (current + 1) % tabs.length;
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      next = (current - 1 + tabs.length) % tabs.length;
+    } else if (e.key === 'Home') {
+      next = 0;
+    } else if (e.key === 'End') {
+      next = tabs.length - 1;
+    }
+
+    if (next >= 0) {
+      e.preventDefault();
+      tabs[next].focus();
+    }
+  });
+
+  return playlistArea;
+}
+
+function assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout) {
   if (isCardsLayout) {
     block.append(playlistArea, playerArea);
   } else if (playlistLayout === 'top' || playlistLayout === 'bottom') {
@@ -275,39 +316,140 @@ export async function decorateBlock(block) {
   } else {
     block.append(playerArea, playlistArea);
   }
+}
 
-  // Initialize the Brightcove player with the first video
+export async function decorateBlock(block) {
+  const cfg = readBlockConfig(block);
+  const {
+    accountId, playlistId, enableCaptions, playlistLayout,
+  } = cfg;
+  const player = DEFAULT_PLAYER;
+  const isCardsLayout = playlistLayout === 'cards';
+
+  block.classList.add(`cvp-layout-${playlistLayout}`);
+
+  // Player area
+  const playerArea = document.createElement('div');
+  playerArea.className = 'cvp-player-area';
+
+  const videoContainer = document.createElement('div');
+  videoContainer.className = 'cvp-video-container';
+  playerArea.append(videoContainer);
+
+  const activeTitle = document.createElement('h3');
+  activeTitle.className = 'cvp-active-title';
+  playerArea.append(activeTitle);
+
+  const activeDesc = document.createElement('p');
+  activeDesc.className = 'cvp-active-desc';
+  playerArea.append(activeDesc);
+
+  const transcriptLink = document.createElement('a');
+  transcriptLink.className = 'cvp-transcript-link';
+  transcriptLink.target = '_blank';
+  transcriptLink.rel = 'noopener noreferrer';
+  transcriptLink.textContent = 'View transcript';
+  transcriptLink.hidden = true;
+  playerArea.append(transcriptLink);
+
+  // Mode A: Brightcove Playlist ID — fetch videos from Brightcove
+  if (accountId && playlistId) {
+    block.textContent = '';
+
+    const loadingEl = document.createElement('div');
+    loadingEl.className = 'cvp-placeholder';
+    loadingEl.textContent = 'Loading playlist...';
+    videoContainer.append(loadingEl);
+
+    block.append(playerArea);
+
+    initPlaylistPlayer(videoContainer, accountId, player, playlistId, enableCaptions, (bcPlayer) => { // eslint-disable-line max-len
+      loadingEl.remove();
+
+      const playlist = bcPlayer.playlist() || [];
+      if (!playlist.length) return;
+
+      const items = playlist.map((video) => ({
+        videoId: video.id,
+        thumbnail: video.thumbnail || video.poster || '',
+        title: video.name || '',
+        description: video.description || '',
+        transcriptHref: '',
+      }));
+
+      activeTitle.textContent = items[0].title;
+      activeDesc.textContent = items[0].description;
+
+      const playlistArea = renderPlaylist({
+        items, isCardsLayout, videoContainer, activeTitle, transcriptLink,
+      });
+
+      // Override card click to use Brightcove playlist index
+      playlistArea.querySelectorAll('.cvp-playlist-item').forEach((card, idx) => {
+        card.addEventListener('click', () => {
+          bcPlayer.playlist.currentItem(idx);
+          activeTitle.textContent = items[idx].title;
+          activeDesc.textContent = items[idx].description;
+        });
+      });
+
+      // Insert playlist before player area
+      if (isCardsLayout) {
+        block.prepend(playlistArea);
+      } else {
+        assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
+      }
+
+      // Listen for playlist item changes
+      bcPlayer.on('playlistitem', () => {
+        const currentIdx = bcPlayer.playlist.currentItem();
+        if (currentIdx >= 0 && items[currentIdx]) {
+          activeTitle.textContent = items[currentIdx].title;
+          activeDesc.textContent = items[currentIdx].description;
+
+          playlistArea.querySelectorAll('.cvp-playlist-item').forEach((btn, i) => {
+            btn.classList.toggle('is-active', i === currentIdx);
+            btn.setAttribute('aria-selected', i === currentIdx ? 'true' : 'false');
+          });
+        }
+      });
+    });
+    return;
+  }
+
+  // Mode B: Authored items — fallback when no playlistId
+  const items = parsePlaylistItems(block);
+  if (!items.length) {
+    block.textContent = '';
+    const placeholder = document.createElement('div');
+    placeholder.className = 'cvp-placeholder';
+    placeholder.textContent = 'Add video items or configure a Brightcove Playlist ID';
+    block.append(placeholder);
+    return;
+  }
+
+  block.textContent = '';
+
+  activeTitle.textContent = items[0].title || '';
+  if (items[0].transcriptHref) {
+    transcriptLink.href = items[0].transcriptHref;
+    transcriptLink.hidden = false;
+  }
+
+  const playlistArea = renderPlaylist({
+    items, isCardsLayout, videoContainer, activeTitle, transcriptLink,
+  });
+
+  assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
+
   if (accountId && items[0].videoId) {
-    initPlayer(videoContainer, accountId, playerId, items[0].videoId, enableCaptions);
+    initSinglePlayer(videoContainer, accountId, player, items[0].videoId, enableCaptions);
   } else {
     const placeholder = document.createElement('div');
     placeholder.className = 'cvp-placeholder';
     placeholder.textContent = 'Video player — configure Brightcove account to enable playback';
     videoContainer.append(placeholder);
   }
-
-  // Keyboard navigation within playlist
-  playlistArea.addEventListener('keydown', (e) => {
-    const tabs = [...playlistArea.querySelectorAll('.cvp-playlist-item')];
-    const current = tabs.indexOf(document.activeElement);
-    if (current < 0) return;
-
-    let next = -1;
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      next = (current + 1) % tabs.length;
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      next = (current - 1 + tabs.length) % tabs.length;
-    } else if (e.key === 'Home') {
-      next = 0;
-    } else if (e.key === 'End') {
-      next = tabs.length - 1;
-    }
-
-    if (next >= 0) {
-      e.preventDefault();
-      tabs[next].focus();
-    }
-  });
 }
 
 export default async function decorate(block) {
