@@ -26,7 +26,7 @@ function parseBlock(block) {
       const imgEl = cells[1]?.querySelector('img, picture img');
       if (imgEl && (camelKey === 'thumbnail' || camelKey === 'beforeImage' || camelKey === 'afterImage')) {
         currentItem[camelKey] = imgEl.src || '';
-        const altKey = camelKey.replace('Image', '') + 'Alt';
+        const altKey = `${camelKey.replace('Image', '')}Alt`;
         if (!currentItem[altKey]) currentItem[altKey] = imgEl.alt || '';
       } else {
         currentItem[camelKey] = cells[1]?.textContent?.trim() || '';
@@ -57,15 +57,15 @@ function parseBlock(block) {
 
 function buildTabs(config, isToggle, onTabSwitch) {
   const nav = document.createElement('div');
-  nav.className = 'before-after-gallery-tabs' + (isToggle ? ' before-after-gallery-toggle' : '');
+  nav.className = `before-after-gallery-tabs${isToggle ? ' before-after-gallery-toggle' : ''}`;
   nav.setAttribute('role', 'tablist');
   config.tabs.forEach((tab, i) => {
     const btn = document.createElement('button');
     btn.className = 'before-after-gallery-tab';
     btn.setAttribute('role', 'tab');
     btn.setAttribute('aria-selected', String(tab.openDefault));
-    btn.setAttribute('aria-controls', 'bag-panel-' + i);
-    btn.id = 'bag-tab-' + i;
+    btn.setAttribute('aria-controls', `bag-panel-${i}`);
+    btn.id = `bag-tab-${i}`;
     btn.textContent = tab.tabLabel;
     if (tab.openDefault) btn.classList.add('is-active');
     btn.addEventListener('click', () => {
@@ -96,7 +96,7 @@ function buildThumbnails(images, onSelect) {
     thumb.className = 'before-after-gallery-thumb';
     thumb.type = 'button';
     if (i === 0) thumb.classList.add('is-active');
-    thumb.setAttribute('aria-label', img.thumbnailLabel || 'Image ' + (i + 1));
+    thumb.setAttribute('aria-label', img.thumbnailLabel || `Image ${i + 1}`);
     if (img.thumbnail) {
       const pic = document.createElement('img');
       pic.className = 'before-after-gallery-thumb-image';
@@ -163,7 +163,7 @@ function buildSlider(config) {
   slider.append(afterEl, beforeEl, labels, handle, prompt);
   function setPosition(pct) {
     const clamped = Math.max(0, Math.min(100, pct));
-    slider.style.setProperty('--compare-position', clamped + '%');
+    slider.style.setProperty('--compare-position', `${clamped}%`);
     handle.setAttribute('aria-valuenow', String(Math.round(clamped)));
   }
   setPosition(50);
@@ -198,7 +198,7 @@ function buildSlider(config) {
     beforeImg.alt = imageData.beforeAlt || '';
     setPosition(50);
   }
-  return { slider: slider, loadImages: loadImages };
+  return { slider, loadImages };
 }
 
 export default function decorate(block) {

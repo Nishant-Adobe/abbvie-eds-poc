@@ -1,3 +1,8 @@
 export default async function getBlockConfigs() {
-  return { flags: {}, variations: [], decorations: {} };
+  return {
+    flags: {},
+    variations: [],
+    decorations: {},
+  };
 }
+
