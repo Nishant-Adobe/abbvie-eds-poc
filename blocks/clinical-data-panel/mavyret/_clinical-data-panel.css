@@ -1,4 +1,5 @@
 @import '../clinical-data-panel.css';
+@import '../../../styles/mavyret/tokens.css';
 
 /* Mavyret HCP — clinical-data-panel brand overrides
    Source: mavyret.com/hcp/efficacy
@@ -6,16 +7,16 @@
 
 .clinical-data-panel {
     font-family: var(--body-font-family);
-    color: var(--text-color);
+    color: var(--color-panel-heading);
     max-width: var(--content-max-width-panel);
-    padding: var(--spacing-section-padding);
+    padding: 0 20px;
 }
 
 .clinical-data-panel-title {
-    font-family: var(--body-font-family);
+    font-family: var(--heading-font-family);
     font-size: var(--font-size-panel-title);
     font-weight: var(--font-weight-heading);
-    color: var(--color-text-heading);
+    color: var(--color-panel-heading);
     letter-spacing: var(--letter-spacing-panel-title);
     text-transform: none;
 }
@@ -23,9 +24,9 @@
 /* ── footnotes area ── */
 .clinical-data-panel-footnotes {
     font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-relaxed);
-    color: var(--text-color);
+    font-size: var(--font-size-panel-body);
+    line-height: var(--line-height-panel-body);
+    color: var(--color-panel-heading);
     border-top: none;
     padding-top: var(--spacing-24);
 }
@@ -34,30 +35,32 @@
     margin: 0 0 var(--spacing-16);
     padding: 0;
     font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-relaxed);
-    color: var(--text-color);
+    font-size: var(--font-size-panel-body);
+    line-height: var(--line-height-panel-body);
+    color: var(--color-panel-heading);
     font-weight: var(--font-weight-body);
 }
 
 /* Green callout text (e.g. "Viral suppression at treatment week 4...") */
 .clinical-data-panel-footnotes p:first-child {
-    color: var(--color-green-flash);
-    font-family: var(--body-font-family);
+    color: var(--color-panel-callout);
+    font-family: var(--heading-font-family);
     font-weight: var(--font-weight-heading);
     font-style: normal;
-    font-size: var(--font-size-callout);
+    font-size: var(--font-size-panel-callout);
+    line-height: var(--line-height-panel-heading);
     text-align: center;
     margin-bottom: var(--spacing-section-large);
 }
 
-/* METHODOLOGY heading — bold, uppercase */
+/* METHODOLOGY heading — bold */
 .clinical-data-panel-footnotes p:nth-child(2) {
-    font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
+    font-family: var(--heading-font-family);
+    font-size: var(--font-size-panel-heading);
     font-weight: var(--font-weight-heading);
     font-style: normal;
-    color: var(--color-text-heading);
+    line-height: var(--line-height-panel-heading);
+    color: var(--color-panel-heading);
     text-transform: uppercase;
     margin-bottom: var(--spacing-8);
 }
@@ -65,19 +68,21 @@
 /* Methodology body text */
 .clinical-data-panel-footnotes p:nth-child(3) {
     font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
+    font-size: var(--font-size-panel-body);
     font-weight: var(--font-weight-body);
-    color: var(--text-color);
+    line-height: var(--line-height-panel-body);
+    color: var(--color-panel-heading);
     margin-bottom: var(--spacing-24);
 }
 
-/* LIMITATIONS heading — bold, uppercase */
+/* LIMITATIONS heading — bold */
 .clinical-data-panel-footnotes p:nth-child(4) {
-    font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
+    font-family: var(--heading-font-family);
+    font-size: var(--font-size-panel-heading);
     font-weight: var(--font-weight-heading);
     font-style: normal;
-    color: var(--color-text-heading);
+    line-height: var(--line-height-panel-heading);
+    color: var(--color-panel-heading);
     text-transform: uppercase;
     margin-bottom: var(--spacing-8);
 }
@@ -85,19 +90,20 @@
 /* Limitations body text */
 .clinical-data-panel-footnotes p:nth-child(5) {
     font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
+    font-size: var(--font-size-panel-body);
     font-weight: var(--font-weight-body);
-    color: var(--text-color);
+    line-height: var(--line-height-panel-body);
+    color: var(--color-panel-heading);
     margin-bottom: var(--spacing-24);
 }
 
 /* Remaining body paragraphs */
 .clinical-data-panel-footnotes p:nth-child(n+6) {
     font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
+    font-size: var(--font-size-panel-body);
     font-weight: var(--font-weight-body);
-    line-height: var(--line-height-relaxed);
-    color: var(--text-color);
+    line-height: var(--line-height-panel-body);
+    color: var(--color-panel-heading);
     margin-bottom: var(--spacing-16);
 }
 
@@ -106,15 +112,15 @@
     font-family: var(--body-font-family);
     font-size: var(--font-size-body-small);
     font-weight: var(--font-weight-body);
-    line-height: var(--line-height-tight);
-    color: var(--color-text-secondary);
+    line-height: var(--line-height-panel-body);
+    color: var(--color-panel-heading);
     margin-top: var(--spacing-16);
 }
 
 /* Bold/strong text — green accent */
 .clinical-data-panel-footnotes strong {
-    color: var(--color-green-flash);
-    font-family: var(--body-font-family);
+    color: var(--color-panel-callout);
+    font-family: var(--heading-font-family);
     font-style: normal;
 }
 
@@ -126,10 +132,10 @@
 
 /* ── CTA link ── */
 .clinical-data-panel .clinical-data-panel-cta {
-    font-family: var(--body-font-family);
-    font-size: var(--font-size-body);
+    font-family: var(--heading-font-family);
+    font-size: var(--font-size-panel-body);
     font-weight: var(--font-weight-heading);
-    color: var(--color-text-heading);
+    color: var(--color-panel-heading);
     text-transform: none;
     text-decoration: none;
     padding: 12px 42px 12px 0;
@@ -139,7 +145,7 @@
 }
 
 .clinical-data-panel .clinical-data-panel-cta:hover {
-    border-bottom-color: var(--color-text-heading);
+    border-bottom-color: var(--color-panel-heading);
 }
 
 .clinical-data-panel .clinical-data-panel-cta::after {
