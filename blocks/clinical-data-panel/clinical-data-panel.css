@@ -1,28 +1,6 @@
 /* clinical-data-panel — responsive clinical chart with footnotes v1.0 */
 
 .clinical-data-panel {
-  --cdp-color-text: var(--text-color, #071d49);
-  --cdp-color-heading: var(--text-color, #071d49);
-  --cdp-color-accent: var(--link-color, #071d49);
-  --cdp-color-muted: var(--color-text-muted, #555);
-  --cdp-color-border: var(--container-border-color, #e0e0e0);
-  --cdp-font-body: var(--body-font-family, Arial, sans-serif);
-  --cdp-font-heading: var(--heading-font-family, Arial, sans-serif);
-  --cdp-font-size-title: var(--font-size-22, 22px);
-  --cdp-font-size-callout: var(--font-size-26, 26px);
-  --cdp-font-size-body: var(--font-size-14, 14px);
-  --cdp-font-size-small: var(--font-size-13, 12.8px);
-  --cdp-font-weight-bold: var(--font-weight-700, 700);
-  --cdp-font-weight-normal: var(--font-weight-400, 400);
-  --cdp-line-height-callout: var(--line-height-30, 30px);
-  --cdp-line-height-body: 18px;
-  --cdp-line-height-default: var(--line-height-16, 16px);
-  --cdp-spacing-sm: var(--spacing-08, 8px);
-  --cdp-spacing-md: var(--spacing-16, 16px);
-  --cdp-spacing-lg: var(--spacing-24, 24px);
-  --cdp-max-width: 1180px;
-  --cdp-letter-spacing-title: 0.02em;
-
   max-width: var(--cdp-max-width);
   margin: 0 auto;
   padding: 0;
@@ -93,8 +71,11 @@
 }
 
 @media (width <= 600px) {
-  .clinical-data-panel {
-    --cdp-font-size-title: var(--font-size-18, 18px);
-    --cdp-font-size-body: var(--font-size-12, 12px);
+  .clinical-data-panel-title {
+    font-size: var(--font-size-18);
+  }
+
+  .clinical-data-panel-footnotes {
+    font-size: var(--font-size-12);
   }
 }
