@@ -79,9 +79,9 @@
 
 /* Mavyret HCP — clinical-data-panel brand overrides
    Source: mavyret.com/hcp/efficacy
-   Orange accent: #e65400 | Green accent: #76bd22
+   Green accent: #76bd22 | Orange warning: #e65400
    Dark navy: #071d49 | Text: #21406d
-   Headings: Univers LT W01_67 Bold */
+   Headings: Univers LT W01_67 Bold, uppercase, italic */
 
 .clinical-data-panel {
     font-family: var(--body-font-family);
@@ -102,68 +102,92 @@
 /* ── footnotes area ── */
 
 .clinical-data-panel-footnotes {
+    font-family: var(--body-font-family);
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--text-color);
     border-top: none;
-    padding-top: var(--spacing-16, 16px);
+    padding-top: 24px;
 }
 
 .clinical-data-panel-footnotes p {
-    margin: 0 0 8px;
+    margin: 0 0 16px;
     padding: 0;
-    font-family: var(--heading-font-family-bold);
+    font-family: var(--body-font-family);
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--text-color);
+    font-weight: 400;
 }
 
-/* Methodology heading — bold uppercase */
+/* Green callout text (e.g. "Viral suppression at treatment week 4...") */
 
 .clinical-data-panel-footnotes p:first-child {
+    color: var(--color-green-flash);
+    font-family: var(--heading-font-family-bold);
+    font-weight: 700;
+    font-style: italic;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+/* METHODOLOGY heading — bold, uppercase, italic */
+
+.clinical-data-panel-footnotes p:nth-child(2) {
     font-family: var(--heading-font-family-bold);
     font-size: 14px;
     font-weight: 700;
+    font-style: italic;
     color: var(--color-text-heading);
     text-transform: uppercase;
-    margin-top: 16px;
     margin-bottom: 8px;
 }
 
-/* Body text — regular weight */
+/* Methodology body text */
 
-.clinical-data-panel-footnotes p:nth-child(2) {
+.clinical-data-panel-footnotes p:nth-child(3) {
     font-family: var(--body-font-family);
     font-size: 14px;
     font-weight: 400;
+    color: var(--text-color);
+    margin-bottom: 24px;
+}
+
+/* LIMITATIONS heading — bold, uppercase, italic */
+
+.clinical-data-panel-footnotes p:nth-child(4) {
+    font-family: var(--heading-font-family-bold);
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--color-text-heading);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+/* Limitations body text */
+
+.clinical-data-panel-footnotes p:nth-child(5) {
+    font-family: var(--body-font-family);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-color);
+    margin-bottom: 24px;
+}
+
+/* Remaining body paragraphs */
+
+.clinical-data-panel-footnotes p:nth-child(n+6) {
+    font-family: var(--body-font-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
     color: var(--text-color);
     margin-bottom: 16px;
 }
 
-/* Limitations heading */
-
-.clinical-data-panel-footnotes p:nth-child(3) {
-    font-family: var(--heading-font-family-bold);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-text-heading);
-    text-transform: uppercase;
-    margin-top: 16px;
-    margin-bottom: 8px;
-}
-
-/* Remaining paragraphs — regular body */
-
-.clinical-data-panel-footnotes p:nth-child(n+4) {
-    font-family: var(--body-font-family);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--text-color);
-    margin-bottom: 8px;
-}
-
-/* Last paragraph: abbreviations/small text */
+/* Last paragraph: small text */
 
 .clinical-data-panel-footnotes p:last-child {
     font-family: var(--body-font-family);
@@ -174,20 +198,19 @@
     margin-top: 16px;
 }
 
-/* Orange accent text (warnings/callouts) */
+/* Bold/strong text — green accent */
 
 .clinical-data-panel-footnotes strong {
-    color: var(--color-fiesta);
+    color: var(--color-green-flash);
     font-family: var(--heading-font-family-bold);
+    font-style: italic;
 }
 
-/* Green accent underlines (from chart green bars) */
+/* Superscript styling */
 
-.clinical-data-panel-footnotes u,
-.clinical-data-panel-footnotes .u {
-    text-decoration: none;
-    border-bottom: 3px solid var(--color-green-flash);
-    padding-bottom: 2px;
+.clinical-data-panel-footnotes sup {
+    font-size: 0.7em;
+    vertical-align: super;
 }
 
 /* ── CTA link ── */
