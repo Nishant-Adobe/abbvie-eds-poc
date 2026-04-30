@@ -1,0 +1,132 @@
+@import '../clinical-data-panel.css';
+
+/* Mavyret HCP — clinical-data-panel brand overrides
+   Source: mavyret.com/hcp/efficacy
+   Orange accent: #e65400 | Green accent: #76bd22
+   Dark navy: #071d49 | Text: #21406d
+   Headings: Univers LT W01_67 Bold */
+
+.clinical-data-panel {
+    font-family: var(--body-font-family);
+    color: var(--text-color);
+    max-width: 1180px;
+    padding: 0 20px;
+}
+
+.clinical-data-panel-title {
+    font-family: var(--heading-font-family-bold);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+
+/* ── footnotes area ── */
+.clinical-data-panel-footnotes {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-color);
+    border-top: none;
+    padding-top: var(--spacing-16, 16px);
+}
+
+.clinical-data-panel-footnotes p {
+    margin: 0 0 8px;
+    padding: 0;
+    font-family: var(--heading-font-family-bold);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-color);
+}
+
+/* Methodology heading — bold uppercase */
+.clinical-data-panel-footnotes p:first-child {
+    font-family: var(--heading-font-family-bold);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    text-transform: uppercase;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+/* Body text — regular weight */
+.clinical-data-panel-footnotes p:nth-child(2) {
+    font-family: var(--body-font-family);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-color);
+    margin-bottom: 16px;
+}
+
+/* Limitations heading */
+.clinical-data-panel-footnotes p:nth-child(3) {
+    font-family: var(--heading-font-family-bold);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    text-transform: uppercase;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+/* Remaining paragraphs — regular body */
+.clinical-data-panel-footnotes p:nth-child(n+4) {
+    font-family: var(--body-font-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+/* Last paragraph: abbreviations/small text */
+.clinical-data-panel-footnotes p:last-child {
+    font-family: var(--body-font-family);
+    font-size: 12.8px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    margin-top: 16px;
+}
+
+/* Orange accent text (warnings/callouts) */
+.clinical-data-panel-footnotes strong {
+    color: var(--color-fiesta);
+    font-family: var(--heading-font-family-bold);
+}
+
+/* Green accent underlines (from chart green bars) */
+.clinical-data-panel-footnotes u,
+.clinical-data-panel-footnotes .u {
+    text-decoration: none;
+    border-bottom: 3px solid var(--color-green-flash);
+    padding-bottom: 2px;
+}
+
+/* ── CTA link ── */
+.clinical-data-panel .clinical-data-panel-cta {
+    font-family: var(--heading-font-family-bold);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    text-transform: none;
+    text-decoration: none;
+    padding: 12px 42px 12px 0;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    margin-top: var(--spacing-24, 24px);
+}
+
+.clinical-data-panel .clinical-data-panel-cta:hover {
+    border-bottom-color: var(--color-text-heading);
+}
+
+.clinical-data-panel .clinical-data-panel-cta::after {
+    content: '›';
+    position: absolute;
+    right: 20px;
+    font-size: 1.4em;
+    font-weight: 400;
+}
