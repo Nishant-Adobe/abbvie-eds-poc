@@ -279,6 +279,11 @@ export async function decorateBlock(block) {
   // Initialize the Brightcove player with the first video
   if (accountId && items[0].videoId) {
     initPlayer(videoContainer, accountId, playerId, items[0].videoId, enableCaptions);
+  } else {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'cvp-placeholder';
+    placeholder.textContent = 'Video player — configure Brightcove account to enable playback';
+    videoContainer.append(placeholder);
   }
 
   // Keyboard navigation within playlist
