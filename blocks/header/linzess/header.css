@@ -1,0 +1,132 @@
+/* stylelint-disable */
+/* ============================================================
+   LINZESS (linzess.com)
+   Variant: classic
+   Layout: teal eyebrow → white utility bar → white logo row
+           → dark teal nav bar + "Check My Symptoms" CTA in header-right
+   ============================================================ */
+
+@import url('../header.css');
+
+/* ── Brand tokens ────────────────────────────────────────────── */
+:root {
+  --nav-logo-size-desk: 11rem;
+  --nav-logo-size-mobile: 8.5rem;
+  --nav-height: 88px;
+  --nav-height-mobile: 64px;
+
+  /* Eyebrow: medium teal */
+  --header-eyebrow-bg: #00796b;
+  --header-eyebrow-color: #fff;
+
+  /* Utility bar: white */
+  --header-utility-bg: #fff;
+  --header-utility-color: #444;
+  --header-utility-height: 2.5rem;
+
+  /* Logo row + nav: dark teal */
+  --background-color: #fff;
+  --text-color: #004d40;
+  --header-nav-bar-bg: #004d40;
+  --header-nav-bar-color: #fff;
+
+  /* Mega menu */
+  --highlight-background-color: #e0f2f1;
+  --highlight-dark-background-color: #004d40;
+}
+
+/* ── Eyebrow ─────────────────────────────────────────────── */
+.header-eyebrow {
+  background: #00796b;
+}
+
+.header-eyebrow a {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── Utility bar ─────────────────────────────────────────── */
+.header-utility-nav {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-utility-link,
+.header-utility-dropdown-toggle {
+  color: #555;
+  font-size: 0.75rem;
+  border-right: 1px solid #ddd;
+}
+
+.header-utility-item:last-child .header-utility-link,
+.header-utility-item:last-child .header-utility-dropdown-toggle {
+  border-right: none;
+}
+
+/* HCP modal link: teal colored */
+.header-utility-hcp-modal .header-utility-link {
+  color: #00796b;
+  font-weight: 700;
+}
+
+/* ── Logo row ─────────────────────────────────────────────── */
+header .nav-wrapper {
+  background: #fff;
+}
+
+header nav {
+  background: #fff;
+}
+
+/* ── Primary nav bar: dark teal ──────────────────────────── */
+@media (width > 1023px) {
+  header nav .nav-sections {
+    background-color: #004d40;
+    padding: 0 var(--spacing-35);
+    margin-left: 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul {
+    gap: 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button {
+    color: #fff;
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-700);
+    text-transform: none;
+    padding: var(--spacing-20) var(--spacing-20);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true'] {
+    background: rgb(255 255 255 / 12%);
+    color: #fff;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: #fff;
+  }
+}
+
+/* ── "Check My Symptoms" CTA button in nav-tools ─────────── */
+.header-cta-button,
+header nav .nav-tools .header-cta-button {
+  background: #00796b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-700);
+  padding: 0.5rem 1.25rem;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-cta-button:hover {
+  background: #004d40;
+  color: #fff;
+}

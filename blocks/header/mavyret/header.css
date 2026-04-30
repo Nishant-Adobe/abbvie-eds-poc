@@ -1,0 +1,112 @@
+/* stylelint-disable */
+/* ============================================================
+   MAVYRET (mavyret.com)
+   Variant: lite
+   Layout: dual eyebrow (orange) → white utility bar → white logo row
+           → white nav bar with logo
+   ============================================================ */
+
+@import url('../header.css');
+
+/* ── Brand tokens ────────────────────────────────────────────── */
+:root {
+  --nav-logo-size-desk: 11rem;
+  --nav-logo-size-mobile: 8rem;
+  --nav-height: 72px;
+  --nav-height-mobile: 60px;
+
+  /* Eyebrow: Mavyret orange */
+  --header-eyebrow-bg: #f26522;
+  --header-eyebrow-color: #fff;
+
+  /* Utility bar: white with light borders */
+  --header-utility-bg: #fff;
+  --header-utility-color: #333;
+  --header-utility-height: 2.75rem;
+
+  /* Nav bar: white, black text, thin bottom border */
+  --background-color: #fff;
+  --text-color: #333;
+  --header-nav-bar-bg: #fff;
+  --header-nav-bar-color: #333;
+
+  /* Mega menu */
+  --highlight-background-color: #f4f4f4;
+  --highlight-dark-background-color: #f26522;
+}
+
+/* ── Eyebrow bars ─────────────────────────────────────────── */
+.header-eyebrow {
+  background: #f26522;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.header-eyebrow a {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── Utility bar: white with dividers ────────────────────── */
+header .nav-wrapper {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-utility-nav {
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-utility-link,
+.header-utility-dropdown-toggle {
+  color: #555;
+  font-size: 0.75rem;
+  border-right: 1px solid #ddd;
+}
+
+.header-utility-item:last-child .header-utility-link,
+.header-utility-item:last-child .header-utility-dropdown-toggle {
+  border-right: none;
+}
+
+/* Savings link: orange accent */
+.header-utility-savings .header-utility-link {
+  color: #f26522;
+  font-weight: 700;
+}
+
+/* ── Nav bar (lite — white, nav items dark) ──────────────── */
+header nav {
+  background: #fff;
+}
+
+@media (width > 1023px) {
+  header nav .nav-sections .default-content-wrapper > ul > li > button {
+    color: #333;
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-700);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: var(--body-font-family);
+    padding: var(--spacing-20) var(--spacing-16);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true'] {
+    color: #f26522;
+    font-family: var(--roboto-bold-font-family);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: #f26522;
+  }
+}
+
+/* Phone + locate in nav: orange */
+header nav .nav-sections a[href^="tel"],
+header nav .nav-sections .header-utility-phone {
+  color: #f26522;
+  font-weight: 700;
+}

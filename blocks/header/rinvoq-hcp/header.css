@@ -1,0 +1,111 @@
+/* stylelint-disable */
+/* ============================================================
+   RINVOQ HCP (rinvoqhcp.com)
+   Variant: fl-safety
+   Layout: dark header → lite (logo in nav bar) → yellow nav bar
+           + floating ISI strip at page bottom
+   ============================================================ */
+
+@import url('../header.css');
+
+/* ── Brand tokens ────────────────────────────────────────────── */
+:root {
+  --nav-logo-size-desk: 11rem;
+  --nav-logo-size-mobile: 8.5rem;
+  --nav-height: 80px;
+  --nav-height-mobile: 64px;
+
+  /* No utility bar for Rinvoq HCP */
+  --header-utility-height: 0;
+
+  /* Header background: very dark navy */
+  --background-color: #1a1a2e;
+  --text-color: #fff;
+
+  /* Nav bar: golden yellow */
+  --header-nav-bar-bg: #c8a415;
+  --header-nav-bar-color: #1a1a2e;
+
+  /* Floating ISI */
+  --header-floating-isi-bg: #1a1a2e;
+  --header-floating-isi-color: #fff;
+  --header-nav-bar-bg: #c8a415;
+}
+
+/* ── Header wrapper ─────────────────────────────────────────── */
+header .nav-wrapper {
+  background-color: #1a1a2e;
+}
+
+header nav {
+  background-color: #1a1a2e;
+}
+
+header nav .nav-brand img {
+  /* HCP logo is white version — rendered against dark bg */
+  max-width: var(--nav-logo-size-desk);
+  filter: brightness(0) invert(1);
+}
+
+/* ── Hamburger: white on dark bg ────────────────────────────── */
+header nav .nav-hamburger button > span {
+  background: #fff;
+}
+
+/* ── Inline logo duplicated in nav bar (lite behavior) ──────── */
+header.header-lite .nav-brand-inline img {
+  filter: brightness(0) invert(1);
+}
+
+/* ── Nav bar sections: yellow background ────────────────────── */
+@media (width > 1023px) {
+  header nav .nav-sections {
+    background-color: #c8a415;
+    margin-left: 0;
+    padding: 0 var(--spacing-35);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul {
+    gap: 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button {
+    color: #1a1a2e;
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-700);
+    padding: var(--spacing-20) var(--spacing-24);
+    text-transform: none;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true'] {
+    background: rgb(0 0 0 / 12%);
+    color: #1a1a2e;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: #1a1a2e;
+  }
+}
+
+/* ── Floating ISI overrides ─────────────────────────────────── */
+.header-floating-isi {
+  border-top-color: #c8a415;
+}
+
+.header-floating-isi-toggle {
+  padding: 0.5rem 1.5rem;
+  background: #c8a415;
+  color: #1a1a2e;
+  font-weight: 700;
+}
+
+/* Body offset so content isn't hidden under floating ISI */
+body {
+  padding-bottom: 3rem;
+}
+
+body.isi-expanded {
+  padding-bottom: 40vh;
+}

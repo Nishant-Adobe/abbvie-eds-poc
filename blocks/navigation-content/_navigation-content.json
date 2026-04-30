@@ -61,6 +61,22 @@
             {
               "name": "Search",
               "value": "search"
+            },
+            {
+              "name": "Utility Nav",
+              "value": "utility-nav"
+            },
+            {
+              "name": "Eyebrow Bar",
+              "value": "eyebrow"
+            },
+            {
+              "name": "Floating ISI (HCP compliance)",
+              "value": "floating-isi"
+            },
+            {
+              "name": "CTA Group (Register / Sign In)",
+              "value": "cta-group"
             }
           ]
         },
@@ -352,6 +368,94 @@
         },
         {
            "...": "../../models/_common-properties.json#/common-prop"
+        },
+        {
+          "component": "richtext",
+          "name": "content_utilityItems",
+          "label": "Utility Items — one row per item: [type | label | href | options]",
+          "description": "Each row = one item. type: isi-jump | pdf-dropdown | hcp-modal | phone | condition-selector | locale | locate | savings",
+          "condition": {
+            "in": [{ "var": "classes" }, ["utility-nav"]]
+          }
+        },
+        {
+          "component": "select",
+          "name": "content_eyebrowPosition",
+          "label": "Eyebrow Position",
+          "value": "top",
+          "condition": {
+            "in": [{ "var": "classes" }, ["eyebrow"]]
+          },
+          "options": [
+            { "name": "Top", "value": "top" },
+            { "name": "Bottom", "value": "bottom" }
+          ]
+        },
+        {
+          "component": "richtext",
+          "name": "content_eyebrowContent",
+          "label": "Eyebrow message (supports links and inline markup)",
+          "condition": {
+            "in": [{ "var": "classes" }, ["eyebrow"]]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "content_floatingIsiText",
+          "label": "Floating ISI — MLR-approved compliance text",
+          "condition": {
+            "in": [{ "var": "classes" }, ["floating-isi"]]
+          }
+        },
+        {
+          "component": "text",
+          "name": "content_floatingIsiExpandLabel",
+          "label": "Expand button label",
+          "value": "See Full ISI",
+          "condition": {
+            "in": [{ "var": "classes" }, ["floating-isi"]]
+          }
+        },
+        {
+          "component": "text",
+          "name": "content_floatingIsiCollapseLabel",
+          "label": "Collapse button label",
+          "value": "Collapse ISI",
+          "condition": {
+            "in": [{ "var": "classes" }, ["floating-isi"]]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "content_ctaGuestLinks",
+          "label": "Guest state links (Register / Sign In)",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "content_ctaUserLinks",
+          "label": "Authenticated user links (My Account / Sign Out)",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
+        },
+        {
+          "component": "aem-content",
+          "name": "content_ctaPrimaryLink",
+          "label": "Primary CTA button link",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
+        },
+        {
+          "component": "text",
+          "name": "content_ctaPrimaryLabel",
+          "label": "Primary CTA button text",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
         }
       ]
     }

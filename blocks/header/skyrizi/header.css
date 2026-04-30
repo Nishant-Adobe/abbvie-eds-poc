@@ -1,0 +1,97 @@
+/* stylelint-disable */
+/* ============================================================
+   SKYRIZI DTC (skyrizi.com)
+   Variant: classic
+   Layout: utility bar (dark navy) → white logo row → cobalt blue nav bar
+   ============================================================ */
+
+/* Import shared base */
+@import url('../header.css');
+
+/* ── Brand tokens ────────────────────────────────────────────── */
+:root {
+  --nav-logo-size-desk: 12rem;
+  --nav-logo-size-mobile: 9rem;
+  --nav-height: 88px;
+  --nav-height-mobile: 64px;
+
+  /* Utility bar: deep navy */
+  --header-utility-bg: #1b3a6e;
+  --header-utility-color: #fff;
+  --header-utility-height: 2.5rem;
+
+  /* Logo row: white */
+  --background-color: #fff;
+
+  /* Nav bar: cobalt blue */
+  --header-nav-bar-bg: #003087;
+  --header-nav-bar-color: #fff;
+
+  /* Eyebrow: none for Skyrizi DTC */
+  --header-eyebrow-bg: #003087;
+  --header-eyebrow-color: #fff;
+
+  /* Mega menu */
+  --highlight-background-color: #e8eef7;
+  --highlight-dark-background-color: #003087;
+}
+
+/* ── Utility bar ────────────────────────────────────────────── */
+.header-utility-nav {
+  background: #1b3a6e;
+}
+
+.header-utility-link,
+.header-utility-dropdown-toggle {
+  font-family: var(--body-font-family);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── Logo row ─────────────────────────────────────────────── */
+header .nav-wrapper {
+  background-color: #fff;
+}
+
+header nav .nav-brand img {
+  max-width: var(--nav-logo-size-desk);
+}
+
+/* ── Nav bar (primary sections) ─────────────────────────────── */
+header nav {
+  background-color: #fff;
+}
+
+@media (width > 1023px) {
+  header nav .nav-sections .default-content-wrapper > ul > li > button {
+    color: #003087;
+    font-size: var(--font-size-16);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true'] {
+    color: #003087;
+    font-family: var(--roboto-bold-font-family);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: #003087;
+  }
+}
+
+/* ── HCP link in utility: button style ──────────────────────── */
+.header-utility-hcp-modal .header-utility-link {
+  background: #003087;
+  color: #fff;
+  border-radius: 2px;
+  border: 1px solid #fff;
+  padding: 0.2rem 0.75rem;
+  font-weight: 700;
+}
+
+/* Condition selector nav item: styled as select-like */
+.header-utility-condition-selector .header-condition-toggle {
+  color: #fff;
+  font-weight: 600;
+}

@@ -1,0 +1,54 @@
+/* stylelint-disable */
+/* ============================================================
+   SKYRIZI HCP (skyrizihcp.com)
+   Variant: slim
+   Layout: cobalt blue logo-only header, centred logo, no nav or utilities
+   ============================================================ */
+
+@import url('../header.css');
+
+/* ── Brand tokens ────────────────────────────────────────────── */
+:root {
+  --nav-logo-size-desk: 11rem;
+  --nav-logo-size-mobile: 8.5rem;
+  --nav-height: 72px;
+  --nav-height-mobile: 64px;
+
+  --background-color: #003087;
+  --text-color: #fff;
+}
+
+/* ── Logo row: cobalt blue full-width bar ────────────────── */
+header .nav-wrapper {
+  background: #003087;
+}
+
+header nav {
+  background: #003087;
+  justify-content: center;
+}
+
+/* White logo on dark blue bg */
+header nav .nav-brand img {
+  filter: brightness(0) invert(1);
+  max-width: var(--nav-logo-size-desk);
+}
+
+/* ── Slim: hide everything except logo (enforced via variant class in CSS base) */
+header.header-slim nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--nav-height);
+  padding: 0 var(--spacing-35);
+}
+
+@media (width <= 1023px) {
+  header.header-slim nav {
+    height: var(--nav-height-mobile);
+  }
+
+  header nav .nav-brand img {
+    max-width: var(--nav-logo-size-mobile);
+  }
+}

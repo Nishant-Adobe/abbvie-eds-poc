@@ -1,0 +1,103 @@
+/* stylelint-disable */
+/* ============================================================
+   VENCLEXTA (venclexta.com)
+   Variant: lite
+   Layout: dark purple utility bar → white logo row
+           → dark purple nav bar with logo
+   ============================================================ */
+
+@import url('../header.css');
+
+/* ── Brand tokens ────────────────────────────────────────────── */
+:root {
+  --nav-logo-size-desk: 13rem;
+  --nav-logo-size-mobile: 9.5rem;
+  --nav-height: 88px;
+  --nav-height-mobile: 64px;
+
+  /* Utility bar: deep plum/purple */
+  --header-utility-bg: #4a1470;
+  --header-utility-color: #fff;
+  --header-utility-height: 2.5rem;
+
+  /* Logo row: white */
+  --background-color: #fff;
+
+  /* Nav bar: same deep purple */
+  --header-nav-bar-bg: #4a1470;
+  --header-nav-bar-color: #fff;
+
+  /* Mega menu */
+  --highlight-background-color: #f3eaf8;
+  --highlight-dark-background-color: #4a1470;
+}
+
+/* ── Utility bar ────────────────────────────────────────────── */
+.header-utility-nav {
+  background: #4a1470;
+}
+
+/* Condition selector: pill style on dark bg */
+.header-utility-condition-selector .header-condition-toggle {
+  background: rgb(255 255 255 / 15%);
+  border-radius: 3px;
+  padding: 0.2rem 0.875rem;
+  font-weight: 600;
+}
+
+/* ── Logo row ─────────────────────────────────────────────── */
+header .nav-wrapper {
+  background: #fff;
+}
+
+header nav {
+  background: #fff;
+}
+
+/* ── Nav bar: dark purple (lite variant) ─────────────────── */
+@media (width > 1023px) {
+  header nav .nav-sections {
+    background-color: #4a1470;
+    padding: 0 var(--spacing-35);
+    margin-left: 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul {
+    gap: 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button {
+    color: #fff;
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-700);
+    text-transform: none;
+    padding: var(--spacing-20) var(--spacing-20);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true'] {
+    background: rgb(255 255 255 / 12%);
+    color: #fff;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: #fff;
+  }
+}
+
+/* HCP modal link: italic underline in nav bar */
+header nav .nav-sections .header-hcp-modal {
+  font-style: italic;
+  text-decoration: underline;
+  color: #fff;
+}
+
+/* "Get VENCLEXTA treatment support" — nested phone block */
+header nav .nav-sections .nav-support-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.125rem;
+  font-size: 0.75rem;
+}
