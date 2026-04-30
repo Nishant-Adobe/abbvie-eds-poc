@@ -7,86 +7,86 @@
   --formulary-text-align: center;
 
   /* Card variant */
-  --formulary-card-bg: #fff;
-  --formulary-card-border-radius: 10px;
-  --formulary-card-box-shadow: rgb(0 0 0 / 15%) 0 2px 12px 0;
-  --formulary-card-padding: 48px 40px 40px;
+  --formulary-card-bg: var(--background-color);
+  --formulary-card-border-radius: var(--formulary-card-radius);
+  --formulary-card-box-shadow: var(--formulary-card-shadow);
+  --formulary-card-padding: var(--formulary-card-padding);
 
-  /* Heading — bold, dark */
-  --formulary-heading-font-size: 24px;
-  --formulary-heading-font-weight: 700;
+  /* Heading */
+  --formulary-heading-font-size: var(--formulary-heading-size);
+  --formulary-heading-font-weight: var(--formulary-heading-weight);
   --formulary-heading-color: var(--color-charcoal);
-  --formulary-heading-margin-bottom: 32px;
-  --formulary-heading-line-height: 1.3;
+  --formulary-heading-margin-bottom: var(--formulary-heading-spacing);
+  --formulary-heading-line-height: var(--formulary-heading-line-height);
 
   /* Gold underline accent */
   --formulary-heading-accent-content: "";
   --formulary-heading-accent-display: block;
-  --formulary-heading-accent-height: 8px;
+  --formulary-heading-accent-height: var(--formulary-heading-accent-height);
   --formulary-heading-accent-bg: var(--color-formulary-accent);
-  --formulary-heading-accent-bottom: -14px;
+  --formulary-heading-accent-bottom: var(--formulary-heading-accent-offset);
   --formulary-heading-accent-left: 0;
   --formulary-heading-accent-width: 100%;
   --formulary-heading-accent-margin: 0;
 
-  /* Form max-width for centered layout */
-  --formulary-form-max-width: 520px;
+  /* Form max-width */
+  --formulary-form-max-width: var(--formulary-form-width);
 
-  /* Input — outlined with rounded corners */
-  --formulary-input-max-width: 520px;
-  --formulary-input-height: 56px;
+  /* Input */
+  --formulary-input-max-width: var(--formulary-input-width);
+  --formulary-input-height: var(--formulary-input-height);
   --formulary-input-border: 1px solid var(--color-silver);
-  --formulary-input-border-radius: 10px;
-  --formulary-input-padding: 18px 16px;
-  --formulary-input-margin-bottom: 24px;
-  --formulary-input-font-size: 18px;
+  --formulary-input-border-radius: var(--formulary-input-radius);
+  --formulary-input-padding: var(--formulary-input-padding);
+  --formulary-input-margin-bottom: var(--formulary-input-spacing);
+  --formulary-input-font-size: var(--formulary-input-size);
 
   /* Floating label */
   --formulary-label-position: absolute;
   --formulary-label-display: block;
-  --formulary-label-font-size: 12px;
-  --formulary-label-font-weight: 400;
-  --formulary-label-bg: #fff;
+  --formulary-label-font-size: var(--formulary-label-size);
+  --formulary-label-font-weight: var(--formulary-label-weight);
+  --formulary-label-bg: var(--background-color);
   --formulary-label-padding: 0 4px;
   --formulary-label-top: -8px;
-  --formulary-label-left: 12px;
+  --formulary-label-left: var(--formulary-label-left);
   --formulary-label-z-index: 1;
-  --formulary-label-line-height: 16px;
+  --formulary-label-line-height: var(--formulary-label-line-height);
   --formulary-label-color: var(--color-iron);
   --formulary-label-margin-bottom: 0;
 
   /* Submit button — plum pill with search icon */
   --formulary-submit-bg: var(--color-formulary-submit-bg);
-  --formulary-submit-color: #fff;
+  --formulary-submit-color: var(--color-text-on-dark);
   --formulary-submit-border: none;
-  --formulary-submit-border-radius: 100px;
-  --formulary-submit-height: 56px;
-  --formulary-submit-padding: 14px 60px 14px 32px;
-  --formulary-submit-font-size: 18px;
-  --formulary-submit-font-weight: 700;
+  --formulary-submit-border-radius: var(--formulary-submit-radius);
+  --formulary-submit-height: var(--formulary-submit-height);
+  --formulary-submit-padding: var(--formulary-submit-padding);
+  --formulary-submit-font-size: var(--formulary-submit-size);
+  --formulary-submit-font-weight: var(--formulary-submit-weight);
   --formulary-submit-icon-display: inline-block;
-  --formulary-submit-icon-right: 24px;
+  --formulary-submit-icon-right: var(--formulary-submit-icon-offset);
   --formulary-submit-width: auto;
 
   /* Error */
   --formulary-error-color: var(--color-error);
-  --formulary-error-font-size: 12px;
+  --formulary-error-font-size: var(--formulary-label-size);
 
   /* reCAPTCHA notice */
-  --formulary-captcha-font-size: 12px;
+  --formulary-captcha-font-size: var(--formulary-recaptcha-size);
 
   /* Results */
-  --formulary-results-border-radius: 8px;
-  --formulary-results-box-shadow: rgb(0 0 0 / 10%) 0 2px 8px 0;
+  --formulary-results-border-radius: var(--formulary-results-radius);
+  --formulary-results-box-shadow: var(--formulary-results-shadow);
 }
 
 /* Header — icon + heading side by side */
 .formulary-lookup .formulary-lookup-header {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: var(--formulary-header-gap);
   justify-content: center;
-  margin-bottom: 48px;
+  margin-bottom: var(--formulary-header-spacing);
 }
 
 .formulary-lookup .formulary-lookup-header .formulary-lookup-icon {
@@ -94,7 +94,7 @@
 }
 
 .formulary-lookup .formulary-lookup-header .formulary-lookup-icon img {
-  width: 56px;
+  width: var(--formulary-icon-size);
   height: auto;
 }
 
@@ -108,7 +108,7 @@
   flex-direction: column;
   align-items: stretch;
   gap: 0;
-  max-width: 520px;
+  max-width: var(--formulary-input-width);
   margin-inline: auto;
   position: relative;
 }
@@ -116,11 +116,11 @@
 /* ZIP input full width */
 .formulary-lookup .formulary-lookup-zip-input {
   width: 100%;
-  max-width: 520px;
+  max-width: var(--formulary-input-width);
   flex: none;
   font-family: var(--body-font-family);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--formulary-input-size);
+  font-weight: var(--formulary-zip-weight);
   color: var(--color-charcoal);
 }
 
@@ -132,7 +132,7 @@
   position: relative;
   padding-top: 0;
   width: 100%;
-  max-width: 520px;
+  max-width: var(--formulary-input-width);
   margin-inline: auto;
 }
 
@@ -140,44 +140,44 @@
 .formulary-lookup .formulary-lookup-input-group {
   position: relative;
   width: 100%;
-  max-width: 520px;
-  margin-top: 8px;
+  max-width: var(--formulary-input-width);
+  margin-top: var(--formulary-zip-margin-top);
 }
 
 /* Floating label positioning — sits on top border of input (fieldset-legend style) */
 .formulary-lookup .formulary-lookup-zip-form > .formulary-lookup-label {
   position: relative;
-  left: 16px;
+  left: var(--formulary-label-offset-left);
   top: 0;
-  background: #fff;
+  background: var(--background-color);
   padding: 0 6px;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: var(--formulary-label-size);
+  font-weight: var(--formulary-label-weight);
   color: var(--color-iron);
   z-index: 2;
-  line-height: 16px;
+  line-height: var(--formulary-label-line-height);
   align-self: flex-start;
-  margin-bottom: -16px;
+  margin-bottom: calc(-1 * var(--formulary-label-line-height));
 }
 
 /* Filter — matches input width */
 .formulary-lookup .formulary-lookup-filter {
-  max-width: 520px;
+  max-width: var(--formulary-input-width);
   margin-inline: auto;
-  margin-bottom: 24px;
+  margin-bottom: var(--formulary-filter-spacing);
 }
 
 .formulary-lookup .formulary-lookup-filter-anchor {
-  height: 56px;
-  border-radius: 10px;
+  height: var(--formulary-input-height);
+  border-radius: var(--formulary-filter-radius);
   border: 1px solid var(--color-silver);
   font-family: var(--body-font-family);
-  font-size: 16px;
-  padding: 16px 16px;
+  font-size: var(--font-size-body);
+  padding: var(--formulary-input-padding);
 }
 
 .formulary-lookup .formulary-lookup-filter-panel {
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 var(--formulary-filter-radius) var(--formulary-filter-radius);
 }
 
 .formulary-lookup .formulary-lookup-filter-option:has(input:checked) {
@@ -202,22 +202,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: var(--formulary-filter-chevron-size);
+  height: var(--formulary-filter-chevron-size);
   background: var(--color-formulary-submit-bg);
   border-radius: 50%;
   flex-shrink: 0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-size: 14px;
+  background-size: var(--formulary-chevron-bg-size);
   background-position: center;
   background-repeat: no-repeat;
 }
 
 /* Indications */
 .formulary-lookup .formulary-lookup-indications {
-  max-width: 520px;
+  max-width: var(--formulary-input-width);
   margin-inline: auto;
-  margin-bottom: 24px;
+  margin-bottom: var(--formulary-indication-spacing);
 }
 
 .formulary-lookup .formulary-lookup-indications-heading {
@@ -227,18 +227,18 @@
 
 .formulary-lookup .formulary-lookup-indications-group input[type="radio"] {
   accent-color: var(--color-formulary-submit-bg);
-  width: 18px;
-  height: 18px;
+  width: var(--formulary-radio-size);
+  height: var(--formulary-radio-size);
 }
 
 .formulary-lookup .formulary-lookup-indications-group label {
   font-family: var(--body-font-family);
-  font-size: 16px;
+  font-size: var(--font-size-body);
 }
 
 /* Submit — centered pill */
 .formulary-lookup .formulary-lookup-submit {
-  margin: 24px auto;
+  margin: var(--formulary-submit-spacing) auto;
   display: block;
   font-family: var(--heading-font-family);
   letter-spacing: 0.02em;
@@ -250,8 +250,8 @@
 
 /* Disclaimer */
 .formulary-lookup .formulary-lookup-disclaimer {
-  font-size: 14px;
-  max-width: 520px;
+  font-size: var(--formulary-disclaimer-size);
+  max-width: var(--formulary-input-width);
   margin-inline: auto;
   font-family: var(--body-font-family);
 }
@@ -259,7 +259,7 @@
 /* reCAPTCHA links */
 .formulary-lookup .formulary-lookup-recaptcha-notice {
   font-family: var(--body-font-family);
-  font-size: 12px;
+  font-size: var(--formulary-recaptcha-size);
   color: var(--color-iron);
 }
 
