@@ -44,17 +44,6 @@
         "label": "Page Subtitle"
       },
       {
-        "component": "select",
-        "valueType": "string",
-        "name": "brand",
-        "label": "Brand",
-        "options": [
-          { "name": "AbbVie (default)", "value": "" },
-          { "name": "Rinvoq", "value": "rinvoq" },
-          { "name": "Botox", "value": "botox" }
-        ]
-      },
-      {
         "component": "boolean",
         "valueType": "boolean",
         "name": "hideFromNavigation",
@@ -9766,6 +9755,85 @@
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "carousel-video-playlist",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Playlist Layout",
+        "options": [
+          { "name": "Cards Grid (default)", "value": "" },
+          { "name": "Bottom", "value": "bottom" },
+          { "name": "Top", "value": "top" },
+          { "name": "Left Sidebar", "value": "left" },
+          { "name": "Right Sidebar", "value": "right" }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "accountId",
+        "value": "",
+        "label": "Brightcove Account ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "playlistId",
+        "value": "",
+        "label": "Brightcove Playlist ID"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "enableCaptions",
+        "value": false,
+        "label": "Enable Captions"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      }
+    ]
+  },
+  {
+    "id": "carousel-video-playlist-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "videoId",
+        "value": "",
+        "label": "Brightcove Video ID"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "thumbnail",
+        "label": "Thumbnail Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Video Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "transcriptHref",
+        "value": "",
+        "label": "Transcript URL"
       }
     ]
   }
