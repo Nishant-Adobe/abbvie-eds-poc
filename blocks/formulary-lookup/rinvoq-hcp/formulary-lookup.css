@@ -3,7 +3,7 @@
 /* RinvoqHCP formulary-lookup — pixel-matched to rinvoqhcp.com/dermatology/access */
 
 .formulary-lookup {
-  --formulary-text-color: rgb(37 40 42);
+  --formulary-text-color: var(--color-charcoal);
   --formulary-text-align: center;
 
   /* Card variant */
@@ -15,7 +15,7 @@
   /* Heading — bold, dark */
   --formulary-heading-font-size: 24px;
   --formulary-heading-font-weight: 700;
-  --formulary-heading-color: rgb(37 40 42);
+  --formulary-heading-color: var(--color-charcoal);
   --formulary-heading-margin-bottom: 32px;
   --formulary-heading-line-height: 1.3;
 
@@ -23,7 +23,7 @@
   --formulary-heading-accent-content: "";
   --formulary-heading-accent-display: block;
   --formulary-heading-accent-height: 6px;
-  --formulary-heading-accent-bg: rgb(218 170 0);
+  --formulary-heading-accent-bg: var(--color-formulary-accent);
   --formulary-heading-accent-bottom: -12px;
   --formulary-heading-accent-left: 0;
   --formulary-heading-accent-width: 100%;
@@ -35,7 +35,7 @@
   /* Input — outlined with rounded corners */
   --formulary-input-max-width: 520px;
   --formulary-input-height: 56px;
-  --formulary-input-border: 1px solid rgb(135 137 138);
+  --formulary-input-border: 1px solid var(--color-steel);
   --formulary-input-border-radius: 4px;
   --formulary-input-padding: 16px 14px;
   --formulary-input-margin-bottom: 24px;
@@ -52,11 +52,11 @@
   --formulary-label-left: 12px;
   --formulary-label-z-index: 1;
   --formulary-label-line-height: 16px;
-  --formulary-label-color: rgb(70 72 74);
+  --formulary-label-color: var(--color-iron);
   --formulary-label-margin-bottom: 0;
 
   /* Submit button — maroon/magenta pill with search icon */
-  --formulary-submit-bg: rgb(130 0 67);
+  --formulary-submit-bg: var(--color-formulary-submit-bg);
   --formulary-submit-color: #fff;
   --formulary-submit-border: none;
   --formulary-submit-border-radius: 100px;
@@ -69,7 +69,7 @@
   --formulary-submit-width: auto;
 
   /* Error */
-  --formulary-error-color: rgb(214 42 36);
+  --formulary-error-color: var(--color-error);
   --formulary-error-font-size: 12px;
 
   /* reCAPTCHA notice */
@@ -141,15 +141,15 @@
 }
 
 .formulary-lookup .formulary-lookup-filter-option:has(input:checked) {
-  background: rgb(255 243 200);
+  background: var(--color-formulary-highlight);
 }
 
 .formulary-lookup .formulary-lookup-filter-option input[type="checkbox"] {
-  accent-color: rgb(218 170 0);
+  accent-color: var(--color-formulary-accent);
 }
 
 .formulary-lookup .formulary-lookup-filter-clear {
-  color: rgb(130 0 67);
+  color: var(--color-formulary-filter-clear);
 }
 
 /* Indications */
@@ -159,7 +159,7 @@
 }
 
 .formulary-lookup .formulary-lookup-indications-group input[type="radio"] {
-  accent-color: rgb(130 0 67);
+  accent-color: var(--color-formulary-submit-bg);
 }
 
 /* Submit — centered pill */
@@ -169,7 +169,7 @@
 }
 
 .formulary-lookup .formulary-lookup-submit:hover {
-  background: rgb(100 0 52);
+  background: var(--color-formulary-submit-hover);
 }
 
 /* Disclaimer */
@@ -181,7 +181,7 @@
 
 /* reCAPTCHA links */
 .formulary-lookup .formulary-lookup-recaptcha-notice a {
-  color: rgb(130 0 67);
+  color: var(--color-formulary-link);
   text-decoration: underline;
 }
 
