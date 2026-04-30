@@ -1,119 +1,107 @@
 @import '../clinical-data-panel.css';
 
 /* Skyrizi HCP — clinical-data-panel brand overrides
-   Source: skyrizihcp.com/dermatology/psoriasis-efficacy/skyrizi-vs-cosentyx
-   Uses tokens from styles/skyrizi-hcp/tokens.css */
+   Source: skyrizihcp.com/dermatology/psoriasis-efficacy/skyrizi-vs-cosentyx */
 
 .clinical-data-panel {
-    font-family: var(--body-font-family);
-    color: var(--color-text-panel);
-    max-width: var(--content-max-width-panel);
-    padding: 0 20px;
+  --cdp-color-text: #21406d;
+  --cdp-color-heading: #21406d;
+  --cdp-color-accent: #1ba2da;
+  --cdp-color-muted: #50535c;
+  --cdp-color-cta: #071d49;
+  --cdp-font-body: var(--body-font-family, 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif);
+  --cdp-font-heading: var(--heading-font-family, 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif);
+  --cdp-font-size-title: 22px;
+  --cdp-font-size-callout: 26px;
+  --cdp-font-size-body: 14px;
+  --cdp-font-size-small: 12.8px;
+  --cdp-line-height-callout: 30px;
+  --cdp-line-height-body: 18px;
+  --cdp-line-height-default: 16px;
+
+  padding: 0 20px;
 }
 
-.clinical-data-panel-title {
-    font-family: var(--heading-font-family);
-    font-size: var(--font-size-panel-title);
-    font-weight: var(--font-weight-heading);
-    color: var(--color-text-panel);
-    letter-spacing: var(--letter-spacing-panel-title);
-}
-
-/* ── footnotes area ── */
+/* ── footnotes ── */
 .clinical-data-panel-footnotes {
-    font-size: var(--font-size-panel-body);
-    line-height: var(--line-height-panel-default);
-    color: var(--color-text-panel);
-    border-top: none;
-    padding-top: var(--spacing-16);
+  border-top: none;
 }
 
 .clinical-data-panel-footnotes p {
-    margin: 0 0 4px;
-    padding: 0;
-    font-family: var(--heading-font-family);
-    font-size: var(--font-size-callout);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-callout);
-    color: var(--color-text-panel);
+  font-family: var(--cdp-font-heading);
+  font-size: var(--cdp-font-size-callout);
+  font-weight: var(--cdp-font-weight-normal);
+  line-height: var(--cdp-line-height-callout);
+  color: var(--cdp-color-heading);
+  margin: 0 0 4px;
 }
 
-/* First paragraph: "SKYRIZI 5 doses in year one" — teal */
 .clinical-data-panel-footnotes p:first-child {
-    color: var(--color-accent-teal);
-    margin-bottom: var(--spacing-8);
-    margin-top: 4px;
+  color: var(--cdp-color-accent);
+  margin-bottom: var(--cdp-spacing-sm);
+  margin-top: 4px;
 }
 
-/* Second paragraph: "and COSENTYX 16 doses..." — dark navy */
 .clinical-data-panel-footnotes p:nth-child(2) {
-    color: var(--color-text-panel);
-    margin-bottom: var(--spacing-8);
+  color: var(--cdp-color-heading);
+  margin-bottom: var(--cdp-spacing-sm);
 }
 
-/* Third paragraph: "STUDY DESIGN:" — teal, smaller */
 .clinical-data-panel-footnotes p:nth-child(3) {
-    font-size: var(--font-size-panel-body);
-    line-height: var(--line-height-panel-default);
-    color: var(--color-accent-teal);
-    margin-top: var(--spacing-16);
-    margin-bottom: var(--spacing-8);
+  font-size: var(--cdp-font-size-body);
+  line-height: var(--cdp-line-height-default);
+  color: var(--cdp-color-accent);
+  margin-top: var(--cdp-spacing-md);
+  margin-bottom: var(--cdp-spacing-sm);
 }
 
-/* Fourth paragraph: study body text — navy, regular weight */
 .clinical-data-panel-footnotes p:nth-child(4) {
-    font-family: var(--body-font-family);
-    font-size: var(--font-size-panel-body);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-panel-body);
-    color: var(--color-text-panel);
-    margin-bottom: var(--spacing-8);
+  font-family: var(--cdp-font-body);
+  font-size: var(--cdp-font-size-body);
+  font-weight: var(--cdp-font-weight-normal);
+  line-height: var(--cdp-line-height-body);
+  color: var(--cdp-color-heading);
+  margin-bottom: var(--cdp-spacing-sm);
 }
 
-/* Last paragraph: abbreviations — small gray */
 .clinical-data-panel-footnotes p:last-child {
-    font-family: var(--body-font-family);
-    font-size: var(--font-size-panel-small);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-panel-default);
-    color: var(--color-text-muted-gray);
-    margin-top: var(--spacing-16);
+  font-family: var(--cdp-font-body);
+  font-size: var(--cdp-font-size-small);
+  font-weight: var(--cdp-font-weight-normal);
+  line-height: var(--cdp-line-height-default);
+  color: var(--cdp-color-muted);
+  margin-top: var(--cdp-spacing-md);
 }
 
-/* Underlined drug names inside dosing text */
 .clinical-data-panel-footnotes u,
 .clinical-data-panel-footnotes .u {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* Bold/strong text — teal accent */
 .clinical-data-panel-footnotes strong {
-    color: var(--color-accent-teal);
-    font-family: var(--heading-font-family);
+  color: var(--cdp-color-accent);
+  font-family: var(--cdp-font-heading);
 }
 
 /* ── CTA link ── */
 .clinical-data-panel .clinical-data-panel-cta {
-    font-family: var(--heading-font-family);
-    font-size: var(--font-size-panel-body);
-    font-weight: var(--font-weight-heading);
-    color: var(--color-text-cta);
-    text-transform: none;
-    text-decoration: none;
-    padding: 12px 42px 12px 0;
-    position: relative;
-    border-bottom: 2px solid transparent;
-    margin-top: var(--spacing-24);
+  color: var(--cdp-color-cta);
+  text-transform: none;
+  padding: 12px 42px 12px 0;
+  position: relative;
+  border-bottom: 2px solid transparent;
+  margin-top: var(--cdp-spacing-lg);
 }
 
 .clinical-data-panel .clinical-data-panel-cta:hover {
-    border-bottom-color: var(--color-text-cta);
+  border-bottom-color: var(--cdp-color-cta);
+  text-decoration: none;
 }
 
 .clinical-data-panel .clinical-data-panel-cta::after {
-    content: '>';
-    position: absolute;
-    right: 20px;
-    font-size: 1.4em;
-    font-weight: var(--font-weight-body);
+  content: '>';
+  position: absolute;
+  right: 20px;
+  font-size: 1.4em;
+  font-weight: var(--cdp-font-weight-normal);
 }
