@@ -1,7 +1,7 @@
 /* clinical-data-panel — responsive clinical chart with footnotes v1.0 */
 
 .clinical-data-panel {
-    max-width: var(--section-width, 1200px);
+    max-width: var(--content-max-width-panel);
     margin: 0 auto;
     padding: 0;
 }
@@ -12,12 +12,12 @@
 }
 
 .clinical-data-panel-title {
-    font-size: var(--heading-font-size-s, 1rem);
-    font-weight: 700;
+    font-size: var(--font-size-panel-title);
+    font-weight: var(--font-weight-heading);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-color, #071d49);
-    margin: 0 0 var(--spacing-16, 16px);
+    letter-spacing: var(--letter-spacing-panel-title);
+    color: var(--text-color);
+    margin: 0 0 var(--spacing-16);
     text-align: center;
 }
 
@@ -29,37 +29,37 @@
 }
 
 .clinical-data-panel-footnotes {
-    font-size: var(--body-font-size-xs, 0.75rem);
-    line-height: 1.4;
-    color: var(--text-color-muted, #555);
-    margin-top: var(--spacing-16, 16px);
-    padding-top: var(--spacing-12, 12px);
-    border-top: 1px solid var(--border-color, #e0e0e0);
+    font-size: var(--font-size-panel-body);
+    line-height: var(--line-height-panel-body);
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-16);
+    padding-top: var(--spacing-12);
+    border-top: 1px solid var(--color-border-default);
 }
 
 .clinical-data-panel-footnotes p {
-    margin: 0 0 var(--spacing-08, 8px);
+    margin: 0 0 var(--spacing-08);
 }
 
 .clinical-data-panel-footnotes strong {
-    color: var(--text-color, #071d49);
+    color: var(--text-color);
 }
 
 .clinical-data-panel-cta {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: var(--spacing-16, 16px);
-    font-size: var(--body-font-size-s, 0.875rem);
-    font-weight: 700;
-    color: var(--link-color, #071d49);
+    margin-top: var(--spacing-16);
+    font-size: var(--font-size-panel-body);
+    font-weight: var(--font-weight-heading);
+    color: var(--link-color);
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
 }
 
 .clinical-data-panel-cta::after {
-    content: '›';
+    content: '>';
     font-size: 1.2em;
 }
 
@@ -69,10 +69,10 @@
 
 @media (width <= 600px) {
     .clinical-data-panel-title {
-        font-size: var(--body-font-size-m, 0.875rem);
+        font-size: var(--body-font-size-m);
     }
 
     .clinical-data-panel-footnotes {
-        font-size: 0.6875rem;
+        font-size: var(--font-size-body-small);
     }
 }
