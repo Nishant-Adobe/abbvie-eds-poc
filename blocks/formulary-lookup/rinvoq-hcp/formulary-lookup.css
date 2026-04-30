@@ -22,9 +22,9 @@
   /* Gold underline accent */
   --formulary-heading-accent-content: "";
   --formulary-heading-accent-display: block;
-  --formulary-heading-accent-height: 6px;
+  --formulary-heading-accent-height: 8px;
   --formulary-heading-accent-bg: var(--color-formulary-accent);
-  --formulary-heading-accent-bottom: -12px;
+  --formulary-heading-accent-bottom: -14px;
   --formulary-heading-accent-left: 0;
   --formulary-heading-accent-width: 100%;
   --formulary-heading-accent-margin: 0;
@@ -35,11 +35,11 @@
   /* Input — outlined with rounded corners */
   --formulary-input-max-width: 520px;
   --formulary-input-height: 56px;
-  --formulary-input-border: 1px solid var(--color-steel);
-  --formulary-input-border-radius: 4px;
-  --formulary-input-padding: 16px 14px;
+  --formulary-input-border: 1px solid var(--color-silver);
+  --formulary-input-border-radius: 10px;
+  --formulary-input-padding: 18px 16px;
   --formulary-input-margin-bottom: 24px;
-  --formulary-input-font-size: 16px;
+  --formulary-input-font-size: 18px;
 
   /* Floating label */
   --formulary-label-position: absolute;
@@ -55,7 +55,7 @@
   --formulary-label-color: var(--color-iron);
   --formulary-label-margin-bottom: 0;
 
-  /* Submit button — maroon/magenta pill with search icon */
+  /* Submit button — plum pill with search icon */
   --formulary-submit-bg: var(--color-formulary-submit-bg);
   --formulary-submit-color: #fff;
   --formulary-submit-border: none;
@@ -86,7 +86,7 @@
   align-items: flex-start;
   gap: 16px;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
 .formulary-lookup .formulary-lookup-header .formulary-lookup-icon {
@@ -94,11 +94,13 @@
 }
 
 .formulary-lookup .formulary-lookup-header .formulary-lookup-icon img {
-  max-width: 56px;
+  width: 56px;
+  height: auto;
 }
 
 .formulary-lookup .formulary-lookup-header .formulary-lookup-heading {
   text-align: left;
+  font-family: var(--heading-font-family);
 }
 
 /* Input group — stacked vertically */
@@ -116,6 +118,10 @@
   width: 100%;
   max-width: 520px;
   flex: none;
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-charcoal);
 }
 
 /* Center the zip form */
@@ -123,21 +129,55 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  padding-top: 0;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+/* Input group as positioning context for floating label */
+.formulary-lookup .formulary-lookup-input-group {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin-top: 8px;
+}
+
+/* Floating label positioning — sits on top border of input (fieldset-legend style) */
+.formulary-lookup .formulary-lookup-zip-form > .formulary-lookup-label {
+  position: relative;
+  left: 16px;
+  top: 0;
+  background: #fff;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-iron);
+  z-index: 2;
+  line-height: 16px;
+  align-self: flex-start;
+  margin-bottom: -16px;
 }
 
 /* Filter — matches input width */
 .formulary-lookup .formulary-lookup-filter {
   max-width: 520px;
   margin-inline: auto;
+  margin-bottom: 24px;
 }
 
 .formulary-lookup .formulary-lookup-filter-anchor {
   height: 56px;
-  border-radius: 4px;
+  border-radius: 10px;
+  border: 1px solid var(--color-silver);
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  padding: 16px 16px;
 }
 
 .formulary-lookup .formulary-lookup-filter-panel {
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 10px 10px;
 }
 
 .formulary-lookup .formulary-lookup-filter-option:has(input:checked) {
@@ -152,20 +192,56 @@
   color: var(--color-formulary-filter-clear);
 }
 
+.formulary-lookup .formulary-lookup-filter-clear[hidden] {
+  display: none;
+}
+
+/* Plum circle chevron icon on filter */
+.formulary-lookup .formulary-lookup-filter-anchor::after {
+  content: "";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--color-formulary-submit-bg);
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-size: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* Indications */
 .formulary-lookup .formulary-lookup-indications {
   max-width: 520px;
   margin-inline: auto;
+  margin-bottom: 24px;
+}
+
+.formulary-lookup .formulary-lookup-indications-heading {
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-semibold);
 }
 
 .formulary-lookup .formulary-lookup-indications-group input[type="radio"] {
   accent-color: var(--color-formulary-submit-bg);
+  width: 18px;
+  height: 18px;
+}
+
+.formulary-lookup .formulary-lookup-indications-group label {
+  font-family: var(--body-font-family);
+  font-size: 16px;
 }
 
 /* Submit — centered pill */
 .formulary-lookup .formulary-lookup-submit {
   margin: 24px auto;
   display: block;
+  font-family: var(--heading-font-family);
+  letter-spacing: 0.02em;
 }
 
 .formulary-lookup .formulary-lookup-submit:hover {
@@ -177,26 +253,17 @@
   font-size: 14px;
   max-width: 520px;
   margin-inline: auto;
+  font-family: var(--body-font-family);
 }
 
 /* reCAPTCHA links */
+.formulary-lookup .formulary-lookup-recaptcha-notice {
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  color: var(--color-iron);
+}
+
 .formulary-lookup .formulary-lookup-recaptcha-notice a {
   color: var(--color-formulary-link);
   text-decoration: underline;
-}
-
-/* Force label into fieldset-legend style positioning */
-.formulary-lookup .formulary-lookup-zip-form {
-  position: relative;
-  padding-top: 8px;
-}
-
-.formulary-lookup .formulary-lookup-zip-form > .formulary-lookup-label {
-  position: absolute;
-  top: 0;
-  left: 24px;
-  background: #fff;
-  padding: 0 4px;
-  font-size: 12px;
-  z-index: 1;
 }
