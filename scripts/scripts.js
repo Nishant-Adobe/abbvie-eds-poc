@@ -415,7 +415,26 @@ export function decorateMain(main) {
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
+function processLocalMetadata() {
+  const metadataBlock = document.querySelector('main > div.metadata, main div.metadata');
+  if (!metadataBlock) return;
+  [...metadataBlock.children].forEach((row) => {
+    const cells = [...row.children];
+    if (cells.length < 2) return;
+    const key = cells[0]?.textContent?.trim().toLowerCase();
+    const value = cells[1]?.textContent?.trim();
+    if (key && value && !document.head.querySelector(`meta[name="${key}"]`)) {
+      const meta = document.createElement('meta');
+      meta.name = key;
+      meta.content = value;
+      document.head.append(meta);
+    }
+  });
+  metadataBlock.remove();
+}
+
 async function loadEager(doc) {
+  processLocalMetadata();
   document.documentElement.lang = 'en';
   loadCSS(`${window.hlx.codeBasePath}/styles/section.css`);
   decorateTemplateAndTheme();
