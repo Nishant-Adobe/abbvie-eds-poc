@@ -431,16 +431,6 @@ function processLocalMetadata() {
     }
   });
   metadataBlock.remove();
-
-  const brand = getMetadata('brand')?.trim();
-  if (brand) {
-    const hasTokens = [...document.querySelectorAll('link[rel="stylesheet"]')]
-      .some((l) => l.href.includes(`/styles/${brand}/`));
-    if (!hasTokens) {
-      loadCSS(`${window.hlx.codeBasePath}/styles/${brand}/tokens.css`);
-      loadCSS(`${window.hlx.codeBasePath}/styles/${brand}/styles.css`);
-    }
-  }
 }
 
 async function loadEager(doc) {
