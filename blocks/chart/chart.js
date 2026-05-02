@@ -59,9 +59,75 @@ function renderPie(data, svg) {
   });
 }
 
+function renderStatic(block) {
+  const rows = [...block.children];
+  const pictures = [];
+  let altText = '';
+
+  rows.forEach((row) => {
+    const img = row.querySelector('img');
+    const pic = row.querySelector('picture');
+    if (pic) {
+      pictures.push(pic);
+      const imgEl = pic.querySelector('img');
+      if (imgEl && imgEl.alt) altText = imgEl.alt;
+    } else if (img) {
+      pictures.push(img);
+      if (img.alt) altText = img.alt;
+    }
+  });
+
+  if (!pictures.length) return;
+
+  const figure = document.createElement('figure');
+  figure.className = 'chart-figure';
+
+  if (pictures.length === 1) {
+    figure.append(pictures[0]);
+  } else {
+    const picture = document.createElement('picture');
+    const desktopImg = pictures[0].querySelector('img') || pictures[0];
+    const mobileSource = pictures[pictures.length - 1];
+    const mobileSrc = mobileSource.querySelector('img')?.src || mobileSource.src;
+
+    if (mobileSrc) {
+      const source = document.createElement('source');
+      source.setAttribute('media', '(max-width: 599px)');
+      source.setAttribute('srcset', mobileSrc);
+      picture.append(source);
+    }
+
+    if (pictures.length >= 3) {
+      const tabletSource = pictures[1];
+      const tabletSrc = tabletSource.querySelector('img')?.src || tabletSource.src;
+      if (tabletSrc) {
+        const source = document.createElement('source');
+        source.setAttribute('media', '(max-width: 1023px)');
+        source.setAttribute('srcset', tabletSrc);
+        picture.append(source);
+      }
+    }
+
+    const img = document.createElement('img');
+    img.src = desktopImg.src || desktopImg.querySelector('img')?.src || '';
+    img.alt = altText;
+    img.loading = 'lazy';
+    picture.append(img);
+    figure.append(picture);
+  }
+
+  block.replaceChildren(figure);
+}
+
 export default function decorate(block) {
   if (document.documentElement.hasAttribute('data-aue-resource')
     || document.querySelector('.adobe-ue-edit') !== null) {
+    return;
+  }
+
+  const isStatic = block.classList.contains('static');
+  if (isStatic) {
+    renderStatic(block);
     return;
   }
 
@@ -94,7 +160,6 @@ export default function decorate(block) {
     renderBar(data, svg);
   }
 
-  // Accessible table fallback
   const table = document.createElement('table');
   table.className = 'chart-data-table visually-hidden';
   data.forEach((d) => {

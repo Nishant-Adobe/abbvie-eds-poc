@@ -8623,6 +8623,10 @@
           {
             "name": "Pie Chart",
             "value": "pie"
+          },
+          {
+            "name": "Static (Image)",
+            "value": "static"
           }
         ]
       },
@@ -8641,6 +8645,38 @@
         "value": "",
         "label": "Center Label",
         "description": "Text shown in donut center (pie variant only)."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "chartImage",
+        "label": "Chart Image (Desktop)",
+        "description": "Desktop chart image from DAM (static variant only).",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "chartImageTablet",
+        "label": "Chart Image (Tablet)",
+        "description": "Tablet chart image (optional — uses desktop if empty).",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "chartImageMobile",
+        "label": "Chart Image (Mobile)",
+        "description": "Mobile chart image from DAM (static variant only).",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "chartImageAlt",
+        "value": "",
+        "label": "Chart Image Alt Text",
+        "description": "Descriptive alt text for the chart image (required for accessibility)."
       },
       {
         "component": "boolean",
