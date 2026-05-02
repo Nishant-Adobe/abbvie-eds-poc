@@ -60,6 +60,11 @@ function renderPie(data, svg) {
 }
 
 export default function decorate(block) {
+  if (document.documentElement.hasAttribute('data-aue-resource')
+    || document.querySelector('.adobe-ue-edit') !== null) {
+    return;
+  }
+
   const isPie = block.classList.contains('pie');
 
   const rows = [...block.children];
