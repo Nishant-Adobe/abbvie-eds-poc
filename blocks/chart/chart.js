@@ -120,7 +120,9 @@ function renderStatic(block) {
 }
 
 export default function decorate(block) {
-  const isEditor = document.documentElement.hasAttribute('data-aue-resource')
+  const isEditor = block.hasAttribute('data-aue-resource')
+    || block.closest('[data-aue-resource]') !== null
+    || document.documentElement.hasAttribute('data-aue-resource')
     || document.querySelector('.adobe-ue-edit') !== null
     || window.location.href.includes('universal-editor');
   if (isEditor) {
