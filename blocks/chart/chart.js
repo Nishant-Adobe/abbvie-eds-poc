@@ -120,12 +120,9 @@ function renderStatic(block) {
 }
 
 export default function decorate(block) {
-  const isEditor = block.hasAttribute('data-aue-resource')
-    || block.closest('[data-aue-resource]') !== null
-    || document.documentElement.hasAttribute('data-aue-resource')
-    || document.querySelector('.adobe-ue-edit') !== null
-    || window.location.href.includes('universal-editor');
-  if (isEditor) {
+  const isUeEdit = document.body.classList.contains('adobe-ue-edit')
+    || document.querySelector('.adobe-ue-edit') !== null;
+  if (isUeEdit) {
     block.classList.add('chart--editor');
     return;
   }
@@ -141,12 +138,15 @@ export default function decorate(block) {
   const rows = [...block.children];
   const data = rows.map((row) => {
     const cells = [...row.children];
+    if (cells.length < 2) return null;
+    const val = parseFloat(cells[1]?.textContent.trim());
+    if (Number.isNaN(val)) return null;
     return {
       label: cells[0]?.textContent.trim() || '',
-      value: parseFloat(cells[1]?.textContent.trim() || '0'),
+      value: val,
       valueLabel: cells[2]?.textContent.trim() || '',
     };
-  }).filter((d) => !Number.isNaN(d.value));
+  }).filter(Boolean);
 
   if (!data.length) return;
 
