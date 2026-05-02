@@ -120,8 +120,11 @@ function renderStatic(block) {
 }
 
 export default function decorate(block) {
-  if (document.documentElement.hasAttribute('data-aue-resource')
-    || document.querySelector('.adobe-ue-edit') !== null) {
+  const isEditor = document.documentElement.hasAttribute('data-aue-resource')
+    || document.querySelector('.adobe-ue-edit') !== null
+    || window.location.href.includes('universal-editor');
+  if (isEditor) {
+    block.classList.add('chart--editor');
     return;
   }
 
