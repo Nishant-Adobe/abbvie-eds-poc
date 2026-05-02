@@ -73,3 +73,120 @@
   height: auto;
   margin: 0 auto;
 }
+
+/* ── Clinical Line/Area variant ── */
+.chart.clinical-line-area .chart-cla-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.chart.clinical-line-area .chart-cla-grid {
+  stroke: var(--chart-cla-grid-color);
+  stroke-width: 0.5;
+}
+
+.chart.clinical-line-area .chart-cla-y-label,
+.chart.clinical-line-area .chart-cla-x-label {
+  font-size: 5px;
+  fill: var(--chart-cla-axis-label-color);
+}
+
+.chart.clinical-line-area .chart-cla-axis-title {
+  font-size: 5.5px;
+  fill: var(--chart-cla-axis-label-color);
+  font-weight: 600;
+}
+
+.chart.clinical-line-area .chart-cla-area {
+  opacity: var(--chart-cla-area-opacity);
+}
+
+.chart.clinical-line-area .chart-cla-area.chart-cla-series-0 { fill: var(--chart-cla-series-0); }
+.chart.clinical-line-area .chart-cla-area.chart-cla-series-1 { fill: var(--chart-cla-series-1); }
+.chart.clinical-line-area .chart-cla-area.chart-cla-series-2 { fill: var(--chart-cla-series-2); }
+.chart.clinical-line-area .chart-cla-area.chart-cla-series-3 { fill: var(--chart-cla-series-3); }
+
+.chart.clinical-line-area .chart-cla-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 1.5s ease;
+}
+
+.chart.clinical-line-area .chart-cla-line.chart-cla-series-0 { stroke: var(--chart-cla-series-0); }
+.chart.clinical-line-area .chart-cla-line.chart-cla-series-1 { stroke: var(--chart-cla-series-1); }
+.chart.clinical-line-area .chart-cla-line.chart-cla-series-2 { stroke: var(--chart-cla-series-2); }
+.chart.clinical-line-area .chart-cla-line.chart-cla-series-3 { stroke: var(--chart-cla-series-3); }
+
+.chart.clinical-line-area.chart-cla-animated .chart-cla-line {
+  stroke-dashoffset: 0;
+}
+
+.chart.clinical-line-area .chart-cla-point {
+  fill: #fff;
+  stroke-width: 1.5;
+}
+
+.chart.clinical-line-area .chart-cla-point.chart-cla-series-0 { stroke: var(--chart-cla-series-0); }
+.chart.clinical-line-area .chart-cla-point.chart-cla-series-1 { stroke: var(--chart-cla-series-1); }
+.chart.clinical-line-area .chart-cla-point.chart-cla-series-2 { stroke: var(--chart-cla-series-2); }
+.chart.clinical-line-area .chart-cla-point.chart-cla-series-3 { stroke: var(--chart-cla-series-3); }
+
+.chart.clinical-line-area .chart-cla-callout-box {
+  fill: var(--chart-cla-callout-bg);
+  stroke-width: 1;
+}
+
+.chart.clinical-line-area .chart-cla-callout-box.chart-cla-series-0 { stroke: var(--chart-cla-series-0); }
+.chart.clinical-line-area .chart-cla-callout-box.chart-cla-series-1 { stroke: var(--chart-cla-series-1); }
+.chart.clinical-line-area .chart-cla-callout-box.chart-cla-series-2 { stroke: var(--chart-cla-series-2); }
+.chart.clinical-line-area .chart-cla-callout-box.chart-cla-series-3 { stroke: var(--chart-cla-series-3); }
+
+.chart.clinical-line-area .chart-cla-callout-label {
+  font-size: 5px;
+  font-weight: 700;
+  fill: var(--chart-cla-callout-text);
+}
+
+.chart.clinical-line-area .chart-cla-phase-line {
+  stroke: var(--chart-cla-phase-border);
+  stroke-width: 0.5;
+  stroke-dasharray: 3 2;
+}
+
+.chart.clinical-line-area .chart-cla-phase-label {
+  font-size: 4px;
+  fill: var(--chart-cla-phase-text);
+}
+
+.chart.clinical-line-area .chart-cla-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 0 0;
+  justify-content: center;
+}
+
+.chart.clinical-line-area .chart-cla-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: var(--chart-cla-legend-text);
+}
+
+.chart.clinical-line-area .chart-cla-legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.chart.clinical-line-area .chart-cla-legend-dot.chart-cla-series-0 { background: var(--chart-cla-series-0); }
+.chart.clinical-line-area .chart-cla-legend-dot.chart-cla-series-1 { background: var(--chart-cla-series-1); }
+.chart.clinical-line-area .chart-cla-legend-dot.chart-cla-series-2 { background: var(--chart-cla-series-2); }
+.chart.clinical-line-area .chart-cla-legend-dot.chart-cla-series-3 { background: var(--chart-cla-series-3); }

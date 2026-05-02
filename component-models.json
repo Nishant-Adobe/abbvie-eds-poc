@@ -8627,6 +8627,10 @@
           {
             "name": "Static (Image)",
             "value": "static"
+          },
+          {
+            "name": "Clinical Line/Area",
+            "value": "clinical-line-area"
           }
         ]
       },
@@ -8685,6 +8689,59 @@
         "description": "Render a visually-hidden data table for screen readers."
       },
       {
+        "component": "tab",
+        "label": "Line/Area Config",
+        "name": "lineAreaConfig"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "xAxisLabel",
+        "value": "",
+        "label": "X-Axis Label — CLINICAL LINE/AREA ONLY",
+        "description": "Title for the X-axis (e.g. 'Weeks')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "yAxisLabel",
+        "value": "",
+        "label": "Y-Axis Label — CLINICAL LINE/AREA ONLY",
+        "description": "Title for the Y-axis (e.g. '% Response')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "xAxisCategories",
+        "value": "",
+        "label": "X-Axis Categories — CLINICAL LINE/AREA ONLY",
+        "description": "Comma-separated X values (e.g. '0,4,8,12,16,24')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "yAxisMax",
+        "value": "100",
+        "label": "Y-Axis Max — CLINICAL LINE/AREA ONLY",
+        "description": "Maximum Y-axis value (e.g. '100')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "yAxisStep",
+        "value": "20",
+        "label": "Y-Axis Step — CLINICAL LINE/AREA ONLY",
+        "description": "Grid step size for Y-axis (e.g. '20')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "seriesLabels",
+        "value": "",
+        "label": "Series Labels — CLINICAL LINE/AREA ONLY",
+        "description": "Comma-separated legend labels (e.g. 'SKYRIZI 150 mg,Placebo')."
+      },
+      {
         "...": "../../models/_common-properties.json#/common-prop"
       }
     ]
@@ -8720,6 +8777,35 @@
         "value": "",
         "label": "Display Value",
         "description": "Formatted value shown above the bar (e.g. '72%' or '1.2M'). Leave blank to hide."
+      },
+      {
+        "component": "tab",
+        "label": "Line/Area",
+        "name": "lineAreaTab"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "seriesIndex",
+        "value": "0",
+        "label": "Series Index — CLINICAL LINE/AREA ONLY",
+        "description": "Which series this point belongs to (0-based). E.g. '0' for first series, '1' for second."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "calloutText",
+        "value": "",
+        "label": "Callout Text — CLINICAL LINE/AREA ONLY",
+        "description": "Text shown in callout bubble at this point (e.g. '57%*'). Leave blank for no callout."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "phaseLabel",
+        "value": "",
+        "label": "Phase Label — CLINICAL LINE/AREA ONLY",
+        "description": "Optional phase divider label at this X position (e.g. 'Open-label'). Leave blank for no divider."
       }
     ]
   },
