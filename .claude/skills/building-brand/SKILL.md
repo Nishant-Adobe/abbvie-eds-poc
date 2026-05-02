@@ -13,7 +13,6 @@ This skill guides you through everything required to introduce a new brand ident
 - **building-blocks**: Use when a new block needs to be created for this brand. The scaffold automatically creates brand folders for all brands in `brand-config.json` when a block is scaffolded.
 - **building-brand-blocks**: Use when implementing block-level visual overrides specific to this brand — editing `_{block}.css` partials, brand `block-config.js`, or brand+theme CSS. The scaffold creates empty override partials for all existing blocks.
 - **ue-component-model**: Use to expose `brand` as a page-level `select` field in Universal Editor after the brand is registered.
-- **token-naming**: Full token naming formula, segment definitions, intent vs appearance rules, anti-patterns, and responsive token patterns. Reference before authoring any new CSS custom properties.
 
 ---
 
@@ -108,98 +107,82 @@ ls blocks/*/  # each should now have a {brand}/ subfolder
 
 The most important step. Edit **`styles/{brand}/_tokens.css`** — the scaffold pre-fills it with the global token values as a starting point. Override only what differs from the defaults.
 
-```css
-/* styles/{brand}/_tokens.css */
-:root {
-  /* Override global base tokens (legacy names — match styles/tokens.css exactly) */
-  --background-color: #ffffff;
-  --light-color: #f4f4f4;
-  --dark-color: #2b2b2b;
-  --text-color: #111111;
-  --link-color: #0057cc;
-  --link-hover-color: #003d99;
-  --body-font-family: 'Brand Sans', roboto-fallback, sans-serif;
-  --heading-font-family: 'Brand Display', roboto-condensed-fallback, sans-serif;
-  --nav-height: 72px;
+Read `styles/tokens.css` at execution time to get the current token names and their default values — use those as the baseline. The structure below is illustrative only; actual token names and values must come from the file.
 
-  /* New brand-specific tokens — follow EDS Token Naming Guide */
-  --color-primary-bg: #0057cc;
-  --color-accent-bg: #ff6600;
-  --color-surface-subtle: #f0f4ff;
-  --color-text-on-surface: #111111;
+```css
+/* styles/{brand}/_tokens.css — illustrative structure, not fixed values */
+:root {
+  /* Override global base tokens — names must match styles/tokens.css exactly */
+  --background-color: <brand-value>;
+  --text-color: <brand-value>;
+  /* ... other tokens from styles/tokens.css that differ for this brand ... */
+
+  /* New brand-specific tokens — follow W3C Design Token naming */
+  --color-brand-primary: <brand-value>;
+  --color-brand-accent: <brand-value>;
 }
 ```
 
-**Available global token names to override** (from `styles/tokens.css`):
-- Colors: `--background-color`, `--light-color`, `--dark-color`, `--text-color`, `--link-color`, `--link-hover-color`
-- Fonts: `--body-font-family`, `--heading-font-family`
-- Font sizes: `--body-font-size-m/s/xs`, `--heading-font-size-xxl/xl/l/m/s/xs`
-- Nav: `--nav-height`
+> **STRICT RULE — No hardcoded values, ever.**
+> All token values and CSS property values MUST reference a design token via `var(--token-name)`. Raw values (`#fff`, `1rem`, `600px`, `bold`, `16px`, inline font stacks, etc.) are **never** allowed. The only permitted exception is `0` (the unitless zero).
+>
+> **If a token does not exist yet, define it first at the correct level of the multi-brand hierarchy — then reference it:**
+>
+> | Scope | Define the token in |
+> |---|---|
+> | All brands and themes | `styles/tokens.css` — global base scale |
+> | One brand, all themes | `styles/{brand}/_tokens.css` |
+> | All brands, one theme | `styles/themes/{theme}/_tokens.css` |
+> | One brand + one theme | `styles/{brand}/themes/{theme}/_tokens.css` |
+>
+> Token values must themselves reference another token via `var(--...)` — never a raw value. Read the existing token files at execution time to find the right reference. Follow W3C DTCG naming: `--{type}-{semantic}-{variant}` (e.g. `--color-brand-surface`, `--spacing-section-gap`).
 
-**Token naming rules for new tokens — see `token-naming` skill for the full guide.**
+**Available global token names to override:** Read `styles/tokens.css` at execution time to get the authoritative list — do not rely on a cached list here.
 
-All new tokens introduced at brand, theme, or block level must follow the EDS Token Naming formula:
+**W3C Design Token naming rules for new tokens — STRICTLY ENFORCED:**
+
+**Do not proceed past this step if any new token violates the naming rules below. Rename the token before continuing.**
+
+All new tokens introduced at brand, theme, or block level must follow the [W3C Design Token Community Group](https://www.w3.org/community/design-tokens/) format:
 
 ```
---{system}-{type}-{category}-{device?}-{attribute}
+--{type}-{semantic-group}-{variant}
 ```
 
-`system` and `type` are omitted for conciseness at the global and component layers. Use the full prefix only for alias tokens where the namespace matters.
-
-| Segment | Values |
+| Type prefix | Used for |
 |---|---|
-| `category` | `color` · `spacing` · `typography` · `border` · `shadow` · `motion` · `z-index` · `opacity` |
-| `device` _(optional)_ | `mobile` · `desktop` · `tablet` — only when value differs per breakpoint |
-| `attribute` | `bg` · `text` · `border` · `border-radius` · `font-size` · `font-family` · `font-weight` · `padding-y` · `padding-x` · `gap` · `shadow` |
+| `--color-` | All color values |
+| `--font-family-` | Font stack declarations |
+| `--font-size-` | Size values for text |
+| `--font-weight-` | Weight values |
+| `--spacing-` | Margin, padding, gap |
+| `--border-` | Border width, radius, style |
+| `--shadow-` | Box or text shadows |
+| `--motion-` | Duration, easing |
 
 ```css
-/* CORRECT — intent-based names, attribute as last segment */
---color-primary-bg: #0057cc;
---color-surface-subtle: #f0f4ff;
---color-text-inverse: #ffffff;
---font-family-display: 'Brand Display', serif;
---font-size-heading-lg: 3rem;
---section-padding-y-mobile: var(--spacing-48);
---section-padding-y-desktop: var(--spacing-96);
---border-radius-card: 8px;
---shadow-card-default: 0 2px 8px rgb(0 0 0 / 12%);
+/* CORRECT — type prefix first, semantic group, then variant; values reference tokens, never hardcoded */
+--color-brand-primary: var(--color-base-blue-600);
+--color-brand-surface: var(--color-base-blue-050);
+--color-text-inverse: var(--color-base-neutral-000);
+--font-family-display: var(--font-family-brand-display);
+--font-size-display-l: var(--font-size-scale-700);
+--spacing-section-gap: var(--spacing-scale-800);
+--border-radius-card: var(--border-radius-scale-200);
+--shadow-card-default: var(--shadow-elevation-100);
 
-/* WRONG — appearance-based (what it looks like, not what it does) */
---red-button: ...
---light-gray-bg: ...
---big-text: ...
+/* WRONG — no type prefix */
+--brand-primary: var(--color-base-blue-600);
+--brand-surface: var(--color-base-blue-050);
 
-/* WRONG — brand/theme name embedded in alias tokens */
---abbvie-color-primary: ...
---bright-background: ...
-
-/* WRONG — raw value encoded in the name */
---color-hex-fa0f00: ...
-
-/* WRONG — more than 4 segments */
---color-brand-primary-dark-hover: ...
+/* WRONG — brand or theme name embedded in the token name */
+--roy-primary: var(--color-base-blue-600);
+--bright-background: var(--color-base-yellow-050);
 ```
 
-**Responsive tokens:** when a value differs by breakpoint, create a `-mobile` / `-desktop` pair in the alias layer rather than hardcoding values inside media queries:
+**Token values must always reference another token via `var(--...)`, never a hardcoded value (no hex codes, raw `rem`/`px` literals, or inline font stacks).** Read the project's base token files at execution time to find the correct token reference to use.
 
-```css
-/* styles/{brand}/_tokens.css */
-:root {
-  --section-padding-y-mobile:  var(--spacing-48);
-  --section-padding-y-desktop: var(--spacing-96);
-}
-```
-
-```css
-/* blocks/my-block/my-block.css */
-.my-block { --block-padding-y: var(--section-padding-y-mobile); }
-
-@media (min-width: 900px) {
-  .my-block { --block-padding-y: var(--section-padding-y-desktop); }
-}
-```
-
-Token names must describe **intent** (what it does), not **appearance** (what it looks like). If swapping the brand would make the name misleading, it is named wrong.
+Token names must be portable: they must make sense in any brand or theme context and must not encode the brand or theme name.
 
 ### Step 4: Add Brand Fonts
 
@@ -233,12 +216,12 @@ The `_fonts.css` partial does **not** import the global fonts file — fonts are
 Edit **`styles/{brand}/_styles.css`** for typography, layout, or section-level overrides specific to this brand. The file already imports the global base:
 
 ```css
-/* styles/{brand}/_styles.css */
+/* styles/{brand}/_styles.css — illustrative structure; values must always reference tokens */
 @import '../styles.css';
 
 /* Brand-specific global overrides */
 h1, h2, h3 {
-  letter-spacing: -0.02em;
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 main > .section.highlight {
@@ -246,10 +229,12 @@ main > .section.highlight {
 }
 
 a.button:any-link {
-  border-radius: 4px;          /* override default pill shape */
-  font-weight: 700;
+  border-radius: var(--border-radius-button);
+  font-weight: var(--font-weight-bold);
 }
 ```
+
+**No hardcoded values** — every property value must reference a token via `var(--...)`. Read `styles/tokens.css` and the brand's `_tokens.css` at execution time to find the correct token to reference.
 
 Keep this file minimal — prefer block-level overrides over global ones. Only put rules here that genuinely apply across all blocks and all content.
 
@@ -333,12 +318,14 @@ If the brand needs theme variants (e.g. `bright`, `dark`):
 To configure a brand+theme token override, edit `styles/{brand}/themes/{theme}/_tokens.css`:
 
 ```css
-/* styles/{brand}/themes/bright/_tokens.css */
+/* styles/{brand}/themes/bright/_tokens.css — illustrative structure; values must always reference tokens */
 :root {
-  --background-color: #fffde7;
-  --brand-surface: #fff9c4;
+  --background-color: var(--color-base-yellow-050);
+  --color-brand-surface: var(--color-base-yellow-100);
 }
 ```
+
+**No hardcoded values** — token values must always be `var(--...)` references. Token names must follow W3C naming (`--color-brand-surface`, not `--brand-surface`). Read base token files at execution time for the correct references.
 
 The theme is activated by adding `theme: bright` metadata to the page alongside `brand: {brand}`.
 
@@ -420,17 +407,21 @@ No JS changes are needed to activate a brand — metadata drives everything.
 
 ---
 
-## Checklist
+## Definition of Done
+
+The brand is not complete until every item below passes. Do not mark the task done or move to the next step if any item is unresolved.
 
 - [ ] `npm run scaffold:create` → Brand completed without errors
 - [ ] `brand-config.json` updated with new brand name
-- [ ] `styles/{brand}/_tokens.css` configured with brand colour, font, and spacing tokens
+- [ ] `styles/{brand}/_tokens.css` configured with brand colour, font, and spacing tokens — all values are `var(--...)` references, no hardcoded literals
+- [ ] All new token names follow W3C Design Token naming (`--{type}-{semantic-group}-{variant}`) — no brand/theme name encoded in token names
 - [ ] `styles/{brand}/_fonts.css` has `@font-face` declarations (if custom fonts)
 - [ ] Font files present in `styles/{brand}/fonts/` (if custom fonts)
-- [ ] `styles/{brand}/_styles.css` has any necessary global overrides
+- [ ] `styles/{brand}/_styles.css` has any necessary global overrides — all values are `var(--...)` references
 - [ ] Block `_{block}.css` partials updated for all blocks with brand visual differences
 - [ ] `npm run scaffold:build` run — no errors
 - [ ] Dev server tested with `brand: {brand}` metadata on a page
 - [ ] Brand tokens visible in DevTools `:root`
 - [ ] Brand CSS files loading in Network tab
 - [ ] `npm run lint` passes
+
