@@ -188,14 +188,14 @@
   pointer-events: none;
 }
 
-.ic-container[data-type="vertical"] .ic-handle::after {
-  content: '‹ ›';
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
 .ic-handle:focus-visible {
   outline: var(--ic-focus-width) solid var(--ic-focus-color);
   outline-offset: var(--ic-focus-offset);
+}
+
+.ic-container[data-type="vertical"] .ic-handle::after {
+  content: '‹ ›';
+  transform: translate(-50%, -50%) rotate(90deg);
 }
 
 /* ── Labels ──────────────────────────────────────────────────────────────── */
