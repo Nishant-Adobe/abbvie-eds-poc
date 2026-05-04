@@ -693,14 +693,16 @@
   color: var(--accordion-color-heading);
 }
 /* External link arrow — replace missing icon font with SVG */
-.accordion .accordion-item-body .external-link::after {
-  content: '';
+.accordion .accordion-item-body .external-link::after,
+.accordion .accordion-item-body a[target="_blank"]::after {
+  content: '' !important;
   display: inline-block;
   width: var(--spacing-16);
   height: var(--spacing-16);
   margin-left: var(--spacing-08);
   font-family: inherit;
   font-size: 0;
+  line-height: 0;
   transform: none;
   vertical-align: middle;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2'%3E%3Cpath d='M7 17L17 7M17 7H7M17 7v10'/%3E%3C/svg%3E") center / contain no-repeat;
