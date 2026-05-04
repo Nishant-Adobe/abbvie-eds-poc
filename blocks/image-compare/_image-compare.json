@@ -23,15 +23,49 @@
       "fields": [
         {
           "component": "tab",
+          "label": "Settings",
+          "name": "tab-settings"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes_type",
+          "label": "Slider Type",
+          "options": [
+            { "name": "Horizontal (default)", "value": "" },
+            { "name": "Vertical", "value": "vertical" },
+            { "name": "Progressive (opacity fade)", "value": "progressive" }
+          ]
+        },
+        {
+          "component": "multiselect",
+          "valueType": "string",
+          "name": "classes",
+          "label": "Options",
+          "options": [
+            { "name": "Hide labels on mobile", "value": "hide-labels-mobile" }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "sliderStart",
+          "label": "Slider Start Position (%)",
+          "value": "50",
+          "description": "Initial divider position. Enter a number 0–100. Default is 50."
+        },
+        {
+          "component": "tab",
           "label": "Before Image",
-          "name": "before"
+          "name": "tab-before"
         },
         {
           "component": "reference",
           "valueType": "string",
           "name": "beforeImage",
           "label": "Before Image",
-          "multi": false
+          "multi": false,
+          "description": "Must be the same dimensions as the After image."
         },
         {
           "component": "text",
@@ -43,22 +77,56 @@
         {
           "component": "text",
           "valueType": "string",
+          "name": "beforeImageWidth",
+          "value": "",
+          "label": "Before Image Width (px)",
+          "description": "Explicit width reduces Cumulative Layout Shift."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "beforeImageHeight",
+          "value": "",
+          "label": "Before Image Height (px)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
           "name": "beforeLabel",
           "value": "Before",
           "label": "Before Label",
-          "description": "Caption shown over the before image."
+          "description": "Short caption shown over the before image. Also used as the left label in progressive mode."
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "beforeLabelPosition",
+          "label": "Before Label Position",
+          "value": "bottom-left",
+          "options": [
+            { "name": "Top Left", "value": "top-left" },
+            { "name": "Top Centre", "value": "top-center" },
+            { "name": "Top Right", "value": "top-right" },
+            { "name": "Middle Left", "value": "middle-left" },
+            { "name": "Middle Centre", "value": "middle-center" },
+            { "name": "Middle Right", "value": "middle-right" },
+            { "name": "Bottom Left (default)", "value": "bottom-left" },
+            { "name": "Bottom Centre", "value": "bottom-center" },
+            { "name": "Bottom Right", "value": "bottom-right" }
+          ]
         },
         {
           "component": "tab",
           "label": "After Image",
-          "name": "after"
+          "name": "tab-after"
         },
         {
           "component": "reference",
           "valueType": "string",
           "name": "afterImage",
           "label": "After Image",
-          "multi": false
+          "multi": false,
+          "description": "Must be the same dimensions as the Before image."
         },
         {
           "component": "text",
@@ -70,10 +138,63 @@
         {
           "component": "text",
           "valueType": "string",
+          "name": "afterImageWidth",
+          "value": "",
+          "label": "After Image Width (px)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "afterImageHeight",
+          "value": "",
+          "label": "After Image Height (px)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
           "name": "afterLabel",
           "value": "After",
           "label": "After Label",
-          "description": "Caption shown over the after image."
+          "description": "Short caption shown over the after image. Also used as the right label in progressive mode."
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "afterLabelPosition",
+          "label": "After Label Position",
+          "value": "bottom-right",
+          "options": [
+            { "name": "Top Left", "value": "top-left" },
+            { "name": "Top Centre", "value": "top-center" },
+            { "name": "Top Right", "value": "top-right" },
+            { "name": "Middle Left", "value": "middle-left" },
+            { "name": "Middle Centre", "value": "middle-center" },
+            { "name": "Middle Right", "value": "middle-right" },
+            { "name": "Bottom Left", "value": "bottom-left" },
+            { "name": "Bottom Centre", "value": "bottom-center" },
+            { "name": "Bottom Right (default)", "value": "bottom-right" }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Analytics",
+          "name": "tab-analytics"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "analyticsInteractionId",
+          "label": "Analytics Interaction ID",
+          "value": "",
+          "description": "Unique ID pushed to GTM dataLayer when the slider is used."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "anchorId",
+          "label": "Anchor ID",
+          "value": "",
+          "description": "Optional id attribute for deep-linking to this component."
         },
         {
           "...": "../../models/_common-properties.json#/common-prop"
