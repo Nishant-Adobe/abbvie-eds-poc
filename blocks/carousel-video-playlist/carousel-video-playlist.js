@@ -1,6 +1,6 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
-const DEFAULT_PLAYER = 'bC11jvCtd';
+const DEFAULT_PLAYER = 'default';
 const bcScripts = {};
 let playerCount = 0;
 
@@ -160,13 +160,21 @@ function initPlaylistPlayer(container, account, player, playlistId, enableCaptio
           }
         }
         if (typeof onReady === 'function') {
+          if (typeof this.playlist !== 'function') {
+            onReady(null);
+            return;
+          }
           const self = this;
+          let attempts = 0;
           const pollPlaylist = () => {
+            attempts += 1;
             const pl = self.playlist();
             if (pl && pl.length > 0) {
               onReady(self);
-            } else {
+            } else if (attempts < 20) {
               setTimeout(pollPlaylist, 500);
+            } else {
+              onReady(null);
             }
           };
           setTimeout(pollPlaylist, 1000);
@@ -386,6 +394,14 @@ export async function decorateBlock(block) {
 
     initPlaylistPlayer(videoContainer, accountId, player, playlistId, enableCaptions, (bcPlayer) => { // eslint-disable-line max-len
       loadingEl.remove();
+
+      if (!bcPlayer) {
+        const msg = document.createElement('div');
+        msg.className = 'cvp-placeholder';
+        msg.textContent = 'Playlist plugin not available — check Player ID';
+        videoContainer.append(msg);
+        return;
+      }
 
       const playlist = bcPlayer.playlist() || [];
       if (!playlist.length) return;
