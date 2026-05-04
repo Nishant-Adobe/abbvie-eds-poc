@@ -130,16 +130,16 @@
 .accordion .accordion-item-body a,
 .accordion .accordion-item-body a.button,
 .accordion .accordion-item-body a.button.external-link {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,4 20,12 8,20' fill='%23071d49'/%3E%3C/svg%3E") right var(--spacing-16) center / 10px 10px no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,4 20,12 8,20' fill='%23071d49'/%3E%3C/svg%3E") right var(--spacing-16) center / var(--spacing-10) var(--spacing-10) no-repeat;
   background-color: transparent;
   color: var(--text-color);
   text-decoration: none;
   text-align: left;
   white-space: normal;
   border: none;
-  border-bottom: 1px solid #b3b3b3;
+  border-bottom: var(--border-01) solid var(--color-border-muted);
   border-radius: 0;
-  padding: var(--spacing-10, 10px) var(--spacing-40) var(--spacing-10, 10px) var(--spacing-16);
+  padding: var(--spacing-10) var(--spacing-40) var(--spacing-10) var(--spacing-16);
   margin: var(--spacing-00);
   display: block;
   position: relative;
@@ -149,8 +149,8 @@
 
 .accordion .accordion-item-body a:hover,
 .accordion .accordion-item-body a.button:hover {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,4 20,12 8,20' fill='%23071d49'/%3E%3C/svg%3E") right var(--spacing-16) center / 10px 10px no-repeat;
-  background-color: #e8edef;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,4 20,12 8,20' fill='%23071d49'/%3E%3C/svg%3E") right var(--spacing-16) center / var(--spacing-10) var(--spacing-10) no-repeat;
+  background-color: var(--color-brand-primary-light);
   color: var(--text-color);
 }
 
@@ -170,7 +170,7 @@
 
 /* Lighter separator for second-level items */
 .accordion .accordion-item-body .accordion .accordion-item {
-  border-bottom: 1px solid rgb(7 29 73 / 20%);
+  border-bottom: var(--border-01) solid var(--color-border-muted);
 }
 
 /* Compact padding, top-align text and icon */
@@ -196,8 +196,8 @@
 .accordion .accordion-item-body .accordion-icon-font .item-icon-plus::after,
 .accordion .accordion-item-body .accordion-icon-font .item-icon-minus::after {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8%2C4 20%2C12 8%2C20' fill='%23071d49'/%3E%3C/svg%3E") center / contain no-repeat;
-  width: 16px;
-  height: 16px;
-  min-width: 16px;
-  min-height: 16px;
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+  min-width: var(--spacing-16);
+  min-height: var(--spacing-16);
 }
