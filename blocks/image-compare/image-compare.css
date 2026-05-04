@@ -3,289 +3,331 @@
    Override per brand in blocks/image-compare/{brand}/_image-compare.css
    ─────────────────────────────────────────────────────────────────────────── */
 
-.ic-container {
-  /* state */
-  --ic-pos: 50%;
-  --ic-opacity: 1;
-
-  /* handle line */
-  --ic-handle-line: var(--color-white);
-  --ic-handle-line-width: var(--spacing-03);       /* 3px  */
-
-  /* handle circle */
-  --ic-handle-bg: var(--color-white);
-  --ic-handle-size: var(--spacing-44);             /* 44px */
-  --ic-handle-shadow: 0 var(--spacing-02) var(--spacing-08) rgb(0 0 0 / 30%);
-
-  /* handle icon */
-  --ic-handle-icon-color: var(--text-color);
-  --ic-handle-icon-size: var(--spacing-10);        /* 1rem */
-  --ic-handle-icon-spacing: var(--spacing-02);     /* letter-spacing 2px */
-
-  /* focus ring */
-  --ic-focus-color: var(--link-color);
-  --ic-focus-width: var(--spacing-03);             /* 3px  */
-  --ic-focus-offset: var(--spacing-02);            /* 2px  */
-
-  /* overlay labels */
-  --ic-label-bg: var(--overlay-navy-medium);
-  --ic-label-color: var(--color-white);
-  --ic-label-size: var(--font-size-13);            /* 1.3rem */
-  --ic-label-weight: 600;
-  --ic-label-padding-v: var(--spacing-03);         /* 3px  */
-  --ic-label-padding-h: var(--spacing-10);         /* 10px */
-  --ic-label-radius: var(--border-radius-s);       /* 0.2rem */
-  --ic-label-line-height: 1.4;
-  --ic-label-offset: var(--spacing-12);            /* 12px — edge inset */
-
-  /* progressive range */
-  --ic-range-bg: var(--overlay-navy-light);
-  --ic-range-track-bg: rgb(255 255 255 / 40%);
-  --ic-range-track-height: var(--spacing-04);      /* 4px  */
-  --ic-range-track-radius: var(--border-radius-s); /* 0.2rem */
-  --ic-range-thumb-size: var(--spacing-20);        /* 20px */
-  --ic-range-thumb-shadow: 0 var(--spacing-01) var(--spacing-04) rgb(0 0 0 / 30%);
-  --ic-range-gap: var(--spacing-08);               /* 8px  */
-  --ic-range-padding-v: var(--spacing-06);         /* 6px  */
-  --ic-range-padding-h: var(--spacing-12);         /* 12px */
-  --ic-range-radius: var(--spacing-20);            /* 20px pill */
-  --ic-range-bottom: var(--spacing-20);            /* 20px from bottom */
-  --ic-range-focus-offset: var(--spacing-04);      /* 4px  */
-
-  position: relative;
-  overflow: hidden;
-  user-select: none;
-  line-height: 0;
-}
-
-/* ── After image (base layer — always full size) ─────────────────────────── */
-
-.ic-after {
-  display: block;
-  position: relative;
-}
-
-.ic-after img,
-.ic-after picture {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* ── Before image — horizontal clip (default) ────────────────────────────── */
-
-.ic-container:not([data-type=vertical]):not([data-type=progressive]) .ic-before {
-  position: absolute;
-  inset: 0;
-  width: var(--ic-pos);
-  overflow: hidden;
-}
-
-.ic-container:not([data-type=vertical]):not([data-type=progressive]) .ic-before img,
-.ic-container:not([data-type=vertical]):not([data-type=progressive]) .ic-before picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: left top;
-}
-
-/* ── Before image — vertical clip ────────────────────────────────────────── */
-
-.ic-container[data-type=vertical] .ic-before {
-  position: absolute;
-  inset: 0;
-  height: var(--ic-pos);
-  overflow: hidden;
-}
-
-.ic-container[data-type=vertical] .ic-before img,
-.ic-container[data-type=vertical] .ic-before picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: left top;
-}
-
-/* ── Before image — progressive (opacity fade) ───────────────────────────── */
-
-.ic-container[data-type=progressive] .ic-before {
-  position: absolute;
-  inset: 0;
-  opacity: var(--ic-opacity);
-  transition: opacity 0.05s linear;
-}
-
-.ic-container[data-type=progressive] .ic-before img,
-.ic-container[data-type=progressive] .ic-before picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ── Drag handle — horizontal ─────────────────────────────────────────────── */
-
-.ic-container:not([data-type=vertical]):not([data-type=progressive]) {
-  cursor: col-resize;
-}
-
-.ic-container:not([data-type=vertical]):not([data-type=progressive]) .ic-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--ic-pos);
-  transform: translateX(-50%);
-  width: var(--ic-handle-line-width);
-  background: var(--ic-handle-line);
-  cursor: col-resize;
-}
-
-/* ── Drag handle — vertical ──────────────────────────────────────────────── */
-
-.ic-container[data-type=vertical] {
-  cursor: row-resize;
-}
-
-.ic-container[data-type=vertical] .ic-handle {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: var(--ic-pos);
-  transform: translateY(-50%);
-  height: var(--ic-handle-line-width);
-  background: var(--ic-handle-line);
-  cursor: row-resize;
-}
-
-/* ── Handle circle — shared ──────────────────────────────────────────────── */
-
-.ic-handle::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: var(--ic-handle-size);
-  height: var(--ic-handle-size);
-  background: var(--ic-handle-bg);
-  border-radius: 50%;
-  box-shadow: var(--ic-handle-shadow);
-}
-
-/* Chevron arrows inside the handle circle */
-.ic-handle::after {
-  content: '‹ ›';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: var(--ic-handle-icon-size);
-  color: var(--ic-handle-icon-color);
-  letter-spacing: var(--ic-handle-icon-spacing);
-  line-height: 1;
-  pointer-events: none;
-}
-
-.ic-container[data-type=vertical] .ic-handle::after {
-  content: '‹ ›';
-  transform: translate(-50%, -50%) rotate(90deg);
-}
-
-.ic-handle:focus-visible {
-  outline: var(--ic-focus-width) solid var(--ic-focus-color);
-  outline-offset: var(--ic-focus-offset);
-}
-
-/* ── Labels ──────────────────────────────────────────────────────────────── */
-
-.ic-label {
-  position: absolute;
-  background: var(--ic-label-bg);
-  color: var(--ic-label-color);
-  font-size: var(--ic-label-size);
-  font-weight: var(--ic-label-weight);
-  padding: var(--ic-label-padding-v) var(--ic-label-padding-h);
-  border-radius: var(--ic-label-radius);
-  pointer-events: none;
-  line-height: var(--ic-label-line-height);
-  white-space: nowrap;
-}
-
-/* 9 position variants */
-.ic-label.top-left     { top: var(--ic-label-offset);    left: var(--ic-label-offset); }
-.ic-label.top-center   { top: var(--ic-label-offset);    left: 50%; transform: translateX(-50%); }
-.ic-label.top-right    { top: var(--ic-label-offset);    right: var(--ic-label-offset); }
-.ic-label.middle-left  { top: 50%; left: var(--ic-label-offset);  transform: translateY(-50%); }
-.ic-label.middle-center { top: 50%; left: 50%;           transform: translate(-50%, -50%); }
-.ic-label.middle-right { top: 50%; right: var(--ic-label-offset); transform: translateY(-50%); }
-.ic-label.bottom-left  { bottom: var(--ic-label-offset); left: var(--ic-label-offset); }
-.ic-label.bottom-center { bottom: var(--ic-label-offset); left: 50%; transform: translateX(-50%); }
-.ic-label.bottom-right { bottom: var(--ic-label-offset); right: var(--ic-label-offset); }
-
-/* ── Progressive range slider ────────────────────────────────────────────── */
-
-.ic-range-wrap {
-  position: absolute;
-  bottom: var(--ic-range-bottom);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: var(--ic-range-gap);
-  background: var(--ic-range-bg);
-  padding: var(--ic-range-padding-v) var(--ic-range-padding-h);
-  border-radius: var(--ic-range-radius);
-  width: clamp(var(--spacing-200, 20rem), 60%, var(--spacing-480, 48rem));
-}
-
-.ic-range-label {
-  color: var(--ic-label-color);
-  font-size: var(--ic-label-size);
-  font-weight: var(--ic-label-weight);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.ic-range {
-  flex: 1;
-  -webkit-appearance: none;
-  appearance: none;
-  height: var(--ic-range-track-height);
-  background: var(--ic-range-track-bg);
-  border-radius: var(--ic-range-track-radius);
-  cursor: pointer;
-  outline: none;
-}
-
-.ic-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: var(--ic-range-thumb-size);
-  height: var(--ic-range-thumb-size);
-  border-radius: 50%;
-  background: var(--ic-handle-bg);
-  box-shadow: var(--ic-range-thumb-shadow);
-  cursor: grab;
-}
-
-.ic-range::-moz-range-thumb {
-  width: var(--ic-range-thumb-size);
-  height: var(--ic-range-thumb-size);
-  border: none;
-  border-radius: 50%;
-  background: var(--ic-handle-bg);
-  box-shadow: var(--ic-range-thumb-shadow);
-  cursor: grab;
-}
-
-.ic-range:focus-visible {
-  outline: var(--ic-focus-width) solid var(--ic-focus-color);
-  outline-offset: var(--ic-range-focus-offset);
-}
-
-/* ── Hide labels on mobile ───────────────────────────────────────────────── */
-
-@media (max-width: 600px) {
-  .image-compare.hide-labels-mobile .ic-label { display: none; }
-}
+   .ic-container {
+    /* state */
+    --ic-pos: 50%;
+    --ic-opacity: 1;
+  
+    /* handle line */
+    --ic-handle-line: var(--color-white);
+    --ic-handle-line-width: var(--spacing-03);       /* 3px  */
+  
+    /* handle circle */
+    --ic-handle-bg: var(--color-white);
+    --ic-handle-size: var(--spacing-44);             /* 44px */
+    --ic-handle-shadow: 0 var(--spacing-02) var(--spacing-08) rgb(0 0 0 / 30%);
+  
+    /* handle icon */
+    --ic-handle-icon-color: var(--text-color);
+    --ic-handle-icon-size: var(--spacing-10);        /* 1rem */
+    --ic-handle-icon-spacing: var(--spacing-02);     /* letter-spacing 2px */
+  
+    /* focus ring */
+    --ic-focus-color: var(--link-color);
+    --ic-focus-width: var(--spacing-03);             /* 3px  */
+    --ic-focus-offset: var(--spacing-02);            /* 2px  */
+  
+    /* overlay labels */
+    --ic-label-bg: var(--overlay-navy-medium);
+    --ic-label-color: var(--color-white);
+    --ic-label-size: var(--font-size-13);            /* 1.3rem */
+    --ic-label-weight: 600;
+    --ic-label-padding-v: var(--spacing-03);         /* 3px  */
+    --ic-label-padding-h: var(--spacing-10);         /* 10px */
+    --ic-label-radius: var(--border-radius-s);       /* 0.2rem */
+    --ic-label-line-height: 1.4;
+    --ic-label-offset: var(--spacing-12);            /* 12px — edge inset */
+  
+    /* progressive range */
+    --ic-range-bg: var(--overlay-navy-light);
+    --ic-range-track-bg: rgb(255 255 255 / 40%);
+    --ic-range-track-height: var(--spacing-04);      /* 4px  */
+    --ic-range-track-radius: var(--border-radius-s); /* 0.2rem */
+    --ic-range-thumb-size: var(--spacing-20);        /* 20px */
+    --ic-range-thumb-shadow: 0 var(--spacing-01) var(--spacing-04) rgb(0 0 0 / 30%);
+    --ic-range-gap: var(--spacing-08);               /* 8px  */
+    --ic-range-padding-v: var(--spacing-06);         /* 6px  */
+    --ic-range-padding-h: var(--spacing-12);         /* 12px */
+    --ic-range-radius: var(--spacing-20);            /* 20px pill */
+    --ic-range-bottom: var(--spacing-20);            /* 20px from bottom */
+    --ic-range-focus-offset: var(--spacing-04);      /* 4px  */
+  
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    line-height: 0;
+  }
+  
+  /* ── After image (base layer — always full size) ─────────────────────────── */
+  
+  .ic-after {
+    display: block;
+    position: relative;
+  }
+  
+  .ic-after img,
+  .ic-after picture {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  /* ── Before image — vertical clip ────────────────────────────────────────── */
+  
+  .ic-container[data-type="vertical"] .ic-before {
+    position: absolute;
+    inset: 0;
+    height: var(--ic-pos);
+    overflow: hidden;
+  }
+  
+  .ic-container[data-type="vertical"] .ic-before img,
+  .ic-container[data-type="vertical"] .ic-before picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+  }
+  
+  /* ── Before image — progressive (opacity fade) ───────────────────────────── */
+  
+  .ic-container[data-type="progressive"] .ic-before {
+    position: absolute;
+    inset: 0;
+    opacity: var(--ic-opacity);
+    transition: opacity 0.05s linear;
+  }
+  
+  .ic-container[data-type="progressive"] .ic-before img,
+  .ic-container[data-type="progressive"] .ic-before picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* ── Before image — horizontal clip (default) ────────────────────────────── */
+  
+  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-before {
+    position: absolute;
+    inset: 0;
+    width: var(--ic-pos);
+    overflow: hidden;
+  }
+  
+  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-before img,
+  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-before picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+  }
+  
+  /* ── Handle circle — shared ──────────────────────────────────────────────── */
+  
+  .ic-handle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--ic-handle-size);
+    height: var(--ic-handle-size);
+    background: var(--ic-handle-bg);
+    border-radius: 50%;
+    box-shadow: var(--ic-handle-shadow);
+  }
+  
+  /* Chevron arrows inside the handle circle */
+  .ic-handle::after {
+    content: '‹ ›';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--ic-handle-icon-size);
+    color: var(--ic-handle-icon-color);
+    letter-spacing: var(--ic-handle-icon-spacing);
+    line-height: 1;
+    pointer-events: none;
+  }
+  
+  .ic-handle:focus-visible {
+    outline: var(--ic-focus-width) solid var(--ic-focus-color);
+    outline-offset: var(--ic-focus-offset);
+  }
+  
+  /* ── Drag handle — vertical ──────────────────────────────────────────────── */
+  
+  .ic-container[data-type="vertical"] {
+    cursor: row-resize;
+  }
+  
+  .ic-container[data-type="vertical"] .ic-handle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--ic-pos);
+    transform: translateY(-50%);
+    height: var(--ic-handle-line-width);
+    background: var(--ic-handle-line);
+    cursor: row-resize;
+  }
+  
+  .ic-container[data-type="vertical"] .ic-handle::after {
+    content: '‹ ›';
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  
+  /* ── Drag handle — horizontal ─────────────────────────────────────────────── */
+  
+  .ic-container:not([data-type="vertical"], [data-type="progressive"]) {
+    cursor: col-resize;
+  }
+  
+  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--ic-pos);
+    transform: translateX(-50%);
+    width: var(--ic-handle-line-width);
+    background: var(--ic-handle-line);
+    cursor: col-resize;
+  }
+  
+  /* ── Labels ──────────────────────────────────────────────────────────────── */
+  
+  .ic-label {
+    position: absolute;
+    background: var(--ic-label-bg);
+    color: var(--ic-label-color);
+    font-size: var(--ic-label-size);
+    font-weight: var(--ic-label-weight);
+    padding: var(--ic-label-padding-v) var(--ic-label-padding-h);
+    border-radius: var(--ic-label-radius);
+    pointer-events: none;
+    line-height: var(--ic-label-line-height);
+    white-space: nowrap;
+  }
+  
+  /* 9 position variants */
+  .ic-label.top-left {
+    top: var(--ic-label-offset);
+    left: var(--ic-label-offset);
+  }
+  
+  .ic-label.top-center {
+    top: var(--ic-label-offset);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .ic-label.top-right {
+    top: var(--ic-label-offset);
+    right: var(--ic-label-offset);
+  }
+  
+  .ic-label.middle-left {
+    top: 50%;
+    left: var(--ic-label-offset);
+    transform: translateY(-50%);
+  }
+  
+  .ic-label.middle-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .ic-label.middle-right {
+    top: 50%;
+    right: var(--ic-label-offset);
+    transform: translateY(-50%);
+  }
+  
+  .ic-label.bottom-left {
+    bottom: var(--ic-label-offset);
+    left: var(--ic-label-offset);
+  }
+  
+  .ic-label.bottom-center {
+    bottom: var(--ic-label-offset);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .ic-label.bottom-right {
+    bottom: var(--ic-label-offset);
+    right: var(--ic-label-offset);
+  }
+  
+  /* ── Progressive range slider ────────────────────────────────────────────── */
+  
+  .ic-range-wrap {
+    position: absolute;
+    bottom: var(--ic-range-bottom);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--ic-range-gap);
+    background: var(--ic-range-bg);
+    padding: var(--ic-range-padding-v) var(--ic-range-padding-h);
+    border-radius: var(--ic-range-radius);
+    width: clamp(var(--spacing-200, 20rem), 60%, var(--spacing-480, 48rem));
+  }
+  
+  .ic-range-label {
+    color: var(--ic-label-color);
+    font-size: var(--ic-label-size);
+    font-weight: var(--ic-label-weight);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  
+  .ic-range {
+    flex: 1;
+    appearance: none;
+    height: var(--ic-range-track-height);
+    background: var(--ic-range-track-bg);
+    border-radius: var(--ic-range-track-radius);
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .ic-range::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--ic-range-thumb-size);
+    height: var(--ic-range-thumb-size);
+    border-radius: 50%;
+    background: var(--ic-handle-bg);
+    box-shadow: var(--ic-range-thumb-shadow);
+    cursor: grab;
+  }
+  
+  .ic-range::-moz-range-thumb {
+    width: var(--ic-range-thumb-size);
+    height: var(--ic-range-thumb-size);
+    border: none;
+    border-radius: 50%;
+    background: var(--ic-handle-bg);
+    box-shadow: var(--ic-range-thumb-shadow);
+    cursor: grab;
+  }
+  
+  .ic-range:focus-visible {
+    outline: var(--ic-focus-width) solid var(--ic-focus-color);
+    outline-offset: var(--ic-range-focus-offset);
+  }
+  
+  /* ── Hide labels on mobile ───────────────────────────────────────────────── */
+  
+  @media (width <= 600px) {
+    .image-compare.hide-labels-mobile .ic-label {
+      display: none;
+    }
+  }
+  
