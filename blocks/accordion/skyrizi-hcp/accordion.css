@@ -568,58 +568,72 @@
 .accordion.accordion-centered .accordion-item-body {
     text-align: center;
 }
-/* Skyrizi HCP accordion overrides */
+/* Skyrizi HCP accordion — matches skyrizihcp.com */
 .accordion {
-  /* Fix undefined token — block heading color */
-  --bg-666b7a: var(--color-text-muted);
+  --accordion-color-bg: var(--color-background, transparent);
+  --accordion-color-text: var(--color-text, #000);
+  --accordion-color-border: var(--color-brand-primary, #071d49);
+  --accordion-color-heading: var(--color-brand-primary, #071d49);
+  --accordion-color-icon: var(--color-text, #000);
+  --accordion-font-family: var(--font-family-body, "Univers Regular", "Arial Narrow", sans-serif);
+  --accordion-font-size-heading: var(--body-font-size-m, 16px);
+  --accordion-font-weight-heading: var(--font-weight-bold, 700);
+  --accordion-border-width: var(--border-02, 2px);
+  --accordion-padding-item: var(--spacing-16, 16px) 40px var(--spacing-24, 24px) 0;
+  --accordion-icon-size: var(--icon-size-md, 21px);
 
-  /* Expand All button + inline links → brand primary */
-  --highlight-dark-background-color: var(--color-brand-primary);
-
-  /* Separator border → brand border token */
-  --footer-seperator-color: var(--color-border-default);
+  font-family: var(--accordion-font-family);
+  background: var(--accordion-color-bg);
+  color: var(--accordion-color-text);
 }
-/* Block heading font → Red Hat Display (replaces Roboto Bold) */
-.accordion-block-heading {
-  font-family: var(--heading-font-family);
+/* Item separator — 2px navy border */
+.accordion .accordion-item {
+  border-bottom: var(--accordion-border-width) solid var(--accordion-color-border);
 }
-/* Expand All button font → Red Hat Display */
-.accordion .accordion-expand-all {
-  font-family: var(--heading-font-family);
-}
-/* Fix focus ring — override black default with brand colour */
-.accordion .accordion-expand-all:focus {
-  border: var(--border-02) solid var(--color-brand-primary);
-  border-radius: var(--border-radius-s);
-  outline: none;
-}
-/* Item heading → brand primary blue (matches skyrizihcp.com) */
+/* Item heading — uppercase, navy, bold */
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
 .accordion .accordion-item-label h4,
 .accordion .accordion-item-label h5,
 .accordion .accordion-item-label h6 {
-  color: var(--color-brand-primary);
+  color: var(--accordion-color-heading);
+  font-weight: var(--accordion-font-weight-heading);
+  font-size: var(--accordion-font-size-heading);
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide-06);
+  letter-spacing: var(--letter-spacing-wide-06, 0.06em);
 }
-/* Open item — light brand tint background on the label (light theme) */
-.accordion-item[open] summary {
-  background-color: var(--color-brand-primary-light);
+/* Summary/button padding */
+.accordion summary,
+.accordion .accordion-item-label {
+  padding: var(--accordion-padding-item);
 }
-/* Separator border → brand tint (light theme) */
-.accordion .accordion-item {
-  border-bottom-color: var(--color-brand-primary-light);
+/* Icon color */
+.accordion summary::after,
+.accordion .accordion-item-icon {
+  color: var(--accordion-color-icon);
+  font-size: var(--accordion-icon-size);
 }
-/* Dark theme — navy background matching skyrizihcp.com */
-.accordion.accordion-dark {
-  background-color: var(--color-background-footer);
-  padding: var(--spacing-24) var(--spacing-32);
+/* Focus — light gray */
+.accordion summary:focus-visible {
+  background: var(--color-background-subtle, #f1f1f1);
+  outline: none;
 }
-.accordion.accordion-dark .accordion-item {
-  border-bottom-color: rgb(255 255 255 / 20%);
+/* Hover — transparent (matches live site) */
+.accordion .accordion-item:hover summary {
+  background: transparent;
 }
-.accordion.accordion-dark .accordion-item[open] summary {
-  background-color: var(--color-brand-primary);
+/* Open state — no background change */
+.accordion .accordion-item[open] summary {
+  background: transparent;
+}
+/* Expand All button — brand primary */
+.accordion .accordion-expand-all {
+  font-family: var(--accordion-font-family);
+  color: var(--accordion-color-heading);
+}
+.accordion .accordion-expand-all:focus {
+  border: var(--accordion-border-width) solid var(--accordion-color-heading);
+  border-radius: var(--border-radius-s, 4px);
+  outline: none;
 }
