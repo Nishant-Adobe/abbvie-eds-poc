@@ -80,11 +80,17 @@ function readBlockConfig(block) {
   const rows = [...block.children];
   const configRows = rows.filter((r) => !isItemRow(r));
   const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
+
+  const layouts = ['cards', 'bottom', 'top', 'left', 'right'];
+  const numbers = values.filter((v) => /^\d{5,}$/.test(v));
+  const layout = values.find((v) => layouts.includes(v)) || 'cards';
+  const enableCaptions = values.includes('true');
+
   return {
-    playlistLayout: values[0] || 'cards',
-    accountId: values[1] || '',
-    playlistId: values[2] || '',
-    enableCaptions: values.includes('true'),
+    playlistLayout: layout,
+    accountId: numbers[0] || '',
+    playlistId: numbers[1] || '',
+    enableCaptions,
   };
 }
 
