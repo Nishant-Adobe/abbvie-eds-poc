@@ -49,3 +49,131 @@
   color: var(--color-text-on-dark, #fff);
 }
 
+/* ============================================================
+   SKYRIZI HCP — Horizontal flat layout (matches live site)
+   DOM: links are in <p> tags with pipe separators, not <ul>
+   logo is in footer-bottom (Section 2)
+   ============================================================ */
+
+/* Hide empty columns (logo + primary are empty in this layout) */
+.footer .footer-logo,
+.footer .footer-links-primary {
+  display: none;
+}
+
+/* Flat footer — no rounded corner */
+.footer {
+  border-radius: 0;
+}
+
+/* Remove ALL CAPS from link row paragraphs (base applies text-transform: uppercase to p:first-child) */
+.footer .footer-column p:first-child {
+  text-transform: none;
+}
+
+/* Make footer-columns a centered vertical stack of link rows */
+.footer .footer-columns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+  margin-bottom: var(--spacing-24);
+}
+
+/* Each column takes full width */
+.footer .footer-column {
+  width: 100%;
+  text-align: center;
+}
+
+/* Style the <p> tags that hold inline pipe-separated links */
+.footer .footer-links-secondary p,
+.footer .footer-links-tertiary p {
+  text-align: center;
+  color: var(--color-text-on-dark, #fff);
+  font-size: var(--font-size-footer, 14px);
+  line-height: var(--line-height-nav, 22px);
+  margin: 0;
+}
+
+/* Override base :last-child right-align (higher specificity in base CSS) */
+.footer .footer-links-tertiary p:last-child {
+  text-align: center;
+  margin-top: 0;
+}
+
+/* Links inside the <p> rows */
+.footer .footer-links-secondary p a,
+.footer .footer-links-tertiary p a {
+  color: var(--color-text-on-dark, #fff);
+  font-size: var(--font-size-footer, 14px);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.footer .footer-links-secondary p a:hover,
+.footer .footer-links-tertiary p a:hover {
+  text-decoration: underline;
+}
+
+/* Bottom bar: legal text left, AbbVie logo right
+   DOM order is p(logo) then ul(legal), so use order to flip visually */
+.footer .footer-bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-16);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: var(--spacing-24) 0 var(--spacing-16);
+}
+
+/* Legal text — left side, takes available space */
+.footer .footer-bottom ul {
+  order: 1;
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.footer .footer-bottom ul li {
+  margin-bottom: 0;
+}
+
+.footer .footer-bottom ul li,
+.footer .footer-bottom ul li a {
+  color: var(--color-text-on-dark, #fff);
+  font-size: var(--font-size-footer, 14px);
+  text-decoration: none;
+  text-transform: none;
+}
+
+/* AbbVie logo — right side */
+.footer .footer-bottom p {
+  order: 2;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.footer .footer-bottom img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 743px) {
+  .footer .footer-links-secondary p,
+  .footer .footer-links-tertiary p,
+  .footer .footer-links-tertiary p:last-child {
+    text-align: left;
+  }
+
+  .footer .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-12);
+  }
+}
+
