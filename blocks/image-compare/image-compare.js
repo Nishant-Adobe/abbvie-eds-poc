@@ -131,8 +131,86 @@ function parseGalleryRows(block) {
   return config;
 }
 
+function parseModelFields(block) {
+  const fields = {};
+  [...block.children].forEach((row) => {
+    const cells = [...row.children];
+    if (cells.length < 2) return;
+    const key = cells[0]?.textContent?.trim();
+    const valCell = cells[1];
+    if (!key) return;
+    const img = valCell?.querySelector('img, picture img');
+    fields[key] = img ? img.src : valCell?.textContent?.trim() || '';
+    if (img && !fields[`${key}Alt`]) fields[`${key}Alt`] = img.alt || '';
+  });
+  return fields;
+}
+
+function buildConfigFromModelFields(fields) {
+  const config = {
+    heading: fields.heading || '',
+    description: fields.description || '',
+    sliderPrompt: fields.sliderPrompt || '',
+    beforeLabelPrefix: fields.beforeLabelPrefix || 'BEFORE',
+    afterLabelPrefix: fields.afterLabelPrefix || 'AFTER',
+    tabs: [],
+  };
+
+  const tab1Images = [];
+  const tab2Images = [];
+
+  for (let i = 1; i <= 4; i += 1) {
+    const before = fields[`tab1Img${i}Before`];
+    const after = fields[`tab1Img${i}After`];
+    if (before && after) {
+      tab1Images.push({
+        beforeImage: before,
+        afterImage: after,
+        beforeAlt: fields[`tab1Img${i}BeforeAlt`] || '',
+        afterAlt: fields[`tab1Img${i}AfterAlt`] || '',
+        thumbnail: fields[`tab1Img${i}Thumb`] || '',
+        thumbnailAlt: fields[`tab1Img${i}ThumbAlt`] || '',
+        thumbnailLabel: fields[`tab1Img${i}Label`] || '',
+        thumbnailSubLabel: fields[`tab1Img${i}SubLabel`] || '',
+      });
+    }
+  }
+
+  for (let i = 1; i <= 4; i += 1) {
+    const before = fields[`tab2Img${i}Before`];
+    const after = fields[`tab2Img${i}After`];
+    if (before && after) {
+      tab2Images.push({
+        beforeImage: before,
+        afterImage: after,
+        beforeAlt: fields[`tab2Img${i}BeforeAlt`] || '',
+        afterAlt: fields[`tab2Img${i}AfterAlt`] || '',
+        thumbnail: fields[`tab2Img${i}Thumb`] || '',
+        thumbnailAlt: fields[`tab2Img${i}ThumbAlt`] || '',
+        thumbnailLabel: fields[`tab2Img${i}Label`] || '',
+        thumbnailSubLabel: fields[`tab2Img${i}SubLabel`] || '',
+      });
+    }
+  }
+
+  if (tab1Images.length) {
+    config.tabs.push({ label: fields.tab1Label || 'Tab 1', images: tab1Images });
+  }
+  if (tab2Images.length) {
+    config.tabs.push({ label: fields.tab2Label || 'Tab 2', images: tab2Images });
+  }
+
+  return config;
+}
+
 function decorateGallery(block) {
-  const config = parseGalleryRows(block);
+  let config = parseGalleryRows(block);
+
+  if (!config.tabs.length) {
+    const fields = parseModelFields(block);
+    config = buildConfigFromModelFields(fields);
+  }
+
   const isToggle = block.classList.contains('toggle');
   const hasPrompt = block.classList.contains('prompt');
   const initialPos = parseInt(block.dataset.initialPosition || '50', 10) || 50;
