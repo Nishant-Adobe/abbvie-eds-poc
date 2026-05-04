@@ -593,3 +593,22 @@
   border-radius: 2px;
   outline: none;
 }
+/* Item heading → brand primary blue (matches skyrizihcp.com) */
+.accordion .accordion-item-label p,
+.accordion .accordion-item-label h2,
+.accordion .accordion-item-label h3,
+.accordion .accordion-item-label h4,
+.accordion .accordion-item-label h5,
+.accordion .accordion-item-label h6 {
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+/* Open item — light brand tint background on the label */
+.accordion-item[open] summary {
+  background-color: var(--color-brand-primary-light);
+}
+/* Separator border → brand tint */
+.accordion .accordion-item {
+  border-bottom-color: var(--color-brand-primary-light);
+}
