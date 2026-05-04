@@ -128,7 +128,7 @@
   background-size: unset;
   color: var(--text-color);
   text-decoration: none;
-  border-bottom: 1px solid var(--color-border-default);
+  border-bottom: 1px solid var(--color-border-muted, var(--color-border-default));
   border-radius: 0;
   padding: var(--spacing-16) var(--spacing-40) var(--spacing-16) var(--spacing-16);
   margin-bottom: var(--spacing-00);
@@ -137,6 +137,12 @@
   justify-content: space-between;
   position: relative;
   transition: background-color 0.2s ease;
+}
+
+/* Remove border from last link */
+.accordion .accordion-item-body a:last-child,
+.accordion .accordion-item-body a.button:last-child {
+  border-bottom: none;
 }
 
 .accordion .accordion-item-body a:hover {
