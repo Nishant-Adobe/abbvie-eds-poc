@@ -1,0 +1,54 @@
+/* ============================================================
+   RINVOQ HCP — Hero Block Overrides
+   Fonts: Graphik family
+   Profile band: charcoal (--color-charcoal #25282a)
+   CTA: plum (--link-color #90124a)
+   ============================================================ */
+
+/* Heading + body: Graphik */
+.hero h1 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+}
+
+.hero h2,
+.hero h3 {
+  font-family: var(--heading-font-family);
+}
+
+.hero p {
+  font-family: var(--body-font-family);
+}
+
+/* Profile band: charcoal */
+.hero.profile > :where(div):first-child {
+  background-color: var(--color-charcoal);
+}
+
+/* Profile text panel: white text on dark band */
+.hero.profile h1,
+.hero.profile h2,
+.hero.profile h3,
+.hero.profile p {
+  color: var(--color-text-on-dark);
+}
+
+.hero.profile .hero-breadcrumbs :where(ol li),
+.hero.profile .hero-breadcrumbs :where(li a) {
+  color: var(--color-text-on-dark);
+}
+
+/* Stat numbers: gold accent */
+.hero.stat-overlay .hero-stat-number {
+  color: var(--color-brand-accent);
+}
+
+/* CTA button: plum */
+.hero :where(a).button {
+  color: var(--color-text-link);
+}
+
+/* Landing CTA: gold accent on dark bg */
+.hero.landing :where(a).button {
+  color: var(--color-brand-accent);
+}

@@ -1,0 +1,57 @@
+@import '../hero.css';
+@import '../../../styles/skyrizi-hcp/tokens.css';
+
+/* ============================================================
+   SKYRIZI HCP — Hero Block Overrides (XWalk/UE preview)
+   ============================================================ */
+
+/* Heading + body: Red Hat Display */
+.hero h1 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+}
+
+.hero h2,
+.hero h3 {
+  font-family: var(--heading-font-family);
+}
+
+.hero p {
+  font-family: var(--body-font-family);
+}
+
+/* Profile band: dark teal */
+.hero.profile > :where(div):first-child {
+  background-color: var(--color-background-footer);
+}
+
+/* Profile text panel: white text on dark band */
+.hero.profile h1,
+.hero.profile h2,
+.hero.profile h3,
+.hero.profile p {
+  color: var(--color-text-on-dark);
+}
+
+.hero.profile .hero-breadcrumbs :where(ol li),
+.hero.profile .hero-breadcrumbs :where(li a) {
+  color: var(--color-text-on-dark);
+}
+
+/* CTA button: yellow accent */
+.hero :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+.hero.landing :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+/* Landing gradient: teal left-to-right fade */
+.hero.landing::after {
+  background: linear-gradient(
+    to right,
+    var(--color-background-footer) 0%,
+    rgba(0, 59, 82, 0.3) 100%
+  );
+}
