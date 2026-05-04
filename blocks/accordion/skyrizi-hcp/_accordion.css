@@ -121,6 +121,11 @@
   color: var(--text-color);
 }
 
+/* Button-container paragraphs — remove margin to stack link rows tightly */
+.accordion .accordion-item-body .button-container {
+  margin: var(--spacing-00);
+}
+
 /* Links inside expanded body — card-row style with arrow (matches skyrizihcp.com) */
 .accordion .accordion-item-body a,
 .accordion .accordion-item-body a.button {
@@ -134,9 +139,10 @@
   padding: var(--spacing-16) var(--spacing-40) var(--spacing-16) var(--spacing-16);
   margin: var(--spacing-00);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   position: relative;
+  overflow: visible;
   transition: background-color 0.2s ease;
 }
 
