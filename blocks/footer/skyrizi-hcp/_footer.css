@@ -71,42 +71,42 @@
   text-transform: none;
 }
 
-/* Make footer-columns a centered vertical stack of link rows */
+/* Link rows — centered vertical stack with generous spacing */
 .footer .footer-columns {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-12);
-  margin-bottom: var(--spacing-24);
+  gap: var(--spacing-20);
+  padding: var(--spacing-32) 0;
+  margin-bottom: 0;
 }
 
-/* Each column takes full width */
 .footer .footer-column {
   width: 100%;
   text-align: center;
 }
 
-/* Style the <p> tags that hold inline pipe-separated links */
+/* Link row paragraphs */
 .footer .footer-links-secondary p,
 .footer .footer-links-tertiary p {
   text-align: center;
   color: var(--color-text-on-dark, #fff);
-  font-size: var(--font-size-footer, 14px);
-  line-height: var(--line-height-nav, 22px);
+  font-size: 15px;
+  line-height: 1.6;
   margin: 0;
 }
 
-/* Override base :last-child right-align (higher specificity in base CSS) */
+/* Override base :last-child right-align */
 .footer .footer-links-tertiary p:last-child {
   text-align: center;
   margin-top: 0;
 }
 
-/* Links inside the <p> rows */
+/* Links inside the rows */
 .footer .footer-links-secondary p a,
 .footer .footer-links-tertiary p a {
   color: var(--color-text-on-dark, #fff);
-  font-size: var(--font-size-footer, 14px);
+  font-size: 15px;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -116,23 +116,60 @@
   text-decoration: underline;
 }
 
-/* Bottom bar: legal text left, AbbVie logo right
-   DOM order: p:has(picture) = logo, p:not(:has(picture)) = legal text
-   Use CSS order to place logo on right */
+/* ── Footer bottom: legal text stacked above logo ─────────────────
+   DOM order: p:has(picture) = logo (first), p:not(:has(picture)) = legal (second)
+   CSS order flips them: legal full-width on top, logo right-aligned below */
 .footer .footer-bottom {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--spacing-16);
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-24);
   border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding: var(--spacing-24) 0 var(--spacing-16);
+  padding: var(--spacing-40) 0 var(--spacing-24);
 }
 
-/* AbbVie logo — right side */
+/* Legal text — full width, centered above logo */
+.footer .footer-bottom p:not(:has(picture)),
+.footer .footer-bottom .button-container {
+  order: 1;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  color: var(--color-text-on-dark, #fff);
+  font-size: 14px;
+  line-height: 1.6;
+  text-transform: none;
+}
+
+/* Strip button pill styling when legal text is authored as a button */
+.footer .footer-bottom a.button,
+.footer .footer-bottom .button-container a {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--color-text-on-dark, #fff) !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  display: inline !important;
+  white-space: normal !important;
+  line-height: 1.6 !important;
+}
+
+.footer .footer-bottom a.button:hover,
+.footer .footer-bottom .button-container a:hover {
+  background: none !important;
+  text-decoration: underline !important;
+}
+
+/* AbbVie logo — right-aligned below legal text */
 .footer .footer-bottom p:has(picture) {
   order: 2;
   margin: 0;
-  flex-shrink: 0;
+  align-self: flex-end;
 }
 
 .footer .footer-bottom p:has(picture) img {
@@ -142,53 +179,42 @@
   filter: brightness(0) invert(1);
 }
 
-/* Legal text — left side (authored as <p> in this brand) */
-.footer .footer-bottom p:not(:has(picture)) {
-  order: 1;
-  flex: 1;
-  margin: 0;
-  text-align: left;
-  color: var(--color-text-on-dark, #fff);
-  font-size: var(--font-size-footer, 14px);
-  text-transform: none;
-}
-
-.footer .footer-bottom p:not(:has(picture)) a {
-  color: var(--color-text-on-dark, #fff);
-  font-size: var(--font-size-footer, 14px);
-  text-decoration: none;
-  text-transform: none;
-}
-
-/* Also handle legacy ul structure (shared /footer fragment uses ul) */
+/* Legacy ul structure fallback */
 .footer .footer-bottom ul {
   order: 1;
-  flex: 1;
   list-style: none;
   padding: 0;
   margin: 0;
-  text-align: left;
+  text-align: center;
+  width: 100%;
 }
 
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
   color: var(--color-text-on-dark, #fff);
-  font-size: var(--font-size-footer, 14px);
+  font-size: 14px;
   text-decoration: none;
   text-transform: none;
 }
 
 @media (max-width: 743px) {
+  .footer .footer-columns {
+    padding: var(--spacing-24) 0;
+  }
+
   .footer .footer-links-secondary p,
   .footer .footer-links-tertiary p,
   .footer .footer-links-tertiary p:last-child {
     text-align: left;
   }
 
-  .footer .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-12);
+  .footer .footer-bottom p:not(:has(picture)),
+  .footer .footer-bottom .button-container {
+    text-align: left;
+  }
+
+  .footer .footer-bottom p:has(picture) {
+    align-self: flex-start;
   }
 }
 
