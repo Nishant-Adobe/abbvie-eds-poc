@@ -153,6 +153,9 @@ export default function decorate(block) {
 
   block.textContent = '';
 
+  const wrapper = document.createElement('span');
+  wrapper.className = 'cta-wrapper';
+
   let element;
   if (isToggle(block)) {
     element = buildToggle(cfg, block);
@@ -162,7 +165,8 @@ export default function decorate(block) {
     element = buildLink(cfg, block);
   }
 
-  block.append(element);
+  wrapper.append(element);
+  block.append(wrapper);
 
   block.dispatchEvent(
     new CustomEvent('cta:ready', { bubbles: true, detail: { cfg } }),

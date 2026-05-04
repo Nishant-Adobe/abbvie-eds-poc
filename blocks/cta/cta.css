@@ -14,6 +14,10 @@
    Shared button base (a + button)
    ------------------------------------------------------- */
 
+.cta .cta-wrapper {
+  display: contents;
+}
+
 .cta .cta-button {
   display: inline-flex;
   align-items: center;
@@ -37,20 +41,26 @@
   outline-offset: 2px;
 }
 
+/* Reset framework button defaults */
+.cta button.cta-button {
+  margin: 0;
+  border-radius: var(--border-radius-button-primary, 4px);
+}
+
 /* -------------------------------------------------------
    Primary (default)
    ------------------------------------------------------- */
 
 .cta.cta-primary .cta-button {
-  background-color: var(--button-primary-bg, #003087);
+  background-color: var(--button-primary-bg, var(--color-brand-primary, #003087));
   color: var(--button-primary-color, #fff);
-  border-color: var(--button-primary-border, var(--button-primary-bg, #003087));
+  border-color: var(--button-primary-border, var(--button-primary-bg, var(--color-brand-primary, #003087)));
 }
 
 .cta.cta-primary .cta-button:hover {
-  background-color: var(--button-primary-hover-bg, var(--color-brand-primary-dark, #001f5c));
+  background-color: var(--button-primary-hover-bg, var(--color-brand-primary-dark, var(--button-primary-bg)));
   color: var(--button-primary-hover-color, var(--button-primary-color, #fff));
-  border-color: var(--button-primary-hover-border, var(--button-primary-hover-bg, var(--color-brand-primary-dark, #001f5c)));
+  border-color: var(--button-primary-hover-border, var(--button-primary-hover-bg, var(--color-brand-primary-dark)));
 }
 
 /* -------------------------------------------------------
