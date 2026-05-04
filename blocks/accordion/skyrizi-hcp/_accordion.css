@@ -140,11 +140,11 @@
   border: none;
   border-bottom: 1px solid #b3b3b3;
   border-radius: 0;
-  padding: var(--spacing-10, 10px) var(--spacing-40) var(--spacing-10, 10px) var(--spacing-16);
+  padding: var(--spacing-10, 10px) var(--spacing-16) var(--spacing-10, 10px) var(--spacing-16);
   margin: var(--spacing-00);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
   position: relative;
   overflow: visible;
   transition: background-color 0.2s ease;
@@ -162,22 +162,23 @@
   border-bottom: none;
 }
 
-/* Right-pointing triangle arrow — inline next to text */
+/* Right-pointing triangle arrow — vertically centered to the right */
 .accordion .accordion-item-body .external-link::after,
 .accordion .accordion-item-body a::after {
   content: '' !important;
-  display: inline-block;
+  display: block;
   width: 10px;
   height: 10px;
   min-width: 10px;
   min-height: 10px;
-  position: static;
-  margin-left: var(--spacing-08, 8px);
-  vertical-align: middle;
+  position: absolute;
+  right: var(--spacing-16);
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: auto;
   font-family: inherit;
   font-size: 0;
   line-height: 0;
-  transform: none;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,4 20,12 8,20' fill='%23071d49'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
