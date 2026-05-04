@@ -2,30 +2,49 @@
 /* stylelint-disable no-descending-specificity */
 
 /* Mavyret — CTA brand overrides
-   Primary: Green (#508118), white text, 0px radius
-   Font: trade-gothic-next (mapped to --heading-font-family-bold) */
+   Primary: White bg, black text, gray border, green glow shadow
+   Secondary: White bg, black text, orange border, orange glow shadow
+   Tertiary: White bg, black text, gray border, no shadow
+   Font: Barlow Semi Condensed */
 
 .cta.cta-primary .cta-button {
-  font-family: var(--heading-font-family-bold);
-  text-transform: uppercase;
+  font-family: var(--body-font-family);
+  font-weight: var(--button-primary-font-weight);
+  box-shadow: var(--button-primary-shadow);
 }
 
 .cta.cta-primary .cta-button:hover {
-  background-color: #3d6512;
-  border-color: #3d6512;
+  background-color: var(--button-primary-hover-bg);
+  color: var(--button-primary-hover-color);
+  border-color: var(--button-primary-hover-bg);
 }
 
 .cta.cta-secondary .cta-button {
-  font-family: var(--heading-font-family-bold);
-  text-transform: uppercase;
+  font-family: var(--body-font-family);
+  font-weight: var(--button-primary-font-weight);
+  box-shadow: var(--button-secondary-shadow);
 }
 
 .cta.cta-secondary .cta-button:hover {
-  background-color: #3d6512;
-  border-color: #3d6512;
+  background-color: var(--button-secondary-hover-bg);
+  color: var(--button-secondary-hover-color);
+  border-color: var(--button-secondary-hover-bg);
+}
+
+.cta.cta-tertiary .cta-button {
+  font-family: var(--body-font-family);
+  font-weight: var(--button-primary-font-weight);
+  box-shadow: var(--button-tertiary-shadow);
+}
+
+.cta.cta-tertiary .cta-button:hover {
+  background-color: var(--button-tertiary-hover-bg);
+  color: var(--button-tertiary-hover-color);
+  border-color: var(--button-tertiary-hover-bg);
 }
 
 .cta.cta-plain .cta-button {
-  font-family: var(--heading-font-family-bold);
-  font-weight: 700;
+  font-family: var(--body-font-family);
+  font-weight: var(--button-primary-font-weight);
+  color: var(--button-plain-color);
 }
