@@ -214,9 +214,17 @@ function parseXWalkFields(block) {
   }
 
   // Now parse tab groups
+  function skipEmpty() {
+    while (idx < rows.length && !getSrc(rows[idx]) && !getText(rows[idx])) {
+      idx += 1;
+    }
+  }
+
   function parseTabGroup() {
     const images = [];
     let tabLabel = '';
+
+    skipEmpty();
 
     // tab label (text)
     if (idx < rows.length && !getSrc(rows[idx])) {
@@ -226,6 +234,8 @@ function parseXWalkFields(block) {
 
     // Parse image sets: each set = before(img), after(img), thumb(img), label(text), subLabel(text)
     while (idx < rows.length) {
+      skipEmpty();
+      if (idx >= rows.length) break;
       const nextSrc = getSrc(rows[idx]);
       if (!nextSrc) break; // No more images = end of this tab's images
 
