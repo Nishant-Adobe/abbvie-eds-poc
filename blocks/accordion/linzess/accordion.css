@@ -1041,23 +1041,112 @@
   /* ---- Transition ---- */
   --transition-button: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-/* Linzess DTC accordion — brand-specific overrides */
+/* Linzess FAQ accordion — purple card style matching linzess.com/savings-and-support/faqs */
 .accordion {
-    --footer-seperator-color: var(--color-brand-primary);
+    --accordion-linzess-bg-item: var(--color-brand-primary);
+    --accordion-linzess-bg-item-hover: var(--color-brand-primary-light);
+    --accordion-linzess-color-label: #fff;
+    --accordion-linzess-color-body: var(--text-color);
+    --accordion-linzess-radius: var(--linz-rounded-corner-sm);
+    --accordion-linzess-gap: 10px;
+    --footer-seperator-color: transparent;
     --highlight-dark-background-color: var(--color-brand-primary);
+
+    background: transparent;
 }
+/* Card-per-item — no bottom border, gap between cards */
+.accordion .accordion-item {
+    border-bottom: none;
+    background: var(--accordion-linzess-bg-item);
+    border-radius: var(--accordion-linzess-radius);
+    overflow: hidden;
+    margin-bottom: var(--accordion-linzess-gap);
+}
+/* Summary row */
+.accordion summary,
+.accordion .accordion-item-label {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--accordion-linzess-bg-item);
+    color: var(--accordion-linzess-color-label);
+}
+/* Label text — white, bold, sentence case */
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
 .accordion .accordion-item-label h4,
 .accordion .accordion-item-label h5,
 .accordion .accordion-item-label h6 {
-    color: var(--color-brand-primary);
-    font-family: var(--heading-font-family);
+    color: var(--accordion-linzess-color-label);
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size-m);
+    font-weight: var(--font-weight-bold);
+    text-transform: none;
+    letter-spacing: normal;
+    margin: 0;
 }
+/* Chevron icons — white ∨ (closed) and ∧ (open), sits as flex item */
+.accordion-icon-font .item-icon-plus::after,
+.accordion-icon-font .item-icon-minus::after {
+    content: '';
+    position: static;
+    top: auto;
+    right: auto;
+    display: block;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    min-height: 22px;
+    font-size: 0;
+    transform: none;
+}
+/* ∨ chevron when collapsed */
+.accordion-icon-font .item-icon-plus::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* ∧ chevron when expanded */
+.accordion-icon-font .item-icon-minus::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 15l6-6 6 6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* Focus */
+.accordion summary:focus-visible {
+    outline: 2px solid var(--linz-orange);
+    outline-offset: 2px;
+    background: var(--accordion-linzess-bg-item);
+}
+/* Hover — lighter purple */
+.accordion .accordion-item:hover summary {
+    background: var(--accordion-linzess-bg-item-hover);
+}
+/* Open state — keep brand purple on header */
+.accordion .accordion-item[open] summary {
+    background: var(--accordion-linzess-bg-item);
+}
+/* Body — white, padded */
+.accordion .accordion-item-body {
+    background: #fff;
+    padding: 16px 24px 24px;
+}
+.accordion .accordion-item-body .accordion-item-body-text {
+    color: var(--accordion-linzess-color-body);
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size-s);
+    line-height: 1.6;
+}
+/* Suppress external-link ::after glyph */
+.accordion .accordion-item-body .external-link::after,
+.accordion .accordion-item-body a::after {
+    display: none;
+}
+/* Expand all button */
 .accordion .accordion-expand-all {
     color: var(--color-brand-primary);
-    font-family: var(--heading-font-family);
+    font-family: var(--body-font-family);
+    font-weight: var(--font-weight-bold);
 }
 .accordion .accordion-expand-all:focus {
     border-color: var(--color-brand-primary);
