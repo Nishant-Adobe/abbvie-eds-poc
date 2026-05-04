@@ -1,3 +1,28 @@
 @import '../accordion.css';
+@import '../../../styles/mavyret/tokens.css';
 
-/* Mavyret HCP accordion overrides */
+/* Mavyret HCP accordion — brand-specific overrides */
+.accordion {
+    --footer-seperator-color: var(--color-brand-primary);
+    --highlight-dark-background-color: var(--color-brand-primary);
+}
+
+.accordion .accordion-item-label p,
+.accordion .accordion-item-label h2,
+.accordion .accordion-item-label h3,
+.accordion .accordion-item-label h4,
+.accordion .accordion-item-label h5,
+.accordion .accordion-item-label h6 {
+    color: var(--color-brand-primary);
+    font-family: var(--heading-font-family);
+    font-weight: var(--font-weight-700);
+}
+
+.accordion .accordion-expand-all {
+    color: var(--color-brand-primary);
+    font-family: var(--heading-font-family);
+}
+
+.accordion .accordion-expand-all:focus {
+    border-color: var(--color-brand-primary);
+}

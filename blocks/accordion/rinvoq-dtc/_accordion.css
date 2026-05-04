@@ -1,3 +1,33 @@
 @import '../accordion.css';
+@import '../../../styles/rinvoq-dtc/tokens.css';
 
-/* Rinvoq DTC accordion overrides */
+/* Rinvoq DTC accordion — brand-specific overrides */
+.accordion {
+    --footer-seperator-color: var(--color-brand-primary);
+    --highlight-dark-background-color: var(--color-brand-primary);
+}
+
+.accordion .accordion-item {
+    border-radius: var(--border-radius-s);
+    overflow: hidden;
+}
+
+.accordion .accordion-item-label p,
+.accordion .accordion-item-label h2,
+.accordion .accordion-item-label h3,
+.accordion .accordion-item-label h4,
+.accordion .accordion-item-label h5,
+.accordion .accordion-item-label h6 {
+    color: var(--color-brand-primary);
+    font-family: var(--heading-font-family);
+}
+
+.accordion .accordion-expand-all {
+    color: var(--color-brand-primary);
+    font-family: var(--heading-font-family);
+}
+
+.accordion .accordion-expand-all:focus {
+    border-color: var(--color-brand-primary);
+    border-radius: var(--border-radius-s);
+}

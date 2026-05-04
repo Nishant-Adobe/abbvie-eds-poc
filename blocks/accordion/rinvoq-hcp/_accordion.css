@@ -1,3 +1,56 @@
 @import '../accordion.css';
+@import '../../../styles/rinvoq-hcp/tokens.css';
 
-/* Rinvoq HCP accordion overrides */
+/* Rinvoq HCP accordion — brand-specific overrides */
+.accordion {
+    --footer-seperator-color: var(--color-brand-primary);
+    --highlight-dark-background-color: var(--color-brand-primary);
+}
+
+.accordion .accordion-item-label p,
+.accordion .accordion-item-label h2,
+.accordion .accordion-item-label h3,
+.accordion .accordion-item-label h4,
+.accordion .accordion-item-label h5,
+.accordion .accordion-item-label h6 {
+    color: var(--color-brand-primary);
+    font-family: var(--heading-font-family);
+    font-weight: var(--font-weight-700);
+}
+
+.accordion .accordion-expand-all {
+    color: var(--color-brand-primary);
+    font-family: var(--heading-font-family);
+}
+
+.accordion .accordion-expand-all:focus {
+    border-color: var(--color-brand-primary);
+}
+
+/* Dark theme — Rinvoq HCP navy background */
+.accordion.accordion-dark {
+    background-color: var(--color-background-footer);
+    padding: var(--spacing-24) var(--spacing-32);
+}
+
+.accordion.accordion-dark .accordion-item {
+    border-bottom-color: rgb(255 255 255 / 20%);
+}
+
+.accordion.accordion-dark summary,
+.accordion.accordion-dark .accordion-item-label {
+    color: var(--light-color);
+}
+
+.accordion.accordion-dark .accordion-item-label p,
+.accordion.accordion-dark .accordion-item-label h2,
+.accordion.accordion-dark .accordion-item-label h3,
+.accordion.accordion-dark .accordion-item-label h4,
+.accordion.accordion-dark .accordion-item-label h5,
+.accordion.accordion-dark .accordion-item-label h6 {
+    color: var(--light-color);
+}
+
+.accordion.accordion-dark .accordion-item[open] summary {
+    background-color: var(--color-brand-primary);
+}
