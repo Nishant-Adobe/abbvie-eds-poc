@@ -608,7 +608,7 @@
 .accordion .accordion-item-label {
   padding: var(--accordion-padding-item);
 }
-/* Icon — CSS + symbol (no icon font dependency) */
+/* Icon — circled plus/minus SVG (matches skyrizihcp.com ⊕/⊖) */
 .accordion summary::after,
 .accordion .accordion-item-icon {
   color: var(--accordion-color-icon);
@@ -616,17 +616,21 @@
 }
 .accordion-icon-font .icon-plus::after,
 .accordion-icon-font .item-icon-plus::after {
-  content: '+';
-  font-family: var(--font-family-body);
-  font-size: var(--icon-size-md);
-  font-weight: var(--font-weight-light);
+  content: '';
+  display: inline-block;
+  width: var(--accordion-icon-size);
+  height: var(--accordion-icon-size);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 8v8M8 12h8'/%3E%3C/svg%3E") center / contain no-repeat;
+  font-family: inherit;
 }
 .accordion-icon-font .icon-minus::after,
 .accordion-icon-font .item-icon-minus::after {
-  content: '−';
-  font-family: var(--font-family-body);
-  font-size: var(--icon-size-md);
-  font-weight: var(--font-weight-light);
+  content: '';
+  display: inline-block;
+  width: var(--accordion-icon-size);
+  height: var(--accordion-icon-size);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M8 12h8'/%3E%3C/svg%3E") center / contain no-repeat;
+  font-family: inherit;
 }
 /* Focus */
 .accordion summary:focus-visible {
