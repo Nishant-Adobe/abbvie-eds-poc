@@ -1,298 +1,208 @@
+/* stylelint-disable no-descending-specificity */
+
+/* ============================================================
+   CTA Block — Base Styles (Token-Driven)
+   All colors/sizes reference --button-* tokens declared in
+   brand token files. No hard-coded brand colors here.
+   ============================================================ */
+
 .cta {
-    --cta-custom-icon-image-size: 1em;
-    --cta-unset : unset;
+  display: block;
 }
 
 /* -------------------------------------------------------
-   .button and base button
+   Shared button base (a + button)
    ------------------------------------------------------- */
 
-.cta .button {
-    background: none;
-    border: none;
-    outline: none;
-    margin-bottom: var(--spacing-16);
-    white-space: break-spaces;
-    text-align: left;
+.cta .cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--button-icon-gap, 8px);
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--button-font-family, var(--heading-font-family-bold, var(--body-font-family)));
+  font-size: var(--font-size-button, 16px);
+  font-weight: var(--font-weight-button, 700);
+  line-height: var(--line-height-button, 1.25);
+  border: var(--button-border-width, 2px) solid transparent;
+  border-radius: var(--border-radius-button-primary, 4px);
+  padding: var(--button-primary-padding, 14px 32px);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  width: fit-content;
+  white-space: nowrap;
 }
 
-@media (width >= 744px) {
-    .cta .button {
-        margin-bottom: var(--spacing-24);
-    }
+.cta .cta-button:focus-visible {
+  outline: 2px solid var(--color-brand-primary, #005272);
+  outline-offset: 2px;
 }
 
 /* -------------------------------------------------------
-   Default CTA
+   Primary (default)
    ------------------------------------------------------- */
 
-.default-cta a.button,
-   :where(.light-theme).default-cta .button {
-    align-items: center;
-    color: var(--color-accent-blue);
-    cursor: pointer;
-    display: flex;
-    font-family: var(--roboto-bold-font-family);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-700);
-    line-height: var(--line-height-20);
-    padding: var(--spacing-12) var(--spacing-32);
-    margin: var(--spacing-00);
-    border: var(--spacing-01) solid var(--color-accent-blue);
-    border-radius: var(--border-radius-00);
-    background-color: var(--cta-unset);
-    text-decoration: none;
-    width: fit-content;
-    text-transform: var(--font-uppercase);
-    }
-
-.cta .button:focus {
-        outline: var(--spacing-01) solid var(--color-navy-dark);
-    }
-
-@media (width >= 744px) {
-        .default-cta a.button {
-            font-size: var(--font-size-14);
-        }
-    }
-
-.default-cta .button:hover,
-    :where(.light-theme).default-cta .button:hover {
-        color: var(--background-color);
-        background-color: var(--color-accent-blue);
-    }
-
-:where(.dark-theme).default-cta a.button {
-        color: var(--background-color);
-        border: var(--spacing-01) solid var(--background-color);
-        background-color: var(--cta-unset);
-    }
-
-:where(.dark-theme).default-cta .button:hover {
-        background-color: var(--background-color);
-        color: var(--text-color);
-    }
-
-/* -------------------------------------------------------
-   External CTA (light)
-   ------------------------------------------------------- */
-
-.external-cta a.button,
-:where(.light-theme).external-cta a.button {
-    align-items: center;
-    color: var(--color-accent-blue);
-    cursor: pointer;
-    display: flex;
-    font-family: var(--roboto-bold-font-family);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-800);
-    line-height: var(--spacing-20);
-    padding: var(--spacing-00);
-    margin: var(--spacing-00);
-    border: none;
-    border-radius: var(--border-radius-00);
-    background-color: var(--cta-unset);
-    text-decoration: var(--cta-unset);;
-    width: fit-content;
+.cta.cta-primary .cta-button {
+  background-color: var(--button-primary-bg, #003087);
+  color: var(--button-primary-color, #fff);
+  border-color: var(--button-primary-border, var(--button-primary-bg, #003087));
 }
 
-@media (width >= 744px) {
-    .external-cta a.button {
-        font-size: var(--font-size-14);
-    }
-}
-
-.external-cta .button:hover,
-:where(.light-theme).external-cta .button:hover {
-    color: var(--text-color);
-    background-color: var(--cta-unset);
-}
-
-:where(.dark-theme).external-cta a.button {
-    color: var(--color-accent-blue-light);
-}
-
-:where(.dark-theme).external-cta .button:hover {
-    color: var(--color-blue-light);
-    background-color: var(--cta-unset);
-}
-
-.external-cta a.button::after {
-    color: inherit;
-    content: '\e900';
-    font-family: var(--icon-font-family);
-    font-size: var(--font-size-12);
-    margin-left: var(--spacing-12);
-    margin-right: var(--spacing-03);
-    transform: scale(.8);
-    transition: color .1s ease;
+.cta.cta-primary .cta-button:hover {
+  background-color: var(--button-primary-hover-bg, var(--color-brand-primary-dark, #001f5c));
+  color: var(--button-primary-hover-color, var(--button-primary-color, #fff));
+  border-color: var(--button-primary-hover-border, var(--button-primary-hover-bg, var(--color-brand-primary-dark, #001f5c)));
 }
 
 /* -------------------------------------------------------
-   Internal CTA (light)
+   Secondary
    ------------------------------------------------------- */
 
-.internal-cta a.button,
-:where(.light-theme).internal-cta a.button {
-    align-items: center;
-    color: var(--story-card-link-color);
-    cursor: pointer;
-    display: flex;
-    font-family: var(--roboto-bold-font-family);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-700);
-    letter-spacing: var(--letter-spacing-wide-06);
-    line-height: var(--line-height-20);
-    padding: var(--spacing-00);
-    margin: var(--spacing-00);
-    text-decoration: none;
-    text-transform: var(--font-uppercase);
-    border: none;
-    border-radius: var(--border-radius-00);
-    background-color: var(--cta-unset);
-    width: fit-content;
+.cta.cta-secondary .cta-button {
+  background-color: var(--button-secondary-bg, transparent);
+  color: var(--button-secondary-color, var(--button-primary-bg, #003087));
+  border-color: var(--button-secondary-border, var(--button-primary-bg, #003087));
+  border-radius: var(--border-radius-button-secondary, var(--border-radius-button-primary, 4px));
+  padding: var(--button-secondary-padding, var(--button-primary-padding, 14px 32px));
 }
 
-:where(.dark-theme).internal-cta a.button {
-    color: var(--color-accent-blue-light);
-}
-
-.internal-cta .button:hover,
-:where(.light-theme).internal-cta .button:hover {
-    color: var(--color-navy-dark);
-    background-color: var(--cta-unset);
-}
-
-:where(.dark-theme).internal-cta .button:hover {
-    color: var(--color-blue-light);
-}
-
-@media (width >= 744px) {
-    .internal-cta a.button,
-    :where(.light-theme).internal-cta a.button {
-        font-size: var(--font-size-14);
-    }
-}
-
-.internal-cta a.button::after {
-    color: inherit;
-    content: '\e901';
-    display: flex;
-    font-family: var(--icon-font-family);
-    font-size: var(--font-size-12);
-    margin-left: var(--spacing-12);
-    margin-right: var(--spacing-03);
-    transition: color .1s ease;
-    vertical-align: middle;
-}
-
-[dir="rtl"] :where(.internal-cta .button-container) .button::after {
-        transform: rotate(180deg);
-    }
-
-/* -------------------------------------------------------
-   Back CTA (light)
-   ------------------------------------------------------- */
-
-.back-cta a.button,
-:where(.light-theme).back-cta a.button {
-    align-items: center;
-    background: none;
-    border: none;
-    border-radius: var(--border-radius-00);
-    color: var(--story-card-link-color);
-    cursor: pointer;
-    display: flex;
-    font-family: var(--roboto-bold-font-family);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-700);
-    letter-spacing: var(--letter-spacing-wide-06);
-    line-height: var(--line-height-20);
-    padding: var(--spacing-00);
-    text-decoration: none;
-    text-transform: var(--font-uppercase);
-    width: fit-content;
-}
-
-:where(.dark-theme).back-cta a.button {
-    color: var(--color-accent-blue-light);
-}
-
-.back-cta .button:hover,
-:where(.light-theme).back-cta .button:hover {
-    color: var(--text-color);
-    background-color: var(--cta-unset);
-}
-
-:where(.dark-theme).back-cta .button:hover {
-    color: var(--color-blue-light);
-}
-
-@media (width >= 744px) {
-    .back-cta a.button,
-    :where(.light-theme).back-cta a.button {
-        font-size: var(--font-size-14);
-    }
-}
-
-.back-cta a.button::before {
-    color: inherit;
-    content: '\e903';
-    display: flex;
-    font-family: var(--icon-font-family);
-    font-size: var(--font-size-12);
-    margin-left: var(--spacing-03);
-    margin-right: var(--spacing-12);
-    transform: scale(.8);
-    transition: color .1s ease;
-}
-
-[dir="rtl"] :where(.back-cta .button-container) .button::before {
-    transform: rotate(180deg);
+.cta.cta-secondary .cta-button:hover {
+  background-color: var(--button-secondary-hover-bg, var(--button-primary-bg, #003087));
+  color: var(--button-secondary-hover-color, var(--button-primary-color, #fff));
+  border-color: var(--button-secondary-hover-border, var(--button-secondary-hover-bg, var(--button-primary-bg, #003087)));
 }
 
 /* -------------------------------------------------------
-   Config-driven icon overrides
+   Tertiary
    ------------------------------------------------------- */
 
-.external-cta a.cta-icon-font::after,
-.external-cta a.cta-icon-image::after,
-.internal-cta a.cta-icon-font::after,
-.internal-cta a.cta-icon-image::after,
-.back-cta a.cta-icon-font::before,
-.back-cta a.cta-icon-image::before {
-    content: none;
-    display: none;
+.cta.cta-tertiary .cta-button {
+  background-color: var(--button-tertiary-bg, transparent);
+  color: var(--button-tertiary-color, var(--color-brand-primary, #003087));
+  border-color: var(--button-tertiary-border, var(--color-border-default, #ccc));
+  border-radius: var(--border-radius-button-tertiary, var(--border-radius-button-primary, 4px));
+  padding: var(--button-tertiary-padding, var(--button-primary-padding, 14px 32px));
 }
 
-.cta .cta-custom-icon {
-    align-items: center;
-    display: inline-flex;
-    flex: 0 0 auto;
-    justify-content: center;
-    line-height: inherit;
+.cta.cta-tertiary .cta-button:hover {
+  background-color: var(--button-tertiary-hover-bg, var(--color-background-light, #f5f5f5));
+  color: var(--button-tertiary-hover-color, var(--button-tertiary-color, var(--color-brand-primary, #003087)));
+  border-color: var(--button-tertiary-hover-border, var(--color-brand-primary, #003087));
 }
 
-.cta .cta-icon-left > .cta-custom-icon {
-    margin-left: var(--spacing-03);
-    margin-right: var(--spacing-12);
+/* -------------------------------------------------------
+   Plain (text-link style)
+   ------------------------------------------------------- */
+
+.cta.cta-plain .cta-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--button-plain-color, var(--link-color, #003087));
+  font-weight: var(--button-plain-weight, 700);
+  text-decoration: var(--button-plain-decoration, none);
 }
 
-.cta .cta-icon-right > .cta-custom-icon {
-    margin-left: var(--spacing-12);
-    margin-right: var(--spacing-03);
+.cta.cta-plain .cta-button:hover {
+  color: var(--button-plain-hover-color, var(--color-brand-primary-dark, #001f5c));
+  text-decoration: var(--button-plain-hover-decoration, underline);
 }
 
-.cta .cta-custom-icon-font {
-    font-family: var(--icon-font-family);
-    font-size: var(--font-size-12);
-    transform: scale(.8);
+/* -------------------------------------------------------
+   Icon positioning
+   ------------------------------------------------------- */
+
+.cta .cta-icon {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--icon-font-family, 'abbv-iconFont');
+  font-size: var(--button-icon-size, 0.75em);
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-.cta .cta-custom-icon-image img {
-    display: block;
-    height: var(--cta-custom-icon-image-size);
-    object-fit: contain;
-    width: var(--cta-custom-icon-image-size);
+.cta.icon-before .cta-button {
+  flex-direction: row;
 }
 
+.cta.icon-after .cta-button {
+  flex-direction: row;
+}
+
+.cta.icon-before .cta-icon {
+  order: -1;
+}
+
+.cta.icon-after .cta-icon {
+  order: 1;
+}
+
+/* -------------------------------------------------------
+   Toggle — shared base
+   ------------------------------------------------------- */
+
+.cta .cta-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--toggle-label-gap, 12px);
+  cursor: pointer;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button, 16px);
+}
+
+.cta .cta-toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cta .cta-toggle-slider {
+  position: relative;
+  display: inline-block;
+  width: var(--toggle-width, 48px);
+  height: var(--toggle-height, 24px);
+  background-color: var(--toggle-bg-off, #ccc);
+  transition: background-color 0.2s ease;
+}
+
+.cta .cta-toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: var(--toggle-thumb-offset, 2px);
+  left: var(--toggle-thumb-offset, 2px);
+  width: var(--toggle-thumb-size, 20px);
+  height: var(--toggle-thumb-size, 20px);
+  background-color: var(--toggle-thumb-color, #fff);
+  transition: transform 0.2s ease;
+}
+
+.cta .cta-toggle-input:checked + .cta-toggle-slider {
+  background-color: var(--toggle-bg-on, var(--button-primary-bg, #003087));
+}
+
+.cta .cta-toggle-input:checked + .cta-toggle-slider::after {
+  transform: translateX(calc(var(--toggle-width, 48px) - var(--toggle-thumb-size, 20px) - var(--toggle-thumb-offset, 2px) * 2));
+}
+
+.cta .cta-toggle-input:focus-visible + .cta-toggle-slider {
+  outline: 2px solid var(--color-brand-primary, #005272);
+  outline-offset: 2px;
+}
+
+/* Round toggle */
+.cta.cta-toggle-round .cta-toggle-slider {
+  border-radius: var(--toggle-height, 24px);
+}
+
+.cta.cta-toggle-round .cta-toggle-slider::after {
+  border-radius: 50%;
+}
+
+/* Square toggle */
+.cta.cta-toggle-square .cta-toggle-slider {
+  border-radius: var(--toggle-square-radius, 4px);
+}
+
+.cta.cta-toggle-square .cta-toggle-slider::after {
+  border-radius: var(--toggle-square-thumb-radius, 2px);
+}

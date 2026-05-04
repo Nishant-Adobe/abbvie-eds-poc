@@ -1,145 +1,170 @@
-/**
- * Decorates the CTA block element.
- * Transforms the block's content into a styled call-to-action component
- * with a heading, description, and action button.
- *
- * @param {HTMLElement} block - The CTA block element to decorate.
- * @returns {void}
- */
 import { applyCommonProps } from '../../scripts/utils.js';
-import { resolveImageReference } from '../../scripts/scripts.js';
 
-function getCellPicture(row) {
-  if (!row) return null;
-  resolveImageReference(row.firstElementChild || row);
-  return row.querySelector('picture');
+// Field order (non-tab fields rendered as rows):
+// label[0], srText[1], href[2], target[3], icon[4], modalId[5],
+// anchorId[6], analyticsId[7]
+const CFG = {
+  LABEL: 0,
+  SR_TEXT: 1,
+  HREF: 2,
+  TARGET: 3,
+  ICON: 4,
+  MODAL_ID: 5,
+  ANCHOR_ID: 6,
+  ANALYTICS_ID: 7,
+  COUNT: 8,
+};
+
+function cellText(row, idx = 0) {
+  return row?.children[idx]?.textContent?.trim() || '';
 }
 
-function readBlock(block, cfgOrder) {
-  const cfg = {};
-  [...block.children].forEach((row, index) => {
-    if (index >= 1) {
-      const key = cfgOrder[index - 1];
-      if (key === 'iconImage') {
-        cfg[key] = getCellPicture(row);
-      } else {
-        const attrValue = row.textContent.trim();
-        if (attrValue) {
-          cfg[key] = attrValue;
-        }
-      }
-      row.remove();
-    }
+function readConfig(block) {
+  const rows = [...block.children];
+  const cfg = rows.slice(0, CFG.COUNT);
+  return {
+    label: cellText(cfg[CFG.LABEL]) || 'Button',
+    srText: cellText(cfg[CFG.SR_TEXT]),
+    href: cellText(cfg[CFG.HREF]) || '#',
+    target: cellText(cfg[CFG.TARGET]) || '_self',
+    icon: cellText(cfg[CFG.ICON]),
+    modalId: cellText(cfg[CFG.MODAL_ID]),
+    anchorId: cellText(cfg[CFG.ANCHOR_ID]),
+    analyticsId: cellText(cfg[CFG.ANALYTICS_ID]),
+  };
+}
+
+function getVariant(block) {
+  const variants = [
+    'cta-primary', 'cta-secondary', 'cta-tertiary',
+    'cta-plain', 'cta-toggle-round', 'cta-toggle-square',
+  ];
+  return variants.find((v) => block.classList.contains(v)) || 'cta-primary';
+}
+
+function pushAnalytics(cfg, block, action) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'cta_interaction',
+    cta_action: action,
+    cta_id: cfg.analyticsId,
+    cta_label: cfg.label,
+    cta_variant: getVariant(block),
   });
-  return cfg;
 }
 
-const cfgOrder = [
-  'ariaLabel',
-  'ctaTarget',
-  'iconType',
-  'iconFont',
-  'iconImage',
-  'iconPosition',
-  'ariaHidden',
-]; // maintain the order where the attributes are defined in the content authoring
-
-function updateAttributes(block, cfg) {
-  const element = block.querySelector('a');
-  if (!element) return;
-  if (cfg.ariaLabel) element.setAttribute('aria-label', cfg.ariaLabel);
-  if (cfg.ariaHidden) element.setAttribute('aria-hidden', cfg.ariaHidden);
-  if (cfg.ctaTarget) element.setAttribute('target', cfg.ctaTarget);
+function isToggle(block) {
+  return block.classList.contains('cta-toggle-round')
+    || block.classList.contains('cta-toggle-square');
 }
 
-function normalizeIconPosition(iconPosition = '') {
-  const value = iconPosition.toLowerCase();
-  if (['left', 'before', 'start'].includes(value)) return 'left';
-  if (['right', 'after', 'end'].includes(value)) return 'right';
-  return 'right';
-}
+function buildToggle(cfg, block) {
+  const wrapper = document.createElement('label');
+  wrapper.className = 'cta-toggle';
 
-function readGlyph(iconFont = '') {
-  const trimmed = iconFont.trim();
-  if (!trimmed) return null;
-  if (trimmed.length === 1) return trimmed;
+  const input = document.createElement('input');
+  input.type = 'checkbox';
+  input.className = 'cta-toggle-input';
+  if (cfg.srText) input.setAttribute('aria-label', cfg.srText);
 
-  const normalized = trimmed
-    .replace(/^\\u/i, '')
-    .replace(/^u/i, '')
-    .replace(/^\\/, '');
+  const slider = document.createElement('span');
+  slider.className = 'cta-toggle-slider';
 
-  if (/^[0-9a-f]{4,6}$/i.test(normalized)) {
-    return String.fromCodePoint(parseInt(normalized, 16));
+  const labelSpan = document.createElement('span');
+  labelSpan.className = 'cta-toggle-label';
+  labelSpan.textContent = cfg.label;
+
+  wrapper.append(input, slider, labelSpan);
+
+  if (cfg.analyticsId) {
+    input.addEventListener('change', () => {
+      const action = input.checked ? 'toggle_on' : 'toggle_off';
+      pushAnalytics(cfg, block, action);
+    });
   }
 
-  return null;
+  return wrapper;
 }
 
-function createIconNode(cfg, iconType) {
-  if (iconType === 'icon-font') {
-    if (!cfg.iconFont) return null;
-    const icon = document.createElement('span');
-    icon.className = 'cta-custom-icon cta-custom-icon-font';
-    icon.setAttribute('aria-hidden', 'true');
+function buildLink(cfg, block) {
+  const el = document.createElement('a');
+  el.className = 'cta-button';
+  el.href = cfg.href;
+  el.textContent = cfg.label;
 
-    const glyph = readGlyph(cfg.iconFont);
-    if (glyph) {
-      icon.textContent = glyph;
+  if (cfg.target === '_blank') {
+    el.target = '_blank';
+    el.rel = 'noopener';
+  }
+
+  if (cfg.srText) el.setAttribute('aria-label', cfg.srText);
+
+  if (cfg.icon) {
+    const iconEl = document.createElement('span');
+    iconEl.className = `cta-icon icon-${cfg.icon}`;
+    iconEl.setAttribute('aria-hidden', 'true');
+    if (block.classList.contains('icon-before')) {
+      el.prepend(iconEl);
     } else {
-      cfg.iconFont
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean)
-        .forEach((className) => icon.classList.add(className));
+      el.append(iconEl);
     }
-
-    return icon;
   }
 
-  if (iconType === 'image') {
-    if (!cfg.iconImage) return null;
-    const picture = cfg.iconImage.cloneNode(true);
-    picture.classList.add('cta-custom-icon', 'cta-custom-icon-image');
-    return picture;
+  if (cfg.analyticsId) {
+    el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
   }
 
-  return null;
+  return el;
 }
 
-function clearCustomIcon(link) {
-  link.classList.remove('cta-icon-override', 'cta-icon-font', 'cta-icon-image', 'cta-icon-left', 'cta-icon-right');
-  link.querySelectorAll('.cta-custom-icon').forEach((node) => node.remove());
-}
+function buildButton(cfg, block) {
+  const el = document.createElement('button');
+  el.type = 'button';
+  el.className = 'cta-button';
+  el.dataset.modalId = cfg.modalId;
+  el.textContent = cfg.label;
 
-function setIcon(block, cfg) {
-  const links = block.querySelectorAll('a.button');
-  if (!links.length) return;
+  if (cfg.srText) el.setAttribute('aria-label', cfg.srText);
 
-  const iconType = (cfg.iconType || '').toLowerCase();
-  links.forEach((link) => clearCustomIcon(link));
-
-  if (!iconType || iconType === 'none') return;
-
-  const position = normalizeIconPosition(cfg.iconPosition);
-  const iconNode = createIconNode(cfg, iconType);
-  if (!iconNode) return;
-
-  links.forEach((link) => {
-    const node = iconNode.cloneNode(true);
-    link.classList.add('cta-icon-override', `cta-icon-${position}`);
-    link.classList.add(iconType === 'image' ? 'cta-icon-image' : 'cta-icon-font');
-    if (position === 'left') {
-      link.prepend(node);
+  if (cfg.icon) {
+    const iconEl = document.createElement('span');
+    iconEl.className = `cta-icon icon-${cfg.icon}`;
+    iconEl.setAttribute('aria-hidden', 'true');
+    if (block.classList.contains('icon-before')) {
+      el.prepend(iconEl);
     } else {
-      link.append(node);
+      el.append(iconEl);
     }
-  });
+  }
+
+  if (cfg.analyticsId) {
+    el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
+  }
+
+  return el;
 }
 
 export default function decorate(block) {
   applyCommonProps(block);
-  const cfg = readBlock(block, cfgOrder);
-  updateAttributes(block, cfg);
-  setIcon(block, cfg);
+
+  const cfg = readConfig(block);
+
+  if (cfg.anchorId) block.id = cfg.anchorId;
+
+  block.textContent = '';
+
+  let element;
+  if (isToggle(block)) {
+    element = buildToggle(cfg, block);
+  } else if (cfg.modalId) {
+    element = buildButton(cfg, block);
+  } else {
+    element = buildLink(cfg, block);
+  }
+
+  block.append(element);
+
+  block.dispatchEvent(
+    new CustomEvent('cta:ready', { bubbles: true, detail: { cfg } }),
+  );
 }

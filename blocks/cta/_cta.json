@@ -10,16 +10,15 @@
             "template": {
               "name": "Cta",
               "model": "cta",
-              "link": "/link",
-              "linkText": "Button",
-              "linkAriaLabel": "",
+              "label": "Button",
+              "screenReaderText": "",
+              "href": "/link",
               "ctaTarget": "_self",
-              "iconVariation": "none",
-              "iconFont": "",
-              "iconImage": "",
-              "ariaHidden": false,
-              "iconPosition": "after",
-              "classes": "default-cta",
+              "icon": "",
+              "modalId": "",
+              "anchorId": "",
+              "analyticsInteractionId": "",
+              "classes": "cta-primary",
               "language": "lang:none",
               "blockId": "id:"
             }
@@ -34,177 +33,99 @@
       "fields": [
         {
           "component": "tab",
-          "label": "Overview",
-          "name": "overview"
+          "label": "Content",
+          "name": "tab-content"
         },
         {
           "component": "text",
-          "name": "linkText",
-          "label": "Button Text"
+          "valueType": "string",
+          "name": "label",
+          "label": "Button Label",
+          "value": "Button",
+          "description": "Visible text displayed on the button."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "screenReaderText",
+          "label": "Screen Reader Text",
+          "value": "",
+          "description": "Accessible label for screen readers. Overrides the visible label for assistive technology."
         },
         {
           "component": "aem-content",
-          "name": "link",
-          "label": "Target"
-        },
-        {
-          "component": "text",
-          "name": "aria-label",
-          "label": "ARIA Label",
-          "valueType": "string",
-          "attribute": "data-aria-label"
+          "name": "href",
+          "label": "Link URL",
+          "description": "Target URL for the button. Ignored when Modal ID is set."
         },
         {
           "component": "select",
-          "label": "Click Behavior",
+          "valueType": "string",
           "name": "ctaTarget",
+          "label": "Open In",
           "value": "_self",
-          "valueType": "string",
           "options": [
-            {
-              "name": "Same Tab",
-              "value": "_self"
-            },
-            {
-              "name": "New Tab",
-              "value": "_blank"
-            }
-          ]
-        },
-        {
-          "component": "select",
-          "valueType": "string",
-          "name": "iconVariation",
-          "value": "none",
-          "label": "Icon Type",
-          "description": "Icon type for the button",
-          "options": [
-            {
-              "name": "None",
-              "value": "none"
-            },
-            {
-              "name": "Icon Font",
-              "value": "icon-font"
-            },
-            {
-              "name": "Image",
-              "value": "image"
-            }
+            { "name": "Same Tab", "value": "_self" },
+            { "name": "New Tab", "value": "_blank" }
           ]
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "iconFont",
+          "name": "icon",
+          "label": "Icon Name",
           "value": "",
-          "label": "Button Font Icon",
-          "description": "Font icon name for button",
-          "condition": {
-            "===": [
-              {
-                "var": "iconVariation"
-              },
-              "icon-font"
-            ]
-          }
+          "description": "Icon identifier (e.g. 'arrow-right'). Rendered via CSS using the icon font."
         },
         {
-          "component": "reference",
+          "component": "text",
           "valueType": "string",
-          "name": "iconImage",
-          "label": "Button Image Icon",
-          "description": "Image icon for button",
-          "multi": false,
-          "condition": {
-            "===": [
-              {
-                "var": "iconVariation"
-              },
-              "image"
-            ]
-          }
+          "name": "modalId",
+          "label": "Modal ID",
+          "value": "",
+          "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
         },
-        {
-          "component": "select",
-          "valueType": "string",
-          "name": "iconPosition",
-          "value": "after",
-          "label": "Icon Position",
-          "description": "Select whether the icon is placed before your button text or after your button text",
-          "options": [
-            {
-              "name": "Before",
-              "value": "before"
-            },
-            {
-              "name": "After",
-              "value": "after"
-            }
-          ],
-          "condition": {
-            "in": [
-              {
-                "var": "iconVariation"
-              },
-              [
-                "icon-font",
-                "image"
-              ]
-            ]
-          }
-        },
-        {
-          "component": "boolean",
-          "label": "Prevent screen readers from announcing this CTA",
-          "name": "ariaHidden",
-          "value": false,
-          "valueType": "boolean"
-        },
-
         {
           "component": "tab",
           "label": "Styles",
-          "name": "styles"
+          "name": "tab-styles"
         },
         {
-          "component": "select",
+          "component": "multiselect",
+          "valueType": "string",
           "name": "classes",
-          "label": "Type",
-          "value": "default-cta",
+          "label": "Variant",
           "options": [
-            {
-              "name": "default",
-              "value": "default-cta"
-            },
-            {
-              "name": "Internal CTA",
-              "value": "internal-cta"
-            },
-            {
-              "name": "External CTA",
-              "value": "external-cta"
-            },
-            {
-              "name": "Back CTA",
-              "value": "back-cta"
-            }
+            { "name": "Primary (default)", "value": "cta-primary" },
+            { "name": "Secondary", "value": "cta-secondary" },
+            { "name": "Tertiary", "value": "cta-tertiary" },
+            { "name": "Plain link", "value": "cta-plain" },
+            { "name": "Toggle (round)", "value": "cta-toggle-round" },
+            { "name": "Toggle (square)", "value": "cta-toggle-square" },
+            { "name": "Icon before text", "value": "icon-before" },
+            { "name": "Icon after text", "value": "icon-after" }
           ]
         },
         {
-          "component": "select",
-          "name": "classes_theme",
-          "label": "Theme",
-          "options": [
-            {
-              "name": "Light",
-              "value": "light-theme"
-            },
-            {
-              "name": "Dark",
-              "value": "dark-theme"
-            }
-          ]
+          "component": "tab",
+          "label": "Analytics & A11y",
+          "name": "tab-analytics"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "anchorId",
+          "label": "Anchor ID",
+          "value": "",
+          "description": "Optional id attribute for deep-linking to this CTA."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "analyticsInteractionId",
+          "label": "Analytics Interaction ID",
+          "value": "",
+          "description": "Unique ID pushed to GTM dataLayer on click."
         },
         {
           "...": "../../models/_common-properties.json#/common-prop"
