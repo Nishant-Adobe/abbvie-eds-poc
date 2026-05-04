@@ -608,11 +608,25 @@
 .accordion .accordion-item-label {
   padding: var(--accordion-padding-item);
 }
-/* Icon color */
+/* Icon — CSS + symbol (no icon font dependency) */
 .accordion summary::after,
 .accordion .accordion-item-icon {
   color: var(--accordion-color-icon);
   font-size: var(--accordion-icon-size);
+}
+.accordion-icon-font .icon-plus::after,
+.accordion-icon-font .item-icon-plus::after {
+  content: '+';
+  font-family: var(--font-family-body);
+  font-size: var(--icon-size-md);
+  font-weight: var(--font-weight-light);
+}
+.accordion-icon-font .icon-minus::after,
+.accordion-icon-font .item-icon-minus::after {
+  content: '−';
+  font-family: var(--font-family-body);
+  font-size: var(--icon-size-md);
+  font-weight: var(--font-weight-light);
 }
 /* Focus */
 .accordion summary:focus-visible {
