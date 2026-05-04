@@ -1050,7 +1050,7 @@
     --accordion-linzess-radius: var(--linz-rounded-corner-sm);
     --accordion-linzess-gap: 10px;
     --footer-seperator-color: transparent;
-    --highlight-dark-background-color: var(--color-brand-primary);
+    --highlight-dark-background-color: transparent;
 
     background: transparent;
 }
@@ -1072,6 +1072,13 @@
     gap: 16px;
     background: var(--accordion-linzess-bg-item);
     color: var(--accordion-linzess-color-label);
+    cursor: pointer;
+}
+/* Focus */
+.accordion summary:focus-visible {
+    outline: 2px solid var(--linz-orange);
+    outline-offset: 2px;
+    background: var(--accordion-linzess-bg-item);
 }
 /* Label text — white, bold, sentence case */
 .accordion .accordion-item-label p,
@@ -1088,35 +1095,26 @@
     letter-spacing: normal;
     margin: 0;
 }
-/* Chevron icons — white ∨ (closed) and ∧ (open), sits as flex item */
-.accordion-icon-font .item-icon-plus::after,
-.accordion-icon-font .item-icon-minus::after {
+/* Chevron — CSS-driven via summary::after, no icon-font class needed */
+.accordion summary::after {
     content: '';
-    position: static;
-    top: auto;
-    right: auto;
     display: block;
     flex-shrink: 0;
     width: 22px;
     height: 22px;
     min-width: 22px;
-    min-height: 22px;
-    font-size: 0;
-    transform: none;
-}
-/* ∨ chevron when collapsed */
-.accordion-icon-font .item-icon-plus::after {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: transform 0.2s ease;
 }
-/* ∧ chevron when expanded */
+.accordion .accordion-item[open] summary::after {
+    transform: rotate(180deg);
+}
+/* Hide any icon-font icons so they don't double up */
+.accordion .item-icon-plus::after,
+.accordion .item-icon-minus::after,
+.accordion-icon-font .item-icon-plus::after,
 .accordion-icon-font .item-icon-minus::after {
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 15l6-6 6 6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-/* Focus */
-.accordion summary:focus-visible {
-    outline: 2px solid var(--linz-orange);
-    outline-offset: 2px;
-    background: var(--accordion-linzess-bg-item);
+    display: none !important;
 }
 /* Hover — lighter purple */
 .accordion .accordion-item:hover summary {
@@ -1128,7 +1126,7 @@
 }
 /* Body — white, padded */
 .accordion .accordion-item-body {
-    background: #fff;
+    background: #fff !important;
     padding: 16px 24px 24px;
 }
 .accordion .accordion-item-body .accordion-item-body-text {
@@ -1136,6 +1134,21 @@
     font-family: var(--body-font-family);
     font-size: var(--body-font-size-s);
     line-height: 1.6;
+}
+/* Reset body link styles — base applies purple gradient */
+.accordion .accordion-item-body a,
+.accordion .accordion-item-body a.button {
+    background: none;
+    color: var(--color-brand-primary);
+    text-decoration: underline;
+    padding: 0;
+    border-radius: 0;
+    transition: color 0.1s ease;
+}
+.accordion .accordion-item-body a:hover,
+.accordion .accordion-item-body a.button:hover {
+    background: none;
+    color: var(--color-brand-primary-light);
 }
 /* Suppress external-link ::after glyph */
 .accordion .accordion-item-body .external-link::after,
