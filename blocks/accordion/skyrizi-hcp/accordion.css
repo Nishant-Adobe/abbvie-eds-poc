@@ -666,7 +666,7 @@
 }
 /* Body content — expanded state */
 .accordion .accordion-item-body {
-  padding: var(--spacing-24) var(--spacing-00) var(--spacing-40);
+  padding: var(--spacing-16) var(--spacing-00) var(--spacing-32);
 }
 .accordion .accordion-item-body .accordion-item-body-text {
   font-family: var(--accordion-font-family);
@@ -674,38 +674,46 @@
   line-height: var(--line-height-body);
   color: var(--text-color);
 }
-/* Links inside expanded body — brand-color underline */
+/* Links inside expanded body — card-row style with arrow (matches skyrizihcp.com) */
 .accordion .accordion-item-body a,
 .accordion .accordion-item-body a.button {
-  background: none;
+  background: var(--color-brand-primary-light, var(--color-background-light));
   background-size: unset;
   color: var(--text-color);
   text-decoration: none;
-  border-bottom: var(--border-02) solid var(--accordion-color-border);
+  border-bottom: 1px solid var(--color-border-default);
   border-radius: 0;
-  padding: var(--spacing-16) var(--spacing-00);
-  display: inline-block;
-  transition: color 0.2s ease;
+  padding: var(--spacing-16) var(--spacing-40) var(--spacing-16) var(--spacing-16);
+  margin-bottom: var(--spacing-00);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  transition: background-color 0.2s ease;
 }
 .accordion .accordion-item-body a:hover {
-  background: none;
+  background: var(--color-background-tint, var(--color-brand-primary-light));
   background-size: unset;
-  color: var(--accordion-color-heading);
+  color: var(--text-color);
 }
-/* External link arrow — replace missing icon font with SVG */
+/* Right-pointing triangle arrow on each link row */
 .accordion .accordion-item-body .external-link::after,
-.accordion .accordion-item-body a[target="_blank"]::after {
+.accordion .accordion-item-body a::after {
   content: '' !important;
-  display: inline-block;
-  width: var(--spacing-16);
-  height: var(--spacing-16);
-  margin-left: var(--spacing-08);
+  display: block;
+  width: var(--spacing-12, 12px);
+  height: var(--spacing-12, 12px);
+  min-width: var(--spacing-12, 12px);
+  min-height: var(--spacing-12, 12px);
+  position: absolute;
+  right: var(--spacing-16);
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: var(--spacing-16);
   font-family: inherit;
   font-size: 0;
   line-height: 0;
-  transform: none;
-  vertical-align: middle;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2'%3E%3Cpath d='M7 17L17 7M17 7H7M17 7v10'/%3E%3C/svg%3E") center / contain no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,4 20,12 8,20' fill='%23071d49'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 /* ---- Sub-items: nested accordion within an open accordion body ---- */
 /* Lighter separator for second-level items */
