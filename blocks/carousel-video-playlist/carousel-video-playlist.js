@@ -155,7 +155,17 @@ function initPlaylistPlayer(container, account, player, playlistId, enableCaptio
             }
           }
         }
-        if (typeof onReady === 'function') onReady(this);
+        if (typeof onReady === 'function') {
+          const waitForPlaylist = () => {
+            const pl = this.playlist();
+            if (pl && pl.length > 0) {
+              onReady(this);
+            } else {
+              this.one('duringplaylistchange', () => onReady(this));
+            }
+          };
+          waitForPlaylist();
+        }
       });
     };
     configure();
