@@ -1,7 +1,8 @@
+/* stylelint-disable no-descending-specificity */
+
 /* Mavyret — CTA brand overrides
-   Primary: Navy (#071d49), white text, 30px pill radius
-   Secondary: Same navy outline, 30px radius
-   Condensed font family */
+   Primary: Green (#508118), white text, 0px radius
+   Font: trade-gothic-next (mapped to --heading-font-family-bold) */
 
 .cta.cta-primary .cta-button {
   font-family: var(--heading-font-family-bold);
@@ -9,31 +10,21 @@
 }
 
 .cta.cta-primary .cta-button:hover {
-  background-color: var(--color-brand-accent, #1ba2da);
-  border-color: var(--color-brand-accent, #1ba2da);
+  background-color: #3d6512;
+  border-color: #3d6512;
 }
 
 .cta.cta-secondary .cta-button {
-  border-color: var(--button-secondary-border, #071d49);
-  color: var(--button-secondary-color, #fff);
-  background-color: var(--button-secondary-bg, #071d49);
-  border-radius: var(--border-radius-button-secondary, 30px);
-  padding: var(--button-secondary-padding, 14px 66px 14px 46px);
   font-family: var(--heading-font-family-bold);
   text-transform: uppercase;
 }
 
 .cta.cta-secondary .cta-button:hover {
-  background-color: var(--color-brand-accent, #1ba2da);
-  border-color: var(--color-brand-accent, #1ba2da);
+  background-color: #3d6512;
+  border-color: #3d6512;
 }
 
 .cta.cta-plain .cta-button {
-  color: var(--color-brand-primary-dark, #071d49);
   font-family: var(--heading-font-family-bold);
-  text-transform: uppercase;
-}
-
-.cta.icon-after .cta-icon::before {
-  content: '\e901';
+  font-weight: 700;
 }

@@ -3,7 +3,7 @@
 /* ============================================================
    CTA Block — Base Styles (Token-Driven)
    All colors/sizes reference --button-* tokens declared in
-   brand token files. No hard-coded brand colors here.
+   brand token files. No fallback values used.
    ============================================================ */
 
 .cta {
@@ -21,30 +21,30 @@
 .cta .cta-button {
   display: inline-flex;
   align-items: center;
-  gap: var(--button-icon-gap, 8px);
+  gap: 8px;
   cursor: pointer;
   text-decoration: none;
-  font-family: var(--button-font-family, var(--heading-font-family-bold, var(--body-font-family)));
-  font-size: var(--font-size-button, 16px);
-  font-weight: var(--font-weight-button, 700);
-  line-height: var(--line-height-button, 1.25);
-  border: var(--button-border-width, 2px) solid transparent;
-  border-radius: var(--border-radius-button-primary, 4px);
-  padding: var(--button-primary-padding, 14px 32px);
+  font-family: var(--heading-font-family-bold);
+  font-size: var(--button-primary-font-size, var(--font-size-button));
+  font-weight: var(--button-primary-font-weight, var(--font-weight-button));
+  line-height: 1.25;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-button-primary);
+  padding: var(--button-primary-padding);
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   width: fit-content;
   white-space: nowrap;
 }
 
 .cta .cta-button:focus-visible {
-  outline: 2px solid var(--color-brand-primary, #005272);
+  outline: 2px solid var(--color-brand-primary);
   outline-offset: 2px;
 }
 
 /* Reset framework button defaults */
 .cta button.cta-button {
   margin: 0;
-  border-radius: var(--border-radius-button-primary, 4px);
+  border-radius: var(--border-radius-button-primary);
 }
 
 /* -------------------------------------------------------
@@ -52,14 +52,14 @@
    ------------------------------------------------------- */
 
 .cta.cta-primary .cta-button {
-  background-color: var(--button-primary-bg, var(--color-brand-primary, #003087));
-  color: var(--button-primary-color, #fff);
-  border-color: var(--button-primary-border, var(--button-primary-bg, var(--color-brand-primary, #003087)));
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+  border-color: var(--button-primary-border);
 }
 
 .cta.cta-primary .cta-button:hover {
-  background-color: var(--button-primary-hover-bg, var(--color-brand-primary-dark, var(--button-primary-bg)));
-  color: var(--button-primary-hover-color, var(--button-primary-color, #fff));
+  background-color: var(--button-primary-hover-bg, var(--color-brand-primary-dark));
+  color: var(--button-primary-hover-color, var(--button-primary-color));
   border-color: var(--button-primary-hover-border, var(--button-primary-hover-bg, var(--color-brand-primary-dark)));
 }
 
@@ -68,17 +68,17 @@
    ------------------------------------------------------- */
 
 .cta.cta-secondary .cta-button {
-  background-color: var(--button-secondary-bg, transparent);
-  color: var(--button-secondary-color, var(--button-primary-bg, #003087));
-  border-color: var(--button-secondary-border, var(--button-primary-bg, #003087));
-  border-radius: var(--border-radius-button-secondary, var(--border-radius-button-primary, 4px));
-  padding: var(--button-secondary-padding, var(--button-primary-padding, 14px 32px));
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-color);
+  border-color: var(--button-secondary-border);
+  border-radius: var(--border-radius-button-secondary, var(--border-radius-button-primary));
+  padding: var(--button-secondary-padding);
 }
 
 .cta.cta-secondary .cta-button:hover {
-  background-color: var(--button-secondary-hover-bg, var(--button-primary-bg, #003087));
-  color: var(--button-secondary-hover-color, var(--button-primary-color, #fff));
-  border-color: var(--button-secondary-hover-border, var(--button-secondary-hover-bg, var(--button-primary-bg, #003087)));
+  background-color: var(--button-secondary-hover-bg, var(--button-primary-bg));
+  color: var(--button-secondary-hover-color, var(--button-primary-color));
+  border-color: var(--button-secondary-hover-border, var(--button-secondary-hover-bg, var(--button-primary-bg)));
 }
 
 /* -------------------------------------------------------
@@ -86,17 +86,18 @@
    ------------------------------------------------------- */
 
 .cta.cta-tertiary .cta-button {
-  background-color: var(--button-tertiary-bg, transparent);
-  color: var(--button-tertiary-color, var(--color-brand-primary, #003087));
-  border-color: var(--button-tertiary-border, var(--color-border-default, #ccc));
-  border-radius: var(--border-radius-button-tertiary, var(--border-radius-button-primary, 4px));
-  padding: var(--button-tertiary-padding, var(--button-primary-padding, 14px 32px));
+  background-color: var(--button-tertiary-bg);
+  color: var(--button-tertiary-color);
+  border-color: var(--button-tertiary-border);
+  border-radius: var(--border-radius-button-tertiary, var(--border-radius-button-primary));
+  padding: var(--button-tertiary-padding);
+  font-size: var(--button-tertiary-font-size, var(--button-primary-font-size, var(--font-size-button)));
 }
 
 .cta.cta-tertiary .cta-button:hover {
-  background-color: var(--button-tertiary-hover-bg, var(--color-background-light, #f5f5f5));
-  color: var(--button-tertiary-hover-color, var(--button-tertiary-color, var(--color-brand-primary, #003087)));
-  border-color: var(--button-tertiary-hover-border, var(--color-brand-primary, #003087));
+  background-color: var(--button-tertiary-hover-bg, var(--color-background-light));
+  color: var(--button-tertiary-hover-color, var(--button-tertiary-color));
+  border-color: var(--button-tertiary-hover-border, var(--color-brand-primary));
 }
 
 /* -------------------------------------------------------
@@ -107,14 +108,14 @@
   background: none;
   border: none;
   padding: 0;
-  color: var(--button-plain-color, var(--link-color, #003087));
-  font-weight: var(--button-plain-weight, 700);
-  text-decoration: var(--button-plain-decoration, none);
+  color: var(--button-plain-color, var(--link-color));
+  font-weight: var(--button-plain-weight, var(--font-weight-button));
+  text-decoration: none;
 }
 
 .cta.cta-plain .cta-button:hover {
-  color: var(--button-plain-hover-color, var(--color-brand-primary-dark, #001f5c));
-  text-decoration: var(--button-plain-hover-decoration, underline);
+  color: var(--button-plain-hover-color, var(--color-brand-primary-dark));
+  text-decoration: underline;
 }
 
 /* -------------------------------------------------------
@@ -124,8 +125,8 @@
 .cta .cta-icon {
   display: inline-flex;
   align-items: center;
-  font-family: var(--icon-font-family, 'abbv-iconFont');
-  font-size: var(--button-icon-size, 0.75em);
+  font-family: var(--icon-font-family);
+  font-size: 0.75em;
   line-height: 1;
   flex-shrink: 0;
 }
@@ -153,10 +154,10 @@
 .cta .cta-toggle {
   display: inline-flex;
   align-items: center;
-  gap: var(--toggle-label-gap, 12px);
+  gap: 12px;
   cursor: pointer;
   font-family: var(--body-font-family);
-  font-size: var(--font-size-button, 16px);
+  font-size: var(--font-size-button);
 }
 
 .cta .cta-toggle-input {
@@ -171,31 +172,31 @@
   display: inline-block;
   width: var(--toggle-width, 48px);
   height: var(--toggle-height, 24px);
-  background-color: var(--toggle-bg-off, #ccc);
+  background-color: var(--toggle-bg-off);
   transition: background-color 0.2s ease;
 }
 
 .cta .cta-toggle-slider::after {
   content: '';
   position: absolute;
-  top: var(--toggle-thumb-offset, 2px);
-  left: var(--toggle-thumb-offset, 2px);
+  top: 2px;
+  left: 2px;
   width: var(--toggle-thumb-size, 20px);
   height: var(--toggle-thumb-size, 20px);
-  background-color: var(--toggle-thumb-color, #fff);
+  background-color: var(--toggle-thumb-color);
   transition: transform 0.2s ease;
 }
 
 .cta .cta-toggle-input:checked + .cta-toggle-slider {
-  background-color: var(--toggle-bg-on, var(--button-primary-bg, #003087));
+  background-color: var(--toggle-bg-on, var(--button-primary-bg));
 }
 
 .cta .cta-toggle-input:checked + .cta-toggle-slider::after {
-  transform: translateX(calc(var(--toggle-width, 48px) - var(--toggle-thumb-size, 20px) - var(--toggle-thumb-offset, 2px) * 2));
+  transform: translateX(calc(var(--toggle-width, 48px) - var(--toggle-thumb-size, 20px) - 4px));
 }
 
 .cta .cta-toggle-input:focus-visible + .cta-toggle-slider {
-  outline: 2px solid var(--color-brand-primary, #005272);
+  outline: 2px solid var(--color-brand-primary);
   outline-offset: 2px;
 }
 
@@ -210,9 +211,9 @@
 
 /* Square toggle */
 .cta.cta-toggle-square .cta-toggle-slider {
-  border-radius: var(--toggle-square-radius, 4px);
+  border-radius: 4px;
 }
 
 .cta.cta-toggle-square .cta-toggle-slider::after {
-  border-radius: var(--toggle-square-thumb-radius, 2px);
+  border-radius: 2px;
 }
