@@ -3,7 +3,9 @@
 
 /* Skyrizi HCP — CTA brand overrides
    Primary: Navy (#071d49) pill button, 30px radius
-   Plain: Light cyan (#baecff) text links */
+   Hover: #1f448c (darker navy)
+   Secondary: Transparent with navy border
+   Plain: White text links */
 
 .cta.cta-primary .cta-button {
   font-family: var(--heading-font-family-bold);
@@ -13,12 +15,17 @@
 .cta.cta-primary .cta-button:hover {
   background-color: var(--button-primary-hover-bg);
   color: var(--button-primary-hover-color);
-  border-color: var(--button-primary-hover-bg);
+  border-color: var(--button-primary-hover-border);
+}
+
+.cta.cta-secondary .cta-button:hover {
+  background-color: var(--button-secondary-hover-bg);
+  color: var(--button-secondary-hover-color);
+  border-color: var(--button-secondary-hover-border);
 }
 
 .cta.cta-plain .cta-button {
   font-family: var(--heading-font-family-bold);
-  text-transform: uppercase;
 }
 
 .cta.icon-after .cta-icon::before {
