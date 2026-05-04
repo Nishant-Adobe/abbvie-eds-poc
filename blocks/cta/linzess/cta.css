@@ -2,20 +2,19 @@
 /* stylelint-disable no-descending-specificity */
 
 /* Linzess — CTA brand overrides
-   Primary: Orange (#faa633), purple text, 16px radius
-   Secondary: Purple filled (#422e83), white text
+   Primary: Dark purple (#422e83), white text, 16px radius
+   Secondary: White bg, purple text
    Tertiary: Light purple (#d9d7f9), purple text */
 
 .cta.cta-primary .cta-button {
   font-family: var(--body-font-family);
   font-weight: 800;
-  text-transform: uppercase;
 }
 
 .cta.cta-primary .cta-button:hover {
-  background-color: var(--color-brand-primary);
-  color: #fff;
-  border-color: var(--color-brand-primary);
+  background-color: var(--button-primary-hover-bg);
+  color: var(--button-primary-hover-color);
+  border-color: var(--button-primary-hover-bg);
 }
 
 .cta.cta-secondary .cta-button {
@@ -24,9 +23,9 @@
 }
 
 .cta.cta-secondary .cta-button:hover {
-  background-color: var(--color-brand-primary-dark);
-  color: #fff;
-  border-color: var(--color-brand-primary-dark);
+  background-color: var(--button-secondary-hover-bg);
+  color: var(--button-secondary-hover-color);
+  border-color: var(--button-secondary-hover-bg);
 }
 
 .cta.cta-tertiary .cta-button {
@@ -35,14 +34,15 @@
 }
 
 .cta.cta-tertiary .cta-button:hover {
-  background-color: var(--color-brand-primary);
-  color: #fff;
-  border-color: var(--color-brand-primary);
+  background-color: var(--button-tertiary-hover-bg);
+  color: var(--button-tertiary-hover-color);
+  border-color: var(--button-tertiary-hover-bg);
 }
 
 .cta.cta-plain .cta-button {
   color: var(--color-brand-primary);
-  font-weight: 700;
+  font-family: var(--body-font-family);
+  font-weight: 800;
 }
 
 .cta.icon-after .cta-icon::before {
