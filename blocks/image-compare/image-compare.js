@@ -256,10 +256,10 @@ function parseXWalkFields(block) {
       let imgSubLabel = '';
       if (idx < rows.length && !getSrc(rows[idx])) {
         const peek = getText(rows[idx]);
-        // If next text looks like a tab label (longer phrase), stop
-        if (peek && !peek.includes('%') && peek.length > 20) break;
-        imgSubLabel = peek;
-        idx += 1;
+        if (peek && (peek.includes('%') || peek.length <= 20)) {
+          imgSubLabel = peek;
+          idx += 1;
+        }
       }
 
       if (beforeImage && afterImage) {
