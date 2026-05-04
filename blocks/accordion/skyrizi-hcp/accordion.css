@@ -587,3 +587,9 @@
 .accordion .accordion-expand-all {
   font-family: var(--heading-font-family);
 }
+/* Fix focus ring — --border-02 is undefined in base tokens causing a thick black border */
+.accordion .accordion-expand-all:focus {
+  border: 2px solid var(--color-brand-primary);
+  border-radius: 2px;
+  outline: none;
+}
