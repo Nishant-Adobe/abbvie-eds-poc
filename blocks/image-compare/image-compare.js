@@ -131,73 +131,102 @@ function parseGalleryRows(block) {
   return config;
 }
 
-function parseModelFields(block) {
-  const fields = {};
-  [...block.children].forEach((row) => {
-    const cells = [...row.children];
-    if (cells.length < 2) return;
-    const key = cells[0]?.textContent?.trim();
-    const valCell = cells[1];
-    if (!key) return;
-    const img = valCell?.querySelector('img, picture img');
-    fields[key] = img ? img.src : valCell?.textContent?.trim() || '';
-    if (img && !fields[`${key}Alt`]) fields[`${key}Alt`] = img.alt || '';
-  });
-  return fields;
-}
-
-function buildConfigFromModelFields(fields) {
+function parseXWalkFields(block) {
+  const rows = [...block.children];
   const config = {
-    heading: fields.heading || '',
-    description: fields.description || '',
-    sliderPrompt: fields.sliderPrompt || '',
-    beforeLabelPrefix: fields.beforeLabelPrefix || 'BEFORE',
-    afterLabelPrefix: fields.afterLabelPrefix || 'AFTER',
+    heading: '',
+    description: '',
+    sliderPrompt: '',
+    beforeLabelPrefix: 'BEFORE',
+    afterLabelPrefix: 'AFTER',
     tabs: [],
   };
 
-  const tab1Images = [];
-  const tab2Images = [];
+  function getImg(row) {
+    if (!row) return '';
+    const img = row.querySelector('img, picture img');
+    return img ? img.src : '';
+  }
 
-  for (let i = 1; i <= 4; i += 1) {
-    const before = fields[`tab1Img${i}Before`];
-    const after = fields[`tab1Img${i}After`];
-    if (before && after) {
-      tab1Images.push({
-        beforeImage: before,
-        afterImage: after,
-        beforeAlt: fields[`tab1Img${i}BeforeAlt`] || '',
-        afterAlt: fields[`tab1Img${i}AfterAlt`] || '',
-        thumbnail: fields[`tab1Img${i}Thumb`] || '',
-        thumbnailAlt: fields[`tab1Img${i}ThumbAlt`] || '',
-        thumbnailLabel: fields[`tab1Img${i}Label`] || '',
-        thumbnailSubLabel: fields[`tab1Img${i}SubLabel`] || '',
-      });
+  function getAlt(row) {
+    if (!row) return '';
+    const img = row.querySelector('img, picture img');
+    return img ? img.alt || '' : '';
+  }
+
+  const allImgs = rows.filter((r) => r.querySelector('img, picture img'));
+  const allText = rows.filter((r) => !r.querySelector('img, picture img'));
+
+  if (allImgs.length >= 2) {
+    const tab1Images = [];
+    const tab2Images = [];
+    let tab1Label = '';
+    let tab2Label = '';
+
+    const textVals = allText.map((r) => r.textContent.trim()).filter(Boolean);
+
+    if (textVals.length > 0) config.heading = textVals[0] || '';
+    if (textVals.length > 1) config.description = textVals[1] || '';
+
+    let labelIdx = 2;
+    const possiblePrompt = textVals[labelIdx];
+    if (possiblePrompt && possiblePrompt.toUpperCase().includes('DRAG')) {
+      config.sliderPrompt = possiblePrompt;
+      labelIdx += 1;
     }
-  }
 
-  for (let i = 1; i <= 4; i += 1) {
-    const before = fields[`tab2Img${i}Before`];
-    const after = fields[`tab2Img${i}After`];
-    if (before && after) {
-      tab2Images.push({
-        beforeImage: before,
-        afterImage: after,
-        beforeAlt: fields[`tab2Img${i}BeforeAlt`] || '',
-        afterAlt: fields[`tab2Img${i}AfterAlt`] || '',
-        thumbnail: fields[`tab2Img${i}Thumb`] || '',
-        thumbnailAlt: fields[`tab2Img${i}ThumbAlt`] || '',
-        thumbnailLabel: fields[`tab2Img${i}Label`] || '',
-        thumbnailSubLabel: fields[`tab2Img${i}SubLabel`] || '',
-      });
+    if (textVals[labelIdx]) config.beforeLabelPrefix = textVals[labelIdx];
+    if (textVals[labelIdx + 1]) config.afterLabelPrefix = textVals[labelIdx + 1];
+
+    const remainingText = textVals.slice(labelIdx + 2);
+    const currentTabLabel = remainingText[0] || 'Tab 1';
+    const textPos = 0;
+
+    for (let i = 0; i < allImgs.length; i += 2) {
+      const beforeRow = allImgs[i];
+      const afterRow = allImgs[i + 1];
+      if (!beforeRow || !afterRow) break;
+
+      const thumbRow = allImgs[i + 2];
+      let hasThumb = false;
+      if (thumbRow) {
+        const thumbImg = thumbRow.querySelector('img');
+        if (thumbImg && thumbImg.naturalWidth < 200) hasThumb = true;
+      }
+
+      const imgLabel = remainingText[textPos + 1] || '';
+      const imgSubLabel = remainingText[textPos + 2] || '';
+
+      const item = {
+        beforeImage: getImg(beforeRow),
+        afterImage: getImg(afterRow),
+        beforeAlt: getAlt(beforeRow),
+        afterAlt: getAlt(afterRow),
+        thumbnail: hasThumb ? getImg(allImgs[i + 2]) : getImg(beforeRow),
+        thumbnailAlt: '',
+        thumbnailLabel: imgLabel,
+        thumbnailSubLabel: imgSubLabel,
+      };
+
+      if (!tab1Label) {
+        tab1Label = currentTabLabel;
+        tab1Images.push(item);
+      } else if (currentTabLabel === tab1Label) {
+        tab1Images.push(item);
+      } else {
+        if (!tab2Label) tab2Label = currentTabLabel;
+        tab2Images.push(item);
+      }
+
+      if (hasThumb) i += 1;
     }
-  }
 
-  if (tab1Images.length) {
-    config.tabs.push({ label: fields.tab1Label || 'Tab 1', images: tab1Images });
-  }
-  if (tab2Images.length) {
-    config.tabs.push({ label: fields.tab2Label || 'Tab 2', images: tab2Images });
+    if (tab1Images.length) {
+      config.tabs.push({ label: tab1Label, images: tab1Images });
+    }
+    if (tab2Images.length) {
+      config.tabs.push({ label: tab2Label, images: tab2Images });
+    }
   }
 
   return config;
@@ -207,8 +236,7 @@ function decorateGallery(block) {
   let config = parseGalleryRows(block);
 
   if (!config.tabs.length) {
-    const fields = parseModelFields(block);
-    config = buildConfigFromModelFields(fields);
+    config = parseXWalkFields(block);
   }
 
   const isToggle = block.classList.contains('toggle');
