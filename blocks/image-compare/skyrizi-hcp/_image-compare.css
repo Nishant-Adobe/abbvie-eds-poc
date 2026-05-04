@@ -1,20 +1,89 @@
 @import '../image-compare.css';
 
-/* SkyriziHCP image-compare overrides */
+/* SkyriziHCP overrides */
 
 .image-compare {
   --image-compare-handle-color: #fff;
   --image-compare-tab-bg: transparent;
-  --image-compare-tab-border: #071d49;
-  --image-compare-tab-color: #071d49;
-  --image-compare-tab-active-bg: #071d49;
+  --image-compare-tab-border: #fff;
+  --image-compare-tab-color: #fff;
+  --image-compare-tab-active-bg: #1398d1;
   --image-compare-tab-active-color: #fff;
   --image-compare-thumb-active-border: #1398d1;
-  --image-compare-border-radius: 8px;
-  --image-compare-prompt-bg: rgb(0 0 0 / 70%);
-  --image-compare-prompt-color: #fff;
+  --image-compare-border-radius: 0;
+}
+
+.image-compare.gallery {
+  background-color: #071d49;
+  padding: 40px 24px;
+  border-radius: 12px;
+  color: #fff;
 }
 
 .image-compare .image-compare-heading {
   color: #1398d1;
+  font-size: 1.75rem;
+}
+
+.image-compare .image-compare-description {
+  color: #c8d4e8;
+}
+
+.image-compare .image-compare-tabs {
+  justify-content: center;
+  gap: 0;
+  border-bottom: 2px solid rgb(255 255 255 / 20%);
+  margin-bottom: 24px;
+}
+
+.image-compare .image-compare-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  color: rgb(255 255 255 / 70%);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 12px 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.image-compare .image-compare-tab.is-active {
+  background: transparent;
+  border-color: transparent;
+  border-bottom-color: #1398d1;
+  color: #fff;
+}
+
+.image-compare .image-compare-label {
+  background: rgb(0 20 50 / 80%);
+  font-size: 0.7rem;
+  padding: 6px 12px;
+}
+
+.image-compare .image-compare-thumbnails {
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.image-compare .image-compare-thumb {
+  width: 100px;
+  border: 2px solid rgb(255 255 255 / 30%);
+}
+
+.image-compare .image-compare-thumb.is-active {
+  border-color: #1398d1;
+  box-shadow: 0 0 0 2px #1398d1;
+}
+
+.image-compare .image-compare-thumb-label {
+  background: rgb(0 20 50 / 85%);
+  font-size: 0.65rem;
+}
+
+.image-compare .image-compare-handle::before {
+  width: 48px;
+  height: 48px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 40%);
 }
