@@ -1,6 +1,6 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
-const DEFAULT_PLAYER = 'default';
+const DEFAULT_PLAYER = 'bC11jvCtd';
 const bcScripts = {};
 let playerCount = 0;
 
