@@ -43,17 +43,7 @@
         "name": "pageSubtitle",
         "label": "Page Subtitle"
       },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "brand",
-        "label": "Brand",
-        "options": [
-          { "name": "AbbVie (default)", "value": "" },
-          { "name": "Rinvoq", "value": "rinvoq" },
-          { "name": "Botox", "value": "botox" }
-        ]
-      },
+      
       {
         "component": "boolean",
         "valueType": "boolean",
@@ -166,6 +156,20 @@
         "label": "CTA Alt Text",
         "value": "",
         "description": "Alternative text for the card CTA."
+      },
+      {
+        "component": "tab",
+        "label": "Brand & Theme",
+        "name": "tabBrand"
+      },
+      
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "theme",
+        "label": "Theme",
+        "value": "",
+        "description": "Optional theme name (e.g. 'dark', 'bright'). Leave empty for default."
       }
     ]
   },
@@ -3243,51 +3247,51 @@
             "value": ""
           },
           {
-            "name": "Two Columns \u2014 Equal Split, Double Divider (5/1/5/1)",
+            "name": "Two Columns — Equal Split, Double Divider (5/1/5/1)",
             "value": "grid-5-5"
           },
           {
-            "name": "Two Columns \u2014 Right Slightly Wider, With Divider (5/1/6)",
+            "name": "Two Columns — Right Slightly Wider, With Divider (5/1/6)",
             "value": "grid-5-6"
           },
           {
-            "name": "Two Columns \u2014 Left Slightly Wider, With Divider (6/1/5)",
+            "name": "Two Columns — Left Slightly Wider, With Divider (6/1/5)",
             "value": "grid-6-5"
           },
           {
-            "name": "Two Columns \u2014 Dominant Left, With Divider (7/1/4)",
+            "name": "Two Columns — Dominant Left, With Divider (7/1/4)",
             "value": "grid-7-4"
           },
           {
-            "name": "Two Columns \u2014 Strong Left, With Divider (8/1/3)",
+            "name": "Two Columns — Strong Left, With Divider (8/1/3)",
             "value": "grid-8-3"
           },
           {
-            "name": "Two Columns \u2014 Equal (50/50)",
+            "name": "Two Columns — Equal (50/50)",
             "value": "grid-6-6"
           },
           {
-            "name": "Two Columns \u2014 Main Content with Two Sidebars (8/2/2)",
+            "name": "Two Columns — Main Content with Two Sidebars (8/2/2)",
             "value": "grid-8-2-2"
           },
           {
-            "name": "Two Columns \u2014 Narrow Left, Wide Right (1/5/6)",
+            "name": "Two Columns — Narrow Left, Wide Right (1/5/6)",
             "value": "grid-1-5-6"
           },
           {
-            "name": "Two Columns \u2014 Framed Equal (1/5/5/1)",
+            "name": "Two Columns — Framed Equal (1/5/5/1)",
             "value": "grid-1-5-5-1"
           },
           {
-            "name": "Two Columns \u2014 Narrow Left, Wide Right (1/5)",
+            "name": "Two Columns — Narrow Left, Wide Right (1/5)",
             "value": "grid-1-5"
           },
           {
-            "name": "Three Columns \u2014 Equal (4/4/4)",
+            "name": "Three Columns — Equal (4/4/4)",
             "value": "grid-4-4-4"
           },
           {
-            "name": "Four Columns \u2014 Equal (3/3/3/3)",
+            "name": "Four Columns — Equal (3/3/3/3)",
             "value": "grid-3-3-3-3"
           }
         ]
@@ -3505,517 +3509,6 @@
           {
             "name": "Dark",
             "value": "dark-theme"
-          }
-        ]
-      },
-      {
-        "component": "tab",
-        "label": "Common Properties",
-        "name": "commonProperties"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "blockId",
-        "valueFormat": "regexp",
-        "label": "ID",
-        "description": "Unique identifier for this block",
-        "validation": {
-          "regExp": "^id:\\S*$",
-          "customErrorMsg": "ID must start with 'id:' and contain no spaces"
-        }
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "classes_commonCustomClass",
-        "label": "Custom Class",
-        "description": "Custom CSS class to apply to this block"
-      },
-      {
-        "component": "select",
-        "name": "language",
-        "label": "Language",
-        "options": [
-          {
-            "name": "None",
-            "value": "lang:none"
-          },
-          {
-            "name": "Bulgarian",
-            "value": "lang:bg"
-          },
-          {
-            "name": "Chinese",
-            "value": "lang:zh"
-          },
-          {
-            "name": "Chinese (Taiwan)",
-            "value": "lang:zh-TW"
-          },
-          {
-            "name": "Czech",
-            "value": "lang:cs"
-          },
-          {
-            "name": "Danish",
-            "value": "lang:da"
-          },
-          {
-            "name": "Dutch",
-            "value": "lang:nl"
-          },
-          {
-            "name": "English",
-            "value": "lang:en"
-          },
-          {
-            "name": "Finnish",
-            "value": "lang:fi"
-          },
-          {
-            "name": "French",
-            "value": "lang:fr"
-          },
-          {
-            "name": "German",
-            "value": "lang:de"
-          },
-          {
-            "name": "Greek",
-            "value": "lang:el"
-          },
-          {
-            "name": "Hebrew",
-            "value": "lang:he"
-          },
-          {
-            "name": "Hungarian",
-            "value": "lang:hu"
-          },
-          {
-            "name": "Italian",
-            "value": "lang:it"
-          },
-          {
-            "name": "Japanese",
-            "value": "lang:ja"
-          },
-          {
-            "name": "Korean",
-            "value": "lang:ko"
-          },
-          {
-            "name": "Norwegian",
-            "value": "lang:no"
-          },
-          {
-            "name": "Polish",
-            "value": "lang:pl"
-          },
-          {
-            "name": "Portuguese",
-            "value": "lang:pt"
-          },
-          {
-            "name": "Russian",
-            "value": "lang:ru"
-          },
-          {
-            "name": "Slovak",
-            "value": "lang:sk"
-          },
-          {
-            "name": "Slovenian",
-            "value": "lang:sl"
-          },
-          {
-            "name": "Spanish",
-            "value": "lang:es"
-          },
-          {
-            "name": "Swedish",
-            "value": "lang:sv"
-          },
-          {
-            "name": "Turkish",
-            "value": "lang:tr"
-          },
-          {
-            "name": "Ukrainian",
-            "value": "lang:uk"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "custom-image",
-    "fields": [
-      {
-        "component": "tab",
-        "label": "Overview",
-        "name": "overview"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "presetType",
-        "value": "",
-        "label": "Preset Type",
-        "description": "Choose how the image preset or smart crop is applied",
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Image Preset",
-            "value": "image-preset"
-          },
-          {
-            "name": "Smart Crop",
-            "value": "smart-crop"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "imagePreset",
-        "value": "",
-        "label": "Image Preset",
-        "description": "Select an image preset from the available preset renditions",
-        "condition": {
-          "===": [
-            {
-              "var": "presetType"
-            },
-            "image-preset"
-          ]
-        },
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Feature",
-            "value": "Feature"
-          },
-          {
-            "name": "Hero",
-            "value": "Hero"
-          },
-          {
-            "name": "Responsive",
-            "value": "Responsive"
-          },
-          {
-            "name": "Square",
-            "value": "Square"
-          },
-          {
-            "name": "Tall",
-            "value": "Tall"
-          },
-          {
-            "name": "VideoThumbnail",
-            "value": "VideoThumbnail"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "rendition",
-        "value": "",
-        "label": "Rendition",
-        "description": "Select a smart crop rendition for the image",
-        "condition": {
-          "===": [
-            {
-              "var": "presetType"
-            },
-            "smart-crop"
-          ]
-        },
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Auto",
-            "value": "Auto"
-          },
-          {
-            "name": "Square",
-            "value": "Square"
-          },
-          {
-            "name": "Tall",
-            "value": "Tall"
-          },
-          {
-            "name": "Taller",
-            "value": "Taller"
-          },
-          {
-            "name": "Tallest",
-            "value": "Tallest"
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageModifiers",
-        "value": "",
-        "label": "Image Modifiers",
-        "description": "Specify additional image modifier parameters (e.g. wid=500&hei=300)"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "value": "",
-        "label": "Alternative Text",
-        "description": "Provide alternative text for your image",
-        "required": true
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "getAltFromDAM",
-        "value": false,
-        "label": "Get alternative text from DAM"
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "imageIsDecorative",
-        "value": false,
-        "label": "Image is decorative"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "caption",
-        "value": "",
-        "label": "Caption",
-        "description": "Text displayed as a caption for the image"
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "getCaptionFromDAM",
-        "value": false,
-        "label": "Get caption from DAM"
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "displayCaptionBelowImage",
-        "value": false,
-        "label": "Enable caption as text under image"
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "enableLink",
-        "value": false,
-        "label": "Enable Link",
-        "description": "Enable linking from the image to another target"
-      },
-      {
-        "component": "aem-content",
-        "valueType": "string",
-        "name": "target",
-        "value": "",
-        "label": "Target",
-        "description": "Provide your target path or URL",
-        "condition": {
-          "===": [
-            {
-              "var": "enableLink"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "clickBehavior",
-        "value": "_self",
-        "label": "Click Behavior",
-        "description": "Select the behavior of this button",
-        "condition": {
-          "===": [
-            {
-              "var": "enableLink"
-            },
-            true
-          ]
-        },
-        "options": [
-          {
-            "name": "Same Tab",
-            "value": "_self"
-          },
-          {
-            "name": "New Tab",
-            "value": "_blank"
-          },
-          {
-            "name": "Modal",
-            "value": "modal"
-          },
-          {
-            "name": "Hidden Panel",
-            "value": "hidden-panel"
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "modalPanelId",
-        "value": "",
-        "label": "Modal/Hidden Panel ID",
-        "description": "ID of the modal or hidden panel to trigger",
-        "condition": {
-          "and": [
-            {
-              "===": [
-                {
-                  "var": "enableLink"
-                },
-                true
-              ]
-            },
-            {
-              "or": [
-                {
-                  "===": [
-                    {
-                      "var": "clickBehavior"
-                    },
-                    "modal"
-                  ]
-                },
-                {
-                  "===": [
-                    {
-                      "var": "clickBehavior"
-                    },
-                    "hidden-panel"
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "enableWarnOnLeave",
-        "value": false,
-        "label": "Enable Warn on Leave Modal",
-        "description": "Show a warning modal when the user navigates away",
-        "condition": {
-          "===": [
-            {
-              "var": "enableLink"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "aem-content",
-        "valueType": "string",
-        "name": "warnOnLeavePath",
-        "value": "",
-        "label": "Warn on leave modal path",
-        "condition": {
-          "and": [
-            {
-              "===": [
-                {
-                  "var": "enableLink"
-                },
-                true
-              ]
-            },
-            {
-              "===": [
-                {
-                  "var": "enableWarnOnLeave"
-                },
-                true
-              ]
-            }
-          ]
-        }
-      },
-      {
-        "component": "tab",
-        "label": "Accessibility",
-        "name": "accessibility"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "linkAriaLabel",
-        "value": "",
-        "label": "Link Aria Label",
-        "description": "Provide an aria-label for the image target link"
-      },
-      {
-        "component": "tab",
-        "label": "Analytics",
-        "name": "analytics"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "analyticsInteractionId",
-        "value": "",
-        "label": "Analytics Interaction ID",
-        "description": "Analytics interaction identifier for tracking"
-      },
-      {
-        "component": "tab",
-        "label": "Styles",
-        "name": "styles"
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "classes_shape",
-        "label": "Shape",
-        "options": [
-          {
-            "name": "Default",
-            "value": ""
-          },
-          {
-            "name": "Circle",
-            "value": "circle"
-          },
-          {
-            "name": "Logo",
-            "value": "logo"
           }
         ]
       },
@@ -5160,11 +4653,11 @@
             "value": "single-column"
           },
           {
-            "name": "Two Columns \u2013 stack on mobile",
+            "name": "Two Columns – stack on mobile",
             "value": "two-columns-stack"
           },
           {
-            "name": "Two columns \u2013 do not stack on mobile",
+            "name": "Two columns – do not stack on mobile",
             "value": "two-columns-nostack"
           }
         ],
@@ -5183,7 +4676,7 @@
         "name": "fontIcon",
         "label": "Icon",
         "value": "",
-        "description": "Icon applied to every link when Variant is Icons. Works for all link sources \u2014 the only icon option when using Child Pages.",
+        "description": "Icon applied to every link when Variant is Icons. Works for all link sources — the only icon option when using Child Pages.",
         "condition": {
           "or": [
             {
@@ -8739,10 +8232,22 @@
         "name": "classes",
         "label": "Variants",
         "options": [
-          { "name": "Right side", "value": "right" },
-          { "name": "Auto-open on load", "value": "autoopen" },
-          { "name": "Show once (hide after first view)", "value": "once" },
-          { "name": "Show until closed", "value": "once-closed" }
+          {
+            "name": "Right side",
+            "value": "right"
+          },
+          {
+            "name": "Auto-open on load",
+            "value": "autoopen"
+          },
+          {
+            "name": "Show once (hide after first view)",
+            "value": "once"
+          },
+          {
+            "name": "Show until closed",
+            "value": "once-closed"
+          }
         ]
       },
       {
@@ -9337,19 +8842,51 @@
         "name": "content"
       },
       {
-        "component": "text",
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Variant & Layout",
+        "description": "Select variant and optional layout modifiers. Default: state dropdown. Dynamic: state + county. ZIP: ZIP code input. Card: white card with shadow. Centered: centered layout.",
+        "options": [
+          {
+            "name": "Dynamic (State + County)",
+            "value": "dynamic"
+          },
+          {
+            "name": "ZIP Code",
+            "value": "zip"
+          },
+          {
+            "name": "Card Container",
+            "value": "card"
+          },
+          {
+            "name": "Centered Layout",
+            "value": "centered"
+          }
+        ]
+      },
+      {
+        "component": "reference",
         "valueType": "string",
-        "name": "heading",
+        "name": "icon",
         "value": "",
-        "label": "Heading"
+        "label": "Icon",
+        "description": "Optional icon image displayed above the heading."
       },
       {
         "component": "text",
         "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading",
+        "description": "Heading text. Supports bold/italic formatting for partial emphasis."
+      },
+      {
+        "component": "richtext",
         "name": "description",
         "value": "",
         "label": "Description",
-        "description": "Optional introductory text shown above the state dropdown."
+        "description": "Optional introductory text shown above the form."
       },
       {
         "component": "text",
@@ -9357,6 +8894,70 @@
         "name": "state-label",
         "value": "Select your state",
         "label": "State Dropdown Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "county-label",
+        "value": "Select your county",
+        "label": "County Dropdown Label",
+        "description": "Only used in Dynamic variant."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "zip-label",
+        "value": "Enter your ZIP code",
+        "label": "ZIP Code Input Label",
+        "description": "Only used in ZIP Code variant."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "zip-placeholder",
+        "value": "",
+        "label": "ZIP Code Placeholder",
+        "description": "Placeholder text for the ZIP code input (e.g., '00000' or 'Enter a Zip Code')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "submit-label",
+        "value": "Search",
+        "label": "Submit Button Label",
+        "description": "Only used in ZIP Code variant."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "filter-label",
+        "value": "",
+        "label": "Filter Dropdown Label",
+        "description": "Label for optional filter dropdown (e.g., 'Select a filter'). Leave empty to hide."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "filter-options",
+        "value": "",
+        "label": "Filter Options",
+        "description": "Comma-separated filter options (e.g., 'Commercial,Medicare,State Medicaid')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "indication-label",
+        "value": "",
+        "label": "Indication Label",
+        "description": "Label for indication radio group (e.g., 'Choose Indication'). Leave empty to hide."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "indications",
+        "value": "",
+        "label": "Indications",
+        "description": "Comma-separated indication values (e.g., 'AD,PsA,Ps')."
       },
       {
         "component": "tab",
@@ -9369,7 +8970,23 @@
         "name": "api",
         "value": "",
         "label": "API Endpoint",
-        "description": "URL of the formulary lookup API. Receives ?state= query parameter."
+        "description": "Formulary lookup API URL. Receives ?state=, ?state=&county=, or ?zip= query parameters depending on variant."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "recaptcha-key",
+        "value": "",
+        "label": "reCAPTCHA Site Key",
+        "description": "Google reCAPTCHA v3 site key. If provided, a token is sent with each API request."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "results-per-page",
+        "value": "10",
+        "label": "Results Per Page",
+        "description": "Number of results displayed per page in the results table."
       },
       {
         "component": "text",
@@ -9384,6 +9001,28 @@
         "name": "error",
         "value": "An error occurred. Please try again.",
         "label": "Error Message"
+      },
+      {
+        "component": "richtext",
+        "name": "recaptcha-notice",
+        "value": "",
+        "label": "reCAPTCHA Notice Text",
+        "description": "Legal text shown below the form (e.g., 'This site is protected by reCAPTCHA...')."
+      },
+      {
+        "component": "richtext",
+        "name": "disclaimer",
+        "value": "",
+        "label": "Disclaimer Text",
+        "description": "Coverage disclaimer text shown below the results area."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "analyticsId",
+        "value": "",
+        "label": "Analytics ID",
+        "description": "Value for data-analytics attribute on the submit/select action."
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
