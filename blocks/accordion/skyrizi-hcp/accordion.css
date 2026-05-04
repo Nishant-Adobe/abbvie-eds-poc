@@ -570,27 +570,27 @@
 }
 /* Skyrizi HCP accordion — matches skyrizihcp.com */
 .accordion {
-  --accordion-color-bg: var(--color-background, transparent);
-  --accordion-color-text: var(--color-text, #000);
-  --accordion-color-border: var(--color-brand-primary, #071d49);
-  --accordion-color-heading: var(--color-brand-primary, #071d49);
-  --accordion-color-icon: var(--color-text, #000);
-  --accordion-font-family: var(--font-family-body, "Univers Regular", "Arial Narrow", sans-serif);
-  --accordion-font-size-heading: var(--body-font-size-m, 16px);
-  --accordion-font-weight-heading: var(--font-weight-bold, 700);
-  --accordion-border-width: var(--border-02, 2px);
-  --accordion-padding-item: var(--spacing-16, 16px) 40px var(--spacing-24, 24px) 0;
-  --accordion-icon-size: var(--icon-size-md, 21px);
+  --accordion-color-bg: var(--color-background);
+  --accordion-color-text: var(--color-text);
+  --accordion-color-border: var(--color-brand-primary);
+  --accordion-color-heading: var(--color-brand-primary);
+  --accordion-color-icon: var(--color-text);
+  --accordion-font-family: var(--font-family-body);
+  --accordion-font-size-heading: var(--body-font-size-m);
+  --accordion-font-weight-heading: var(--font-weight-bold);
+  --accordion-border-width: var(--border-02);
+  --accordion-padding-item: var(--spacing-16) var(--spacing-40) var(--spacing-24) 0;
+  --accordion-icon-size: var(--icon-size-md);
 
   font-family: var(--accordion-font-family);
   background: var(--accordion-color-bg);
   color: var(--accordion-color-text);
 }
-/* Item separator — 2px navy border */
+/* Item separator */
 .accordion .accordion-item {
   border-bottom: var(--accordion-border-width) solid var(--accordion-color-border);
 }
-/* Item heading — uppercase, navy, bold */
+/* Item heading — uppercase, brand color, bold */
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
@@ -601,7 +601,7 @@
   font-weight: var(--accordion-font-weight-heading);
   font-size: var(--accordion-font-size-heading);
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide-06, 0.06em);
+  letter-spacing: var(--letter-spacing-wide);
 }
 /* Summary/button padding */
 .accordion summary,
@@ -614,12 +614,12 @@
   color: var(--accordion-color-icon);
   font-size: var(--accordion-icon-size);
 }
-/* Focus — light gray */
+/* Focus */
 .accordion summary:focus-visible {
-  background: var(--color-background-subtle, #f1f1f1);
+  background: var(--color-background-subtle);
   outline: none;
 }
-/* Hover — transparent (matches live site) */
+/* Hover — transparent */
 .accordion .accordion-item:hover summary {
   background: transparent;
 }
@@ -627,13 +627,13 @@
 .accordion .accordion-item[open] summary {
   background: transparent;
 }
-/* Expand All button — brand primary */
+/* Expand All button */
 .accordion .accordion-expand-all {
   font-family: var(--accordion-font-family);
   color: var(--accordion-color-heading);
 }
 .accordion .accordion-expand-all:focus {
   border: var(--accordion-border-width) solid var(--accordion-color-heading);
-  border-radius: var(--border-radius-s, 4px);
+  border-radius: var(--border-radius-s);
   outline: none;
 }
