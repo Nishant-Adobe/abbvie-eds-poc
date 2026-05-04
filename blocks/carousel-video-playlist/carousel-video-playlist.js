@@ -310,7 +310,7 @@ function renderPlaylist(opts) {
 
 function assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout) {
   if (isCardsLayout) {
-    block.append(playerArea, playlistArea);
+    block.append(playlistArea, playerArea);
   } else if (playlistLayout === 'top' || playlistLayout === 'bottom') {
     const scrollWrapper = document.createElement('div');
     scrollWrapper.className = 'cvp-playlist-scroll-wrapper';
