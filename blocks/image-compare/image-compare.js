@@ -142,7 +142,7 @@ function parseXWalkFields(block) {
     tabs: [],
   };
 
-  function getImg(row) {
+  function getSrc(row) {
     if (!row) return '';
     const img = row.querySelector('img, picture img');
     return img ? img.src : '';
@@ -154,79 +154,141 @@ function parseXWalkFields(block) {
     return img ? img.alt || '' : '';
   }
 
-  const allImgs = rows.filter((r) => r.querySelector('img, picture img'));
-  const allText = rows.filter((r) => !r.querySelector('img, picture img'));
+  function getText(row) {
+    if (!row) return '';
+    return row.textContent.trim();
+  }
 
-  if (allImgs.length >= 2) {
-    const tab1Images = [];
-    const tab2Images = [];
-    let tab1Label = '';
-    let tab2Label = '';
+  // XWalk renders model fields sequentially as rows.
+  // Model field order: heading, description, sliderPrompt, beforeLabelPrefix,
+  // afterLabelPrefix, beforeImage, beforeAlt, afterImage, afterAlt,
+  // tab1Label, tab1Img1Before, tab1Img1After, tab1Img1Thumb, tab1Img1Label,
+  // tab1Img1SubLabel, tab1Img2Before, tab1Img2After, tab1Img2Thumb,
+  // tab1Img2Label, tab1Img2SubLabel, tab2Label, tab2Img1Before, ...
+  // We parse by scanning rows in order and matching by content type.
 
-    const textVals = allText.map((r) => r.textContent.trim()).filter(Boolean);
+  let idx = 0;
 
-    if (textVals.length > 0) config.heading = textVals[0] || '';
-    if (textVals.length > 1) config.description = textVals[1] || '';
+  // Skip empty rows at start
+  while (idx < rows.length && !getText(rows[idx]) && !getSrc(rows[idx])) idx += 1;
 
-    let labelIdx = 2;
-    const possiblePrompt = textVals[labelIdx];
-    if (possiblePrompt && possiblePrompt.toUpperCase().includes('DRAG')) {
-      config.sliderPrompt = possiblePrompt;
-      labelIdx += 1;
+  // heading (text)
+  if (idx < rows.length && !getSrc(rows[idx])) {
+    config.heading = getText(rows[idx]);
+    idx += 1;
+  }
+  // description (text/html)
+  if (idx < rows.length && !getSrc(rows[idx])) {
+    config.description = rows[idx].innerHTML?.trim() || '';
+    idx += 1;
+  }
+  // sliderPrompt (text)
+  if (idx < rows.length && !getSrc(rows[idx])) {
+    const val = getText(rows[idx]);
+    if (val.toUpperCase().includes('DRAG') || val.toUpperCase().includes('CLICK')) {
+      config.sliderPrompt = val;
+      idx += 1;
+    }
+  }
+  // beforeLabelPrefix (text)
+  if (idx < rows.length && !getSrc(rows[idx])) {
+    config.beforeLabelPrefix = getText(rows[idx]);
+    idx += 1;
+  }
+  // afterLabelPrefix (text)
+  if (idx < rows.length && !getSrc(rows[idx])) {
+    config.afterLabelPrefix = getText(rows[idx]);
+    idx += 1;
+  }
+
+  // Skip simple mode fields (beforeImage, beforeAlt, afterImage, afterAlt)
+  // These may be empty or may have images — skip if present before tab fields
+  const beforeSimple = getSrc(rows[idx]);
+  if (beforeSimple && idx + 1 < rows.length) {
+    // Check if next text row looks like alt text (short) followed by another image
+    // Skip: beforeImage, beforeAlt, afterImage, afterAlt
+    idx += 1; // beforeImage
+    if (idx < rows.length && !getSrc(rows[idx])) idx += 1; // beforeAlt
+    if (idx < rows.length && getSrc(rows[idx])) idx += 1; // afterImage
+    if (idx < rows.length && !getSrc(rows[idx])) idx += 1; // afterAlt
+  }
+
+  // Now parse tab groups
+  function parseTabGroup() {
+    const images = [];
+    let tabLabel = '';
+
+    // tab label (text)
+    if (idx < rows.length && !getSrc(rows[idx])) {
+      tabLabel = getText(rows[idx]);
+      idx += 1;
     }
 
-    if (textVals[labelIdx]) config.beforeLabelPrefix = textVals[labelIdx];
-    if (textVals[labelIdx + 1]) config.afterLabelPrefix = textVals[labelIdx + 1];
+    // Parse image sets: each set = before(img), after(img), thumb(img), label(text), subLabel(text)
+    while (idx < rows.length) {
+      const nextSrc = getSrc(rows[idx]);
+      if (!nextSrc) break; // No more images = end of this tab's images
 
-    const remainingText = textVals.slice(labelIdx + 2);
-    const currentTabLabel = remainingText[0] || 'Tab 1';
-    const textPos = 0;
+      const beforeImage = nextSrc;
+      const beforeAltVal = getAlt(rows[idx]);
+      idx += 1;
 
-    for (let i = 0; i < allImgs.length; i += 2) {
-      const beforeRow = allImgs[i];
-      const afterRow = allImgs[i + 1];
-      if (!beforeRow || !afterRow) break;
-
-      const thumbRow = allImgs[i + 2];
-      let hasThumb = false;
-      if (thumbRow) {
-        const thumbImg = thumbRow.querySelector('img');
-        if (thumbImg && thumbImg.naturalWidth < 200) hasThumb = true;
+      let afterImage = '';
+      let afterAltVal = '';
+      if (idx < rows.length && getSrc(rows[idx])) {
+        afterImage = getSrc(rows[idx]);
+        afterAltVal = getAlt(rows[idx]);
+        idx += 1;
       }
 
-      const imgLabel = remainingText[textPos + 1] || '';
-      const imgSubLabel = remainingText[textPos + 2] || '';
-
-      const item = {
-        beforeImage: getImg(beforeRow),
-        afterImage: getImg(afterRow),
-        beforeAlt: getAlt(beforeRow),
-        afterAlt: getAlt(afterRow),
-        thumbnail: hasThumb ? getImg(allImgs[i + 2]) : getImg(beforeRow),
-        thumbnailAlt: '',
-        thumbnailLabel: imgLabel,
-        thumbnailSubLabel: imgSubLabel,
-      };
-
-      if (!tab1Label) {
-        tab1Label = currentTabLabel;
-        tab1Images.push(item);
-      } else if (currentTabLabel === tab1Label) {
-        tab1Images.push(item);
-      } else {
-        if (!tab2Label) tab2Label = currentTabLabel;
-        tab2Images.push(item);
+      let thumbnail = '';
+      if (idx < rows.length && getSrc(rows[idx])) {
+        thumbnail = getSrc(rows[idx]);
+        idx += 1;
       }
 
-      if (hasThumb) i += 1;
+      let imgLabel = '';
+      if (idx < rows.length && !getSrc(rows[idx])) {
+        imgLabel = getText(rows[idx]);
+        idx += 1;
+      }
+
+      let imgSubLabel = '';
+      if (idx < rows.length && !getSrc(rows[idx])) {
+        const peek = getText(rows[idx]);
+        // If next text looks like a tab label (longer phrase), stop
+        if (peek && !peek.includes('%') && peek.length > 20) break;
+        imgSubLabel = peek;
+        idx += 1;
+      }
+
+      if (beforeImage && afterImage) {
+        images.push({
+          beforeImage,
+          afterImage,
+          beforeAlt: beforeAltVal,
+          afterAlt: afterAltVal,
+          thumbnail: thumbnail || beforeImage,
+          thumbnailAlt: '',
+          thumbnailLabel: imgLabel,
+          thumbnailSubLabel: imgSubLabel,
+        });
+      }
     }
 
-    if (tab1Images.length) {
-      config.tabs.push({ label: tab1Label, images: tab1Images });
-    }
-    if (tab2Images.length) {
-      config.tabs.push({ label: tab2Label, images: tab2Images });
-    }
+    return { label: tabLabel, images };
+  }
+
+  // Parse Tab 1
+  if (idx < rows.length) {
+    const tab1 = parseTabGroup();
+    if (tab1.images.length) config.tabs.push(tab1);
+  }
+
+  // Parse Tab 2 (if more rows remain)
+  if (idx < rows.length) {
+    const tab2 = parseTabGroup();
+    if (tab2.images.length) config.tabs.push(tab2);
   }
 
   return config;
