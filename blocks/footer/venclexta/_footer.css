@@ -1,0 +1,94 @@
+@import '../footer.css';
+
+/* ============================================================
+   VENCLEXTA — Black footer (#000), 3-logo variant (AbbVie + Genentech + VENCLEXTA)
+   ============================================================ */
+
+/* ============================================================
+   Dark Footer — Common overrides for dark brand backgrounds
+   ============================================================ */
+/* stylelint-disable */
+
+.footer {
+  background-color: var(--color-background-footer);
+}
+
+.footer ul li a {
+  color: var(--color-text-on-dark, #fff);
+}
+
+.footer .footer-links-primary li a,
+.footer .footer-links-primary li a:hover {
+  color: var(--color-text-on-dark, #fff);
+}
+
+.footer .footer-links-secondary ul,
+.footer .footer-links-tertiary ul,
+.footer .footer-links-tertiary p {
+  color: var(--color-text-on-dark, #fff);
+}
+
+.footer .footer-links-tertiary p:last-child {
+  color: var(--color-text-on-dark, #fff);
+}
+
+.footer .footer-column p:first-child {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer .footer-bottom {
+  border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+.footer-bottom ul li a {
+  color: var(--color-text-on-dark, #fff);
+}
+
+.footer-wrapper .back-to-top {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-text-on-dark, #fff);
+}
+
+
+/* Venclexta 3-logo: multiple logo images stack vertically on mobile,
+   inline on tablet/desktop in the footer-logo column */
+.footer .footer-logo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  align-items: flex-start;
+}
+
+.footer .footer-logo img {
+  max-width: 130px;
+  height: auto;
+}
+
+/* Bottom bar can contain multiple logos inline (Genentech + AbbVie) */
+.footer .footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-16);
+}
+
+.footer .footer-bottom p {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer .footer-bottom picture,
+.footer .footer-bottom img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 744px) {
+  .footer .footer-logo {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-20);
+  }
+}
