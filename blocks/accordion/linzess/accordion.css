@@ -1116,9 +1116,16 @@
 .accordion-icon-font .item-icon-minus::after {
     display: none !important;
 }
-/* Hover — lighter purple */
+/* Hover — darker purple, keep text unchanged */
 .accordion .accordion-item:hover summary {
     background: var(--accordion-linzess-bg-item-hover);
+}
+.accordion .accordion-item-label.open .accordion-item-label-text,
+.accordion .accordion-item-label .accordion-item-label-text:hover {
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size-m);
+    font-weight: var(--font-weight-bold);
+    color: var(--accordion-linzess-color-label);
 }
 /* Open state — keep brand purple on header */
 .accordion .accordion-item[open] summary {
