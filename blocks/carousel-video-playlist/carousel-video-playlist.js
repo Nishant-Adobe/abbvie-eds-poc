@@ -85,11 +85,15 @@ function readBlockConfig(block) {
   const numbers = values.filter((v) => /^\d{5,}$/.test(v));
   const layout = values.find((v) => layouts.includes(v)) || 'cards';
   const enableCaptions = values.includes('true');
+  const playerId = values.find(
+    (v) => v && !layouts.includes(v) && v !== 'true' && v !== 'false' && !/^\d{5,}$/.test(v),
+  ) || '';
 
   return {
     playlistLayout: layout,
     accountId: numbers[0] || '',
     playlistId: numbers[1] || '',
+    playerId,
     enableCaptions,
   };
 }
@@ -340,7 +344,7 @@ export async function decorateBlock(block) {
   const {
     accountId, playlistId, enableCaptions, playlistLayout,
   } = cfg;
-  const player = DEFAULT_PLAYER;
+  const player = cfg.playerId || DEFAULT_PLAYER;
   const isCardsLayout = playlistLayout === 'cards';
 
   block.classList.add(`cvp-layout-${playlistLayout}`);
