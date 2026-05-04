@@ -587,10 +587,10 @@
 .accordion .accordion-expand-all {
   font-family: var(--heading-font-family);
 }
-/* Fix focus ring — --border-02 is undefined in base tokens causing a thick black border */
+/* Fix focus ring — override black default with brand colour */
 .accordion .accordion-expand-all:focus {
-  border: 2px solid var(--color-brand-primary);
-  border-radius: 2px;
+  border: var(--border-02) solid var(--color-brand-primary);
+  border-radius: var(--border-radius-s);
   outline: none;
 }
 /* Item heading → brand primary blue (matches skyrizihcp.com) */
@@ -602,7 +602,7 @@
 .accordion .accordion-item-label h6 {
   color: var(--color-brand-primary);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-wide-06);
 }
 /* Open item — light brand tint background on the label */
 .accordion-item[open] summary {
