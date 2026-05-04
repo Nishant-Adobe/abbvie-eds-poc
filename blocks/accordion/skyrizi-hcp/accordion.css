@@ -617,20 +617,28 @@
 .accordion-icon-font .icon-plus::after,
 .accordion-icon-font .item-icon-plus::after {
   content: '';
-  display: inline-block;
+  display: block;
   width: var(--accordion-icon-size);
   height: var(--accordion-icon-size);
+  min-width: var(--accordion-icon-size);
+  min-height: var(--accordion-icon-size);
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23071d49'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='white' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
   font-family: inherit;
+  font-size: 0;
+  transform: none;
 }
 .accordion-icon-font .icon-minus::after,
 .accordion-icon-font .item-icon-minus::after {
   content: '';
-  display: inline-block;
+  display: block;
   width: var(--accordion-icon-size);
   height: var(--accordion-icon-size);
+  min-width: var(--accordion-icon-size);
+  min-height: var(--accordion-icon-size);
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23071d49'/%3E%3Cpath d='M7 12h10' stroke='white' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
   font-family: inherit;
+  font-size: 0;
+  transform: none;
 }
 /* Focus */
 .accordion summary:focus-visible {
