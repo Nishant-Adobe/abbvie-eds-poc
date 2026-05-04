@@ -1,49 +1,50 @@
 @import '../accordion.css';
 @import '../../../styles/rinvoq-dtc/tokens.css';
 
-/* Rinvoq DTC accordion — clean white style matching rinvoq.com/faq */
+/* Rinvoq DTC accordion — gold-accent style matching rinvoq.com/faq */
 
 .accordion {
+    --accordion-rinvoq-color-primary: var(--color-brand-primary);
+    --accordion-rinvoq-color-accent: var(--color-brand-accent);
     --accordion-rinvoq-color-text: var(--color-text-heading);
-    --accordion-rinvoq-color-border: var(--color-brand-primary);
-    --accordion-rinvoq-color-icon: var(--color-brand-primary);
     --accordion-rinvoq-color-body: var(--text-color);
-    --footer-seperator-color: var(--color-brand-primary);
+    --footer-seperator-color: var(--color-brand-accent);
     --highlight-dark-background-color: transparent;
 
     background: transparent;
     overflow-x: hidden;
 }
 
-/* Item — plum bottom border, no background */
+/* Item — white bg, gold left border, small gap between items */
 .accordion .accordion-item {
-    border-bottom: 1px solid var(--accordion-rinvoq-color-border);
+    border-bottom: none;
+    border-left: 5px solid var(--accordion-rinvoq-color-accent);
+    background: #fff;
+    margin-bottom: 4px;
     border-radius: 0;
-    overflow: visible;
-    background: transparent;
+    overflow: hidden;
 }
 
-/* Summary row */
+/* Summary — circle icon left, text follows */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: 24px 0;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    background: transparent;
+    justify-content: flex-start;
+    gap: 14px;
+    background: #fff;
     color: var(--accordion-rinvoq-color-text);
     overflow: hidden;
 }
 
 /* Focus */
 .accordion summary:focus-visible {
-    outline: 2px solid var(--accordion-rinvoq-color-border);
+    outline: 2px solid var(--accordion-rinvoq-color-accent);
     outline-offset: 2px;
-    background: transparent;
 }
 
-/* Label text — charcoal, Graphik Bold */
+/* Label text — dark charcoal, bold */
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
@@ -57,33 +58,32 @@
     text-transform: none;
     letter-spacing: normal;
     margin: 0;
-    transition: font-weight 0.1s ease;
 }
 
-/* Bold on hover */
-.accordion .accordion-item:hover .accordion-item-label p,
-.accordion .accordion-item:hover .accordion-item-label h2,
-.accordion .accordion-item:hover .accordion-item-label h3,
-.accordion .accordion-item:hover .accordion-item-label h4,
-.accordion .accordion-item:hover .accordion-item-label h5,
-.accordion .accordion-item:hover .accordion-item-label h6 {
-    font-weight: var(--font-weight-button);
-}
-
-/* Plum chevron via summary::after — no icon-font class needed */
-.accordion summary::after {
+/* Plum circle + icon on LEFT (collapsed) */
+.accordion summary::before {
     content: '';
-    display: block;
+    display: inline-block;
     flex-shrink: 0;
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%2390124a' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-    transition: transform 0.2s ease;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-.accordion .accordion-item[open] summary::after {
-    transform: rotate(180deg);
+/* Plum circle − icon (expanded) */
+.accordion .accordion-item[open] summary::before {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Open state — gold background on summary */
+.accordion .accordion-item[open] summary {
+    background: var(--accordion-rinvoq-color-accent);
+}
+
+/* Hover — light gold tint */
+.accordion .accordion-item:hover summary {
+    background: #fff5cc;
 }
 
 /* Hide icon-font icons */
@@ -94,16 +94,10 @@
     display: none !important;
 }
 
-/* No background change on hover or open */
-.accordion .accordion-item:hover summary,
-.accordion .accordion-item[open] summary {
-    background: transparent;
-}
-
-/* Body */
+/* Body — white, left-padded to align with text after icon */
 .accordion .accordion-item-body {
-    background: transparent;
-    padding: 0 0 24px;
+    background: #fff;
+    padding: 16px 20px 24px 58px;
 }
 
 .accordion .accordion-item-body .accordion-item-body-text {
@@ -113,11 +107,11 @@
     line-height: 1.6;
 }
 
-/* Body links — plum, underline */
+/* Body links — plum */
 .accordion .accordion-item-body a,
 .accordion .accordion-item-body a.button {
     background: none;
-    color: var(--color-brand-primary);
+    color: var(--accordion-rinvoq-color-primary);
     text-decoration: underline;
     padding: 0;
     border-radius: 0;
@@ -138,12 +132,12 @@
 
 /* Expand all button */
 .accordion .accordion-expand-all {
-    color: var(--color-brand-primary);
+    color: var(--accordion-rinvoq-color-primary);
     font-family: var(--heading-font-family);
     font-weight: var(--font-weight-heading);
 }
 
 .accordion .accordion-expand-all:focus {
-    border-color: var(--color-brand-primary);
+    border-color: var(--accordion-rinvoq-color-accent);
     border-radius: var(--border-radius-s);
 }
