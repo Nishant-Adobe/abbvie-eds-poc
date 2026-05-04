@@ -664,3 +664,34 @@
   border-radius: var(--border-radius-s);
   outline: none;
 }
+/* ---- Sub-items: nested accordion within an open accordion body ---- */
+/* Lighter separator for second-level items */
+.accordion .accordion-item-body .accordion .accordion-item {
+  border-bottom: 1px solid rgb(7 29 73 / 20%);
+}
+/* Compact padding, top-align text and icon */
+.accordion .accordion-item-body .accordion summary,
+.accordion .accordion-item-body .accordion .accordion-item-label {
+  padding: var(--spacing-16) 0;
+  align-items: flex-start;
+}
+/* Sub-item headings — not uppercase, normal body size */
+.accordion .accordion-item-body .accordion .accordion-item-label p,
+.accordion .accordion-item-body .accordion .accordion-item-label h2,
+.accordion .accordion-item-body .accordion .accordion-item-label h3,
+.accordion .accordion-item-body .accordion .accordion-item-label h4,
+.accordion .accordion-item-body .accordion .accordion-item-label h5,
+.accordion .accordion-item-body .accordion .accordion-item-label h6 {
+  font-size: var(--body-font-size-s);
+  text-transform: none;
+  letter-spacing: normal;
+}
+/* Sub-item icon — solid ▶ right-pointing arrow (matches skyrizihcp.com sub-items) */
+.accordion .accordion-item-body .accordion-icon-font .item-icon-plus::after,
+.accordion .accordion-item-body .accordion-icon-font .item-icon-minus::after {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8%2C4 20%2C12 8%2C20' fill='%23071d49'/%3E%3C/svg%3E") center / contain no-repeat;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+}
