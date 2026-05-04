@@ -15,8 +15,7 @@ import { applyCommonProps } from '../../scripts/utils.js';
  * those classes are copied to the inner flex container.
  */
 
-const LINE1_CLASS =
-  'cta-card-line-1 abbv-icon-keyboard_arrow_right i-a';
+const LINE1_CLASS = 'cta-card-line-1 abbv-icon-keyboard_arrow_right i-a';
 
 function parseLinkCell(cell) {
   if (!cell) return { href: '#', target: '_self' };
