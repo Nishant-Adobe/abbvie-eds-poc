@@ -156,15 +156,16 @@ function initPlaylistPlayer(container, account, player, playlistId, enableCaptio
           }
         }
         if (typeof onReady === 'function') {
-          const waitForPlaylist = () => {
-            const pl = this.playlist();
+          const self = this;
+          const pollPlaylist = () => {
+            const pl = self.playlist();
             if (pl && pl.length > 0) {
-              onReady(this);
+              onReady(self);
             } else {
-              this.one('duringplaylistchange', () => onReady(this));
+              setTimeout(pollPlaylist, 500);
             }
           };
-          waitForPlaylist();
+          setTimeout(pollPlaylist, 1000);
         }
       });
     };
