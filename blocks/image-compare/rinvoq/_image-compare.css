@@ -1,61 +1,132 @@
 @import '../image-compare.css';
 
-/* Rinvoq DTC overrides */
+/* Rinvoq DTC overrides — pixel-perfect to rinvoq.com */
 
 .image-compare {
   --image-compare-handle-color: #fff;
-  --image-compare-tab-bg: #fff;
-  --image-compare-tab-border: #90124a;
-  --image-compare-tab-color: #90124a;
-  --image-compare-tab-active-bg: #90124a;
-  --image-compare-tab-active-color: #fff;
   --image-compare-thumb-active-border: #90124a;
-  --image-compare-prompt-bg: #ffd100;
-  --image-compare-prompt-color: #1a1a1a;
 }
 
+/* Before/After header labels — colored bars ABOVE image */
+.image-compare .image-compare-label {
+  inset: 0 auto auto 0;
+  width: 50%;
+  border-radius: 0;
+  padding: 6px 0 6px 15px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.image-compare .image-compare-label-before {
+  left: 0;
+  background: #333;
+  color: #fff;
+}
+
+.image-compare .image-compare-label-after {
+  left: auto;
+  right: 0;
+  background: #ffd100;
+  color: #1a1a1a;
+  text-align: right;
+  padding: 6px 15px 6px 0;
+}
+
+/* Gold prompt badge with chevron arrows */
 .image-compare .image-compare-prompt {
-  font-size: 0.7rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffd100;
+  color: #1a1a1a;
+  font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 8px 16px 30px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 4px;
 }
 
-.image-compare.toggle .image-compare-tabs-toggle .image-compare-tab {
-  padding: 12px 24px;
-  font-size: 0.9rem;
+/* Toggle buttons — pill shape, plum active */
+.image-compare .image-compare-tabs-toggle {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  border: 2px solid #90124a;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.image-compare .image-compare-tabs-toggle .image-compare-tab {
+  border: none;
+  border-radius: 0;
+  padding: 10px 20px;
+  font-size: 0.8rem;
   font-weight: 700;
-  border-width: 2px;
+  color: #90124a;
+  background: #fff;
 }
 
+.image-compare .image-compare-tabs-toggle .image-compare-tab.is-active {
+  background: #90124a;
+  color: #fff;
+}
+
+.image-compare .image-compare-tabs-toggle .image-compare-tab:first-child {
+  border-radius: 999px 0 0 999px;
+}
+
+.image-compare .image-compare-tabs-toggle .image-compare-tab:last-child {
+  border-radius: 0 999px 999px 0;
+}
+
+/* Thumbnails — larger with body-part labels + clearance % */
 .image-compare .image-compare-thumbnails {
-  gap: 12px;
-  justify-content: center;
+  gap: 10px;
+  justify-content: flex-start;
   flex-wrap: wrap;
   overflow-x: visible;
+  padding-top: 12px;
 }
 
 .image-compare .image-compare-thumb {
-  width: 150px;
+  width: 130px;
   border-radius: 0;
-  border-width: 3px;
+  border: 3px solid transparent;
+}
+
+.image-compare .image-compare-thumb.is-active {
+  border-color: #90124a;
 }
 
 .image-compare .image-compare-thumb-label {
-  font-size: 0.85rem;
-  padding: 6px 8px;
+  font-size: 0.8rem;
+  padding: 4px 8px;
   font-weight: 800;
+  background: rgb(0 0 0 / 70%);
 }
 
 .image-compare .image-compare-thumb-sublabel {
-  font-size: 0.65rem;
-  padding: 3px 8px;
-  bottom: 28px;
+  font-size: 0.6rem;
+  padding: 2px 8px;
+  bottom: 24px;
+  background: rgb(0 0 0 / 50%);
 }
 
+/* Heading */
 .image-compare .image-compare-heading {
   color: #1a1a1a;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+/* Disclaimer text below slider */
+.image-compare .image-compare-description {
+  color: #333;
+  font-size: 0.85rem;
+}
+
+/* Slider container — no rounded corners */
+.image-compare.gallery .image-compare-container {
+  border-radius: 0;
 }

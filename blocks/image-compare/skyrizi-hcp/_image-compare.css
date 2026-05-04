@@ -1,38 +1,31 @@
 @import '../image-compare.css';
 
-/* SkyriziHCP overrides */
+/* SkyriziHCP overrides — pixel-perfect to skyrizihcp.com */
 
 .image-compare {
   --image-compare-handle-color: #fff;
-  --image-compare-tab-bg: transparent;
-  --image-compare-tab-border: #fff;
-  --image-compare-tab-color: #fff;
-  --image-compare-tab-active-bg: #1398d1;
-  --image-compare-tab-active-color: #fff;
   --image-compare-thumb-active-border: #1398d1;
-  --image-compare-border-radius: 0;
 }
 
+/* Navy section background with white card */
 .image-compare.gallery {
   background-color: #071d49;
   padding: 40px 24px;
   border-radius: 12px;
-  color: #fff;
 }
 
-.image-compare .image-compare-heading {
-  color: #1398d1;
-  font-size: 1.75rem;
+/* White card wrapper for content area */
+.image-compare .image-compare-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgb(0 0 0 / 15%);
 }
 
-.image-compare .image-compare-description {
-  color: #c8d4e8;
-}
-
+/* Tab bar — WEEK 16 | WEEK 52 style */
 .image-compare .image-compare-tabs {
   justify-content: center;
   gap: 0;
-  border-bottom: 2px solid rgb(255 255 255 / 20%);
   margin-bottom: 24px;
 }
 
@@ -41,8 +34,8 @@
   border: none;
   border-bottom: 3px solid transparent;
   border-radius: 0;
-  color: rgb(255 255 255 / 70%);
-  font-size: 1rem;
+  color: #071d49;
+  font-size: 0.9rem;
   font-weight: 700;
   padding: 12px 24px;
   text-transform: uppercase;
@@ -53,23 +46,56 @@
   background: transparent;
   border-color: transparent;
   border-bottom-color: #1398d1;
-  color: #fff;
+  color: #071d49;
 }
 
+/* Heading — teal color */
+.image-compare .image-compare-heading {
+  color: #1398d1;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+/* Description — navy text */
+.image-compare .image-compare-description {
+  color: #071d49;
+  font-size: 0.85rem;
+  font-family: "Univers LT W01_57 Condensed", Arial, sans-serif;
+}
+
+/* Before/After labels — semi-transparent dark */
 .image-compare .image-compare-label {
-  background: rgb(0 20 50 / 80%);
+  background: rgb(7 29 73 / 80%);
   font-size: 0.7rem;
   padding: 6px 12px;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
 }
 
+/* Patient caption bar below slider */
+.image-compare .image-compare-gallery-content::after {
+  content: attr(data-caption);
+  display: block;
+  background: #071d49;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 12px 16px;
+  margin-top: -4px;
+}
+
+/* Thumbnails — horizontal strip */
 .image-compare .image-compare-thumbnails {
+  gap: 8px;
   justify-content: center;
   padding-top: 16px;
+  overflow-x: auto;
 }
 
 .image-compare .image-compare-thumb {
-  width: 100px;
-  border: 2px solid rgb(255 255 255 / 30%);
+  width: 90px;
+  border-radius: 4px;
+  border: 2px solid #ddd;
 }
 
 .image-compare .image-compare-thumb.is-active {
@@ -78,12 +104,17 @@
 }
 
 .image-compare .image-compare-thumb-label {
-  background: rgb(0 20 50 / 85%);
-  font-size: 0.65rem;
+  display: none;
 }
 
+/* Handle — larger white circle */
 .image-compare .image-compare-handle::before {
   width: 48px;
   height: 48px;
   box-shadow: 0 2px 12px rgb(0 0 0 / 40%);
+}
+
+/* Slider no rounded corners */
+.image-compare.gallery .image-compare-container {
+  border-radius: 0;
 }
