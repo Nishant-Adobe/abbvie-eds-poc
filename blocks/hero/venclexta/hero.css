@@ -1,0 +1,59 @@
+/* ============================================================
+   VENCLEXTA DTC — Hero Block Overrides
+   Fonts: Graphik (body/UI), Red Hat Display (brand headings)
+   Profile band: dark teal (--color-background-container #003b52)
+   Heading: teal brand color (--color-text-heading-brand #005272)
+   CTA: plum (--link-color #90124a)
+   ============================================================ */
+
+/* Heading: Red Hat Display brand font, teal */
+.hero h1 {
+  color: var(--color-text-heading-brand);
+  font-family: var(--font-family-brand);
+}
+
+.hero h2,
+.hero h3 {
+  font-family: var(--font-family-brand);
+}
+
+.hero p {
+  font-family: var(--body-font-family);
+}
+
+/* Profile band: dark teal container bg */
+.hero.profile > :where(div):first-child {
+  background-color: var(--color-background-container);
+}
+
+/* Profile text panel: white text on dark band */
+.hero.profile h1,
+.hero.profile h2,
+.hero.profile h3,
+.hero.profile p {
+  color: var(--color-text-on-dark);
+}
+
+.hero.profile .hero-breadcrumbs :where(ol li),
+.hero.profile .hero-breadcrumbs :where(li a) {
+  color: var(--color-text-on-dark);
+}
+
+/* Dual-CTA primary button: plum */
+.hero :where(a).button {
+  color: var(--link-color);
+}
+
+/* Landing CTA: white on dark overlay */
+.hero.landing :where(a).button {
+  color: var(--color-text-on-dark);
+}
+
+/* Landing gradient: dark teal left-to-right */
+.hero.landing::after {
+  background: linear-gradient(
+    to right,
+    var(--color-background-container) 0%,
+    rgba(0, 59, 82, 0.3) 100%
+  );
+}

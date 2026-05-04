@@ -707,3 +707,70 @@ color: inherit;
     padding: var(--spacing-80) var(--spacing-55) var(--spacing-00);
   }
 }
+
+/* =====================================================
+   Hero Stat-Overlay Variant — oversized stat number on image
+   Authoring: use block name "Hero (stat-overlay)"
+   ===================================================== */
+
+.hero.stat-overlay > :where(div):nth-child(2) {
+  overflow: visible;
+}
+
+.hero.stat-overlay .hero-stat-number {
+  display: block;
+  font-family: var(--heading-font-family-bold);
+  font-size: clamp(4rem, 10vw, 10rem);
+  color: var(--color-brand-accent, var(--color-brand-primary));
+  line-height: 0.9;
+  margin-bottom: var(--spacing-16);
+}
+
+/* =====================================================
+   Hero Multilayer Variant — buddy-state layer switching
+   Authoring: use block name "Hero (multilayer)"
+   Each direct child of the image cell is a layer;
+   JS sets data-buddy-state and toggles .is-active.
+   ===================================================== */
+
+.hero.multilayer > :where(div):first-child {
+  position: relative;
+}
+
+.hero.multilayer .hero-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.hero.multilayer .hero-layer.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero.multilayer .hero-layer:first-child {
+  position: relative;
+  opacity: 1;
+}
+
+/* =====================================================
+   Hero Dual-CTA Variant — two side-by-side CTAs
+   Authoring: use block name "Hero (dual-cta)"
+   ===================================================== */
+
+.hero.dual-cta .button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-16, 1.6rem);
+  align-items: center;
+}
+
+.hero.dual-cta .button-container :where(a).button:first-child {
+  margin-top: var(--spacing-16);
+}
+
+.hero.dual-cta .button-container :where(a).button:not(:first-child) {
+  margin-top: var(--spacing-16);
+}

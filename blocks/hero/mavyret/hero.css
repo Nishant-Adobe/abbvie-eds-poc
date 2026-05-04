@@ -1,0 +1,55 @@
+/* ============================================================
+   MAVYRET HCP — Hero Block Overrides
+   Font: Univers LT W01 Condensed
+   Profile band: dark navy (--color-background-footer #071d49)
+   Landing: radial hero gradient (--gradient-hero)
+   CTA: bright blue accent (--color-brand-accent #1ba2da)
+   ============================================================ */
+
+/* Heading: Univers LT Bold Condensed */
+.hero h1 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family-bold);
+}
+
+.hero h2,
+.hero h3 {
+  font-family: var(--heading-font-family);
+}
+
+/* Body: Univers LT Regular Condensed */
+.hero p {
+  font-family: var(--body-font-family);
+}
+
+/* Profile band: dark navy */
+.hero.profile > :where(div):first-child {
+  background-color: var(--color-background-footer);
+}
+
+/* Profile text panel: white text on dark navy band */
+.hero.profile h1,
+.hero.profile h2,
+.hero.profile h3,
+.hero.profile p {
+  color: var(--color-text-on-dark);
+}
+
+.hero.profile .hero-breadcrumbs :where(ol li),
+.hero.profile .hero-breadcrumbs :where(li a) {
+  color: var(--color-text-on-dark);
+}
+
+/* CTA button: bright blue accent */
+.hero :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+.hero.landing :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+/* Landing gradient: brand radial gradient */
+.hero.landing::after {
+  background: var(--gradient-hero);
+}

@@ -91,4 +91,25 @@ export default async function decorate(block) {
       }
     }
   }
+
+  // Multilayer hero: toggle layers on abbv:buddy:stateChange events.
+  // Each direct-child div of the image cell that has [data-buddy-state]
+  // is a layer; only the matching one gets .is-active.
+  if (block.classList.contains('multilayer')) {
+    const imageCell = block.querySelector(':scope > div:first-child');
+    if (imageCell) {
+      const layers = [...imageCell.children].filter((el) => el.dataset.buddyState);
+      if (layers.length > 0) {
+        layers.forEach((layer) => layer.classList.add('hero-layer'));
+        layers[0].classList.add('is-active');
+        document.addEventListener('abbv:buddy:stateChange', (e) => {
+          const { state } = e.detail || {};
+          if (!state) return;
+          layers.forEach((layer) => {
+            layer.classList.toggle('is-active', layer.dataset.buddyState === state);
+          });
+        });
+      }
+    }
+  }
 }
