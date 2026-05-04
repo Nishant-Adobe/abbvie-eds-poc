@@ -406,7 +406,8 @@
 }
 
 /* Bottom bar: legal text left, AbbVie logo right
-   DOM order is p(logo) then ul(legal), so use order to flip visually */
+   DOM order: p:has(picture) = logo, p:not(:has(picture)) = legal text
+   Use CSS order to place logo on right */
 .footer .footer-bottom {
   display: flex;
   flex-direction: row;
@@ -416,7 +417,39 @@
   padding: var(--spacing-24) 0 var(--spacing-16);
 }
 
-/* Legal text — left side, takes available space */
+/* AbbVie logo — right side */
+.footer .footer-bottom p:has(picture) {
+  order: 2;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.footer .footer-bottom p:has(picture) img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+/* Legal text — left side (authored as <p> in this brand) */
+.footer .footer-bottom p:not(:has(picture)) {
+  order: 1;
+  flex: 1;
+  margin: 0;
+  text-align: left;
+  color: var(--color-text-on-dark, #fff);
+  font-size: var(--font-size-footer, 14px);
+  text-transform: none;
+}
+
+.footer .footer-bottom p:not(:has(picture)) a {
+  color: var(--color-text-on-dark, #fff);
+  font-size: var(--font-size-footer, 14px);
+  text-decoration: none;
+  text-transform: none;
+}
+
+/* Also handle legacy ul structure (shared /footer fragment uses ul) */
 .footer .footer-bottom ul {
   order: 1;
   flex: 1;
@@ -426,30 +459,12 @@
   text-align: left;
 }
 
-.footer .footer-bottom ul li {
-  margin-bottom: 0;
-}
-
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
   color: var(--color-text-on-dark, #fff);
   font-size: var(--font-size-footer, 14px);
   text-decoration: none;
   text-transform: none;
-}
-
-/* AbbVie logo — right side */
-.footer .footer-bottom p {
-  order: 2;
-  margin: 0;
-  flex-shrink: 0;
-}
-
-.footer .footer-bottom img {
-  height: 22px;
-  width: auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
 }
 
 @media (max-width: 743px) {
