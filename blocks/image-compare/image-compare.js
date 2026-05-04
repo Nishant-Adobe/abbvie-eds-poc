@@ -282,28 +282,73 @@ function decorateGallery(block) {
 
 function decorateSimple(block) {
   const rows = [...block.children];
-  const [beforeRow, afterRow] = rows;
 
-  const beforeImg = beforeRow?.querySelector('img');
-  const beforeLabel = [...(beforeRow?.children || [])].find((c) => !c.querySelector('img'))?.textContent.trim();
-  const afterImg = afterRow?.querySelector('img');
-  const afterLabel = [...(afterRow?.children || [])].find((c) => !c.querySelector('img'))?.textContent.trim();
+  let beforeSrc = '';
+  let afterSrc = '';
+  let beforeAlt = '';
+  let afterAlt = '';
+  let beforeLabel = '';
+  let afterLabel = '';
+  let initialPos = 50;
 
-  if (!beforeImg || !afterImg) return;
+  if (rows.length >= 2) {
+    const beforeRow = rows[0];
+    const afterRow = rows[1];
+    const posRow = rows[2];
 
-  const initialPos = parseInt(block.dataset.initialPosition || '50', 10) || 50;
+    const beforeImg = beforeRow?.querySelector('img');
+    const afterImg = afterRow?.querySelector('img');
+
+    if (beforeImg) {
+      beforeSrc = beforeImg.src;
+      beforeAlt = beforeImg.alt || '';
+    }
+    if (afterImg) {
+      afterSrc = afterImg.src;
+      afterAlt = afterImg.alt || '';
+    }
+
+    const beforeCells = [...(beforeRow?.children || [])];
+    beforeCells.forEach((cell) => {
+      if (!cell.querySelector('img')) {
+        const text = cell.textContent.trim();
+        if (text && !beforeLabel) beforeLabel = text;
+      }
+    });
+
+    const afterCells = [...(afterRow?.children || [])];
+    afterCells.forEach((cell) => {
+      if (!cell.querySelector('img')) {
+        const text = cell.textContent.trim();
+        if (text && !afterLabel) afterLabel = text;
+      }
+    });
+
+    if (posRow) {
+      const posText = posRow.textContent.trim();
+      const parsed = parseInt(posText, 10);
+      if (parsed >= 0 && parsed <= 100) initialPos = parsed;
+    }
+  }
+
+  if (!beforeSrc || !afterSrc) return;
+
+  if (block.dataset.initialPosition) {
+    initialPos = parseInt(block.dataset.initialPosition, 10) || 50;
+  }
+
   const container = document.createElement('div');
   container.className = 'image-compare-container';
   block.replaceChildren(container);
 
   buildSlider(
     container,
-    beforeImg.src,
-    afterImg.src,
-    beforeImg.alt || '',
-    afterImg.alt || '',
-    beforeLabel || '',
-    afterLabel || '',
+    beforeSrc,
+    afterSrc,
+    beforeAlt,
+    afterAlt,
+    beforeLabel,
+    afterLabel,
     initialPos,
   );
 }
