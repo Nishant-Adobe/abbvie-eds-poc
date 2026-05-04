@@ -3353,36 +3353,33 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Content",
-        "name": "tab-content"
+        "label": "Overview",
+        "name": "tab-overview"
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "label",
-        "label": "Button Label",
-        "value": "Button",
-        "description": "Visible text displayed on the button."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "screenReaderText",
-        "label": "Screen Reader Text",
-        "value": "",
-        "description": "Accessible label for screen readers. Overrides the visible label for assistive technology."
+        "label": "Button Text",
+        "value": "Button"
       },
       {
         "component": "aem-content",
         "name": "href",
-        "label": "Link URL",
-        "description": "Target URL for the button. Ignored when Modal ID is set."
+        "label": "Target"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ariaLabel",
+        "label": "ARIA Label",
+        "value": ""
       },
       {
         "component": "select",
         "valueType": "string",
         "name": "ctaTarget",
-        "label": "Open In",
+        "label": "Click Behavior",
         "value": "_self",
         "options": [
           {
@@ -3396,20 +3393,68 @@
         ]
       },
       {
-        "component": "text",
+        "component": "select",
         "valueType": "string",
-        "name": "icon",
-        "label": "Icon Name",
-        "value": "",
-        "description": "Icon identifier (e.g. 'arrow-right'). Rendered via CSS using the icon font."
+        "name": "iconType",
+        "label": "Icon Type",
+        "value": "none",
+        "description": "Icon type for the button",
+        "options": [
+          {
+            "name": "None",
+            "value": "none"
+          },
+          {
+            "name": "Icon Font",
+            "value": "icon-font"
+          },
+          {
+            "name": "Image",
+            "value": "image"
+          }
+        ]
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "modalId",
-        "label": "Modal ID",
+        "name": "iconFont",
+        "label": "Button Font Icon",
         "value": "",
-        "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
+        "description": "Font icon name for button",
+        "condition": { "iconType": "icon-font" }
+      },
+      {
+        "component": "aem-asset",
+        "name": "iconImage",
+        "label": "Button Image Icon",
+        "description": "Image icon for button",
+        "condition": { "iconType": "image" }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "iconPosition",
+        "label": "Icon Position",
+        "value": "after",
+        "description": "Select whether the icon is placed before your button text or after your button text",
+        "options": [
+          {
+            "name": "Before",
+            "value": "before"
+          },
+          {
+            "name": "After",
+            "value": "after"
+          }
+        ],
+        "condition": { "iconType": ["icon-font", "image"] }
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "ariaHidden",
+        "label": "Prevent screen readers from announcing this CTA",
+        "value": false
       },
       {
         "component": "tab",
@@ -3445,21 +3490,21 @@
           {
             "name": "Toggle (square)",
             "value": "cta-toggle-square"
-          },
-          {
-            "name": "Icon before text",
-            "value": "icon-before"
-          },
-          {
-            "name": "Icon after text",
-            "value": "icon-after"
           }
         ]
       },
       {
         "component": "tab",
-        "label": "Analytics & A11y",
-        "name": "tab-analytics"
+        "label": "Common Properties",
+        "name": "tab-common"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "modalId",
+        "label": "Modal ID",
+        "value": "",
+        "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
       },
       {
         "component": "text",
