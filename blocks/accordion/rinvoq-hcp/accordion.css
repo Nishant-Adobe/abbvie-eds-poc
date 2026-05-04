@@ -1118,33 +1118,8 @@
   --formulary-label-line-height: 16px;
   --formulary-chevron-bg-size: 14px;
 }
-/* Rinvoq HCP accordion — brand-specific overrides */
+/* Rinvoq HCP accordion — inline-toggle is the default style */
 .accordion {
-    --footer-seperator-color: var(--color-brand-primary);
-    --highlight-dark-background-color: var(--color-brand-primary);
-}
-.accordion .accordion-item-label p,
-.accordion .accordion-item-label h2,
-.accordion .accordion-item-label h3,
-.accordion .accordion-item-label h4,
-.accordion .accordion-item-label h5,
-.accordion .accordion-item-label h6 {
-    color: var(--color-brand-primary);
-    font-family: var(--heading-font-family);
-    font-weight: var(--font-weight-700);
-}
-.accordion .accordion-expand-all {
-    color: var(--color-brand-primary);
-    font-family: var(--heading-font-family);
-}
-.accordion .accordion-expand-all:focus {
-    border-color: var(--color-brand-primary);
-}
-/* ================================================================
-   Inline-toggle variation — rinvoqhcp.com study detail toggles
-   Apply by adding "accordion-inline-toggle" to the block classes
-   ================================================================ */
-.accordion.accordion-inline-toggle {
     --accordion-toggle-color-text: #1a1a3e;
     --accordion-toggle-color-chevron: #c8373e;
     --accordion-toggle-color-separator: #d0d0d8;
@@ -1152,18 +1127,20 @@
     --accordion-toggle-tab-color-active: #1a1a3e;
     --accordion-toggle-tab-color-inactive: #767688;
     --accordion-toggle-tab-color-indicator: #c8373e;
+    --footer-seperator-color: var(--color-brand-primary);
+    --highlight-dark-background-color: var(--color-brand-primary);
 
     background: #fff;
     margin-bottom: 0;
 }
-.accordion.accordion-inline-toggle .accordion-block-heading-wrapper {
+.accordion .accordion-block-heading-wrapper {
     display: none;
 }
-.accordion.accordion-inline-toggle .accordion-item {
+.accordion .accordion-item {
     border-bottom: 1px solid var(--accordion-toggle-color-separator);
 }
-.accordion.accordion-inline-toggle summary,
-.accordion.accordion-inline-toggle .accordion-item-label {
+.accordion summary,
+.accordion .accordion-item-label {
     padding: 10px 0;
     display: flex;
     align-items: center;
@@ -1174,13 +1151,13 @@
     color: var(--accordion-toggle-color-text);
     justify-content: flex-start;
 }
-.accordion.accordion-inline-toggle summary:focus-visible {
+.accordion summary:focus-visible {
     background: none;
     outline: 2px solid var(--accordion-toggle-color-chevron);
     outline-offset: 2px;
 }
 /* Chevron ▼ before the label text */
-.accordion.accordion-inline-toggle summary::before {
+.accordion summary::before {
     content: '';
     display: inline-block;
     flex-shrink: 0;
@@ -1192,16 +1169,16 @@
     transition: transform 0.2s ease;
     margin-top: -3px;
 }
-.accordion.accordion-inline-toggle .accordion-item[open] summary::before {
+.accordion .accordion-item[open] summary::before {
     transform: rotate(-135deg);
     margin-top: 3px;
 }
-.accordion.accordion-inline-toggle .accordion-item-label p,
-.accordion.accordion-inline-toggle .accordion-item-label h2,
-.accordion.accordion-inline-toggle .accordion-item-label h3,
-.accordion.accordion-inline-toggle .accordion-item-label h4,
-.accordion.accordion-inline-toggle .accordion-item-label h5,
-.accordion.accordion-inline-toggle .accordion-item-label h6 {
+.accordion .accordion-item-label p,
+.accordion .accordion-item-label h2,
+.accordion .accordion-item-label h3,
+.accordion .accordion-item-label h4,
+.accordion .accordion-item-label h5,
+.accordion .accordion-item-label h6 {
     color: var(--accordion-toggle-color-text);
     font-size: var(--accordion-toggle-font-size);
     font-weight: 500;
@@ -1210,26 +1187,33 @@
     margin: 0;
 }
 /* Hide icon-font based icons — replaced by CSS chevron */
-.accordion.accordion-inline-toggle .item-icon-plus::after,
-.accordion.accordion-inline-toggle .item-icon-minus::after {
+.accordion .item-icon-plus::after,
+.accordion .item-icon-minus::after {
     display: none;
 }
-.accordion.accordion-inline-toggle .accordion-item:hover summary,
-.accordion.accordion-inline-toggle .accordion-item[open] summary {
+.accordion .accordion-item:hover summary,
+.accordion .accordion-item[open] summary {
     background: none;
 }
-.accordion.accordion-inline-toggle .accordion-item-body {
+.accordion .accordion-expand-all {
+    color: var(--accordion-toggle-color-text);
+    font-family: var(--heading-font-family);
+}
+.accordion .accordion-expand-all:focus {
+    border-color: var(--accordion-toggle-color-chevron);
+}
+.accordion .accordion-item-body {
     padding: 16px 0 24px;
     background: #fff;
 }
 /* Suppress external-link ::after glyph */
-.accordion.accordion-inline-toggle .accordion-item-body .external-link::after,
-.accordion.accordion-inline-toggle .accordion-item-body a::after {
+.accordion .accordion-item-body .external-link::after,
+.accordion .accordion-item-body a::after {
     display: none;
 }
 /* Reset body link styles */
-.accordion.accordion-inline-toggle .accordion-item-body a,
-.accordion.accordion-inline-toggle .accordion-item-body a.button {
+.accordion .accordion-item-body a,
+.accordion .accordion-item-body a.button {
     background: none;
     color: var(--accordion-toggle-color-text);
     text-decoration: underline;
@@ -1237,18 +1221,18 @@
     border-radius: 0;
     transition: color 0.1s ease;
 }
-.accordion.accordion-inline-toggle .accordion-item-body a:hover,
-.accordion.accordion-inline-toggle .accordion-item-body a.button:hover {
+.accordion .accordion-item-body a:hover,
+.accordion .accordion-item-body a.button:hover {
     background: none;
     color: var(--accordion-toggle-color-chevron);
 }
-/* ---- Nested tabs inside the inline-toggle body ---- */
-.accordion.accordion-inline-toggle .accordion-item-body .tabs .tabs-list {
+/* ---- Nested tabs inside accordion body ---- */
+.accordion .accordion-item-body .tabs .tabs-list {
     border-bottom: 2px solid var(--accordion-toggle-color-separator);
     gap: 0;
     margin-bottom: 16px;
 }
-.accordion.accordion-inline-toggle .accordion-item-body .tabs .tabs-list button {
+.accordion .accordion-item-body .tabs .tabs-list button {
     background: none;
     border: none;
     border-bottom: 3px solid transparent;
@@ -1261,12 +1245,12 @@
         color 0.15s ease,
         border-color 0.15s ease;
 }
-.accordion.accordion-inline-toggle .accordion-item-body .tabs .tabs-list button:hover {
+.accordion .accordion-item-body .tabs .tabs-list button:hover {
     color: var(--accordion-toggle-tab-color-active);
     background: none;
 }
 /* Active tab — bold, red underline indicator */
-.accordion.accordion-inline-toggle .accordion-item-body .tabs .tabs-list button[aria-selected='true'] {
+.accordion .accordion-item-body .tabs .tabs-list button[aria-selected='true'] {
     color: var(--accordion-toggle-tab-color-active);
     font-weight: 700;
     border-bottom-color: var(--accordion-toggle-tab-color-indicator);
@@ -1274,7 +1258,7 @@
     cursor: default;
 }
 /* Tab panel — no border box */
-.accordion.accordion-inline-toggle .accordion-item-body .tabs .tabs-panel {
+.accordion .accordion-item-body .tabs .tabs-panel {
     border: none;
     padding: 0;
     margin: 0;
