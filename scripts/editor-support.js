@@ -195,6 +195,29 @@ function attachEventListners(main) {
   main?.addEventListener('aue:ui-select', handleSelection);
 }
 
+// Start Load brand level CSS resources
+ const brandCode = [...document.head.querySelectorAll(`meta[name="brand"]`)]
+    .map((m) => m.content)
+    .join(', ');
+  const themeCode = [...document.head.querySelectorAll(`meta[name="theme"]`)]
+    .map((m) => m.content)
+    .join(', ');
+  const brandPath = `${(brandCode !== '') ? `${brandCode}/` : ''}`;
+  const themePath = `${(themeCode !== '') ? `themes/${themeCode}/` : ''}`;
+  // load tokens and styles
+  const stylesheets = [
+    `/styles/${brandPath}${themePath}tokens.css`,
+    `/styles/${brandPath}${themePath}styles.css`
+  ];
+  stylesheets.forEach(stylesheet => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = stylesheet;
+    link.type = "text/css";
+    document.head.appendChild(link);
+  });
+// End Load brand level CSS resources
+
 const main = document.querySelector('main');
 attachEventListners(main);
 showGridColumnLabel(main);
