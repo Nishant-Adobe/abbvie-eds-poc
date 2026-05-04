@@ -569,3 +569,21 @@
     text-align: center;
 }
 /* Skyrizi HCP accordion overrides */
+.accordion {
+  /* Fix undefined token — block heading color */
+  --bg-666b7a: var(--color-text-muted);
+
+  /* Expand All button + inline links → brand primary */
+  --highlight-dark-background-color: var(--color-brand-primary);
+
+  /* Separator border → brand border token */
+  --footer-seperator-color: var(--color-border-default);
+}
+/* Block heading font → Red Hat Display (replaces Roboto Bold) */
+.accordion-block-heading {
+  font-family: var(--heading-font-family);
+}
+/* Expand All button font → Red Hat Display */
+.accordion .accordion-expand-all {
+  font-family: var(--heading-font-family);
+}
