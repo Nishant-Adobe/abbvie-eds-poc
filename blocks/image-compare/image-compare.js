@@ -84,7 +84,9 @@ function buildRinvoq(block, afterImg, beforeImg, startPct, captionHtml) {
   }
 
   block.appendChild(container);
-  return { container, beforeLayer, beforeImg, afterImg, divider, handle };
+  return {
+    container, beforeLayer, beforeImg, afterImg, divider, handle,
+  };
 }
 
 function buildSkyrizi(block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName) {
@@ -135,7 +137,9 @@ function buildSkyrizi(block, afterImg, beforeImg, labelLeft, labelRight, topLabe
   }
 
   block.appendChild(wrapper);
-  return { container, beforeLayer, beforeImg, afterImg, divider, handle };
+  return {
+    container, beforeLayer, beforeImg, afterImg, divider, handle,
+  };
 }
 
 function setupSlider(container, beforeLayer, beforeImg, afterImg, handle, startPct, isSkyrizi) {
@@ -197,7 +201,8 @@ function decorateLegacy(block, cells) {
     const labelRight = cells[4]?.textContent?.trim() || 'AFTER | WEEK 16';
     const topLabel = cells[5]?.textContent?.trim() || '';
     const patientName = cells[6]?.textContent?.trim() || '';
-    const parts = buildSkyrizi(block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName);
+    const args = [block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName];
+    const parts = buildSkyrizi(...args);
     return { ...parts, startPct, isSkyrizi: true };
   }
 
@@ -262,7 +267,8 @@ function decorateKeyValue(block, rows) {
     const labelRight = getText(data.afterLabelPrefix) || 'AFTER | WEEK 16';
     const topLabel = getText(data.heading) || '';
     const patientName = firstImg?.label || '';
-    const parts = buildSkyrizi(block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName);
+    const args = [block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName];
+    const parts = buildSkyrizi(...args);
     return { ...parts, startPct, isSkyrizi: true };
   }
 
@@ -288,7 +294,8 @@ function decorateModelFormat(block, cells) {
     const labelRight = getText(cells[COL.afterLabelPrefix]) || 'AFTER | WEEK 16';
     const topLabel = getText(cells[COL.heading]) || '';
     const patientName = getText(cells[COL.tab1Img1Label]) || '';
-    const parts = buildSkyrizi(block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName);
+    const args = [block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName];
+    const parts = buildSkyrizi(...args);
     return { ...parts, startPct, isSkyrizi: true };
   }
 
