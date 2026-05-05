@@ -1019,20 +1019,20 @@
     --accordion-rinvoq-color-accent: var(--color-brand-accent);
     --accordion-rinvoq-color-text: var(--color-text-heading);
     --accordion-rinvoq-color-body: var(--text-color);
-    --accordion-rinvoq-color-label: #8b6914;
-    --accordion-rinvoq-color-hover-bg: #fff5cc;
+    --accordion-rinvoq-color-label: var(--color-text-heading);
+    --accordion-rinvoq-color-hover-bg: var(--color-brand-accent-butter);
     --footer-seperator-color: var(--color-brand-accent);
     --highlight-dark-background-color: transparent;
 
     background: transparent;
     overflow-x: hidden;
 }
-/* Item — white bg, gold left border, small gap between items */
+/* Item — white bg, gold left border, bottom separator */
 .accordion .accordion-item {
-    border-bottom: none;
+    border-bottom: var(--border-01) solid var(--color-border-default);
     border-left: var(--spacing-05) solid var(--accordion-rinvoq-color-accent);
     background: var(--background-color);
-    margin-bottom: var(--spacing-04);
+    margin-bottom: var(--spacing-00);
     border-radius: 0;
     overflow: hidden;
 }
