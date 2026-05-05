@@ -1,18 +1,23 @@
 import { applyCommonProps } from '../../scripts/utils.js';
 
-// Field order (non-tab fields rendered as rows):
-// label[0], srText[1], href[2], target[3], icon[4], modalId[5],
-// anchorId[6], analyticsId[7]
+// Field order matches template property order in _cta.json:
+// label[0], href[1], ariaLabel[2], ctaTarget[3], iconType[4],
+// iconFont[5], iconImage[6], iconPosition[7], modalId[8],
+// anchorId[9], analyticsId[10], ariaHidden[11]
 const CFG = {
   LABEL: 0,
-  SR_TEXT: 1,
-  HREF: 2,
+  HREF: 1,
+  ARIA_LABEL: 2,
   TARGET: 3,
-  ICON: 4,
-  MODAL_ID: 5,
-  ANCHOR_ID: 6,
-  ANALYTICS_ID: 7,
-  COUNT: 8,
+  ICON_TYPE: 4,
+  ICON_FONT: 5,
+  ICON_IMAGE: 6,
+  ICON_POSITION: 7,
+  MODAL_ID: 8,
+  ANCHOR_ID: 9,
+  ANALYTICS_ID: 10,
+  ARIA_HIDDEN: 11,
+  COUNT: 12,
 };
 
 function cellText(row, idx = 0) {
@@ -24,10 +29,12 @@ function readConfig(block) {
   const cfg = rows.slice(0, CFG.COUNT);
   return {
     label: cellText(cfg[CFG.LABEL]) || 'Button',
-    srText: cellText(cfg[CFG.SR_TEXT]),
     href: cellText(cfg[CFG.HREF]) || '#',
+    ariaLabel: cellText(cfg[CFG.ARIA_LABEL]),
     target: cellText(cfg[CFG.TARGET]) || '_self',
-    icon: cellText(cfg[CFG.ICON]),
+    iconType: cellText(cfg[CFG.ICON_TYPE]),
+    iconFont: cellText(cfg[CFG.ICON_FONT]),
+    iconImage: cellText(cfg[CFG.ICON_IMAGE]),
     modalId: cellText(cfg[CFG.MODAL_ID]),
     anchorId: cellText(cfg[CFG.ANCHOR_ID]),
     analyticsId: cellText(cfg[CFG.ANALYTICS_ID]),
@@ -65,7 +72,7 @@ function buildToggle(cfg, block) {
   const input = document.createElement('input');
   input.type = 'checkbox';
   input.className = 'cta-toggle-input';
-  if (cfg.srText) input.setAttribute('aria-label', cfg.srText);
+  if (cfg.ariaLabel) input.setAttribute('aria-label', cfg.ariaLabel);
 
   const slider = document.createElement('span');
   slider.className = 'cta-toggle-slider';
@@ -97,11 +104,11 @@ function buildLink(cfg, block) {
     el.rel = 'noopener';
   }
 
-  if (cfg.srText) el.setAttribute('aria-label', cfg.srText);
+  if (cfg.ariaLabel) el.setAttribute('aria-label', cfg.ariaLabel);
 
-  if (cfg.icon) {
+  if (cfg.iconType && cfg.iconType !== 'none') {
     const iconEl = document.createElement('span');
-    iconEl.className = `cta-icon icon-${cfg.icon}`;
+    iconEl.className = `cta-icon icon-${cfg.iconFont}`;
     iconEl.setAttribute('aria-hidden', 'true');
     if (block.classList.contains('i-b')) {
       el.prepend(iconEl);
@@ -124,11 +131,11 @@ function buildButton(cfg, block) {
   el.dataset.modalId = cfg.modalId;
   el.textContent = cfg.label;
 
-  if (cfg.srText) el.setAttribute('aria-label', cfg.srText);
+  if (cfg.ariaLabel) el.setAttribute('aria-label', cfg.ariaLabel);
 
-  if (cfg.icon) {
+  if (cfg.iconType && cfg.iconType !== 'none') {
     const iconEl = document.createElement('span');
-    iconEl.className = `cta-icon icon-${cfg.icon}`;
+    iconEl.className = `cta-icon icon-${cfg.iconFont}`;
     iconEl.setAttribute('aria-hidden', 'true');
     if (block.classList.contains('i-b')) {
       el.prepend(iconEl);
