@@ -1,8 +1,10 @@
 import { applyCommonProps } from '../../scripts/utils.js';
 
 function cellText(row) {
-  const el = row?.children?.[0];
-  return el?.textContent?.trim() || '';
+  if (!row) return '';
+  const el = row.children?.[0];
+  const text = el?.textContent?.trim() || row.textContent?.trim() || '';
+  return text;
 }
 
 function cellHref(row) {
@@ -41,8 +43,8 @@ function readConfig(block) {
       iconPosition = text;
     } else if (img) {
       iconImage = img;
-    } else if (text && /^[0-9a-f]{3,6}$/i.test(text)) {
-      iconFont = text;
+    } else if (text && /[0-9a-f]{3,6}/i.test(text) && !iconFont) {
+      [iconFont] = text.match(/[0-9a-f]{3,6}/i);
     }
   }
 
