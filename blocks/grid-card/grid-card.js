@@ -11,10 +11,39 @@ import { applyCommonProps } from '../../scripts/utils.js';
  *   </div>
  * </div>
  *
- * Table (one row): | Link | Line 1 | Line 2 | Line 3 | Line 4 | Centered (optional) |
+ * Authoring (UE): flat sibling cells — typically
+ *   div[link] · div[line1] · div[line2] · div[line3] · div[line4] · div[centered]
+ * Content is normalized toward skyrizi-hcp markup (c-risa-pri, sup citations).
  */
 
 const LINE1_CLASS = 'cta-card-line-1 abbv-icon-keyboard_arrow_right i-a';
+
+/**
+ * UE often emits &lt;strong&gt; for the brand name; Skyrizi reference uses .c-risa-pri.
+ */
+function normalizeLine1Html(html) {
+  const raw = (html || '').trim();
+  if (!raw) return '';
+  return raw
+    .replace(/<strong\b[^>]*>([\s\S]*?)<\/strong>/gi, '<span class="c-risa-pri">$1</span>')
+    .replace(/<b\b[^>]*>([\s\S]*?)<\/b>/gi, '<span class="c-risa-pri">$1</span>');
+}
+
+/**
+ * UE may output ") 10 **" instead of ")&lt;sup&gt;10&lt;/sup&gt;**".
+ */
+function normalizeLine3Html(html) {
+  const raw = (html || '').trim();
+  if (!raw) return '';
+  if (/<sup\b/i.test(raw)) return raw;
+  return raw.replace(/\)\s*([\d,†]+)\s*\*\*/g, ')<sup>$1</sup>**');
+}
+
+function normalizeFieldHtml(field, html) {
+  if (field === 'line1') return normalizeLine1Html(html);
+  if (field === 'line3') return normalizeLine3Html(html);
+  return (html || '').trim();
+}
 
 export function parseLinkCell(cell) {
   if (!cell) return { href: '#', target: '_self' };
@@ -39,11 +68,11 @@ export function isCenteredCell(cell) {
 }
 
 function getTableCells(block) {
-  const direct = [...block.children];
-  if (direct.length === 1 && direct[0].children.length >= 5) {
-    return [...direct[0].children];
+  const elements = [...block.children].filter((n) => n.nodeType === 1);
+  if (elements.length === 1 && elements[0].children.length >= 5) {
+    return [...elements[0].children].filter((n) => n.nodeType === 1);
   }
-  if (direct.length >= 5) return direct;
+  if (elements.length >= 5) return elements;
   return [];
 }
 
@@ -74,19 +103,19 @@ export function buildGridCardMarkup({
 
   const s1 = document.createElement('span');
   s1.className = LINE1_CLASS;
-  s1.innerHTML = line1 || '';
+  s1.innerHTML = normalizeFieldHtml('line1', line1);
 
   const s2 = document.createElement('span');
   s2.className = 'cta-card-line-2';
-  s2.innerHTML = line2 || '';
+  s2.innerHTML = normalizeFieldHtml('line2', line2);
 
   const s3 = document.createElement('span');
   s3.className = 'cta-card-line-3';
-  s3.innerHTML = line3 || '';
+  s3.innerHTML = normalizeFieldHtml('line3', line3);
 
   const s4 = document.createElement('span');
   s4.className = 'cta-card-line-4';
-  s4.innerHTML = line4 || '';
+  s4.innerHTML = normalizeFieldHtml('line4', line4);
 
   a.append(s1, s2, s3, s4);
   p.append(a);
