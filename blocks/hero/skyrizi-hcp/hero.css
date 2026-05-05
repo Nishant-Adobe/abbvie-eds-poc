@@ -2,6 +2,7 @@
    SKYRIZI HCP — Hero Block Overrides
    Fonts: Red Hat Display
    Profile band: dark teal (--color-background-footer #003b52)
+   Solid bg: brand primary teal (--color-brand-primary #005272)
    CTA: yellow accent (--color-brand-accent #ffce00)
    ============================================================ */
 
@@ -47,11 +48,36 @@
   color: var(--color-brand-accent);
 }
 
-/* Landing gradient: teal left-to-right fade */
+/* Landing gradient: dark teal left-to-right fade */
 .hero.landing::after {
   background: linear-gradient(
     to right,
     var(--color-background-footer) 0%,
     rgba(0, 59, 82, 0.3) 100%
   );
+}
+
+/* Solid background: brand primary teal */
+.hero.solid {
+  background-color: var(--color-brand-primary);
+}
+
+.hero.solid :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+/* Full/video overlay: teal gradient (replaces default dark overlay) */
+.hero.full::after,
+.hero.video::after {
+  background: linear-gradient(
+    to right,
+    var(--color-background-footer) 0%,
+    rgba(0, 82, 114, 0.25) 60%,
+    transparent 100%
+  );
+}
+
+.hero.full :where(a).button,
+.hero.video :where(a).button {
+  color: var(--color-brand-accent);
 }

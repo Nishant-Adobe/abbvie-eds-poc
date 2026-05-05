@@ -48,11 +48,24 @@
   color: var(--color-brand-accent);
 }
 
-.hero.landing :where(a).button {
+.hero.landing :where(a).button,
+.hero.full :where(a).button,
+.hero.video :where(a).button {
   color: var(--color-brand-accent);
 }
 
-/* Landing gradient: dark-to-transparent overlay */
-.hero.landing::after {
+/* Landing/full gradient: dark-to-transparent overlay from tokens */
+.hero.landing::after,
+.hero.full::after,
+.hero.video::after {
   background: var(--gradient-hero-overlay, linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%));
+}
+
+/* Solid background: purple */
+.hero.solid {
+  background-color: var(--color-brand-primary);
+}
+
+.hero.solid :where(a).button {
+  color: var(--color-brand-accent);
 }

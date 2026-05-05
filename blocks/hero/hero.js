@@ -43,34 +43,69 @@ export default async function decorate(block) {
     }
   }
 
-  // Promote hero image to section background.
-  // Local/import: first cell has an <img> tag.
-  // AEM Author: first cell has a reference <a> link (no <img>).
-  // In both cases, set section background-image and create an invisible
-  // spacer so the CSS aspect-ratio rules preserve the proper height.
-  if (section) {
-    const imgCell = block.querySelector(':scope > div:first-child');
-    let imgSrc = null;
-    let imgAlt = '';
+  // Eyebrow detection: first <p> before <h1>/<h2> with no links/images → .hero-eyebrow
+  const firstP = textPanel?.querySelector('p:first-child');
+  if (firstP && !firstP.querySelector('a') && !firstP.querySelector('img')) {
+    const nextEl = firstP.nextElementSibling;
+    if (nextEl?.tagName === 'H1' || nextEl?.tagName === 'H2') {
+      firstP.classList.add('hero-eyebrow');
+    }
+  }
 
-    // Local case: image is an <img> tag
-    const img = imgCell?.querySelector('img');
-    if (img?.src) {
-      imgSrc = img.src;
-      imgAlt = img.alt || '';
+  // Mobile image swap: two pictures authored = desktop + mobile responsive swap.
+  // Plain authoring: two <picture> tags in the same first-row div.
+  // UE authoring: two separate div rows in the image cell (mobileImage field).
+  const imgCell = block.querySelector(':scope > div:first-child');
+  if (imgCell) {
+    let desktopPicture = null;
+    let mobilePicture = null;
+
+    const firstRow = imgCell.querySelector(':scope > div');
+    if (firstRow) {
+      const pics = firstRow.querySelectorAll('picture');
+      if (pics.length === 2) {
+        [desktopPicture, mobilePicture] = pics;
+      }
     }
 
-    // AEM Author case: image field renders as a reference link
-    if (!imgSrc) {
-      const link = imgCell?.querySelector('a');
+    if (!desktopPicture) {
+      const rows = imgCell.querySelectorAll(':scope > div');
+      if (rows.length >= 2) {
+        desktopPicture = rows[0].querySelector('picture');
+        mobilePicture = rows[1].querySelector('picture');
+      }
+    }
+
+    if (desktopPicture && mobilePicture) {
+      const desktopImg = desktopPicture.querySelector('img');
+      const mobileImg = mobilePicture.querySelector('img');
+      if (desktopImg && mobileImg) {
+        const combinedPicture = document.createElement('picture');
+        const desktopSource = document.createElement('source');
+        desktopSource.media = '(min-width: 744px)';
+        desktopSource.srcset = desktopImg.src;
+        combinedPicture.appendChild(desktopSource);
+        combinedPicture.appendChild(mobileImg.cloneNode(true));
+        desktopPicture.replaceWith(combinedPicture);
+        mobilePicture.closest('div')?.remove();
+      }
+    }
+  }
+
+  // Promote hero image for default/profile/landing variants.
+  // Local/import: first cell has an <img> tag.
+  // AEM Author: first cell has a reference <a> link (no <img>).
+  // Converts the reference link to an <img> spacer so CSS aspect-ratio preserves height.
+  if (section) {
+    const imgCellInner = block.querySelector(':scope > div:first-child');
+    const img = imgCellInner?.querySelector('img');
+
+    if (!img) {
+      const link = imgCellInner?.querySelector('a');
       if (link?.href) {
-        imgSrc = link.href;
-        imgAlt = link.title || link.textContent || '';
-        // Replace the button/link with an invisible spacer <img>
-        // so the CSS aspect-ratio rules create proper height
         const spacer = document.createElement('img');
-        spacer.src = imgSrc;
-        spacer.alt = imgAlt;
+        spacer.src = link.href;
+        spacer.alt = link.title || link.textContent || '';
         const container = link.closest('.button-container') || link.closest('p') || link;
         container.replaceWith(spacer);
       }
@@ -109,6 +144,46 @@ export default async function decorate(block) {
             layer.classList.toggle('is-active', layer.dataset.buddyState === state);
           });
         });
+      }
+    }
+  }
+
+  // Video hero: initialize Brightcove player for background video variant.
+  // Authoring: the last <p> in the image cell must contain only the Brightcove video ID
+  // (a numeric string, e.g. "6369925747112"). The fallback poster image is authored
+  // as a <picture> before the ID paragraph. On mobile the video is suppressed.
+  // Override the Brightcove account by adding data-brightcove-account on the block element.
+  if (block.classList.contains('video')) {
+    const videoImgCell = block.querySelector(':scope > div:first-child');
+    const videoIdEl = videoImgCell?.querySelector('p:last-of-type');
+    const videoId = videoIdEl?.textContent?.trim();
+
+    if (videoId && /^\d+$/.test(videoId)) {
+      videoIdEl.remove();
+      const brightcoveAccount = block.dataset.brightcoveAccount || '2157889328001';
+
+      if (window.matchMedia('(min-width: 744px)').matches) {
+        const videoContainer = document.createElement('div');
+        videoContainer.classList.add('hero-video-bg');
+
+        const videoEl = document.createElement('video');
+        videoEl.setAttribute('autoplay', '');
+        videoEl.setAttribute('muted', '');
+        videoEl.setAttribute('loop', '');
+        videoEl.setAttribute('playsinline', '');
+        videoEl.setAttribute('data-video-id', videoId);
+        videoEl.setAttribute('data-account', brightcoveAccount);
+        videoEl.setAttribute('data-player', 'default');
+        videoEl.classList.add('video-js');
+        videoContainer.appendChild(videoEl);
+
+        const firstRow = videoImgCell.querySelector(':scope > div') || videoImgCell;
+        firstRow.appendChild(videoContainer);
+
+        const script = document.createElement('script');
+        script.src = `https://players.brightcove.net/${brightcoveAccount}/default_default/index.min.js`;
+        script.defer = true;
+        document.head.appendChild(script);
       }
     }
   }
