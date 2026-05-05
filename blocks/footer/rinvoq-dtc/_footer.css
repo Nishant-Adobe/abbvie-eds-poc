@@ -20,13 +20,14 @@
   --footer-spacing-padding-y: var(--spacing-40);
   --footer-spacing-padding-x: var(--spacing-30);
   --footer-spacing-legal-gap: var(--spacing-30);
+  --footer-content-max-width: 1200px;
 }
 
-/* Container: light, full-bleed */
+/* Container: white bg (gray scoped to .footer-columns only) */
 .footer {
-  background-color: var(--footer-color-bg);
+  background-color: var(--background-color);
   color: var(--footer-color-text);
-  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
+  padding: 0;
   margin: 0;
   max-width: none;
   border-radius: 0;
@@ -38,18 +39,71 @@
   display: none;
 }
 
-/* ── 3-column grid ──────────────────────────────────────────── */
+/* ── Footer top: indication code (white bg, ABOVE gray columns) ── */
+.footer .footer-top {
+  background-color: var(--background-color);
+  padding-block: var(--spacing-12);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
+}
+
+.footer .footer-top p {
+  margin: 0;
+  text-align: left;
+  color: var(--color-charcoal);
+  font-family: var(--footer-font-family);
+  font-size: var(--font-size-12);
+  line-height: var(--line-height-20);
+}
+
+/* ── 3-column grid (GRAY bg only here, NOT on .footer) ──────── */
 .footer .footer-columns {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-32);
   margin: 0;
-  padding: 0;
+  padding-block: var(--footer-spacing-padding-y);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
+  background-color: var(--footer-color-bg);
+  position: relative;
 }
 
 @media (min-width: 744px) {
   .footer .footer-columns {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Replace per-heading borders with a single continuous line under headings */
+  .footer .footer-column h1,
+  .footer .footer-column h2,
+  .footer .footer-column h3,
+  .footer .footer-column h4,
+  .footer .footer-column h5,
+  .footer .footer-column h6 {
+    border-bottom: none;
+  }
+
+  .footer .footer-columns::after {
+    content: '';
+    position: absolute;
+    top: calc(
+      var(--footer-spacing-padding-y) + var(--line-height-22) + var(--spacing-12)
+    );
+    left: max(
+      var(--footer-spacing-padding-x),
+      calc((100% - var(--footer-content-max-width)) / 2)
+    );
+    right: max(
+      var(--footer-spacing-padding-x),
+      calc((100% - var(--footer-content-max-width)) / 2)
+    );
+    height: 1px;
+    background-color: var(--color-black);
   }
 }
 
@@ -135,14 +189,31 @@
   }
 }
 
-/* ── Footer bottom: legal text + number + logo ──────────────── */
+/* ── Footer bottom: legal text + number + logo (GRAY bg, same as columns) ── */
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-12);
   border: none;
-  padding: var(--footer-spacing-legal-gap) 0 0;
+  padding-block: var(--footer-spacing-legal-gap);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
   margin-top: 0;
+  background-color: var(--footer-color-bg);
+  position: relative;
+}
+
+/* 1px separator between columns and legal/logo row — full viewport width */
+.footer .footer-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--color-black);
 }
 
 .footer .footer-bottom p {
@@ -185,10 +256,11 @@
   white-space: normal !important;
 }
 
-/* Legal number — small text */
+/* Legal number — small gray text */
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
   font-size: var(--font-size-12);
+  color: var(--color-pewter);
 }
 
 /* Logo — DTC has dark logo on light bg, no filter */
@@ -243,7 +315,6 @@
   .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
     grid-column: 2;
     grid-row: 2;
-    text-align: right;
     margin: 0;
   }
 }
