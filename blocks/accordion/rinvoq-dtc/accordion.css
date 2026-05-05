@@ -1088,11 +1088,13 @@
     background: var(--background-color);
 }
 .accordion .accordion-item-label.open .accordion-item-label-text,
-.accordion .accordion-item-label .accordion-item-label-text:hover {
-    font-family: var(--heading-font-family);
-    font-size: var(--body-font-size-m);
-    font-weight: var(--font-weight-heading);
-    color: var(--accordion-rinvoq-color-label);
+.accordion .accordion-item-label .accordion-item-label-text:hover,
+.accordion .accordion-item:hover .accordion-item-label p,
+.accordion .accordion-item:hover .accordion-item-label-text {
+    font-family: var(--heading-font-family) !important;
+    font-size: var(--body-font-size-m) !important;
+    font-weight: var(--font-weight-heading) !important;
+    color: var(--accordion-rinvoq-color-label) !important;
 }
 /* Open state — bright gold header, transparent left border (must come after hover) */
 .accordion .accordion-item[open] {
