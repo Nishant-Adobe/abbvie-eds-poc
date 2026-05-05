@@ -1,11 +1,35 @@
 @import '../footer.css';
+@import '../../../styles/rinvoq-hcp/tokens.css';
 
 /* ============================================================
    RINVOQ HCP — Footer brand overrides
    Live: www.rinvoqhcp.com/dermatology
-   Background (#17181b near-black), font-family (Graphik), and
-   font-size (16px) all flow through brand tokens in
-   styles/rinvoq-hcp/tokens.css. No brand-specific overrides needed.
+   - Muted gray text (--color-silver #c9c9ca, per live `.abbv-footer ul.abbv-footer-horizontal li a`)
+   - Border-top separator between link rows (--color-steel)
+   - Tighter gap to legal text section
    ============================================================ */
 
 /* stylelint-disable */
+
+/* Brand token overrides */
+.footer-wrapper {
+  /* Live: .abbv-footer ul.abbv-footer-horizontal li a { color: var(--silver); } = #c9c9ca */
+  --footer-color-text: var(--color-silver);
+
+  /* Live uses smaller legal text gap than skyrizi-hcp (~40px vs 60px) */
+  --footer-spacing-legal-gap: var(--spacing-40);
+}
+
+/* Border separator between the 2 link rows (matches live `abbv-footer-border-top`).
+   The DOM has 2 consecutive <ul>s in .footer-links-primary; second one gets the border. */
+.footer .footer-links-primary ul + ul {
+  border-top: 1px solid var(--color-steel);
+  padding-top: var(--footer-spacing-row-gap);
+}
+
+/* Legal text uses smaller font than link rows
+   (matches live `.abbv-footer .abbv-legal-text { font-size: 0.75rem }` = 12px) */
+.footer .footer-bottom {
+  --footer-font-size: var(--footer-font-size-small);
+}
+
