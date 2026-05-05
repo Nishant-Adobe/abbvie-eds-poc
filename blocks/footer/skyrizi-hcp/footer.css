@@ -3,9 +3,8 @@
 .footer-wrapper {
   margin-top: var(--spacing-n40);
 }
-
 .footer {
-  background-color: var(--color-background-footer);
+  background-color: var(--footer-background-color);
   font-size: var(--font-size-12);
   box-sizing: border-box;
   padding: var(--spacing-32) var(--spacing-35) 0;
@@ -14,16 +13,13 @@
   max-width: 1440px;
   position: relative;
 }
-
 .footer p {
   margin: var(--spacing-00);
 }
-
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
-
 .footer-bottom ul li a {
   font-family: var(--body-font-family);
   text-decoration: none;
@@ -37,13 +33,11 @@
   font-weight: var(--font-weight-400);
   letter-spacing: var(--letter-spacing-wide-04);
 }
-
 /* Bottom links */
 .footer .footer-bottom {
   border-top: 1px solid var(--footer-seperator-color);
   padding: var(--spacing-24) 0 var(--spacing-16);
 }
-
 .footer .footer-bottom ul {
   list-style: none;
   padding: var(--spacing-00);
@@ -52,21 +46,18 @@
   flex-flow: column wrap;
   gap: var(--spacing-20);
 }
-
 .footer .footer-columns {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-20);
   margin-bottom: var(--spacing-16);
 }
-
 .footer .footer-column ul {
   list-style: none;
   padding: var(--spacing-00);
   margin: var(--spacing-00);
   margin-bottom: var(--spacing-16);
 }
-
 .footer .footer-links-primary li a {
   color: var(--footer-link-color);
   margin-bottom: var(--spacing-20);
@@ -75,25 +66,20 @@
   font-family: var(--heading-font-family);
   font-weight: var(--font-weight-650);
 }
-
 .footer ul li a:hover {
   font-family: var(--roboto-bold-font-family);
   font-weight: var(--font-weight-700);
 }
-
 .footer-column li:not(:last-child) {
   margin-bottom: var(--spacing-16);
 }
-
 .footer-links-primary li:not(:last-child) {
   margin-bottom: var(--spacing-20);
 }
-
 .footer .footer-links-primary li a:hover {
   font-family: var(--heading-font-family-bold);
   font-weight: var(--font-weight-800);
 }
-
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -106,12 +92,10 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
-
 .footer .footer-links-tertiary {
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-400);
 }
-
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
   font-family: var(--body-font-family);
@@ -121,11 +105,9 @@
   font-weight: var(--font-weight-400);
   line-height: var(--line-height-20);
 }
-
 .footer .footer-links-tertiary ul {
   margin-bottom: var(--spacing-66);
 }
-
 .footer .footer-links-tertiary p {
   font-family: var(--roboto-light-font-family);
   font-weight: var(--font-weight-300);
@@ -134,21 +116,17 @@
   line-height: var(--line-height-16);
   text-align: left;
 }
-
 .footer .footer-links-tertiary p:last-child {
   margin-top: var(--spacing-30);
   text-align: right;
 }
-
 .footer-bottom img {
   width: 27px;
 }
-
 .footer .footer-logo img {
   max-width: 150px;
   height: auto;
 }
-
 .footer .footer-column p:first-child {
   font-family: var(--body-font-family);
   color: var(--color-gray-dark);
@@ -159,7 +137,6 @@
   margin-bottom: var(--spacing-16);
   text-transform: uppercase;
 }
-
 @media (min-width: 744px) {
   .footer-wrapper {
     margin-top: var(--spacing-n64);
@@ -221,41 +198,6 @@
     grid-column: auto / span 4;
   }
 }
-
-/* Back to top button */
-
-.footer-wrapper .back-to-top {
-  position: absolute;
-  top: var(--spacing-n44);
-  margin-bottom: var(--spacing-24);
-  margin-top: 0;
-  right: 1.7%;
-  transform: translateX(-50%);
-  font-weight: var(--font-weight-700);
-  height: var(--spacing-88);
-  width: var(--spacing-88);
-  border-radius: 50%;
-  background-color: var(--color-blue-light);
-  color: var(--footer-link-color);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.2s ease;
-}
-
-.footer-wrapper .back-to-top::before {
-    color: inherit;
-    content: '\e90a';
-    font-size: var(--font-size-18);
-    font-family: var(--icon-font-family);
-    position: absolute;
-}
-
-.footer-wrapper .back-to-top:focus-visible, .footer-wrapper .back-to-top:focus {
-  outline: var(--spacing-01) solid var(--footer-link-color);;
-}
-
 @media (min-width: 1024px) {
   .footer-wrapper {
     margin-top: var(--spacing-n80);
@@ -288,149 +230,135 @@
   }
 
 }
-
 /* ============================================================
-   SKYRIZI HCP — Dark teal footer (#003b52)
-   ============================================================ */
-
-/* ============================================================
-   Dark Footer — Common overrides for dark brand backgrounds
+   SKYRIZI HCP — Footer overrides
+   Live: www.skyrizihcp.com/dermatology
+   - Background: navy #071d49 (via --color-background-footer token)
+   - Two centered link rows (UL-based, gap-separated, no border)
+   - 60px gap, then legal text + legal number + AbbVie logo
+   - Live reference: skyrizi_hcp.css .abbv-footer rules
    ============================================================ */
 /* stylelint-disable */
-
+/* ── Container: flat, full-bleed, navy ──────────────────────── */
+.footer-wrapper {
+  margin-top: 0;
+}
 .footer {
   background-color: var(--color-background-footer);
+  color: #e2e4e3;
+  font-size: 14px;
+  border-radius: 0;
+  border-top-left-radius: 0;
+  max-width: none;
+  padding: 40px 20px;
+  position: relative;
 }
-
-.footer ul li a {
-  color: var(--color-text-on-dark, #fff);
-}
-
-.footer .footer-links-primary li a,
-.footer .footer-links-primary li a:hover {
-  color: var(--color-text-on-dark, #fff);
-}
-
-.footer .footer-links-secondary ul,
-.footer .footer-links-tertiary ul,
-.footer .footer-links-tertiary p {
-  color: var(--color-text-on-dark, #fff);
-}
-
-.footer .footer-links-tertiary p:last-child {
-  color: var(--color-text-on-dark, #fff);
-}
-
-.footer .footer-column p:first-child {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.footer .footer-bottom {
-  border-top-color: rgba(255, 255, 255, 0.15);
-}
-
-.footer-bottom ul li a {
-  color: var(--color-text-on-dark, #fff);
-}
-
-.footer-wrapper .back-to-top {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: var(--color-text-on-dark, #fff);
-}
-
-/* ============================================================
-   SKYRIZI HCP — Horizontal flat layout (matches live site)
-   DOM: links are in <p> tags with pipe separators, not <ul>
-   logo is in footer-bottom (Section 2)
-   ============================================================ */
-
-/* Hide empty columns (logo + primary are empty in this layout) */
-.footer .footer-logo,
-.footer .footer-links-primary {
+/* Auto-hide any empty column (depends on what's authored) */
+.footer .footer-column:empty {
   display: none;
 }
-
-/* Flat footer — no rounded corner */
-.footer {
-  border-radius: 0;
-}
-
-/* Remove ALL CAPS from link row paragraphs (base applies text-transform: uppercase to p:first-child) */
-.footer .footer-column p:first-child {
-  text-transform: none;
-}
-
-/* Link rows — centered vertical stack with generous spacing */
+/* ── Link rows ──────────────────────────────────────────────── */
 .footer .footer-columns {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-20);
-  padding: var(--spacing-32) 0;
-  margin-bottom: 0;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
 }
-
 .footer .footer-column {
   width: 100%;
-  text-align: center;
-}
-
-/* Link row paragraphs */
-.footer .footer-links-secondary p,
-.footer .footer-links-tertiary p {
-  text-align: center;
-  color: var(--color-text-on-dark, #fff);
-  font-size: 15px;
-  line-height: 1.6;
   margin: 0;
-}
-
-/* Override base :last-child right-align */
-.footer .footer-links-tertiary p:last-child {
   text-align: center;
-  margin-top: 0;
 }
-
-/* Links inside the rows */
-.footer .footer-links-secondary p a,
-.footer .footer-links-tertiary p a {
-  color: var(--color-text-on-dark, #fff);
-  font-size: 15px;
+/* Primary column may hold both link rows (when 2 ULs authored in section 1) — stack them */
+.footer .footer-links-primary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+/* Reset base "first p as label" styling that conflicts */
+.footer .footer-column p:first-child {
+  text-transform: none;
+  margin-bottom: 0;
+}
+.footer .footer-links-tertiary p:last-child {
+  margin-top: 0;
+  text-align: center;
+}
+/* UL row — flex layout, gap-separated */
+.footer .footer-links-primary ul,
+.footer .footer-links-secondary ul,
+.footer .footer-links-tertiary ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: var(--font-weight-400);
+  line-height: 1.6;
+  color: #e2e4e3;
+}
+.footer .footer-links-primary li,
+.footer .footer-links-secondary li,
+.footer .footer-links-tertiary li {
+  margin: 0;
+  padding: 0;
+}
+.footer .footer-links-primary a,
+.footer .footer-links-secondary a,
+.footer .footer-links-tertiary a {
+  color: #e2e4e3;
+  font-size: 14px;
   text-decoration: none;
   white-space: nowrap;
 }
-
-.footer .footer-links-secondary p a:hover,
-.footer .footer-links-tertiary p a:hover {
+.footer .footer-links-primary a:hover,
+.footer .footer-links-secondary a:hover,
+.footer .footer-links-tertiary a:hover {
   text-decoration: underline;
 }
-
-/* ── Footer bottom: legal text stacked above logo ─────────────────
-   DOM order: p:has(picture) = logo (first), p:not(:has(picture)) = legal (second)
-   CSS order flips them: legal full-width on top, logo right-aligned below */
+/* Backward compat: P with pipe-separated links (current authoring) */
+.footer .footer-links-secondary p,
+.footer .footer-links-tertiary p {
+  margin: 0;
+  text-align: center;
+  text-transform: none;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: var(--font-weight-400);
+  line-height: 1.6;
+  color: #e2e4e3;
+}
+/* ── Footer bottom: legal text + number + logo ──────────────── */
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: var(--spacing-24);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding: var(--spacing-40) 0 var(--spacing-24);
+  gap: 12px;
+  border: none;
+  padding: 0;
+  margin-top: 60px;
 }
-
-/* Legal text — full width, centered above logo */
-.footer .footer-bottom p:not(:has(picture)),
-.footer .footer-bottom .button-container {
-  order: 1;
-  width: 100%;
+.footer .footer-bottom p {
   margin: 0;
   text-align: center;
-  color: var(--color-text-on-dark, #fff);
+  color: #e2e4e3;
   font-size: 14px;
   line-height: 1.6;
   text-transform: none;
 }
-
-/* Strip button pill styling when legal text is authored as a button */
+.footer .footer-bottom p a {
+  color: #e2e4e3;
+  text-decoration: underline;
+}
+.footer .footer-bottom p a:hover {
+  text-decoration: none;
+}
+/* Strip button-pill styling when legal text is authored as a button (legacy fallback) */
 .footer .footer-bottom a.button,
 .footer .footer-bottom .button-container a {
   background: none !important;
@@ -438,71 +366,95 @@
   border-radius: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
-  color: var(--color-text-on-dark, #fff) !important;
+  color: #e2e4e3 !important;
   font-size: 14px !important;
   font-weight: normal !important;
-  text-decoration: none !important;
+  text-decoration: underline !important;
   text-transform: none !important;
   display: inline !important;
   white-space: normal !important;
   line-height: 1.6 !important;
 }
-
 .footer .footer-bottom a.button:hover,
 .footer .footer-bottom .button-container a:hover {
-  background: none !important;
-  text-decoration: underline !important;
+  text-decoration: none !important;
 }
-
-/* AbbVie logo — right-aligned below legal text */
-.footer .footer-bottom p:has(picture) {
-  order: 2;
-  margin: 0;
-  align-self: flex-end;
+/* Legal number — detected by .legal-number class OR by being 2nd-to-last
+   (the paragraph immediately before the logo picture) */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+  font-size: 12px;
 }
-
-.footer .footer-bottom p:has(picture) img {
+/* Logo — centered on mobile, right-aligned on desktop, white SVG/img */
+.footer .footer-bottom p:has(picture),
+.footer .footer-bottom p:has(img) {
+  margin: 12px 0 0;
+  text-align: center;
+}
+.footer .footer-bottom p:has(picture) img,
+.footer .footer-bottom p:has(img) img {
   height: 22px;
   width: auto;
-  object-fit: contain;
   filter: brightness(0) invert(1);
 }
-
-/* Legacy ul structure fallback */
+.footer .footer-bottom svg {
+  height: 22px;
+  width: auto;
+  fill: #fff;
+}
+/* Legacy ul fallback in footer-bottom */
 .footer .footer-bottom ul {
-  order: 1;
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
-  width: 100%;
 }
-
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
-  color: var(--color-text-on-dark, #fff);
+  color: #e2e4e3;
   font-size: 14px;
   text-decoration: none;
-  text-transform: none;
 }
-
-@media (max-width: 743px) {
-  .footer .footer-columns {
-    padding: var(--spacing-24) 0;
+/* ── Desktop ≥601px (matches live media query) ──────────────── */
+@media (min-width: 601px) {
+  .footer .footer-links-primary ul,
+  .footer .footer-links-secondary ul,
+  .footer .footer-links-tertiary ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
   }
 
-  .footer .footer-links-secondary p,
-  .footer .footer-links-tertiary p,
-  .footer .footer-links-tertiary p:last-child {
+  .footer .footer-bottom {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "legal legal"
+      "number logo";
+    align-items: end;
+    gap: 16px 24px;
+  }
+
+  /* Legal paragraphs — top row, full-width */
+  .footer .footer-bottom > .button-container,
+  .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
+    grid-area: legal;
+  }
+
+  /* Legal number — bottom-left */
+  .footer .footer-bottom > p.legal-number,
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+    grid-area: number;
     text-align: left;
+    margin: 0;
   }
 
-  .footer .footer-bottom p:not(:has(picture)),
-  .footer .footer-bottom .button-container {
-    text-align: left;
-  }
-
-  .footer .footer-bottom p:has(picture) {
-    align-self: flex-start;
+  /* Logo — bottom-right */
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    grid-area: logo;
+    text-align: right;
+    margin: 0;
   }
 }

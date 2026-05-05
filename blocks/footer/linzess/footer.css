@@ -3,7 +3,6 @@
 .footer-wrapper {
   margin-top: var(--spacing-n40);
 }
-
 .footer {
   background-color: var(--footer-background-color);
   font-size: var(--font-size-12);
@@ -14,16 +13,13 @@
   max-width: 1440px;
   position: relative;
 }
-
 .footer p {
   margin: var(--spacing-00);
 }
-
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
-
 .footer-bottom ul li a {
   font-family: var(--body-font-family);
   text-decoration: none;
@@ -37,13 +33,11 @@
   font-weight: var(--font-weight-400);
   letter-spacing: var(--letter-spacing-wide-04);
 }
-
 /* Bottom links */
 .footer .footer-bottom {
   border-top: 1px solid var(--footer-seperator-color);
   padding: var(--spacing-24) 0 var(--spacing-16);
 }
-
 .footer .footer-bottom ul {
   list-style: none;
   padding: var(--spacing-00);
@@ -52,21 +46,18 @@
   flex-flow: column wrap;
   gap: var(--spacing-20);
 }
-
 .footer .footer-columns {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-20);
   margin-bottom: var(--spacing-16);
 }
-
 .footer .footer-column ul {
   list-style: none;
   padding: var(--spacing-00);
   margin: var(--spacing-00);
   margin-bottom: var(--spacing-16);
 }
-
 .footer .footer-links-primary li a {
   color: var(--footer-link-color);
   margin-bottom: var(--spacing-20);
@@ -75,25 +66,20 @@
   font-family: var(--heading-font-family);
   font-weight: var(--font-weight-650);
 }
-
 .footer ul li a:hover {
   font-family: var(--roboto-bold-font-family);
   font-weight: var(--font-weight-700);
 }
-
 .footer-column li:not(:last-child) {
   margin-bottom: var(--spacing-16);
 }
-
 .footer-links-primary li:not(:last-child) {
   margin-bottom: var(--spacing-20);
 }
-
 .footer .footer-links-primary li a:hover {
   font-family: var(--heading-font-family-bold);
   font-weight: var(--font-weight-800);
 }
-
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -106,12 +92,10 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
-
 .footer .footer-links-tertiary {
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-400);
 }
-
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
   font-family: var(--body-font-family);
@@ -121,11 +105,9 @@
   font-weight: var(--font-weight-400);
   line-height: var(--line-height-20);
 }
-
 .footer .footer-links-tertiary ul {
   margin-bottom: var(--spacing-66);
 }
-
 .footer .footer-links-tertiary p {
   font-family: var(--roboto-light-font-family);
   font-weight: var(--font-weight-300);
@@ -134,21 +116,17 @@
   line-height: var(--line-height-16);
   text-align: left;
 }
-
 .footer .footer-links-tertiary p:last-child {
   margin-top: var(--spacing-30);
   text-align: right;
 }
-
 .footer-bottom img {
   width: 27px;
 }
-
 .footer .footer-logo img {
   max-width: 150px;
   height: auto;
 }
-
 .footer .footer-column p:first-child {
   font-family: var(--body-font-family);
   color: var(--color-gray-dark);
@@ -159,7 +137,6 @@
   margin-bottom: var(--spacing-16);
   text-transform: uppercase;
 }
-
 @media (min-width: 744px) {
   .footer-wrapper {
     margin-top: var(--spacing-n64);
@@ -221,41 +198,6 @@
     grid-column: auto / span 4;
   }
 }
-
-/* Back to top button */
-
-.footer-wrapper .back-to-top {
-  position: absolute;
-  top: var(--spacing-n44);
-  margin-bottom: var(--spacing-24);
-  margin-top: 0;
-  right: 1.7%;
-  transform: translateX(-50%);
-  font-weight: var(--font-weight-700);
-  height: var(--spacing-88);
-  width: var(--spacing-88);
-  border-radius: 50%;
-  background-color: var(--color-blue-light);
-  color: var(--footer-link-color);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.2s ease;
-}
-
-.footer-wrapper .back-to-top::before {
-    color: inherit;
-    content: '\e90a';
-    font-size: var(--font-size-18);
-    font-family: var(--icon-font-family);
-    position: absolute;
-}
-
-.footer-wrapper .back-to-top:focus-visible, .footer-wrapper .back-to-top:focus {
-  outline: var(--spacing-01) solid var(--footer-link-color);;
-}
-
 @media (min-width: 1024px) {
   .footer-wrapper {
     margin-top: var(--spacing-n80);
@@ -288,57 +230,44 @@
   }
 
 }
-
 /* ============================================================
    LINZESS — Purple footer (#422e83), cobrand variant (AbbVie + Ironwood)
    ============================================================ */
-
 /* ============================================================
    Dark Footer — Common overrides for dark brand backgrounds
    ============================================================ */
 /* stylelint-disable */
-
 .footer {
   background-color: var(--color-background-footer);
 }
-
 .footer ul li a {
   color: var(--color-text-on-dark, #fff);
 }
-
 .footer .footer-links-primary li a,
 .footer .footer-links-primary li a:hover {
   color: var(--color-text-on-dark, #fff);
 }
-
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul,
 .footer .footer-links-tertiary p {
   color: var(--color-text-on-dark, #fff);
 }
-
 .footer .footer-links-tertiary p:last-child {
   color: var(--color-text-on-dark, #fff);
 }
-
 .footer .footer-column p:first-child {
   color: rgba(255, 255, 255, 0.6);
 }
-
 .footer .footer-bottom {
   border-top-color: rgba(255, 255, 255, 0.15);
 }
-
 .footer-bottom ul li a {
   color: var(--color-text-on-dark, #fff);
 }
-
 .footer-wrapper .back-to-top {
   background-color: rgba(255, 255, 255, 0.15);
   color: var(--color-text-on-dark, #fff);
 }
-
-
 /* Linzess cobrand: AbbVie + Ironwood logos side-by-side in footer-logo */
 .footer .footer-logo {
   display: flex;
@@ -347,13 +276,11 @@
   align-items: center;
   gap: var(--spacing-24);
 }
-
 .footer .footer-logo img {
   max-width: 120px;
   height: auto;
   object-fit: contain;
 }
-
 /* Cobrand bottom bar: logos + copyright in a row */
 .footer .footer-bottom {
   display: flex;
@@ -361,14 +288,12 @@
   align-items: center;
   gap: var(--spacing-16);
 }
-
 .footer .footer-bottom picture,
 .footer .footer-bottom img {
   height: 28px;
   width: auto;
   object-fit: contain;
 }
-
 .footer .footer-bottom ul {
   flex-wrap: wrap;
 }

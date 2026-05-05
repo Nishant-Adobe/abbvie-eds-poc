@@ -83,16 +83,6 @@ export default async function decorate(block) {
     decorateExternalLinksUtility(columnsContainer);
   }
 
-  // Back to top button — placed on the footer-wrapper so it sits half above / half inside
-  const backToTop = document.createElement('button');
-  backToTop.className = 'back-to-top';
-  backToTop.setAttribute('aria-label', 'Back to top');
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  block.prepend(backToTop);
-
   // Handle second section (bottom links)
   if (sections.length > 1) {
     const secondSection = sections[1];
