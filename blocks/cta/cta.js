@@ -24,6 +24,11 @@ function cellText(row, idx = 0) {
   return row?.children[idx]?.textContent?.trim() || '';
 }
 
+function cellImage(row) {
+  const img = row?.querySelector('img');
+  return img ? img.src : '';
+}
+
 function readConfig(block) {
   const rows = [...block.children];
   const cfg = rows.slice(0, CFG.COUNT);
@@ -34,7 +39,8 @@ function readConfig(block) {
     target: cellText(cfg[CFG.TARGET]) || '_self',
     iconType: cellText(cfg[CFG.ICON_TYPE]),
     iconFont: cellText(cfg[CFG.ICON_FONT]),
-    iconImage: cellText(cfg[CFG.ICON_IMAGE]),
+    iconImage: cellImage(cfg[CFG.ICON_IMAGE]) || cellText(cfg[CFG.ICON_IMAGE]),
+    iconPosition: cellText(cfg[CFG.ICON_POSITION]) || 'i-a',
     modalId: cellText(cfg[CFG.MODAL_ID]),
     anchorId: cellText(cfg[CFG.ANCHOR_ID]),
     analyticsId: cellText(cfg[CFG.ANALYTICS_ID]),
@@ -93,6 +99,42 @@ function buildToggle(cfg, block) {
   return wrapper;
 }
 
+function buildIcon(cfg) {
+  if (!cfg.iconType || cfg.iconType === 'none') return null;
+
+  if (cfg.iconType === 'image' && cfg.iconImage) {
+    const iconEl = document.createElement('span');
+    iconEl.className = 'cta-icon cta-icon-image';
+    iconEl.setAttribute('aria-hidden', 'true');
+    const img = document.createElement('img');
+    img.src = cfg.iconImage;
+    img.alt = '';
+    img.loading = 'lazy';
+    iconEl.append(img);
+    return iconEl;
+  }
+
+  if (cfg.iconType === 'icon-font' && cfg.iconFont) {
+    const iconEl = document.createElement('span');
+    iconEl.className = 'cta-icon cta-icon-font';
+    iconEl.setAttribute('aria-hidden', 'true');
+    const code = cfg.iconFont.replace(/^\\u|^0x|^u\+/i, '');
+    iconEl.style.setProperty('--cta-icon-content', `'\\${code}'`);
+    return iconEl;
+  }
+
+  return null;
+}
+
+function attachIcon(el, iconEl, isBefore) {
+  if (!iconEl) return;
+  if (isBefore) {
+    el.prepend(iconEl);
+  } else {
+    el.append(iconEl);
+  }
+}
+
 function buildLink(cfg, block) {
   const el = document.createElement('a');
   el.className = 'abbv-cta';
@@ -106,16 +148,7 @@ function buildLink(cfg, block) {
 
   if (cfg.ariaLabel) el.setAttribute('aria-label', cfg.ariaLabel);
 
-  if (cfg.iconType && cfg.iconType !== 'none') {
-    const iconEl = document.createElement('span');
-    iconEl.className = `cta-icon icon-${cfg.iconFont}`;
-    iconEl.setAttribute('aria-hidden', 'true');
-    if (block.classList.contains('i-b')) {
-      el.prepend(iconEl);
-    } else {
-      el.append(iconEl);
-    }
-  }
+  attachIcon(el, buildIcon(cfg), block.classList.contains('i-b'));
 
   if (cfg.analyticsId) {
     el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
@@ -133,16 +166,7 @@ function buildButton(cfg, block) {
 
   if (cfg.ariaLabel) el.setAttribute('aria-label', cfg.ariaLabel);
 
-  if (cfg.iconType && cfg.iconType !== 'none') {
-    const iconEl = document.createElement('span');
-    iconEl.className = `cta-icon icon-${cfg.iconFont}`;
-    iconEl.setAttribute('aria-hidden', 'true');
-    if (block.classList.contains('i-b')) {
-      el.prepend(iconEl);
-    } else {
-      el.append(iconEl);
-    }
-  }
+  attachIcon(el, buildIcon(cfg), block.classList.contains('i-b'));
 
   if (cfg.analyticsId) {
     el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
@@ -157,6 +181,10 @@ export default function decorate(block) {
   const cfg = readConfig(block);
 
   if (cfg.anchorId) block.id = cfg.anchorId;
+
+  if (cfg.iconType && cfg.iconType !== 'none' && cfg.iconPosition) {
+    block.classList.add(cfg.iconPosition);
+  }
 
   block.textContent = '';
 

@@ -124,10 +124,25 @@
   position: absolute;
   display: inline-flex;
   align-items: center;
+  line-height: 1;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cta .cta-icon-font {
   font-family: var(--icon-font-family);
   font-size: 1.3rem;
-  line-height: 1;
-  top: 9px;
+}
+
+.cta .cta-icon-font::before {
+  content: var(--cta-icon-content, '\e901');
+}
+
+.cta .cta-icon-image img {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .cta.i-b .abbv-cta {
