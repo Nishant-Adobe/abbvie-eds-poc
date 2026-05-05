@@ -1,0 +1,60 @@
+{
+  "definitions": [
+    {
+      "title": "Header",
+      "id": "header",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Header",
+              "model": "header"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "header",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Layout",
+          "name": "layout"
+        },
+        {
+          "component": "select",
+          "name": "classes_layout",
+          "label": "Header Layout",
+          "value": "",
+          "description": "Classic: logo left, nav right. Lite: logo inline with nav bar (HCP / slim brands).",
+          "options": [
+            { "name": "Classic (default)", "value": "" },
+            { "name": "Lite", "value": "lite" }
+          ]
+        },
+        {
+          "component": "checkbox",
+          "name": "classes_sticky",
+          "label": "Sticky (always visible — disables scroll-hide behaviour)",
+          "value": false
+        },
+        {
+          "component": "tab",
+          "label": "Navigation",
+          "name": "navigation"
+        },
+        {
+          "component": "aem-content",
+          "name": "nav",
+          "label": "Navigation Fragment",
+          "description": "Path to the /nav page fragment that contains all navigation-content blocks."
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

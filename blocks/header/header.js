@@ -69,7 +69,7 @@ function toggleAllNavSections(expanded = false) {
  * @param {Element} navSections - The nav sections.
  * @param {boolean|null} forceExpanded - Force expansion state.
  */
-function toggleMenu(nav, navSections, forceExpanded = null) {
+function toggleMenu(nav, _navSections, forceExpanded = null) {
   if (forceExpanded === null) {
     const isSearchOpen = nav.querySelector('.menu-search')?.getAttribute('aria-expanded') === 'true';
     const expanded = forceExpanded !== null ? forceExpanded : (isSearchOpen || nav.getAttribute('aria-expanded') === 'true');
@@ -638,11 +638,127 @@ function buildMenuItem(block, isNavigation = false) {
   return li;
 }
 
+/**
+ * Builds eyebrow bars (top / bottom) from authored navigation-content blocks.
+ * Each eyebrow block has: row[0] = position text ("top"|"bottom"), row[1] = HTML content.
+ * @param {Element} headerEl - The navigation-content-container element.
+ * @returns {Array<{position: string, bar: Element}>}
+ */
+function buildEyebrows(headerEl) {
+  const result = [];
+  headerEl.querySelectorAll('.navigation-content[data-type="eyebrow"]').forEach((eb) => {
+    const rows = [...eb.children];
+    const position = rows[0]?.textContent.trim().toLowerCase() || 'top';
+    const contentRow = rows[1];
+    if (!contentRow) return;
+    const bar = createElement('div', { className: `nav-eyebrow nav-eyebrow-${position}` });
+    bar.innerHTML = contentRow.innerHTML;
+    result.push({ position, bar });
+  });
+  return result;
+}
+
+/**
+ * Builds the floating ISI compliance bar from a navigation-content block.
+ * row[0] = ISI text (richtext), row[1] = expand label, row[2] = collapse label.
+ * @param {Element} headerEl
+ * @returns {Element|null}
+ */
+function buildFloatingIsi(headerEl) {
+  const isiBlock = headerEl.querySelector('.navigation-content[data-type="floating-isi"]');
+  if (!isiBlock) return null;
+  const rows = [...isiBlock.children];
+  const expandLabel = rows[1]?.textContent.trim() || 'See Full ISI';
+  const collapseLabel = rows[2]?.textContent.trim() || 'Collapse ISI';
+
+  const bar = createElement('div', {
+    className: 'nav-floating-isi',
+    attributes: { role: 'complementary', 'aria-label': 'Important Safety Information' },
+  });
+  const textWrap = createElement('div', { className: 'nav-floating-isi-text', attributes: { 'aria-live': 'polite' } });
+  if (rows[0]) textWrap.innerHTML = rows[0].innerHTML;
+
+  const toggle = createElement('button', {
+    className: 'nav-floating-isi-toggle',
+    attributes: { type: 'button', 'aria-expanded': 'false' },
+    textContent: expandLabel,
+  });
+  toggle.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.textContent = expanded ? expandLabel : collapseLabel;
+    bar.classList.toggle('nav-floating-isi-open', !expanded);
+  });
+
+  bar.append(toggle, textWrap);
+  return bar;
+}
+
+/**
+ * Builds the CTA group (guest/user state + primary button) from a navigation-content block.
+ * row[0] = guest links (richtext), row[1] = user links (richtext),
+ * row[2] = primary CTA link (aem-content), row[3] = primary CTA label (text).
+ * @param {Element} headerEl
+ * @returns {Element|null}
+ */
+function buildCtaGroup(headerEl) {
+  const ctaBlock = headerEl.querySelector('.navigation-content[data-type="cta-group"]');
+  if (!ctaBlock) return null;
+  const rows = [...ctaBlock.children];
+
+  const group = createElement('div', { className: 'nav-cta-group' });
+
+  if (rows[0]?.innerHTML.trim()) {
+    const guestWrap = createElement('div', { className: 'nav-cta-guest' });
+    guestWrap.innerHTML = rows[0].innerHTML;
+    group.appendChild(guestWrap);
+  }
+  if (rows[1]?.innerHTML.trim()) {
+    const userWrap = createElement('div', {
+      className: 'nav-cta-user',
+      attributes: { hidden: '', 'aria-hidden': 'true' },
+    });
+    userWrap.innerHTML = rows[1].innerHTML;
+    group.appendChild(userWrap);
+  }
+
+  const ctaHref = rows[2]?.querySelector('a')?.href;
+  const ctaLabel = rows[3]?.textContent.trim();
+  if (ctaHref && ctaLabel) {
+    const btn = createElement('a', {
+      className: 'nav-cta-primary button',
+      attributes: { href: ctaHref },
+      textContent: ctaLabel,
+    });
+    group.appendChild(btn);
+  }
+
+  return group;
+}
+
+/**
+ * Wires click handlers on HCP modal links — any <a> with class "hcp-modal"
+ * or data-hcp-modal attribute intercepts navigation and shows a leave-site warning.
+ * @param {Element} container
+ */
+function wireHcpModalLinks(container) {
+  container.querySelectorAll('a.hcp-modal, a[data-hcp-modal]').forEach((link) => {
+    link.setAttribute('aria-haspopup', 'dialog');
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      // eslint-disable-next-line no-alert
+      if (window.confirm('You are about to leave this site and go to a site intended for US healthcare professionals only.\n\nDo you wish to continue?')) {
+        window.open(link.href, '_blank', 'noopener,noreferrer');
+      }
+    });
+  });
+}
+
 // Throttled scroll handler
 function handleScroll() {
   throttleRAF(() => {
     const header = document.querySelector('header');
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const heroBlock = document.querySelector('.hero.block');
     const threshold = heroBlock ? heroBlock.offsetHeight - 100 : SCROLL_THRESHOLD_DEFAULT;
     if (scrollTop > lastScrollTop && scrollTop > threshold) {
@@ -659,6 +775,10 @@ function handleScroll() {
 // Keydown handler for ESC
 function handleKeydown(e) {
   if (e.key !== 'Escape') return;
+  // Close utility dropdowns
+  document.querySelectorAll('.nav-utility button[aria-expanded="true"]').forEach((btn) => {
+    btn.setAttribute('aria-expanded', 'false');
+  });
   const navSections = document.querySelector('.nav-sections');
   if (!navSections || navSections.getAttribute('aria-expanded') === 'false') return;
   toggleAllNavSections(false);
@@ -680,19 +800,112 @@ export default async function decorate(block) {
   const header = fragment.querySelector('.navigation-content-container');
   if (!header) return;
 
+  // Block-level layout variants
+  const isLite = block.classList.contains('lite');
+  const isSticky = block.classList.contains('sticky');
+  if (isLite) document.querySelector('header').classList.add('header-lite');
+  if (isSticky) document.querySelector('header').classList.add('header-sticky');
+
   const nav = createElement('nav', { attributes: { id: 'nav', 'aria-expanded': 'false' } });
+
+  // Utility Navigation (optional — content-driven, hidden when absent)
+  const utilityBlocks = header.querySelectorAll('.navigation-content[data-type="utility-nav"]');
+  if (utilityBlocks.length) {
+    const utility = createElement('div', { className: 'section nav-utility' });
+    const utilityNav = createElement('nav', {
+      attributes: { 'aria-label': 'Utility Navigation' },
+    });
+    const utilityUl = createElement('ul', { attributes: { role: 'menubar' } });
+
+    utilityBlocks.forEach((utilBlock) => {
+      const rows = utilBlock.querySelectorAll(':scope > div');
+      rows.forEach((row) => {
+        const li = createElement('li', { attributes: { role: 'none' } });
+        const innerDiv = row.querySelector(':scope > div');
+        if (!innerDiv) return;
+        const paragraphs = innerDiv.querySelectorAll('p');
+        const firstP = paragraphs[0];
+        if (!firstP) return;
+
+        const label = firstP.textContent.trim();
+
+        // Single link — simple anchor item
+        if (paragraphs.length === 1) {
+          const link = firstP.querySelector('a');
+          if (link) {
+            link.setAttribute('role', 'menuitem');
+            li.appendChild(link.cloneNode(true));
+          } else {
+            li.textContent = label;
+          }
+        } else if (paragraphs.length === 2) {
+          // Label + single link
+          const link = paragraphs[1].querySelector('a');
+          if (link) {
+            link.setAttribute('role', 'menuitem');
+            li.appendChild(link.cloneNode(true));
+          }
+        } else {
+          // Label + multiple links = dropdown
+          const btn = createElement('button', {
+            attributes: {
+              type: 'button',
+              'aria-haspopup': 'true',
+              'aria-expanded': 'false',
+              role: 'menuitem',
+            },
+            textContent: label,
+          });
+          const submenu = createElement('ul', { attributes: { role: 'menu' } });
+          Array.from(paragraphs).slice(1).forEach((p) => {
+            const a = p.querySelector('a');
+            if (a) {
+              const subLi = createElement('li', { attributes: { role: 'none' } });
+              a.setAttribute('role', 'menuitem');
+              subLi.appendChild(a.cloneNode(true));
+              submenu.appendChild(subLi);
+            }
+          });
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            // Close other utility dropdowns
+            utilityUl.querySelectorAll('button[aria-expanded="true"]').forEach((b) => {
+              if (b !== btn) b.setAttribute('aria-expanded', 'false');
+            });
+            btn.setAttribute('aria-expanded', String(!expanded));
+          });
+          li.appendChild(btn);
+          li.appendChild(submenu);
+        }
+        utilityUl.appendChild(li);
+      });
+    });
+
+    utilityNav.appendChild(utilityUl);
+    utility.appendChild(utilityNav);
+    // Utility bar stored for later insertion before nav in wrapper
+    nav.utilityBar = utility;
+  }
 
   // Brand (Logo)
   const brandBlock = header.querySelector('.navigation-content[data-type="logo"]');
   if (brandBlock) {
-    const brandImg = brandBlock.querySelector('picture');
+    const pictures = brandBlock.querySelectorAll('picture');
+    const brandImg = pictures[0];
+    const indicationImg = pictures[1]; // optional second logo (e.g. site-indication)
     const brand = createElement('div', { className: 'section nav-brand nav-item-level-0' });
     const wrapper = createElement('div', { className: 'default-content-wrapper' });
     const p = createElement('p');
-    const a = createElement('a', { attributes: { href: '/', title: 'Button' } });
+    const a = createElement('a', { attributes: { href: '/', title: 'Home' } });
     if (brandImg) a.appendChild(brandImg);
     p.appendChild(a);
     wrapper.appendChild(p);
+    if (indicationImg) {
+      const indication = createElement('div', { className: 'nav-brand-indication' });
+      indication.appendChild(indicationImg);
+      wrapper.appendChild(indication);
+    }
     brand.appendChild(wrapper);
     nav.appendChild(brand);
   }
@@ -736,6 +949,10 @@ export default async function decorate(block) {
 
   const toolsUl = document.createElement('ul');
 
+  // CTA group (guest/user auth + primary button) — rendered BEFORE search/language-links
+  const ctaGroup = buildCtaGroup(header);
+  if (ctaGroup) toolsUl.appendChild(createElement('li', { className: 'nav-cta-item' })).appendChild(ctaGroup);
+
   const toolBlocks = header.querySelectorAll('.navigation-content[data-type="language-links"], .navigation-content[data-type="search"]');
   toolBlocks.forEach((tool) => {
     const li = buildMenuItem(tool);
@@ -748,6 +965,7 @@ export default async function decorate(block) {
     if (expandableMenu && li) li.querySelector('.submenu-level-1').appendChild(expandableMenu);
     if (li) toolsUl.appendChild(li);
   });
+
   toolsWrapper.appendChild(toolsUl);
   tools.appendChild(toolsWrapper);
   nav.appendChild(tools);
@@ -775,9 +993,28 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+
+  // Insert eyebrow bars: top goes before utility, bottom goes after utility
+  const eyebrows = buildEyebrows(header);
+  const topEyebrows = eyebrows.filter(({ position }) => position === 'top').map(({ bar }) => bar);
+  const bottomEyebrows = eyebrows.filter(({ position }) => position === 'bottom').map(({ bar }) => bar);
+  topEyebrows.forEach((bar) => navWrapper.append(bar));
+
+  if (nav.utilityBar) {
+    navWrapper.append(nav.utilityBar);
+    delete nav.utilityBar;
+  }
+  bottomEyebrows.forEach((bar) => navWrapper.append(bar));
+
   navWrapper.append(nav);
   decorateExternalLinksUtility(navWrapper);
+  wireHcpModalLinks(navWrapper);
   block.append(navWrapper);
+
+  // Floating ISI — appended to header block, sits outside nav-wrapper
+  const floatingIsi = buildFloatingIsi(header);
+  if (floatingIsi) block.append(floatingIsi);
+
   // build desktop backdrop
   const backdrop = document.createElement('div');
   backdrop.id = 'nav-backdrop';

@@ -18,12 +18,7 @@
 
   /* Header bar — overridable per brand */
   --nav-bar-bg: var(--background-color);
-  --nav-bar-bg-scroll: hsl(0deg 0% 100% / 85%);
   --nav-bar-text: var(--text-color);
-
-  /* Active/hover indicator — overridable per brand (e.g., yellow for RINVOQ HCP) */
-  --nav-active-indicator: var(--text-color);
-  --nav-active-bg: transparent;
 }
 
 /* ──────────────────────────────────────────
@@ -987,10 +982,6 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     margin: var(--spacing-00);
   }
 
-  header nav .nav-item-level-0 .default-content-wrapper>ul>li {
-    position: relative;
-  }
-
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button {
     flex: 0 1 auto;
     position: relative;
@@ -1005,7 +996,6 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     border-radius: var(--border-radius-00);
     margin: var(--spacing-00);
     font-family: var(--body-font-family);
-    white-space: nowrap;
   }
 
   header nav .nav-tools .default-content-wrapper>ul>li>button {
@@ -1014,42 +1004,29 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     padding-right: var(--spacing-10);
   }
 
-  /* Active state — no font-weight change to prevent layout shift */
-  header nav .nav-item-level-0 .default-content-wrapper ul li button.selected,
-  header nav .nav-item-level-0 .default-content-wrapper>ul>li>button[aria-current='page'] {
-    font-weight: var(--font-weight-400);
+  header nav .nav-item-level-0 .default-content-wrapper ul li button.selected {
+    font-weight: var(--font-weight-700);
   }
 
-  /* Hover/focus/expanded — use underline indicator only, no reflow */
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover,
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus,
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus-visible,
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button[aria-expanded='true'] {
-    font-weight: var(--font-weight-400);
-  }
-
-  /* Active indicator underline — always present but transparent, visible on interaction */
-  header nav .nav-item-level-0 .default-content-wrapper>ul>li>button::after {
-    background: transparent;
-    bottom: var(--spacing-00);
-    content: "";
-    height: 4px;
-    left: var(--spacing-00);
-    position: absolute;
-    width: 100%;
-    transition: background-color 0.2s ease;
+    font-weight: var(--font-weight-700);
+    font-family: var(--roboto-bold-font-family);
   }
 
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover::after,
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus::after,
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus-visible::after,
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button[aria-expanded='true']::after {
-    background: var(--nav-active-indicator, var(--text-color));
-  }
-
-  /* Active page indicator — always visible */
-  header nav .nav-item-level-0 .default-content-wrapper>ul>li>button[aria-current='page']::after {
-    background: var(--nav-active-indicator, var(--text-color));
+    background: var(--text-color);
+    bottom: var(--spacing-00);
+    content: "";
+    height: 4px;
+    left: var(--spacing-00);
+    position: absolute;
+    width: 100%;
   }
 
   header nav .nav-item-level-0 .close-btn-wrapper .close-btn {
@@ -1108,32 +1085,27 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     background-color: var(--text-color);
   }
 
-  /* Dropdown panel — positioned absolute to nav-wrapper, not parent li */
   header nav .nav-item-level-0 .default-content-wrapper>ul>li .submenu-level-1 {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
+    top: var(--nav-height);
+    left: var(--spacing-00);
+    width: 100%;
     background: var(--background-color);
     pointer-events: none;
     border-top: 0.5px solid var(--footer-seperator-color);
-    max-height: calc(100vh - var(--nav-height, 88px));
+    max-height: calc(100vh - 8.8rem);
     min-height: 12rem;
     height: auto;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    z-index: var(--z-index-2, 100);
     transform: scaleY(0);
     transform-origin: top center;
     opacity: 0;
     visibility: hidden;
-    transition: transform 0.3s ease, opacity 0.2s ease, visibility 0.3s;
+    transition: transform 0.4s ease, opacity 0.3s ease, visibility 0.4s;
   }
 
-  /* Open state — no layout shift, overlay only */
   header nav .nav-item-level-0 .default-content-wrapper>ul>li[aria-expanded="true"] .submenu-level-1 {
     transform: scaleY(1);
     opacity: 1;
@@ -1141,52 +1113,37 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     pointer-events: auto;
   }
 
-  /* Dropdown content fade-in */
   header nav .nav-item-level-0 .default-content-wrapper>ul>li .submenu-level-1>* {
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper>ul>li[aria-expanded="true"] .submenu-level-1>* {
     opacity: 1;
-    transition-delay: 0.2s;
-  }
-
-  /* Scroll hide/show — use transform instead of opacity to prevent reflow */
-  header .nav-wrapper {
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition-delay: 0.3s;
   }
 
   header.hide-nav .nav-wrapper {
-    background: var(--nav-bar-bg-scroll, hsl(0deg 0% 100% / 85%));
+    background: hsl(0deg 0% 100% / 85%);
   }
 
   header.hide-nav .nav-wrapper:hover {
-    background: var(--nav-bar-bg, var(--background-color));
-  }
-
-  /* Sections/tools visibility — use visibility + opacity for no-reflow transition */
-  header .nav-sections,
-  header .nav-tools {
-    transition: opacity 0.2s ease;
+    background: var(--background-color);
   }
 
   header.hide-nav .nav-sections,
   header.hide-nav .nav-tools {
     opacity: 0;
-    pointer-events: none;
   }
 
   header.show-nav .nav-sections,
   header.show-nav .nav-tools {
     opacity: 1;
-    pointer-events: auto;
   }
 
   nav:hover .nav-sections,
   nav:hover .nav-tools {
     opacity: 1;
-    pointer-events: auto;
   }
 
   header nav[aria-expanded='true'] .nav-sections {
@@ -1912,4 +1869,130 @@ body:has(.nav-floating-isi-open) {
 
 .header-sticky.hide-nav .nav-wrapper {
   background: var(--nav-bar-bg, var(--background-color)) !important;
+}
+/* SKYRIZI DTC Brand Overrides — Source: skyrizi.com (verified 2026-05-04) */
+
+header .nav-eyebrow-top {
+  background-color: rgb(0 118 175);
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  padding: 6px 24px;
+  line-height: 1.4;
+}
+
+header .nav-eyebrow-top a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+header .nav-utility {
+  --nav-utility-bg: rgb(255 255 255);
+  --nav-utility-text: rgb(0 118 175);
+  --nav-utility-height: 27px;
+  --nav-utility-font-size: 12px;
+  --nav-utility-link-hover: rgb(0 90 140);
+}
+
+header .nav-utility li + li::before {
+  color: rgb(0 118 175 / 50%);
+}
+
+header .nav-wrapper {
+  background-color: transparent;
+}
+
+header nav {
+  color: #fff;
+}
+
+header nav .nav-brand img {
+  filter: brightness(0) invert(1);
+  max-width: 145px;
+  width: 145px;
+  height: auto;
+}
+
+header nav {
+  --nav-height: 130px;
+}
+
+header nav .nav-hamburger button > span {
+  background: #fff;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: #fff;
+  font-weight: 600;
+}
+
+header nav .nav-tools .default-content-wrapper > ul > li > button {
+  color: #fff;
+}
+
+header nav .nav-sections .icon,
+header nav .nav-tools .icon {
+  filter: brightness(0) invert(1);
+}
+
+@media (width > 1023px) {
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:focus::after,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: #fff;
+  }
+
+  header.hide-nav .nav-wrapper {
+    background: rgb(0 118 175 / 90%);
+  }
+
+  header.hide-nav .nav-wrapper:hover {
+    background: rgb(0 118 175);
+  }
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: #fff;
+  color: var(--text-color);
+}
+
+/* SKYRIZI: Header overlays hero — hero content starts behind the nav */
+@media (width > 1023px) {
+  header.header-wrapper {
+    height: calc(36px + 27px) !important;
+    min-height: 0 !important;
+  }
+
+  /* Utility bar must sit above the nav — give it relative + z-index */
+  header .nav-utility {
+    position: relative;
+    z-index: 2;
+  }
+
+  header nav {
+    min-height: 100px;
+    padding: 0 24px;
+    overflow: visible;
+  }
+
+  header nav .nav-brand {
+    padding-left: 40px;
+    overflow: visible;
+    min-width: 200px;
+  }
+
+  header nav .nav-brand img {
+    max-width: 145px;
+    width: 145px;
+  }
+
+  header .nav-wrapper {
+    overflow: visible;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button {
+    font-size: 16px;
+    letter-spacing: 0.3px;
+  }
 }

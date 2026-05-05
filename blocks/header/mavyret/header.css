@@ -1,0 +1,90 @@
+/* MAVYRET Header Brand Overrides
+   ──────────────────────────────
+   Source: mavyret.com (verified 2025-05-01)
+   - White header background throughout
+   - Gray text links in utility bar: rgb(74, 74, 74)
+   - Primary nav: white bg, gray links, 78px height
+   - Utility: 28px height, font-size 16px
+*/
+
+/* Utility bar — white bg, dark gray text */
+header .nav-utility {
+  --nav-utility-bg: rgb(255 255 255);
+  --nav-utility-text: rgb(74 74 74);
+  --nav-utility-height: 28px;
+  --nav-utility-font-size: 14px;
+  --nav-utility-link-hover: rgb(0 0 0);
+}
+
+/* Utility bar separators — lighter gray */
+header .nav-utility li + li::before {
+  color: rgb(180 180 180);
+}
+
+/* Main header wrapper — white */
+header .nav-wrapper {
+  background-color: rgb(255 255 255);
+  border-bottom: 1px solid rgb(220 220 220);
+}
+
+header nav {
+  color: rgb(74 74 74);
+}
+
+/* Logo: full color, no filter */
+header nav .nav-brand img {
+  max-width: 10rem;
+  width: 10rem;
+}
+
+/* Primary navigation — white, dark gray text */
+header nav .nav-sections {
+  background-color: rgb(255 255 255);
+  color: rgb(74 74 74);
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: rgb(74 74 74);
+  font-weight: 400;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+/* Hover/active underline */
+@media (width > 1023px) {
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button:focus::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: rgb(74 74 74);
+  }
+
+  header.hide-nav .nav-wrapper {
+    background: rgb(255 255 255 / 95%);
+  }
+
+  header.hide-nav .nav-wrapper:hover {
+    background: rgb(255 255 255);
+  }
+}
+
+/* Submenu keeps white background */
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+/* MAVYRET: Eyebrow bar — dark charcoal matching live site */
+header .nav-eyebrow-top {
+  background-color: rgb(68 68 68);
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  padding: 8px 24px;
+  line-height: 1.4;
+}
+
+header .nav-eyebrow-top a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 700;
+}

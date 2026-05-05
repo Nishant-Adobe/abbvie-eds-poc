@@ -1,0 +1,124 @@
+/* SKYRIZI HCP Header Brand Overrides
+   ───────────────────────────────────
+   Source: skyrizihcp.com
+   - Transparent main bar (overlaid on hero)
+   - White brand explorer bar above (content-driven)
+   - White text when over hero
+   - No utility nav on homepage (empty content)
+   - Primary nav hidden on desktop
+*/
+
+/* Transparent header overlaid on hero */
+header .nav-wrapper {
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+}
+
+header nav {
+  color: #fff;
+}
+
+/* White logo */
+header nav .nav-brand img {
+  filter: brightness(0) invert(1);
+  max-width: 10rem;
+  width: 10rem;
+}
+
+header nav .nav-hamburger button > span {
+  background: #fff;
+}
+
+/* Hamburger with MENU label */
+header nav .nav-hamburger button::after {
+  content: 'MENU';
+  display: block;
+  font-size: 10px;
+  color: #fff;
+  font-weight: var(--font-weight-700);
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li > button {
+  color: #fff;
+}
+
+header nav .nav-tools .default-content-wrapper > ul > li > button {
+  color: #fff;
+}
+
+header nav .nav-sections .icon,
+header nav .nav-tools .icon {
+  filter: brightness(0) invert(1);
+}
+
+/* When sticky (scrolled), switch to solid white background */
+@media (width > 1023px) {
+  header.hide-nav .nav-wrapper {
+    background: rgb(255 255 255 / 95%);
+  }
+
+  header.hide-nav .nav-wrapper:hover {
+    background: rgb(255 255 255);
+  }
+
+  /* Dark text when over white sticky background */
+  header.hide-nav nav {
+    color: var(--text-color);
+  }
+
+  header.hide-nav nav .nav-brand img {
+    filter: none;
+  }
+
+  header.hide-nav nav .nav-hamburger button > span {
+    background: var(--text-color);
+  }
+
+  header.hide-nav nav .nav-sections .icon,
+  header.hide-nav nav .nav-tools .icon {
+    filter: none;
+  }
+}
+
+/* Primary nav sections — visible at desktop per base CSS media query.
+   On the live site, the homepage uses a specialty chooser instead of
+   traditional nav, but inner pages show full navigation.
+   The base CSS already handles mobile (display:none) vs desktop (display:block). */
+
+/* Submenu keeps white background */
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+/* SKYRIZI HCP: Override transparent to solid blue for standalone header pages */
+header .nav-wrapper {
+  background-color: rgb(0 118 175) !important;
+  position: relative !important;
+}
+
+header nav .nav-brand img {
+  filter: brightness(0) invert(1);
+  max-width: 160px;
+  width: 160px;
+}
+
+header nav .nav-hamburger button > span {
+  background: #fff;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: #fff;
+}
+
+header nav .nav-tools .default-content-wrapper > ul > li > button {
+  color: #fff;
+}
+
+header nav .nav-sections .icon,
+header nav .nav-tools .icon {
+  filter: brightness(0) invert(1);
+}

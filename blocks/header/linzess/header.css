@@ -1,0 +1,105 @@
+/* LINZESS Header Brand Overrides
+   ──────────────────────────────
+   Source: linzess.com (verified 2025-05-01)
+   - Deep dark purple/navy header overall
+   - White text throughout (utility + primary nav)
+   - Utility bar: subtle bottom border separator
+   - Primary nav: uppercase white links, LINZESS logo
+   - Total height: ~138px (28px utility + 110px nav)
+   Note: Live site uses transparent header + gradient overlay on hero.
+   EDS approximation uses solid dark background for structural simplicity.
+*/
+
+/* Utility bar — dark bg, white text */
+header .nav-utility {
+  --nav-utility-bg: rgb(35 29 29);
+  --nav-utility-text: rgb(255 255 255);
+  --nav-utility-height: 28px;
+  --nav-utility-font-size: 12px;
+  --nav-utility-link-hover: rgb(200 200 200);
+  border-bottom: 1px solid rgb(247 248 245 / 20%);
+}
+
+/* Utility bar separators */
+header .nav-utility li + li::before {
+  color: rgb(255 255 255 / 40%);
+}
+
+/* Main header bar — very dark (simulating gradient overlay) */
+header .nav-wrapper {
+  background-color: rgb(35 29 29);
+}
+
+header nav {
+  color: #fff;
+  background-color: rgb(35 29 29);
+}
+
+/* Logo: on dark background */
+header nav .nav-brand img {
+  max-width: 9rem;
+  width: 9rem;
+}
+
+/* Primary navigation — dark bg, white text */
+header nav .nav-sections {
+  background-color: rgb(35 29 29);
+  color: #fff;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Tools (search) also white */
+header nav .nav-tools {
+  color: #fff;
+}
+
+header nav .nav-tools .icon-search svg {
+  fill: #fff;
+  stroke: #fff;
+}
+
+/* Hover/active underline */
+@media (width > 1023px) {
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button:focus::after,
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: #fff;
+  }
+
+  header.hide-nav .nav-wrapper {
+    background: rgb(35 29 29 / 95%);
+  }
+
+  header.hide-nav .nav-wrapper:hover {
+    background: rgb(35 29 29);
+  }
+}
+
+/* Submenu drops down in white */
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+/* LINZESS: Eyebrow bar — dark purple matching header bg */
+header .nav-eyebrow-top {
+  background-color: rgb(35 29 29);
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  padding: 6px 24px;
+  line-height: 1.4;
+}
+
+header .nav-eyebrow-top a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 700;
+}

@@ -1,0 +1,48 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="nav" content="/drafts/nav-mavyret">
+  <meta name="brand" content="mavyret">
+  <script>
+    const brandCode = [...document.head.querySelectorAll(`meta[name="brand"]`)]
+      .map((m) => m.content)
+      .join(', ');
+    const themeCode = [...document.head.querySelectorAll(`meta[name="theme"]`)]
+      .map((m) => m.content)
+      .join(', ');
+    const brandPath = `${(brandCode !== '') ? `${brandCode}/` : ''}`;
+    const themePath = `${(themeCode !== '') ? `themes/${themeCode}/` : ''}`;
+    const stylesheets = [
+      `/styles/${brandPath}${themePath}tokens.css`,
+      `/styles/${brandPath}${themePath}styles.css`
+    ];
+    stylesheets.forEach(stylesheet => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = stylesheet;
+      link.type = "text/css";
+      document.head.appendChild(link);
+    });
+  </script>
+  <script src="/scripts/aem.js" type="module"></script>
+  <script src="/scripts/scripts.js" type="module"></script>
+  <link rel="stylesheet" href="/styles/styles.css"/>
+  <style>
+    html, body { overflow: auto !important; }
+    main { min-height: 80vh; padding-top: 200px; }
+  </style>
+</head>
+<body>
+  <header></header>
+  <main>
+    <div>
+      <div class="default-content-wrapper">
+        <h1>MAVYRET Header Preview</h1>
+        <p>Brand: mavyret • Source: mavyret.com</p>
+        <p>Expected: Light gray header + dark charcoal utility bar (rgb(68, 68, 68)) + MAVYRET logo</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
