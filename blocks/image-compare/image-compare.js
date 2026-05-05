@@ -38,6 +38,13 @@ function getText(cell) {
   return cell?.textContent?.trim() || '';
 }
 
+function cloneImg(img) {
+  if (!img) return null;
+  const clone = img.cloneNode(true);
+  clone.removeAttribute('loading');
+  return clone;
+}
+
 function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   const container = document.createElement('div');
   container.className = 'image-compare-container';
@@ -82,6 +89,301 @@ function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   return { container, beforeWrap, handle };
 }
 
+function buildTabs(labels, isToggle) {
+  const tabsDiv = document.createElement('div');
+  tabsDiv.className = isToggle
+    ? 'image-compare-tabs image-compare-tabs-toggle'
+    : 'image-compare-tabs';
+
+  labels.forEach((label, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'image-compare-tab';
+    if (i === 0) btn.classList.add('is-active');
+    btn.textContent = label;
+    tabsDiv.appendChild(btn);
+  });
+
+  return tabsDiv;
+}
+
+function buildThumbnails(images) {
+  const thumbsDiv = document.createElement('div');
+  thumbsDiv.className = 'image-compare-thumbnails';
+
+  images.forEach((img, i) => {
+    if (!img.thumbImg) return;
+    const btn = document.createElement('button');
+    btn.className = 'image-compare-thumb';
+    if (i === 0) btn.classList.add('is-active');
+
+    const thumbImg = cloneImg(img.thumbImg);
+    if (thumbImg) {
+      thumbImg.className = 'image-compare-thumb-image';
+      btn.appendChild(thumbImg);
+    }
+
+    if (img.label) {
+      const lbl = document.createElement('span');
+      lbl.className = 'image-compare-thumb-label';
+      lbl.textContent = img.label;
+      btn.appendChild(lbl);
+    }
+
+    if (img.subLabel) {
+      const sub = document.createElement('span');
+      sub.className = 'image-compare-thumb-sublabel';
+      sub.textContent = img.subLabel;
+      btn.appendChild(sub);
+    }
+
+    btn.dataset.index = i;
+    thumbsDiv.appendChild(btn);
+  });
+
+  return thumbsDiv;
+}
+
+function extractTabImages(cells, tabOffset) {
+  const images = [];
+  const img1Before = getImg(cells[tabOffset]);
+  const img1After = getImg(cells[tabOffset + 1]);
+  if (img1Before && img1After) {
+    images.push({
+      beforeImg: img1Before,
+      afterImg: img1After,
+      thumbImg: getImg(cells[tabOffset + 2]),
+      label: getText(cells[tabOffset + 3]),
+      subLabel: getText(cells[tabOffset + 4]),
+    });
+  }
+
+  const img2Before = getImg(cells[tabOffset + 5]);
+  const img2After = getImg(cells[tabOffset + 6]);
+  if (img2Before && img2After) {
+    images.push({
+      beforeImg: img2Before,
+      afterImg: img2After,
+      thumbImg: getImg(cells[tabOffset + 7]),
+      label: getText(cells[tabOffset + 8]),
+      subLabel: getText(cells[tabOffset + 9]),
+    });
+  }
+
+  return images;
+}
+
+function setupGalleryInteraction(block, container, tabSets) {
+  const tabs = block.querySelectorAll('.image-compare-tab');
+
+  function swapSliderImages(beforeImg, afterImg) {
+    const afterWrap = container.querySelector('.image-compare-after');
+    const beforeWrap = container.querySelector('.image-compare-before');
+    if (afterWrap && afterImg) {
+      afterWrap.innerHTML = '';
+      afterWrap.appendChild(cloneImg(afterImg));
+    }
+    if (beforeWrap && beforeImg) {
+      beforeWrap.innerHTML = '';
+      const bImg = cloneImg(beforeImg);
+      bImg.style.width = `${container.clientWidth}px`;
+      beforeWrap.appendChild(bImg);
+    }
+  }
+
+  function setupThumbClicks(thumbsEl, images) {
+    thumbsEl.querySelectorAll('.image-compare-thumb').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.index, 10);
+        const img = images[idx];
+        if (!img) return;
+        swapSliderImages(img.beforeImg, img.afterImg);
+        thumbsEl.querySelectorAll('.image-compare-thumb').forEach(
+          (t) => t.classList.remove('is-active'),
+        );
+        btn.classList.add('is-active');
+      });
+    });
+  }
+
+  function renderThumbnails(images) {
+    const current = block.querySelector('.image-compare-thumbnails');
+    if (!current) return;
+    const newThumbs = buildThumbnails(images);
+    current.replaceWith(newThumbs);
+    setupThumbClicks(newThumbs, images);
+  }
+
+  if (tabs.length && tabSets.length > 1) {
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        const images = tabSets[i] || [];
+        if (images.length) {
+          swapSliderImages(images[0].beforeImg, images[0].afterImg);
+        }
+        renderThumbnails(images);
+      });
+    });
+  }
+
+  const initThumbs = block.querySelector('.image-compare-thumbnails');
+  if (initThumbs && tabSets[0]) {
+    setupThumbClicks(initThumbs, tabSets[0]);
+  }
+}
+
+function decorateGallery(block, cells, startPct) {
+  const hasToggle = block.classList.contains('toggle');
+  const hasPrompt = block.classList.contains('prompt');
+  const isSkyrizi = !hasToggle;
+
+  const beforeLabel = getText(cells[COL.beforeLabelPrefix]) || 'BEFORE';
+  const afterLabel = getText(cells[COL.afterLabelPrefix]) || 'AFTER';
+  const promptText = hasPrompt
+    ? (getText(cells[COL.sliderPrompt]) || 'CLICK AND DRAG TO SEE RESULTS')
+    : '';
+  const tab1Label = getText(cells[COL.tab1Label]);
+  const tab2Label = getText(cells[COL.tab2Label]);
+  const heading = getText(cells[COL.heading]);
+  const description = cells[COL.description]?.innerHTML || '';
+
+  const tab1Images = extractTabImages(cells, COL.tab1Img1Before);
+  const tab2Images = extractTabImages(cells, COL.tab2Img1Before);
+
+  const firstImg = tab1Images[0];
+  const afterImg = firstImg?.afterImg || getImg(cells[COL.afterImage]);
+  const beforeImg = firstImg?.beforeImg || getImg(cells[COL.beforeImage]);
+  if (!afterImg || !beforeImg) return null;
+
+  block.innerHTML = '';
+
+  if (isSkyrizi) {
+    // Two-column layout: left content + right slider
+    const layout = document.createElement('div');
+    layout.className = 'image-compare-layout';
+
+    // Left content panel
+    const content = document.createElement('div');
+    content.className = 'image-compare-content';
+
+    if (tab1Label) {
+      const eyebrow = document.createElement('span');
+      eyebrow.className = 'image-compare-eyebrow';
+      eyebrow.textContent = tab1Label;
+      content.appendChild(eyebrow);
+    }
+
+    if (heading) {
+      const h = document.createElement('h2');
+      h.className = 'image-compare-heading';
+      h.textContent = heading;
+      content.appendChild(h);
+    }
+
+    if (description) {
+      const desc = document.createElement('div');
+      desc.className = 'image-compare-description';
+      desc.innerHTML = description;
+      content.appendChild(desc);
+    }
+
+    if (tab2Label) {
+      const cta = document.createElement('a');
+      cta.className = 'image-compare-cta';
+      cta.href = '#';
+      cta.textContent = `VIEW ${tab2Label.toUpperCase()} RESULTS`;
+      content.appendChild(cta);
+    }
+
+    layout.appendChild(content);
+
+    // Right slider panel
+    const sliderWrap = document.createElement('div');
+    sliderWrap.className = 'image-compare-slider-wrapper';
+
+    const sliderOpts = { beforeLabel, afterLabel };
+    const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
+    sliderWrap.appendChild(slider.container);
+
+    const bottomBar = document.createElement('div');
+    bottomBar.className = 'image-compare-bottom-bar';
+    const leftSpan = document.createElement('span');
+    leftSpan.textContent = beforeLabel;
+    const rightSpan = document.createElement('span');
+    rightSpan.textContent = afterLabel;
+    bottomBar.appendChild(leftSpan);
+    bottomBar.appendChild(rightSpan);
+    sliderWrap.appendChild(bottomBar);
+
+    const patientName = firstImg?.label || '';
+    if (patientName) {
+      const patient = document.createElement('div');
+      patient.className = 'image-compare-patient';
+      patient.textContent = patientName;
+      sliderWrap.appendChild(patient);
+    }
+
+    layout.appendChild(sliderWrap);
+    block.appendChild(layout);
+
+    // Thumbnails below layout
+    const activeImages = tab1Images.length ? tab1Images : tab2Images;
+    if (activeImages.length) {
+      const thumbsEl = buildThumbnails(activeImages);
+      block.appendChild(thumbsEl);
+    }
+
+    const tabSets = [tab1Images, tab2Images];
+    setupGalleryInteraction(block, slider.container, tabSets);
+    return { ...slider, startPct, hasPrompt: false };
+  }
+
+  // Rinvoq toggle layout (existing)
+  const wrapper = document.createElement('div');
+  wrapper.className = 'image-compare-wrapper';
+
+  if (heading) {
+    const h = document.createElement('div');
+    h.className = 'image-compare-heading';
+    h.textContent = heading;
+    wrapper.appendChild(h);
+  }
+
+  if (tab1Label && tab2Label) {
+    const tabsEl = buildTabs([tab1Label, tab2Label], hasToggle);
+    wrapper.appendChild(tabsEl);
+  }
+
+  const sliderOpts = { beforeLabel, afterLabel };
+  if (promptText) sliderOpts.prompt = promptText;
+
+  const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
+  wrapper.appendChild(slider.container);
+
+  if (firstImg?.label) {
+    const galleryContent = document.createElement('div');
+    galleryContent.className = 'image-compare-gallery-content';
+    galleryContent.setAttribute('data-caption', firstImg.label);
+    wrapper.appendChild(galleryContent);
+  }
+
+  const activeImages = tab1Images.length ? tab1Images : tab2Images;
+  if (activeImages.length) {
+    const thumbsEl = buildThumbnails(activeImages);
+    wrapper.appendChild(thumbsEl);
+  }
+
+  block.appendChild(wrapper);
+
+  const tabSets = [tab1Images, tab2Images];
+  setupGalleryInteraction(block, slider.container, tabSets);
+
+  return { ...slider, startPct, hasPrompt: !!promptText };
+}
+
+/* --- Simple slider builders (non-gallery) --- */
+
 function buildRinvoq(block, afterImg, beforeImg, opts) {
   const slider = buildSliderContainer(afterImg, beforeImg, opts);
   const { container } = slider;
@@ -119,7 +421,6 @@ function buildSkyrizi(block, afterImg, beforeImg, opts) {
 
 function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
   const afterImg = container.querySelector('.image-compare-after img');
-  const beforeImg = container.querySelector('.image-compare-before img');
 
   function setPosition(pct) {
     const p = Math.min(1, Math.max(0, pct));
@@ -127,7 +428,8 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
   }
 
   function fixBeforeWidth() {
-    if (beforeImg) beforeImg.style.width = `${container.clientWidth}px`;
+    const bImg = container.querySelector('.image-compare-before img');
+    if (bImg) bImg.style.width = `${container.clientWidth}px`;
   }
 
   if (afterImg) {
@@ -166,7 +468,7 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
   });
 }
 
-/* --- Legacy format: cells[0]=afterImg, cells[1]=beforeImg, cells[2]=pct --- */
+/* --- Legacy format --- */
 function decorateLegacy(block, cells) {
   const afterImg = cells[0]?.querySelector('img');
   const beforeImg = cells[1]?.querySelector('img');
@@ -196,7 +498,7 @@ function decorateLegacy(block, cells) {
   return { ...parts, startPct, hasPrompt: true };
 }
 
-/* --- Key-value row format: each row has [fieldName, fieldValue] --- */
+/* --- Key-value row format --- */
 function parseKeyValueRows(rows) {
   const data = {};
   const tabs = [];
@@ -216,7 +518,8 @@ function parseKeyValueRows(rows) {
       || key === 'afterImage' || key === 'thumbnail'
       || key === 'thumbnailLabel' || key === 'thumbnailSubLabel')) {
       const imgs = currentTab.images;
-      if (!imgs.length || (key === 'beforeImage' && imgs[imgs.length - 1].beforeImg)) {
+      if (!imgs.length
+        || (key === 'beforeImage' && imgs[imgs.length - 1].beforeImg)) {
         imgs.push({});
       }
       const entry = imgs[imgs.length - 1];
@@ -243,7 +546,6 @@ function decorateKeyValue(block, rows) {
   if (!afterImg || !beforeImg) return null;
 
   const hasToggle = block.classList.contains('toggle');
-
   block.innerHTML = '';
 
   if (!hasToggle) {
@@ -266,30 +568,24 @@ function decorateKeyValue(block, rows) {
   return { ...parts, startPct: 0.5, hasPrompt: true };
 }
 
-/* --- UE model-order format: single row with 28+ columns --- */
+/* --- UE model-order format --- */
 function decorateModelFormat(block, cells) {
+  const startPct = (parseFloat(getText(cells[COL.initialPosition])) || 50) / 100;
+  const hasGallery = block.classList.contains('gallery');
+
+  if (hasGallery) {
+    return decorateGallery(block, cells, startPct);
+  }
+
   const afterImg = getImg(cells[COL.afterImage]);
   const beforeImg = getImg(cells[COL.beforeImage]);
-  const startPct = (parseFloat(getText(cells[COL.initialPosition])) || 50) / 100;
   if (!afterImg || !beforeImg) return null;
 
-  const hasToggle = block.classList.contains('toggle');
   const hasPrompt = block.classList.contains('prompt');
-  const isSkyrizi = !hasToggle && block.classList.contains('gallery');
+  const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
 
   block.innerHTML = '';
 
-  if (isSkyrizi) {
-    const opts = {
-      beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE | WEEK 0',
-      afterLabel: getText(cells[COL.afterLabelPrefix]) || 'AFTER | WEEK 16',
-      patientName: getText(cells[COL.tab1Img1Label]) || '',
-    };
-    const parts = buildSkyrizi(block, afterImg, beforeImg, opts);
-    return { ...parts, startPct, hasPrompt: false };
-  }
-
-  const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
   const opts = {
     beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE',
     afterLabel: getText(cells[COL.afterLabelPrefix]) || 'AFTER',
@@ -297,7 +593,7 @@ function decorateModelFormat(block, cells) {
     captionHtml: cells[COL.description]?.innerHTML || '',
   };
   const parts = buildRinvoq(block, afterImg, beforeImg, opts);
-  return { ...parts, startPct, hasPrompt };
+  return { ...parts, startPct, hasPrompt: !!promptText };
 }
 
 function detectFormat(block) {
