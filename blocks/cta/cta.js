@@ -1,21 +1,5 @@
 import { applyCommonProps } from '../../scripts/utils.js';
 
-// Field order matches model fields in _cta.json (excluding tabs):
-// 0:label, 1:href, 2:ariaLabel, 3:ctaTarget, 4:modalId,
-// 5:iconType, 6:iconFont, 7:iconImage, 8:iconPosition, 9:ariaHidden
-const CFG = {
-  LABEL: 0,
-  HREF: 1,
-  ARIA_LABEL: 2,
-  TARGET: 3,
-  MODAL_ID: 4,
-  ICON_TYPE: 5,
-  ICON_FONT: 6,
-  ICON_IMAGE: 7,
-  ICON_POSITION: 8,
-  ARIA_HIDDEN: 9,
-};
-
 function cellText(row) {
   const el = row?.children?.[0];
   return el?.textContent?.trim() || '';
@@ -36,17 +20,42 @@ function cellImage(row) {
 
 function readConfig(block) {
   const rows = [...block.children];
+  const label = cellText(rows[0]) || 'Button';
+  const href = cellHref(rows[1]) || '#';
+  const ariaLabel = cellText(rows[2]) || '';
+  const target = cellText(rows[3]) || '_self';
+  const modalId = cellText(rows[4]) || '';
+
+  let iconType = 'none';
+  let iconFont = '';
+  let iconImage = '';
+  let iconPosition = block.classList.contains('i-b') ? 'i-b' : 'i-a';
+
+  for (let i = 5; i < rows.length; i += 1) {
+    const text = cellText(rows[i]);
+    const img = cellImage(rows[i]);
+
+    if (text === 'icon-font' || text === 'image' || text === 'none') {
+      iconType = text;
+    } else if (text === 'i-a' || text === 'i-b') {
+      iconPosition = text;
+    } else if (img) {
+      iconImage = img;
+    } else if (text && /^[0-9a-f]{3,6}$/i.test(text)) {
+      iconFont = text;
+    }
+  }
+
   return {
-    label: cellText(rows[CFG.LABEL]) || 'Button',
-    href: cellHref(rows[CFG.HREF]) || '#',
-    ariaLabel: cellText(rows[CFG.ARIA_LABEL]),
-    target: cellText(rows[CFG.TARGET]) || '_self',
-    modalId: cellText(rows[CFG.MODAL_ID]),
-    iconType: cellText(rows[CFG.ICON_TYPE]) || 'none',
-    iconFont: cellText(rows[CFG.ICON_FONT]),
-    iconImage: cellImage(rows[CFG.ICON_IMAGE]) || cellText(rows[CFG.ICON_IMAGE]),
-    iconPosition: cellText(rows[CFG.ICON_POSITION])
-      || (block.classList.contains('i-b') ? 'i-b' : 'i-a'),
+    label,
+    href,
+    ariaLabel,
+    target,
+    modalId,
+    iconType,
+    iconFont,
+    iconImage,
+    iconPosition,
   };
 }
 
@@ -118,8 +127,11 @@ function buildIcon(cfg) {
     const iconEl = document.createElement('span');
     iconEl.className = 'cta-icon cta-icon-font';
     iconEl.setAttribute('aria-hidden', 'true');
-    const code = cfg.iconFont.replace(/^\\u|^0x|^u\+/i, '');
-    iconEl.textContent = String.fromCharCode(parseInt(code, 16));
+    const code = cfg.iconFont.replace(/^[/\\]?(?:u\+?|0x|x)?/i, '').trim();
+    const charCode = parseInt(code, 16);
+    if (!Number.isNaN(charCode) && charCode > 0) {
+      iconEl.textContent = String.fromCharCode(charCode);
+    }
     return iconEl;
   }
 
