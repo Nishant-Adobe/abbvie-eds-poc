@@ -201,3 +201,87 @@
   min-width: var(--spacing-16);
   min-height: var(--spacing-16);
 }
+
+/* ---- Dark variant: full-width teal bar (skyrizihcp.com PsA efficacy page) ---- */
+
+.accordion.accordion-dark {
+  background: transparent;
+}
+
+.accordion.accordion-dark .accordion-item {
+  border-bottom: none;
+  background: var(--color-brand-primary);
+  margin-bottom: var(--spacing-08);
+}
+
+.accordion.accordion-dark summary,
+.accordion.accordion-dark .accordion-item-label {
+  padding: var(--spacing-16) var(--spacing-24);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+}
+
+.accordion.accordion-dark .accordion-item-label p,
+.accordion.accordion-dark .accordion-item-label h2,
+.accordion.accordion-dark .accordion-item-label h3,
+.accordion.accordion-dark .accordion-item-label h4,
+.accordion.accordion-dark .accordion-item-label h5,
+.accordion.accordion-dark .accordion-item-label h6 {
+  color: var(--color-text-on-dark);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+  font-size: var(--font-size-h2);
+  text-transform: uppercase;
+}
+
+/* Dark variant icon — white chevron down/up */
+.accordion.accordion-dark summary::after {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  min-width: var(--spacing-24);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='white'/%3E%3C/svg%3E") center / contain no-repeat;
+  font-family: inherit;
+  font-size: 0;
+  transform: none;
+  transition: transform 0.2s ease;
+}
+
+.accordion.accordion-dark .accordion-item[open] summary::after {
+  transform: rotate(180deg);
+}
+
+/* Dark variant hover */
+.accordion.accordion-dark .accordion-item:hover summary {
+  background: var(--color-brand-primary-dark);
+}
+
+/* Dark variant open state */
+.accordion.accordion-dark .accordion-item[open] summary {
+  background: var(--color-brand-primary);
+}
+
+/* Dark variant body */
+.accordion.accordion-dark .accordion-item-body {
+  padding: var(--spacing-24) var(--spacing-24) var(--spacing-32);
+  background: var(--color-background-light);
+}
+
+.accordion.accordion-dark .accordion-item-body p {  /* stylelint-disable-line no-descending-specificity */
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-16);
+  line-height: 1.5;
+}
+
+/* Dark variant — prevent heading change on hover */
+.accordion.accordion-dark .accordion-item:hover .accordion-item-label p,
+.accordion.accordion-dark .accordion-item-label.open .accordion-item-label-text,
+.accordion.accordion-dark .accordion-item-label .accordion-item-label-text:hover {
+  color: var(--color-text-on-dark);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+  font-size: var(--font-size-h2);
+}
