@@ -308,8 +308,10 @@ function detectFormat(block) {
   const firstCells = [...firstRow.children];
 
   if (rows.length === 1 && firstCells.length > 10) return 'model';
-  if (firstCells[0]?.querySelector('img')) return 'legacy';
-  if (rows.length > 1 && firstCells.length === 2) return 'keyvalue';
+  if (rows.length <= 7 && firstCells[0]?.querySelector('img')) return 'legacy';
+  if (rows.length > 1 && firstCells.length === 2
+    && firstRow.children[0]?.textContent?.trim()) return 'keyvalue';
+  if (rows.length > 10 && firstCells.length === 1) return 'model-rows';
   if (rows.length === 1 && firstCells.length >= 5) return 'model';
 
   return 'legacy';
@@ -327,6 +329,9 @@ export default async function decorate(block) {
   } else if (format === 'keyvalue') {
     const rows = [...block.children];
     result = decorateKeyValue(block, rows);
+  } else if (format === 'model-rows') {
+    const cells = [...block.children].map((row) => row.children[0]);
+    result = decorateModelFormat(block, cells);
   } else {
     const cells = [...block.children[0].children];
     result = decorateModelFormat(block, cells);
