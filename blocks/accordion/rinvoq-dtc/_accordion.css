@@ -9,7 +9,7 @@
     --accordion-rinvoq-color-text: var(--color-text-heading);
     --accordion-rinvoq-color-body: var(--text-color);
     --accordion-rinvoq-color-label: var(--color-text-heading);
-    --accordion-rinvoq-color-border: #e6e6e6;
+    --accordion-rinvoq-color-hover-bg: var(--color-brand-accent-butter);
     --footer-seperator-color: var(--color-brand-accent);
     --highlight-dark-background-color: transparent;
 
@@ -17,20 +17,20 @@
     overflow-x: hidden;
 }
 
-/* Item — white bg, thin outer border, 10px gold left bar, 15px gap */
+/* Item — white bg, gold left border, gap between items */
 .accordion .accordion-item {
-    border: var(--border-01) solid var(--accordion-rinvoq-color-border);
-    border-left: var(--spacing-10) solid var(--accordion-rinvoq-color-accent);
+    border-bottom: var(--border-01) solid var(--color-border-default);
+    border-left: var(--spacing-05) solid var(--accordion-rinvoq-color-accent);
     background: var(--background-color);
-    margin-bottom: var(--spacing-15);
-    border-radius: var(--spacing-03);
+    margin-bottom: var(--spacing-16);
+    border-radius: 0;
     overflow: hidden;
 }
 
-/* Summary — circle icon left, text follows */
+/* Summary — circle icon left, text follows, compact height */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: var(--spacing-16) var(--spacing-20);
+    padding: var(--spacing-10) var(--spacing-16);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -42,11 +42,11 @@
 
 /* Focus */
 .accordion summary:focus-visible {
-    outline: var(--border-02) solid var(--accordion-rinvoq-color-accent);
+    outline: var(--spacing-02) solid var(--accordion-rinvoq-color-accent);
     outline-offset: var(--spacing-02);
 }
 
-/* Label text — charcoal, bold */
+/* Label text — dark gold, bold */
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
@@ -79,12 +79,28 @@
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-/* Open state — gold header, transparent left border */
+/* Hover — no background or font change */
+.accordion .accordion-item:hover summary {
+    background: var(--background-color);
+}
+
+.accordion .accordion-item-label.open .accordion-item-label-text,
+.accordion .accordion-item-label .accordion-item-label-text:hover,
+.accordion .accordion-item:hover .accordion-item-label p,
+.accordion .accordion-item:hover .accordion-item-label-text {
+    font-family: var(--heading-font-family) !important;
+    font-size: var(--body-font-size-m) !important;
+    font-weight: var(--font-weight-heading) !important;
+    color: var(--accordion-rinvoq-color-label) !important;
+}
+
+/* Open state — bright gold header, transparent left border (must come after hover) */
 .accordion .accordion-item[open] {
     border-left-color: transparent;
 }
 
-.accordion .accordion-item[open] summary {
+.accordion .accordion-item[open] summary,
+.accordion .accordion-item[open]:hover summary {
     background: var(--accordion-rinvoq-color-accent);
 }
 

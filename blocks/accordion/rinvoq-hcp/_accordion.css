@@ -1,21 +1,20 @@
 @import '../accordion.css';
 @import '../../../styles/rinvoq-hcp/tokens.css';
 
-/* Rinvoq HCP accordion — inline-toggle style */
+/* Rinvoq HCP accordion — inline-toggle is the default style */
 .accordion {
-    --accordion-toggle-color-text: var(--color-text-heading);
-    --accordion-toggle-color-chevron: #c8373e;
-    --accordion-toggle-color-separator: var(--color-iron);
+    --accordion-toggle-color-text: var(--color-accordion-text);
+    --accordion-toggle-color-chevron: var(--color-accordion-accent);
+    --accordion-toggle-color-separator: var(--color-accordion-separator);
     --accordion-toggle-font-size: var(--body-font-size-s);
-    --accordion-toggle-tab-color-active: var(--color-text-heading);
-    --accordion-toggle-tab-color-inactive: #767688;
-    --accordion-toggle-tab-color-indicator: #c8373e;
-    --accordion-hcp-color-dark-separator: rgb(255 255 255 / 20%);
+    --accordion-toggle-tab-color-active: var(--color-accordion-text);
+    --accordion-toggle-tab-color-inactive: var(--color-accordion-tab-inactive);
+    --accordion-toggle-tab-color-indicator: var(--color-accordion-accent);
     --footer-seperator-color: var(--color-brand-primary);
     --highlight-dark-background-color: var(--color-brand-primary);
 
     background: var(--background-color);
-    margin-bottom: 0;
+    margin-bottom: var(--spacing-00);
 }
 
 .accordion .accordion-block-heading-wrapper {
@@ -28,7 +27,7 @@
 
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: var(--spacing-10) 0;
+    padding: var(--spacing-10) var(--spacing-00);
     display: flex;
     align-items: center;
     gap: var(--spacing-08);
@@ -50,18 +49,18 @@
     content: '';
     display: inline-block;
     flex-shrink: 0;
-    width: 7px;
-    height: 7px;
-    border-right: 2px solid var(--accordion-toggle-color-chevron);
-    border-bottom: 2px solid var(--accordion-toggle-color-chevron);
+    width: var(--spacing-08);
+    height: var(--spacing-08);
+    border-right: var(--border-02) solid var(--accordion-toggle-color-chevron);
+    border-bottom: var(--border-02) solid var(--accordion-toggle-color-chevron);
     transform: rotate(45deg);
-    transition: transform var(--transition-duration-fast) var(--transition-easing-standard);
-    margin-top: -3px;
+    transition: transform 0.2s ease;
+    margin-top: var(--spacing-neg-03, -3px);
 }
 
 .accordion .accordion-item[open] summary::before {
     transform: rotate(-135deg);
-    margin-top: 3px;
+    margin-top: var(--spacing-03, 3px);
 }
 
 .accordion .accordion-item-label p,
@@ -99,7 +98,7 @@
 }
 
 .accordion .accordion-item-body {
-    padding: var(--spacing-16) 0 var(--spacing-24);
+    padding: var(--spacing-16) var(--spacing-00) var(--spacing-24);
     background: var(--background-color);
 }
 
@@ -130,15 +129,15 @@
 
 .accordion .accordion-item-body .tabs .tabs-list {
     border-bottom: var(--border-02) solid var(--accordion-toggle-color-separator);
-    gap: 0;
+    gap: var(--spacing-00);
     margin-bottom: var(--spacing-16);
 }
 
 .accordion .accordion-item-body .tabs .tabs-list button {
     background: none;
     border: none;
-    border-bottom: var(--spacing-03) solid transparent;
-    margin-bottom: -2px;
+    border-bottom: var(--spacing-03, 3px) solid transparent;
+    margin-bottom: var(--spacing-neg-02, -2px);
     padding: var(--spacing-08) var(--spacing-20) var(--spacing-10);
     color: var(--accordion-toggle-tab-color-inactive);
     font-size: var(--accordion-toggle-font-size);
@@ -176,7 +175,7 @@
 }
 
 .accordion.accordion-dark .accordion-item {
-    border-bottom-color: var(--accordion-hcp-color-dark-separator);
+    border-bottom-color: rgb(255 255 255 / 0.2);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
