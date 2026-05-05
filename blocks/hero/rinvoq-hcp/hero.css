@@ -2,6 +2,7 @@
    RINVOQ HCP — Hero Block Overrides
    Fonts: Graphik family
    Profile band: charcoal (--color-charcoal #25282a)
+   Solid bg: charcoal
    CTA: plum (--link-color #90124a)
    ============================================================ */
 
@@ -43,12 +44,22 @@
   color: var(--color-brand-accent);
 }
 
-/* CTA button: plum */
+/* CTA: plum on light bg, gold on dark bg */
 .hero :where(a).button {
   color: var(--color-text-link);
 }
 
-/* Landing CTA: gold accent on dark bg */
-.hero.landing :where(a).button {
+.hero.landing :where(a).button,
+.hero.full :where(a).button,
+.hero.video :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+/* Solid background: charcoal */
+.hero.solid {
+  background-color: var(--color-charcoal);
+}
+
+.hero.solid :where(a).button {
   color: var(--color-brand-accent);
 }

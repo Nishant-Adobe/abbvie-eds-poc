@@ -38,13 +38,15 @@
   color: var(--color-text-on-dark);
 }
 
-/* Dual-CTA primary button: plum */
+/* CTA: plum link color */
 .hero :where(a).button {
   color: var(--link-color);
 }
 
-/* Landing CTA: white on dark overlay */
-.hero.landing :where(a).button {
+/* Landing/full/video CTA: white on dark overlay */
+.hero.landing :where(a).button,
+.hero.full :where(a).button,
+.hero.video :where(a).button {
   color: var(--color-text-on-dark);
 }
 
@@ -55,4 +57,38 @@
     var(--color-background-container) 0%,
     rgba(0, 59, 82, 0.3) 100%
   );
+}
+
+/* Full/video overlay: teal gradient */
+.hero.full::after,
+.hero.video::after {
+  background: linear-gradient(
+    to right,
+    var(--color-background-container) 0%,
+    rgba(0, 59, 82, 0.25) 60%,
+    transparent 100%
+  );
+}
+
+/* Solid background: light gray */
+.hero.solid {
+  background-color: var(--color-background-light);
+}
+
+.hero.solid h1,
+.hero.solid h2,
+.hero.solid h3 {
+  color: var(--color-text-heading-brand);
+}
+
+.hero.solid p {
+  color: var(--text-color);
+}
+
+.hero.solid .hero-eyebrow {
+  color: var(--color-text-heading-brand);
+}
+
+.hero.solid :where(a).button {
+  color: var(--link-color);
 }
