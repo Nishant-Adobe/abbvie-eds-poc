@@ -1,33 +1,34 @@
-/*
- * Cards Grid — flex strip container only.
- * Card visuals live in ../grid-card/grid-card.css (imported below).
- */
-
-@import url("../grid-card/grid-card.css");
-
-.block.cards-grid .abbv-flex-container-v2 {
-  display: flex;
+@font-face {
+  font-family: "abbv-iconFont";
+  src: url("https://www.skyrizihcp.com/etc/clientlibs/common-elements/clientlibs/framework/ui/fonts/abbv_iconFont.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-.block.cards-grid .cta-card-container {
+@font-face {
+  font-family: "Univers Regular";
+  font-weight: 400;
+  src: url("https://www.skyrizihcp.com/content/dam/skyrizihcpivy/fonts/bf8f8741-5f64-4db9-a877-a44624092e68.woff2")
+    format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Univers Bold";
+  font-weight: 700;
+  src: url("https://www.skyrizihcp.com/content/dam/skyrizihcpivy/fonts/3bdb4597-ff70-447c-8620-8836686bf840.woff2")
+    format("woff2");
+  font-display: swap;
+}
+
+.cta-card-grid-container {
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 32px auto 24px;
-}
-
-.block.cards-grid .cta-card-container--home {
-  margin: 4px auto;
-}
-
-.block.cards-grid .cta-card-container--home .rich-text .cta-card p a {
-  width: 290px;
-  padding: 20px 24px;
-}
-
-.block.cards-grid .cta-card-container_top {
+  margin-top: 4px;
+  margin-right: auto;
   margin-bottom: 0;
-}
-
-.block.cards-grid .cta-card-container_bottom {
-  margin-top: 0;
+  margin-left: auto;
+  background: #d1f1fc;
 }
