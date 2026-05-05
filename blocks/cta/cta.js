@@ -1,76 +1,53 @@
 import { applyCommonProps } from '../../scripts/utils.js';
 
+// Field order matches model fields in _cta.json (excluding tabs):
+// 0:label, 1:href, 2:ariaLabel, 3:ctaTarget, 4:modalId,
+// 5:iconType, 6:iconFont, 7:iconImage, 8:iconPosition, 9:ariaHidden
+const CFG = {
+  LABEL: 0,
+  HREF: 1,
+  ARIA_LABEL: 2,
+  TARGET: 3,
+  MODAL_ID: 4,
+  ICON_TYPE: 5,
+  ICON_FONT: 6,
+  ICON_IMAGE: 7,
+  ICON_POSITION: 8,
+  ARIA_HIDDEN: 9,
+};
+
 function cellText(row) {
-  return row?.children[0]?.textContent?.trim() || '';
+  const el = row?.children?.[0];
+  return el?.textContent?.trim() || '';
 }
 
 function cellHref(row) {
   const a = row?.querySelector('a');
-  return a ? a.href : cellText(row);
+  return a ? a.getAttribute('href') || a.href : cellText(row);
 }
 
 function cellImage(row) {
   const img = row?.querySelector('img');
-  return img ? img.src : '';
+  if (img) return img.getAttribute('src') || img.src;
+  const pic = row?.querySelector('picture source');
+  if (pic) return pic.getAttribute('srcset');
+  return '';
 }
 
 function readConfig(block) {
   const rows = [...block.children];
-  const cfg = {
-    label: 'Button',
-    href: '#',
-    ariaLabel: '',
-    target: '_self',
-    modalId: '',
-    iconType: 'none',
-    iconFont: '',
-    iconImage: '',
-    iconPosition: '',
+  return {
+    label: cellText(rows[CFG.LABEL]) || 'Button',
+    href: cellHref(rows[CFG.HREF]) || '#',
+    ariaLabel: cellText(rows[CFG.ARIA_LABEL]),
+    target: cellText(rows[CFG.TARGET]) || '_self',
+    modalId: cellText(rows[CFG.MODAL_ID]),
+    iconType: cellText(rows[CFG.ICON_TYPE]) || 'none',
+    iconFont: cellText(rows[CFG.ICON_FONT]),
+    iconImage: cellImage(rows[CFG.ICON_IMAGE]) || cellText(rows[CFG.ICON_IMAGE]),
+    iconPosition: cellText(rows[CFG.ICON_POSITION])
+      || (block.classList.contains('i-b') ? 'i-b' : 'i-a'),
   };
-
-  const propMap = {
-    label: (r) => { cfg.label = cellText(r) || cfg.label; },
-    href: (r) => { cfg.href = cellHref(r) || cfg.href; },
-    ariaLabel: (r) => { cfg.ariaLabel = cellText(r); },
-    ctaTarget: (r) => { cfg.target = cellText(r) || cfg.target; },
-    modalId: (r) => { cfg.modalId = cellText(r); },
-    iconType: (r) => { cfg.iconType = cellText(r) || cfg.iconType; },
-    iconFont: (r) => { cfg.iconFont = cellText(r); },
-    iconImage: (r) => { cfg.iconImage = cellImage(r) || cellText(r); },
-    iconPosition: (r) => { cfg.iconPosition = cellText(r); },
-  };
-
-  const propEl = rows[0]?.querySelector('[data-aue-prop]');
-  if (propEl) {
-    rows.forEach((row) => {
-      const prop = row.querySelector('[data-aue-prop]');
-      if (prop) {
-        const name = prop.getAttribute('data-aue-prop');
-        if (propMap[name]) propMap[name](row);
-      }
-    });
-  } else {
-    const values = rows.map((row) => ({
-      text: cellText(row),
-      href: cellHref(row),
-      img: cellImage(row),
-    }));
-    cfg.label = values[0]?.text || cfg.label;
-    cfg.href = values[1]?.href || cfg.href;
-    cfg.ariaLabel = values[2]?.text || '';
-    cfg.target = values[3]?.text || cfg.target;
-    cfg.modalId = values[4]?.text || '';
-    cfg.iconType = values[5]?.text || cfg.iconType;
-    cfg.iconFont = values[6]?.text || '';
-    cfg.iconImage = values[7]?.img || values[7]?.text || '';
-    cfg.iconPosition = values[8]?.text || '';
-  }
-
-  if (!cfg.iconPosition) {
-    cfg.iconPosition = block.classList.contains('i-b') ? 'i-b' : 'i-a';
-  }
-
-  return cfg;
 }
 
 function getVariant(block) {
@@ -86,7 +63,6 @@ function pushAnalytics(cfg, block, action) {
   window.dataLayer.push({
     event: 'cta_interaction',
     cta_action: action,
-    cta_id: cfg.analyticsId,
     cta_label: cfg.label,
     cta_variant: getVariant(block),
   });
@@ -115,12 +91,10 @@ function buildToggle(cfg, block) {
 
   wrapper.append(input, slider, labelSpan);
 
-  if (cfg.analyticsId) {
-    input.addEventListener('change', () => {
-      const action = input.checked ? 'toggle_on' : 'toggle_off';
-      pushAnalytics(cfg, block, action);
-    });
-  }
+  input.addEventListener('change', () => {
+    const action = input.checked ? 'toggle_on' : 'toggle_off';
+    pushAnalytics(cfg, block, action);
+  });
 
   return wrapper;
 }
@@ -161,7 +135,7 @@ function attachIcon(el, iconEl, isBefore) {
   }
 }
 
-function buildLink(cfg, block) {
+function buildLink(cfg) {
   const el = document.createElement('a');
   el.className = 'abbv-cta';
   el.href = cfg.href;
@@ -176,14 +150,10 @@ function buildLink(cfg, block) {
 
   attachIcon(el, buildIcon(cfg), cfg.iconPosition === 'i-b');
 
-  if (cfg.analyticsId) {
-    el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
-  }
-
   return el;
 }
 
-function buildButton(cfg, block) {
+function buildButton(cfg) {
   const el = document.createElement('button');
   el.type = 'button';
   el.className = 'abbv-cta';
@@ -193,10 +163,6 @@ function buildButton(cfg, block) {
   if (cfg.ariaLabel) el.setAttribute('aria-label', cfg.ariaLabel);
 
   attachIcon(el, buildIcon(cfg), cfg.iconPosition === 'i-b');
-
-  if (cfg.analyticsId) {
-    el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
-  }
 
   return el;
 }
@@ -219,9 +185,9 @@ export default function decorate(block) {
   if (isToggle(block)) {
     element = buildToggle(cfg, block);
   } else if (cfg.modalId) {
-    element = buildButton(cfg, block);
+    element = buildButton(cfg);
   } else {
-    element = buildLink(cfg, block);
+    element = buildLink(cfg);
   }
 
   wrapper.append(element);
