@@ -1,61 +1,77 @@
 @import '../footer.css';
+@import '../../../styles/mavyret/tokens.css';
 
 /* ============================================================
-   MAVYRET — Dark navy footer (#071d49), muted text
+   MAVYRET HCP — Footer brand overrides
+   Live: www.mavyret.com/hcp
+   - Burnt-orange bg (--color-background-footer #c23802)
+   - White text + white underlined links
+   - Two horizontal link rows separated by a 1px white border
+   - AbbVie logo (white SVG) bottom-right; legal-number bottom-left
    ============================================================ */
 
-/* ============================================================
-   Dark Footer — Common overrides for dark brand backgrounds
-   ============================================================ */
 /* stylelint-disable */
 
+/* Brand token overrides */
+.footer-wrapper {
+  --footer-color-bg: var(--color-background-footer);
+  --footer-color-text: var(--color-text-on-dark);
+  --footer-color-link: var(--color-text-on-dark);
+}
+
+/* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
+   add bottom padding so logo/legal-number don't touch the footer's bottom edge */
 .footer {
-  background-color: var(--color-background-footer);
+  padding: 0 var(--footer-spacing-padding-x) var(--spacing-20);
 }
 
-.footer ul li a {
-  color: var(--color-text-on-dark, #fff);
+/* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0 */
+.footer .footer-links-primary ul {
+  padding: var(--spacing-24) 0;
+  margin: var(--spacing-04) 0 0;
 }
 
-.footer .footer-links-primary li a,
-.footer .footer-links-primary li a:hover {
-  color: var(--color-text-on-dark, #fff);
+/* Reset the column's flex gap — UL padding handles vertical spacing */
+.footer .footer-links-primary {
+  gap: 0;
 }
 
-.footer .footer-links-secondary ul,
-.footer .footer-links-tertiary ul,
-.footer .footer-links-tertiary p {
-  color: var(--color-text-on-dark, #fff);
+/* Border separator on second UL (matches live `abbv-footer-border-top`) */
+.footer .footer-links-primary ul + ul {
+  border-top: 1px solid var(--color-text-on-dark);
 }
 
-.footer .footer-links-tertiary p:last-child {
-  color: var(--color-text-on-dark, #fff);
+/* Underline all link text (live mavyret HCP renders links underlined) */
+.footer .footer-links-primary li a {
+  text-decoration: underline;
 }
 
-.footer .footer-column p:first-child {
-  color: rgba(255, 255, 255, 0.6);
-}
-
+/* Footer bottom: legal text uses smaller font, no flex gap (use padding instead) */
 .footer .footer-bottom {
-  border-top-color: rgba(255, 255, 255, 0.15);
+  --footer-font-size: var(--footer-font-size-small);
+  gap: 0;
+  margin-top: 0;
 }
 
-.footer-bottom ul li a {
-  color: var(--color-text-on-dark, #fff);
+/* Live: .abbv-legal-number { padding: 48px 0 0 } — 48px top space */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+  padding-top: var(--spacing-48);
 }
 
-.footer-wrapper .back-to-top {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: var(--color-text-on-dark, #fff);
+/* Live: .abbv-footer .logo { padding: 48px 0 0 } — same as legal-number */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  padding-top: var(--spacing-48);
+  margin: 0;
 }
 
+/* Logo — white SVG/PNG on burnt-orange bg */
+.footer .footer-bottom p:has(picture) img,
+.footer .footer-bottom p:has(img) img {
+  filter: brightness(0) invert(1);
+}
 
-/* Mavyret uses a lighter muted text color on its dark navy background */
-.footer ul li a,
-.footer .footer-links-primary li a,
-.footer .footer-links-secondary ul,
-.footer .footer-links-tertiary ul,
-.footer .footer-links-tertiary p,
-.footer-bottom ul li a {
-  color: var(--color-text-footer, #e2e4e3);
+.footer .footer-bottom svg {
+  fill: var(--color-text-on-dark);
 }
