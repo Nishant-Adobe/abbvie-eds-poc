@@ -14,9 +14,10 @@
               "href": "/link",
               "ariaLabel": "",
               "ctaTarget": "_self",
-              "iconPosition": "none",
+              "iconType": "none",
               "iconFont": "",
               "iconImage": "",
+              "iconPosition": "i-a",
               "modalId": "",
               "anchorId": "",
               "analyticsInteractionId": "",
@@ -84,14 +85,14 @@
         {
           "component": "select",
           "valueType": "string",
-          "name": "iconPosition",
-          "label": "Icon Position",
+          "name": "iconType",
+          "label": "Icon Type",
           "value": "none",
-          "description": "Icon position relative to button text",
+          "description": "Icon type for the button",
           "options": [
             { "name": "None", "value": "none" },
-            { "name": "Before (left)", "value": "i-b" },
-            { "name": "After (right)", "value": "i-a" }
+            { "name": "Icon Font", "value": "icon-font" },
+            { "name": "Image", "value": "image" }
           ]
         },
         {
@@ -101,7 +102,7 @@
           "label": "Button Font Icon",
           "value": "",
           "description": "Font icon name for button",
-          "condition": { "!==": [{ "var": "iconPosition" }, "none"] }
+          "condition": { "===": [{ "var": "iconType" }, "icon-font"] }
         },
         {
           "component": "reference",
@@ -110,7 +111,20 @@
           "label": "Button Image Icon",
           "description": "Image icon for button",
           "multi": false,
-          "condition": { "!==": [{ "var": "iconPosition" }, "none"] }
+          "condition": { "===": [{ "var": "iconType" }, "image"] }
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "iconPosition",
+          "label": "Icon Position",
+          "value": "i-a",
+          "description": "Select whether the icon is placed before or after your button text",
+          "options": [
+            { "name": "Before (left)", "value": "i-b" },
+            { "name": "After (right)", "value": "i-a" }
+          ],
+          "condition": { "in": [{ "var": "iconType" }, ["icon-font", "image"]] }
         },
         {
           "component": "boolean",
@@ -134,8 +148,8 @@
             { "name": "Secondary", "value": "abbv-button-secondary" },
             { "name": "Tertiary", "value": "abbv-button-tertiary" },
             { "name": "Plain link", "value": "abbv-button-plain" },
-            { "name": "Toggle (round)", "value": "abbv-switch abbv-round" },
-            { "name": "Toggle (square)", "value": "abbv-switch abbv-square" }
+            { "name": "Toggle (round)", "value": "abbv-switch-round" },
+            { "name": "Toggle (square)", "value": "abbv-switch-square" }
           ]
         },
         {

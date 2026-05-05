@@ -3419,22 +3419,22 @@
       {
         "component": "select",
         "valueType": "string",
-        "name": "iconPosition",
-        "label": "Icon Position",
+        "name": "iconType",
+        "label": "Icon Type",
         "value": "none",
-        "description": "Icon position relative to button text",
+        "description": "Icon type for the button",
         "options": [
           {
             "name": "None",
             "value": "none"
           },
           {
-            "name": "Before (left)",
-            "value": "i-b"
+            "name": "Icon Font",
+            "value": "icon-font"
           },
           {
-            "name": "After (right)",
-            "value": "i-a"
+            "name": "Image",
+            "value": "image"
           }
         ]
       },
@@ -3446,11 +3446,11 @@
         "value": "",
         "description": "Font icon name for button",
         "condition": {
-          "!==": [
+          "===": [
             {
-              "var": "iconPosition"
+              "var": "iconType"
             },
-            "none"
+            "icon-font"
           ]
         }
       },
@@ -3462,11 +3462,40 @@
         "description": "Image icon for button",
         "multi": false,
         "condition": {
-          "!==": [
+          "===": [
             {
-              "var": "iconPosition"
+              "var": "iconType"
             },
-            "none"
+            "image"
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "iconPosition",
+        "label": "Icon Position",
+        "value": "i-a",
+        "description": "Select whether the icon is placed before or after your button text",
+        "options": [
+          {
+            "name": "Before (left)",
+            "value": "i-b"
+          },
+          {
+            "name": "After (right)",
+            "value": "i-a"
+          }
+        ],
+        "condition": {
+          "in": [
+            {
+              "var": "iconType"
+            },
+            [
+              "icon-font",
+              "image"
+            ]
           ]
         }
       },
@@ -3506,11 +3535,11 @@
           },
           {
             "name": "Toggle (round)",
-            "value": "abbv-switch abbv-round"
+            "value": "abbv-switch-round"
           },
           {
             "name": "Toggle (square)",
-            "value": "abbv-switch abbv-square"
+            "value": "abbv-switch-square"
           }
         ]
       },

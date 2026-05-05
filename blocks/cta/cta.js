@@ -37,7 +37,7 @@ function readConfig(block) {
 function getVariant(block) {
   const variants = [
     'abbv-button-primary', 'abbv-button-secondary', 'abbv-button-tertiary',
-    'abbv-button-plain', 'abbv-switch',
+    'abbv-button-plain', 'abbv-switch-round', 'abbv-switch-square',
   ];
   return variants.find((v) => block.classList.contains(v)) || 'abbv-button-primary';
 }
@@ -54,7 +54,8 @@ function pushAnalytics(cfg, block, action) {
 }
 
 function isToggle(block) {
-  return block.classList.contains('abbv-switch');
+  return block.classList.contains('abbv-switch-round')
+    || block.classList.contains('abbv-switch-square');
 }
 
 function buildToggle(cfg, block) {
