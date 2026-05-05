@@ -6,10 +6,10 @@
 .accordion {
     --accordion-linzess-bg-item: var(--linz-purple);
     --accordion-linzess-bg-item-hover: var(--color-brand-primary);
-    --accordion-linzess-color-label: #fff;
+    --accordion-linzess-color-label: var(--linz-white);
     --accordion-linzess-color-body: var(--text-color);
     --accordion-linzess-radius: var(--linz-rounded-corner-sm);
-    --accordion-linzess-gap: 10px;
+    --accordion-linzess-gap: var(--spacing-10);
     --footer-seperator-color: transparent;
     --highlight-dark-background-color: transparent;
 
@@ -28,11 +28,11 @@
 /* Summary row */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: 20px 24px;
+    padding: var(--spacing-20) var(--spacing-24);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: var(--spacing-16);
     background: var(--accordion-linzess-bg-item);
     color: var(--accordion-linzess-color-label);
     cursor: pointer;
@@ -40,8 +40,8 @@
 
 /* Focus */
 .accordion summary:focus-visible {
-    outline: 2px solid var(--linz-orange);
-    outline-offset: 2px;
+    outline: var(--border-02) solid var(--linz-orange);
+    outline-offset: var(--border-02);
     background: var(--accordion-linzess-bg-item);
 }
 
@@ -66,9 +66,9 @@
     content: '';
     display: block;
     flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    min-width: 22px;
+    width: var(--spacing-24);
+    height: var(--spacing-24);
+    min-width: var(--spacing-24);
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
     transition: transform 0.2s ease;
 }
