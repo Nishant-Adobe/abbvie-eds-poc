@@ -1165,30 +1165,29 @@
     font-size: var(--font-size-accordion);
     text-transform: uppercase;
 }
-/* Icon — circled +/− in green */
-.accordion-icon-font .icon-plus::after,
-.accordion-icon-font .icon-minus::after,
-.accordion-icon-font .item-icon-plus::after,
-.accordion-icon-font .item-icon-minus::after {
+/* Icon — green circled + via summary::after (works without icon-font class) */
+.accordion summary::after {
     content: '';
-    position: static;
     display: block;
     flex-shrink: 0;
     width: var(--spacing-24);
     height: var(--spacing-24);
     min-width: var(--spacing-24);
-    min-height: var(--spacing-24);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%2376bd22' stroke-width='2' fill='none'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='%2376bd22' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: transform 0.2s ease;
     font-family: inherit;
     font-size: 0;
     transform: none;
 }
-.accordion-icon-font .icon-plus::after,
-.accordion-icon-font .item-icon-plus::after {
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%2376bd22' stroke-width='2' fill='none'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='%2376bd22' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-.accordion-icon-font .icon-minus::after,
-.accordion-icon-font .item-icon-minus::after {
+.accordion .accordion-item[open] summary::after {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%2376bd22' stroke-width='2' fill='none'/%3E%3Cpath d='M7 12h10' stroke='%2376bd22' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* Also cover icon-font variants */
+.accordion-icon-font .icon-plus::after,
+.accordion-icon-font .icon-minus::after,
+.accordion-icon-font .item-icon-plus::after,
+.accordion-icon-font .item-icon-minus::after {
+    display: none !important;
 }
 /* Hover/Open — no background change */
 .accordion .accordion-item:hover summary,
