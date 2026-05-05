@@ -4,10 +4,10 @@
 /* ============================================================
    MAVYRET HCP — Footer brand overrides
    Live: www.mavyret.com/hcp
-   - Burnt-orange bg (--color-background-footer #c23802)
-   - White text + white underlined links
+   - Burnt-orange bg (--color-background-footer #c23802) edge-to-edge
+   - Content constrained to centered max-width, LEFT-aligned within
    - Two horizontal link rows separated by a 1px white border
-   - AbbVie logo (white SVG) bottom-right; legal-number bottom-left
+   - Legal text full-width; legal-number bottom-LEFT, logo bottom-RIGHT
    ============================================================ */
 
 /* stylelint-disable */
@@ -17,18 +17,45 @@
   --footer-color-bg: var(--color-background-footer);
   --footer-color-text: var(--color-text-on-dark);
   --footer-color-link: var(--color-text-on-dark);
+  --footer-content-max-width: 1200px;
+
+  /* Live: .abbv-footer { background: linear-gradient(180deg, #c23802 0, #920 100%) } */
+  --footer-bg-gradient: linear-gradient(
+    180deg,
+    var(--color-background-footer) 0%,
+    var(--color-background-footer-end) 100%
+  );
+
+  /* Live: body { font-family: "Roboto"; font-size: 1rem; line-height: 1.45 } */
+  --footer-font-family: 'Roboto', sans-serif;
+  --footer-font-size: var(--font-size-16);
+  --footer-line-height: var(--line-height-24);
 }
 
-/* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
-   add bottom padding so logo/legal-number don't touch the footer's bottom edge */
+/* Container — gradient bg full width, content centered with max-width via padding-inline trick */
 .footer {
-  padding: 0 var(--footer-spacing-padding-x) var(--spacing-20);
+  background: var(--footer-bg-gradient);
+  padding-block: var(--spacing-32);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
 }
 
-/* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0 */
+/* ── Link rows: horizontal, left-aligned, gap-separated ──────── */
+.footer .footer-column {
+  text-align: left;
+}
+
+/* Tight vertical rhythm between the two link rows */
 .footer .footer-links-primary ul {
-  padding: var(--spacing-24) 0;
-  margin: var(--spacing-04) 0 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: var(--spacing-04) 0;
+  margin: 0;
+  gap: var(--spacing-32);
 }
 
 /* Reset the column's flex gap — UL padding handles vertical spacing */
@@ -36,40 +63,61 @@
   gap: 0;
 }
 
-/* Border separator on second UL (matches live `abbv-footer-border-top`) */
-.footer .footer-links-primary ul + ul {
-  border-top: 1px solid var(--color-text-on-dark);
-}
-
 /* Underline all link text (live mavyret HCP renders links underlined) */
 .footer .footer-links-primary li a {
   text-decoration: underline;
 }
 
-/* Footer bottom: legal text uses smaller font, no flex gap (use padding instead) */
+/* ── Footer bottom: grid — legal text full width, legal-number left, logo right ── */
 .footer .footer-bottom {
-  --footer-font-size: var(--footer-font-size-small);
-  gap: 0;
-  margin-top: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--spacing-24);
+  row-gap: var(--spacing-16);
+  align-items: start;
+  margin-top: var(--spacing-32);
+  padding: 0;
 }
 
-/* Live: .abbv-legal-number { padding: 48px 0 0 } — 48px top space */
-.footer .footer-bottom > p.legal-number,
-.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-  padding-top: var(--spacing-48);
-}
-
-/* Live: .abbv-footer .logo { padding: 48px 0 0 } — same as legal-number */
-.footer .footer-bottom > p:has(picture),
-.footer .footer-bottom > p:has(img) {
-  padding-top: var(--spacing-48);
+.footer .footer-bottom p {
+  text-align: left;
   margin: 0;
 }
 
-/* Logo — white SVG/PNG on burnt-orange bg */
+/* Legal text paragraphs span both grid columns */
+.footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number) {
+  grid-column: 1 / -1;
+}
+
+/* MAVYRET® trademark line (3rd from end) — pull tight to "© 2025" paragraph above
+   to mimic live's single <p>"© 2025…<br>MAVYRET®…"</p> structure */
+.footer .footer-bottom > p:nth-last-child(3):not(:has(picture)):not(:has(img)):not(.legal-number) {
+  margin-top: calc(-1 * var(--spacing-12));
+}
+
+/* Legal-number paragraph — bottom-LEFT (matches live `.abbv-legal-number`) */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+  grid-column: 1;
+  font-size: var(--footer-font-size-small);
+  padding-top: var(--spacing-48);
+  text-align: left;
+}
+
+/* Logo paragraph — bottom-RIGHT (matches live `.abbv-footer .logo` with text-align:right) */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  grid-column: 2;
+  text-align: right;
+  align-self: end;
+  padding-top: var(--spacing-48);
+}
+
+/* Logo — DA delivers a white-bg JPG; invert + screen blend to render as white logo on orange */
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
-  filter: brightness(0) invert(1);
+  filter: invert(1);
+  mix-blend-mode: screen;
 }
 
 .footer .footer-bottom svg {
