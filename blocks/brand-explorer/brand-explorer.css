@@ -4,20 +4,18 @@
 .brand-explorer-section {
   position: relative;
   width: 100%;
-  max-width: 100vw;
   z-index: 100;
   margin: 0;
   padding: 0;
   display: block;
-  overflow: hidden;
 }
 
 .brand-explorer-section .default-content-wrapper,
 .brand-explorer-section .brand-explorer-wrapper {
-  max-width: 100%;
+  max-width: none;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .brand-explorer {
@@ -30,8 +28,6 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  max-width: 100vw;
 }
 
 .brand-explorer div {
@@ -697,4 +693,24 @@
   .brand-explorer-modal .brand-explorer-modal-btn {
     width: 100%;
   }
+}
+
+/* ── container overflow fix ─────────────────────────────────── */
+.brand-explorer-container,
+.brand-explorer-container .default-content-wrapper,
+.brand-explorer-container .brand-explorer-wrapper {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.brand-explorer-container .brand-explorer {
+  margin: 0;
+  width: 100%;
+}
+
+.brand-explorer-container .brand-explorer-bar {
+  width: 100%;
 }
