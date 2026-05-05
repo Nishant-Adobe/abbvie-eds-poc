@@ -217,7 +217,7 @@
 .footer .footer-bottom p:has(img) img {
   height: 22px;
   width: auto;
-  filter: brightness(0) invert(1);
+  mix-blend-mode: screen;
 }
 
 .footer .footer-bottom svg {
@@ -241,6 +241,20 @@
   text-decoration: none;
 }
 
+/* Force anchors inside footer-bottom paragraphs to inherit text styling */
+.footer .footer-bottom p a {
+  color: #e2e4e3;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-decoration: underline;
+}
+
+.footer .footer-bottom p a:hover {
+  text-decoration: none;
+}
+
 /* ── Desktop ≥601px (matches live media query) ──────────────── */
 @media (min-width: 601px) {
   .footer .footer-links-primary ul,
@@ -255,31 +269,29 @@
     margin-top: 60px;
     display: grid;
     grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "legal legal"
-      "number logo";
-    align-items: end;
-    gap: 16px 24px;
+    column-gap: 24px;
+    row-gap: 12px;
   }
 
-  /* Legal paragraphs — top row, full-width */
+  /* Legal text paragraphs — each takes its own row, full-width */
   .footer .footer-bottom > .button-container,
   .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
-    grid-area: legal;
+    grid-column: 1 / -1;
+    margin: 0;
   }
 
-  /* Legal number — bottom-left */
+  /* Legal number — bottom-left of its own row */
   .footer .footer-bottom > p.legal-number,
   .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-    grid-area: number;
+    grid-column: 1;
     text-align: left;
     margin: 0;
   }
 
-  /* Logo — bottom-right */
+  /* Logo — bottom-right (same row as legal number due to grid auto-placement) */
   .footer .footer-bottom > p:has(picture),
   .footer .footer-bottom > p:has(img) {
-    grid-area: logo;
+    grid-column: 2;
     text-align: right;
     margin: 0;
   }
