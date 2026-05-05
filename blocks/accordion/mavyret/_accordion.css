@@ -94,9 +94,14 @@
     display: none !important;
 }
 
-/* Hover — border color changes to green */
-.accordion .accordion-item:hover {
+/* Hover — border color changes to green (closed items only) */
+.accordion .accordion-item:not([open]):hover {
     border-color: var(--color-green-flash);
+}
+
+/* Open state — keep default border */
+.accordion .accordion-item[open] {
+    border-color: var(--accordion-mav-border-color);
 }
 
 .accordion .accordion-item:hover summary,
