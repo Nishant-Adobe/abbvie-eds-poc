@@ -1,61 +1,249 @@
 @import '../footer.css';
+@import '../../../styles/rinvoq-dtc/tokens.css';
 
 /* ============================================================
-   RINVOQ DTC — Near-black footer (#17181b), gold back-to-top accent
+   RINVOQ DTC — Footer brand overrides
+   Live: www.rinvoq.com/atopic-dermatitis
+   - Light gray bg (--color-glacier #f5f5f5)
+   - 3-column grid layout (each col: H5 + vertical UL)
+   - Magenta links (--color-plum #90124a)
+   - Logo on bottom-left, indication code + legal text on right
    ============================================================ */
 
-/* ============================================================
-   Dark Footer — Common overrides for dark brand backgrounds
-   ============================================================ */
 /* stylelint-disable */
 
+/* Brand token overrides */
+.footer-wrapper {
+  --footer-color-bg: var(--color-glacier);
+  --footer-color-text: var(--color-charcoal);
+  --footer-color-link: var(--color-plum);
+  --footer-spacing-padding-y: var(--spacing-40);
+  --footer-spacing-padding-x: var(--spacing-30);
+  --footer-spacing-legal-gap: var(--spacing-30);
+}
+
+/* Container: light, full-bleed */
 .footer {
-  background-color: var(--color-background-footer);
+  background-color: var(--footer-color-bg);
+  color: var(--footer-color-text);
+  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
+  margin: 0;
+  max-width: none;
+  border-radius: 0;
+  border-top-left-radius: 0;
 }
 
-.footer ul li a {
-  color: var(--color-text-on-dark, #fff);
+/* Hide any empty column */
+.footer .footer-column:empty {
+  display: none;
 }
 
-.footer .footer-links-primary li a,
-.footer .footer-links-primary li a:hover {
-  color: var(--color-text-on-dark, #fff);
+/* ── 3-column grid ──────────────────────────────────────────── */
+.footer .footer-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-32);
+  margin: 0;
+  padding: 0;
 }
 
-.footer .footer-links-secondary ul,
-.footer .footer-links-tertiary ul,
-.footer .footer-links-tertiary p {
-  color: var(--color-text-on-dark, #fff);
+@media (min-width: 744px) {
+  .footer .footer-columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.footer .footer-links-tertiary p:last-child {
-  color: var(--color-text-on-dark, #fff);
+/* Each column — left-aligned */
+.footer .footer-column {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Reset legacy "first p as label" */
 .footer .footer-column p:first-child {
-  color: rgba(255, 255, 255, 0.6);
+  text-transform: none;
+  margin-bottom: 0;
 }
 
+/* Column heading (H5) */
+.footer .footer-column h1,
+.footer .footer-column h2,
+.footer .footer-column h3,
+.footer .footer-column h4,
+.footer .footer-column h5,
+.footer .footer-column h6 {
+  color: var(--color-charcoal);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-22);
+  margin: 0 0 var(--spacing-16) 0;
+  padding-bottom: var(--spacing-12);
+  border-bottom: 1px solid var(--color-silver);
+}
+
+/* Vertical link list */
+.footer .footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  font-family: var(--footer-font-family);
+}
+
+.footer .footer-column li {
+  margin: 0;
+  padding: 0;
+}
+
+/* High-specificity link override (matches base `.footer .footer-links-primary li a`) */
+.footer .footer-column li a,
+.footer .footer-column ul li a {
+  color: var(--color-plum);
+  font-family: var(--footer-font-family);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-400);
+  line-height: var(--line-height-20);
+  margin: 0;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.footer .footer-column li a:hover {
+  font-family: var(--footer-font-family);
+  font-weight: var(--font-weight-400);
+  text-decoration: underline;
+}
+
+/* Override base @media font-size bumps */
+@media (min-width: 744px) {
+  .footer .footer-column li a {
+    font-size: var(--font-size-14);
+    line-height: var(--line-height-20);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer .footer-column li a {
+    font-size: var(--font-size-14);
+    line-height: var(--line-height-20);
+  }
+}
+
+/* ── Footer bottom: legal text + number + logo ──────────────── */
 .footer .footer-bottom {
-  border-top-color: rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  border: none;
+  padding: var(--footer-spacing-legal-gap) 0 0;
+  margin-top: 0;
 }
 
-.footer-bottom ul li a {
-  color: var(--color-text-on-dark, #fff);
+.footer .footer-bottom p {
+  margin: 0;
+  text-align: left;
+  color: var(--color-charcoal);
+  font-family: var(--footer-font-family);
+  font-size: var(--font-size-12);
+  line-height: var(--line-height-20);
+  text-transform: none;
 }
 
-.footer-wrapper .back-to-top {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: var(--color-text-on-dark, #fff);
+.footer .footer-bottom p a {
+  color: var(--color-plum);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-decoration: underline;
 }
 
-
-/* Rinvoq DTC uses gold accent for interactive elements */
-.footer-wrapper .back-to-top {
-  background-color: var(--color-brand-accent, #ffd100);
-  color: var(--color-charcoal, #25282a);
+.footer .footer-bottom p a:hover {
+  text-decoration: none;
 }
 
-.footer-wrapper .back-to-top::before {
-  color: var(--color-charcoal, #25282a);
+/* Strip button styling on legacy authoring */
+.footer .footer-bottom a.button,
+.footer .footer-bottom .button-container a {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--color-plum) !important;
+  font-size: var(--font-size-12) !important;
+  font-weight: var(--font-weight-400) !important;
+  text-decoration: underline !important;
+  text-transform: none !important;
+  display: inline !important;
+  white-space: normal !important;
+}
+
+/* Legal number — small text */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+  font-size: var(--font-size-12);
+}
+
+/* Logo — DTC has dark logo on light bg, no filter */
+.footer .footer-bottom p:has(picture),
+.footer .footer-bottom p:has(img) {
+  margin: 0;
+  text-align: left;
+}
+
+.footer .footer-bottom p:has(picture) img,
+.footer .footer-bottom p:has(img) img {
+  height: var(--footer-logo-height);
+  width: auto;
+  filter: none;
+  mix-blend-mode: normal;
+}
+
+.footer .footer-bottom svg {
+  height: var(--footer-logo-height);
+  width: auto;
+  fill: var(--color-charcoal);
+}
+
+/* ── Desktop ≥601px: legal text + number row, logo left ─────── */
+@media (min-width: 601px) {
+  .footer .footer-bottom {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--spacing-24);
+    row-gap: var(--spacing-12);
+    align-items: center;
+  }
+
+  /* Logo on the LEFT (DTC-specific, opposite of HCP) */
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
+  }
+
+  /* Legal text paragraphs span full width on top row */
+  .footer .footer-bottom > .button-container,
+  .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  /* Legal number — bottom-right, next to logo */
+  .footer .footer-bottom > p.legal-number,
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+    grid-column: 2;
+    grid-row: 2;
+    text-align: right;
+    margin: 0;
+  }
 }

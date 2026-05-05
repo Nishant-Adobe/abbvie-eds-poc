@@ -1,4 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
+import { renderBlock } from '../../scripts/multi-theme.js';
 import decorateExternalLinksUtility from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 
@@ -8,11 +9,15 @@ function createColumn(className, children) {
   children.forEach((child) => column.appendChild(child));
   return column;
 }
+
 /**
- * loads and decorates the footer
+ * Decorate the footer block — splits the authored fragment's first section
+ * into four columns (logo, primary links, secondary, tertiary) and renders
+ * the second section as a footer-bottom.
+ * Wired to decorations.decorate via blocks/footer/block-config.js.
  * @param {Element} block The footer block element
  */
-export default async function decorate(block) {
+export async function decorateBlock(block) {
   const footerMeta = getMetadata('footer');
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   const fragment = await loadFragment(footerPath);
@@ -103,4 +108,14 @@ export default async function decorate(block) {
       block.appendChild(bottomLinks);
     }
   }
+}
+
+/**
+ * Default export — entry point called by the block loader.
+ * Delegates to renderBlock which loads block-config.js (global + brand merge)
+ * and runs the configured decorations hooks.
+ * @param {Element} block
+ */
+export default async function decorate(block) {
+  await renderBlock(block);
 }
