@@ -26,6 +26,17 @@ function createWrapperATag(wrapper) {
       innerLink.remove();
     }
   }
+  const linkColumn = card.firstElementChild;
+  if (linkColumn?.tagName === 'P') {
+    while (linkColumn.firstChild) card.insertBefore(linkColumn.firstChild, linkColumn);
+    linkColumn.remove();
+  } else if (linkColumn) {
+    const linkPara = linkColumn.querySelector(':scope > p');
+    if (linkPara) {
+      while (linkPara.firstChild) linkColumn.insertBefore(linkPara.firstChild, linkPara);
+      linkPara.remove();
+    }
+  }
   return card;
 }
 
