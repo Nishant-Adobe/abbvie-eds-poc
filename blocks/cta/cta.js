@@ -16,43 +16,61 @@ function cellImage(row) {
 
 function readConfig(block) {
   const rows = [...block.children];
-
-  const label = cellText(rows[0]) || 'Button';
-  const href = cellHref(rows[1]) || '#';
-  const ariaLabel = cellText(rows[2]) || '';
-  const target = cellText(rows[3]) || '_self';
-
-  let iconType = '';
-  let iconFont = '';
-  let iconImage = '';
-  let iconPosition = '';
-  let modalId = '';
-
-  for (let i = 4; i < rows.length; i += 1) {
-    const text = cellText(rows[i]);
-    const img = cellImage(rows[i]);
-
-    if (text === 'icon-font' || text === 'image' || text === 'none') {
-      iconType = text;
-    } else if (text === 'i-a' || text === 'i-b') {
-      iconPosition = text;
-    } else if (/^[0-9a-f]{4,}$/i.test(text) && !iconFont) {
-      iconFont = text;
-    } else if (img) {
-      iconImage = img;
-    } else if (text && !modalId && text !== '_self' && text !== '_blank'
-      && !text.startsWith('id:') && !text.startsWith('lang:')) {
-      modalId = text;
-    }
-  }
-
-  if (!iconPosition) {
-    iconPosition = block.classList.contains('i-b') ? 'i-b' : 'i-a';
-  }
-
-  return {
-    label, href, ariaLabel, target, iconType, iconFont, iconImage, iconPosition, modalId,
+  const cfg = {
+    label: 'Button',
+    href: '#',
+    ariaLabel: '',
+    target: '_self',
+    modalId: '',
+    iconType: 'none',
+    iconFont: '',
+    iconImage: '',
+    iconPosition: '',
   };
+
+  const propMap = {
+    label: (r) => { cfg.label = cellText(r) || cfg.label; },
+    href: (r) => { cfg.href = cellHref(r) || cfg.href; },
+    ariaLabel: (r) => { cfg.ariaLabel = cellText(r); },
+    ctaTarget: (r) => { cfg.target = cellText(r) || cfg.target; },
+    modalId: (r) => { cfg.modalId = cellText(r); },
+    iconType: (r) => { cfg.iconType = cellText(r) || cfg.iconType; },
+    iconFont: (r) => { cfg.iconFont = cellText(r); },
+    iconImage: (r) => { cfg.iconImage = cellImage(r) || cellText(r); },
+    iconPosition: (r) => { cfg.iconPosition = cellText(r); },
+  };
+
+  const propEl = rows[0]?.querySelector('[data-aue-prop]');
+  if (propEl) {
+    rows.forEach((row) => {
+      const prop = row.querySelector('[data-aue-prop]');
+      if (prop) {
+        const name = prop.getAttribute('data-aue-prop');
+        if (propMap[name]) propMap[name](row);
+      }
+    });
+  } else {
+    const values = rows.map((row) => ({
+      text: cellText(row),
+      href: cellHref(row),
+      img: cellImage(row),
+    }));
+    cfg.label = values[0]?.text || cfg.label;
+    cfg.href = values[1]?.href || cfg.href;
+    cfg.ariaLabel = values[2]?.text || '';
+    cfg.target = values[3]?.text || cfg.target;
+    cfg.modalId = values[4]?.text || '';
+    cfg.iconType = values[5]?.text || cfg.iconType;
+    cfg.iconFont = values[6]?.text || '';
+    cfg.iconImage = values[7]?.img || values[7]?.text || '';
+    cfg.iconPosition = values[8]?.text || '';
+  }
+
+  if (!cfg.iconPosition) {
+    cfg.iconPosition = block.classList.contains('i-b') ? 'i-b' : 'i-a';
+  }
+
+  return cfg;
 }
 
 function getVariant(block) {
