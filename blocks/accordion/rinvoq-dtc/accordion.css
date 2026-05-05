@@ -1036,10 +1036,10 @@
     border-radius: 0;
     overflow: hidden;
 }
-/* Summary — circle icon left, text follows */
+/* Summary — circle icon left, text follows, compact height */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: var(--spacing-16) var(--spacing-20);
+    padding: var(--spacing-10) var(--spacing-16);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -1083,9 +1083,16 @@
 .accordion .accordion-item[open] summary::before {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-/* Hover — no background change */
+/* Hover — no background or font change */
 .accordion .accordion-item:hover summary {
     background: var(--background-color);
+}
+.accordion .accordion-item-label.open .accordion-item-label-text,
+.accordion .accordion-item-label .accordion-item-label-text:hover {
+    font-family: var(--heading-font-family);
+    font-size: var(--body-font-size-m);
+    font-weight: var(--font-weight-heading);
+    color: var(--accordion-rinvoq-color-label);
 }
 /* Open state — bright gold header, transparent left border (must come after hover) */
 .accordion .accordion-item[open] {
