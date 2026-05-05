@@ -18,10 +18,6 @@ function normalizeLine1Html(html) {
   return h;
 }
 
-/**
- * Plain "(secukinumab) 10" or "(secukinumab) 10**" → adds <sup> around the trailing digits when missing.
- * Authors can include ** after the number in the field to match footnote styling from skyrizi-hcp.
- */
 function normalizeLine3Html(html) {
   const h = (html || '').trim();
   if (!h || h.includes('<sup')) return h;
@@ -58,7 +54,6 @@ export default function decorate(block) {
   const line3 = normalizeLine3Html(cellParagraph(cells[3])?.innerHTML ?? '');
   const line4 = cellParagraph(cells[4])?.innerHTML?.trim() ?? '';
 
-  /** Matches index.html: .cta-card-grid-richtext > .cta-card-grid > p > a > spans (no extra wrappers). */
   const inner = document.createElement('div');
   inner.className = 'cta-card-grid';
 
