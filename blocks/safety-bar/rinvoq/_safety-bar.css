@@ -1,3 +1,53 @@
 @import '../safety-bar.css';
+@import '../../../styles/rinvoq/tokens.css';
 
-/* Rinvoq safety bar overrides */
+/* Rinvoq — Safety Bar Brand Styles
+   Overrides collapse/expand with max-height transition.
+   Toggle: text labels (Expand / Collapse) instead of +/- symbols.
+*/
+
+.safety-bar {
+  background-color: var(--background-color);
+  border-top: 3px solid var(--color-brand-accent);
+  color: var(--color-text-heading);
+  font-family: var(--body-font-family);
+  max-height: var(--safety-bar-collapsed-height, 12rem);
+  overflow: hidden;
+  transition: max-height 0.3s ease, transform 0.3s ease;
+}
+
+.safety-bar.is-expanded {
+  max-height: var(--safety-bar-expanded-height, 50vh);
+  overflow-y: auto;
+}
+
+.safety-bar.is-expanded .safety-bar-full h2,
+.safety-bar.is-expanded .safety-bar-full h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brand-accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+
+.safety-bar-toggle {
+  border-color: var(--color-text-heading);
+  border-radius: 2px;
+  color: var(--color-text-heading);
+  padding: 2px 8px;
+}
+
+.safety-bar-toggle::after {
+  content: 'Expand';
+}
+
+.safety-bar-toggle[aria-expanded='true']::after {
+  content: 'Collapse';
+}
+
+.safety-bar.is-expanded .safety-bar-toggle {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
