@@ -126,7 +126,7 @@
   margin: var(--spacing-00);
 }
 
-/* Links inside expanded body — row style with arrow aligned right (matches skyrizihcp.com) */
+/* Links inside expanded body — row with arrow after text, vertically aligned */
 .accordion .accordion-item-body a,
 .accordion .accordion-item-body a.button,
 .accordion .accordion-item-body a.button.external-link {
@@ -139,11 +139,12 @@
   border: none;
   border-bottom: var(--border-01) solid var(--color-border-default);
   border-radius: 0;
-  padding: var(--spacing-16) var(--spacing-32) var(--spacing-16) var(--spacing-00);
+  padding: var(--spacing-16) var(--spacing-00);
   margin: var(--spacing-00);
-  display: flex;
+  display: grid;
+  grid-template-columns: auto var(--spacing-16);
   align-items: center;
-  justify-content: space-between;
+  gap: var(--spacing-16);
   position: relative;
   overflow: visible;
   transition: background-color 0.2s ease;
@@ -161,16 +162,14 @@
   border-bottom: none;
 }
 
-/* Arrow icon — aligned right as flex item */
+/* Arrow icon — in second grid column, vertically aligned across rows */
 .accordion .accordion-item-body .external-link::after,
 .accordion .accordion-item-body a::after {
   content: '' !important;
   display: block;
-  flex-shrink: 0;
   width: var(--spacing-10);
   height: var(--spacing-10);
-  min-width: var(--spacing-10);
-  margin-left: auto;
+  grid-column: 2;
   font-family: inherit;
   font-size: 0;
   transform: none;
