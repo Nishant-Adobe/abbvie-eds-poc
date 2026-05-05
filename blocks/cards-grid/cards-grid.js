@@ -7,13 +7,13 @@ function createWrapperATag(wrapper) {
     card.href = sourceLink.getAttribute("href") || "#";
     card.target = sourceLink.getAttribute("target") || "_self";
   } 
-  
+
   while (wrapper.firstChild) {
     card.append(wrapper.firstChild);
   }
-  const innerLink = card.firstElementChild?.querySelector("a[href]");
-  if (innerLink) {
-    innerLink.remove();
+  const firstDiv = card.firstElementChild;
+  if (firstDiv?.tagName === "DIV") {
+    firstDiv.remove();
   }
   return card;
 }
