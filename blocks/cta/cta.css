@@ -3,7 +3,7 @@
 /* ============================================================
    CTA Block — Base Styles (Token-Driven)
    All colors/sizes reference --button-* tokens declared in
-   brand token files. No fallback values used.
+   brand token files.
    ============================================================ */
 
 .cta {
@@ -18,10 +18,9 @@
   display: contents;
 }
 
-.cta .cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.cta .abbv-cta {
+  display: inline-block;
+  position: relative;
   cursor: pointer;
   text-decoration: none;
   font-family: var(--heading-font-family-bold);
@@ -36,13 +35,13 @@
   white-space: nowrap;
 }
 
-.cta .cta-button:focus-visible {
+.cta .abbv-cta:focus-visible {
   outline: 2px solid var(--color-brand-primary);
   outline-offset: 2px;
 }
 
 /* Reset framework button defaults */
-.cta button.cta-button {
+.cta button.abbv-cta {
   margin: 0;
   border-radius: var(--border-radius-button-primary);
 }
@@ -51,13 +50,13 @@
    Primary (default)
    ------------------------------------------------------- */
 
-.cta.cta-primary .cta-button {
+.cta.abbv-button-primary .abbv-cta {
   background-color: var(--button-primary-bg);
   color: var(--button-primary-color);
   border-color: var(--button-primary-border);
 }
 
-.cta.cta-primary .cta-button:hover {
+.cta.abbv-button-primary .abbv-cta:hover {
   background-color: var(--button-primary-hover-bg, var(--color-brand-primary-dark));
   color: var(--button-primary-hover-color, var(--button-primary-color));
   border-color: var(--button-primary-hover-border, var(--button-primary-hover-bg, var(--color-brand-primary-dark)));
@@ -67,7 +66,7 @@
    Secondary
    ------------------------------------------------------- */
 
-.cta.cta-secondary .cta-button {
+.cta.abbv-button-secondary .abbv-cta {
   background-color: var(--button-secondary-bg);
   color: var(--button-secondary-color);
   border-color: var(--button-secondary-border);
@@ -75,7 +74,7 @@
   padding: var(--button-secondary-padding);
 }
 
-.cta.cta-secondary .cta-button:hover {
+.cta.abbv-button-secondary .abbv-cta:hover {
   background-color: var(--button-secondary-hover-bg, var(--button-primary-bg));
   color: var(--button-secondary-hover-color, var(--button-primary-color));
   border-color: var(--button-secondary-hover-border, var(--button-secondary-hover-bg, var(--button-primary-bg)));
@@ -85,7 +84,7 @@
    Tertiary
    ------------------------------------------------------- */
 
-.cta.cta-tertiary .cta-button {
+.cta.abbv-button-tertiary .abbv-cta {
   background-color: var(--button-tertiary-bg);
   color: var(--button-tertiary-color);
   border-color: var(--button-tertiary-border);
@@ -94,7 +93,7 @@
   font-size: var(--button-tertiary-font-size, var(--button-primary-font-size, var(--font-size-button)));
 }
 
-.cta.cta-tertiary .cta-button:hover {
+.cta.abbv-button-tertiary .abbv-cta:hover {
   background-color: var(--button-tertiary-hover-bg, var(--color-background-light));
   color: var(--button-tertiary-hover-color, var(--button-tertiary-color));
   border-color: var(--button-tertiary-hover-border, var(--color-brand-primary));
@@ -104,7 +103,7 @@
    Plain (text-link style)
    ------------------------------------------------------- */
 
-.cta.cta-plain .cta-button {
+.cta.abbv-button-plain .abbv-cta {
   background: none;
   border: none;
   padding: 0;
@@ -113,38 +112,52 @@
   text-decoration: none;
 }
 
-.cta.cta-plain .cta-button:hover {
+.cta.abbv-button-plain .abbv-cta:hover {
   color: var(--button-plain-hover-color, var(--color-brand-primary-dark));
   text-decoration: underline;
 }
 
 /* -------------------------------------------------------
-   Icon positioning
+   Icon positioning — padding + absolute
    ------------------------------------------------------- */
 
 .cta .cta-icon {
+  position: absolute;
   display: inline-flex;
   align-items: center;
   font-family: var(--icon-font-family);
-  font-size: 0.75em;
+  font-size: 1.3rem;
   line-height: 1;
-  flex-shrink: 0;
+  top: 9px;
 }
 
-.cta.icon-before .cta-button {
-  flex-direction: row;
+.cta.i-b .abbv-cta {
+  padding-left: 42px;
 }
 
-.cta.icon-after .cta-button {
-  flex-direction: row;
+.cta.i-b .cta-icon {
+  left: 10px;
 }
 
-.cta.icon-before .cta-icon {
-  order: -1;
+.cta.i-a .abbv-cta {
+  padding-right: 42px;
 }
 
-.cta.icon-after .cta-icon {
-  order: 1;
+.cta.i-a .cta-icon {
+  right: 10px;
+}
+
+/* Icon-only (empty label) */
+.cta.i-b .abbv-cta:empty,
+.cta.i-a .abbv-cta:empty {
+  padding: var(--button-primary-padding);
+  min-width: 42px;
+  text-align: center;
+}
+
+.cta.i-b .abbv-cta:empty .cta-icon,
+.cta.i-a .abbv-cta:empty .cta-icon {
+  position: static;
 }
 
 /* -------------------------------------------------------
@@ -201,19 +214,19 @@
 }
 
 /* Round toggle */
-.cta.cta-toggle-round .cta-toggle-slider {
+.cta.abbv-switch.abbv-round .cta-toggle-slider {
   border-radius: var(--toggle-height, 24px);
 }
 
-.cta.cta-toggle-round .cta-toggle-slider::after {
+.cta.abbv-switch.abbv-round .cta-toggle-slider::after {
   border-radius: 50%;
 }
 
 /* Square toggle */
-.cta.cta-toggle-square .cta-toggle-slider {
+.cta.abbv-switch.abbv-square .cta-toggle-slider {
   border-radius: 4px;
 }
 
-.cta.cta-toggle-square .cta-toggle-slider::after {
+.cta.abbv-switch.abbv-square .cta-toggle-slider::after {
   border-radius: 2px;
 }

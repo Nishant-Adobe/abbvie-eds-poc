@@ -14,15 +14,14 @@
               "href": "/link",
               "ariaLabel": "",
               "ctaTarget": "_self",
-              "iconType": "none",
+              "iconPosition": "none",
               "iconFont": "",
               "iconImage": "",
-              "iconPosition": "after",
               "modalId": "",
               "anchorId": "",
               "analyticsInteractionId": "",
               "ariaHidden": "false",
-              "classes": "cta-primary",
+              "classes": "abbv-button-primary",
               "language": "lang:none",
               "blockId": "id:"
             }
@@ -67,20 +66,32 @@
           "value": "_self",
           "options": [
             { "name": "Same Tab", "value": "_self" },
-            { "name": "New Tab", "value": "_blank" }
+            { "name": "New Tab", "value": "_blank" },
+            { "name": "Modal", "value": "new-modal" },
+            { "name": "Hidden Panel", "value": "new-hidden-panel" },
+            { "name": "Switch View", "value": "switch-view" },
+            { "name": "Indication Selection", "value": "indicationSelection" }
           ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "modalId",
+          "label": "Modal ID",
+          "value": "",
+          "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
         },
         {
           "component": "select",
           "valueType": "string",
-          "name": "iconType",
-          "label": "Icon Type",
+          "name": "iconPosition",
+          "label": "Icon Position",
           "value": "none",
-          "description": "Icon type for the button",
+          "description": "Icon position relative to button text",
           "options": [
             { "name": "None", "value": "none" },
-            { "name": "Icon Font", "value": "icon-font" },
-            { "name": "Image", "value": "image" }
+            { "name": "Before (left)", "value": "i-b" },
+            { "name": "After (right)", "value": "i-a" }
           ]
         },
         {
@@ -90,27 +101,16 @@
           "label": "Button Font Icon",
           "value": "",
           "description": "Font icon name for button",
-          "condition": { "iconType": "icon-font" }
+          "condition": { "!==": [{ "var": "iconPosition" }, "none"] }
         },
         {
-          "component": "aem-asset",
+          "component": "reference",
+          "valueType": "string",
           "name": "iconImage",
           "label": "Button Image Icon",
           "description": "Image icon for button",
-          "condition": { "iconType": "image" }
-        },
-        {
-          "component": "select",
-          "valueType": "string",
-          "name": "iconPosition",
-          "label": "Icon Position",
-          "value": "after",
-          "description": "Select whether the icon is placed before your button text or after your button text",
-          "options": [
-            { "name": "Before", "value": "before" },
-            { "name": "After", "value": "after" }
-          ],
-          "condition": { "iconType": ["icon-font", "image"] }
+          "multi": false,
+          "condition": { "!==": [{ "var": "iconPosition" }, "none"] }
         },
         {
           "component": "boolean",
@@ -130,26 +130,18 @@
           "name": "classes",
           "label": "Variant",
           "options": [
-            { "name": "Primary (default)", "value": "cta-primary" },
-            { "name": "Secondary", "value": "cta-secondary" },
-            { "name": "Tertiary", "value": "cta-tertiary" },
-            { "name": "Plain link", "value": "cta-plain" },
-            { "name": "Toggle (round)", "value": "cta-toggle-round" },
-            { "name": "Toggle (square)", "value": "cta-toggle-square" }
+            { "name": "Primary (default)", "value": "abbv-button-primary" },
+            { "name": "Secondary", "value": "abbv-button-secondary" },
+            { "name": "Tertiary", "value": "abbv-button-tertiary" },
+            { "name": "Plain link", "value": "abbv-button-plain" },
+            { "name": "Toggle (round)", "value": "abbv-switch abbv-round" },
+            { "name": "Toggle (square)", "value": "abbv-switch abbv-square" }
           ]
         },
         {
           "component": "tab",
           "label": "Common Properties",
           "name": "tab-common"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "modalId",
-          "label": "Modal ID",
-          "value": "",
-          "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
         },
         {
           "component": "text",

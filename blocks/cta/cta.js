@@ -36,10 +36,10 @@ function readConfig(block) {
 
 function getVariant(block) {
   const variants = [
-    'cta-primary', 'cta-secondary', 'cta-tertiary',
-    'cta-plain', 'cta-toggle-round', 'cta-toggle-square',
+    'abbv-button-primary', 'abbv-button-secondary', 'abbv-button-tertiary',
+    'abbv-button-plain', 'abbv-switch',
   ];
-  return variants.find((v) => block.classList.contains(v)) || 'cta-primary';
+  return variants.find((v) => block.classList.contains(v)) || 'abbv-button-primary';
 }
 
 function pushAnalytics(cfg, block, action) {
@@ -54,8 +54,7 @@ function pushAnalytics(cfg, block, action) {
 }
 
 function isToggle(block) {
-  return block.classList.contains('cta-toggle-round')
-    || block.classList.contains('cta-toggle-square');
+  return block.classList.contains('abbv-switch');
 }
 
 function buildToggle(cfg, block) {
@@ -88,7 +87,7 @@ function buildToggle(cfg, block) {
 
 function buildLink(cfg, block) {
   const el = document.createElement('a');
-  el.className = 'cta-button';
+  el.className = 'abbv-cta';
   el.href = cfg.href;
   el.textContent = cfg.label;
 
@@ -103,7 +102,7 @@ function buildLink(cfg, block) {
     const iconEl = document.createElement('span');
     iconEl.className = `cta-icon icon-${cfg.icon}`;
     iconEl.setAttribute('aria-hidden', 'true');
-    if (block.classList.contains('icon-before')) {
+    if (block.classList.contains('i-b')) {
       el.prepend(iconEl);
     } else {
       el.append(iconEl);
@@ -120,7 +119,7 @@ function buildLink(cfg, block) {
 function buildButton(cfg, block) {
   const el = document.createElement('button');
   el.type = 'button';
-  el.className = 'cta-button';
+  el.className = 'abbv-cta';
   el.dataset.modalId = cfg.modalId;
   el.textContent = cfg.label;
 
@@ -130,7 +129,7 @@ function buildButton(cfg, block) {
     const iconEl = document.createElement('span');
     iconEl.className = `cta-icon icon-${cfg.icon}`;
     iconEl.setAttribute('aria-hidden', 'true');
-    if (block.classList.contains('icon-before')) {
+    if (block.classList.contains('i-b')) {
       el.prepend(iconEl);
     } else {
       el.append(iconEl);

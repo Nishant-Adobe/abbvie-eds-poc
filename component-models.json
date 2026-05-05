@@ -3389,6 +3389,22 @@
           {
             "name": "New Tab",
             "value": "_blank"
+          },
+          {
+            "name": "Modal",
+            "value": "new-modal"
+          },
+          {
+            "name": "Hidden Panel",
+            "value": "new-hidden-panel"
+          },
+          {
+            "name": "Switch View",
+            "value": "switch-view"
+          },
+          {
+            "name": "Indication Selection",
+            "value": "indicationSelection"
           }
         ]
       },
@@ -3403,22 +3419,22 @@
       {
         "component": "select",
         "valueType": "string",
-        "name": "iconType",
-        "label": "Icon Type",
+        "name": "iconPosition",
+        "label": "Icon Position",
         "value": "none",
-        "description": "Icon type for the button",
+        "description": "Icon position relative to button text",
         "options": [
           {
             "name": "None",
             "value": "none"
           },
           {
-            "name": "Icon Font",
-            "value": "icon-font"
+            "name": "Before (left)",
+            "value": "i-b"
           },
           {
-            "name": "Image",
-            "value": "image"
+            "name": "After (right)",
+            "value": "i-a"
           }
         ]
       },
@@ -3430,11 +3446,11 @@
         "value": "",
         "description": "Font icon name for button",
         "condition": {
-          "===": [
+          "!==": [
             {
-              "var": "iconType"
+              "var": "iconPosition"
             },
-            "icon-font"
+            "none"
           ]
         }
       },
@@ -3446,40 +3462,11 @@
         "description": "Image icon for button",
         "multi": false,
         "condition": {
-          "===": [
+          "!==": [
             {
-              "var": "iconType"
+              "var": "iconPosition"
             },
-            "image"
-          ]
-        }
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "iconPosition",
-        "label": "Icon Position",
-        "value": "after",
-        "description": "Select whether the icon is placed before your button text or after your button text",
-        "options": [
-          {
-            "name": "Before",
-            "value": "before"
-          },
-          {
-            "name": "After",
-            "value": "after"
-          }
-        ],
-        "condition": {
-          "in": [
-            {
-              "var": "iconType"
-            },
-            [
-              "icon-font",
-              "image"
-            ]
+            "none"
           ]
         }
       },
@@ -3503,27 +3490,27 @@
         "options": [
           {
             "name": "Primary (default)",
-            "value": "cta-primary"
+            "value": "abbv-button-primary"
           },
           {
             "name": "Secondary",
-            "value": "cta-secondary"
+            "value": "abbv-button-secondary"
           },
           {
             "name": "Tertiary",
-            "value": "cta-tertiary"
+            "value": "abbv-button-tertiary"
           },
           {
             "name": "Plain link",
-            "value": "cta-plain"
+            "value": "abbv-button-plain"
           },
           {
             "name": "Toggle (round)",
-            "value": "cta-toggle-round"
+            "value": "abbv-switch abbv-round"
           },
           {
             "name": "Toggle (square)",
-            "value": "cta-toggle-square"
+            "value": "abbv-switch abbv-square"
           }
         ]
       },
