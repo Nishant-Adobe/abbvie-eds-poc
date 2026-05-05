@@ -38,126 +38,103 @@ function getText(cell) {
   return cell?.textContent?.trim() || '';
 }
 
-function buildRinvoq(block, afterImg, beforeImg, startPct, captionHtml) {
+function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   const container = document.createElement('div');
-  container.className = 'ic-container';
+  container.className = 'image-compare-container';
 
-  afterImg.className = 'ic-img ic-after';
-  container.appendChild(afterImg);
+  const afterWrap = document.createElement('div');
+  afterWrap.className = 'image-compare-after';
+  afterWrap.appendChild(afterImg);
+  container.appendChild(afterWrap);
 
-  const beforeLayer = document.createElement('div');
-  beforeLayer.className = 'ic-before-layer';
-  beforeImg.className = 'ic-img ic-before';
-  beforeLayer.appendChild(beforeImg);
-  container.appendChild(beforeLayer);
-
-  const divider = document.createElement('div');
-  divider.className = 'ic-divider';
-  container.appendChild(divider);
-
-  const labelBefore = document.createElement('div');
-  labelBefore.className = 'ic-label ic-label-before';
-  labelBefore.textContent = 'BEFORE';
-  container.appendChild(labelBefore);
-
-  const labelAfter = document.createElement('div');
-  labelAfter.className = 'ic-label ic-label-after';
-  labelAfter.textContent = 'AFTER';
-  container.appendChild(labelAfter);
+  const beforeWrap = document.createElement('div');
+  beforeWrap.className = 'image-compare-before';
+  beforeWrap.appendChild(beforeImg);
+  container.appendChild(beforeWrap);
 
   const handle = document.createElement('div');
-  handle.className = 'ic-handle';
-  handle.innerHTML = '<span class="ic-handle-text">CLICK AND DRAG</span>'
-    + '<span class="ic-handle-text">TO SEE RESULTS</span>'
-    + '<span class="ic-handle-arrows">'
-    + '<span class="ic-chevrons">«««</span>'
-    + '<span class="ic-circle">↔</span>'
-    + '<span class="ic-chevrons">»»»</span>'
-    + '</span>';
+  handle.className = 'image-compare-handle';
+  handle.setAttribute('role', 'separator');
+  handle.setAttribute('tabindex', '0');
   container.appendChild(handle);
 
-  if (captionHtml) {
-    const caption = document.createElement('div');
-    caption.className = 'ic-caption';
-    caption.innerHTML = captionHtml;
-    container.appendChild(caption);
+  if (opts.beforeLabel) {
+    const lbl = document.createElement('div');
+    lbl.className = 'image-compare-label image-compare-label-before';
+    lbl.textContent = opts.beforeLabel;
+    container.appendChild(lbl);
   }
 
-  block.appendChild(container);
-  return {
-    container, beforeLayer, beforeImg, afterImg, divider, handle,
-  };
+  if (opts.afterLabel) {
+    const lbl = document.createElement('div');
+    lbl.className = 'image-compare-label image-compare-label-after';
+    lbl.textContent = opts.afterLabel;
+    container.appendChild(lbl);
+  }
+
+  if (opts.prompt) {
+    const prompt = document.createElement('div');
+    prompt.className = 'image-compare-prompt';
+    prompt.textContent = opts.prompt;
+    container.appendChild(prompt);
+  }
+
+  return { container, beforeWrap, handle };
 }
 
-function buildSkyrizi(block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName) {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'ic-wrapper';
+function buildRinvoq(block, afterImg, beforeImg, opts) {
+  const slider = buildSliderContainer(afterImg, beforeImg, opts);
+  const { container } = slider;
 
-  if (topLabel) {
-    const topBar = document.createElement('div');
-    topBar.className = 'ic-top-bar';
-    topBar.textContent = topLabel;
-    wrapper.appendChild(topBar);
+  if (opts.captionHtml) {
+    const caption = document.createElement('div');
+    caption.className = 'image-compare-gallery-content';
+    caption.innerHTML = opts.captionHtml;
+    block.appendChild(caption);
   }
 
-  const container = document.createElement('div');
-  container.className = 'ic-container';
+  block.insertBefore(container, block.firstChild);
+  return slider;
+}
 
-  afterImg.className = 'ic-img ic-after';
-  container.appendChild(afterImg);
+function buildSkyrizi(block, afterImg, beforeImg, opts) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'image-compare-wrapper';
 
-  const beforeLayer = document.createElement('div');
-  beforeLayer.className = 'ic-before-layer';
-  beforeImg.className = 'ic-img ic-before';
-  beforeLayer.appendChild(beforeImg);
-  container.appendChild(beforeLayer);
-
-  const divider = document.createElement('div');
-  divider.className = 'ic-divider';
-  container.appendChild(divider);
-
-  const handle = document.createElement('div');
-  handle.className = 'ic-handle ic-handle-circle';
-  handle.innerHTML = '<span class="ic-arrow-left"></span><span class="ic-arrow-right"></span>';
-  container.appendChild(handle);
-
-  const bottomBar = document.createElement('div');
-  bottomBar.className = 'ic-bottom-bar';
-  bottomBar.innerHTML = `<span class="ic-bottom-left">${labelLeft}</span>`
-    + `<span class="ic-bottom-right">${labelRight}</span>`;
-  container.appendChild(bottomBar);
+  const slider = buildSliderContainer(afterImg, beforeImg, opts);
+  const { container } = slider;
 
   wrapper.appendChild(container);
 
-  if (patientName) {
-    const patient = document.createElement('div');
-    patient.className = 'ic-patient';
-    patient.textContent = patientName;
-    wrapper.appendChild(patient);
+  if (opts.patientName) {
+    const galleryContent = document.createElement('div');
+    galleryContent.className = 'image-compare-gallery-content';
+    galleryContent.setAttribute('data-caption', opts.patientName);
+    wrapper.appendChild(galleryContent);
   }
 
   block.appendChild(wrapper);
-  return {
-    container, beforeLayer, beforeImg, afterImg, divider, handle,
-  };
+  return slider;
 }
 
-function setupSlider(container, beforeLayer, beforeImg, afterImg, handle, startPct, isSkyrizi) {
+function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
+  const afterImg = container.querySelector('.image-compare-after img');
+  const beforeImg = container.querySelector('.image-compare-before img');
+
   function setPosition(pct) {
     const p = Math.min(1, Math.max(0, pct));
-    beforeLayer.style.width = `${p * 100}%`;
-    const d = container.querySelector('.ic-divider');
-    if (d) d.style.left = `${p * 100}%`;
-    handle.style.left = `${p * 100}%`;
+    container.style.setProperty('--compare-position', `${p * 100}%`);
   }
 
   function fixBeforeWidth() {
-    beforeImg.style.width = `${container.clientWidth}px`;
+    if (beforeImg) beforeImg.style.width = `${container.clientWidth}px`;
   }
 
-  afterImg.addEventListener('load', fixBeforeWidth);
+  if (afterImg) {
+    afterImg.addEventListener('load', fixBeforeWidth);
+    if (afterImg.complete) fixBeforeWidth();
+  }
   window.addEventListener('resize', fixBeforeWidth);
-  if (afterImg.complete) fixBeforeWidth();
 
   setPosition(startPct);
 
@@ -173,7 +150,10 @@ function setupSlider(container, beforeLayer, beforeImg, afterImg, handle, startP
     dragging = true;
     container.setPointerCapture(e.pointerId);
     setPosition(getX(e));
-    if (!isSkyrizi) handle.classList.add('ic-handle-hidden');
+    if (hasPrompt) {
+      const prompt = container.querySelector('.image-compare-prompt');
+      if (prompt) prompt.classList.add('is-hidden');
+    }
   });
 
   container.addEventListener('pointermove', (e) => {
@@ -197,18 +177,23 @@ function decorateLegacy(block, cells) {
   const isSkyrizi = cells.length >= 7;
 
   if (isSkyrizi) {
-    const labelLeft = cells[3]?.textContent?.trim() || 'BEFORE | WEEK 0';
-    const labelRight = cells[4]?.textContent?.trim() || 'AFTER | WEEK 16';
-    const topLabel = cells[5]?.textContent?.trim() || '';
-    const patientName = cells[6]?.textContent?.trim() || '';
-    const args = [block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName];
-    const parts = buildSkyrizi(...args);
-    return { ...parts, startPct, isSkyrizi: true };
+    const opts = {
+      beforeLabel: cells[3]?.textContent?.trim() || 'BEFORE | WEEK 0',
+      afterLabel: cells[4]?.textContent?.trim() || 'AFTER | WEEK 16',
+      patientName: cells[6]?.textContent?.trim() || '',
+    };
+    const parts = buildSkyrizi(block, afterImg, beforeImg, opts);
+    return { ...parts, startPct, hasPrompt: false };
   }
 
-  const captionHtml = cells[3]?.innerHTML || '';
-  const parts = buildRinvoq(block, afterImg, beforeImg, startPct, captionHtml);
-  return { ...parts, startPct, isSkyrizi: false };
+  const opts = {
+    beforeLabel: 'BEFORE',
+    afterLabel: 'AFTER',
+    prompt: 'CLICK AND DRAG TO SEE RESULTS',
+    captionHtml: cells[3]?.innerHTML || '',
+  };
+  const parts = buildRinvoq(block, afterImg, beforeImg, opts);
+  return { ...parts, startPct, hasPrompt: true };
 }
 
 /* --- Key-value row format: each row has [fieldName, fieldValue] --- */
@@ -227,13 +212,14 @@ function parseKeyValueRows(rows) {
     if (key === 'tabLabel') {
       currentTab = { label: getText(val), images: [] };
       tabs.push(currentTab);
-    } else if ((key === 'beforeImage' || key === 'afterImage' || key === 'thumbnail'
-      || key === 'thumbnailLabel' || key === 'thumbnailSubLabel') && currentTab) {
-      if (!currentTab.images.length
-        || (key === 'beforeImage' && currentTab.images[currentTab.images.length - 1].beforeImg)) {
-        currentTab.images.push({});
+    } else if (currentTab && (key === 'beforeImage'
+      || key === 'afterImage' || key === 'thumbnail'
+      || key === 'thumbnailLabel' || key === 'thumbnailSubLabel')) {
+      const imgs = currentTab.images;
+      if (!imgs.length || (key === 'beforeImage' && imgs[imgs.length - 1].beforeImg)) {
+        imgs.push({});
       }
-      const entry = currentTab.images[currentTab.images.length - 1];
+      const entry = imgs[imgs.length - 1];
       if (key === 'beforeImage') entry.beforeImg = val.querySelector('img');
       else if (key === 'afterImage') entry.afterImg = val.querySelector('img');
       else if (key === 'thumbnail') entry.thumbImg = val.querySelector('img');
@@ -256,28 +242,31 @@ function decorateKeyValue(block, rows) {
   const beforeImg = firstImg?.beforeImg || data.beforeImage?.querySelector('img');
   if (!afterImg || !beforeImg) return null;
 
-  const startPct = 0.5;
   const hasToggle = block.classList.contains('toggle');
-  const isSkyrizi = !hasToggle;
 
   block.innerHTML = '';
 
-  if (isSkyrizi) {
-    const labelLeft = getText(data.beforeLabelPrefix) || 'BEFORE | WEEK 0';
-    const labelRight = getText(data.afterLabelPrefix) || 'AFTER | WEEK 16';
-    const topLabel = getText(data.heading) || '';
-    const patientName = firstImg?.label || '';
-    const args = [block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName];
-    const parts = buildSkyrizi(...args);
-    return { ...parts, startPct, isSkyrizi: true };
+  if (!hasToggle) {
+    const opts = {
+      beforeLabel: getText(data.beforeLabelPrefix) || 'BEFORE | WEEK 0',
+      afterLabel: getText(data.afterLabelPrefix) || 'AFTER | WEEK 16',
+      patientName: firstImg?.label || '',
+    };
+    const parts = buildSkyrizi(block, afterImg, beforeImg, opts);
+    return { ...parts, startPct: 0.5, hasPrompt: false };
   }
 
-  const captionHtml = data.description?.innerHTML || '';
-  const parts = buildRinvoq(block, afterImg, beforeImg, startPct, captionHtml);
-  return { ...parts, startPct, isSkyrizi: false };
+  const opts = {
+    beforeLabel: getText(data.beforeLabelPrefix) || 'BEFORE',
+    afterLabel: getText(data.afterLabelPrefix) || 'AFTER',
+    prompt: getText(data.sliderPrompt) || 'CLICK AND DRAG TO SEE RESULTS',
+    captionHtml: data.description?.innerHTML || '',
+  };
+  const parts = buildRinvoq(block, afterImg, beforeImg, opts);
+  return { ...parts, startPct: 0.5, hasPrompt: true };
 }
 
-/* --- UE model-order format: single row with 28+ columns matching COL indices --- */
+/* --- UE model-order format: single row with 28+ columns --- */
 function decorateModelFormat(block, cells) {
   const afterImg = getImg(cells[COL.afterImage]);
   const beforeImg = getImg(cells[COL.beforeImage]);
@@ -285,23 +274,30 @@ function decorateModelFormat(block, cells) {
   if (!afterImg || !beforeImg) return null;
 
   const hasToggle = block.classList.contains('toggle');
+  const hasPrompt = block.classList.contains('prompt');
   const isSkyrizi = !hasToggle && block.classList.contains('gallery');
 
   block.innerHTML = '';
 
   if (isSkyrizi) {
-    const labelLeft = getText(cells[COL.beforeLabelPrefix]) || 'BEFORE | WEEK 0';
-    const labelRight = getText(cells[COL.afterLabelPrefix]) || 'AFTER | WEEK 16';
-    const topLabel = getText(cells[COL.heading]) || '';
-    const patientName = getText(cells[COL.tab1Img1Label]) || '';
-    const args = [block, afterImg, beforeImg, labelLeft, labelRight, topLabel, patientName];
-    const parts = buildSkyrizi(...args);
-    return { ...parts, startPct, isSkyrizi: true };
+    const opts = {
+      beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE | WEEK 0',
+      afterLabel: getText(cells[COL.afterLabelPrefix]) || 'AFTER | WEEK 16',
+      patientName: getText(cells[COL.tab1Img1Label]) || '',
+    };
+    const parts = buildSkyrizi(block, afterImg, beforeImg, opts);
+    return { ...parts, startPct, hasPrompt: false };
   }
 
-  const captionHtml = cells[COL.description]?.innerHTML || '';
-  const parts = buildRinvoq(block, afterImg, beforeImg, startPct, captionHtml);
-  return { ...parts, startPct, isSkyrizi: false };
+  const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
+  const opts = {
+    beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE',
+    afterLabel: getText(cells[COL.afterLabelPrefix]) || 'AFTER',
+    prompt: promptText || undefined,
+    captionHtml: cells[COL.description]?.innerHTML || '',
+  };
+  const parts = buildRinvoq(block, afterImg, beforeImg, opts);
+  return { ...parts, startPct, hasPrompt };
 }
 
 function detectFormat(block) {
@@ -339,8 +335,7 @@ export default async function decorate(block) {
   if (!result) return;
 
   const {
-    container, beforeLayer, beforeImg, afterImg, handle, startPct, isSkyrizi,
+    container, beforeWrap, handle, startPct, hasPrompt,
   } = result;
-
-  setupSlider(container, beforeLayer, beforeImg, afterImg, handle, startPct, isSkyrizi);
+  setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
