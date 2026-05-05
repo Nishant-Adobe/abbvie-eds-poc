@@ -119,7 +119,7 @@ function buildIcon(cfg) {
     iconEl.className = 'cta-icon cta-icon-font';
     iconEl.setAttribute('aria-hidden', 'true');
     const code = cfg.iconFont.replace(/^\\u|^0x|^u\+/i, '');
-    iconEl.style.setProperty('--cta-icon-content', `'\\${code}'`);
+    iconEl.textContent = String.fromCharCode(parseInt(code, 16));
     return iconEl;
   }
 
