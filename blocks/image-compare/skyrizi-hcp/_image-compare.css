@@ -3,118 +3,119 @@
 /* SkyriziHCP overrides — pixel-perfect to skyrizihcp.com */
 
 .image-compare {
-  --image-compare-handle-color: #fff;
-  --image-compare-thumb-active-border: #1398d1;
+  --image-compare-handle-color: var(--ic-handle-color);
+  --image-compare-thumb-active-border: var(--ic-thumb-active-border);
 }
 
 /* Navy section background with white card */
 .image-compare.gallery {
-  background-color: #071d49;
-  padding: 40px 24px;
-  border-radius: 12px;
+  background-color: var(--ic-wrapper-bg);
+  padding: var(--ic-wrapper-padding);
+  border-radius: var(--ic-wrapper-radius);
 }
 
 /* White card wrapper for content area */
 .image-compare .image-compare-wrapper {
-  background: #fff;
-  border-radius: 8px;
-  padding: 32px;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 15%);
+  background: var(--ic-card-bg);
+  border-radius: var(--ic-card-radius);
+  padding: var(--ic-card-padding);
+  box-shadow: var(--ic-card-shadow);
 }
 
 /* Tab bar — WEEK 16 | WEEK 52 style */
 .image-compare .image-compare-tabs {
-  justify-content: center;
-  gap: 0;
-  margin-bottom: 24px;
+  justify-content: var(--ic-tab-justify);
+  gap: var(--ic-tab-gap);
+  margin-bottom: var(--ic-tab-margin-bottom);
 }
 
 .image-compare .image-compare-tab {
-  background: transparent;
-  border: none;
-  border-bottom: 3px solid transparent;
-  border-radius: 0;
-  color: #071d49;
-  font-size: 0.9rem;
-  font-weight: 700;
-  padding: 12px 24px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  background: var(--ic-tab-bg);
+  border: var(--ic-tab-border);
+  border-bottom: var(--ic-tab-border-bottom);
+  border-radius: var(--ic-tab-radius);
+  color: var(--ic-tab-color);
+  font-size: var(--ic-tab-font-size);
+  font-weight: var(--ic-tab-font-weight);
+  padding: var(--ic-tab-padding);
+  text-transform: var(--ic-tab-text-transform);
+  letter-spacing: var(--ic-tab-letter-spacing);
 }
 
 .image-compare .image-compare-tab.is-active {
-  background: transparent;
-  border-color: transparent;
-  border-bottom-color: #1398d1;
-  color: #071d49;
+  background: var(--ic-tab-active-bg);
+  border-color: var(--ic-tab-active-border-color);
+  border-bottom-color: var(--ic-tab-active-border-bottom-color);
+  color: var(--ic-tab-active-color);
 }
 
 /* Heading — teal color */
 .image-compare .image-compare-heading {
-  color: #1398d1;
-  font-size: 1.75rem;
-  font-weight: 700;
+  color: var(--ic-heading-color);
+  font-size: var(--ic-heading-font-size);
+  font-weight: var(--ic-heading-font-weight);
 }
 
 /* Description — navy text */
 .image-compare .image-compare-description {
-  color: #071d49;
-  font-size: 0.85rem;
-  font-family: "Univers LT W01_57 Condensed", Arial, sans-serif;
+  color: var(--ic-description-color);
+  font-size: var(--ic-description-font-size);
+  font-family: var(--ic-description-font-family);
 }
 
 /* Before/After labels — semi-transparent dark */
 .image-compare .image-compare-label {
-  background: rgb(7 29 73 / 80%);
-  font-size: 0.7rem;
-  padding: 6px 12px;
-  letter-spacing: 0.08em;
-  border-radius: 2px;
+  background: var(--ic-label-bg);
+  color: var(--ic-label-color);
+  font-size: var(--ic-label-font-size);
+  padding: var(--ic-label-padding);
+  letter-spacing: var(--ic-label-letter-spacing);
+  border-radius: var(--ic-label-radius);
 }
 
 /* Patient caption bar below slider */
 .image-compare .image-compare-gallery-content::after {
   content: attr(data-caption);
   display: block;
-  background: #071d49;
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  padding: 12px 16px;
+  background: var(--ic-caption-bg);
+  color: var(--ic-caption-color);
+  font-size: var(--ic-caption-font-size);
+  font-weight: var(--ic-caption-font-weight);
+  padding: var(--ic-caption-padding);
   margin-top: -4px;
 }
 
 /* Thumbnails — horizontal strip */
 .image-compare .image-compare-thumbnails {
-  gap: 8px;
-  justify-content: center;
-  padding-top: 16px;
+  gap: var(--ic-thumb-gap);
+  justify-content: var(--ic-thumb-justify);
+  padding-top: var(--ic-thumb-padding-top);
   overflow-x: auto;
 }
 
 .image-compare .image-compare-thumb {
-  width: 90px;
-  border-radius: 4px;
-  border: 2px solid #ddd;
+  width: var(--ic-thumb-width);
+  border-radius: var(--ic-thumb-radius);
+  border: var(--ic-thumb-border-width) solid var(--ic-thumb-border);
 }
 
 .image-compare .image-compare-thumb.is-active {
-  border-color: #1398d1;
-  box-shadow: 0 0 0 2px #1398d1;
+  border-color: var(--ic-thumb-active-border);
+  box-shadow: var(--ic-thumb-active-shadow);
 }
 
 .image-compare .image-compare-thumb-label {
-  display: none;
+  display: var(--ic-thumb-label-display);
 }
 
 /* Handle — larger white circle */
 .image-compare .image-compare-handle::before {
-  width: 48px;
-  height: 48px;
-  box-shadow: 0 2px 12px rgb(0 0 0 / 40%);
+  width: var(--ic-handle-size);
+  height: var(--ic-handle-size);
+  box-shadow: var(--ic-handle-shadow);
 }
 
 /* Slider no rounded corners */
 .image-compare.gallery .image-compare-container {
-  border-radius: 0;
+  border-radius: var(--ic-container-radius);
 }

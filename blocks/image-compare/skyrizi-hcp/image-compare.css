@@ -327,124 +327,59 @@
   }
 }
 
-/* Rinvoq DTC overrides — pixel-perfect to rinvoq.com */
+/* SkyriziHCP overrides — pixel-perfect to skyrizihcp.com */
 
 .image-compare {
   --image-compare-handle-color: var(--ic-handle-color);
   --image-compare-thumb-active-border: var(--ic-thumb-active-border);
 }
 
-/* Before/After header labels — colored bars ABOVE image */
+/* Navy section background with white card */
 
-.image-compare .image-compare-label {
-  inset: var(--ic-label-top) auto auto 0;
-  width: var(--ic-label-width);
-  border-radius: var(--ic-label-radius);
-  padding: var(--ic-label-padding);
-  font-size: var(--ic-label-font-size);
-  font-weight: var(--ic-label-font-weight);
-  letter-spacing: var(--ic-label-letter-spacing);
+.image-compare.gallery {
+  background-color: var(--ic-wrapper-bg);
+  padding: var(--ic-wrapper-padding);
+  border-radius: var(--ic-wrapper-radius);
 }
 
-.image-compare .image-compare-label-before {
-  left: 0;
-  background: var(--ic-label-before-bg);
-  color: var(--ic-label-before-color);
+/* White card wrapper for content area */
+
+.image-compare .image-compare-wrapper {
+  background: var(--ic-card-bg);
+  border-radius: var(--ic-card-radius);
+  padding: var(--ic-card-padding);
+  box-shadow: var(--ic-card-shadow);
 }
 
-.image-compare .image-compare-label-after {
-  left: auto;
-  right: 0;
-  background: var(--ic-label-after-bg);
-  color: var(--ic-label-after-color);
-  text-align: var(--ic-label-after-text-align);
-  padding: var(--ic-label-after-padding);
+/* Tab bar — WEEK 16 | WEEK 52 style */
+
+.image-compare .image-compare-tabs {
+  justify-content: var(--ic-tab-justify);
+  gap: var(--ic-tab-gap);
+  margin-bottom: var(--ic-tab-margin-bottom);
 }
 
-/* Gold prompt badge with chevron arrows */
-
-.image-compare .image-compare-prompt {
-  top: var(--ic-prompt-top);
-  left: 50%;
-  transform: var(--ic-prompt-transform);
-  background: var(--ic-prompt-bg);
-  color: var(--ic-prompt-color);
-  font-size: var(--ic-prompt-font-size);
-  font-weight: var(--ic-prompt-font-weight);
-  letter-spacing: var(--ic-prompt-letter-spacing);
-  text-transform: uppercase;
-  padding: var(--ic-prompt-padding);
-  border-radius: var(--ic-prompt-radius);
+.image-compare .image-compare-tab {
+  background: var(--ic-tab-bg);
+  border: var(--ic-tab-border);
+  border-bottom: var(--ic-tab-border-bottom);
+  border-radius: var(--ic-tab-radius);
+  color: var(--ic-tab-color);
+  font-size: var(--ic-tab-font-size);
+  font-weight: var(--ic-tab-font-weight);
+  padding: var(--ic-tab-padding);
+  text-transform: var(--ic-tab-text-transform);
+  letter-spacing: var(--ic-tab-letter-spacing);
 }
 
-/* Toggle buttons — pill shape, plum active */
-
-.image-compare .image-compare-tabs-toggle {
-  margin-top: var(--ic-toggle-margin-top);
-  margin-bottom: var(--ic-toggle-margin-bottom);
-  border: var(--ic-toggle-border-width) solid var(--ic-toggle-border-color);
-  border-radius: var(--ic-toggle-radius);
-  overflow: hidden;
+.image-compare .image-compare-tab.is-active {
+  background: var(--ic-tab-active-bg);
+  border-color: var(--ic-tab-active-border-color);
+  border-bottom-color: var(--ic-tab-active-border-bottom-color);
+  color: var(--ic-tab-active-color);
 }
 
-.image-compare .image-compare-tabs-toggle .image-compare-tab {
-  border: none;
-  border-radius: 0;
-  padding: var(--ic-toggle-tab-padding);
-  font-size: var(--ic-toggle-tab-font-size);
-  font-weight: var(--ic-toggle-tab-font-weight);
-  color: var(--ic-toggle-tab-color);
-  background: var(--ic-toggle-tab-bg);
-}
-
-.image-compare .image-compare-tabs-toggle .image-compare-tab.is-active {
-  background: var(--ic-toggle-tab-active-bg);
-  color: var(--ic-toggle-tab-active-color);
-}
-
-.image-compare .image-compare-tabs-toggle .image-compare-tab:first-child {
-  border-radius: var(--ic-toggle-radius) 0 0 var(--ic-toggle-radius);
-}
-
-.image-compare .image-compare-tabs-toggle .image-compare-tab:last-child {
-  border-radius: 0 var(--ic-toggle-radius) var(--ic-toggle-radius) 0;
-}
-
-/* Thumbnails — larger with body-part labels + clearance % */
-
-.image-compare .image-compare-thumbnails {
-  gap: var(--ic-thumb-gap);
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  overflow-x: visible;
-  padding-top: var(--ic-thumb-padding-top);
-}
-
-.image-compare .image-compare-thumb {
-  width: var(--ic-thumb-width);
-  border-radius: var(--ic-thumb-radius);
-  border: var(--ic-thumb-border-width) solid transparent;
-}
-
-.image-compare .image-compare-thumb.is-active {
-  border-color: var(--ic-thumb-active-border);
-}
-
-.image-compare .image-compare-thumb-label {
-  font-size: var(--ic-thumb-label-font-size);
-  padding: var(--ic-thumb-label-padding);
-  font-weight: var(--ic-thumb-label-font-weight);
-  background: var(--ic-thumb-label-bg);
-}
-
-.image-compare .image-compare-thumb-sublabel {
-  font-size: var(--ic-thumb-sublabel-font-size);
-  padding: var(--ic-thumb-sublabel-padding);
-  bottom: var(--ic-thumb-sublabel-bottom);
-  background: var(--ic-thumb-sublabel-bg);
-}
-
-/* Heading */
+/* Heading — teal color */
 
 .image-compare .image-compare-heading {
   color: var(--ic-heading-color);
@@ -452,14 +387,71 @@
   font-weight: var(--ic-heading-font-weight);
 }
 
-/* Disclaimer text below slider */
+/* Description — navy text */
 
 .image-compare .image-compare-description {
   color: var(--ic-description-color);
   font-size: var(--ic-description-font-size);
+  font-family: var(--ic-description-font-family);
 }
 
-/* Slider container — no rounded corners */
+/* Before/After labels — semi-transparent dark */
+
+.image-compare .image-compare-label {
+  background: var(--ic-label-bg);
+  color: var(--ic-label-color);
+  font-size: var(--ic-label-font-size);
+  padding: var(--ic-label-padding);
+  letter-spacing: var(--ic-label-letter-spacing);
+  border-radius: var(--ic-label-radius);
+}
+
+/* Patient caption bar below slider */
+
+.image-compare .image-compare-gallery-content::after {
+  content: attr(data-caption);
+  display: block;
+  background: var(--ic-caption-bg);
+  color: var(--ic-caption-color);
+  font-size: var(--ic-caption-font-size);
+  font-weight: var(--ic-caption-font-weight);
+  padding: var(--ic-caption-padding);
+  margin-top: -4px;
+}
+
+/* Thumbnails — horizontal strip */
+
+.image-compare .image-compare-thumbnails {
+  gap: var(--ic-thumb-gap);
+  justify-content: var(--ic-thumb-justify);
+  padding-top: var(--ic-thumb-padding-top);
+  overflow-x: auto;
+}
+
+.image-compare .image-compare-thumb {
+  width: var(--ic-thumb-width);
+  border-radius: var(--ic-thumb-radius);
+  border: var(--ic-thumb-border-width) solid var(--ic-thumb-border);
+}
+
+.image-compare .image-compare-thumb.is-active {
+  border-color: var(--ic-thumb-active-border);
+  box-shadow: var(--ic-thumb-active-shadow);
+}
+
+.image-compare .image-compare-thumb-label {
+  display: var(--ic-thumb-label-display);
+}
+
+/* Handle — larger white circle */
+
+.image-compare .image-compare-handle::before {
+  width: var(--ic-handle-size);
+  height: var(--ic-handle-size);
+  box-shadow: var(--ic-handle-shadow);
+}
+
+/* Slider no rounded corners */
 
 .image-compare.gallery .image-compare-container {
   border-radius: var(--ic-container-radius);

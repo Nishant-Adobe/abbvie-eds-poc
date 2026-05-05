@@ -3,130 +3,130 @@
 /* Rinvoq DTC overrides — pixel-perfect to rinvoq.com */
 
 .image-compare {
-  --image-compare-handle-color: #fff;
-  --image-compare-thumb-active-border: #90124a;
+  --image-compare-handle-color: var(--ic-handle-color);
+  --image-compare-thumb-active-border: var(--ic-thumb-active-border);
 }
 
 /* Before/After header labels — colored bars ABOVE image */
 .image-compare .image-compare-label {
-  inset: 0 auto auto 0;
-  width: 50%;
-  border-radius: 0;
-  padding: 6px 0 6px 15px;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  inset: var(--ic-label-top) auto auto 0;
+  width: var(--ic-label-width);
+  border-radius: var(--ic-label-radius);
+  padding: var(--ic-label-padding);
+  font-size: var(--ic-label-font-size);
+  font-weight: var(--ic-label-font-weight);
+  letter-spacing: var(--ic-label-letter-spacing);
 }
 
 .image-compare .image-compare-label-before {
   left: 0;
-  background: #333;
-  color: #fff;
+  background: var(--ic-label-before-bg);
+  color: var(--ic-label-before-color);
 }
 
 .image-compare .image-compare-label-after {
   left: auto;
   right: 0;
-  background: #ffd100;
-  color: #1a1a1a;
-  text-align: right;
-  padding: 6px 15px 6px 0;
+  background: var(--ic-label-after-bg);
+  color: var(--ic-label-after-color);
+  text-align: var(--ic-label-after-text-align);
+  padding: var(--ic-label-after-padding);
 }
 
 /* Gold prompt badge with chevron arrows */
 .image-compare .image-compare-prompt {
-  top: 50%;
+  top: var(--ic-prompt-top);
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffd100;
-  color: #1a1a1a;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  transform: var(--ic-prompt-transform);
+  background: var(--ic-prompt-bg);
+  color: var(--ic-prompt-color);
+  font-size: var(--ic-prompt-font-size);
+  font-weight: var(--ic-prompt-font-weight);
+  letter-spacing: var(--ic-prompt-letter-spacing);
   text-transform: uppercase;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: var(--ic-prompt-padding);
+  border-radius: var(--ic-prompt-radius);
 }
 
 /* Toggle buttons — pill shape, plum active */
 .image-compare .image-compare-tabs-toggle {
-  margin-top: 8px;
-  margin-bottom: 16px;
-  border: 2px solid #90124a;
-  border-radius: 999px;
+  margin-top: var(--ic-toggle-margin-top);
+  margin-bottom: var(--ic-toggle-margin-bottom);
+  border: var(--ic-toggle-border-width) solid var(--ic-toggle-border-color);
+  border-radius: var(--ic-toggle-radius);
   overflow: hidden;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab {
   border: none;
   border-radius: 0;
-  padding: 10px 20px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #90124a;
-  background: #fff;
+  padding: var(--ic-toggle-tab-padding);
+  font-size: var(--ic-toggle-tab-font-size);
+  font-weight: var(--ic-toggle-tab-font-weight);
+  color: var(--ic-toggle-tab-color);
+  background: var(--ic-toggle-tab-bg);
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab.is-active {
-  background: #90124a;
-  color: #fff;
+  background: var(--ic-toggle-tab-active-bg);
+  color: var(--ic-toggle-tab-active-color);
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:first-child {
-  border-radius: 999px 0 0 999px;
+  border-radius: var(--ic-toggle-radius) 0 0 var(--ic-toggle-radius);
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:last-child {
-  border-radius: 0 999px 999px 0;
+  border-radius: 0 var(--ic-toggle-radius) var(--ic-toggle-radius) 0;
 }
 
 /* Thumbnails — larger with body-part labels + clearance % */
 .image-compare .image-compare-thumbnails {
-  gap: 10px;
+  gap: var(--ic-thumb-gap);
   justify-content: flex-start;
   flex-wrap: wrap;
   overflow-x: visible;
-  padding-top: 12px;
+  padding-top: var(--ic-thumb-padding-top);
 }
 
 .image-compare .image-compare-thumb {
-  width: 130px;
-  border-radius: 0;
-  border: 3px solid transparent;
+  width: var(--ic-thumb-width);
+  border-radius: var(--ic-thumb-radius);
+  border: var(--ic-thumb-border-width) solid transparent;
 }
 
 .image-compare .image-compare-thumb.is-active {
-  border-color: #90124a;
+  border-color: var(--ic-thumb-active-border);
 }
 
 .image-compare .image-compare-thumb-label {
-  font-size: 0.8rem;
-  padding: 4px 8px;
-  font-weight: 800;
-  background: rgb(0 0 0 / 70%);
+  font-size: var(--ic-thumb-label-font-size);
+  padding: var(--ic-thumb-label-padding);
+  font-weight: var(--ic-thumb-label-font-weight);
+  background: var(--ic-thumb-label-bg);
 }
 
 .image-compare .image-compare-thumb-sublabel {
-  font-size: 0.6rem;
-  padding: 2px 8px;
-  bottom: 24px;
-  background: rgb(0 0 0 / 50%);
+  font-size: var(--ic-thumb-sublabel-font-size);
+  padding: var(--ic-thumb-sublabel-padding);
+  bottom: var(--ic-thumb-sublabel-bottom);
+  background: var(--ic-thumb-sublabel-bg);
 }
 
 /* Heading */
 .image-compare .image-compare-heading {
-  color: #1a1a1a;
-  font-size: 1.5rem;
-  font-weight: 800;
+  color: var(--ic-heading-color);
+  font-size: var(--ic-heading-font-size);
+  font-weight: var(--ic-heading-font-weight);
 }
 
 /* Disclaimer text below slider */
 .image-compare .image-compare-description {
-  color: #333;
-  font-size: 0.85rem;
+  color: var(--ic-description-color);
+  font-size: var(--ic-description-font-size);
 }
 
 /* Slider container — no rounded corners */
 .image-compare.gallery .image-compare-container {
-  border-radius: 0;
+  border-radius: var(--ic-container-radius);
 }
