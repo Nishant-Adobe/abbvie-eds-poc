@@ -678,7 +678,7 @@
 .accordion .accordion-item-body .button-container {
   margin: var(--spacing-00);
 }
-/* Links inside expanded body — row style with inline arrow (matches skyrizihcp.com) */
+/* Links inside expanded body — row style with arrow aligned right (matches skyrizihcp.com) */
 .accordion .accordion-item-body a,
 .accordion .accordion-item-body a.button,
 .accordion .accordion-item-body a.button.external-link {
@@ -691,9 +691,11 @@
   border: none;
   border-bottom: var(--border-01) solid var(--color-border-default);
   border-radius: 0;
-  padding: var(--spacing-16) var(--spacing-00) var(--spacing-16) var(--spacing-00);
+  padding: var(--spacing-16) var(--spacing-32) var(--spacing-16) var(--spacing-00);
   margin: var(--spacing-00);
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
   overflow: visible;
   transition: background-color 0.2s ease;
@@ -708,15 +710,16 @@
 .accordion .accordion-item-body p:last-child a {
   border-bottom: none;
 }
-/* Arrow icon inline after link text */
+/* Arrow icon — aligned right as flex item */
 .accordion .accordion-item-body .external-link::after,
 .accordion .accordion-item-body a::after {
   content: '' !important;
-  display: inline-block;
+  display: block;
+  flex-shrink: 0;
   width: var(--spacing-10);
   height: var(--spacing-10);
-  margin-left: var(--spacing-08);
-  vertical-align: middle;
+  min-width: var(--spacing-10);
+  margin-left: auto;
   font-family: inherit;
   font-size: 0;
   transform: none;
