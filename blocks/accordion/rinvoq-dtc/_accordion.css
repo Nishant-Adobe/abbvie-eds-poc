@@ -17,12 +17,12 @@
     overflow-x: hidden;
 }
 
-/* Item — white bg, gold left border, bottom separator */
+/* Item — white bg, gold left border, gap between items */
 .accordion .accordion-item {
     border-bottom: var(--border-01) solid var(--color-border-default);
     border-left: var(--spacing-05) solid var(--accordion-rinvoq-color-accent);
     background: var(--background-color);
-    margin-bottom: var(--spacing-00);
+    margin-bottom: var(--spacing-16);
     border-radius: 0;
     overflow: hidden;
 }
@@ -79,9 +79,9 @@
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-/* Hover — light gold tint (closed items only) */
+/* Hover — no background change */
 .accordion .accordion-item:hover summary {
-    background: var(--accordion-rinvoq-color-hover-bg);
+    background: var(--background-color);
 }
 
 /* Open state — bright gold header, transparent left border (must come after hover) */
