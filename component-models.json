@@ -3420,13 +3420,30 @@
         "name": "iconFont",
         "label": "Button Font Icon",
         "value": "",
-        "description": "Font icon name for button"
+        "description": "Font icon name for button",
+        "condition": {
+          "===": [
+            {
+              "var": "iconType"
+            },
+            "icon-font"
+          ]
+        }
       },
       {
         "component": "aem-asset",
         "name": "iconImage",
         "label": "Button Image Icon",
-        "description": "Image icon for button"
+        "description": "Image icon for button",
+        "multi": false,
+        "condition": {
+          "===": [
+            {
+              "var": "iconType"
+            },
+            "image"
+          ]
+        }
       },
       {
         "component": "select",
@@ -3444,7 +3461,18 @@
             "name": "After",
             "value": "after"
           }
-        ]
+        ],
+        "condition": {
+          "in": [
+            {
+              "var": "iconType"
+            },
+            [
+              "icon-font",
+              "image"
+            ]
+          ]
+        }
       },
       {
         "component": "boolean",
