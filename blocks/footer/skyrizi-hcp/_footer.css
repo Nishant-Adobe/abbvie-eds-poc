@@ -14,4 +14,14 @@
    instead of the default --color-text-on-dark: #fff */
 .footer-wrapper {
   --footer-color-text: #e2e4e3;
+  --footer-content-max-width: 1200px;
+}
+
+/* Centered max-width: bg stays edge-to-edge, content (already center-aligned
+   from base CSS) is constrained to a centered max-width via padding-inline max() */
+.footer {
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
 }

@@ -22,12 +22,19 @@
 
   /* Live: font-family: "Graphik Semibold", "Helvetica Neue", arial, helvetica, sans-serif */
   --footer-font-family: var(--font-family-semibold);
+
+  --footer-content-max-width: 1200px;
 }
 
 /* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
-   add bottom padding so logo/legal-number don't touch the footer's bottom edge */
+   add bottom padding so logo/legal-number don't touch the footer's bottom edge.
+   bg stays edge-to-edge, content is constrained to a centered max-width via padding-inline max() */
 .footer {
-  padding: 0 var(--footer-spacing-padding-x) var(--spacing-20);
+  padding-block: 0 var(--spacing-20);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
 }
 
 /* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0 */
