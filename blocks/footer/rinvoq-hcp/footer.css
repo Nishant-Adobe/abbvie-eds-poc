@@ -1,85 +1,168 @@
 /** TODO  - Fix ESlint Issue */
 /* stylelint-disable */
+
+/* ============================================================
+   Footer Block — Base styles
+   Live-matching flat horizontal layout (matches all 6 AbbVie brand sites):
+   - Two centered link rows (UL-based, gap-separated, no border)
+   - Legal text + legal number + AbbVie logo
+   Brand differences flow through brand-level global tokens declared in
+   styles/{brand}/tokens.css:
+     --color-background-footer, --color-text-on-dark,
+     --body-font-family, --font-size-footer
+   ============================================================ */
+
+/* ── Block-scoped tokens (W3C DTCG: --footer-{type}-{semantic}-{variant}) ── */
 .footer-wrapper {
-  margin-top: var(--spacing-n40);
+  --footer-color-bg: var(--color-background-footer);
+  --footer-color-text: var(--color-text-on-dark, #fff);
+  --footer-color-link: var(--footer-color-text);
+  --footer-font-family: var(--body-font-family);
+  --footer-font-size: var(--font-size-footer, var(--font-size-14));
+  --footer-font-size-small: var(--font-size-12);
+  --footer-font-weight: var(--font-weight-400);
+  --footer-line-height: var(--line-height-22);
+  --footer-spacing-padding-y: var(--spacing-40);
+  --footer-spacing-padding-x: var(--spacing-20);
+  --footer-spacing-row-gap: var(--spacing-16);
+  --footer-spacing-link-gap-desktop: var(--spacing-24);
+  --footer-spacing-legal-gap: var(--spacing-60);
+  --footer-spacing-bottom-gap: var(--spacing-12);
+  --footer-logo-height: var(--spacing-22);
 }
+
+/* ── Container: flat, full-bleed ─────────────────────────────── */
+.footer-wrapper {
+  margin-top: 0;
+}
+
 .footer {
-  background-color: var(--footer-background-color);
-  font-size: var(--font-size-12);
-  box-sizing: border-box;
-  padding: var(--spacing-32) var(--spacing-35) 0;
-  border-top-left-radius: var(--spacing-32);
-  margin: auto;
-  max-width: 1440px;
+  background-color: var(--footer-color-bg);
+  color: var(--footer-color-text);
+  font-family: var(--footer-font-family);
+  font-size: var(--footer-font-size);
+  line-height: var(--footer-line-height);
+  border-radius: 0;
+  border-top-left-radius: 0;
+  max-width: none;
+  margin: 0;
+  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
   position: relative;
+  box-sizing: border-box;
 }
+
 .footer p {
-  margin: var(--spacing-00);
+  margin: 0;
 }
+
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
-.footer-bottom ul li a {
-  font-family: var(--body-font-family);
-  text-decoration: none;
-  color: var(--footer-link-color);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-04);
-  text-transform: uppercase;
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-30);
-  font-weight: var(--font-weight-400);
-  letter-spacing: var(--letter-spacing-wide-04);
+
+/* Auto-hide any empty column (depends on what's authored) */
+.footer .footer-column:empty {
+  display: none;
 }
-/* Bottom links */
-.footer .footer-bottom {
-  border-top: 1px solid var(--footer-seperator-color);
-  padding: var(--spacing-24) 0 var(--spacing-16);
-}
-.footer .footer-bottom ul {
-  list-style: none;
-  padding: var(--spacing-00);
-  margin: var(--spacing-00);
-  display: flex;
-  flex-flow: column wrap;
-  gap: var(--spacing-20);
-}
+
+/* ── Link rows ──────────────────────────────────────────────── */
 .footer .footer-columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-20);
-  margin-bottom: var(--spacing-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-spacing-row-gap);
+  margin: 0;
+  padding: 0;
 }
-.footer .footer-column ul {
+
+.footer .footer-column {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+/* Primary column may hold both link rows (when 2 ULs authored in section 1) — stack them */
+.footer .footer-links-primary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-spacing-row-gap);
+}
+
+/* Reset legacy "first p as label" styling */
+.footer .footer-column p:first-child {
+  text-transform: none;
+  margin-bottom: 0;
+}
+
+.footer .footer-links-tertiary p:last-child {
+  margin-top: 0;
+  text-align: center;
+}
+
+/* UL row — flex layout, gap-separated */
+.footer .footer-links-primary ul,
+.footer .footer-links-secondary ul,
+.footer .footer-links-tertiary ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--footer-spacing-row-gap);
+  margin: 0;
+  padding: 0;
   list-style: none;
-  padding: var(--spacing-00);
-  margin: var(--spacing-00);
-  margin-bottom: var(--spacing-16);
+  font-family: var(--footer-font-family);
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
+  line-height: var(--footer-line-height);
+  color: var(--footer-color-text);
 }
-.footer .footer-links-primary li a {
-  color: var(--footer-link-color);
-  margin-bottom: var(--spacing-20);
-  font-size: var(--font-size-40);
-  line-height: var(--line-height-44);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-650);
+
+.footer .footer-links-primary li,
+.footer .footer-links-secondary li,
+.footer .footer-links-tertiary li,
+.footer .footer-links-primary li:not(:last-child),
+.footer .footer-links-secondary li:not(:last-child),
+.footer .footer-links-tertiary li:not(:last-child) {
+  margin: 0;
+  padding: 0;
 }
-.footer ul li a:hover {
-  font-family: var(--roboto-bold-font-family);
-  font-weight: var(--font-weight-700);
+
+/* Link styling — high specificity to override legacy heading-style rules */
+.footer .footer-links-primary li a,
+.footer .footer-links-secondary li a,
+.footer .footer-links-tertiary li a {
+  color: var(--footer-color-link);
+  font-family: var(--footer-font-family);
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
+  line-height: var(--footer-line-height);
+  margin: 0;
+  text-decoration: none;
+  white-space: nowrap;
 }
-.footer-column li:not(:last-child) {
-  margin-bottom: var(--spacing-16);
+
+.footer .footer-links-primary li a:hover,
+.footer .footer-links-secondary li a:hover,
+.footer .footer-links-tertiary li a:hover {
+  font-family: var(--footer-font-family);
+  font-weight: var(--footer-font-weight);
+  text-decoration: underline;
 }
-.footer-links-primary li:not(:last-child) {
-  margin-bottom: var(--spacing-20);
+
+/* P-based authoring fallback (pipe-separated text) */
+.footer .footer-links-secondary p,
+.footer .footer-links-tertiary p {
+  margin: 0;
+  text-align: center;
+  text-transform: none;
+  font-family: var(--footer-font-family);
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
+  line-height: var(--footer-line-height);
+  color: var(--footer-color-text);
 }
-.footer .footer-links-primary li a:hover {
-  font-family: var(--heading-font-family-bold);
-  font-weight: var(--font-weight-800);
-}
+
+/* External link icon */
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -92,180 +175,158 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
-.footer .footer-links-tertiary {
-  font-family: var(--body-font-family);
-  font-weight: var(--font-weight-400);
-}
-.footer .footer-links-secondary ul,
-.footer .footer-links-tertiary ul {
-  font-family: var(--body-font-family);
-  margin-bottom: var(--spacing-16);
-  color: var(--footer-link-color);
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-400);
-  line-height: var(--line-height-20);
-}
-.footer .footer-links-tertiary ul {
-  margin-bottom: var(--spacing-66);
-}
-.footer .footer-links-tertiary p {
-  font-family: var(--roboto-light-font-family);
-  font-weight: var(--font-weight-300);
-  color: var(--footer-link-color);
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-16);
-  text-align: left;
-}
-.footer .footer-links-tertiary p:last-child {
-  margin-top: var(--spacing-30);
-  text-align: right;
-}
-.footer-bottom img {
-  width: 27px;
-}
-.footer .footer-logo img {
-  max-width: 150px;
-  height: auto;
-}
-.footer .footer-column p:first-child {
-  font-family: var(--body-font-family);
-  color: var(--color-gray-dark);
-  font-size: var(--font-size-12);
-  font-weight: var(--font-weight-400);
-  letter-spacing: var(--letter-spacing-wide-04);
-  line-height: var(--line-height-16);
-  margin-bottom: var(--spacing-16);
-  text-transform: uppercase;
-}
-@media (min-width: 744px) {
-  .footer-wrapper {
-    margin-top: var(--spacing-n64);
-  }
 
-  .footer {
-    padding: var(--spacing-56) var(--spacing-70) 0;
-    border-top-left-radius: var(--spacing-64);
-  }
+/* ── Footer bottom: legal text + number + logo ──────────────── */
+.footer .footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-spacing-bottom-gap);
+  border: none;
+  padding: 0;
+  margin-top: var(--footer-spacing-legal-gap);
+}
 
-  .footer .footer-columns {
-    grid-template-columns: repeat(8, 1fr);
-    margin-bottom: var(--spacing-24);
-  }
+.footer .footer-bottom p {
+  margin: 0;
+  text-align: center;
+  color: var(--footer-color-text);
+  font-family: var(--footer-font-family);
+  font-size: var(--footer-font-size);
+  line-height: var(--footer-line-height);
+  text-transform: none;
+}
 
-  .footer .footer-column ul {
-    margin-bottom: var(--spacing-24);
+/* Anchors inside footer-bottom paragraphs inherit text styling */
+.footer .footer-bottom p a {
+  color: var(--footer-color-link);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-decoration: underline;
+}
+
+.footer .footer-bottom p a:hover {
+  text-decoration: none;
+}
+
+/* Strip button-pill styling when legal text is authored as a button (legacy) */
+.footer .footer-bottom a.button,
+.footer .footer-bottom .button-container a {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--footer-color-link) !important;
+  font-size: var(--footer-font-size) !important;
+  font-weight: var(--footer-font-weight) !important;
+  text-decoration: underline !important;
+  text-transform: none !important;
+  display: inline !important;
+  white-space: normal !important;
+  line-height: var(--footer-line-height) !important;
+}
+
+.footer .footer-bottom a.button:hover,
+.footer .footer-bottom .button-container a:hover {
+  text-decoration: none !important;
+}
+
+/* Legal number — small text. Detected by .legal-number class OR by being
+   the 2nd-to-last child (paragraph immediately before the logo picture) */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+  font-size: var(--footer-font-size-small);
+}
+
+/* Logo — centered mobile, right-aligned desktop, white via filter (raster) or fill (SVG) */
+.footer .footer-bottom p:has(picture),
+.footer .footer-bottom p:has(img) {
+  margin: var(--footer-spacing-bottom-gap) 0 0;
+  text-align: center;
+}
+
+.footer .footer-bottom p:has(picture) img,
+.footer .footer-bottom p:has(img) img {
+  height: var(--footer-logo-height);
+  width: auto;
+  /* Handles dark-on-white JPG/PNG logos: invert flips dark→light, screen blend
+     hides the (now black) background against the dark footer */
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
+
+.footer .footer-bottom svg {
+  height: var(--footer-logo-height);
+  width: auto;
+  fill: var(--footer-color-text);
+}
+
+/* Legacy ul fallback inside footer-bottom */
+.footer .footer-bottom ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.footer .footer-bottom ul li,
+.footer .footer-bottom ul li a {
+  color: var(--footer-color-text);
+  font-size: var(--footer-font-size);
+  text-decoration: none;
+}
+
+/* ── Desktop ≥601px (matches live media query) ──────────────── */
+@media (min-width: 601px) {
+  .footer .footer-links-primary ul,
+  .footer .footer-links-secondary ul,
+  .footer .footer-links-tertiary ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--footer-spacing-link-gap-desktop);
   }
 
   .footer .footer-bottom {
-    padding-bottom: var(--spacing-24);
+    margin-top: var(--footer-spacing-legal-gap);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: var(--footer-spacing-link-gap-desktop);
+    row-gap: var(--footer-spacing-bottom-gap);
   }
 
-  .footer .footer-links-secondary ul,
-  .footer .footer-links-tertiary ul {
-    line-height: var(--line-height-22);
+  /* Legal text paragraphs — each takes its own row, full-width */
+  .footer .footer-bottom > .button-container,
+  .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
+    grid-column: 1 / -1;
+    margin: 0;
   }
 
-  .footer .footer-links-primary li a {
-    font-size: var(--font-size-30);
-    line-height: var(--line-height-34);
+  /* Legal number — bottom-left of last row */
+  .footer .footer-bottom > p.legal-number,
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+    grid-column: 1;
+    text-align: left;
+    margin: 0;
   }
 
-  .footer .footer-links-tertiary ul {
-    margin-bottom: var(--spacing-72);
-  }
-
-  .footer .footer-column p:first-child {
-    margin-bottom: var(--spacing-24);
-  }
-
-  .footer .footer-bottom ul {
-    flex-direction: row;
-  }
-
-  .footer .footer-logo {
-    grid-column: auto / span 2;
-  }
-
-  .footer .footer-links-primary {
-    grid-column: auto / span 4;
-  }
-
-  .footer .footer-links-secondary {
-    grid-column: auto / span 2;
-  }
-
-  .footer .footer-links-tertiary {
-    grid-column: auto / span 4;
+  /* Logo — bottom-right (same row as legal number due to grid auto-placement) */
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    grid-column: 2;
+    text-align: right;
+    margin: 0;
   }
 }
-@media (min-width: 1024px) {
-  .footer-wrapper {
-    margin-top: var(--spacing-n80);
-  }
-
-  .footer {
-    padding: var(--spacing-80) var(--spacing-55) 0;
-    border-top-left-radius: var(--spacing-80);
-  }
-
-  .footer .footer-columns {
-    grid-template-columns: repeat(12, 1fr);
-  }
-
-  .footer .footer-links-tertiary p {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-20);
-  }
-
-  .footer .footer-links-primary li a{
-    font-size: var(--font-size-40);
-    line-height: var(--line-height-44);
-  }
 
 
-  .footer .footer-links-secondary ul,
-  .footer .footer-links-tertiary ul {
-    font-size: var(--font-size-18);
-    line-height: var(--line-height-24);
-  }
-
-}
 /* ============================================================
-   RINVOQ HCP — Near-black footer (#17181b)
+   RINVOQ HCP — Footer brand overrides
+   Live: www.rinvoqhcp.com/dermatology
+   Background (#17181b near-black), font-family (Graphik), and
+   font-size (16px) all flow through brand tokens in
+   styles/rinvoq-hcp/tokens.css. No brand-specific overrides needed.
    ============================================================ */
-/* ============================================================
-   Dark Footer — Common overrides for dark brand backgrounds
-   ============================================================ */
+
 /* stylelint-disable */
-.footer {
-  background-color: var(--color-background-footer);
-}
-.footer ul li a {
-  color: var(--color-text-on-dark, #fff);
-}
-.footer .footer-links-primary li a,
-.footer .footer-links-primary li a:hover {
-  color: var(--color-text-on-dark, #fff);
-}
-.footer .footer-links-secondary ul,
-.footer .footer-links-tertiary ul,
-.footer .footer-links-tertiary p {
-  color: var(--color-text-on-dark, #fff);
-}
-.footer .footer-links-tertiary p:last-child {
-  color: var(--color-text-on-dark, #fff);
-}
-.footer .footer-column p:first-child {
-  color: rgba(255, 255, 255, 0.6);
-}
-.footer .footer-bottom {
-  border-top-color: rgba(255, 255, 255, 0.15);
-}
-.footer-bottom ul li a {
-  color: var(--color-text-on-dark, #fff);
-}
-.footer-wrapper .back-to-top {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: var(--color-text-on-dark, #fff);
-}
-
