@@ -1,27 +1,12 @@
 import { applyCommonProps } from '../../scripts/utils.js';
 
-// Field order matches template property order in _cta.json:
-// label[0], href[1], ariaLabel[2], ctaTarget[3], iconType[4],
-// iconFont[5], iconImage[6], iconPosition[7], modalId[8],
-// anchorId[9], analyticsId[10], ariaHidden[11]
-const CFG = {
-  LABEL: 0,
-  HREF: 1,
-  ARIA_LABEL: 2,
-  TARGET: 3,
-  ICON_TYPE: 4,
-  ICON_FONT: 5,
-  ICON_IMAGE: 6,
-  ICON_POSITION: 7,
-  MODAL_ID: 8,
-  ANCHOR_ID: 9,
-  ANALYTICS_ID: 10,
-  ARIA_HIDDEN: 11,
-  COUNT: 12,
-};
+function cellText(row) {
+  return row?.children[0]?.textContent?.trim() || '';
+}
 
-function cellText(row, idx = 0) {
-  return row?.children[idx]?.textContent?.trim() || '';
+function cellHref(row) {
+  const a = row?.querySelector('a');
+  return a ? a.href : cellText(row);
 }
 
 function cellImage(row) {
@@ -31,19 +16,42 @@ function cellImage(row) {
 
 function readConfig(block) {
   const rows = [...block.children];
-  const cfg = rows.slice(0, CFG.COUNT);
+
+  const label = cellText(rows[0]) || 'Button';
+  const href = cellHref(rows[1]) || '#';
+  const ariaLabel = cellText(rows[2]) || '';
+  const target = cellText(rows[3]) || '_self';
+
+  let iconType = '';
+  let iconFont = '';
+  let iconImage = '';
+  let iconPosition = '';
+  let modalId = '';
+
+  for (let i = 4; i < rows.length; i += 1) {
+    const text = cellText(rows[i]);
+    const img = cellImage(rows[i]);
+
+    if (text === 'icon-font' || text === 'image' || text === 'none') {
+      iconType = text;
+    } else if (text === 'i-a' || text === 'i-b') {
+      iconPosition = text;
+    } else if (/^[0-9a-f]{4,}$/i.test(text) && !iconFont) {
+      iconFont = text;
+    } else if (img) {
+      iconImage = img;
+    } else if (text && !modalId && text !== '_self' && text !== '_blank'
+      && !text.startsWith('id:') && !text.startsWith('lang:')) {
+      modalId = text;
+    }
+  }
+
+  if (!iconPosition) {
+    iconPosition = block.classList.contains('i-b') ? 'i-b' : 'i-a';
+  }
+
   return {
-    label: cellText(cfg[CFG.LABEL]) || 'Button',
-    href: cellText(cfg[CFG.HREF]) || '#',
-    ariaLabel: cellText(cfg[CFG.ARIA_LABEL]),
-    target: cellText(cfg[CFG.TARGET]) || '_self',
-    iconType: cellText(cfg[CFG.ICON_TYPE]),
-    iconFont: cellText(cfg[CFG.ICON_FONT]),
-    iconImage: cellImage(cfg[CFG.ICON_IMAGE]) || cellText(cfg[CFG.ICON_IMAGE]),
-    iconPosition: cellText(cfg[CFG.ICON_POSITION]) || 'i-a',
-    modalId: cellText(cfg[CFG.MODAL_ID]),
-    anchorId: cellText(cfg[CFG.ANCHOR_ID]),
-    analyticsId: cellText(cfg[CFG.ANALYTICS_ID]),
+    label, href, ariaLabel, target, iconType, iconFont, iconImage, iconPosition, modalId,
   };
 }
 
@@ -148,7 +156,7 @@ function buildLink(cfg, block) {
 
   if (cfg.ariaLabel) el.setAttribute('aria-label', cfg.ariaLabel);
 
-  attachIcon(el, buildIcon(cfg), block.classList.contains('i-b'));
+  attachIcon(el, buildIcon(cfg), cfg.iconPosition === 'i-b');
 
   if (cfg.analyticsId) {
     el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
@@ -166,7 +174,7 @@ function buildButton(cfg, block) {
 
   if (cfg.ariaLabel) el.setAttribute('aria-label', cfg.ariaLabel);
 
-  attachIcon(el, buildIcon(cfg), block.classList.contains('i-b'));
+  attachIcon(el, buildIcon(cfg), cfg.iconPosition === 'i-b');
 
   if (cfg.analyticsId) {
     el.addEventListener('click', () => pushAnalytics(cfg, block, 'click'));
@@ -179,8 +187,6 @@ export default function decorate(block) {
   applyCommonProps(block);
 
   const cfg = readConfig(block);
-
-  if (cfg.anchorId) block.id = cfg.anchorId;
 
   if (cfg.iconType && cfg.iconType !== 'none' && cfg.iconPosition) {
     block.classList.add(cfg.iconPosition);
