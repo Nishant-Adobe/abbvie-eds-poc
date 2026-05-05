@@ -1,28 +1,144 @@
 @import '../accordion.css';
 @import '../../../styles/mavyret/tokens.css';
 
-/* Mavyret HCP accordion — brand-specific overrides */
+/* Mavyret HCP accordion — Fiesta variation matching mavyret.com/hcp */
+
 .accordion {
-    --footer-seperator-color: var(--color-brand-primary);
-    --highlight-dark-background-color: var(--color-brand-primary);
+    --accordion-mav-border-color: var(--color-border-dark);
+    --accordion-mav-icon-color: var(--color-border-dark);
+    --accordion-mav-text-color: var(--text-color);
+    --accordion-mav-bg: var(--background-color);
+    --footer-seperator-color: transparent;
+    --highlight-dark-background-color: transparent;
+
+    background: transparent;
 }
 
+/* Item — bordered card style */
+.accordion .accordion-item {
+    border: var(--border-02) solid var(--accordion-mav-border-color);
+    border-radius: 0;
+    margin-bottom: var(--spacing-08);
+    background: var(--accordion-mav-bg);
+}
+
+/* Summary row */
+.accordion summary,
+.accordion .accordion-item-label {
+    padding: var(--spacing-16) var(--spacing-24);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-16);
+    background: var(--accordion-mav-bg);
+}
+
+/* Heading text — dark, bold, condensed */
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
 .accordion .accordion-item-label h4,
 .accordion .accordion-item-label h5,
 .accordion .accordion-item-label h6 {
-    color: var(--color-brand-primary);
+    color: var(--accordion-mav-text-color);
     font-family: var(--heading-font-family);
-    font-weight: var(--font-weight-700);
+    font-weight: var(--font-weight-heading);
+    font-size: var(--font-size-h2);
+    text-transform: none;
+    letter-spacing: normal;
+    margin: 0;
 }
 
-.accordion .accordion-expand-all {
-    color: var(--color-brand-primary);
+/* Prevent heading change on hover/open */
+.accordion .accordion-item:hover .accordion-item-label p,
+.accordion .accordion-item:hover .accordion-item-label h2,
+.accordion .accordion-item:hover .accordion-item-label h3,
+.accordion .accordion-item:hover .accordion-item-label h4,
+.accordion .accordion-item:hover .accordion-item-label h5,
+.accordion .accordion-item:hover .accordion-item-label h6,
+.accordion .accordion-item-label.open .accordion-item-label-text,
+.accordion .accordion-item-label .accordion-item-label-text:hover {
+    color: var(--accordion-mav-text-color);
     font-family: var(--heading-font-family);
+    font-weight: var(--font-weight-heading);
+    font-size: var(--font-size-h2);
+}
+
+/* Icon — circled +/− in gray */
+.accordion-icon-font .icon-plus::after,
+.accordion-icon-font .icon-minus::after,
+.accordion-icon-font .item-icon-plus::after,
+.accordion-icon-font .item-icon-minus::after {
+    content: '';
+    position: static;
+    display: block;
+    flex-shrink: 0;
+    width: var(--spacing-24);
+    height: var(--spacing-24);
+    min-width: var(--spacing-24);
+    min-height: var(--spacing-24);
+    font-family: inherit;
+    font-size: 0;
+    transform: none;
+}
+
+.accordion-icon-font .icon-plus::after,
+.accordion-icon-font .item-icon-plus::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%23535758' stroke-width='2' fill='none'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='%23535758' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.accordion-icon-font .icon-minus::after,
+.accordion-icon-font .item-icon-minus::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%23535758' stroke-width='2' fill='none'/%3E%3Cpath d='M7 12h10' stroke='%23535758' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Hover/Open — no background change */
+.accordion .accordion-item:hover summary,
+.accordion .accordion-item[open] summary {
+    background: var(--accordion-mav-bg);
+}
+
+/* Body content */
+.accordion .accordion-item-body {
+    padding: var(--spacing-16) var(--spacing-24) var(--spacing-24);
+    background: var(--accordion-mav-bg);
+}
+
+.accordion .accordion-item-body .accordion-item-body-text {
+    color: var(--accordion-mav-text-color);
+    font-family: var(--body-font-family);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+}
+
+/* Body links */
+.accordion .accordion-item-body a,
+.accordion .accordion-item-body a.button {
+    background: none;
+    color: var(--color-brand-accent);
+    text-decoration: underline;
+    padding: 0;
+    border-radius: 0;
+}
+
+.accordion .accordion-item-body a:hover {
+    background: none;
+    color: var(--color-brand-primary);
+}
+
+/* Hide external link ::after */
+.accordion .accordion-item-body .external-link::after,
+.accordion .accordion-item-body a::after {
+    display: none;
+}
+
+/* Expand all button */
+.accordion .accordion-expand-all {
+    color: var(--accordion-mav-text-color);
+    font-family: var(--heading-font-family);
+    font-weight: var(--font-weight-heading);
 }
 
 .accordion .accordion-expand-all:focus {
-    border-color: var(--color-brand-primary);
+    border-color: var(--accordion-mav-border-color);
 }
