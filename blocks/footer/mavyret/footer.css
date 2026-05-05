@@ -963,20 +963,27 @@
   text-align: left;
   margin: 0;
 }
-/* Legal text paragraphs span both grid columns */
-.footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number) {
+/* Single-line legal text paragraphs span both grid columns.
+   :not(:has(br)) excludes the combined "©…<br>MAVYRET®…<br>US-MAVY…" block,
+   so it stays in column 1 and the logo (column 2) lands on the same row. */
+.footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:has(br)) {
   grid-column: 1 / -1;
 }
-/* MAVYRET® trademark line (3rd from end) — pull tight to "© 2025" paragraph above
-   to mimic live's single <p>"© 2025…<br>MAVYRET®…"</p> structure */
-.footer .footer-bottom > p:nth-last-child(3):not(:has(picture)):not(:has(img)):not(.legal-number) {
-  margin-top: calc(-1 * var(--spacing-12));
+/* Combined legal block (paragraph with <br>) — sit in column 1, share row with logo */
+.footer .footer-bottom > p:has(br):not(:has(picture)):not(:has(img)) {
+  grid-column: 1;
+  padding-top: var(--spacing-22);
 }
-/* Legal-number paragraph — bottom-LEFT (matches live `.abbv-legal-number`) */
+/* Override base small-font rule — mavyret HCP keeps legal-number at regular size (matches live) */
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+  font-size: var(--footer-font-size);
+}
+/* Legal-number paragraph — bottom-LEFT (matches live `.abbv-legal-number`).
+   :not(:has(br)) excludes multi-line combined paragraphs (e.g. "©…<br>MAVYRET®…"). */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)):not(:has(br)) {
   grid-column: 1;
-  font-size: var(--footer-font-size-small);
   padding-top: var(--spacing-48);
   text-align: left;
 }
@@ -990,8 +997,7 @@
 }
 /* Logo — DA delivers a white-bg JPG; invert + screen blend to render as white logo on orange */
 .footer .footer-bottom p:has(picture) img,
-.footer .footer-bottom p:has(img) img {
-  filter: invert(1);
+.footer .footer-bottom p:has(img) img {  
   mix-blend-mode: screen;
 }
 .footer .footer-bottom svg {
