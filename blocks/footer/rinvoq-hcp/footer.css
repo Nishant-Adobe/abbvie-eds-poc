@@ -1,31 +1,62 @@
 /* ============================================================
    RINVOQ HCP — Footer brand overrides
    Live: www.rinvoqhcp.com/dermatology
-   - Muted gray text (--color-silver #c9c9ca, per live `.abbv-footer ul.abbv-footer-horizontal li a`)
-   - Border-top separator between link rows (--color-steel)
-   - Tighter gap to legal text section
+   - Muted gray text (--color-silver #c9c9ca)
+   - Padding-based spacing (matches live `.abbv-footer-horizontal`)
+   - 48px gap between legal text and legal-number/logo row
+   - Border-top separator between link rows
    ============================================================ */
 
 /* stylelint-disable */
 
 /* Brand token overrides */
 .footer-wrapper {
-  /* Live: .abbv-footer ul.abbv-footer-horizontal li a { color: var(--silver); } = #c9c9ca */
+  /* Live: .abbv-footer ul.abbv-footer-horizontal li a { color: var(--silver); } */
   --footer-color-text: var(--color-silver);
 
-  /* Live uses smaller legal text gap than skyrizi-hcp (~40px vs 60px) */
-  --footer-spacing-legal-gap: var(--spacing-40);
+  /* Live footer bg is pure black (not the brand --color-background-footer #17181b) */
+  --footer-color-bg: var(--color-black);
 }
 
-/* Border separator between the 2 link rows (matches live `abbv-footer-border-top`).
-   The DOM has 2 consecutive <ul>s in .footer-links-primary; second one gets the border. */
+/* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
+   add bottom padding so logo/legal-number don't touch the footer's bottom edge */
+.footer {
+  padding: 0 var(--footer-spacing-padding-x) var(--spacing-20);
+}
+
+/* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0 */
+.footer .footer-links-primary ul {
+  padding: var(--spacing-24) 0;
+  margin: var(--spacing-04) 0 0;
+}
+
+/* Reset the column's flex gap — UL padding handles vertical spacing */
+.footer .footer-links-primary {
+  gap: 0;
+}
+
+/* Border separator on second UL (matches live `abbv-footer-border-top`) */
 .footer .footer-links-primary ul + ul {
   border-top: 1px solid var(--color-steel);
-  padding-top: var(--footer-spacing-row-gap);
 }
 
-/* Legal text uses smaller font than link rows
-   (matches live `.abbv-footer .abbv-legal-text { font-size: 0.75rem }` = 12px) */
+/* Footer bottom: legal text uses smaller font, no flex gap (use padding instead) */
 .footer .footer-bottom {
+  /* Live: .abbv-legal-text { font-size: 0.75rem } = 12px */
   --footer-font-size: var(--footer-font-size-small);
+  gap: 0;
+  margin-top: 0;
+}
+
+/* Live: .abbv-legal-number { padding: 48px 0 0 } — 48px top space */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+  padding-top: var(--spacing-48);
+}
+
+/* Live: .abbv-footer .logo { padding: 48px 0 0 } — same as legal-number */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  padding-top: var(--spacing-48);
+  margin: 0;
 }
