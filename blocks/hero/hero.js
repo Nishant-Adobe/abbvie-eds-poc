@@ -124,27 +124,51 @@ function promoteImageLink(imageCell) {
   (link.closest('.button-container') || link.closest('p') || link).replaceWith(img);
 }
 
-function injectIndication(indicationRow, block) {
-  if (!indicationRow) return;
+function createIndication(indicationRow) {
+  if (!indicationRow) return null;
   const cell = indicationRow.firstElementChild;
   const content = cell?.innerHTML?.trim();
   indicationRow.remove();
-  if (!content) return;
+  if (!content) return null;
   const banner = document.createElement('div');
   banner.classList.add('hero-indication');
   banner.innerHTML = content;
-  block.prepend(banner);
+  return banner;
 }
 
-function injectCaption(captionRow, imageCell) {
-  if (!captionRow || !imageCell) return;
+function createCaption(captionRow) {
+  if (!captionRow) return null;
   const text = captionRow.firstElementChild?.textContent?.trim();
   captionRow.remove();
-  if (!text) return;
+  if (!text) return null;
   const caption = document.createElement('span');
   caption.classList.add('hero-image-caption');
   caption.textContent = text;
-  imageCell.appendChild(caption);
+  return caption;
+}
+
+function wrapContent(block, textContainer, indication, caption) {
+  if (!textContainer) return null;
+
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('hero-content-stack');
+  textContainer.replaceWith(wrapper);
+
+  if (caption) wrapper.append(caption);
+  if (indication) wrapper.append(indication);
+
+  wrapper.append(textContainer);
+  if (block.classList.contains('full')) wrapper.classList.add('hero-content-stack-full');
+
+  return wrapper;
+}
+
+function injectFloatingContent(block, imageCell, indicationRow, captionRow) {
+  const indication = createIndication(indicationRow);
+  const caption = createCaption(captionRow);
+
+  if (indication) block.append(indication);
+  if (caption && imageCell) imageCell.append(caption);
 }
 
 function absorbPressReleases(section, textCell) {
@@ -207,9 +231,10 @@ export default function decorate(block) {
   const { imageRow, textRow, videoRow, mobileImageRow, indicationRow, captionRow } = extractRows(block);
   const imageCell = imageRow?.firstElementChild;
   const textCell = textRow?.firstElementChild;
+  const textContainer = textCell?.parentElement;
 
   if (textCell) {
-    textCell.parentElement.classList.add('hero-text-container');
+    textContainer.classList.add('hero-text-container');
     textCell.classList.add('cmp-container-x-large');
   }
 
@@ -217,8 +242,14 @@ export default function decorate(block) {
   detectEyebrow(textCell);
   mergeMobileImage(imageCell, mobileImageRow);
   promoteImageLink(imageCell);
-  injectIndication(indicationRow, block);
-  injectCaption(captionRow, imageCell);
+  if (block.classList.contains('full')) {
+    const indication = createIndication(indicationRow);
+    const caption = indication ? createCaption(captionRow) : null;
+    wrapContent(block, textContainer, indication, caption);
+    if (captionRow && !indication) injectFloatingContent(block, imageCell, null, captionRow);
+  } else {
+    injectFloatingContent(block, imageCell, null, captionRow || indicationRow);
+  }
 
   if (block.classList.contains('landing')) absorbPressReleases(section, textCell);
   if (block.classList.contains('multilayer')) initMultilayer(imageCell);

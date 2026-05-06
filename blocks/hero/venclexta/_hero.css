@@ -136,3 +136,280 @@
 .hero.solid :where(a).button {
   color: var(--link-color);
 }
+
+/* ============================================================
+   VENCLEXTA full hero override
+   Matches the AML reference composition:
+   - dark left overlay
+   - positioned text column
+   - top legal caption box
+   - bottom-right actor portrayal credit
+   ============================================================ */
+
+.hero.full {
+  min-height: 56rem;
+  align-items: stretch;
+}
+
+.hero.full::after {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.96) 0%,
+      rgba(0, 0, 0, 0.86) 22%,
+      rgba(0, 0, 0, 0.58) 46%,
+      rgba(0, 0, 0, 0.12) 72%,
+      rgba(0, 0, 0, 0) 100%
+    );
+}
+
+.hero.full > :where(div):has(> div:empty) {
+  display: none;
+}
+
+.hero.full .hero-text-container {
+  position: relative;
+  z-index: 2;
+  display: block;
+  align-self: center;
+  width: min(100%, 72rem);
+  margin: 15rem 0 0;
+  padding: 0 2rem 5.6rem;
+}
+
+.hero.full .cmp-container-x-large {
+  max-width: 61rem;
+}
+
+.hero.full h1 {
+  margin: 0;
+  color: var(--color-text-on-dark);
+  font-family: var(--heading-font-family-bold);
+  font-size: clamp(3.8rem, 7vw, 5.8rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
+.hero.full h1 + h1 {
+  margin-top: 0.2rem;
+  margin-bottom: 2.4rem;
+}
+
+.hero.full h1 em {
+  color: var(--color-brand-accent);
+  font-style: normal;
+}
+
+.hero.full p {
+  max-width: 62rem;
+  color: var(--color-text-on-dark);
+  font-size: 2rem;
+  line-height: 1.18;
+}
+
+.hero.full p strong {
+  font-size: clamp(2rem, 2.8vw, 2.7rem);
+  line-height: 1.08;
+}
+
+.hero.full p a {
+  color: var(--color-brand-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.12rem;
+  text-underline-offset: 0.14em;
+}
+
+.hero.full p:last-child,
+.hero.full p:nth-last-child(2),
+.hero.full p:nth-last-child(3),
+.hero.full p:nth-last-child(4) {
+  font-size: 1.8rem;
+  line-height: 1.28;
+}
+
+.hero.full .hero-indication {
+  top: 14.8rem;
+  left: 2rem;
+  right: auto;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.hero.full .hero-indication::before {
+  content: '';
+  width: 0.4rem;
+  height: 2.6rem;
+  background-color: var(--color-brand-accent);
+  flex-shrink: 0;
+}
+
+.hero.full .hero-indication p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-on-dark);
+}
+
+.hero.full .hero-image-caption {
+  inset: 1.2rem 2rem auto;
+  width: calc(100% - 4rem);
+  max-width: 111rem;
+  padding: 1.6rem 2rem;
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: 1.35rem;
+  line-height: 1.28;
+  font-style: normal;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--color-brand-accent);
+}
+
+.hero.full > div:not(:first-child):not(.hero-text-container):not(.hero-indication):has(> div > p) {
+  position: absolute;
+  right: 2rem;
+  bottom: 1.6rem;
+  z-index: 3;
+}
+
+.hero.full > div:not(:first-child):not(.hero-text-container):not(.hero-indication):has(> div > p) p {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-on-dark);
+  font-family: var(--heading-font-family-bold);
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+@media (width >= 744px) {
+  .hero.full {
+    min-height: 64rem;
+  }
+
+  .hero.full .hero-text-container {
+    width: min(100%, 82rem);
+    margin-top: 19.6rem;
+    padding: 0 7rem 6.4rem;
+  }
+
+  .hero.full .hero-indication {
+    top: 16.8rem;
+    left: 7rem;
+  }
+
+  .hero.full .hero-image-caption {
+    top: 1.2rem;
+    left: 7rem;
+    width: calc(100% - 14rem);
+  }
+
+  .hero.full > div:not(:first-child):not(.hero-text-container):not(.hero-indication):has(> div > p) {
+    right: 7rem;
+    bottom: 2rem;
+  }
+}
+
+@media (width >= 1024px) {
+  .hero.full {
+    min-height: 73rem;
+  }
+
+  .hero.full .hero-text-container {
+    width: min(100%, 89rem);
+    margin-top: 18.6rem;
+    padding: 0 5.5rem 7rem;
+  }
+
+  .hero.full .cmp-container-x-large {
+    max-width: 68rem;
+  }
+
+  .hero.full h1 {
+    font-size: clamp(5.2rem, 4.45vw, 6.3rem);
+  }
+
+  .hero.full p strong {
+    font-size: 2.8rem;
+  }
+
+  .hero.full p:last-child,
+  .hero.full p:nth-last-child(2),
+  .hero.full p:nth-last-child(3),
+  .hero.full p:nth-last-child(4) {
+    max-width: 63rem;
+    font-size: 1.8rem;
+  }
+
+  .hero.full .hero-indication {
+    top: 18.2rem;
+    left: 5.5rem;
+  }
+
+  .hero.full .hero-image-caption {
+    top: 1.3rem;
+    left: 5.5rem;
+    width: calc(100% - 11rem);
+  }
+
+  .hero.full > div:not(:first-child):not(.hero-text-container):not(.hero-indication):has(> div > p) {
+    right: 5.5rem;
+    bottom: 2rem;
+  }
+}
+
+@media (width < 744px) {
+  .hero.full {
+    min-height: 58rem;
+    align-items: flex-end;
+  }
+
+  .hero.full::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.45) 24%,
+        rgba(0, 0, 0, 0.88) 100%
+      );
+  }
+
+  .hero.full .hero-text-container {
+    width: 100%;
+    margin-top: 18.2rem;
+    padding-bottom: 6rem;
+  }
+
+  .hero.full .cmp-container-x-large {
+    max-width: 100%;
+  }
+
+  .hero.full h1 {
+    font-size: clamp(3.2rem, 10vw, 4.6rem);
+  }
+
+  .hero.full p,
+  .hero.full p strong {
+    font-size: 1.7rem;
+    line-height: 1.24;
+  }
+
+  .hero.full .hero-indication {
+    top: 12.6rem;
+  }
+
+  .hero.full .hero-image-caption {
+    font-size: 1.2rem;
+    line-height: 1.34;
+  }
+}

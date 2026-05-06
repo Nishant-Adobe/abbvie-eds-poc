@@ -3,6 +3,7 @@
   max-width: none;
   width: 100%;
   background: transparent;
+  margin:0;
 }
 
 /* AbbVie Hero — White overlap panel on hero image */
@@ -792,11 +793,13 @@ color: inherit;
   color: inherit;
 }
 
-/* Indication banner: ISI header box — full-width dark strip at the top of the hero */
+/* Indication banner: ISI header — absolutely pinned to top of hero, above overlay */
 .hero .hero-indication {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
-  width: 100%;
   background-color: rgba(0 0 0 / 70%);
   color: #fff;
   padding: var(--spacing-16, 1rem) var(--spacing-24, 1.5rem);
@@ -901,6 +904,7 @@ color: inherit;
   object-fit: cover;
   object-position: 50% 50%;
   border-radius: 0;
+  max-height: unset;
 }
 
 /* Dark left-to-transparent overlay for legibility */
