@@ -38,19 +38,27 @@
 
 .modal-content .button-container a,
 .modal-content .button-container strong a {
-  background: var(--linz-modal-teal);
+  background: var(--color-brand-primary, #422e83);
   color: #fff;
-  border-radius: 4px;
-  padding: 11px 28px;
-  font-weight: 600;
-  font-size: 1rem;
+  border-radius: var(--border-radius-button-primary, 16px);
+  padding: 12px 32px;
+  font-weight: 700;
+  font-size: 0.9rem;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: background-color 0.2s ease;
 }
 
+.modal-content .button-container a::after {
+  content: '›';
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
 .modal-content .button-container a:hover {
-  background: var(--linz-modal-teal-dark);
+  background: var(--color-brand-primary-dark, #2e1f5e);
 }
 
 /* Side-by-side button row */
