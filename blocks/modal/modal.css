@@ -70,10 +70,12 @@
 
 /* ---- Close button ---- */
 
-.modal-close {
+/* Use .modal-header .modal-close for higher specificity than global button reset */
+.modal-header .modal-close {
   width: var(--modal-close-size, 32px);
   height: var(--modal-close-size, 32px);
   padding: 0;
+  margin: 0;
   background: none;
   border: none;
   cursor: pointer;
@@ -83,13 +85,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  max-width: none;
 }
 
-.modal-close:hover {
+.modal-header .modal-close:hover {
   color: var(--modal-close-hover-color);
 }
 
-.modal-close:focus-visible {
+.modal-header .modal-close:focus-visible {
   outline: 2px solid currentcolor;
   outline-offset: 2px;
   border-radius: 2px;
