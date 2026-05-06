@@ -24,13 +24,7 @@
 /* ---- Overlay ---- */
 
 .modal-overlay {
-  /* Base modal tokens — brands override these via their tokens.css */
-  --modal-dialog-max-width: var(--modal-dialog-max-width, 800px);
-  --modal-dialog-padding: var(--modal-dialog-padding, 40px);
-  --modal-dialog-border: var(--modal-dialog-border, none);
-  --modal-dialog-border-radius: var(--modal-dialog-border-radius, var(--border-radius-card, 8px));
-  --modal-close-size: var(--modal-close-size, 32px);
-  --modal-close-font-size: var(--modal-close-font-size, 22px);
+  /* Base fallbacks — brand tokens.css sets --modal-* on :root to override */
   --modal-close-color: var(--color-brand-primary, #333);
   --modal-close-hover-color: var(--color-brand-primary-dark, #000);
 
@@ -56,9 +50,9 @@
   display: flex;
   flex-direction: column;
   background: #fff;
-  border: var(--modal-dialog-border);
-  border-radius: var(--modal-dialog-border-radius);
-  max-width: var(--modal-dialog-max-width);
+  border: var(--modal-dialog-border, none);
+  border-radius: var(--modal-dialog-border-radius, var(--border-radius-card, 8px));
+  max-width: var(--modal-dialog-max-width, 800px);
   width: 100%;
   max-height: 90vh;
   font-family: var(--body-font-family, inherit);
@@ -71,13 +65,13 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  width: var(--modal-close-size);
-  height: var(--modal-close-size);
+  width: var(--modal-close-size, 32px);
+  height: var(--modal-close-size, 32px);
   padding: 0;
-  background: none;
+  background: #fff;
   border: none;
   cursor: pointer;
-  font-size: var(--modal-close-font-size);
+  font-size: var(--modal-close-font-size, 22px);
   line-height: 1;
   color: var(--modal-close-color);
   display: flex;
