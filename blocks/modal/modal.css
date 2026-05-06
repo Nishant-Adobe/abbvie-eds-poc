@@ -59,16 +59,22 @@
   animation: modal-slide-up 0.3s ease;
 }
 
-/* ---- Close button — fixed in top-right, never scrolls away ---- */
+/* ---- Header row (contains close button, never scrolls) ---- */
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 12px 0;
+  flex-shrink: 0;
+}
+
+/* ---- Close button ---- */
 
 .modal-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
   width: var(--modal-close-size, 32px);
   height: var(--modal-close-size, 32px);
   padding: 0;
-  background: #fff;
+  background: none;
   border: none;
   cursor: pointer;
   font-size: var(--modal-close-font-size, 22px);
@@ -77,8 +83,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  flex-shrink: 0;
 }
 
 .modal-close:hover {

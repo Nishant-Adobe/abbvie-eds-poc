@@ -53,6 +53,9 @@ function getOverlay() {
   dialog.setAttribute('aria-hidden', 'true');
   dialog.setAttribute('tabindex', '-1');
 
+  const header = document.createElement('div');
+  header.className = 'modal-header';
+
   const closeBtn = document.createElement('button');
   closeBtn.className = 'modal-close';
   closeBtn.type = 'button';
@@ -60,10 +63,12 @@ function getOverlay() {
   closeBtn.textContent = '✕';
   closeBtn.addEventListener('click', closeModal);
 
+  header.append(closeBtn);
+
   const content = document.createElement('div');
   content.className = 'modal-content';
 
-  dialog.append(closeBtn, content);
+  dialog.append(header, content);
   overlay.append(dialog);
   document.body.append(overlay);
 
