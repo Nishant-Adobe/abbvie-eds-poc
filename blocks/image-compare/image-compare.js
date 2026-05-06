@@ -1,4 +1,4 @@
-﻿/* Model field order â†’ column indices (tabs/classes excluded from column output) */
+/* Model field order â†’ column indices (tabs/classes excluded from column output) */
 const COL = {
   heading: 0,
   description: 1,
@@ -297,7 +297,7 @@ function decorateGallery(block, cells, startPct) {
     if (tab2Label) {
       const cta = document.createElement('a');
       cta.className = 'image-compare-cta';
-      cta.href = `#${tab2Label.toLowerCase().replace(/\s+/g, '-')}`; 
+      cta.href = `#${tab2Label.toLowerCase().replace(/\s+/g, '-')}`;
       cta.textContent = `VIEW ${tab2Label.toUpperCase()} RESULTS`;
       content.appendChild(cta);
     }
@@ -636,14 +636,3 @@ export default async function decorate(block) {
   } = result;
   setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
-
-
-
-
-
-
-
-
-
-
-
