@@ -14,22 +14,22 @@ function createWrapperATag(wrapper) {
 
   const firstDiv = card.firstElementChild;
   if (firstDiv?.tagName === 'DIV') {
-    //firstDiv.remove();
+    firstDiv.remove();
   }
 
-  // const gridWrap = document.createElement('div');
-  // gridWrap.className = 'card-grid-item';
-  // const p = document.createElement('p');
-  // p.append(card);
-  // gridWrap.append(p);
+  const gridWrap = document.createElement('div');
+  gridWrap.className = 'card-grid-item';
+  const p = document.createElement('p');
+  p.append(card);
+  gridWrap.append(p);
 
-  return card;
+  return gridWrap;
 }
 
 export default function decorate(block) {
   const wrappers = [...block.querySelectorAll(':scope > div')];
   wrappers.forEach((wrapper) => {
-    const card = createWrapperATag(wrapper);
-    wrapper.replaceWith(card);
+    // const card = createWrapperATag(wrapper);
+    // wrapper.replaceWith(card);
   });
 }
