@@ -5154,14 +5154,35 @@
     "id": "modal",
     "fields": [
       {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link"
+        "component": "text",
+        "name": "modal-id",
+        "label": "Modal ID",
+        "description": "Unique slug, e.g. hcp-gate. Must match the data-modal-id on trigger elements.",
+        "required": true
       },
       {
         "component": "text",
-        "name": "linkText",
-        "label": "Text"
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Content"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "CTA (link)",
+        "description": "Authored as a hyperlink — link text becomes the button label."
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Behaviour",
+        "options": [
+          { "name": "Show once per session", "value": "once" }
+        ]
       }
     ]
   },
