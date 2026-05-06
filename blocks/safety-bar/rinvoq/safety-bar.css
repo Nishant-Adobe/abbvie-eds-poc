@@ -1,66 +1,32 @@
-.safety-bar-section {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: var(--z-index-safety-bar, 500);
-  pointer-events: none;
-}
+/* Rinvoq DTC — Safety Bar Brand Overrides
+   Collapsed: white bg, gold top border, charcoal text
+   Expanded:  white bg, gold underline on headings, plum close toggle
+*/
 
 .safety-bar {
-  pointer-events: all;
-  background-color: var(--safety-bar-bg, #f5f5f5);
-  border-top: 1px solid var(--safety-bar-border, #ccc);
-  max-height: var(--safety-bar-collapsed-height, 120px);
-  overflow: hidden;
-  transition: max-height 0.3s ease, transform 0.3s ease;
-}
-
-.safety-bar.is-expanded {
-  max-height: var(--safety-bar-expanded-height, 50vh);
-  overflow-y: auto;
-}
-
-.safety-bar.is-hidden {
-  transform: translateY(100%);
-}
-
-.safety-bar-abbreviated {
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
-  font-size: var(--body-font-size-xs, 0.75rem);
-  line-height: 1.5;
-  position: relative;
-}
-
-.safety-bar-full {
-  padding: var(--spacing-16, 16px) var(--spacing-24, 24px);
-  font-size: var(--body-font-size-xs, 0.75rem);
-  line-height: 1.6;
-  display: none;
-}
-
-.safety-bar.is-expanded .safety-bar-full {
-  display: block;
+  background-color: var(--background-color);
+  border-top: 3px solid var(--color-border-safety);
+  color: var(--color-text-heading);
+  font-family: var(--body-font-family);
 }
 
 .safety-bar-toggle {
-  position: absolute;
-  top: var(--spacing-12, 12px);
-  right: var(--spacing-24, 24px);
-  background: none;
-  border: 1px solid currentcolor;
-  cursor: pointer;
-  font-size: var(--body-font-size-xs, 0.75rem);
-  padding: 2px 8px;
-  border-radius: 2px;
+  border-color: var(--color-text-heading);
+  color: var(--color-text-heading);
 }
 
-.safety-bar-toggle::after {
-  content: 'Expand';
+.safety-bar.is-expanded .safety-bar-full h2,
+.safety-bar.is-expanded .safety-bar-full h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brand-accent);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
 }
 
-.safety-bar-toggle[aria-expanded='true']::after {
-  content: 'Collapse';
+.safety-bar.is-expanded .safety-bar-toggle {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
 }
-
-/* Rinvoq safety bar overrides */
