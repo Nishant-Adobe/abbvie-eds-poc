@@ -43,6 +43,50 @@
   color: var(--link-color);
 }
 
+/* Full/video/landing: white text on dark overlay */
+.hero.full h1,
+.hero.full h2,
+.hero.full h3,
+.hero.full p,
+.hero.video h1,
+.hero.video h2,
+.hero.video h3,
+.hero.video p,
+.hero.landing h1,
+.hero.landing h2,
+.hero.landing h3,
+.hero.landing p {
+  color: var(--color-text-on-dark);
+}
+
+/* Two-colour heading: italic span → gold accent */
+.hero.full h1 em,
+.hero.full h2 em,
+.hero.video h1 em,
+.hero.video h2 em,
+.hero.landing h1 em,
+.hero.landing h2 em {
+  color: var(--color-brand-accent);
+  font-style: normal;
+}
+
+/* Eyebrow pipe decoration */
+.hero .hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--color-text-on-dark);
+}
+
+.hero .hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background-color: var(--color-brand-accent);
+  flex-shrink: 0;
+}
+
 /* Landing/full/video CTA: white on dark overlay */
 .hero.landing :where(a).button,
 .hero.full :where(a).button,
