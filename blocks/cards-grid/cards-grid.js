@@ -28,8 +28,8 @@ function createWrapperATag(wrapper) {
 
 export default function decorate(block) {
    const wrappers = [...block.querySelectorAll(':scope > div')];
-  // wrappers.forEach((wrapper) => {
+   wrappers.forEach((wrapper) => {
   //   const card = createWrapperATag(wrapper);
   //   wrapper.replaceWith(card);
-  // });
+   });
 }
