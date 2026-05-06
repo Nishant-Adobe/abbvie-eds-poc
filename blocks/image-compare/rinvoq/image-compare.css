@@ -1,13 +1,30 @@
-/* --- Image Compare: Slider Core --- */
+/* =========================================================
+   IMAGE COMPARE — CORE ENGINE
+========================================================= */
 
 .image-compare-container {
   --compare-position: 50%;
 
   position: relative;
   overflow: hidden;
+
   user-select: none;
-  cursor: col-resize;
   touch-action: none;
+
+  cursor: col-resize;
+
+  aspect-ratio: 1 / 1;
+
+  background: #d9d9d9;
+}
+
+/* =========================================
+   IMAGE LAYERS
+========================================= */
+
+.image-compare-after,
+.image-compare-before {
+  height: 100%;
 }
 
 .image-compare-after {
@@ -15,54 +32,78 @@
   line-height: 0;
 }
 
-.image-compare-after img {
+.image-compare-after img,
+.image-compare-before img {
   width: 100%;
-  height: auto;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
   display: block;
 }
 
 .image-compare-before {
   position: absolute;
+
   inset: 0;
+
   overflow: hidden;
+
   width: var(--compare-position);
 }
 
 .image-compare-before img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   object-position: left;
-  display: block;
 }
+
+/* =========================================
+   HANDLE
+========================================= */
 
 .image-compare-handle {
   position: absolute;
+
   top: 0;
   bottom: 0;
+
   left: var(--compare-position);
+
   transform: translateX(-50%);
+
   width: 4px;
+
   background-color: var(--image-compare-handle-color, #fff);
+
   cursor: col-resize;
+
   z-index: 2;
 }
 
 .image-compare-handle::before {
   content: '';
+
   position: absolute;
+
   top: 50%;
   left: 50%;
+
   transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
+
+  width: 52px;
+  height: 52px;
+
   background-color: var(--image-compare-handle-color, #fff);
+
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+
+  box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
+
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
+
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 24px;
+  background-size: 26px;
 }
 
 .image-compare-handle:focus-visible::before {
@@ -70,76 +111,44 @@
   outline-offset: 2px;
 }
 
-/* --- Rinvoq DTC Variant: User-Guided Style --- */
-
-.image-compare-handle {
-  width: 4px;
-  background-color: rgb(37, 40, 42);
-}
-
-.image-compare-handle::before {
-  display: none;
-}
+/* =========================================
+   LABELS
+========================================= */
 
 .image-compare-label {
   position: absolute;
-  bottom: var(--spacing-12, 12px);
-  background: transparent;
-  color: rgb(37, 40, 42);
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: normal;
-  padding: 0;
+
+  bottom: 14px;
+
+  background: rgb(0 0 0 / 60%);
+
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0;
+
+  text-transform: uppercase;
+
+  padding: 6px 10px;
+
   border-radius: 0;
-  text-transform: none;
+
   z-index: 1;
-  box-shadow: none;
-  font-family: "Helvetica Neue LT W05_55 Roman", Arial, sans-serif;
 }
 
-.image-compare-label-before { left: var(--spacing-12, 12px); }
-
-.image-compare-label-after { right: var(--spacing-12, 12px); }
-
-/* Rinvoq overlay bar (70px gray footer) */
-.image-compare-overlay-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 70px;
-  padding: 5px 10px;
-  background-color: rgb(102, 104, 105);
-  z-index: 11;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  box-sizing: border-box;
+.image-compare-label-before {
+  left: 14px;
 }
 
-.image-compare-overlay-text {
-  color: rgb(255, 255, 255);
-  background-color: transparent;
-  font-size: 16px;
-  font-weight: 400;
-  font-family: "Helvetica Neue LT W05_55 Roman", Arial, sans-serif;
-  line-height: 20px;
-  text-align: center;
-  width: 100%;
-  padding: 0;
-  margin: 0;
+.image-compare-label-after {
+  right: 14px;
 }
 
-/* Rinvoq focus state */
-.image-compare-handle:focus-visible {
-  outline: 2px solid rgb(0, 87, 204);
-  outline-offset: 2px;
-}
-
-/* --- Vertical variant --- */
+/* =========================================
+   VERTICAL VARIANT
+========================================= */
 
 .image-compare.vertical .image-compare-container {
   cursor: row-resize;
@@ -148,6 +157,7 @@
 .image-compare.vertical .image-compare-before {
   width: 100%;
   height: var(--compare-position);
+
   inset: 0 0 auto;
 }
 
@@ -157,80 +167,137 @@
 
 .image-compare.vertical .image-compare-handle {
   inset: var(--compare-position) 0 auto;
+
   width: 100%;
   height: 4px;
+
   transform: translateY(-50%);
 }
 
 .image-compare.vertical .image-compare-label-before {
-  left: var(--spacing-12, 12px);
+  left: 14px;
+
+  top: 14px;
   bottom: auto;
-  top: var(--spacing-12, 12px);
 }
 
 .image-compare.vertical .image-compare-label-after {
-  right: var(--spacing-12, 12px);
-  bottom: var(--spacing-12, 12px);
+  right: 14px;
+  bottom: 14px;
 }
 
-/* --- Mobile hidden variant --- */
+/* =========================================
+   PROMPT
+========================================= */
 
-@media (width <= 768px) {
-  .image-compare.mobile-hidden {
-    display: none;
-  }
+.image-compare-prompt {
+  position: absolute;
+
+  top: 12px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background: rgb(0 0 0 / 70%);
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  padding: 6px 14px;
+
+  border-radius: 4px;
+
+  pointer-events: none;
+
+  z-index: 3;
+
+  white-space: nowrap;
+
+  transition: opacity 400ms;
 }
 
-/* --- Gallery Mode --- */
+.image-compare-prompt.is-hidden {
+  opacity: 0;
+}
+
+/* =========================================
+   WRAPPER
+========================================= */
 
 .image-compare-wrapper {
-  max-width: 1200px;
+  max-width: 1280px;
+
   margin: 0 auto;
 }
 
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
 .image-compare-heading {
-  font-size: var(--heading-font-size-l, 2rem);
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: var(--spacing-8, 8px);
+
+  margin-bottom: 8px;
 }
 
 .image-compare-description {
-  font-size: var(--body-font-size-m, 1rem);
-  margin-bottom: var(--spacing-16, 16px);
+  font-size: 1rem;
+
+  margin-bottom: 16px;
 }
 
-/* --- Tab bar --- */
+/* =========================================
+   TABS
+========================================= */
 
 .image-compare-tabs {
   display: flex;
-  gap: var(--spacing-8, 8px);
-  margin-bottom: var(--spacing-16, 16px);
+
+  gap: 8px;
+
+  margin-bottom: 16px;
 }
 
 .image-compare-tab {
-  background: var(--image-compare-tab-bg, #f5f5f5);
-  border: 2px solid var(--image-compare-tab-border, #ccc);
+  background: #f5f5f5;
+
+  border: 2px solid #ccc;
+
   border-radius: 4px;
-  color: var(--image-compare-tab-color, inherit);
+
+  color: inherit;
+
   cursor: pointer;
-  font-size: var(--body-font-size-s, 0.875rem);
+
+  font-size: 0.875rem;
   font-weight: 600;
-  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
-  transition: background 200ms, border-color 200ms;
+
+  padding: 8px 16px;
+
+  transition:
+    background 200ms,
+    border-color 200ms;
 }
 
 .image-compare-tab.is-active {
-  background: var(--image-compare-tab-active-bg, #071d49);
-  border-color: var(--image-compare-tab-active-bg, #071d49);
-  color: var(--image-compare-tab-active-color, #fff);
+  background: #071d49;
+
+  border-color: #071d49;
+
+  color: #fff;
 }
 
 .image-compare-tab:focus-visible {
-  outline: 2px solid var(--color-focus, #0057cc);
+  outline: 2px solid #0057cc;
   outline-offset: 2px;
 }
 
-/* --- Toggle variant (pill buttons) --- */
+/* =========================================
+   TOGGLE VARIANT
+========================================= */
 
 .image-compare-tabs-toggle {
   gap: 0;
@@ -238,7 +305,9 @@
 
 .image-compare-tabs-toggle .image-compare-tab {
   flex: 1;
+
   text-align: center;
+
   border-radius: 0;
 }
 
@@ -250,105 +319,93 @@
   border-radius: 0 999px 999px 0;
 }
 
-/* --- Gallery content area --- */
+/* =========================================
+   GALLERY CONTENT
+========================================= */
 
 .image-compare-gallery-content {
-  margin-bottom: var(--spacing-16, 16px);
+  margin-bottom: 16px;
 }
 
 .image-compare.gallery .image-compare-container {
-  margin-bottom: var(--spacing-16, 16px);
-  border-radius: var(--image-compare-border-radius, 0);
+  margin-bottom: 0;
+
+  border-radius: 0;
 }
 
-/* --- Drag prompt overlay --- */
-
-.image-compare-prompt {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--image-compare-prompt-bg, rgb(0 0 0 / 70%));
-  color: var(--image-compare-prompt-color, #fff);
-  font-size: var(--body-font-size-xs, 0.75rem);
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 3;
-  white-space: nowrap;
-  transition: opacity 400ms;
-}
-
-.image-compare-prompt.is-hidden {
-  opacity: 0;
-}
-
-/* --- Thumbnail grid --- */
+/* =========================================
+   THUMBNAILS
+========================================= */
 
 .image-compare-thumbnails {
   display: flex;
-  gap: var(--spacing-8, 8px);
+
+  gap: 18px;
+
   overflow-x: auto;
+
   scroll-snap-type: x mandatory;
-  padding-bottom: var(--spacing-8, 8px);
+
+  padding: 24px;
+
+  background: #c7e5ef;
 }
 
 .image-compare-thumb {
   position: relative;
+
   flex: 0 0 auto;
-  width: 140px;
-  border: 3px solid transparent;
-  border-radius: 4px;
-  cursor: pointer;
+
+  width: 74px;
+
+  border: none;
+
+  border-radius: 0;
+
   overflow: hidden;
+
+  cursor: pointer;
+
   padding: 0;
+
   background: none;
-  transition: border-color 200ms;
+
   scroll-snap-align: start;
 }
 
 .image-compare-thumb.is-active {
-  border-color: var(--image-compare-thumb-active-border, #071d49);
+  outline: 3px solid var(--image-compare-thumb-active-border, #1398d1);
 }
 
 .image-compare-thumb:focus-visible {
-  outline: 2px solid var(--color-focus, #0057cc);
+  outline: 2px solid #0057cc;
   outline-offset: 2px;
 }
 
 .image-compare-thumb-image {
   width: 100%;
-  height: auto;
+
+  aspect-ratio: 1 / 1;
+
+  object-fit: cover;
+
   display: block;
 }
 
-.image-compare-thumb-label {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgb(0 0 0 / 60%);
-  color: #fff;
-  font-size: var(--body-font-size-xs, 0.75rem);
-  font-weight: 700;
-  padding: 4px 8px;
-  text-align: center;
-}
-
+.image-compare-thumb-label,
 .image-compare-thumb-sublabel {
-  position: absolute;
-  bottom: 24px;
-  left: 0;
-  right: 0;
-  background: rgb(0 0 0 / 40%);
-  color: #fff;
-  font-size: 0.625rem;
-  padding: 2px 8px;
-  text-align: center;
+  display: none;
 }
 
-/* --- Responsive --- */
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (width <= 768px) {
+  .image-compare.mobile-hidden {
+    display: none;
+  }
+}
 
 @media (width <= 600px) {
   .image-compare-tabs {
@@ -360,19 +417,13 @@
   }
 
   .image-compare-thumb {
-    width: 120px;
+    width: 64px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .image-compare-prompt {
-    transition: none;
-  }
-
-  .image-compare-tab {
-    transition: none;
-  }
-
+  .image-compare-prompt,
+  .image-compare-tab,
   .image-compare-thumb {
     transition: none;
   }

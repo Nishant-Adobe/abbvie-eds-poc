@@ -1,10 +1,30 @@
+/* =========================================================
+   IMAGE COMPARE — CORE ENGINE
+========================================================= */
+
 .image-compare-container {
   --compare-position: 50%;
 
   position: relative;
   overflow: hidden;
+
   user-select: none;
+  touch-action: none;
+
   cursor: col-resize;
+
+  aspect-ratio: 1 / 1;
+
+  background: #d9d9d9;
+}
+
+/* =========================================
+   IMAGE LAYERS
+========================================= */
+
+.image-compare-after,
+.image-compare-before {
+  height: 100%;
 }
 
 .image-compare-after {
@@ -12,63 +32,401 @@
   line-height: 0;
 }
 
-.image-compare-after img {
+.image-compare-after img,
+.image-compare-before img {
   width: 100%;
-  height: auto;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
   display: block;
 }
 
 .image-compare-before {
   position: absolute;
+
   inset: 0;
+
   overflow: hidden;
+
   width: var(--compare-position);
 }
 
 .image-compare-before img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   object-position: left;
-  display: block;
 }
+
+/* =========================================
+   HANDLE
+========================================= */
 
 .image-compare-handle {
   position: absolute;
+
   top: 0;
   bottom: 0;
+
   left: var(--compare-position);
+
   transform: translateX(-50%);
+
   width: 4px;
+
   background-color: var(--image-compare-handle-color, #fff);
+
   cursor: col-resize;
+
+  z-index: 2;
 }
 
 .image-compare-handle::before {
   content: '';
+
   position: absolute;
+
   top: 50%;
   left: 50%;
+
   transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
+
+  width: 52px;
+  height: 52px;
+
   background-color: var(--image-compare-handle-color, #fff);
+
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+
+  box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px;
 }
+
+.image-compare-handle:focus-visible::before {
+  outline: 2px solid var(--color-focus, #0057cc);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   LABELS
+========================================= */
 
 .image-compare-label {
   position: absolute;
-  bottom: var(--spacing-12, 12px);
-  background: rgb(0 0 0 / 50%);
+
+  bottom: 14px;
+
+  background: rgb(0 0 0 / 60%);
+
   color: #fff;
-  font-size: var(--body-font-size-s, 0.875rem);
-  padding: 2px 8px;
-  border-radius: 2px;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0;
+
+  text-transform: uppercase;
+
+  padding: 6px 10px;
+
+  border-radius: 0;
+
+  z-index: 1;
 }
 
-.image-compare-label-before { left: var(--spacing-12, 12px); }
+.image-compare-label-before {
+  left: 14px;
+}
 
-.image-compare-label-after { right: var(--spacing-12, 12px); }
+.image-compare-label-after {
+  right: 14px;
+}
+
+/* =========================================
+   VERTICAL VARIANT
+========================================= */
+
+.image-compare.vertical .image-compare-container {
+  cursor: row-resize;
+}
+
+.image-compare.vertical .image-compare-before {
+  width: 100%;
+  height: var(--compare-position);
+
+  inset: 0 0 auto;
+}
+
+.image-compare.vertical .image-compare-before img {
+  object-position: top;
+}
+
+.image-compare.vertical .image-compare-handle {
+  inset: var(--compare-position) 0 auto;
+
+  width: 100%;
+  height: 4px;
+
+  transform: translateY(-50%);
+}
+
+.image-compare.vertical .image-compare-label-before {
+  left: 14px;
+
+  top: 14px;
+  bottom: auto;
+}
+
+.image-compare.vertical .image-compare-label-after {
+  right: 14px;
+  bottom: 14px;
+}
+
+/* =========================================
+   PROMPT
+========================================= */
+
+.image-compare-prompt {
+  position: absolute;
+
+  top: 12px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background: rgb(0 0 0 / 70%);
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  padding: 6px 14px;
+
+  border-radius: 4px;
+
+  pointer-events: none;
+
+  z-index: 3;
+
+  white-space: nowrap;
+
+  transition: opacity 400ms;
+}
+
+.image-compare-prompt.is-hidden {
+  opacity: 0;
+}
+
+/* =========================================
+   WRAPPER
+========================================= */
+
+.image-compare-wrapper {
+  max-width: 1280px;
+
+  margin: 0 auto;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+.image-compare-heading {
+  font-size: 2rem;
+  font-weight: 700;
+
+  margin-bottom: 8px;
+}
+
+.image-compare-description {
+  font-size: 1rem;
+
+  margin-bottom: 16px;
+}
+
+/* =========================================
+   TABS
+========================================= */
+
+.image-compare-tabs {
+  display: flex;
+
+  gap: 8px;
+
+  margin-bottom: 16px;
+}
+
+.image-compare-tab {
+  background: #f5f5f5;
+
+  border: 2px solid #ccc;
+
+  border-radius: 4px;
+
+  color: inherit;
+
+  cursor: pointer;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+
+  padding: 8px 16px;
+
+  transition:
+    background 200ms,
+    border-color 200ms;
+}
+
+.image-compare-tab.is-active {
+  background: #071d49;
+
+  border-color: #071d49;
+
+  color: #fff;
+}
+
+.image-compare-tab:focus-visible {
+  outline: 2px solid #0057cc;
+  outline-offset: 2px;
+}
+
+/* =========================================
+   TOGGLE VARIANT
+========================================= */
+
+.image-compare-tabs-toggle {
+  gap: 0;
+}
+
+.image-compare-tabs-toggle .image-compare-tab {
+  flex: 1;
+
+  text-align: center;
+
+  border-radius: 0;
+}
+
+.image-compare-tabs-toggle .image-compare-tab:first-child {
+  border-radius: 999px 0 0 999px;
+}
+
+.image-compare-tabs-toggle .image-compare-tab:last-child {
+  border-radius: 0 999px 999px 0;
+}
+
+/* =========================================
+   GALLERY CONTENT
+========================================= */
+
+.image-compare-gallery-content {
+  margin-bottom: 16px;
+}
+
+.image-compare.gallery .image-compare-container {
+  margin-bottom: 0;
+
+  border-radius: 0;
+}
+
+/* =========================================
+   THUMBNAILS
+========================================= */
+
+.image-compare-thumbnails {
+  display: flex;
+
+  gap: 18px;
+
+  overflow-x: auto;
+
+  scroll-snap-type: x mandatory;
+
+  padding: 24px;
+
+  background: #c7e5ef;
+}
+
+.image-compare-thumb {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: 74px;
+
+  border: none;
+
+  border-radius: 0;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  padding: 0;
+
+  background: none;
+
+  scroll-snap-align: start;
+}
+
+.image-compare-thumb.is-active {
+  outline: 3px solid var(--image-compare-thumb-active-border, #1398d1);
+}
+
+.image-compare-thumb:focus-visible {
+  outline: 2px solid #0057cc;
+  outline-offset: 2px;
+}
+
+.image-compare-thumb-image {
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.image-compare-thumb-label,
+.image-compare-thumb-sublabel {
+  display: none;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (width <= 768px) {
+  .image-compare.mobile-hidden {
+    display: none;
+  }
+}
+
+@media (width <= 600px) {
+  .image-compare-tabs {
+    flex-direction: column;
+  }
+
+  .image-compare-tabs-toggle {
+    flex-direction: row;
+  }
+
+  .image-compare-thumb {
+    width: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-compare-prompt,
+  .image-compare-tab,
+  .image-compare-thumb {
+    transition: none;
+  }
+}
 
 /* Abbvie image-compare overrides */
