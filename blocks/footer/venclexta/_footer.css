@@ -215,8 +215,7 @@
   align-items: center;
   gap: var(--spacing-24);
   margin-top: var(--spacing-32);
-  padding-top: var(--spacing-24);
-  border-top: 1px solid var(--footer-color-text);
+  padding-bottom: var(--spacing-40);
 }
 
 .footer .footer-logos > * {
@@ -225,18 +224,29 @@
   align-items: center;
 }
 
-/* `.footer-wrapper` prefix raises specificity above the .footer-bottom img
-   selectors above so stylelint's no-descending-specificity rule passes. */
+/* Partner logos (1st, 2nd) get a small fixed box; brand logo (3rd, Venclexta)
+   gets a taller box so it visually dominates as in the live design.
+   Explicit width + height with object-fit defeats EDS's intrinsic <img>
+   width/height attributes. `.footer-wrapper` prefix also raises specificity
+   above the .footer-bottom img selectors so no-descending-specificity passes. */
 .footer-wrapper .footer .footer-logos img {
-  height: var(--spacing-40);
-  width: auto;
+  width: var(--spacing-110);
+  height: var(--spacing-30);
+  object-fit: contain;
+  object-position: left center;
+}
+
+.footer-wrapper .footer .footer-logos > *:nth-child(3) img {
+  width: var(--spacing-110);
+  height: var(--spacing-100);
+  object-position: right center;
 }
 
 @media (width >= 744px) {
   .footer .footer-logos {
     flex-direction: row;
     justify-content: flex-start;
-    gap: var(--spacing-32);
+    gap: var(--spacing-20);
   }
 
   /* Push the third (brand) logo to the right edge */
@@ -247,7 +257,7 @@
   /* Vertical divider between the two partner logos */
   .footer .footer-logos > *:first-child {
     position: relative;
-    padding-right: var(--spacing-32);
+    padding-right: var(--spacing-20);
   }
 
   .footer .footer-logos > *:first-child::after {
@@ -256,7 +266,7 @@
     right: 0;
     top: 50%;
     width: 1px;
-    height: var(--spacing-40);
+    height: var(--spacing-24);
     background-color: var(--footer-color-text);
     transform: translateY(-50%);
   }
