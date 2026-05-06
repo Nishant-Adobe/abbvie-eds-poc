@@ -1,250 +1,220 @@
-import {
-  buildBlock,
-  decorateBlock as aemDecorateBlock,
-  loadBlock,
-  loadCSS,
-} from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
-
 /*
-  Modal block — supports both programmatic API (createModal / openModal)
-  and inline-authored content decorated via the standard block pipeline.
+ * Modal Block
+ *
+ * Trigger any element on the page that has:
+ *   data-modal-id="my-modal"
+ * or a link:
+ *   <a href="#my-modal">Open</a>
+ *
+ * Lazy-init: the overlay DOM is only built the first time a modal
+ * is triggered — safe for pages with 20+ modals (e.g. Mavyret).
+ *
+ * Block authoring format (table):
+ *   | modal (once) |            |
+ *   |---|---|
+ *   | modal-id  | level-up-study  |
+ *   | Title     | Study Results   |
+ *   | Content   | <rich text>     |
+ *   | CTA       | Learn more      |  <- link authored as hyperlink
+ *
+ * Variants (block class):
+ *   once -- show only once per browser session (sessionStorage)
+ */
 
-  Trigger: any element with [data-modal-id="<id>"] opens the matching modal.
-  Variants (block classes): panel | exit | exit-small | once | once-session |
-                             force | information | image | indication
-*/
+/** @type {Map<string, {block: HTMLElement, cfg: object, overlay: HTMLElement|null}>} */
+const registry = new Map();
+let listenersAttached = false;
 
-function getFocusableElements(container) {
-  return [...container.querySelectorAll(
-    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-  )];
-}
+/* ------------------------------------------------------------------ */
+/* Helpers                                                              */
+/* ------------------------------------------------------------------ */
 
-function trapFocus(dialog) {
-  dialog.addEventListener('keydown', (e) => {
-    if (e.key !== 'Tab') return;
-    const focusable = getFocusableElements(dialog);
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
+function readBlock(block) {
+  const cfg = {};
+  [...block.children].forEach((row) => {
+    const key = row.children[0]?.textContent?.trim().toLowerCase() || '';
+    const valueEl = row.children[1];
+
+    if (key === 'modal-id' || key === 'modal id') {
+      cfg.id = valueEl?.textContent.trim();
+    } else if (key === 'title') {
+      cfg.title = valueEl?.textContent.trim();
+    } else if (key === 'content') {
+      cfg.contentEl = valueEl;
+    } else if (key === 'cta') {
+      const link = valueEl?.querySelector('a');
+      cfg.ctaLabel = link?.textContent.trim() || valueEl?.textContent.trim();
+      cfg.ctaHref = link?.href || '#';
     }
   });
+  return cfg;
 }
 
-function readCookie(name) {
-  return document.cookie.split('; ').find((r) => r.startsWith(`${name}=`))?.split('=')[1];
+function getFocusable(container) {
+  return [
+    ...container.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]),'
+      + ' select:not([disabled]), textarea:not([disabled]),'
+      + ' [tabindex]:not([tabindex="-1"])',
+    ),
+  ];
 }
 
-function writeCookie(name, session = false) {
-  const expires = session ? '' : '; max-age=31536000';
-  document.cookie = `${name}=1; path=/${expires}`;
+/* ------------------------------------------------------------------ */
+/* Build overlay DOM (called lazily on first open)                     */
+/* ------------------------------------------------------------------ */
+
+function buildOverlay(cfg) {
+  const titleId = `modal-title-${cfg.id}`;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  if (cfg.title) overlay.setAttribute('aria-labelledby', titleId);
+
+  const panel = document.createElement('div');
+  panel.className = 'modal-panel';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'modal-close';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.textContent = '✕';
+
+  const content = document.createElement('div');
+  content.className = 'modal-content';
+
+  if (cfg.title) {
+    const heading = document.createElement('h2');
+    heading.id = titleId;
+    heading.className = 'modal-title';
+    heading.textContent = cfg.title;
+    content.append(heading);
+  }
+
+  if (cfg.contentEl) {
+    const body = document.createElement('div');
+    body.className = 'modal-body';
+    body.append(...cfg.contentEl.cloneNode(true).childNodes);
+    content.append(body);
+  }
+
+  if (cfg.ctaLabel) {
+    const cta = document.createElement('a');
+    cta.className = 'modal-cta button';
+    cta.href = cfg.ctaHref;
+    cta.textContent = cfg.ctaLabel;
+    content.append(cta);
+  }
+
+  panel.append(closeBtn, content);
+  overlay.append(panel);
+  document.body.append(overlay);
+
+  return overlay;
 }
 
-/**
- * Creates a modal dialog programmatically.
- * Used by other blocks (e.g. footer links) to open modals from content nodes.
- * @param {Node[]} contentNodes
- * @param {{ onConfirm?: () => void, modalType?: string }} [opts]
- */
-export async function createModal(contentNodes, opts = {}) {
-  await loadCSS(`${window.hlx.codeBasePath}/blocks/modal/modal.css`);
-  const dialog = document.createElement('dialog');
-  const { onConfirm, modalType } = opts;
-  if (modalType) dialog.dataset.modalType = modalType;
+/* ------------------------------------------------------------------ */
+/* Open / close                                                         */
+/* ------------------------------------------------------------------ */
 
-  const dialogContent = document.createElement('div');
-  dialogContent.classList.add('modal-content');
-  dialogContent.append(...contentNodes);
-  dialog.append(dialogContent);
-
-  if (typeof onConfirm === 'function') {
-    dialogContent.addEventListener('click', (e) => {
-      const trigger = e.target.closest('[data-modal-action="confirm"]');
-      if (!trigger) return;
-      e.preventDefault();
-      onConfirm();
-      dialog.close();
-    });
-  }
-
-  const closeButton = document.createElement('button');
-  closeButton.classList.add('close-button');
-  closeButton.setAttribute('aria-label', 'Close');
-  closeButton.type = 'button';
-  closeButton.innerHTML = '<span class="icon icon-close"></span>';
-  closeButton.addEventListener('click', () => dialog.close());
-  dialog.prepend(closeButton);
-
-  const block = buildBlock('modal', '');
-  document.querySelector('main').append(block);
-  aemDecorateBlock(block);
-  await loadBlock(block);
-
-  dialog.addEventListener('click', ({ clientX, clientY }) => {
-    const {
-      left, right, top, bottom,
-    } = dialog.getBoundingClientRect();
-    if (clientX < left || clientX > right || clientY < top || clientY > bottom) {
-      dialog.close();
-    }
-  });
-
-  dialog.addEventListener('close', () => {
-    document.body.classList.remove('modal-open');
-    block.remove();
-  });
-
-  block.innerHTML = '';
-  block.append(dialog);
-
-  return {
-    block,
-    showModal: () => {
-      dialog.showModal();
-      setTimeout(() => { dialogContent.scrollTop = 0; }, 0);
-      document.body.classList.add('modal-open');
-    },
-  };
+function closeModal(id) {
+  const entry = registry.get(id);
+  if (!entry?.overlay) return;
+  entry.overlay.classList.remove('is-open');
+  document.body.classList.remove('modal-is-open');
 }
 
-/**
- * Opens a modal with content loaded from a fragment URL.
- * @param {string} fragmentUrl
- * @param {{ onConfirm?: () => void, modalType?: string }} [options]
- */
-export async function openModal(fragmentUrl, options = {}) {
-  const path = fragmentUrl.startsWith('http')
-    ? new URL(fragmentUrl, window.location).pathname
-    : fragmentUrl;
-  const fragment = await loadFragment(path);
-  if (!fragment) throw new Error(`Modal: fragment not found at ${path}`);
-  const { showModal } = await createModal([...fragment.childNodes], options);
-  showModal();
-}
+function openModal(id) {
+  const entry = registry.get(id);
+  if (!entry) return;
 
-/**
- * Decorates a modal block with inline authored content.
- *
- * Content model (block rows):
- *   Row 0 — col 0: modalId  |  col 1: close button label (optional, default "Close")
- *   Row 1+ — modal body content (rich text, images, etc.)
- *
- * @param {HTMLElement} block
- */
-export async function decorateBlock(block) {
-  const rows = [...block.children];
-  if (!rows.length) return; // empty block created by createModal API — skip
+  if (entry.block.classList.contains('once') && sessionStorage.getItem(`modal-${id}`)) return;
 
-  const configRow = rows[0];
-  const modalId = configRow.children[0]?.textContent.trim() || '';
-  const closeLabel = configRow.children[1]?.textContent.trim() || 'Close';
+  if (!entry.overlay) {
+    const overlay = buildOverlay(entry.cfg);
+    entry.overlay = overlay;
 
-  const isPanel = block.classList.contains('panel');
-  const isForce = block.classList.contains('force');
-  const isOnce = block.classList.contains('once');
-  const isOnceSession = block.classList.contains('once-session');
-  const isExit = block.classList.contains('exit') || block.classList.contains('exit-small');
+    const panel = overlay.querySelector('.modal-panel');
+    const closeBtn = overlay.querySelector('.modal-close');
 
-  const dialog = document.createElement('dialog');
-  dialog.setAttribute('role', 'dialog');
-  dialog.setAttribute('aria-modal', 'true');
-
-  if (modalId) {
-    dialog.dataset.modalId = modalId;
-    block.dataset.modalId = modalId;
-  }
-
-  const closeButton = document.createElement('button');
-  closeButton.classList.add('close-button');
-  closeButton.setAttribute('aria-label', closeLabel);
-  closeButton.type = 'button';
-  closeButton.innerHTML = '<span class="icon icon-close"></span>';
-
-  const contentWrapper = document.createElement('div');
-  contentWrapper.classList.add('modal-content');
-  rows.slice(1).forEach((row) => contentWrapper.append(...row.children));
-
-  dialog.append(closeButton, contentWrapper);
-
-  if (!isPanel) {
-    dialog.addEventListener('click', ({ target }) => {
-      if (target === dialog) dialog.close();
-    });
-  }
-
-  if (isForce) {
-    dialog.addEventListener('cancel', (e) => e.preventDefault());
-  }
-
-  trapFocus(dialog);
-
-  const cookieKey = `modal-${modalId}`;
-
-  function openDialog() {
-    if ((isOnce || isOnceSession) && readCookie(cookieKey)) return;
-    dialog.showModal();
-    document.body.classList.add('modal-open');
-    const focusable = getFocusableElements(dialog);
-    if (focusable.length) focusable[0].focus();
-  }
-
-  function closeDialog() {
-    dialog.close();
-    document.body.classList.remove('modal-open');
-    if (isOnce) writeCookie(cookieKey, false);
-    if (isOnceSession) writeCookie(cookieKey, true);
-  }
-
-  closeButton.addEventListener('click', closeDialog);
-
-  dialog.addEventListener('close', () => {
-    document.body.classList.remove('modal-open');
-    if (isOnce) writeCookie(cookieKey, false);
-    if (isOnceSession) writeCookie(cookieKey, true);
-  });
-
-  // Wire [data-modal-id] triggers anywhere on the page
-  if (modalId) {
-    document.addEventListener('click', (e) => {
-      const trigger = e.target.closest(`[data-modal-id="${modalId}"]`);
-      if (trigger && !block.contains(trigger)) {
+    overlay.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = getFocusable(panel);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
-        openDialog();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal(id);
+    });
+
+    closeBtn.addEventListener('click', () => closeModal(id));
   }
 
-  // Auto-open variants
-  if (isForce || isOnce || isOnceSession) {
-    if (document.readyState === 'complete') {
-      openDialog();
-    } else {
-      window.addEventListener('load', openDialog);
-    }
+  entry.overlay.classList.add('is-open');
+  document.body.classList.add('modal-is-open');
+
+  const focusable = getFocusable(entry.overlay.querySelector('.modal-panel'));
+  if (focusable.length) focusable[0].focus();
+
+  if (entry.block.classList.contains('once')) {
+    sessionStorage.setItem(`modal-${id}`, '1');
   }
-
-  // Exit-intent: open when cursor leaves the top of the viewport
-  if (isExit) {
-    document.addEventListener('mouseleave', (e) => {
-      if (e.clientY <= 0) openDialog();
-    }, { once: true });
-  }
-
-  // Expose for programmatic use by other blocks
-  block.openModal = openDialog;
-  block.closeModal = closeDialog;
-
-  block.innerHTML = '';
-  block.append(dialog);
 }
 
+/* ------------------------------------------------------------------ */
+/* Global event delegation (attached once per page)                    */
+/* ------------------------------------------------------------------ */
+
+function attachGlobalListeners() {
+  if (listenersAttached) return;
+  listenersAttached = true;
+
+  document.addEventListener('click', (e) => {
+    const byAttr = e.target.closest('[data-modal-id]');
+    if (byAttr) {
+      e.preventDefault();
+      openModal(byAttr.dataset.modalId);
+      return;
+    }
+
+    const byHref = e.target.closest('a[href^="#"]');
+    if (byHref) {
+      const id = byHref.getAttribute('href').slice(1);
+      if (registry.has(id)) {
+        e.preventDefault();
+        openModal(id);
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    registry.forEach((entry, id) => {
+      if (entry.overlay?.classList.contains('is-open')) closeModal(id);
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* Block decoration                                                     */
+/* ------------------------------------------------------------------ */
+
 export default async function decorate(block) {
-  await decorateBlock(block);
+  const cfg = readBlock(block);
+  if (!cfg.id) return;
+
+  registry.set(cfg.id, { block, cfg, overlay: null });
+  block.hidden = true;
+
+  attachGlobalListeners();
 }

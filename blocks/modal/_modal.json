@@ -22,21 +22,34 @@
       "fields": [
         {
           "component": "text",
-          "name": "modalId",
+          "name": "modal-id",
           "label": "Modal ID",
-          "description": "Unique identifier. Trigger elements must have data-modal-id matching this value.",
+          "description": "Unique slug, e.g. level-up-study. Must match the data-modal-id on trigger elements.",
           "required": true
         },
         {
           "component": "text",
-          "name": "closeLabel",
-          "label": "Close Button Label",
-          "value": "Close"
+          "name": "title",
+          "label": "Title"
         },
         {
           "component": "richtext",
           "name": "content",
-          "label": "Modal Content"
+          "label": "Content"
+        },
+        {
+          "component": "aem-content",
+          "name": "cta",
+          "label": "CTA (link)",
+          "description": "Authored as a hyperlink — link text becomes the button label."
+        },
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Behaviour",
+          "options": [
+            { "name": "Show once per session", "value": "once" }
+          ]
         }
       ]
     }

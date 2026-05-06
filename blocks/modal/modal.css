@@ -1,191 +1,173 @@
-/* Modal Block
-   Native <dialog>-based modal with backdrop, panel, exit, force, image, and
-   information variants. Trigger: any [data-modal-id] element on the page.
+/* Modal Block — base styles
+   All brand-variable values reference CSS custom properties.
+   --modal-* tokens are defined here with smart defaults that
+   pull from brand tokens automatically (var(--color-brand-primary, …)).
+   Brand CSS files only override --modal-panel-border-color and
+   --modal-panel-radius; everything else flows from brand tokens.
 */
 
-/* ---- Body scroll lock ---- */
-
-body.modal-open {
-  overflow: hidden;
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* ---- Scoped tokens ---- */
+@keyframes modal-slide-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
 
-.modal {
-  --modal-max-width: 90rem;
-  --modal-padding-x: var(--spacing-24);
-  --modal-padding-y: var(--spacing-24);
-  --modal-bg: var(--background-color, #fff);
-  --modal-border-color: var(--color-border-default, var(--dark-color, #505050));
-  --modal-backdrop: rgb(19 19 19 / 75%);
-  --modal-close-size: 4.4rem;
-  --modal-close-color: var(--text-color, #071d49);
-  --modal-close-icon-size: 2.4rem;
-  --modal-panel-width: 42rem;
-  --modal-radius: 0;
-}
-
-/* ---- Backdrop ---- */
-
-.modal dialog::backdrop {
-  background-color: var(--modal-backdrop);
-}
-
-/* ---- Dialog ---- */
-
-.modal dialog {
-  overscroll-behavior: none;
-  overflow-y: hidden;
-  width: calc(100vw - var(--spacing-48, 4.8rem));
-  max-width: var(--modal-max-width);
-  max-height: calc(100dvh - (2 * var(--header-height, 7.2rem)));
-  padding: 0;
-  border: var(--border-01, 1px) solid var(--modal-border-color);
-  border-radius: var(--modal-radius);
-  background: var(--modal-bg);
-}
-
-@media (width >= 900px) {
-  .modal dialog {
-    width: calc(100vw - var(--spacing-64, 6.4rem));
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-/* ---- Scrollable content area ---- */
+/* ---- Overlay (fullscreen backdrop) ---- */
 
-.modal dialog .modal-content {
-  box-sizing: border-box;
-  overflow-y: auto;
-  overscroll-behavior: none;
+.modal-overlay {
+  /* Modal-scoped tokens — defaults pull from brand tokens on :root */
+  --modal-panel-radius: 4px;
+  --modal-panel-border-color: transparent;
+  --modal-close-color: var(--color-brand-primary, #333);
+  --modal-close-hover-color: var(--color-brand-primary-dark, #000);
+  --modal-cta-bg: var(--button-primary-bg, #222);
+  --modal-cta-color: var(--button-primary-color, #fff);
+  --modal-cta-hover-bg: var(--button-primary-bg-hover, #000);
+  --modal-cta-radius: var(--border-radius-button-primary, 4px);
+
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 60%);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal-overlay.is-open {
+  display: flex;
+  animation: modal-fade-in 0.25s ease;
+}
+
+/* ---- Panel ---- */
+
+.modal-panel {
+  position: relative;
+  background: #fff;
+  border-top: 4px solid var(--modal-panel-border-color);
+  border-radius: var(--modal-panel-radius);
+  padding: 40px;
+  max-width: 800px;
   width: 100%;
-  max-height: calc(100dvh - (2 * var(--header-height, 7.2rem)) - var(--modal-close-size));
-  padding: var(--modal-padding-y) var(--modal-padding-x);
-  padding-top: 0;
-  margin-top: var(--modal-close-size);
-}
-
-@media (width >= 900px) {
-  .modal dialog .modal-content {
-    max-height: calc(100dvh - (2 * var(--header-height, 7.2rem)) - var(--spacing-64, 6.4rem));
-    padding: var(--spacing-32) var(--spacing-32);
-    padding-top: 0;
-  }
-}
-
-/* ---- Section padding reset inside modal ---- */
-
-.modal dialog .section {
-  padding: 0;
+  max-height: 90vh;
+  overflow-y: auto;
+  font-family: var(--body-font-family, inherit);
+  animation: modal-slide-up 0.3s ease;
 }
 
 /* ---- Close button ---- */
 
-.modal .close-button {
+.modal-close {
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: var(--z-index-1, 1);
-  width: var(--modal-close-size);
-  height: var(--modal-close-size);
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
   padding: 0;
-  margin: 0;
+  background: none;
   border: none;
-  border-radius: 0;
-  background-color: transparent;
-  color: var(--modal-close-color);
   cursor: pointer;
-  line-height: 0;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--modal-close-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.modal .close-button .icon-close {
-  display: inline-block;
-  width: var(--modal-close-icon-size);
-  height: var(--modal-close-icon-size);
+.modal-close:hover {
+  color: var(--modal-close-hover-color);
 }
 
-.modal .close-button .icon-close::before,
-.modal .close-button .icon-close::after {
-  content: '';
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--modal-close-icon-size);
-  height: 2px;
+.modal-close:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
   border-radius: 2px;
-  background-color: currentcolor;
-  transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.modal .close-button .icon-close::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
+/* ---- Body scroll lock ---- */
+
+body.modal-is-open {
+  overflow: hidden;
 }
 
-/* ---- Panel variant: slide-in drawer from right ---- */
+/* ---- Content ---- */
 
-.modal.panel dialog::backdrop {
-  background-color: rgb(0 0 0 / 30%);
+.modal-title {
+  margin: 0 0 16px;
+  padding-right: 32px;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: var(--color-text-heading, inherit);
+  font-family: var(--heading-font-family, inherit);
 }
 
-.modal.panel dialog {
-  margin: 0 0 0 auto;
-  width: min(var(--modal-panel-width), 90vw);
-  max-width: 100%;
-  max-height: 100dvh;
-  height: 100dvh;
-  border-top: none;
-  border-right: none;
-  border-bottom: none;
-  border-left: var(--border-01, 1px) solid var(--modal-border-color);
-  overflow-y: auto;
+.modal-body {
+  margin-bottom: 24px;
+  line-height: 1.6;
+  color: var(--text-color, inherit);
 }
 
-.modal.panel dialog .modal-content {
-  max-height: none;
-  overflow-y: visible;
-  padding-top: var(--modal-padding-y);
-  margin-top: var(--modal-close-size);
+.modal-body p {
+  margin: 0 0 12px;
 }
 
-/* ---- Image variant: full-bleed ---- */
-
-.modal.image dialog {
-  max-width: 120rem;
-  padding: 0;
-  border: none;
+.modal-body p:last-child {
+  margin-bottom: 0;
 }
 
-.modal.image dialog .modal-content {
-  padding: 0;
-  margin-top: 0;
+/* ---- CTA button ---- */
+
+.modal-cta {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--modal-cta-bg);
+  color: var(--modal-cta-color);
+  text-decoration: none;
+  border-radius: var(--modal-cta-radius);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
 }
 
-.modal.image dialog img {
-  display: block;
-  width: 100%;
-  height: auto;
+.modal-cta:hover {
+  background: var(--modal-cta-hover-bg);
+  color: var(--modal-cta-color);
 }
 
-.modal.image .close-button {
-  background-color: rgb(0 0 0 / 40%);
-  color: #fff;
+/* ---- Mobile: full-width, bottom-anchored ---- */
+
+@media (width <= 600px) {
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-panel {
+    max-width: 100%;
+    border-radius: var(--modal-panel-radius) var(--modal-panel-radius) 0 0;
+    padding: 24px;
+    max-height: 90vh;
+  }
 }
 
-/* ---- Information variant: narrow centered ---- */
+/* ---- Reduced motion ---- */
 
-.modal.information dialog {
-  max-width: 60rem;
-}
-
-/* ---- Exit-small variant: compact ---- */
-
-.modal.exit-small dialog {
-  max-width: 48rem;
-}
-
-/* ---- Force variant: hide close button ---- */
-
-.modal.force .close-button {
-  display: none;
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay.is-open,
+  .modal-panel {
+    animation: none;
+  }
 }
