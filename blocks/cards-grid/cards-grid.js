@@ -14,22 +14,9 @@ function createWrapperATag(wrapper) {
     card.append(wrapper.firstChild);
   }
 
-  const innerLinkDiv = card.firstElementChild;
-  if (innerLinkDiv) {
-    innerLinkDiv.remove();
-  }
-
   const firstDiv = card.firstElementChild;
   if (firstDiv?.tagName === "DIV") {
-    const line1P = firstDiv.querySelector("p");
-    if (line1P) {
-      const line1Span = document.createElement("span");
-      line1Span.className = LINE1_SPAN_CLASSES;
-      line1Span.innerHTML = line1P.innerHTML;
-      firstDiv.replaceWith(line1Span);
-    } else {
-      firstDiv.remove();
-    }
+    firstDiv.remove();
   }
 
   return card;
