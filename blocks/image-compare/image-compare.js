@@ -322,7 +322,7 @@ function decorateGallery(block, cells, startPct) {
     bottomBar.appendChild(rightSpan);
     sliderWrap.appendChild(bottomBar);
 
-    const patientName = firstImg?.label || '';
+    const patientName = firstImg?.label || getText(cells[COL.tab1Img1Label]) || '';
     if (patientName) {
       const patient = document.createElement('div');
       patient.className = 'image-compare-patient';
@@ -664,6 +664,7 @@ export default async function decorate(block) {
   } = result;
   setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
+
 
 
 
