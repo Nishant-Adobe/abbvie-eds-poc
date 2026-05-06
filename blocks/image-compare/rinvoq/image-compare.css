@@ -429,141 +429,246 @@
   }
 }
 
-/* Rinvoq DTC overrides â€” pixel-perfect to rinvoq.com */
-
-.image-compare {
-  --image-compare-handle-color: var(--ic-handle-color);
-  --image-compare-thumb-active-border: var(--ic-thumb-active-border);
-}
-
-/* Before/After header labels â€” colored bars ABOVE image */
-
-.image-compare .image-compare-label {
-  inset: var(--ic-label-top) auto auto 0;
-  width: var(--ic-label-width);
-  border-radius: var(--ic-label-radius);
-  padding: var(--ic-label-padding);
-  font-size: var(--ic-label-font-size);
-  font-weight: var(--ic-label-font-weight);
-  letter-spacing: var(--ic-label-letter-spacing);
-}
-
-.image-compare .image-compare-label-before {
-  left: 0;
-  background: var(--ic-label-before-bg);
-  color: var(--ic-label-before-color);
+.image-compare.gallery {
+  max-width: 765px;
+  margin: 0 auto;
 }
 
 .image-compare .image-compare-label-after {
-  left: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
   right: 0;
-  background: var(--ic-label-after-bg);
-  color: var(--ic-label-after-color);
-  text-align: var(--ic-label-after-text-align);
-  padding: var(--ic-label-after-padding);
+  bottom: auto;
+  background: #ffd100;
+  color: #25282a;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 6px 15px;
+  border-radius: 0;
+  z-index: 3;
+  text-align: right;
 }
 
-/* Gold prompt badge with chevron arrows */
+.image-compare .image-compare-label-before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  background: #ffd100;
+  color: #25282a;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 6px 15px;
+  border-radius: 0;
+  z-index: 4;
+  text-align: left;
+}
+
+.image-compare .image-compare-label {
+  display: block;
+}
+
+.image-compare .image-compare-handle {
+  width: 4px;
+  background-color: #25282a;
+}
+
+.image-compare .image-compare-handle::before {
+  display: none;
+}
 
 .image-compare .image-compare-prompt {
-  top: var(--ic-prompt-top);
+  position: absolute;
+  top: auto;
+  bottom: 40%;
   left: 50%;
-  transform: var(--ic-prompt-transform);
-  background: var(--ic-prompt-bg);
-  color: var(--ic-prompt-color);
-  font-size: var(--ic-prompt-font-size);
-  font-weight: var(--ic-prompt-font-weight);
-  letter-spacing: var(--ic-prompt-letter-spacing);
-  text-transform: uppercase;
-  padding: var(--ic-prompt-padding);
-  border-radius: var(--ic-prompt-radius);
+  transform: translateX(-50%);
+  background: rgb(51 51 51 / 85%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-align: center;
+  white-space: normal;
+  max-width: 160px;
+  line-height: 1.4;
+  z-index: 5;
 }
 
-/* Toggle buttons â€” pill shape, plum active */
+.image-compare .image-compare-gallery-content {
+  background: #666869;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 5px 10px;
+  text-align: center;
+  margin-bottom: 0;
+}
 
 .image-compare .image-compare-tabs-toggle {
-  margin-top: var(--ic-toggle-margin-top);
-  margin-bottom: var(--ic-toggle-margin-bottom);
-  border: var(--ic-toggle-border-width) solid var(--ic-toggle-border-color);
-  border-radius: var(--ic-toggle-radius);
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin: 24px 0 16px;
+  border: 2px solid #90124a;
+  border-radius: 5px;
   overflow: hidden;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab {
+  flex: 1;
+  background: #fff;
+  color: #90124a;
   border: none;
   border-radius: 0;
-  padding: var(--ic-toggle-tab-padding);
-  font-size: var(--ic-toggle-tab-font-size);
-  font-weight: var(--ic-toggle-tab-font-weight);
-  color: var(--ic-toggle-tab-color);
-  background: var(--ic-toggle-tab-bg);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab.is-active {
-  background: var(--ic-toggle-tab-active-bg);
-  color: var(--ic-toggle-tab-active-color);
+  background: #90124a;
+  color: #fff;
+  border-color: #90124a;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:first-child {
-  border-radius: var(--ic-toggle-radius) 0 0 var(--ic-toggle-radius);
+  border-radius: 3px 0 0 3px;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:last-child {
-  border-radius: 0 var(--ic-toggle-radius) var(--ic-toggle-radius) 0;
+  border-radius: 0 3px 3px 0;
 }
 
-/* Thumbnails â€” larger with body-part labels + clearance % */
-
 .image-compare .image-compare-thumbnails {
-  gap: var(--ic-thumb-gap);
+  display: flex;
+  gap: 16px;
   justify-content: flex-start;
   flex-wrap: wrap;
-  overflow-x: visible;
-  padding-top: var(--ic-thumb-padding-top);
+  padding: 16px 0;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  margin: 0;
+  max-width: none;
 }
 
 .image-compare .image-compare-thumb {
-  width: var(--ic-thumb-width);
-  border-radius: var(--ic-thumb-radius);
-  border: var(--ic-thumb-border-width) solid transparent;
+  width: 130px;
+  height: auto;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  flex-shrink: 0;
 }
 
 .image-compare .image-compare-thumb.is-active {
-  border-color: var(--ic-thumb-active-border);
+  border-color: #90124a;
+  outline: none;
+}
+
+.image-compare .image-compare-thumb::after {
+  display: none;
+}
+
+.image-compare .image-compare-thumb-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .image-compare .image-compare-thumb-label {
-  font-size: var(--ic-thumb-label-font-size);
-  padding: var(--ic-thumb-label-padding);
-  font-weight: var(--ic-thumb-label-font-weight);
-  background: var(--ic-thumb-label-bg);
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  position: absolute;
+  bottom: 28px;
+  left: 8px;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
 .image-compare .image-compare-thumb-sublabel {
-  font-size: var(--ic-thumb-sublabel-font-size);
-  padding: var(--ic-thumb-sublabel-padding);
-  bottom: var(--ic-thumb-sublabel-bottom);
-  background: var(--ic-thumb-sublabel-bg);
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: #fff;
+  position: absolute;
+  bottom: 10px;
+  left: 8px;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
-/* Heading */
-
-.image-compare .image-compare-heading {
-  color: var(--ic-heading-color);
-  font-size: var(--ic-heading-font-size);
-  font-weight: var(--ic-heading-font-weight);
+.image-compare .image-compare-container {
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
-/* Disclaimer text below slider */
-
-.image-compare .image-compare-description {
-  color: var(--ic-description-color);
-  font-size: var(--ic-description-font-size);
+.image-compare .image-compare-wrapper {
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
-/* Slider container â€” no rounded corners */
-
-.image-compare.gallery .image-compare-container {
-  border-radius: var(--ic-container-radius);
+.image-compare .image-compare-layout {
+  display: block;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
 }
 
+.image-compare .image-compare-content {
+  display: none;
+}
+
+.image-compare .image-compare-slider-wrapper {
+  padding: 0;
+  min-width: 0;
+}
+
+.image-compare .image-compare-bottom-bar {
+  display: none;
+}
+
+.image-compare .image-compare-patient {
+  display: none;
+}
+
+.image-compare .image-compare-eyebrow {
+  display: none;
+}
+
+.image-compare .image-compare-heading::after {
+  display: none;
+}
+
+.image-compare .image-compare-cta {
+  display: none;
+}
+
+@media (width <= 768px) {
+  .image-compare.gallery {
+    max-width: 100%;
+  }
+
+  .image-compare .image-compare-thumbnails {
+    gap: 10px;
+  }
+
+  .image-compare .image-compare-thumb {
+    width: 100px;
+  }
+}
