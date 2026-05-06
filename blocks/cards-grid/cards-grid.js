@@ -17,13 +17,13 @@ function createWrapperATag(wrapper) {
     //firstDiv.remove();
   }
 
-  const gridWrap = document.createElement('div');
-  gridWrap.className = 'card-grid-item';
-  const p = document.createElement('p');
-  p.append(card);
-  gridWrap.append(p);
+  // const gridWrap = document.createElement('div');
+  // gridWrap.className = 'card-grid-item';
+  // const p = document.createElement('p');
+  // p.append(card);
+  // gridWrap.append(p);
 
-  return gridWrap;
+  return card;
 }
 
 export default function decorate(block) {
