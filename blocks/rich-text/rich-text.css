@@ -1,0 +1,214 @@
+﻿.rich-text {
+  width: 100%;
+  margin-bottom: var(--spacing-16);
+}
+
+.rich-text.align-left { text-align: left; }
+.rich-text.align-center { text-align: center; }
+.rich-text.align-right { text-align: right; }
+
+.rich-text.theme-light { color: var(--text-color); }
+.rich-text.theme-dark { color: var(--light-color, #fff); }
+
+.rich-text.small {
+  font-size: var(--font-size-13, 0.8125rem);
+  line-height: var(--line-height-18, 1.125rem);
+}
+
+.rich-text.large {
+  font-size: var(--font-size-20, 1.25rem);
+  line-height: var(--line-height-28, 1.75rem);
+}
+
+.rich-text.legal,
+.rich-text.disclaimer {
+  font-size: var(--font-size-12, 0.75rem);
+  color: var(--text-muted-color, #666);
+  line-height: var(--line-height-16, 1rem);
+}
+
+.rich-text.footnote {
+  font-size: var(--font-size-11, 0.6875rem);
+  color: var(--text-muted-color, #666);
+  line-height: var(--line-height-16, 1rem);
+  border-top: 1px solid var(--border-color, #ccc);
+  padding-top: var(--spacing-10, 0.625rem);
+  margin-top: var(--spacing-16, 1rem);
+}
+
+.rich-text.boxed-warning {
+  border: 2px solid var(--warning-border-color, #000);
+  padding: var(--spacing-16, 1rem);
+  margin: var(--spacing-16, 1rem) 0;
+  font-size: var(--font-size-14, 0.875rem);
+}
+
+.rich-text.boxed-warning strong:first-child {
+  display: block;
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-08, 0.5rem);
+}
+
+.rich-text.glossary {
+  font-size: var(--font-size-12, 0.75rem);
+  color: var(--text-muted-color, #666);
+  line-height: var(--line-height-18, 1.125rem);
+  columns: 2;
+  column-gap: var(--spacing-24, 1.5rem);
+}
+
+@media (max-width: 743px) {
+  .rich-text.glossary { columns: 1; }
+}
+
+.rich-text p,
+.rich-text ul,
+.rich-text ol {
+  margin-bottom: var(--spacing-16, 1rem);
+}
+
+/* stylelint-disable no-descending-specificity */
+.rich-text p:last-child,
+.rich-text ul:last-child,
+.rich-text ol:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text ul {
+  list-style: disc;
+  padding-left: var(--spacing-16, 1rem);
+}
+
+.rich-text ol {
+  list-style: decimal;
+  padding-left: var(--spacing-16, 1rem);
+}
+
+.rich-text ul ul,
+.rich-text ol ol,
+.rich-text ul ol,
+.rich-text ol ul {
+  margin-top: var(--spacing-06, 0.375rem);
+  margin-bottom: var(--spacing-06, 0.375rem);
+  padding-left: var(--spacing-16, 1rem);
+}
+
+.rich-text strong {
+  font-weight: var(--font-weight-700, 700);
+}
+
+.rich-text em {
+  font-style: italic;
+}
+
+.rich-text u {
+  text-decoration: underline;
+}
+
+.rich-text s {
+  text-decoration: line-through;
+}
+/* stylelint-enable no-descending-specificity */
+
+.rich-text sup {
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.rich-text sub {
+  font-size: 0.7em;
+  vertical-align: sub;
+  line-height: 0;
+}
+
+.rich-text a {
+  color: var(--link-color, var(--brand-primary, #071d49));
+  text-decoration: underline;
+}
+
+.rich-text a:hover {
+  text-decoration: none;
+}
+
+.rich-text a[href^="tel:"] {
+  font-weight: var(--font-weight-700, 700);
+  white-space: nowrap;
+}
+
+.rich-text a[href$=".pdf"]::after {
+  content: " (PDF)";
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+.rich-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--spacing-16, 1rem) 0;
+  font-size: var(--font-size-14, 0.875rem);
+}
+
+.rich-text th,
+.rich-text td {
+  padding: var(--spacing-08, 0.5rem) var(--spacing-12, 0.75rem);
+  border: 1px solid var(--border-color, #dee2e6);
+  text-align: left;
+  vertical-align: top;
+}
+
+.rich-text th {
+  font-weight: var(--font-weight-700, 700);
+  background: var(--table-header-bg, #f8f9fa);
+}
+
+.rich-text tr:nth-child(even) td {
+  background: var(--table-stripe-bg, #fafafa);
+}
+
+.rich-text blockquote {
+  border-left: 4px solid var(--brand-primary, #071d49);
+  padding: var(--spacing-12, 0.75rem) var(--spacing-16, 1rem);
+  margin: var(--spacing-16, 1rem) 0;
+  font-style: italic;
+  color: var(--text-muted-color, #555);
+}
+
+.rich-text hr {
+  border: none;
+  border-top: 1px solid var(--border-color, #dee2e6);
+  margin: var(--spacing-24, 1.5rem) 0;
+}
+
+.rich-text code {
+  font-family: var(--mono-font-family, 'SF Mono', 'Fira Code', monospace);
+  font-size: 0.875em;
+  background: var(--code-bg, #f4f4f4);
+  padding: 0.125em 0.375em;
+  border-radius: 3px;
+}
+
+.rich-text pre {
+  font-family: var(--mono-font-family, 'SF Mono', 'Fira Code', monospace);
+  font-size: var(--font-size-14, 0.875rem);
+  background: var(--code-bg, #f4f4f4);
+  padding: var(--spacing-16, 1rem);
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: var(--spacing-16, 1rem) 0;
+}
+
+.rich-text pre code {
+  background: none;
+  padding: 0;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+  margin-bottom: var(--spacing-08, 0.5rem);
+  font-weight: var(--font-weight-700, 700);
+}
