@@ -14,7 +14,7 @@ function createWrapperATag(wrapper) {
 
   const firstDiv = card.firstElementChild;
   if (firstDiv?.tagName === 'DIV') {
-    firstDiv.remove();
+    //firstDiv.remove();
   }
 
   const gridWrap = document.createElement('div');
