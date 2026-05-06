@@ -148,19 +148,18 @@ export default async function decorate(block) {
     }
   }
 
-  // Video hero: initialize Brightcove player for background video variant.
-  // Authoring: the last <p> in the image cell must contain only the Brightcove video ID
-  // (a numeric string, e.g. "6369925747112"). The fallback poster image is authored
-  // as a <picture> before the ID paragraph. On mobile the video is suppressed.
-  // Override the Brightcove account by adding data-brightcove-account on the block element.
+  // Video hero: initialize native HTML5 video for background video variant.
+  // Authoring: select a DAM video asset (.mp4/.webm/.mov) in the "Background Video" field.
+  // AEM renders the reference as an <a> link in the image cell. On mobile the video is hidden.
   if (block.classList.contains('video')) {
     const videoImgCell = block.querySelector(':scope > div:first-child');
-    const videoIdEl = videoImgCell?.querySelector('p:last-of-type');
-    const videoId = videoIdEl?.textContent?.trim();
+    const videoLink = videoImgCell?.querySelector('a[href]');
+    const isVideoAsset = videoLink && /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(videoLink.href);
 
-    if (videoId && /^\d+$/.test(videoId)) {
-      videoIdEl.remove();
-      const brightcoveAccount = block.dataset.brightcoveAccount || '2157889328001';
+    if (isVideoAsset) {
+      const videoSrc = videoLink.href;
+      const linkContainer = videoLink.closest('.button-container') || videoLink.closest('p') || videoLink;
+      linkContainer.remove();
 
       if (window.matchMedia('(min-width: 744px)').matches) {
         const videoContainer = document.createElement('div');
@@ -171,19 +170,16 @@ export default async function decorate(block) {
         videoEl.setAttribute('muted', '');
         videoEl.setAttribute('loop', '');
         videoEl.setAttribute('playsinline', '');
-        videoEl.setAttribute('data-video-id', videoId);
-        videoEl.setAttribute('data-account', brightcoveAccount);
-        videoEl.setAttribute('data-player', 'default');
-        videoEl.classList.add('video-js');
+        videoEl.setAttribute('preload', 'none');
+
+        const sourceEl = document.createElement('source');
+        sourceEl.src = videoSrc;
+        sourceEl.type = videoSrc.includes('.webm') ? 'video/webm' : 'video/mp4';
+        videoEl.appendChild(sourceEl);
         videoContainer.appendChild(videoEl);
 
         const firstRow = videoImgCell.querySelector(':scope > div') || videoImgCell;
         firstRow.appendChild(videoContainer);
-
-        const script = document.createElement('script');
-        script.src = `https://players.brightcove.net/${brightcoveAccount}/default_default/index.min.js`;
-        script.defer = true;
-        document.head.appendChild(script);
       }
     }
   }
