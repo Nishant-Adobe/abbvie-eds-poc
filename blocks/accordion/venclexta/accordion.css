@@ -1148,6 +1148,38 @@
 .accordion .accordion-item-body a::after {
     display: none;
 }
+/* Icon row — inline images with text labels */
+.accordion .accordion-item-body p img {
+    display: inline-block;
+    vertical-align: middle;
+    width: var(--spacing-40);
+    height: var(--spacing-40);
+    margin-right: var(--spacing-08);
+}
+/* Content cards — paragraphs with strong headings get card treatment */
+.accordion .accordion-item-body .columns {
+    display: flex;
+    gap: var(--spacing-16);
+    flex-wrap: wrap;
+    margin: var(--spacing-24) var(--spacing-00);
+}
+.accordion .accordion-item-body .columns > div {
+    flex: 1;
+    min-width: var(--spacing-200, 200px);
+    background: var(--background-color);
+    border: var(--border-01) solid var(--color-border-default);
+    border-radius: var(--spacing-08);
+    padding: var(--spacing-24);
+    text-align: center;
+}
+.accordion .accordion-item-body .columns > div h2, /* stylelint-disable-line no-descending-specificity */
+.accordion .accordion-item-body .columns > div h3, /* stylelint-disable-line no-descending-specificity */
+.accordion .accordion-item-body .columns > div h4 { /* stylelint-disable-line no-descending-specificity */
+    color: var(--color-brand-primary);
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-heading);
+    margin-bottom: var(--spacing-16);
+}
 /* Expand all button */
 .accordion .accordion-expand-all {
     color: var(--accordion-ven-text-color);
