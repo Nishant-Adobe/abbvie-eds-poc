@@ -300,13 +300,7 @@ function decorateGallery(block, cells, startPct) {
     const sliderWrap = document.createElement('div');
     sliderWrap.className = 'image-compare-slider-wrapper';
 
-    const isReversed = block.classList.contains('reversed');
-    if (isReversed) {
-      layout.appendChild(sliderWrap);
-      layout.appendChild(content);
-    } else {
-      layout.appendChild(content);
-    }
+    layout.appendChild(content);
 
     const sliderOpts = { beforeLabel, afterLabel };
     const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
@@ -330,9 +324,7 @@ function decorateGallery(block, cells, startPct) {
       sliderWrap.appendChild(patient);
     }
 
-    if (!isReversed) {
-      layout.appendChild(sliderWrap);
-    }
+    layout.appendChild(sliderWrap);
     block.appendChild(layout);
 
     // Thumbnails below layout
@@ -648,5 +640,7 @@ export default async function decorate(block) {
   } = result;
   setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
+
+
 
 
