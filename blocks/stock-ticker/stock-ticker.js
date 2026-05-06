@@ -1,4 +1,4 @@
-﻿import { getConfigValue } from '../../scripts/config.js';
+import { getConfigValue } from '../../scripts/config.js';
 
 /**
  * Stock Ticker Block
@@ -128,7 +128,7 @@ export default async function decorate(block) {
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-    console.error('Stock Ticker Error:', error);
+      console.error('Stock Ticker Error:', error);
       block.innerHTML = '<p>Error fetching stock data</p>';
     }
   }
@@ -139,4 +139,3 @@ export default async function decorate(block) {
   // Poll every 5 minutes
   setInterval(fetchStock, 5 * 60 * 1000);
 }
-
