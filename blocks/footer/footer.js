@@ -43,42 +43,42 @@ function createColumn(className, children) {
 export function buildColumnsByPosition(children) {
   const container = document.createElement('div');
   container.className = 'footer-columns';
-  let i = 0;
+  let cursor = 0;
 
-  const col1Children = [];
-  if (children[i] && children[i].querySelector('picture')) {
-    col1Children.push(children[i].cloneNode(true));
-    i += 1;
+  const logoChildren = [];
+  if (children[cursor] && children[cursor].querySelector('picture')) {
+    logoChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
   }
-  container.appendChild(createColumn('footer-column footer-logo', col1Children));
+  container.appendChild(createColumn('footer-column footer-logo', logoChildren));
 
-  const col2Children = [];
+  const primaryLinkChildren = [];
   while (
-    i < children.length
-    && (children[i].tagName === 'UL' || children[i].classList.contains('social-media'))
+    cursor < children.length
+    && (children[cursor].tagName === 'UL' || children[cursor].classList.contains('social-media'))
   ) {
-    col2Children.push(children[i].cloneNode(true));
-    i += 1;
+    primaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
   }
-  container.appendChild(createColumn('footer-column footer-links-primary', col2Children));
+  container.appendChild(createColumn('footer-column footer-links-primary', primaryLinkChildren));
 
-  const col3Children = [];
-  if (i < children.length && children[i].tagName === 'P') {
-    col3Children.push(children[i].cloneNode(true));
-    i += 1;
+  const secondaryLinkChildren = [];
+  if (cursor < children.length && children[cursor].tagName === 'P') {
+    secondaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
   }
-  if (i < children.length && children[i].tagName === 'UL') {
-    col3Children.push(children[i].cloneNode(true));
-    i += 1;
+  if (cursor < children.length && children[cursor].tagName === 'UL') {
+    secondaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
   }
-  container.appendChild(createColumn('footer-column footer-links-secondary', col3Children));
+  container.appendChild(createColumn('footer-column footer-links-secondary', secondaryLinkChildren));
 
-  const col4Children = [];
-  while (i < children.length) {
-    col4Children.push(children[i].cloneNode(true));
-    i += 1;
+  const tertiaryLinkChildren = [];
+  while (cursor < children.length) {
+    tertiaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
   }
-  container.appendChild(createColumn('footer-column footer-links-tertiary', col4Children));
+  container.appendChild(createColumn('footer-column footer-links-tertiary', tertiaryLinkChildren));
 
   return container;
 }
