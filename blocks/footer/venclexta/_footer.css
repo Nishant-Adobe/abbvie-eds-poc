@@ -101,8 +101,10 @@
   padding: 0;
 }
 
-.footer .footer-column li a,
-.footer .footer-column ul li a {
+/* `.footer-wrapper` prefix raises specificity above the heading-anchor
+   `:hover` rules above so stylelint's no-descending-specificity passes. */
+.footer-wrapper .footer .footer-column li a,
+.footer-wrapper .footer .footer-column ul li a {
   color: var(--footer-color-link);
   font-family: var(--footer-font-family);
   font-size: var(--footer-font-size);
@@ -112,16 +114,20 @@
   white-space: normal;
 }
 
-.footer .footer-column li a:hover {
+.footer-wrapper .footer .footer-column li a:hover {
   color: var(--footer-color-text);
   text-decoration: underline;
 }
 
 /* ── Footer bottom: sub-links + legal text + indication code ── */
 .footer .footer-bottom {
+  /* Live venclexta footer-bottom uses 14px / weight 500 (smaller than columns) */
+  --footer-font-size: var(--font-size-14);
+  --footer-font-weight: var(--font-weight-500);
+
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-16);
+  gap: var(--spacing-32);
   border: none;
   padding: 0;
   margin-top: var(--spacing-40);
@@ -138,23 +144,35 @@
   border-top: 1px solid var(--footer-color-text);
 }
 
+/* Spacing handled per-<li> (margin-right) instead of UL gap so it matches the
+   live abbv-footer pattern: padding-right + margin-right cumulatively = 40px
+   between items, with row-gap implicitly 0 when wrapped lines stack. */
 @media (width >= 744px) {
   .footer .footer-bottom ul {
     flex-flow: row wrap;
-    gap: var(--spacing-20);
+    gap: 0;
+  }
+
+  .footer .footer-bottom ul li {
+    margin-right: var(--spacing-40);
   }
 }
 
-/* `.footer-wrapper` prefix raises specificity to (0,4,2) — keeps source order
-   while satisfying stylelint's no-descending-specificity rule against the
-   higher-specificity column-section selectors above. */
+/* `.footer-wrapper` prefix raises specificity above the heading-anchor
+   `:hover` rules so the bottom-section overrides the column section. The
+   inline disable acknowledges that the cleaner alternative — interleaving
+   selectors by specificity rather than by section — would scatter the
+   bottom-section rules and hurt readability. */
+/* stylelint-disable no-descending-specificity */
 .footer-wrapper .footer .footer-bottom ul li,
 .footer-wrapper .footer .footer-bottom ul li a {
   color: var(--footer-color-text);
   font-family: var(--footer-font-family);
   font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
   text-decoration: none;
 }
+/* stylelint-enable no-descending-specificity */
 
 .footer-wrapper .footer .footer-bottom ul li a:hover {
   text-decoration: underline;
@@ -164,6 +182,7 @@
   color: var(--footer-color-text);
   font-family: var(--footer-font-family);
   font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
   line-height: var(--footer-line-height);
   margin: 0;
   text-align: left;
