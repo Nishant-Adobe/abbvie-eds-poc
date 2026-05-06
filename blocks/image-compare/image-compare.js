@@ -473,13 +473,6 @@ function decorateLegacy(block, cells) {
   const beforeImg = cells[1]?.querySelector('img');
   const startPct = parseFloat(cells[2]?.textContent) / 100 || 0.5;
   if (!afterImg || !beforeImg) return null;
-
-  const anchorId = getText(cells[COL.anchorId]);
-  if (anchorId) block.id = anchorId;
-  else if (tab1Label) {
-    block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
-  }
-
   block.innerHTML = '';
   const isSkyrizi = cells.length >= 7;
 
@@ -549,13 +542,6 @@ function decorateKeyValue(block, rows) {
   const afterImg = firstImg?.afterImg || data.afterImage?.querySelector('img');
   const beforeImg = firstImg?.beforeImg || data.beforeImage?.querySelector('img');
   if (!afterImg || !beforeImg) return null;
-
-  const anchorId = getText(cells[COL.anchorId]);
-  if (anchorId) block.id = anchorId;
-  else if (tab1Label) {
-    block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
-  }
-
   const hasToggle = block.classList.contains('toggle');
   block.innerHTML = '';
 
@@ -591,13 +577,6 @@ function decorateModelFormat(block, cells) {
   const afterImg = getImg(cells[COL.afterImage]);
   const beforeImg = getImg(cells[COL.beforeImage]);
   if (!afterImg || !beforeImg) return null;
-
-  const anchorId = getText(cells[COL.anchorId]);
-  if (anchorId) block.id = anchorId;
-  else if (tab1Label) {
-    block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
-  }
-
   const hasPrompt = block.classList.contains('prompt');
   const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
 
