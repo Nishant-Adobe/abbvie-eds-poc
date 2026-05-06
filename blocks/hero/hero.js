@@ -1,7 +1,7 @@
 export default async function decorate(block) {
   const section = block.closest('.section');
 
-  // Add helper classes for CSS specificity reduction
+  // ── Section helper classes
   if (section) {
     if (section.classList.contains('navy-overlap') && section.classList.contains('hero-container')) {
       section.classList.add('hero-navy');
@@ -14,15 +14,50 @@ export default async function decorate(block) {
     }
   }
 
-  // Absorb a breadcrumb block into the hero text panel.
-  // The breadcrumb may be in the same section or in the immediately
-  // preceding sibling section (separate section break in authoring).
-  const textPanel = block.querySelector(':scope > div:nth-child(2) > div');
-  textPanel.parentElement.classList.add('hero-text-container');
-  textPanel.classList.add('cmp-container-x-large');
-  if (section && textPanel) {
+  // ── Extract rows via block.children
+  // UE authoring: one row per content field. classes_* fields → CSS classes, no DOM row.
+  // Model field order: image, imageAlt, mobileImage, mobileImageAlt, eyebrow, text, layers, video
+  const rows = Array.from(block.children);
+
+  // Video row: any row whose only content is a DAM video reference link
+  const videoRow = rows.find((row) => {
+    const link = row.firstElementChild?.querySelector('a[href]');
+    if (!link) return false;
+    const { href } = link;
+    return (
+      /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(href)
+      || (/\/content\/dam\//i.test(href) && !/\.(jpg|jpeg|png|gif|webp|svg|pdf|html)(\?.*)?$/i.test(href))
+    );
+  });
+
+  // Image row: always the first row (may be empty when only video is authored)
+  const imageRow = rows[0];
+  const imageCell = imageRow?.firstElementChild;
+
+  // Text row: first non-image, non-video row that contains a heading or a CTA link
+  const textRow = rows.slice(1).find((row) => {
+    if (row === videoRow) return false;
+    const cell = row.firstElementChild;
+    return cell?.querySelector('h1,h2,h3,h4,h5,h6') || cell?.querySelector('a[href]');
+  });
+  const textCell = textRow?.firstElementChild;
+
+  // Mobile image row: a remaining row (not text, not video) that carries a picture
+  const mobileImageRow = rows.slice(1).find((row) => {
+    if (row === textRow || row === videoRow) return false;
+    return row.firstElementChild?.querySelector('picture,img');
+  });
+
+  // ── Text panel: add classes for CSS targeting
+  if (textCell) {
+    textCell.parentElement.classList.add('hero-text-container');
+    textCell.classList.add('cmp-container-x-large');
+  }
+
+  // ── Absorb breadcrumb into text panel
+  // The breadcrumb may live in the same section or in the immediately preceding section.
+  if (section && textCell) {
     let breadcrumbWrapper = section.querySelector('.breadcrumb-wrapper');
-    // Also check the previous sibling section
     if (!breadcrumbWrapper) {
       const prevSection = section.previousElementSibling;
       if (prevSection?.classList.contains('section')) {
@@ -32,9 +67,8 @@ export default async function decorate(block) {
     if (breadcrumbWrapper) {
       const breadcrumbBlock = breadcrumbWrapper.querySelector('.breadcrumb');
       if (breadcrumbBlock) {
-        textPanel.prepend(breadcrumbBlock);
+        textCell.prepend(breadcrumbBlock);
         breadcrumbWrapper.remove();
-        // Remove the previous section if it's now empty
         const prevSection = section.previousElementSibling;
         if (prevSection?.classList.contains('section') && !prevSection.children.length) {
           prevSection.remove();
@@ -43,144 +77,120 @@ export default async function decorate(block) {
     }
   }
 
-  // Eyebrow detection: first <p> before <h1>/<h2> with no links/images → .hero-eyebrow
-  const firstP = textPanel?.querySelector('p:first-child');
-  if (firstP && !firstP.querySelector('a') && !firstP.querySelector('img')) {
-    const nextEl = firstP.nextElementSibling;
-    if (nextEl?.tagName === 'H1' || nextEl?.tagName === 'H2') {
-      firstP.classList.add('hero-eyebrow');
+  // ── Eyebrow: first <p> before <h1>/<h2> with no links or images → .hero-eyebrow
+  if (textCell) {
+    const firstP = textCell.querySelector('p:first-child');
+    if (firstP && !firstP.querySelector('a') && !firstP.querySelector('img')) {
+      const next = firstP.nextElementSibling;
+      if (next?.tagName === 'H1' || next?.tagName === 'H2') {
+        firstP.classList.add('hero-eyebrow');
+      }
     }
   }
 
-  // Mobile image swap: two pictures authored = desktop + mobile responsive swap.
-  // Plain authoring: two <picture> tags in the same first-row div.
-  // UE authoring: two separate div rows in the image cell (mobileImage field).
-  const imgCell = block.querySelector(':scope > div:first-child');
-  if (imgCell) {
+  // ── Mobile image: merge desktop + mobile into one responsive <picture>
+  if (imageCell) {
     let desktopPicture = null;
     let mobilePicture = null;
 
-    const firstRow = imgCell.querySelector(':scope > div');
-    if (firstRow) {
-      const pics = firstRow.querySelectorAll('picture');
-      if (pics.length === 2) {
-        [desktopPicture, mobilePicture] = pics;
-      }
+    // Case 1: two <picture> elements inline in the image cell
+    const inlinePics = imageCell.querySelectorAll('picture');
+    if (inlinePics.length >= 2) {
+      [desktopPicture, mobilePicture] = inlinePics;
     }
 
-    if (!desktopPicture) {
-      const rows = imgCell.querySelectorAll(':scope > div');
-      if (rows.length >= 2) {
-        desktopPicture = rows[0].querySelector('picture');
-        mobilePicture = rows[1].querySelector('picture');
-      }
+    // Case 2: mobile image authored as a separate UE field row
+    if (!desktopPicture && mobileImageRow) {
+      desktopPicture = imageCell.querySelector('picture');
+      mobilePicture = mobileImageRow.firstElementChild?.querySelector('picture');
     }
 
     if (desktopPicture && mobilePicture) {
       const desktopImg = desktopPicture.querySelector('img');
       const mobileImg = mobilePicture.querySelector('img');
       if (desktopImg && mobileImg) {
-        const combinedPicture = document.createElement('picture');
-        const desktopSource = document.createElement('source');
-        desktopSource.media = '(min-width: 744px)';
-        desktopSource.srcset = desktopImg.src;
-        combinedPicture.appendChild(desktopSource);
-        combinedPicture.appendChild(mobileImg.cloneNode(true));
-        desktopPicture.replaceWith(combinedPicture);
-        mobilePicture.closest('div')?.remove();
+        const combined = document.createElement('picture');
+        const source = document.createElement('source');
+        source.media = '(min-width: 744px)';
+        source.srcset = desktopImg.src;
+        combined.appendChild(source);
+        combined.appendChild(mobileImg.cloneNode(true));
+        desktopPicture.replaceWith(combined);
+        if (mobileImageRow) mobileImageRow.remove();
+        else mobilePicture.closest('div')?.remove();
       }
     }
   }
 
-  // Promote hero image for default/profile/landing variants.
-  // Local/import: first cell has an <img> tag.
-  // AEM Author: first cell has a reference <a> link (no <img>).
-  // Converts the reference link to an <img> spacer so CSS aspect-ratio preserves height.
-  if (section) {
-    const imgCellInner = block.querySelector(':scope > div:first-child');
-    const img = imgCellInner?.querySelector('img');
-
-    if (!img) {
-      const link = imgCellInner?.querySelector('a');
-      if (link?.href) {
-        const spacer = document.createElement('img');
-        spacer.src = link.href;
-        spacer.alt = link.title || link.textContent || '';
-        const container = link.closest('.button-container') || link.closest('p') || link;
-        container.replaceWith(spacer);
-      }
+  // ── Background image: AEM Author renders a reference field as <a>; convert to <img>
+  if (imageCell && !imageCell.querySelector('img')) {
+    const link = imageCell.querySelector('a[href]');
+    if (link?.href) {
+      const img = document.createElement('img');
+      img.src = link.href;
+      img.alt = link.title || link.textContent || '';
+      (link.closest('.button-container') || link.closest('p') || link).replaceWith(img);
     }
   }
 
-  // Landing hero: absorb press-releases block from the same section.
-  if (block.closest('.section') && textPanel && block.classList.contains('landing')) {
-    const pressReleasesWrapper = block.closest('.section').querySelector('.press-releases-wrapper');
+  // ── Landing: absorb press-releases block from the same section
+  if (block.classList.contains('landing') && textCell) {
+    const pressReleasesWrapper = section?.querySelector('.press-releases-wrapper');
     if (pressReleasesWrapper) {
       const pressReleasesBlock = pressReleasesWrapper.querySelector('.press-releases');
       if (pressReleasesBlock) {
-        const pressReleasesContainer = document.createElement('div');
-        pressReleasesContainer.classList.add('hero-press-releases-container');
-        pressReleasesContainer.appendChild(pressReleasesBlock);
-        textPanel.appendChild(pressReleasesContainer);
+        const container = document.createElement('div');
+        container.classList.add('hero-press-releases-container');
+        container.appendChild(pressReleasesBlock);
+        textCell.appendChild(container);
         pressReleasesWrapper.remove();
       }
     }
   }
 
-  // Multilayer hero: toggle layers on abbv:buddy:stateChange events.
-  // Each direct-child div of the image cell that has [data-buddy-state]
-  // is a layer; only the matching one gets .is-active.
-  if (block.classList.contains('multilayer')) {
-    const imageCell = block.querySelector(':scope > div:first-child');
-    if (imageCell) {
-      const layers = [...imageCell.children].filter((el) => el.dataset.buddyState);
-      if (layers.length > 0) {
-        layers.forEach((layer) => layer.classList.add('hero-layer'));
-        layers[0].classList.add('is-active');
-        document.addEventListener('abbv:buddy:stateChange', (e) => {
-          const { state } = e.detail || {};
-          if (!state) return;
-          layers.forEach((layer) => {
-            layer.classList.toggle('is-active', layer.dataset.buddyState === state);
-          });
+  // ── Multilayer: toggle layers on abbv:buddy:stateChange events
+  // Each child of the image cell with [data-buddy-state] is a layer; only the
+  // matching one gets .is-active.
+  if (block.classList.contains('multilayer') && imageCell) {
+    const layers = [...imageCell.children].filter((el) => el.dataset.buddyState);
+    if (layers.length > 0) {
+      layers.forEach((layer) => layer.classList.add('hero-layer'));
+      layers[0].classList.add('is-active');
+      document.addEventListener('abbv:buddy:stateChange', (e) => {
+        const { state } = e.detail || {};
+        if (!state) return;
+        layers.forEach((layer) => {
+          layer.classList.toggle('is-active', layer.dataset.buddyState === state);
         });
-      }
+      });
     }
   }
 
-  // Video hero: initialize native HTML5 video for background video variant.
-  // Authoring: select a DAM video asset (.mp4/.webm/.mov) in the "Background Video" field.
-  // AEM renders the reference as an <a> link in the image cell. On mobile the video is hidden.
-  if (block.classList.contains('video')) {
-    const videoImgCell = block.querySelector(':scope > div:first-child');
-    const videoLink = videoImgCell?.querySelector('a[href]');
-    const isVideoAsset = videoLink && /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(videoLink.href);
+  // ── Video: remove the video reference row; inject a native <video> into the image cell
+  // The video field is authored as a DAM asset reference and appears as its own row.
+  // Video is hidden on mobile (< 744px); the poster image in the image row acts as fallback.
+  if (block.classList.contains('video') && videoRow) {
+    const videoLink = videoRow.firstElementChild?.querySelector('a[href]');
+    const videoSrc = videoLink?.href;
+    videoRow.remove();
 
-    if (isVideoAsset) {
-      const videoSrc = videoLink.href;
-      const linkContainer = videoLink.closest('.button-container') || videoLink.closest('p') || videoLink;
-      linkContainer.remove();
+    if (videoSrc && window.matchMedia('(min-width: 744px)').matches) {
+      const videoContainer = document.createElement('div');
+      videoContainer.classList.add('hero-video-bg');
 
-      if (window.matchMedia('(min-width: 744px)').matches) {
-        const videoContainer = document.createElement('div');
-        videoContainer.classList.add('hero-video-bg');
+      const videoEl = document.createElement('video');
+      videoEl.setAttribute('autoplay', '');
+      videoEl.setAttribute('muted', '');
+      videoEl.setAttribute('loop', '');
+      videoEl.setAttribute('playsinline', '');
+      videoEl.setAttribute('preload', 'none');
 
-        const videoEl = document.createElement('video');
-        videoEl.setAttribute('autoplay', '');
-        videoEl.setAttribute('muted', '');
-        videoEl.setAttribute('loop', '');
-        videoEl.setAttribute('playsinline', '');
-        videoEl.setAttribute('preload', 'none');
-
-        const sourceEl = document.createElement('source');
-        sourceEl.src = videoSrc;
-        sourceEl.type = videoSrc.includes('.webm') ? 'video/webm' : 'video/mp4';
-        videoEl.appendChild(sourceEl);
-        videoContainer.appendChild(videoEl);
-
-        const firstRow = videoImgCell.querySelector(':scope > div') || videoImgCell;
-        firstRow.appendChild(videoContainer);
-      }
+      const sourceEl = document.createElement('source');
+      sourceEl.src = videoSrc;
+      sourceEl.type = /\.webm(\?.*)?$/i.test(videoSrc) ? 'video/webm' : 'video/mp4';
+      videoEl.appendChild(sourceEl);
+      videoContainer.appendChild(videoEl);
+      (imageCell || block.firstElementChild).appendChild(videoContainer);
     }
   }
 }
