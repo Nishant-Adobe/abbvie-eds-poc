@@ -10,7 +10,6 @@
    - Border-top separator between link rows
    ============================================================ */
 
-/* stylelint-disable */
 
 /* Brand token overrides */
 .footer-wrapper {
@@ -22,19 +21,13 @@
 
   /* Live: font-family: "Graphik Semibold", "Helvetica Neue", arial, helvetica, sans-serif */
   --footer-font-family: var(--font-family-semibold);
-
-  --footer-content-max-width: 1200px;
 }
 
 /* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
    add bottom padding so logo/legal-number don't touch the footer's bottom edge.
-   bg stays edge-to-edge, content is constrained to a centered max-width via padding-inline max() */
+   Centering (max-width + padding-inline max()) is inherited from base. */
 .footer {
   padding-block: 0 var(--spacing-20);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
 }
 
 /* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0 */
@@ -57,14 +50,9 @@
 .footer .footer-bottom {
   /* Live: .abbv-legal-text { font-size: 0.75rem } = 12px */
   --footer-font-size: var(--footer-font-size-small);
+
   gap: 0;
   margin-top: 0;
-}
-
-/* Live: .abbv-legal-number { padding: 48px 0 0 } — 48px top space */
-.footer .footer-bottom > p.legal-number,
-.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-  padding-top: var(--spacing-48);
 }
 
 /* Live: .abbv-footer .logo { padding: 48px 0 0 } — same as legal-number */
@@ -72,4 +60,10 @@
 .footer .footer-bottom > p:has(img) {
   padding-top: var(--spacing-48);
   margin: 0;
+}
+
+/* Live: .abbv-legal-number { padding: 48px 0 0 } — 48px top space */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+  padding-top: var(--spacing-48);
 }

@@ -8,20 +8,9 @@
    in styles/skyrizi-hcp/tokens.css. Only brand-specific tweaks live here.
    ============================================================ */
 
-/* stylelint-disable */
-
 /* Live SkyRizi HCP uses slightly off-white #e2e4e3 (lighter than pure white)
-   instead of the default --color-text-on-dark: #fff */
+   instead of the default --color-text-on-dark: #fff.
+   Centering (1200px max-width via padding-inline max()) is inherited from base. */
 .footer-wrapper {
   --footer-color-text: #e2e4e3;
-  --footer-content-max-width: 1200px;
-}
-
-/* Centered max-width: bg stays edge-to-edge, content (already center-aligned
-   from base CSS) is constrained to a centered max-width via padding-inline max() */
-.footer {
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
 }
