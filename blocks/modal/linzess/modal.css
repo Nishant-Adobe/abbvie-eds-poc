@@ -4,6 +4,20 @@
    even when styles/linzess/tokens.css has not been loaded at the page level.
 */
 
+/* ---- Close button color — purple, not the #333 fallback in modal.css ---- */
+
+.modal-overlay {
+  --modal-close-color: var(--color-brand-primary, #422e83);
+  --modal-close-hover-color: var(--color-brand-primary-dark, #2e1f5e);
+}
+
+/* ---- Content spacing ---- */
+
+:root {
+  --modal-dialog-padding-top: 24px;
+  --modal-dialog-padding: 40px;
+}
+
 /* ---- Dialog sizing ---- */
 
 .modal-dialog {
@@ -19,10 +33,10 @@
 .modal-content h3 {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   color: var(--linz-grey, #4d4d4f);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   line-height: 1.3;
   font-weight: 400;
-  margin: 0 0 0.75rem;
+  margin: 0 0 1rem;
 }
 
 /* ---- Body text inside fragment content ---- */
