@@ -126,15 +126,29 @@ async function openModal(trigger) {
 /* ------------------------------------------------------------------ */
 
 export default async function decorate(block) {
-  const config = {};
-  [...block.querySelectorAll(':scope > div')].forEach((row) => {
-    const key = row.children[0]?.textContent?.trim();
-    const value = row.children[1]?.textContent?.trim();
-    if (key && value) config[key] = value;
-  });
+  const rows = [...block.querySelectorAll(':scope > div')];
 
-  const fragmentPath = config.fragmentPath || config['fragment-path'] || config['Fragment Path'];
-  const openLabel = config.openLabel || config['open-label'] || config['Open Button Label'] || 'Open modal';
+  // v2/block: single-cell rows in field order (modalId, fragmentPath, openLabel)
+  // v1/block: two-cell rows (key | value) — fall back to key-value parsing
+  let fragmentPath;
+  let openLabel;
+
+  if (rows[0]?.children.length >= 2) {
+    // v1/block key-value format
+    const config = {};
+    rows.forEach((row) => {
+      const key = row.children[0]?.textContent?.trim();
+      const value = row.children[1]?.textContent?.trim();
+      if (key && value) config[key] = value;
+    });
+    fragmentPath = config.fragmentPath || config['fragment-path'];
+    openLabel = config.openLabel || config['open-label'] || 'Open modal';
+  } else {
+    // v2/block single-cell format — row 0 = modalId, row 1 = fragmentPath, row 2 = openLabel
+    fragmentPath = rows[1]?.querySelector('a')?.getAttribute('href')
+      || rows[1]?.children[0]?.textContent?.trim();
+    openLabel = rows[2]?.children[0]?.textContent?.trim() || 'Open modal';
+  }
 
   if (!fragmentPath) return;
 
