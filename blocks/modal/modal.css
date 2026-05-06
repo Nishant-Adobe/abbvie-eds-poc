@@ -24,7 +24,13 @@
 /* ---- Overlay ---- */
 
 .modal-overlay {
-  --modal-dialog-radius: var(--border-radius-card, 8px);
+  /* Base modal tokens — brands override these via their tokens.css */
+  --modal-dialog-max-width: var(--modal-dialog-max-width, 800px);
+  --modal-dialog-padding: var(--modal-dialog-padding, 40px);
+  --modal-dialog-border: var(--modal-dialog-border, none);
+  --modal-dialog-border-radius: var(--modal-dialog-border-radius, var(--border-radius-card, 8px));
+  --modal-close-size: var(--modal-close-size, 32px);
+  --modal-close-font-size: var(--modal-close-font-size, 22px);
   --modal-close-color: var(--color-brand-primary, #333);
   --modal-close-hover-color: var(--color-brand-primary-dark, #000);
 
@@ -43,40 +49,42 @@
   animation: modal-fade-in 0.25s ease;
 }
 
-/* ---- Dialog ---- */
+/* ---- Dialog — flex column so close button stays fixed while content scrolls ---- */
 
 .modal-dialog {
   position: relative;
+  display: flex;
+  flex-direction: column;
   background: #fff;
-  border-radius: var(--modal-dialog-radius);
-  padding: 40px;
-  max-width: 800px;
+  border: var(--modal-dialog-border);
+  border-radius: var(--modal-dialog-border-radius);
+  max-width: var(--modal-dialog-max-width);
   width: 100%;
   max-height: 90vh;
-  overflow-y: auto;
   font-family: var(--body-font-family, inherit);
   animation: modal-slide-up 0.3s ease;
 }
 
-/* ---- Close button ---- */
+/* ---- Close button — fixed in top-right, never scrolls away ---- */
 
 .modal-close {
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 36px;
-  height: 36px;
+  width: var(--modal-close-size);
+  height: var(--modal-close-size);
   padding: 0;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 22px;
+  font-size: var(--modal-close-font-size);
   line-height: 1;
   color: var(--modal-close-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 10;
+  flex-shrink: 0;
 }
 
 .modal-close:hover {
@@ -87,6 +95,14 @@
   outline: 2px solid currentcolor;
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ---- Content — this is the scrollable area ---- */
+
+.modal-content {
+  padding: var(--modal-dialog-padding);
+  overflow-y: auto;
+  flex: 1;
 }
 
 /* ---- Body scroll lock ---- */
@@ -107,7 +123,7 @@ body.modal-is-open {
 
 .modal-trigger {
   display: inline-block;
-  padding: 12px 28px;
+  padding: var(--button-primary-padding, 12px 28px);
   background: var(--button-primary-bg, #222);
   color: var(--button-primary-color, #fff);
   border: none;
@@ -132,8 +148,7 @@ body.modal-is-open {
 
   .modal-dialog {
     max-width: 100%;
-    border-radius: var(--modal-dialog-radius) var(--modal-dialog-radius) 0 0;
-    padding: 24px;
+    border-radius: var(--modal-dialog-border-radius) var(--modal-dialog-border-radius) 0 0;
     max-height: 90vh;
   }
 }

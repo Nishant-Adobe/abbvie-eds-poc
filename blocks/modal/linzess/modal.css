@@ -1,34 +1,21 @@
 /* Linzess — modal brand overrides
-   This file is only loaded on linzess-branded pages by multi-theme.js.
-   No .linzess prefix needed — brand scoping is handled by the loader.
+   Loaded only on linzess-branded pages by multi-theme.js.
+   All values reference tokens defined in styles/linzess/tokens.css.
 */
 
-/* ================================================================
-   LINZESS MODAL TOKENS
-   ================================================================ */
-
 .modal-overlay {
-  --linz-modal-teal: #00857c;
-  --linz-modal-teal-dark: #006d65;
-  --linz-modal-text: #333;
-  --linz-modal-text-muted: #666;
-  --linz-modal-border: #c2c2c2;
-  --linz-modal-divider: #e0e0e0;
-
-  --modal-dialog-radius: 4px;
-  --modal-close-color: var(--linz-modal-text);
-  --modal-close-hover-color: var(--linz-modal-teal);
-}
-
-/* Narrower dialog for consumer DTC */
-.modal-dialog {
-  max-width: 600px;
-  color: var(--linz-modal-text);
+  --modal-dialog-max-width: var(--linz-modal-max-width, 720px);
+  --modal-dialog-padding: var(--modal-dialog-padding, 32px);
+  --modal-dialog-border: var(--modal-dialog-border, 1px solid #ccc);
+  --modal-dialog-border-radius: var(--modal-dialog-border-radius, 0px);
+  --modal-close-color: var(--color-text-heading, #333);
+  --modal-close-hover-color: var(--color-brand-primary, #422e83);
 }
 
 /* ================================================================
    BUTTONS INSIDE FRAGMENT CONTENT
-   Fragment may contain multiple button blocks — display side by side.
+   Match real linzess.com: purple filled, rounded pill, arrow icon,
+   displayed side by side.
    ================================================================ */
 
 .modal-content .button-container {
@@ -39,16 +26,16 @@
 .modal-content .button-container a,
 .modal-content .button-container strong a {
   background: var(--color-brand-primary, #422e83);
-  color: #fff;
+  color: var(--color-text-on-dark, #fff);
   border-radius: var(--border-radius-button-primary, 16px);
-  padding: 12px 32px;
-  font-weight: 700;
-  font-size: 0.9rem;
+  padding: 12px 28px;
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-button, 0.9rem);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: background-color 0.2s ease;
+  transition: var(--transition-button, background 0.2s ease);
 }
 
 .modal-content .button-container a::after {
@@ -81,8 +68,6 @@
 
   .modal-dialog {
     max-width: 100%;
-    border-radius: var(--modal-dialog-radius);
-    padding: 24px;
   }
 
   .modal-content .section:has(.button-container) {
