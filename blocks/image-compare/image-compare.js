@@ -1,4 +1,4 @@
-/* Model field order → column indices (tabs/classes excluded from column output) */
+﻿/* Model field order â†’ column indices (tabs/classes excluded from column output) */
 const COL = {
   heading: 0,
   description: 1,
@@ -296,11 +296,17 @@ function decorateGallery(block, cells, startPct) {
       content.appendChild(cta);
     }
 
-    layout.appendChild(content);
-
-    // Right slider panel
+    // Right slider panel (or left if reversed)
     const sliderWrap = document.createElement('div');
     sliderWrap.className = 'image-compare-slider-wrapper';
+
+    const isReversed = block.classList.contains('reversed');
+    if (isReversed) {
+      layout.appendChild(sliderWrap);
+      layout.appendChild(content);
+    } else {
+      layout.appendChild(content);
+    }
 
     const sliderOpts = { beforeLabel, afterLabel };
     const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
@@ -324,7 +330,9 @@ function decorateGallery(block, cells, startPct) {
       sliderWrap.appendChild(patient);
     }
 
-    layout.appendChild(sliderWrap);
+    if (!isReversed) {
+      layout.appendChild(sliderWrap);
+    }
     block.appendChild(layout);
 
     // Thumbnails below layout
@@ -640,3 +648,5 @@ export default async function decorate(block) {
   } = result;
   setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
+
+
