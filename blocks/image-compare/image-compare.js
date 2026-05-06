@@ -256,6 +256,12 @@ function decorateGallery(block, cells, startPct) {
   const beforeImg = firstImg?.beforeImg || getImg(cells[COL.beforeImage]);
   if (!afterImg || !beforeImg) return null;
 
+  const anchorId = getText(cells[COL.anchorId]);
+  if (anchorId) block.id = anchorId;
+  else if (tab1Label) {
+    block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
+  }
+
   block.innerHTML = '';
 
   if (isSkyrizi) {
@@ -291,7 +297,7 @@ function decorateGallery(block, cells, startPct) {
     if (tab2Label) {
       const cta = document.createElement('a');
       cta.className = 'image-compare-cta';
-      cta.href = '#';
+      cta.href = `#${tab2Label.toLowerCase().replace(/\s+/g, '-')}`; 
       cta.textContent = `VIEW ${tab2Label.toUpperCase()} RESULTS`;
       content.appendChild(cta);
     }
@@ -475,6 +481,12 @@ function decorateLegacy(block, cells) {
   const startPct = parseFloat(cells[2]?.textContent) / 100 || 0.5;
   if (!afterImg || !beforeImg) return null;
 
+  const anchorId = getText(cells[COL.anchorId]);
+  if (anchorId) block.id = anchorId;
+  else if (tab1Label) {
+    block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
+  }
+
   block.innerHTML = '';
   const isSkyrizi = cells.length >= 7;
 
@@ -545,6 +557,12 @@ function decorateKeyValue(block, rows) {
   const beforeImg = firstImg?.beforeImg || data.beforeImage?.querySelector('img');
   if (!afterImg || !beforeImg) return null;
 
+  const anchorId = getText(cells[COL.anchorId]);
+  if (anchorId) block.id = anchorId;
+  else if (tab1Label) {
+    block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
+  }
+
   const hasToggle = block.classList.contains('toggle');
   block.innerHTML = '';
 
@@ -580,6 +598,12 @@ function decorateModelFormat(block, cells) {
   const afterImg = getImg(cells[COL.afterImage]);
   const beforeImg = getImg(cells[COL.beforeImage]);
   if (!afterImg || !beforeImg) return null;
+
+  const anchorId = getText(cells[COL.anchorId]);
+  if (anchorId) block.id = anchorId;
+  else if (tab1Label) {
+    block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
+  }
 
   const hasPrompt = block.classList.contains('prompt');
   const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
@@ -640,6 +664,8 @@ export default async function decorate(block) {
   } = result;
   setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
+
+
 
 
 
