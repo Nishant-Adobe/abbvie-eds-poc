@@ -64,6 +64,28 @@
   margin: 0 0 var(--spacing-16) 0;
 }
 
+/* Heading-only column (e.g. "Side Effects") — anchor inside H5 inherits
+   heading color instead of the global link color. */
+.footer .footer-column h1 a,
+.footer .footer-column h2 a,
+.footer .footer-column h3 a,
+.footer .footer-column h4 a,
+.footer .footer-column h5 a,
+.footer .footer-column h6 a {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+.footer .footer-column h1 a:hover,
+.footer .footer-column h2 a:hover,
+.footer .footer-column h3 a:hover,
+.footer .footer-column h4 a:hover,
+.footer .footer-column h5 a:hover,
+.footer .footer-column h6 a:hover {
+  text-decoration: underline;
+}
+
 /* Vertical link list — no bullets, gap-separated */
 .footer .footer-column ul {
   list-style: none;
