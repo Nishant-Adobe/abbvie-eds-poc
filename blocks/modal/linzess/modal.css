@@ -1,21 +1,13 @@
-/* Linzess DTC — modal brand overrides
-   linzess.com modal design: teal accent, 4px radius, 600px max-width.
+/* Linzess — modal brand overrides
+   Teal accent (#00857c), 4px radius, 600px max-width.
    Body class .linzess is added by multi-theme.js.
-
-   NOTE: .modal--hcp-gate / .modal--telemed / .modal--exit / .modal--share
-   classes must be present on .modal-overlay for variant rules to apply.
-   This requires modal.js to copy block modifier classes onto the overlay
-   (e.g. entry.block.classList → overlay.classList). See Step 8 for details.
 */
 
 /* ================================================================
-   LINZESS MODAL DESIGN TOKENS
-   Raw values defined once here — all rules below use var().
-   Ideally these move to styles/linzess/tokens.css once stabilised.
+   LINZESS MODAL TOKENS
    ================================================================ */
 
 .linzess .modal-overlay {
-  /* Palette */
   --linz-modal-teal: #00857c;
   --linz-modal-teal-dark: #006d65;
   --linz-modal-text: #333;
@@ -23,238 +15,74 @@
   --linz-modal-border: #c2c2c2;
   --linz-modal-divider: #e0e0e0;
 
-  /* Override base token defaults */
-  --modal-panel-border-color: transparent; /* no top accent bar */
-  --modal-panel-radius: 4px;
+  --modal-dialog-radius: 4px;
   --modal-close-color: var(--linz-modal-text);
   --modal-close-hover-color: var(--linz-modal-teal);
-  --modal-cta-bg: var(--linz-modal-teal);
-  --modal-cta-color: #fff;
-  --modal-cta-hover-bg: var(--linz-modal-teal-dark);
-  --modal-cta-radius: 4px;
 }
 
-/* Narrower panel for consumer DTC (base is 800px) */
-.linzess .modal-panel {
+/* Narrower dialog for consumer DTC */
+.linzess .modal-dialog {
   max-width: 600px;
   color: var(--linz-modal-text);
 }
 
 /* ================================================================
-   GHOST / SECONDARY BUTTON
-   Authors put the "No / Cancel" action as a hyperlink in the
-   Content row; CSS renders it as an outlined ghost button.
+   BUTTONS INSIDE FRAGMENT CONTENT
+   Fragment may contain multiple button blocks — display side by side.
    ================================================================ */
 
-.linzess .modal-body a {
+.linzess .modal-content .button-container {
   display: inline-block;
-  padding: 11px 28px; /* 11px + 2px border = same visual height as .modal-cta */
-  border: 2px solid var(--linz-modal-teal);
-  border-radius: var(--modal-cta-radius, 4px);
-  color: var(--linz-modal-teal);
-  background: transparent;
+  margin: 4px 8px 4px 0;
+}
+
+.linzess .modal-content .button-container a,
+.linzess .modal-content .button-container strong a {
+  background: var(--linz-modal-teal);
+  color: #fff;
+  border-radius: 4px;
+  padding: 11px 28px;
   font-weight: 600;
   font-size: 1rem;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  display: inline-block;
+  transition: background-color 0.2s ease;
 }
 
-.linzess .modal-body a:hover {
-  background: var(--linz-modal-teal);
-  color: #fff;
+.linzess .modal-content .button-container a:hover {
+  background: var(--linz-modal-teal-dark);
 }
 
-/* Two-button row: author a div.modal-buttons in content containing both links */
-.linzess .modal-buttons {
+/* Button row — wraps multiple button containers */
+.linzess .modal-content .section:has(.button-container) {
   display: flex;
-  gap: 16px;
-  justify-content: center;
   flex-wrap: wrap;
+  gap: 12px;
   margin-top: 24px;
 }
 
 /* ================================================================
-   TYPE 1 — HCP GATE  (.modal--hcp-gate)
-   Triggered by "Healthcare Professionals" nav item.
-   Forced gate: no close ✕; centered text; No | Yes button pair.
-   ================================================================ */
-
-.linzess .modal--hcp-gate .modal-panel {
-  text-align: center;
-  padding: 48px 40px;
-}
-
-.linzess .modal--hcp-gate .modal-close {
-  display: none; /* forced gate — no escape via ✕ */
-}
-
-.linzess .modal--hcp-gate .modal-title {
-  font-size: 1.25rem;
-  color: var(--linz-modal-text);
-  font-weight: 600;
-  font-family: var(--body-font-family, inherit);
-}
-
-.linzess .modal--hcp-gate .modal-body {
-  color: var(--linz-modal-text-muted);
-  text-align: center;
-  margin-bottom: 0;
-}
-
-/* ================================================================
-   TYPE 2 — TELEMEDICINE  (.modal--telemed)
-   Triggered by "Talk to a Doctor Online" CTA.
-   Icon-left + text-right step rows; disclaimer at bottom.
-   ================================================================ */
-
-.linzess .modal--telemed .modal-body p {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: 0.9375rem;
-  margin-bottom: 16px;
-}
-
-.linzess .modal--telemed .modal-body p:last-of-type {
-  margin-bottom: 0;
-}
-
-/* Author a <p class="modal-disclaimer"> in the content for small print */
-.linzess .modal--telemed .modal-disclaimer {
-  font-size: 0.75rem;
-  color: var(--linz-modal-text-muted);
-  line-height: 1.5;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--linz-modal-divider);
-}
-
-/* ================================================================
-   TYPE 3 — EXIT / LEAVE SITE  (.modal--exit)
-   Triggered by external links leaving linzess.com.
-   Compact; uppercase title; small gray body text; No | Yes.
-   ================================================================ */
-
-.linzess .modal--exit .modal-panel {
-  padding: 32px;
-}
-
-.linzess .modal--exit .modal-title {
-  font-size: 0.9375rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 700;
-  color: var(--linz-modal-text);
-  padding-right: 40px; /* clear the close button */
-}
-
-.linzess .modal--exit .modal-body {
-  font-size: 0.875rem;
-  color: var(--linz-modal-text-muted);
-  margin-bottom: 0;
-}
-
-/* ================================================================
-   TYPE 4 — SHARE  (.modal--share)
-   Triggered by video transcript share buttons.
-   Email input; Cancel | Send; reCAPTCHA notice.
-   ================================================================ */
-
-.linzess .modal--share .modal-panel {
-  max-width: 480px;
-  padding: 32px;
-}
-
-.linzess .modal--share .modal-title {
-  font-size: 1.25rem;
-  margin-bottom: 20px;
-}
-
-.linzess .modal--share input[type="email"] {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px 14px;
-  border: 1px solid var(--linz-modal-border);
-  border-radius: 4px;
-  font-size: 1rem;
-  color: var(--linz-modal-text);
-  margin-bottom: 16px;
-}
-
-.linzess .modal--share input[type="email"]:focus {
-  outline: 2px solid var(--linz-modal-teal);
-  outline-offset: 0;
-  border-color: var(--linz-modal-teal);
-}
-
-/* Author a <p class="modal-recaptcha"> in content for reCAPTCHA notice */
-.linzess .modal--share .modal-recaptcha {
-  font-size: 0.6875rem;
-  color: var(--linz-modal-text-muted);
-  line-height: 1.4;
-  margin-top: 12px;
-}
-
-/* ================================================================
-   TYPE 5 — TERMS AND CONDITIONS  (.modal--terms)
-   Triggered by footer "Terms and Conditions" link.
-   Dismissible (close ✕ visible); scrollable long-form body; no CTA.
-   Uppercase title matching linzess.com Platform C design.
-   ================================================================ */
-
-.linzess .modal--terms .modal-title {
-  font-size: 1.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 700;
-  color: var(--linz-modal-text);
-}
-
-.linzess .modal--terms .modal-body {
-  font-size: 0.9375rem;
-  color: var(--linz-modal-text);
-  line-height: 1.7;
-}
-
-.linzess .modal--terms .modal-body h2,
-.linzess .modal--terms .modal-body h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 20px 0 8px;
-}
-
-/* ================================================================
    MOBILE
-   Consumer DTC: centered overlay with 16px side padding (not
-   bottom-anchored sheet like HCP brands).
    ================================================================ */
 
 @media (width <= 600px) {
   .linzess .modal-overlay {
-    align-items: center; /* override base bottom-anchor */
+    align-items: center;
     padding: 16px;
   }
 
-  .linzess .modal-panel {
+  .linzess .modal-dialog {
     max-width: 100%;
-    border-radius: var(--modal-panel-radius); /* all corners — not 4px 4px 0 0 */
-  }
-
-  .linzess .modal--hcp-gate .modal-panel,
-  .linzess .modal--exit .modal-panel,
-  .linzess .modal--share .modal-panel,
-  .linzess .modal--terms .modal-panel {
+    border-radius: var(--modal-dialog-radius);
     padding: 24px;
   }
 
-  .linzess .modal-buttons {
+  .linzess .modal-content .section:has(.button-container) {
     flex-direction: column;
-    align-items: stretch;
   }
 
-  .linzess .modal-buttons a,
-  .linzess .modal-buttons .modal-cta {
+  .linzess .modal-content .button-container a {
     text-align: center;
+    display: block;
   }
 }
