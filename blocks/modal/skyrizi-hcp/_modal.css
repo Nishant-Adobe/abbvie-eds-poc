@@ -1,0 +1,63 @@
+@import '../modal.css';
+@import '../../../styles/skyrizi-hcp/tokens.css';
+
+/* Skyrizi HCP modal — Red Hat Display, teal/navy palette, skyrizihcp.com */
+
+.modal {
+  --modal-backdrop: var(--color-overlay-dark, rgb(22 22 22 / 75%));
+  --modal-border-color: var(--color-border-default);
+  --modal-close-color: var(--color-brand-primary);
+}
+
+/* Focus: remove default outline on interactive elements in modal */
+.modal dialog .modal-content [role="button"]:focus,
+.modal dialog .modal-content [role="button"]:active {
+  outline: none;
+}
+
+/* Buttons inside modal */
+.modal dialog .modal-content a.button {
+  font-family: var(--heading-font-family);
+}
+
+/* Headings */
+.modal dialog .modal-content h2,
+.modal dialog .modal-content h3 {
+  color: var(--color-brand-primary);
+  font-family: var(--heading-font-family);
+}
+
+/* Close button: teal */
+.modal .close-button {
+  color: var(--color-brand-primary);
+}
+
+/* UC-style modal: plum close button, compact */
+.modal[data-modal-id^="uc"] .close-button,
+.modal.uc dialog .close-button {
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+}
+
+/* Panel: teal left border */
+.modal.panel dialog {
+  border-left-color: var(--color-brand-primary);
+}
+
+/* Safety/study data modals — tab controls inside dialog */
+.modal dialog .modal-content .tabs-list {
+  width: fit-content;
+  margin: var(--spacing-10) auto;
+  padding: var(--spacing-04);
+  border: var(--border-01, 1px) solid var(--color-border-default);
+  background-color: var(--color-background-light);
+  border-radius: var(--spacing-10);
+}
+
+.modal dialog .modal-content .tabs-list button[aria-selected="true"] {
+  background-color: var(--background-color);
+  border-radius: var(--spacing-10);
+  color: var(--color-brand-primary);
+}

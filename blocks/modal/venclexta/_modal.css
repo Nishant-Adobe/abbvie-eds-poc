@@ -1,0 +1,22 @@
+@import '../modal.css';
+@import '../../../styles/venclexta/tokens.css';
+
+/* Venclexta HCP modal — brand token overrides */
+
+.modal {
+  --modal-backdrop: rgb(0 0 0 / 75%);
+  --modal-border-color: var(--color-border-default);
+  --modal-close-color: var(--color-brand-primary);
+}
+
+/* Headings */
+.modal dialog .modal-content h2,
+.modal dialog .modal-content h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+}
+
+/* Close button hover */
+.modal .close-button:hover {
+  color: var(--color-brand-primary-dark, var(--color-brand-primary));
+}

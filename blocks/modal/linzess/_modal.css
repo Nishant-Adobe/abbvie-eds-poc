@@ -1,0 +1,37 @@
+@import '../modal.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* Linzess DTC modal — Bebas Neue / Lato, purple/orange palette */
+
+.modal {
+  --modal-backdrop: var(--color-overlay-dark, rgb(0 0 0 / 80%));
+  --modal-border-color: var(--color-border-default);
+  --modal-close-color: var(--color-brand-primary);
+}
+
+/* Headings */
+.modal dialog .modal-content h2,
+.modal dialog .modal-content h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+}
+
+/* Body text */
+.modal dialog .modal-content p {
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+}
+
+/* Close button: purple */
+.modal .close-button {
+  color: var(--color-brand-primary);
+}
+
+.modal .close-button:hover {
+  color: var(--color-brand-accent);
+}
+
+/* Panel: orange left accent */
+.modal.panel dialog {
+  border-left-color: var(--color-brand-accent);
+}

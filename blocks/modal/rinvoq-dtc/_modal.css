@@ -1,0 +1,48 @@
+@import '../modal.css';
+@import '../../../styles/rinvoq-dtc/tokens.css';
+
+/* Rinvoq DTC modal — plum/gold palette matching rinvoq.com */
+
+.modal {
+  --modal-backdrop: rgb(37 40 42 / 80%);
+  --modal-border-color: var(--color-border-default);
+  --modal-close-color: var(--color-text-heading);
+}
+
+/* Close button: plum on hover */
+.modal .close-button:hover {
+  color: var(--color-brand-primary);
+}
+
+/* CTA buttons inside modal body — outlined plum pill */
+.modal dialog .modal-content a.button,
+.modal dialog .modal-content .button-container a {
+  background-color: var(--background-color);
+  color: var(--color-brand-primary);
+  border: var(--border-02, 2px) solid var(--color-brand-primary);
+  border-radius: var(--border-radius-button-primary, 100px);
+  padding: var(--spacing-16) var(--spacing-32);
+  font-weight: var(--font-weight-button);
+  transition:
+    background-color var(--transition-duration-fast) var(--transition-easing-standard),
+    color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.modal dialog .modal-content a.button:hover,
+.modal dialog .modal-content .button-container a:hover {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+}
+
+/* Headings inside modal */
+.modal dialog .modal-content h2,
+.modal dialog .modal-content h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+}
+
+/* Panel: gold left accent */
+.modal.panel dialog {
+  border-left-color: var(--color-brand-accent);
+}

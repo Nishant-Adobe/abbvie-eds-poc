@@ -1,0 +1,65 @@
+@import '../modal.css';
+@import '../../../styles/rinvoq-hcp/tokens.css';
+
+/* Rinvoq HCP modal — Graphik, centered content, red chevron accent */
+
+.modal {
+  --modal-backdrop: rgb(37 40 42 / 80%);
+  --modal-border-color: var(--color-border-default);
+  --modal-close-color: var(--color-accordion-text, var(--text-color));
+}
+
+/* Content: centered text for information-style modals */
+.modal.information dialog .modal-content {
+  text-align: center;
+}
+
+/* Rich text inside modal — left-align */
+.modal.information dialog .modal-content p {
+  text-align: left;
+}
+
+/* Legal footnotes inside modal */
+.modal dialog .modal-content p.legal {
+  text-align: left;
+  margin-top: var(--spacing-20);
+  font-size: var(--font-size-body-small);
+}
+
+/* Headings */
+.modal dialog .modal-content h2,
+.modal dialog .modal-content h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading);
+}
+
+/* Inline close button label — used in confirmation modals */
+.modal dialog .modal-content [data-modal-action="confirm"] {
+  min-width: 8.7rem;
+}
+
+/* Close button hover: red accent */
+.modal .close-button:hover {
+  color: var(--color-accordion-accent, var(--color-brand-primary));
+}
+
+/* Dark variant: footer-dark navy background */
+.modal.accordion-dark dialog,
+.modal[data-modal-type="dark"] dialog {
+  background-color: var(--color-background-footer);
+  color: var(--color-text-on-dark);
+  border-color: transparent;
+}
+
+.modal.accordion-dark dialog .modal-content h2,
+.modal.accordion-dark dialog .modal-content h3,
+.modal.accordion-dark dialog .modal-content p,
+.modal[data-modal-type="dark"] dialog .modal-content p {
+  color: var(--color-text-on-dark);
+}
+
+.modal.accordion-dark .close-button,
+.modal[data-modal-type="dark"] .close-button {
+  color: var(--color-text-on-dark);
+}

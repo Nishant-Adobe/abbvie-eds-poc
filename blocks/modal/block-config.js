@@ -1,17 +1,11 @@
-// import { beforeDecorate, decorateBlock, afterDecorate } from '../modal.js';
+import { decorateBlock } from './modal.js';
 
 export default async function getBlockConfigs() {
   return {
-    flags: {
-      // flag: true,
-    },
-    variations: [
-      // { variation: 'variation-name', module: 'variation.js' },
-    ],
+    flags: {},
+    variations: [],
     decorations: {
-    //   beforeDecorate: async (ctx, blockConfig) => beforeDecorate(ctx, blockConfig),
-    //   decorate: async (ctx, blockConfig) => decorateBlock(ctx, blockConfig),
-    //   afterDecorate: async (ctx, blockConfig) => afterDecorate(ctx, blockConfig),
+      decorate: async (ctx) => decorateBlock(ctx),
     },
   };
 }
