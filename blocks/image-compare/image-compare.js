@@ -345,21 +345,9 @@ function decorateGallery(block, cells, startPct) {
     return { ...slider, startPct, hasPrompt: false };
   }
 
-  // Rinvoq toggle layout (existing)
+  // Rinvoq toggle layout
   const wrapper = document.createElement('div');
   wrapper.className = 'image-compare-wrapper';
-
-  if (heading) {
-    const h = document.createElement('div');
-    h.className = 'image-compare-heading';
-    h.textContent = heading;
-    wrapper.appendChild(h);
-  }
-
-  if (tab1Label && tab2Label) {
-    const tabsEl = buildTabs([tab1Label, tab2Label], hasToggle);
-    wrapper.appendChild(tabsEl);
-  }
 
   const sliderOpts = { beforeLabel, afterLabel };
   if (promptText) sliderOpts.prompt = promptText;
@@ -367,11 +355,16 @@ function decorateGallery(block, cells, startPct) {
   const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
   wrapper.appendChild(slider.container);
 
-  if (firstImg?.label) {
+  if (description) {
     const galleryContent = document.createElement('div');
     galleryContent.className = 'image-compare-gallery-content';
-    galleryContent.setAttribute('data-caption', firstImg.label);
+    galleryContent.innerHTML = description;
     wrapper.appendChild(galleryContent);
+  }
+
+  if (tab1Label && tab2Label) {
+    const tabsEl = buildTabs([tab1Label, tab2Label], hasToggle);
+    wrapper.appendChild(tabsEl);
   }
 
   const activeImages = tab1Images.length ? tab1Images : tab2Images;
@@ -664,6 +657,7 @@ export default async function decorate(block) {
   } = result;
   setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
+
 
 
 

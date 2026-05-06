@@ -49,15 +49,24 @@
 }
 
 .image-compare .image-compare-handle::before {
-  display: none;
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: #ffd100;
+  border-radius: 50%;
+  border: 2px solid #25282a;
+  box-shadow: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2325282a'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
+  background-size: 22px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .image-compare .image-compare-prompt {
   position: absolute;
-  top: auto;
-  bottom: 40%;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  left: var(--compare-position);
+  transform: translate(-50%, -50%);
   background: rgb(51 51 51 / 85%);
   color: #fff;
   font-size: 11px;
@@ -245,4 +254,7 @@
     width: 100px;
   }
 }
+
+
+
 
