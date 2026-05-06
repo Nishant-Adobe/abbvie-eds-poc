@@ -135,6 +135,11 @@ function openModal(id) {
     const overlay = buildOverlay(entry.cfg);
     entry.overlay = overlay;
 
+    const SKIP = new Set(['block', 'modal', 'once']);
+    entry.block.classList.forEach((cls) => {
+      if (!SKIP.has(cls)) overlay.classList.add(`modal--${cls}`);
+    });
+
     const panel = overlay.querySelector('.modal-panel');
     const closeBtn = overlay.querySelector('.modal-close');
 
