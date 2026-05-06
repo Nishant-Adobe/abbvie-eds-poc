@@ -102,9 +102,20 @@
 /* ---- Content — this is the scrollable area ---- */
 
 .modal-content {
-  padding: var(--modal-dialog-padding);
+  padding: var(--modal-dialog-padding, 40px);
   overflow-y: auto;
   flex: 1;
+}
+
+/* Reset section/wrapper margins so fragment content doesn't inherit page-level spacing */
+.modal-content .section {
+  margin: 0;
+  padding: 0;
+}
+
+/* Reset global a.button margin (styles.css applies margin: 12px 0 to all button-like elements) */
+.modal-content .button-container a {
+  margin: 0;
 }
 
 /* ---- Body scroll lock ---- */
