@@ -883,6 +883,12 @@
   --footer-font-family: var(--font-family-brand);
   --footer-font-size: var(--font-size-footer);
   --footer-line-height: var(--line-height-body);
+
+  /* Footer-logos box dimensions (semantic names — brand logo is taller than
+     partner logos to visually dominate, matching the live design). */
+  --footer-logo-width: var(--spacing-110);
+  --footer-logo-partner-height: var(--spacing-30);
+  --footer-logo-brand-height: var(--spacing-100);
 }
 
 /* ── 5-column heading-based grid ────────────────────────────── */
@@ -999,6 +1005,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-32);
+
+  /* reset base: base footer-bottom has top-border + padding which we don't want */
   border: none;
   padding: 0;
   margin-top: var(--spacing-40);
@@ -1031,9 +1039,13 @@
   }
 }
 
-/* `.footer-wrapper` prefix raises specificity to (0,4,2) — keeps source order
-   while satisfying stylelint's no-descending-specificity rule against the
-   higher-specificity column-section selectors above. */
+/* `.footer-wrapper` prefix raises specificity above the heading-anchor
+   `:hover` rules so the bottom-section overrides the column section. The
+   inline disable acknowledges that the cleaner alternative — interleaving
+   selectors by specificity rather than by section — would scatter the
+   bottom-section rules and hurt readability. */
+
+/* stylelint-disable no-descending-specificity */
 
 .footer-wrapper .footer .footer-bottom ul li,
 .footer-wrapper .footer .footer-bottom ul li a {
@@ -1043,6 +1055,8 @@
   font-weight: var(--footer-font-weight);
   text-decoration: none;
 }
+
+/* stylelint-enable no-descending-specificity */
 
 .footer-wrapper .footer .footer-bottom ul li a:hover {
   text-decoration: underline;
@@ -1091,6 +1105,9 @@
   padding-bottom: var(--spacing-40);
 }
 
+/* EDS wraps each authored image in a <p> — these flex props center the
+   <picture>/<img> vertically inside the box defined by --footer-logo-*-height. */
+
 .footer .footer-logos > * {
   margin: 0;
   display: flex;
@@ -1104,15 +1121,15 @@
    above the .footer-bottom img selectors so no-descending-specificity passes. */
 
 .footer-wrapper .footer .footer-logos img {
-  width: var(--spacing-110);
-  height: var(--spacing-30);
+  width: var(--footer-logo-width);
+  height: var(--footer-logo-partner-height);
   object-fit: contain;
   object-position: left center;
 }
 
 .footer-wrapper .footer .footer-logos > *:nth-child(3) img {
-  width: var(--spacing-110);
-  height: var(--spacing-100);
+  width: var(--footer-logo-width);
+  height: var(--footer-logo-brand-height);
   object-position: right center;
 }
 
