@@ -247,6 +247,8 @@ export default function decorate(block) {
     const caption = indication ? createCaption(captionRow) : null;
     wrapContent(block, textContainer, indication, caption);
     if (captionRow && !indication) injectFloatingContent(block, imageCell, null, captionRow);
+  } else if (block.classList.contains('mavyret-data-hero')) {
+    injectFloatingContent(block, imageCell, indicationRow, captionRow);
   } else {
     injectFloatingContent(block, imageCell, null, captionRow || indicationRow);
   }
