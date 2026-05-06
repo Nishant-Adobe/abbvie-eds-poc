@@ -26,10 +26,18 @@ function createWrapperATag(wrapper) {
   return gridWrap;
 }
 
+function isInUniversalEditor() {
+  return window.self !== window.top;
+}
+
 export default function decorate(block) {
-   const wrappers = [...block.querySelectorAll(':scope > div')];
-  //  wrappers.forEach((wrapper) => {
-  //    const card = createWrapperATag(wrapper);
-  //    wrapper.replaceWith(card);
-  //  });
+  if (isInUniversalEditor()) {
+    return;
+  }
+
+  const wrappers = [...block.querySelectorAll(":scope > div")];
+  wrappers.forEach((wrapper) => {
+    const card = createWrapperATag(wrapper);
+    wrapper.replaceWith(card);
+  });
 }
