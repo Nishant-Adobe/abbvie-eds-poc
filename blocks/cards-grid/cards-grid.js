@@ -32,6 +32,10 @@ function createWrapperATag(wrapper) {
     card.target = sourceLink.getAttribute("target") || "_self";
   }
 
+  while (wrapper.firstChild) {
+    card.append(wrapper.firstChild);
+  }
+
   const innerLinkDiv = card.firstElementChild;
   if (innerLinkDiv) {
     innerLinkDiv.remove();
