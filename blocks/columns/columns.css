@@ -2391,3 +2391,50 @@ main > .section.columns-container:last-child a.button:hover {
     grid-column: 8 / 12;
   }
 }
+
+/* ============================================================
+   Layout variants — applied via classes_variant model field
+   ============================================================ */
+
+/* --columns-gap: shared custom property so flush can zero it in one place */
+.columns {
+  --columns-gap: var(--spacing-24);
+}
+
+/* offset: 1/3 + 2/3 grid — CSS-defined, not authored */
+.columns.columns-offset > div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--columns-gap);
+}
+
+/* flush: collapse all gaps to zero via the custom property */
+.columns.columns-flush {
+  --columns-gap: var(--spacing-00);
+}
+
+.columns.columns-flush > div {
+  gap: var(--columns-gap);
+}
+
+/* reverse: swap column order on mobile; reset to authored order on desktop */
+.columns.columns-reverse > div {
+  flex-direction: column-reverse;
+}
+
+@media (width >= 768px) {
+  /* offset already grid; enforce 33/66 at desktop too */
+  .columns.columns-offset > div {
+    grid-template-columns: 1fr 2fr;
+  }
+
+  /* flush gap stays zero at all widths */
+  .columns.columns-flush > div {
+    gap: var(--columns-gap);
+  }
+
+  /* restore natural row direction on desktop */
+  .columns.columns-reverse > div {
+    flex-direction: row;
+  }
+}
