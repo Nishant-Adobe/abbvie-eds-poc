@@ -1,54 +1,25 @@
 /*
  * Modal Block
+ * Fragment-based modal: each block instance renders a trigger button and
+ * loads an EDS fragment into a shared overlay on demand.
  *
- * Trigger any element on the page that has:
- *   data-modal-id="my-modal"
- * or a link:
- *   <a href="#my-modal">Open</a>
+ * Authoring (key–value block table):
+ *   | modalId       | promo-2025                        |
+ *   | fragmentPath  | /us/en/fragments/promo-2025       |
+ *   | openLabel     | Show offer                        |
  *
- * Lazy-init: the overlay DOM is only built the first time a modal
- * is triggered — safe for pages with 20+ modals (e.g. Mavyret).
- *
- * Block authoring format (table):
- *   | modal (once) |            |
- *   |---|---|
- *   | modal-id  | level-up-study  |
- *   | Title     | Study Results   |
- *   | Content   | <rich text>     |
- *   | CTA       | Learn more      |  <- link authored as hyperlink
- *
- * Variants (block class):
- *   once -- show only once per browser session (sessionStorage)
+ * The fragment can contain any EDS blocks (text, buttons, accordion, etc.).
+ * Multiple Modal blocks on one page each point to a different fragment.
  */
 
-/** @type {Map<string, {block: HTMLElement, cfg: object, overlay: HTMLElement|null}>} */
-const registry = new Map();
-let listenersAttached = false;
+import { loadFragment } from '../fragment/fragment.js';
 
 /* ------------------------------------------------------------------ */
-/* Helpers                                                              */
+/* Shared overlay (one instance per page)                              */
 /* ------------------------------------------------------------------ */
 
-function readBlock(block) {
-  const cfg = {};
-  [...block.children].forEach((row) => {
-    const key = row.children[0]?.textContent?.trim().toLowerCase() || '';
-    const valueEl = row.children[1];
-
-    if (key === 'modal-id' || key === 'modal id') {
-      cfg.id = valueEl?.textContent.trim();
-    } else if (key === 'title') {
-      cfg.title = valueEl?.textContent.trim();
-    } else if (key === 'content') {
-      cfg.contentEl = valueEl;
-    } else if (key === 'cta') {
-      const link = valueEl?.querySelector('a');
-      cfg.ctaLabel = link?.textContent.trim() || valueEl?.textContent.trim();
-      cfg.ctaHref = link?.href || '#';
-    }
-  });
-  return cfg;
-}
+let overlay = null;
+let lastTrigger = null;
 
 function getFocusable(container) {
   return [
@@ -60,154 +31,94 @@ function getFocusable(container) {
   ];
 }
 
-/* ------------------------------------------------------------------ */
-/* Build overlay DOM (called lazily on first open)                     */
-/* ------------------------------------------------------------------ */
+function closeModal() {
+  if (!overlay) return;
+  const dialog = overlay.querySelector('.modal-dialog');
+  dialog.setAttribute('aria-hidden', 'true');
+  overlay.classList.remove('is-open');
+  document.body.classList.remove('modal-is-open');
+  if (lastTrigger) lastTrigger.focus();
+}
 
-function buildOverlay(cfg) {
-  const titleId = `modal-title-${cfg.id}`;
+function getOverlay() {
+  if (overlay) return overlay;
 
-  const overlay = document.createElement('div');
+  overlay = document.createElement('div');
   overlay.className = 'modal-overlay';
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-  if (cfg.title) overlay.setAttribute('aria-labelledby', titleId);
 
-  const panel = document.createElement('div');
-  panel.className = 'modal-panel';
+  const dialog = document.createElement('div');
+  dialog.className = 'modal-dialog';
+  dialog.setAttribute('role', 'dialog');
+  dialog.setAttribute('aria-modal', 'true');
+  dialog.setAttribute('aria-hidden', 'true');
+  dialog.setAttribute('tabindex', '-1');
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'modal-close';
-  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close modal');
   closeBtn.textContent = '✕';
+  closeBtn.addEventListener('click', closeModal);
 
   const content = document.createElement('div');
   content.className = 'modal-content';
 
-  if (cfg.title) {
-    const heading = document.createElement('h2');
-    heading.id = titleId;
-    heading.className = 'modal-title';
-    heading.textContent = cfg.title;
-    content.append(heading);
-  }
-
-  if (cfg.contentEl) {
-    const body = document.createElement('div');
-    body.className = 'modal-body';
-    body.append(...cfg.contentEl.cloneNode(true).childNodes);
-    content.append(body);
-  }
-
-  if (cfg.ctaLabel) {
-    const cta = document.createElement('a');
-    cta.className = 'modal-cta button';
-    cta.href = cfg.ctaHref;
-    cta.textContent = cfg.ctaLabel;
-    content.append(cta);
-  }
-
-  panel.append(closeBtn, content);
-  overlay.append(panel);
+  dialog.append(closeBtn, content);
+  overlay.append(dialog);
   document.body.append(overlay);
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = getFocusable(dialog);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
 
   return overlay;
 }
 
 /* ------------------------------------------------------------------ */
-/* Open / close                                                         */
+/* Open                                                                 */
 /* ------------------------------------------------------------------ */
 
-function closeModal(id) {
-  const entry = registry.get(id);
-  if (!entry?.overlay) return;
-  entry.overlay.classList.remove('is-open');
-  document.body.classList.remove('modal-is-open');
-}
+async function openModal(trigger) {
+  lastTrigger = trigger;
+  const { fragmentPath } = trigger.dataset;
+  const ov = getOverlay();
+  const dialog = ov.querySelector('.modal-dialog');
+  const content = ov.querySelector('.modal-content');
 
-function openModal(id) {
-  const entry = registry.get(id);
-  if (!entry) return;
-
-  if (entry.block.classList.contains('once') && sessionStorage.getItem(`modal-${id}`)) return;
-
-  if (!entry.overlay) {
-    const overlay = buildOverlay(entry.cfg);
-    entry.overlay = overlay;
-
-    const SKIP = new Set(['block', 'modal', 'once']);
-    entry.block.classList.forEach((cls) => {
-      if (!SKIP.has(cls)) overlay.classList.add(`modal--${cls}`);
-    });
-
-    const panel = overlay.querySelector('.modal-panel');
-    const closeBtn = overlay.querySelector('.modal-close');
-
-    overlay.addEventListener('keydown', (e) => {
-      if (e.key !== 'Tab') return;
-      const focusable = getFocusable(panel);
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    });
-
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal(id);
-    });
-
-    closeBtn.addEventListener('click', () => closeModal(id));
-  }
-
-  entry.overlay.classList.add('is-open');
+  content.innerHTML = '<p class="modal-loading">Loading…</p>';
+  dialog.setAttribute('aria-hidden', 'false');
+  ov.classList.add('is-open');
   document.body.classList.add('modal-is-open');
 
-  const focusable = getFocusable(entry.overlay.querySelector('.modal-panel'));
-  if (focusable.length) focusable[0].focus();
-
-  if (entry.block.classList.contains('once')) {
-    sessionStorage.setItem(`modal-${id}`, '1');
+  try {
+    const fragment = await loadFragment(fragmentPath);
+    content.innerHTML = '';
+    if (fragment) {
+      [...fragment.childNodes].forEach((node) => content.append(node));
+    }
+  } catch {
+    content.innerHTML = '<p class="modal-error">Unable to load content.</p>';
   }
-}
 
-/* ------------------------------------------------------------------ */
-/* Global event delegation (attached once per page)                    */
-/* ------------------------------------------------------------------ */
-
-function attachGlobalListeners() {
-  if (listenersAttached) return;
-  listenersAttached = true;
-
-  document.addEventListener('click', (e) => {
-    const byAttr = e.target.closest('[data-modal-id]');
-    if (byAttr) {
-      e.preventDefault();
-      openModal(byAttr.dataset.modalId);
-      return;
-    }
-
-    const byHref = e.target.closest('a[href^="#"]');
-    if (byHref) {
-      const id = byHref.getAttribute('href').slice(1);
-      if (registry.has(id)) {
-        e.preventDefault();
-        openModal(id);
-      }
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    registry.forEach((entry, id) => {
-      if (entry.overlay?.classList.contains('is-open')) closeModal(id);
-    });
-  });
+  const focusable = getFocusable(dialog);
+  if (focusable.length) focusable[0].focus();
+  else dialog.focus();
 }
 
 /* ------------------------------------------------------------------ */
@@ -215,11 +126,26 @@ function attachGlobalListeners() {
 /* ------------------------------------------------------------------ */
 
 export default async function decorate(block) {
-  const cfg = readBlock(block);
-  if (!cfg.id) return;
+  const config = {};
+  [...block.querySelectorAll(':scope > div')].forEach((row) => {
+    const key = row.children[0]?.textContent?.trim();
+    const value = row.children[1]?.textContent?.trim();
+    if (key && value) config[key] = value;
+  });
 
-  registry.set(cfg.id, { block, cfg, overlay: null });
-  block.hidden = true;
+  const fragmentPath = config.fragmentPath || config['fragment-path'] || config['Fragment Path'];
+  const openLabel = config.openLabel || config['open-label'] || config['Open Button Label'] || 'Open modal';
 
-  attachGlobalListeners();
+  if (!fragmentPath) return;
+
+  block.innerHTML = '';
+
+  const button = document.createElement('button');
+  button.className = 'modal-trigger';
+  button.type = 'button';
+  button.textContent = openLabel;
+  button.dataset.fragmentPath = fragmentPath;
+  button.addEventListener('click', () => openModal(button));
+
+  block.append(button);
 }

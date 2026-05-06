@@ -5155,39 +5155,24 @@
     "fields": [
       {
         "component": "text",
-        "name": "modal-id",
+        "name": "modalId",
         "label": "Modal ID",
-        "description": "Unique slug, e.g. hcp-gate. Must match the data-modal-id on trigger elements.",
+        "description": "Unique slug, e.g. promo-1, faq-modal.",
         "required": true
       },
       {
         "component": "text",
-        "name": "title",
-        "label": "Title"
+        "name": "fragmentPath",
+        "label": "Fragment Path",
+        "description": "Path to the fragment that contains modal content, e.g. /us/en/fragments/promo-1.",
+        "required": true
       },
       {
-        "component": "richtext",
-        "name": "content",
-        "label": "Content"
-      },
-      {
-        "component": "aem-content",
-        "name": "cta",
-        "label": "CTA (link)",
-        "description": "Authored as a hyperlink — link text becomes the button label."
-      },
-      {
-        "component": "multiselect",
-        "name": "classes",
-        "label": "Behaviour",
-        "options": [
-          { "name": "Show once per session", "value": "once" },
-          { "name": "HCP Gate (forced, no close)", "value": "hcp-gate" },
-          { "name": "Telemedicine", "value": "telemed" },
-          { "name": "Exit / Leave Site", "value": "exit" },
-          { "name": "Share", "value": "share" },
-          { "name": "Terms and Conditions", "value": "terms" }
-        ]
+        "component": "text",
+        "name": "openLabel",
+        "label": "Open Button Label",
+        "description": "Label for the trigger button.",
+        "value": "Open modal"
       }
     ]
   },
