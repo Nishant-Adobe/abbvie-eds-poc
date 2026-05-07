@@ -1,9 +1,32 @@
+/*
+ * Icon font must be same-origin as the page. Loading from skyrizihcp.com has no
+ * Access-Control-Allow-Origin on the .woff response, so @font-face is blocked
+ * from http://localhost (see blocked cross-origin font requests in DevTools).
+ */
 @font-face {
   font-family: "abbv-iconFont";
-  src: url("https://www.skyrizihcp.com/etc/clientlibs/common-elements/clientlibs/framework/ui/fonts/abbv_iconFont.woff")
-    format("woff");
+  src: url("/fonts/skyrizi-hcp/abbv_iconFont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
+  font-display: block;
+}
+
+.i-b:before,
+.i-a:after {
+  font-family: 'abbv-iconFont', sans-serif !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+}
+
+.abbv-icon-keyboard_arrow_right.i-b:before,
+.abbv-icon-keyboard_arrow_right.i-a:after {
+  content: '\e315';
 }
 
 @font-face {
@@ -111,3 +134,4 @@
 .card-grid-item-richtext {
   margin: 24px 32px 24px 36px;
 }
+
