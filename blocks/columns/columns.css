@@ -1,133 +1,61 @@
 /* ============================================================
    Columns Block
-   Supports two authoring modes:
-   - UE (Universal Editor): JS wraps items into .columns-row > .columns-col
-   - Document-based (legacy): JS adds .columns-item > .columns-item-content
-   Variants applied via Layout Variant select in UE: columns-offset, columns-flush, columns-reverse
+   DOM: .columns > .columns-item > .columns-item-image | .columns-item-content
+   .columns lives inside .abbvie-container which is already a CSS grid.
+   .columns itself becomes the grid for its column items.
+   Variants: columns-offset, columns-flush, columns-reverse
    ============================================================ */
 
-/* ---- Shared gap token ---- */
 .columns {
   --columns-gap: var(--spacing-24);
-}
-
-/* ============================================================
-   UE-authored mode: .columns-row / .columns-col
-   ============================================================ */
-
-/* Mobile: stack columns vertically */
-.columns > .columns-row {
   display: flex;
   flex-direction: column;
   gap: var(--columns-gap);
 }
 
-.columns > .columns-row > .columns-col {
-  width: 100%;
+.columns>.columns-item {
+  display: flex;
+  flex-direction: column;
 }
 
-.columns > .columns-row > .columns-col img {
+.columns>.columns-item>.columns-item-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns>.columns-item>.columns-item-content ol {
+  margin-left: 18px;
+}
+
+.columns>.columns-item>.columns-item-image img {
   width: 100%;
   display: block;
-  border-radius: var(--spacing-08);
 }
 
-/* Desktop: CSS grid — column count driven by number of .columns-col items */
-@media (width >= 768px) {
-  .columns > .columns-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    gap: var(--columns-gap);
-    align-items: flex-start;
-  }
-}
-
-/* ============================================================
-   Layout variants (UE mode)
-   ============================================================ */
-
-/* offset: first col 33%, second col 66% — CSS-defined, not authored */
-.columns.columns-offset > .columns-row {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: var(--columns-gap);
-}
-
-/* flush: collapse gap to zero via the shared custom property */
-.columns.columns-flush {
-  --columns-gap: var(--spacing-00);
-}
-
-/* reverse: swap stacking order on mobile */
-.columns.columns-reverse > .columns-row {
+.columns.columns-reverse>.columns-item {
   flex-direction: column-reverse;
 }
 
-@media (width >= 768px) {
-  /* offset: enforce 33/66 at all widths */
-  .columns.columns-offset > .columns-row {
-    grid-template-columns: 1fr 2fr;
-  }
-
-  /* flush: gap stays zero at all widths */
-  .columns.columns-flush > .columns-row {
-    gap: var(--spacing-00);
-  }
-
-  /* reverse: restore natural row order on desktop */
-  .columns.columns-reverse > .columns-row {
+@media (width >=768px) {
+  .columns {
     flex-direction: row;
   }
-}
 
-/* ============================================================
-   Document-based (legacy) mode: .columns-item / .columns-item-content
-   ============================================================ */
-
-.columns > .columns-item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--columns-gap);
-}
-
-.columns > .columns-item > .columns-item-content {
-  width: 100%;
-}
-
-.columns > .columns-item img {
-  width: 100%;
-  display: block;
-  border-radius: var(--spacing-08);
-}
-
-@media (width >= 768px) {
-  .columns > .columns-item {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  .columns > .columns-item > .columns-item-content {
+  .columns.columns-offset .columns-item {
     flex: 1;
   }
 
-  /* offset variant for legacy mode */
-  .columns.columns-offset > .columns-item {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
+  .columns.columns-offset .columns-item:first-child {
+    width: 33%;
+    flex: none;
   }
 
-  /* flush variant for legacy mode */
-  .columns.columns-flush > .columns-item {
-    gap: var(--spacing-00);
-  }
-
-  /* reverse variant for legacy mode */
-  .columns.columns-reverse > .columns-item {
-    flex-direction: row-reverse;
+  .columns.columns-reverse>.columns-item {
+    flex-direction: column;
   }
 }
 
-/* reverse stacking on mobile for legacy mode */
-.columns.columns-reverse > .columns-item {
-  flex-direction: column-reverse;
+/* flush: zero gap */
+.columns.columns-flush {
+  --columns-gap: var(--spacing-00);
 }
