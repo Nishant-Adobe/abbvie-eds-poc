@@ -28,14 +28,16 @@ function isItemRow(row) {
 
 function parseConfig(block) {
   const cfgRows = [...block.children].filter((r) => !isItemRow(r));
-  // cfgRows[0]=classes, [1]=heading, [2]=description, [3]=maxVisible,
-  // [4]=accountId, [5]=playlistId, [6]=playerId
+  // cfgRows[0]=classes, [1]=heading, [2]=description,
+  // [3]=accountId, [4]=playlistId, [5]=playerId, [6]=maxVisible
   const cellText = (i) => cfgRows[i]?.firstElementChild?.textContent?.trim() ?? '';
   return {
     heading: cellText(1),
     description: cellText(2),
-    accountId: cellText(4),
-    playerId: cellText(6) || 'default',
+    accountId: cellText(3),
+    playlistId: cellText(4),
+    playerId: cellText(5) || 'default',
+    maxVisible: parseInt(cellText(6), 10) || 0,
   };
 }
 
