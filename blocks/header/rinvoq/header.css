@@ -170,6 +170,168 @@ header nav .nav-sections .default-content-wrapper > ul > li > button.selected {
   font-weight: 700 !important;
 }
 
+/* Hide "Choose Your Condition" on homepage desktop — only shows in mobile menu */
+header nav .nav-sections .menu-choose-your-condition,
+header nav .nav-sections .menu-conditions {
+  display: none !important;
+}
+
+/* Hide all language-links duplicates in nav-tools (already shown in nav-sections) */
+header nav .nav-tools .default-content-wrapper > ul > li:not(.nav-cta-item):not(.menu-search) {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════
+   Condition page mega-menu drawer (desktop)
+   ═══════════════════════════════════════════ */
+@media (width > 1023px) {
+  /* Header must grow for two-row condition nav */
+  header:has(.nav-sections .menu-about-eczema),
+  header:has(.nav-sections .menu-rinvoq-results),
+  header:has(.nav-sections .menu-about-rinvoq) {
+    height: auto !important;
+  }
+
+  /* Nav layout: two rows — brand+tools on top, nav-sections below */
+  header nav#nav {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "brand tools tools"
+      "sections sections sections" !important;
+    align-items: center;
+    padding: 0 24px !important;
+    height: auto !important;
+    min-height: var(--nav-height, 88px);
+  }
+
+  header nav .nav-brand {
+    grid-area: brand !important;
+  }
+
+  header nav .nav-tools {
+    grid-area: tools !important;
+    justify-self: end;
+  }
+
+  header nav .nav-sections {
+    grid-area: sections !important;
+    margin-left: 0 !important;
+    width: 100%;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Nav items — evenly spaced row below CTA */
+  header nav .nav-sections .default-content-wrapper > ul {
+    display: flex !important;
+    width: 100%;
+    padding: 8px 0 12px !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:not(.menu-choose-your-condition):not(.menu-conditions) {
+    display: flex !important;
+    align-items: center;
+    flex: 1 1 0;
+    padding: 0 24px;
+    margin: 0;
+    height: auto;
+    border: none !important;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:not(.menu-choose-your-condition):not(.menu-conditions) > button {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    text-transform: none;
+    white-space: nowrap;
+    border-left: 3px solid rgb(255 209 0) !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    padding: 4px 0 4px 12px !important;
+    background: none !important;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:not(.menu-choose-your-condition):not(.menu-conditions) > button:hover {
+    text-decoration: underline;
+  }
+
+  /* Hide default underline indicator and individual submenus */
+  header nav .nav-sections .default-content-wrapper > ul > li:not(.menu-choose-your-condition):not(.menu-conditions) > button::after {
+    display: none !important;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:not(.menu-choose-your-condition):not(.menu-conditions) .submenu-level-1 {
+    display: none !important;
+  }
+
+  /* ── Mega drawer (JS-generated) ── */
+  .rinvoq-mega-drawer {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) scaleY(0);
+    width: 100vw;
+    padding: 32px 60px;
+    background: rgb(37 40 42);
+    border-top: 1px solid rgb(60 60 60);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 40px;
+    z-index: 200;
+    transform-origin: top;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.25s ease, opacity 0.2s ease, visibility 0.25s;
+  }
+
+  .rinvoq-mega-drawer[aria-hidden="false"] {
+    transform: translateX(-50%) scaleY(1);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mega-drawer-col {
+    padding: 0 16px;
+  }
+
+  .mega-drawer-heading {
+    font-size: 16px;
+    font-weight: 700;
+    font-style: italic;
+    color: #fff;
+    border-left: 3px solid rgb(255 209 0);
+    padding-left: 12px;
+    margin: 0 0 16px;
+  }
+
+  .mega-drawer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mega-drawer-links li {
+    padding: 8px 0;
+  }
+
+  .mega-drawer-links a {
+    color: #fff !important;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .mega-drawer-links a:hover {
+    text-decoration: underline;
+  }
+}
+
 /* Search icon — no border, no hover effect */
 header nav .nav-tools .menu-search > button {
   border: none !important;
@@ -272,6 +434,11 @@ header nav .nav-item-level-0 .default-content-wrapper ul li button.active {
 
 /* Active state underline in white */
 @media (width > 1023px) {
+  /* Hide duplicate language-links item in nav-tools (already shown in nav-sections) */
+  header nav .nav-tools .menu-choose-your-condition {
+    display: none !important;
+  }
+
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after,
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:focus::after,
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:focus-visible::after,
@@ -471,7 +638,7 @@ header .nav-eyebrow-top a {
     align-items: center;
     margin: 0;
     color: #fff;
-    font-size: 12px;
+    font-size: 0 !important;
     white-space: nowrap;
     line-height: 1;
   }
@@ -485,7 +652,7 @@ header .nav-eyebrow-top a {
 
   header .nav-cta-group .nav-cta-guest a {
     color: #fff !important;
-    font-size: 12px;
+    font-size: 12px !important;
     text-decoration: underline !important;
     font-weight: 400;
     background: none !important;
@@ -493,6 +660,10 @@ header .nav-eyebrow-top a {
     border-radius: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
+  }
+
+  header .nav-cta-group .nav-cta-guest a[href^="tel:"]::after {
+    display: none !important;
   }
 
   header .nav-cta-group .nav-cta-guest a:hover {
@@ -593,6 +764,150 @@ header nav .nav-tools .menu-search .icon svg {
     font-size: 18px;
     font-weight: 400;
     padding: 16px 0;
+  }
+
+  /* RINVOQ: Mobile nav — match rinvoq.com layout */
+
+  /* Mobile nav — position sections below the brand (logo height ~80px) */
+  header nav[aria-expanded='true'] .nav-sections {
+    top: 100px !important;
+    padding: 0 24px 80px !important;
+  }
+
+  /* CTA links — show inside nav-sections BEFORE conditions via generated content */
+  header nav[aria-expanded='true'] .nav-tools {
+    position: absolute !important;
+    top: 100px;
+    left: 0;
+    right: 0;
+    padding: 0 24px !important;
+    z-index: 2;
+  }
+
+  header nav[aria-expanded='true'] .nav-cta-group {
+    display: block !important;
+    padding: 0 0 16px !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-cta-group .nav-cta-guest {
+    display: block !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-cta-group .nav-cta-guest p {
+    color: #fff !important;
+    font-size: 16px !important;
+    margin: 0 0 6px !important;
+    line-height: 1.5 !important;
+    padding-left: 0 !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-cta-group .nav-cta-guest p::before {
+    content: none !important;
+  }
+
+  /* Hide bullet dots on mobile CTA links */
+  header nav[aria-expanded='true'] .nav-tools .nav-cta-group p {
+    list-style: none !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-cta-group .nav-cta-guest a {
+    color: #fff !important;
+    font-size: 16px !important;
+    text-decoration: underline !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* Show CTA item on mobile and hide search */
+  header nav[aria-expanded='true'] .nav-tools .nav-cta-item {
+    display: block !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-tools .menu-search,
+  header nav[aria-expanded='true'] .nav-tools .menu-conditions {
+    display: none !important;
+  }
+
+  /* Push nav-sections down to make room for CTA */
+  header nav[aria-expanded='true'] .nav-sections {
+    margin-top: 100px !important;
+  }
+
+  /* Show the conditions list item on mobile */
+  header nav[aria-expanded='true'] .nav-sections .menu-conditions,
+  header nav[aria-expanded='true'] .nav-sections .menu-choose-your-condition {
+    display: list-item !important;
+  }
+
+  /* "Choose Your Condition" heading style — show the button as heading */
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.menu-conditions > button,
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li.menu-choose-your-condition > button {
+    display: block !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    padding: 12px 0 12px !important;
+    margin: 0 24px 16px !important;
+    text-align: left;
+    border-bottom: 3px solid rgb(255 209 0) !important;
+    pointer-events: none;
+    width: fit-content;
+  }
+
+  /* Hide back button */
+  header nav[aria-expanded='true'] .nav-sections .back-btn {
+    display: none !important;
+  }
+
+  /* Auto-expand conditions submenu */
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li .submenu-level-1 {
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 24px !important;
+    height: auto !important;
+    max-height: none !important;
+    transition: none !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li .submenu-level-1 .close-btn-wrapper {
+    display: none !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li .submenu-level-1 .navigation-group {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    padding: 0;
+    margin: 0;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li .submenu-level-1 .navigation-group li {
+    border-bottom: none !important;
+    padding: 12px 0;
+    background: transparent !important;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li .submenu-level-1 .navigation-group a {
+    color: #fff !important;
+    font-size: 20px !important;
+    font-weight: 400;
+    text-decoration: none;
+    background: transparent !important;
+    line-height: 1.4;
+  }
+
+  header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li .submenu-level-1 .navigation-group a:hover {
+    text-decoration: underline;
   }
 
   /* Mobile CTA group — stacked links with underline */

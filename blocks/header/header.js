@@ -385,7 +385,7 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
 
   const fragment = document.createDocumentFragment(); // Batch DOM changes
   const ul = createElement('ul', { className: 'navigation-group' });
-  const pageRedirectText = megaMenu.querySelector('.mega-menu-left .button-container a').textContent.trim();
+  const pageRedirectText = megaMenu?.querySelector('.mega-menu-left .button-container a')?.textContent?.trim() || '';
   (data?.children || []).forEach((child) => {
     const li = createElement('li', { className: 'navigation-item navigation-item-level-1' });
     if (child.children?.length) {
