@@ -79,39 +79,39 @@ function isItemRow(row) {
 function readBlockConfig(block) {
   const rows = [...block.children];
   const configRows = rows.filter((r) => !isItemRow(r));
+  const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
 
-  // Positional reading matching component-model field order:
-  // 0: classes (layout), 1: accountId, 2: playlistId, 3: playerId, 4: enableCaptions, 5: anchorId
-  const getText = (idx) => configRows[idx]?.firstElementChild?.textContent?.trim() || '';
-
-  const layoutVal = getText(0);
   const layouts = ['cards', 'bottom', 'top', 'left', 'right'];
-  let playlistLayout = layouts.includes(layoutVal) ? layoutVal : 'cards';
-  let accountId = getText(1);
-  let playlistId = getText(2);
-  let playerId = getText(3);
-  let enableCaptions = getText(4) === 'true';
+  const firstVal = values[0] || '';
+  const firstIsNumber = /^\d{5,}$/.test(firstVal);
 
-  // Fallback: if positional reading gives no account ID, try pattern-based detection
-  if (!accountId) {
-    const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
+  // If first value is a long number, content was authored without layout field (legacy)
+  // Use pattern-based detection
+  if (firstIsNumber) {
     const numbers = values.filter((v) => /^\d{5,}$/.test(v));
-    const layout = values.find((v) => layouts.includes(v));
-    if (layout) playlistLayout = layout;
-    accountId = numbers[0] || '';
-    playlistId = numbers[1] || '';
-    playerId = values.find(
+    const layout = values.find((v) => layouts.includes(v)) || 'cards';
+    const enableCaptions = values.includes('true');
+    const playerId = values.find(
       (v) => v && !layouts.includes(v) && v !== 'true' && v !== 'false' && !/^\d{5,}$/.test(v),
     ) || '';
-    enableCaptions = values.includes('true');
+
+    return {
+      playlistLayout: layout,
+      accountId: numbers[0] || '',
+      playlistId: numbers[1] || '',
+      playerId,
+      enableCaptions,
+    };
   }
 
+  // Positional reading (UE-authored with classes/layout field at position 0)
+  // Field order: classes(0), accountId(1), playlistId(2), playerId(3), captions(4), anchorId(5)
   return {
-    playlistLayout,
-    accountId,
-    playlistId,
-    playerId,
-    enableCaptions,
+    playlistLayout: layouts.includes(firstVal) ? firstVal : 'cards',
+    accountId: values[1] || '',
+    playlistId: values[2] || '',
+    playerId: values[3] || '',
+    enableCaptions: values[4] === 'true',
   };
 }
 
