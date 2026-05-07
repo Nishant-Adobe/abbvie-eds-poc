@@ -383,7 +383,7 @@ function decorateGallery(block, cells, startPct) {
 
 /* --- Simple slider builders (non-gallery) --- */
 
-function buildRinvoq(block, afterImg, beforeImg, opts) {
+function buildSliderWithCaption(block, afterImg, beforeImg, opts) {
   const slider = buildSliderContainer(afterImg, beforeImg, opts);
   const { container } = slider;
 
@@ -398,7 +398,7 @@ function buildRinvoq(block, afterImg, beforeImg, opts) {
   return slider;
 }
 
-function buildSkyrizi(block, afterImg, beforeImg, opts) {
+function buildWrappedSlider(block, afterImg, beforeImg, opts) {
   const wrapper = document.createElement('div');
   wrapper.className = 'image-compare-wrapper';
 
@@ -482,7 +482,7 @@ function decorateLegacy(block, cells) {
       afterLabel: cells[4]?.textContent?.trim() || 'AFTER | WEEK 16',
       patientName: cells[6]?.textContent?.trim() || '',
     };
-    const parts = buildSkyrizi(block, afterImg, beforeImg, opts);
+    const parts = buildWrappedSlider(block, afterImg, beforeImg, opts);
     return { ...parts, startPct, hasPrompt: false };
   }
 
@@ -492,7 +492,7 @@ function decorateLegacy(block, cells) {
     prompt: 'CLICK AND DRAG TO SEE RESULTS',
     captionHtml: cells[3]?.innerHTML || '',
   };
-  const parts = buildRinvoq(block, afterImg, beforeImg, opts);
+  const parts = buildSliderWithCaption(block, afterImg, beforeImg, opts);
   return { ...parts, startPct, hasPrompt: true };
 }
 
@@ -551,7 +551,7 @@ function decorateKeyValue(block, rows) {
       afterLabel: getText(data.afterLabelPrefix) || 'AFTER | WEEK 16',
       patientName: firstImg?.label || '',
     };
-    const parts = buildSkyrizi(block, afterImg, beforeImg, opts);
+    const parts = buildWrappedSlider(block, afterImg, beforeImg, opts);
     return { ...parts, startPct: 0.5, hasPrompt: false };
   }
 
@@ -561,7 +561,7 @@ function decorateKeyValue(block, rows) {
     prompt: getText(data.sliderPrompt) || 'CLICK AND DRAG TO SEE RESULTS',
     captionHtml: data.description?.innerHTML || '',
   };
-  const parts = buildRinvoq(block, afterImg, beforeImg, opts);
+  const parts = buildSliderWithCaption(block, afterImg, beforeImg, opts);
   return { ...parts, startPct: 0.5, hasPrompt: true };
 }
 
@@ -588,7 +588,7 @@ function decorateModelFormat(block, cells) {
     prompt: promptText || undefined,
     captionHtml: cells[COL.description]?.innerHTML || '',
   };
-  const parts = buildRinvoq(block, afterImg, beforeImg, opts);
+  const parts = buildSliderWithCaption(block, afterImg, beforeImg, opts);
   return { ...parts, startPct, hasPrompt: !!promptText };
 }
 
