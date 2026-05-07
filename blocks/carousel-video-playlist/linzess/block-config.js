@@ -71,7 +71,7 @@ function parseItems(block) {
     .filter(({ videoId }) => videoId);
 }
 
-function initPlayer(container, videoId, autoplay) {
+function createVideoEl(videoId) {
   const accountId = getAccountId();
   playerCounter += 1;
   const id = `linz-cvp-${playerCounter}`;
@@ -82,20 +82,31 @@ function initPlayer(container, videoId, autoplay) {
   videoEl.setAttribute('data-player', BC_PLAYER_ID);
   videoEl.setAttribute('data-embed', 'default');
   videoEl.setAttribute('data-video-id', videoId);
+  videoEl.setAttribute('preload', 'none');
   videoEl.setAttribute('controls', '');
   videoEl.className = 'video-js vjs-fluid';
+  return { videoEl, id };
+}
+
+// Initialise player in poster-only mode (preload=none shows BC poster, no stream loaded).
+// Returns a play() function — call it to start playback.
+function initPosterPlayer(container, videoId, playBtn) {
+  const { videoEl, id } = createVideoEl(videoId);
   container.append(videoEl);
 
-  loadBrightcoveScript(accountId, BC_PLAYER_ID).then(() => {
+  loadBrightcoveScript(getAccountId(), BC_PLAYER_ID).then(() => {
     if (typeof window.bc === 'function') window.bc(videoEl);
-    if (autoplay) {
-      const poll = () => {
-        const p = getVideoJsPlayer(id);
-        if (p) p.ready(() => p.play());
-        else requestAnimationFrame(poll);
-      };
-      poll();
-    }
+  });
+
+  playBtn.addEventListener('click', () => {
+    playBtn.hidden = true;
+    const poll = () => {
+      const p = getVideoJsPlayer(id);
+      if (p) p.ready(() => p.play());
+      else requestAnimationFrame(poll);
+    };
+    // Ensure BC script is loaded before polling
+    loadBrightcoveScript(getAccountId(), BC_PLAYER_ID).then(poll);
   });
 
   return id;
@@ -180,13 +191,6 @@ function buildGridMode(block, cfg, items) {
     const playerWrap = document.createElement('div');
     playerWrap.className = 'cvp-player-wrap';
 
-    if (item.thumbnail) {
-      const thumbImg = document.createElement('div');
-      thumbImg.className = 'cvp-thumb-img';
-      thumbImg.append(item.thumbnail.cloneNode(true));
-      playerWrap.append(thumbImg);
-    }
-
     if (item.nameBanner) {
       const banner = document.createElement('div');
       banner.className = 'cvp-name-banner';
@@ -216,26 +220,13 @@ function buildGridMode(block, cfg, items) {
     card.append(footer);
     createTranscriptToggle(item.transcript, footer);
 
-    // Lazy-preload BC script when card enters viewport
-    const preloadObs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        preloadObs.disconnect();
-        loadBrightcoveScript(getAccountId(), BC_PLAYER_ID);
-      }
+    // Init player in poster mode when card enters viewport — BC poster loads automatically
+    const obs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      initPosterPlayer(playerWrap, item.videoId, playBtn);
     }, { rootMargin: '300px' });
-    preloadObs.observe(card);
-
-    // Play → initialise player inline
-    let initialized = false;
-    playBtn.addEventListener('click', () => {
-      if (initialized) return;
-      initialized = true;
-      preloadObs.disconnect();
-      const thumbImg = playerWrap.querySelector('.cvp-thumb-img');
-      if (thumbImg) thumbImg.hidden = true;
-      playBtn.hidden = true;
-      initPlayer(playerWrap, item.videoId, true);
-    });
+    obs.observe(card);
 
     grid.append(card);
   });
@@ -262,8 +253,6 @@ function buildFeaturedMode(block, items) {
   if (!items.length) return;
 
   let activePlayerId = null;
-  let currentIndex = 0;
-  let featuredInitialized = false;
 
   // ── Part A: Featured video + quote panel ──────────────────────
   const featuredRow = document.createElement('div');
@@ -275,13 +264,6 @@ function buildFeaturedMode(block, items) {
 
   const featuredWrap = document.createElement('div');
   featuredWrap.className = 'cvp-player-wrap';
-
-  if (items[0].thumbnail) {
-    const thumbImg = document.createElement('div');
-    thumbImg.className = 'cvp-thumb-img';
-    thumbImg.append(items[0].thumbnail.cloneNode(true));
-    featuredWrap.append(thumbImg);
-  }
 
   const featuredBanner = document.createElement('div');
   featuredBanner.className = 'cvp-name-banner';
@@ -329,26 +311,8 @@ function buildFeaturedMode(block, items) {
     featuredBanner.textContent = item.nameBanner || '';
   }
 
-  function updateFeaturedThumb(item) {
-    const existing = featuredWrap.querySelector('.cvp-thumb-img');
-    if (existing) existing.remove();
-    if (item.thumbnail) {
-      const thumbImg = document.createElement('div');
-      thumbImg.className = 'cvp-thumb-img';
-      thumbImg.append(item.thumbnail.cloneNode(true));
-      featuredWrap.prepend(thumbImg);
-    }
-  }
-
-  // Featured play button → init player
-  featuredPlayBtn.addEventListener('click', () => {
-    if (featuredInitialized) return;
-    featuredInitialized = true;
-    const thumbImg = featuredWrap.querySelector('.cvp-thumb-img');
-    if (thumbImg) thumbImg.hidden = true;
-    featuredPlayBtn.hidden = true;
-    activePlayerId = initPlayer(featuredWrap, items[currentIndex].videoId, true);
-  });
+  // Init featured player in poster mode — BC poster loads automatically
+  activePlayerId = initPosterPlayer(featuredWrap, items[0].videoId, featuredPlayBtn);
 
   // ── Part B: Thumbnail playlist row ───────────────────────────
   const playlistRow = document.createElement('div');
@@ -383,14 +347,6 @@ function buildFeaturedMode(block, items) {
     const thumbWrap = document.createElement('div');
     thumbWrap.className = 'cvp-thumb-wrap';
 
-    if (item.thumbnail) {
-      const img = item.thumbnail.querySelector('img')?.cloneNode(true);
-      if (img) {
-        img.alt = item.nameBanner || '';
-        thumbWrap.append(img);
-      }
-    }
-
     const thumbBanner = document.createElement('div');
     thumbBanner.className = 'cvp-name-banner';
     thumbBanner.textContent = item.nameBanner || '';
@@ -410,7 +366,6 @@ function buildFeaturedMode(block, items) {
     thumb.append(thumbTitle);
 
     function selectThumb() {
-      currentIndex = index;
       thumbnails.querySelectorAll('.cvp-thumb').forEach((t, i) => {
         t.classList.toggle('active', i === index);
         t.setAttribute('aria-selected', i === index ? 'true' : 'false');
@@ -418,10 +373,8 @@ function buildFeaturedMode(block, items) {
       });
       updateQuotePanel(item);
 
-      if (featuredInitialized && activePlayerId) {
+      if (activePlayerId) {
         switchVideo(activePlayerId, item.videoId);
-      } else {
-        updateFeaturedThumb(item);
       }
     }
 
