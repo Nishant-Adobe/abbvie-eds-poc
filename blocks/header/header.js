@@ -224,6 +224,9 @@ async function buildMegaMenu(block) {
     dashboardCardType,
   ] = tagsValues;
 
+  // No authored mega menu content — bail to avoid rendering empty wrapper
+  if (!megaMenuTitle) return null;
+
   const primaryCardData = {
     title: megaMenuCardTitle,
     cardContent: megaMenuCardContent,
@@ -496,7 +499,7 @@ function buildLevelTwoLanguageLinks(selector) {
  * @returns {Element} - The search form element.
  */
 function createSearchForm(block) {
-  const text = block.querySelector('p:last-child')?.textContent.trim();
+  const text = 'Search';
   const maindiv = createElement('div', { className: 'search-main-wrapper' });
   const wrapperdiv = createElement('div', { className: 'search-wrapper' });
   const form = createElement('form', {
@@ -553,7 +556,7 @@ function createSearchForm(block) {
 function buildMenuItem(block, isNavigation = false) {
   let label = block.querySelector('p')?.textContent.trim();
   if (block.classList.contains('search')) {
-    label = block.querySelector('p:last-child')?.textContent.trim() || 'Search';
+    label = 'Search';
   }
   if (!label && !block.classList.contains('search')) return null;
 
@@ -567,7 +570,9 @@ function buildMenuItem(block, isNavigation = false) {
   if (currentParentPage === slug) {
     button.classList.add('selected');
   }
-  const icon = block.querySelector('p > span');
+  // Only include the icon if it's the search block (other blocks get the search icon by mistake
+  // because content_searchIcon is a template default shared across all navigation-content blocks)
+  const icon = block.classList.contains('search') ? block.querySelector('p > span') : null;
   const text = createElement('span', { textContent: label });
   if (icon) button.appendChild(icon.cloneNode(true));
   button.appendChild(text);
@@ -635,6 +640,39 @@ function buildMenuItem(block, isNavigation = false) {
     document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', expanded);
   });
 
+  // Desktop: hover opens submenu (mouseenter/mouseleave with small delay to allow moving into submenu)
+  if (isNavigation) {
+    let hoverTimer = null;
+
+    const openOnHover = async () => {
+      if (!isDesktop.matches) return;
+      clearTimeout(hoverTimer);
+      const navGroup = li.querySelector('.navigation-group');
+      const isParsed = navGroup?.querySelector('.navigation-item');
+      if (!isParsed) {
+        await buildLevelTwoNavigations(button, navGroup, block);
+      }
+      toggleAllNavSections(false);
+      li.setAttribute('aria-expanded', 'true');
+      button.setAttribute('aria-expanded', 'true');
+      document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', 'false');
+    };
+
+    const closeOnLeave = () => {
+      if (!isDesktop.matches) return;
+      hoverTimer = setTimeout(() => {
+        li.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-expanded', 'false');
+        document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', 'true');
+      }, 100);
+    };
+
+    li.addEventListener('mouseenter', openOnHover);
+    li.addEventListener('mouseleave', closeOnLeave);
+    submenu.addEventListener('mouseenter', () => clearTimeout(hoverTimer));
+    submenu.addEventListener('mouseleave', closeOnLeave);
+  }
+
   return li;
 }
 
@@ -647,12 +685,23 @@ function buildMenuItem(block, isNavigation = false) {
 function buildEyebrows(headerEl) {
   const result = [];
   headerEl.querySelectorAll('.navigation-content[data-type="eyebrow"]').forEach((eb) => {
-    const rows = [...eb.children];
-    const position = rows[0]?.textContent.trim().toLowerCase() || 'top';
-    const contentRow = rows[1];
-    if (!contentRow) return;
+    // All block fields are packed inline as <p> tags inside row 0's inner cell.
+    // Fixed positions (determined by model field order — same in UE and production):
+    //   p[0]      = searchIcon (template default — always first)
+    //   p[1]      = eyebrowPosition ("top"|"bottom" — template default)
+    //   p[2..n-3] = eyebrowContent (authored — one <p> per richtext paragraph)
+    //   p[n-2]    = floatingIsiExpandLabel ("See Full ISI" — template default)
+    //   p[n-1]    = floatingIsiCollapseLabel ("Collapse ISI" — template default)
+    const cell = eb.querySelector(':scope > div > div');
+    const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
+    const contentParas = paras.slice(2, -2); // skip icon, position, and last 2 ISI defaults
+    if (!contentParas.length) return;
+
+    const positionText = paras[1]?.textContent.trim().toLowerCase();
+    const position = positionText === 'bottom' ? 'bottom' : 'top';
+
     const bar = createElement('div', { className: `nav-eyebrow nav-eyebrow-${position}` });
-    bar.innerHTML = contentRow.innerHTML;
+    bar.innerHTML = contentParas.map((p) => p.outerHTML).join('');
     result.push({ position, bar });
   });
   return result;
@@ -667,16 +716,25 @@ function buildEyebrows(headerEl) {
 function buildFloatingIsi(headerEl) {
   const isiBlock = headerEl.querySelector('.navigation-content[data-type="floating-isi"]');
   if (!isiBlock) return null;
-  const rows = [...isiBlock.children];
-  const expandLabel = rows[1]?.textContent.trim() || 'See Full ISI';
-  const collapseLabel = rows[2]?.textContent.trim() || 'Collapse ISI';
+
+  // Fixed positions in row 0's inner cell (model field order — same in UE and production):
+  //   p[0]      = searchIcon (template default)
+  //   p[1]      = eyebrowPosition ("top" — template default)
+  //   p[2..n-3] = floatingIsiText (authored ISI text)
+  //   p[n-2]    = floatingIsiExpandLabel (authored or default "See Full ISI")
+  //   p[n-1]    = floatingIsiCollapseLabel (authored or default "Collapse ISI")
+  const cell = isiBlock.querySelector(':scope > div > div');
+  const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
+  const expandLabel = paras[paras.length - 2]?.textContent.trim() || 'See Full ISI';
+  const collapseLabel = paras[paras.length - 1]?.textContent.trim() || 'Collapse ISI';
+  const isiParas = paras.slice(2, -2); // authored ISI text paragraphs
 
   const bar = createElement('div', {
     className: 'nav-floating-isi',
     attributes: { role: 'complementary', 'aria-label': 'Important Safety Information' },
   });
   const textWrap = createElement('div', { className: 'nav-floating-isi-text', attributes: { 'aria-live': 'polite' } });
-  if (rows[0]) textWrap.innerHTML = rows[0].innerHTML;
+  if (isiParas.length) textWrap.innerHTML = isiParas.map((p) => p.outerHTML).join('');
 
   const toggle = createElement('button', {
     className: 'nav-floating-isi-toggle',
@@ -696,44 +754,58 @@ function buildFloatingIsi(headerEl) {
 
 /**
  * Builds the CTA group (guest/user state + primary button) from a navigation-content block.
- * row[0] = guest links (richtext), row[1] = user links (richtext),
- * row[2] = primary CTA link (aem-content), row[3] = primary CTA label (text).
+ * All fields inline in row 0's cell (model field order):
+ *   p[0] = searchIcon (template default)
+ *   p[1] = eyebrowPosition (template default)
+ *   p[2] = floatingIsiExpandLabel (template default)
+ *   p[3] = floatingIsiCollapseLabel (template default)
+ *   p[4..k] = ctaGuestLinks (authored richtext)
+ *   p[k+1..m] = ctaUserLinks (authored richtext)
+ *   p[last] = ctaPrimaryLabel (authored text, no link)
+ * Primary CTA link (aem-content) is in a separate row: ctaBlock.children[1].
  * @param {Element} headerEl
  * @returns {Element|null}
  */
 function buildCtaGroup(headerEl) {
   const ctaBlock = headerEl.querySelector('.navigation-content[data-type="cta-group"]');
   if (!ctaBlock) return null;
-  const rows = [...ctaBlock.children];
+
+  const cell = ctaBlock.querySelector(':scope > div > div');
+  const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
+  const ctaParas = paras.slice(4); // skip 4 template defaults (icon, eyebrowPos, isiExpand, isiCollapse)
+  if (!ctaParas.length) return null;
 
   const group = createElement('div', { className: 'nav-cta-group' });
 
-  if (rows[0]?.innerHTML.trim()) {
+  const linkParas = ctaParas.filter((p) => p.querySelector('a'));
+  if (linkParas.length) {
+    const mid = Math.ceil(linkParas.length / 2);
     const guestWrap = createElement('div', { className: 'nav-cta-guest' });
-    guestWrap.innerHTML = rows[0].innerHTML;
+    guestWrap.innerHTML = linkParas.slice(0, mid).map((p) => p.outerHTML).join('');
     group.appendChild(guestWrap);
-  }
-  if (rows[1]?.innerHTML.trim()) {
-    const userWrap = createElement('div', {
-      className: 'nav-cta-user',
-      attributes: { hidden: '', 'aria-hidden': 'true' },
-    });
-    userWrap.innerHTML = rows[1].innerHTML;
-    group.appendChild(userWrap);
+
+    if (linkParas.length > 1) {
+      const userWrap = createElement('div', {
+        className: 'nav-cta-user',
+        attributes: { hidden: '', 'aria-hidden': 'true' },
+      });
+      userWrap.innerHTML = linkParas.slice(mid).map((p) => p.outerHTML).join('');
+      group.appendChild(userWrap);
+    }
   }
 
-  const ctaHref = rows[2]?.querySelector('a')?.href;
-  const ctaLabel = rows[3]?.textContent.trim();
-  if (ctaHref && ctaLabel) {
-    const btn = createElement('a', {
+  // Primary CTA: label from last para (text only), link from separate row 1
+  const ctaLabel = ctaParas[ctaParas.length - 1]?.textContent.trim();
+  const ctaLinkEl = ctaBlock.children[1]?.querySelector('a');
+  if (ctaLabel && ctaLinkEl) {
+    group.appendChild(createElement('a', {
       className: 'nav-cta-primary button',
-      attributes: { href: ctaHref },
+      attributes: { href: ctaLinkEl.href },
       textContent: ctaLabel,
-    });
-    group.appendChild(btn);
+    }));
   }
 
-  return group;
+  return group.children.length ? group : null;
 }
 
 /**
@@ -818,67 +890,58 @@ export default async function decorate(block) {
     const utilityUl = createElement('ul', { attributes: { role: 'menubar' } });
 
     utilityBlocks.forEach((utilBlock) => {
-      const rows = utilBlock.querySelectorAll(':scope > div');
-      rows.forEach((row) => {
-        const li = createElement('li', { attributes: { role: 'none' } });
-        const innerDiv = row.querySelector(':scope > div');
-        if (!innerDiv) return;
-        const paragraphs = innerDiv.querySelectorAll('p');
-        const firstP = paragraphs[0];
-        if (!firstP) return;
+      // content_utilityItems is a richtext field that can contain <p> and <ul> elements.
+      // All children are packed inline in row 0's cell (model field order):
+      //   child[0]       = searchIcon <p> (template default)
+      //   child[1..n-4]  = authored <p> links and <ul> dropdowns
+      //   child[n-3]     = eyebrowPosition <p> (template default "top")
+      //   child[n-2]     = floatingIsiExpandLabel <p> (template default)
+      //   child[n-1]     = floatingIsiCollapseLabel <p> (template default)
+      const cell = utilBlock.querySelector(':scope > div > div');
+      const children = [...(cell?.children || [])];
+      const authoredChildren = children.slice(1, -3); // skip icon; skip 3 trailing template defaults
 
-        const label = firstP.textContent.trim();
+      authoredChildren.forEach((child, idx) => {
+        if (child.tagName !== 'P') return; // <ul> nodes are handled by the preceding <p>
+        const link = child.querySelector('a');
+        if (!link) return;
 
-        // Single link — simple anchor item
-        if (paragraphs.length === 1) {
-          const link = firstP.querySelector('a');
-          if (link) {
-            link.setAttribute('role', 'menuitem');
-            li.appendChild(link.cloneNode(true));
-          } else {
-            li.textContent = label;
-          }
-        } else if (paragraphs.length === 2) {
-          // Label + single link
-          const link = paragraphs[1].querySelector('a');
-          if (link) {
-            link.setAttribute('role', 'menuitem');
-            li.appendChild(link.cloneNode(true));
-          }
-        } else {
-          // Label + multiple links = dropdown
+        const nextChild = authoredChildren[idx + 1];
+        const hasDropdown = nextChild?.tagName === 'UL';
+
+        if (hasDropdown) {
+          // Dropdown: preceding <p> is the trigger label, following <ul> holds the items
+          const dropLi = createElement('li', { attributes: { role: 'none' } });
           const btn = createElement('button', {
-            attributes: {
-              type: 'button',
-              'aria-haspopup': 'true',
-              'aria-expanded': 'false',
-              role: 'menuitem',
-            },
-            textContent: label,
+            attributes: { type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false', role: 'menuitem' },
+            textContent: link.textContent.trim(),
           });
-          const submenu = createElement('ul', { attributes: { role: 'menu' } });
-          Array.from(paragraphs).slice(1).forEach((p) => {
-            const a = p.querySelector('a');
-            if (a) {
-              const subLi = createElement('li', { attributes: { role: 'none' } });
-              a.setAttribute('role', 'menuitem');
-              subLi.appendChild(a.cloneNode(true));
-              submenu.appendChild(subLi);
-            }
+          const dropMenu = createElement('ul', { attributes: { role: 'menu' } });
+          nextChild.querySelectorAll('li').forEach((subLi) => {
+            const subLink = subLi.querySelector('a');
+            if (!subLink) return;
+            const sli = createElement('li', { attributes: { role: 'none' } });
+            subLink.setAttribute('role', 'menuitem');
+            sli.appendChild(subLink.cloneNode(true));
+            dropMenu.appendChild(sli);
           });
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const expanded = btn.getAttribute('aria-expanded') === 'true';
-            // Close other utility dropdowns
             utilityUl.querySelectorAll('button[aria-expanded="true"]').forEach((b) => {
               if (b !== btn) b.setAttribute('aria-expanded', 'false');
             });
             btn.setAttribute('aria-expanded', String(!expanded));
           });
-          li.appendChild(btn);
-          li.appendChild(submenu);
+          dropLi.append(btn, dropMenu);
+          utilityUl.appendChild(dropLi);
+        } else {
+          // Simple link
+          const li = createElement('li', { attributes: { role: 'none' } });
+          link.setAttribute('role', 'menuitem');
+          li.appendChild(link.cloneNode(true));
+          utilityUl.appendChild(li);
         }
-        utilityUl.appendChild(li);
       });
     });
 
@@ -910,6 +973,29 @@ export default async function decorate(block) {
     nav.appendChild(brand);
   }
 
+  // Secondary brand info — navigation-content blocks with no text label.
+  // In AEM, richtext list content (e.g. "For savings & support" links) renders as
+  // <div data-aue-prop="content_title"><ul>...</ul></div>, leaving no <p> with text.
+  // These are supplementary inline links shown alongside the logo, not nav section items.
+  const navContentBlocks = [...header.querySelectorAll('.navigation-content[data-type="navigation-content"]')];
+  const brandInfoBlocks = navContentBlocks.filter((b) => !b.querySelector('p')?.textContent.trim());
+  if (brandInfoBlocks.length) {
+    const infoDiv = createElement('div', { className: 'nav-brand-info' });
+    brandInfoBlocks.forEach((infoBlock) => {
+      const cell = infoBlock.querySelector(':scope > div > div');
+      const firstContent = cell?.firstElementChild;
+      if (!firstContent) return;
+      // Content is either a <ul> directly or inside a richtext <div> wrapper
+      const ul = firstContent.tagName === 'UL' ? firstContent : firstContent.querySelector('ul');
+      if (ul) {
+        infoDiv.appendChild(ul.cloneNode(true));
+      } else if (firstContent.tagName === 'P' && firstContent.textContent.trim()) {
+        infoDiv.appendChild(firstContent.cloneNode(true));
+      }
+    });
+    if (infoDiv.children.length) nav.appendChild(infoDiv);
+  }
+
   // Navigation Items
   const section = createElement('div', { className: 'section nav-sections nav-item-level-0' });
   const sectionWrapper = createElement('div', { className: 'default-content-wrapper' });
@@ -917,6 +1003,9 @@ export default async function decorate(block) {
 
   const menus = header.querySelectorAll('.navigation-content[data-type="navigation-content"], .navigation-content[data-type="language-links"]');
   menus.forEach((menu) => {
+    // Skip brand-info blocks — they have no text label (content is supplementary links)
+    if (!menu.querySelector('p')?.textContent.trim()) return;
+
     let element = menu;
     const p = menu.querySelector('p');
     if (p && p.innerText.trim() === 'MORE') {
