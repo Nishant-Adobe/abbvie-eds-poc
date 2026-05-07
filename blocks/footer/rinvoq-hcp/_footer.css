@@ -101,14 +101,14 @@
     align-items: center;
   }
 
+  .footer .footer-bottom > p:not(:has(picture), :has(img), .legal-number, :nth-last-child(2)) {
+    grid-column: 1 / -1;
+  }
+
   .footer .footer-bottom > p.legal-number,
   .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
     grid-column: 1;
     text-align: left;
     padding-top: 0;
-  }
-
-  .footer .footer-bottom > p:not(:has(picture), :has(img), .legal-number, :nth-last-child(2)) {
-    grid-column: 1 / -1;
   }
 }
