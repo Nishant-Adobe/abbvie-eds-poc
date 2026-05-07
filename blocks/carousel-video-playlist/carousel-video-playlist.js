@@ -449,7 +449,6 @@ export async function decorateBlock(block) {
 
       assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
 
-
       // Listen for playlist item changes
       bcPlayer.on('playlistitem', () => {
         const currentIdx = bcPlayer.playlist.currentItem();
@@ -491,7 +490,6 @@ export async function decorateBlock(block) {
   });
 
   assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
-  applyMaxVisible(block, cfg);
 
   if (accountId && items[0].videoId) {
     initSinglePlayer(videoContainer, accountId, player, items[0].videoId, enableCaptions);
