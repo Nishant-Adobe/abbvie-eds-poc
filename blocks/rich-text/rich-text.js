@@ -1,4 +1,4 @@
-﻿export default function decorate(block) {
+export default function decorate(block) {
   const row = block.querySelector(':scope > div');
   if (!row) return;
   const cell = row.querySelector(':scope > div');
