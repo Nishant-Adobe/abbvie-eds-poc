@@ -16,7 +16,7 @@
 }
 
 /* ── Mobile only (< 601px) ─────────────────────────────────── */
-@media (max-width: 600px) {
+@media (width <= 600px) {
   /* 1. Tighter gap between stacked link items */
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
@@ -29,11 +29,6 @@
     gap: var(--spacing-01);
   }
 
-  /* Indication code (3rd p, e.g. US-SKZD-260038) — 40px top gap matches live site */
-  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-    margin-top: var(--spacing-40);
-  }
-
   /* 3. Center AbbVie logo — picture/img are display:block globally so
      text-align won't work; flex+justify-content centers block children */
   .footer .footer-bottom > p:has(picture),
@@ -41,5 +36,10 @@
     display: flex;
     justify-content: center;
     margin-top: var(--spacing-08);
+  }
+
+  /* Indication code (3rd p, e.g. US-SKZD-260038) — 40px top gap matches live site */
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+    margin-top: var(--spacing-40);
   }
 }
