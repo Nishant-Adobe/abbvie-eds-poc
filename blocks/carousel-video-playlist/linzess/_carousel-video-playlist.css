@@ -22,22 +22,24 @@
   gap: var(--cvp-spacing-cards-gap);
 }
 
-/* Card item */
+/* Card item — fill grid cell */
 .carousel-video-playlist .cvp-playlist-item {
   background: transparent;
   border: none;
   border-radius: var(--linz-rounded-corner-sm);
-  overflow: hidden;
+  overflow: visible;
   text-align: left;
   width: 100%;
+  display: block;
 }
 
-/* Thumbnail */
+/* Thumbnail — fill card width */
 .carousel-video-playlist .cvp-playlist-thumb {
   border-radius: var(--linz-rounded-corner-sm);
   overflow: hidden;
   width: 100%;
   aspect-ratio: 16 / 9;
+  position: relative;
 }
 
 /* Play icon — centered, larger */
@@ -99,10 +101,15 @@
   display: none;
 }
 
-.carousel-video-playlist .cvp-playlist-thumb img {
+.carousel-video-playlist .cvp-playlist-thumb img,
+.carousel-video-playlist .cvp-playlist-thumb picture {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* Responsive: 1 column on mobile */
