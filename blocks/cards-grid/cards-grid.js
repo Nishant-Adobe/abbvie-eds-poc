@@ -69,6 +69,10 @@ function decorateLine3(card) {
   if (!card) return;
   const lineDiv = [...card.children].find((el) => el.tagName === 'DIV');
   if (!lineDiv) return;
+  const raw = lineDiv.innerHTML;
+  if (raw.includes('&lt;sup')) {
+    lineDiv.innerHTML = raw.replace(/&lt;sup&gt;([\s\S]*?)&lt;\/sup&gt;/gi, '<sup>$1</sup>');
+  }
   const span = document.createElement('span');
   span.className = LINE3_CLASS;
   while (lineDiv.firstChild) {
