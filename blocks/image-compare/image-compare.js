@@ -59,6 +59,7 @@ function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   beforeWrap.appendChild(beforeImg);
   container.appendChild(beforeWrap);
 
+  // Handle
   const handle = document.createElement('div');
   handle.className = 'image-compare-handle';
   handle.setAttribute('role', 'separator');
