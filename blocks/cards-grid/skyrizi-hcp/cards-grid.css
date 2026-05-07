@@ -115,6 +115,22 @@ sup {
   margin: 24px 32px 24px 36px;
 }
 
+.cards-grid .card-grid-item {
+  transition: transform 0.3s ease;
+}
+
+@media only screen and (min-width: 896px) {
+  .cards-grid .card-grid-item:hover {
+    transform: scale(1.15);
+  }
+}
+
+@media only screen and (max-width: 896px) {
+  .cards-grid .card-grid-item:hover {
+    transform: scale(1.05);
+  }
+}
+
 .i-b:before,
 .i-a:after {
   font-family: 'abbv-iconFont', sans-serif !important;
@@ -132,3 +148,4 @@ sup {
 .abbv-icon-keyboard_arrow_right.i-a:after {
   content: '\e315';
 }
+
