@@ -16,29 +16,21 @@
   display: block;
 }
 
-/* Desktop: equal columns — count driven by number of authored column items */
 @media (width >=768px) {
   .columns {
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     align-items: start;
   }
-}
 
-/* ---- Variants ---- */
-
-/* offset: first column 33%, second column 66% */
-@media (width >=768px) {
   .columns.columns-offset {
     grid-template-columns: 1fr 2fr;
   }
 }
 
-/* flush: zero gap */
 .columns.columns-flush {
   --columns-gap: var(--spacing-00);
 }
 
-/* reverse: swap column order via grid item order property */
 .columns.columns-reverse>.columns-item:first-child {
   order: 2;
 }
