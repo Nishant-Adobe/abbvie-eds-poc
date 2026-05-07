@@ -23,21 +23,24 @@
 }
 
 /* Card item — fill grid cell */
-.carousel-video-playlist .cvp-playlist-item {
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item {
+  width: 100%;
   background: transparent;
   border: none;
   border-radius: var(--linz-rounded-corner-sm);
   overflow: visible;
   text-align: left;
-  width: 100%;
   display: block;
+  aspect-ratio: auto;
+  opacity: 1;
 }
 
 /* Thumbnail — fill card width */
-.carousel-video-playlist .cvp-playlist-thumb {
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-thumb {
   border-radius: var(--linz-rounded-corner-sm);
   overflow: hidden;
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
   position: relative;
 }
@@ -101,8 +104,7 @@
   display: none;
 }
 
-.carousel-video-playlist .cvp-playlist-thumb img,
-.carousel-video-playlist .cvp-playlist-thumb picture {
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
