@@ -41,49 +41,32 @@
           "component": "select",
           "valueType": "string",
           "name": "classes",
-          "label": "Playlist Layout",
+          "label": "Layout",
           "options": [
-            { "name": "Cards Grid (default)", "value": "" },
-            { "name": "Bottom", "value": "bottom" },
-            { "name": "Top", "value": "top" },
-            { "name": "Left Sidebar", "value": "left" },
-            { "name": "Right Sidebar", "value": "right" }
+            { "name": "Cards Grid — homepage (default)", "value": "" },
+            { "name": "Bottom — patient experiences", "value": "bottom" }
           ]
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "accountId",
+          "name": "sectionHeading",
           "value": "",
-          "label": "Brightcove Account ID"
+          "label": "Section Heading"
         },
         {
-          "component": "text",
+          "component": "richtext",
           "valueType": "string",
-          "name": "playlistId",
+          "name": "sectionDescription",
           "value": "",
-          "label": "Brightcove Playlist ID"
+          "label": "Section Description"
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "playerId",
-          "value": "",
-          "label": "Brightcove Player ID"
-        },
-        {
-          "component": "boolean",
-          "valueType": "boolean",
-          "name": "enableCaptions",
-          "value": false,
-          "label": "Enable Captions"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "anchorId",
-          "value": "",
-          "label": "Anchor ID"
+          "component": "number",
+          "valueType": "number",
+          "name": "maxVisible",
+          "value": 0,
+          "label": "Max Visible Cards (0 = show all)"
         }
       ]
     },
@@ -109,14 +92,35 @@
           "valueType": "string",
           "name": "title",
           "value": "",
-          "label": "Video Title"
+          "label": "Story Title (e.g. DIAN'S LINZESS STORY)"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "transcript",
+          "value": "",
+          "label": "Transcript"
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "transcriptHref",
+          "name": "patientName",
           "value": "",
-          "label": "Transcript URL"
+          "label": "Patient Name (e.g. Dian, 43)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "condition",
+          "value": "",
+          "label": "Condition (e.g. Prescribed LINZESS for CIC)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "quote",
+          "value": "",
+          "label": "Patient Quote"
         }
       ]
     }
