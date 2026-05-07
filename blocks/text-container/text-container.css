@@ -308,3 +308,237 @@ p.text-container-text:last-child,
 .text-container.content-center {
    grid-column: 3 / 10;
  }
+/* Superscript / Subscript (pharma footnotes) */
+
+.text-container sup {
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.text-container sub {
+  font-size: 0.7em;
+  vertical-align: sub;
+  line-height: 0;
+}
+
+/* Inline tables (clinical data) */
+
+.text-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--spacing-16) 0;
+  font-size: var(--font-size-14);
+}
+
+.text-container th,
+.text-container td {
+  padding: var(--spacing-08) var(--spacing-12);
+  border: 1px solid var(--container-border-color);
+  text-align: left;
+  vertical-align: top;
+}
+
+.text-container th {
+  font-family: var(--roboto-bold-font-family);
+  font-weight: var(--font-weight-700);
+  background: var(--highlight-background-color);
+}
+
+.text-container tr:nth-child(even) td {
+  background: var(--footer-background-color);
+}
+
+/* Nested lists (ISI multi-level) */
+
+/* stylelint-disable no-descending-specificity */
+.text-container ul ul,
+.text-container ol ol,
+.text-container ul ol,
+.text-container ol ul {
+  margin-top: var(--spacing-06);
+  margin-bottom: var(--spacing-06);
+  padding-left: var(--spacing-16);
+}
+
+.text-container.text-rtl ul ul,
+.text-container.text-rtl ol ol,
+.text-container.text-rtl ul ol,
+.text-container.text-rtl ol ul {
+  padding-left: var(--spacing-00, 0);
+  padding-right: var(--spacing-16);
+}
+/* stylelint-enable no-descending-specificity */
+
+/* Horizontal rule */
+
+.text-container hr {
+  border: none;
+  border-top: 1px solid var(--container-border-color);
+  margin: var(--spacing-24) 0;
+}
+
+/* Blockquote */
+
+.text-container blockquote {
+  border-left: 4px solid var(--highlight-dark-background-color);
+  padding: var(--spacing-12) var(--spacing-16);
+  margin: var(--spacing-16) 0;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.text-container blockquote p {
+  margin-bottom: var(--spacing-00, 0);
+}
+
+/* Figure / Figcaption */
+
+.text-container figure {
+  margin: var(--spacing-16) 0;
+}
+
+.text-container figcaption {
+  font-size: var(--font-size-12);
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-06);
+  line-height: 1.4;
+}
+
+/* Tel: links */
+
+.text-container a[href^="tel:"] {
+  font-family: var(--roboto-bold-font-family);
+  font-weight: var(--font-weight-700);
+  white-space: nowrap;
+}
+
+/* PDF links */
+
+.text-container a[href$=".pdf"]::after {
+  content: " (PDF)";
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+/* Abbreviation */
+
+.text-container abbr {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* Code */
+
+.text-container code {
+  font-family: monospace;
+  font-size: 0.875em;
+  background: var(--highlight-background-color);
+  padding: 0.125em 0.375em;
+  border-radius: 3px;
+}
+
+.text-container pre {
+  font-family: monospace;
+  font-size: var(--font-size-14);
+  background: var(--highlight-background-color);
+  padding: var(--spacing-16);
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: var(--spacing-16) 0;
+}
+
+.text-container pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Underline / Strikethrough */
+
+.text-container u {
+  text-decoration: underline;
+}
+
+.text-container s {
+  text-decoration: line-through;
+}
+
+/* VARIANT: Footnote */
+
+.text-container.footnote {
+  font-size: var(--font-size-12);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  border-top: 1px solid var(--container-border-color);
+  padding-top: var(--spacing-10);
+  margin-top: var(--spacing-16);
+}
+
+/* VARIANT: Disclaimer */
+
+.text-container.disclaimer {
+  font-size: var(--font-size-12);
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* VARIANT: References */
+
+.text-container.references {
+  font-size: var(--font-size-11);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.text-container.references ol {
+  padding-left: var(--spacing-20);
+}
+
+.text-container.references li {
+  font-size: var(--font-size-11);
+  padding-left: var(--spacing-06);
+  text-indent: -0.5em;
+}
+
+/* VARIANT: Legal */
+
+.text-container.legal {
+  font-size: var(--font-size-12);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+/* VARIANT: Boxed Warning */
+
+.text-container.boxed-warning {
+  border: 2px solid var(--color-black);
+  padding: var(--spacing-16);
+  margin: var(--spacing-16) 0;
+  font-size: var(--font-size-14);
+}
+
+.text-container.boxed-warning p:first-child {
+  font-family: var(--roboto-bold-font-family);
+  font-weight: var(--font-weight-700);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-08);
+}
+
+/* VARIANT: Glossary */
+
+.text-container.glossary {
+  font-size: var(--font-size-12);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  columns: 2;
+  column-gap: var(--spacing-24);
+}
+
+@media (width < 744px) {
+  .text-container.glossary {
+    columns: 1;
+  }
+}
