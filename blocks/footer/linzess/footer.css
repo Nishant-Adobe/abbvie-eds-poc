@@ -983,10 +983,13 @@
 /* Inline <br> hidden on mobile — matches live's `<br class="desktop-only">`.
    Inserted by block-config.js#applyLineBreaks for headings/links flagged
    `desktopOnly: true` in the LINE_BREAKS map. */
+.footer .footer-br-desktop {
+  display: none;
+}
 
-@media (width < 1024px) {
+@media (width >= 1024px) {
   .footer .footer-br-desktop {
-    display: none;
+    display: inline;
   }
 }
 
@@ -1162,7 +1165,7 @@
 .footer .footer-bottom-texts {
   display: flex;
   gap: var(--spacing-24);
-  text-align: right;
+  text-align: left;
 }
 
 /* `.footer-wrapper` prefix raises specificity above `.footer-bottom-logos > p:first-child`
@@ -1170,6 +1173,20 @@
 
 .footer-wrapper .footer .footer-bottom-texts > p {
   margin: 0;
+}
+
+/* ── Mobile (< 744px): copyright + indication code flow inline ─ */
+@media (width < 744px) {
+  /* Override flex-row so the two text paragraphs flow as a single inline
+     text block: "…All rights reserved. US-LIN-250071" wraps naturally. */
+  .footer .footer-bottom-texts {
+    display: block;
+  }
+
+  .footer .footer-bottom-texts > p {
+    display: inline;
+  }
+
 }
 
 @media (width >= 744px) {

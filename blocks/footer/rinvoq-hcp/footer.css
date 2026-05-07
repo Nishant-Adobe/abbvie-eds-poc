@@ -951,3 +951,49 @@
   padding-top: var(--spacing-48);
   margin: 0;
 }
+
+/* ── Mobile / narrow tablet (< 768px) ──────────────────────── */
+@media (max-width: 767px) {
+  /* Fix 1: row-wrap within 335px — matches live abbv-footer-horizontal on mobile */
+  .footer .footer-links-primary ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 335px;
+    margin-inline: auto;
+    column-gap: var(--spacing-16);
+  }
+
+  /* Fix 2: compact line-height on first legal paragraph (matches live 1.2rem) */
+  .footer .footer-bottom > p:first-of-type {
+    line-height: var(--spacing-12);
+  }
+
+  /* Fix 3: indication code left + logo right in same row via grid */
+  .footer .footer-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    row-gap: var(--spacing-24);
+    align-items: center;
+  }
+
+  .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
+    grid-column: 1 / -1;
+  }
+
+  .footer .footer-bottom > p.legal-number,
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
+    grid-column: 1;
+    text-align: left;
+    padding-top: 0;
+  }
+
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    grid-column: 2;
+    padding-top: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

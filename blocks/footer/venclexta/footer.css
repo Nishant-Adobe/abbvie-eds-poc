@@ -545,8 +545,10 @@
   --spacing-110: 11rem;
   --spacing-120: 12rem;
   --spacing-124: 12.4rem;
+  --spacing-155: 15.5rem;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
+  --spacing-200: 20rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
   --spacing-320: 32rem;
@@ -886,9 +888,9 @@
 
   /* Footer-logos box dimensions (semantic names — brand logo is taller than
      partner logos to visually dominate, matching the live design). */
-  --footer-logo-width: var(--spacing-110);
-  --footer-logo-partner-height: var(--spacing-30);
-  --footer-logo-brand-height: var(--spacing-100);
+  --footer-logo-width: var(--spacing-200);
+  --footer-logo-partner-height: var(--spacing-20);
+  --footer-logo-brand-height: var(--spacing-155);
 }
 
 /* ── 5-column heading-based grid ────────────────────────────── */
@@ -1022,6 +1024,7 @@
   flex-direction: column;
   gap: var(--spacing-12);
   border-top: 1px solid var(--footer-color-text);
+  text-align: left;
 }
 
 /* Spacing handled per-<li> (margin-right) instead of UL gap so it matches the
@@ -1121,7 +1124,7 @@
    above the .footer-bottom img selectors so no-descending-specificity passes. */
 
 .footer-wrapper .footer .footer-logos img {
-  width: var(--footer-logo-width);
+  width: var(--spacing-100);
   height: var(--footer-logo-partner-height);
   object-fit: contain;
   object-position: left center;
@@ -1131,6 +1134,39 @@
   width: var(--footer-logo-width);
   height: var(--footer-logo-brand-height);
   object-position: right center;
+}
+
+/* White pipe divider after first partner logo — shared mobile + desktop */
+.footer .footer-logos > *:first-child {
+  position: relative;
+  padding-right: var(--spacing-20);
+}
+
+.footer .footer-logos > *:first-child::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 1px;
+  height: var(--spacing-24);
+  background-color: var(--footer-color-text);
+  transform: translateY(-50%);
+}
+
+/* ── Mobile (< 744px): partner logos row, brand logo on next line ── */
+@media (width < 744px) {
+  .footer .footer-logos {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--spacing-20);
+  }
+
+  /* Brand logo (3rd child) wraps to its own row */
+  .footer .footer-logos > *:nth-child(3) {
+    flex-basis: 100%;
+  }
 }
 
 @media (width >= 744px) {
@@ -1143,22 +1179,5 @@
   /* Push the third (brand) logo to the right edge */
   .footer .footer-logos > *:nth-child(3) {
     margin-left: auto;
-  }
-
-  /* Vertical divider between the two partner logos */
-  .footer .footer-logos > *:first-child {
-    position: relative;
-    padding-right: var(--spacing-20);
-  }
-
-  .footer .footer-logos > *:first-child::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 1px;
-    height: var(--spacing-24);
-    background-color: var(--footer-color-text);
-    transform: translateY(-50%);
   }
 }

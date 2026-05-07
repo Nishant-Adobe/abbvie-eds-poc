@@ -220,18 +220,18 @@
 /* Strip button styling on legacy authoring */
 .footer-wrapper .footer .footer-bottom a.button,
 .footer-wrapper .footer .footer-bottom .button-container a {
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  color: var(--color-plum) !important;
-  font-size: var(--font-size-12) !important;
-  font-weight: var(--font-weight-400) !important;
-  text-decoration: underline !important;
-  text-transform: none !important;
-  display: inline !important;
-  white-space: normal !important;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--color-plum);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-400);
+  text-decoration: underline;
+  text-transform: none;
+  display: inline;
+  white-space: normal;
 }
 
 .footer-wrapper .footer .footer-bottom p a:hover {
@@ -245,7 +245,10 @@
   color: var(--color-pewter);
 }
 
-/* Logo — DTC has dark logo on light bg, no filter */
+/* Logo — DTC has dark logo on light bg.
+   Live: `.logo svg { fill: #194560 }` — dark navy/teal (--color-navy).
+   For <img> SVG (white source): filter chain converts white → ~--color-navy.
+   For inline SVG: fill override applies the token directly. */
 .footer-wrapper .footer .footer-bottom p:has(picture),
 .footer-wrapper .footer .footer-bottom p:has(img) {
   margin: 0;
@@ -256,14 +259,22 @@
 .footer .footer-bottom p:has(img) img {
   height: var(--footer-logo-height);
   width: auto;
-  filter: none;
+  filter: sepia(1) brightness(0.25) saturate(18) hue-rotate(143deg);
   mix-blend-mode: normal;
 }
 
 .footer .footer-bottom svg {
   height: var(--footer-logo-height);
   width: auto;
-  fill: var(--color-charcoal);
+  fill: var(--color-navy);
+}
+
+/* ── Mobile (< 601px): logo first, then legal text ─────────── */
+@media (width < 601px) {
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    order: -1;
+  }
 }
 
 /* ── Desktop ≥601px: legal text + number row, logo left ─────── */

@@ -122,3 +122,51 @@
 .footer .footer-bottom svg {
   fill: var(--color-text-on-dark);
 }
+
+/* ── Mobile (< 601px) ───────────────────────────────────────── */
+@media (width < 601px) {
+  .footer .footer-links-primary {
+    flex-direction: row;
+  }
+  /* Each UL takes equal half-width so long text is forced to wrap */
+  .footer .footer-links-primary ul {
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: var(--spacing-12);
+    margin-right: var(--spacing-16);
+  }
+
+  /* Allow long link text to wrap (base sets white-space: nowrap) */
+  .footer .footer-links-primary li a {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* Fix 2: Stack footer-bottom paragraphs with consistent vertical gap */
+  .footer .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-16);
+  }
+
+  /* Reset padding-top overrides — flex gap handles spacing */
+  .footer .footer-bottom > p:has(br):not(:has(picture), :has(img)) {
+    padding-top: 0;
+  }
+
+  .footer .footer-bottom > p.legal-number,
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img), :has(br)) {
+    padding-top: 0;
+  }
+
+  /* Fix 3: Logo last row, left-aligned */
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    order: 999;
+    text-align: left;
+    padding-top: 0;
+    align-self: center;
+  }
+}
