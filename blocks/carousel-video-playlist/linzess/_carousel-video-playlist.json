@@ -1,0 +1,113 @@
+{
+  "definitions": [
+    {
+      "title": "Carousel Video Playlist (Linzess)",
+      "id": "carousel-video-playlist",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Carousel Video Playlist",
+              "model": "carousel-video-playlist",
+              "filter": "carousel-video-playlist",
+              "classes": ""
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Patient Video Item",
+      "id": "carousel-video-playlist-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Video Item",
+              "model": "carousel-video-playlist-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "carousel-video-playlist",
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes",
+          "label": "Layout",
+          "options": [
+            { "name": "Cards Grid (default)", "value": "" },
+            { "name": "Carousel", "value": "carousel" }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "sectionHeading",
+          "value": "",
+          "label": "Section Heading"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "sectionDescription",
+          "value": "",
+          "label": "Section Description"
+        },
+        {
+          "component": "number",
+          "valueType": "number",
+          "name": "maxVisible",
+          "value": 0,
+          "label": "Max Visible Cards (0 = show all)"
+        }
+      ]
+    },
+    {
+      "id": "carousel-video-playlist-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "videoId",
+          "value": "",
+          "label": "Brightcove Video ID"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "thumbnail",
+          "label": "Thumbnail Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "title",
+          "value": "",
+          "label": "Patient Name"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "transcript",
+          "value": "",
+          "label": "Transcript (inline — shown/hidden via toggle)"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "carousel-video-playlist",
+      "components": ["carousel-video-playlist-item"]
+    }
+  ]
+}

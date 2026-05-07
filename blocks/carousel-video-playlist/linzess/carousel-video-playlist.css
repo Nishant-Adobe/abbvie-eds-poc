@@ -1,4 +1,4 @@
-.carousel-video-playlist {
+﻿.carousel-video-playlist {
   --cvp-color-bg: var(--background-color, #fff);
   --cvp-color-text: var(--color-text, #1d1d1d);
   --cvp-color-active: var(--link-color, #0057b8);
@@ -502,135 +502,519 @@
   cursor: pointer;
 }
 
-/* Linzess carousel-video-playlist — dark purple section, cards grid */
+/* Linzess carousel-video-playlist â€” two layout variations */
 
 .carousel-video-playlist {
-  --cvp-color-bg: var(--color-brand-primary);
-  --cvp-color-text: var(--linz-white);
-  --cvp-color-card-title: var(--linz-white);
-  --cvp-color-active: var(--linz-white);
-  --cvp-spacing-cards-gap: var(--spacing-24);
-
-  background: var(--cvp-color-bg);
-  padding: var(--spacing-40) var(--spacing-24);
-  border-radius: var(--linz-rounded-corner-sm);
-  color: var(--cvp-color-text);
+  --cvp-linz-color-purple: var(--linz-dark-purple);
+  --cvp-linz-color-purple-light: var(--linz-light-purple);
+  --cvp-linz-card-radius: var(--linz-rounded-corner-sm);
 }
 
-/* Cards grid — 3 columns on desktop */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   CARDS LAYOUT â€” homepage: dark purple bg, 3-col thumbnail grid
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+.carousel-video-playlist.cvp-layout-cards {
+  background: var(--cvp-linz-color-purple);
+  color: var(--linz-white);
+  padding: var(--spacing-48, 48px) var(--spacing-24, 24px);
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-section-heading {
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h1, 2rem);
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 var(--spacing-08, 8px);
+  line-height: 1.1;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-section-desc {
+  color: var(--linz-white);
+  font-size: var(--font-size-body, 14px);
+  line-height: 1.5;
+  text-align: center;
+  margin: 0 0 var(--spacing-32, 32px);
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--cvp-spacing-cards-gap);
+  gap: var(--spacing-24, 24px);
 }
 
-/* Card item — fill grid cell */
-
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-radius: var(--linz-rounded-corner-sm);
-  overflow: visible;
-  text-align: left;
-  display: block;
-  aspect-ratio: auto;
-  opacity: 1;
-}
-
-/* Thumbnail — fill card width */
-
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-thumb {
-  border-radius: var(--linz-rounded-corner-sm);
+.carousel-video-playlist.cvp-layout-cards .cvp-card {
+  border-radius: var(--cvp-linz-card-radius);
   overflow: hidden;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb {
   position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  cursor: pointer;
+  background: #000;
 }
 
-/* Play icon — centered, larger */
-
-.carousel-video-playlist .cvp-playlist-play-icon {
-  width: var(--spacing-56, 56px);
-  height: var(--spacing-56, 56px);
-}
-
-/* Overlay title on thumbnail — white, bold */
-
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-overlay-title {
-  color: var(--linz-white);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-16);
-  text-transform: uppercase;
-}
-
-/* Title below thumbnail */
-
-.carousel-video-playlist .cvp-playlist-item-title {
-  color: var(--linz-white);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-16);
-  text-transform: uppercase;
-  margin-top: var(--spacing-10);
-}
-
-/* Active title (main player area) */
-
-.carousel-video-playlist .cvp-active-title {
-  color: var(--linz-white);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-}
-
-/* Transcript link — white */
-
-.carousel-video-playlist .cvp-transcript-link {
-  color: var(--linz-white);
-  font-weight: var(--font-weight-bold);
-  text-decoration: underline;
-}
-
-/* Active state — border highlight */
-
-.carousel-video-playlist .cvp-playlist-item.is-active {
-  outline: var(--border-02) solid var(--linz-orange);
-  border-radius: var(--linz-rounded-corner-sm);
-}
-
-/* Show only first 3 cards on homepage — hide others via CSS */
-
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item:nth-child(n+4) {
-  display: none;
-}
-
-.carousel-video-playlist.cvp-layout-cards.cvp-show-all .cvp-playlist-item:nth-child(n+4) {
+.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb picture {
   display: block;
+  width: 100%;
+  height: 100%;
 }
 
-/* Hide the main player area on cards layout (homepage) — only show thumbnails */
-
-.carousel-video-playlist.cvp-layout-cards .cvp-player-area {
-  display: none;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-thumb img {
+.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
-/* Responsive: 1 column on mobile */
+.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb[hidden] {
+  display: none;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-play-btn {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-play-btn::after {
+  content: '';
+  display: block;
+  width: var(--spacing-56, 56px);
+  height: var(--spacing-56, 56px);
+  border: 3px solid rgb(255 255 255 / 85%);
+  border-radius: 50%;
+  background:
+    rgb(255 255 255 / 15%)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
+    center / 22px no-repeat;
+  transition: background-color 200ms;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-play-btn:hover::after {
+  background-color: rgb(255 255 255 / 30%);
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-overlay-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--cvp-linz-color-purple);
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-body, 14px);
+  text-transform: uppercase;
+  padding: var(--spacing-08, 8px) var(--spacing-16, 16px);
+  pointer-events: none;
+  line-height: 1.2;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-player {
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: #000;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-player video-js,
+.carousel-video-playlist.cvp-layout-cards .cvp-card-player .video-js {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-player[hidden] {
+  display: none;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-footer {
+  background: rgb(255 255 255 / 10%);
+  padding: var(--spacing-08, 8px) var(--spacing-16, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-08, 8px);
+  min-height: 40px;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card-title {
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-body, 14px);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-transcript-toggle {
+  background: none;
+  border: none;
+  color: var(--linz-white);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small, 12px);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-transcript-toggle:hover {
+  text-decoration: none;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-transcript-panel {
+  background: var(--cvp-linz-color-purple-light);
+  padding: var(--spacing-16, 16px);
+  font-size: var(--font-size-body-small, 12px);
+  line-height: 1.6;
+  color: var(--cvp-linz-color-purple);
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-transcript-panel[hidden] {
+  display: none;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-card.cvp-hidden {
+  display: none;
+}
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   BOTTOM LAYOUT â€” patient experiences: white bg, player + info panel + carousel
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.carousel-video-playlist.cvp-layout-bottom {
+  background: var(--linz-white);
+  color: var(--linz-grey);
+  padding: var(--spacing-48, 48px) var(--spacing-24, 24px);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-section-heading {
+  color: var(--cvp-linz-color-purple);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h1, 2rem);
+  text-transform: uppercase;
+  margin: 0 0 var(--spacing-32, 32px);
+  line-height: 1.1;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-section-desc {
+  color: var(--linz-grey);
+  font-size: var(--font-size-body, 14px);
+  line-height: 1.6;
+  margin: 0 0 var(--spacing-24, 24px);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-player-area {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: var(--spacing-24, 24px);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-video-container {
+  flex: 0 0 65%;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-video-container video-js,
+.carousel-video-playlist.cvp-layout-bottom .cvp-video-container .video-js {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-patient-info {
+  flex: 1;
+  background: var(--cvp-linz-color-purple-light);
+  padding: var(--spacing-24, 24px) var(--spacing-32, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-08, 8px);
+  justify-content: center;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-patient-quote {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-md, 17px);
+  font-style: italic;
+  color: var(--cvp-linz-color-purple);
+  line-height: 1.5;
+  margin: 0 0 var(--spacing-08, 8px);
+  border: none;
+  padding: 0;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-patient-name {
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-body, 14px);
+  color: var(--cvp-linz-color-purple);
+  margin: 0;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-patient-condition {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small, 12px);
+  font-style: italic;
+  color: var(--cvp-linz-color-purple);
+  margin: 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-toggle {
+  background: none;
+  border: none;
+  color: var(--cvp-linz-color-purple);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small, 12px);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  text-align: left;
+  align-self: flex-start;
+  margin-top: var(--spacing-08, 8px);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-toggle:hover {
+  text-decoration: none;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-panel {
+  background: var(--linz-off-white);
+  border-radius: var(--cvp-linz-card-radius);
+  padding: var(--spacing-16, 16px);
+  font-size: var(--font-size-body-small, 12px);
+  line-height: 1.6;
+  color: var(--linz-grey);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-panel[hidden] {
+  display: none;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-08, 8px);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev,
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--cvp-linz-color-purple);
+  background: var(--linz-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev:hover,
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next:hover {
+  background: var(--cvp-linz-color-purple-light);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev::after,
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--cvp-linz-color-purple);
+  border-right: 2px solid var(--cvp-linz-color-purple);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev::after {
+  transform: rotate(-135deg);
+  margin-left: 3px;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next::after {
+  transform: rotate(45deg);
+  margin-right: 3px;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist {
+  display: flex;
+  flex: 1;
+  gap: var(--spacing-16, 16px);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item {
+  flex-shrink: 0;
+  width: 220px;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: var(--cvp-linz-card-radius);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  transition: border-color 200ms;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item:hover {
+  border-color: var(--linz-purple);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item.is-active {
+  border-color: var(--cvp-linz-color-purple);
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-thumb picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgb(255 255 255 / 90%);
+  border-radius: 50%;
+  background:
+    rgb(0 0 0 / 30%)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
+    center / 16px no-repeat;
+  pointer-events: none;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-overlay-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--cvp-linz-color-purple);
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-body-small, 12px);
+  text-transform: uppercase;
+  padding: var(--spacing-08, 8px);
+  pointer-events: none;
+  line-height: 1.2;
+}
+
+.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item-title {
+  display: block;
+  color: var(--cvp-linz-color-purple);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-body, 14px);
+  text-transform: uppercase;
+  padding: var(--spacing-08, 8px);
+  line-height: 1.2;
+}
 
 @media (width < 768px) {
-  .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
-    grid-template-columns: 1fr;
+  .carousel-video-playlist.cvp-layout-cards {
+    padding: var(--spacing-32, 32px) var(--spacing-16, 16px);
+  }
+
+  .carousel-video-playlist.cvp-layout-cards .cvp-grid {
+    display: flex;
+    grid-template-columns: unset;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: var(--spacing-16, 16px);
+    padding-bottom: var(--spacing-08, 8px);
+  }
+
+  .carousel-video-playlist.cvp-layout-cards .cvp-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-video-playlist.cvp-layout-cards .cvp-card {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+
+  .carousel-video-playlist.cvp-layout-bottom {
+    padding: var(--spacing-32, 32px) var(--spacing-16, 16px);
+  }
+
+  .carousel-video-playlist.cvp-layout-bottom .cvp-player-area {
+    flex-direction: column;
+  }
+
+  .carousel-video-playlist.cvp-layout-bottom .cvp-video-container {
+    flex: unset;
+    width: 100%;
+  }
+
+  .carousel-video-playlist.cvp-layout-bottom .cvp-patient-info {
+    width: 100%;
+  }
+
+  .carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item {
+    width: 160px;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-video-playlist .cvp-grid,
+  .carousel-video-playlist .cvp-playlist {
+    scroll-behavior: auto;
+  }
+
+  .carousel-video-playlist .cvp-card-play-btn::after,
+  .carousel-video-playlist .cvp-playlist-item,
+  .carousel-video-playlist .cvp-carousel-prev,
+  .carousel-video-playlist .cvp-carousel-next {
+    transition: none;
+  }
+}
+
