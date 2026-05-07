@@ -59,12 +59,12 @@ function parseItems(block) {
       const cells = [...row.children];
       return {
         videoId: cells[0]?.textContent?.trim() ?? '',
-        nameBanner: cells[2]?.textContent?.trim() ?? '',
-        // cells[3] = transcriptHref (Rinvoq field, skipped for Linzess)
-        transcript: cells[4] ?? null,
-        patientName: cells[5]?.textContent?.trim() ?? '',
-        prescribed: cells[6]?.textContent?.trim() ?? '',
-        quote: cells[7]?.textContent?.trim() ?? '',
+        nameBanner: cells[1]?.textContent?.trim() ?? '',
+        // cells[2] = transcriptHref (Rinvoq field, skipped for Linzess)
+        transcript: cells[3] ?? null,
+        patientName: cells[4]?.textContent?.trim() ?? '',
+        prescribed: cells[5]?.textContent?.trim() ?? '',
+        quote: cells[6]?.textContent?.trim() ?? '',
       };
     })
     .filter(({ videoId }) => videoId);
@@ -427,6 +427,8 @@ async function decorateBlock(block) {
   if (window.self !== window.top) return;
 
   const isFeatured = block.classList.contains('featured');
+  // Ensure CSS layout class is present (default to grid)
+  if (!isFeatured && !block.classList.contains('grid')) block.classList.add('grid');
 
   const cfg = parseConfig(block);
   const items = parseItems(block);
