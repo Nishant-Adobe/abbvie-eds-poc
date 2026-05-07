@@ -486,6 +486,22 @@
   }
 }
 
+/* Hidden playlist items (maxVisible feature) */
+
+.carousel-video-playlist .cvp-playlist-item.cvp-hidden {
+  display: none;
+}
+
+/* See All button (base styling) */
+
+.carousel-video-playlist .cvp-see-all-btn {
+  display: block;
+  margin: 24px auto 0;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* Linzess carousel-video-playlist — dark purple section, cards grid */
 
 .carousel-video-playlist {
@@ -575,6 +591,29 @@
 .carousel-video-playlist .cvp-playlist-item.is-active {
   outline: var(--border-02) solid var(--linz-orange);
   border-radius: var(--linz-rounded-corner-sm);
+}
+
+/* See All button */
+
+.carousel-video-playlist .cvp-see-all-btn {
+  display: block;
+  margin: var(--spacing-32) auto var(--spacing-00);
+  padding: var(--spacing-16) var(--spacing-40);
+  border: var(--border-02) solid var(--linz-white);
+  border-radius: var(--linz-rounded-corner);
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-16);
+  text-decoration: none;
+  text-align: center;
+  width: fit-content;
+  transition: background-color 0.2s ease;
+}
+
+.carousel-video-playlist .cvp-see-all-btn:hover {
+  background: var(--linz-white);
+  color: var(--color-brand-primary);
 }
 
 /* Responsive: 1 column on mobile */
