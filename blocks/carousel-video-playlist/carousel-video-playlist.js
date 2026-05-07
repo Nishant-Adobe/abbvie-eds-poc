@@ -105,18 +105,13 @@ function readBlockConfig(block) {
   }
 
   // Positional reading (UE-authored with classes/layout field at position 0)
-  // Field order: classes(0), accountId(1), playlistId(2), playerId(3), captions(4),
-  //              maxVisible(5), seeAllHref(6), seeAllLabel(7), anchorId(8)
-  const maxVal = parseInt(values[5], 10);
+  // Field order: classes(0), accountId(1), playlistId(2), playerId(3), captions(4), anchorId(5)
   return {
     playlistLayout: layouts.includes(firstVal) ? firstVal : 'cards',
     accountId: values[1] || '',
     playlistId: values[2] || '',
     playerId: values[3] || '',
     enableCaptions: values[4] === 'true',
-    maxVisible: Number.isNaN(maxVal) ? 0 : maxVal,
-    seeAllHref: values[6] || '',
-    seeAllLabel: values[7] || 'See All Patient Videos',
   };
 }
 
@@ -369,38 +364,6 @@ function assembleLayout(block, playlistArea, playerArea, playlistLayout, isCards
   }
 }
 
-function applyMaxVisible(block, cfg) {
-  if (!cfg.maxVisible || cfg.maxVisible <= 0) return;
-
-  const items = block.querySelectorAll('.cvp-playlist-item');
-  items.forEach((item, idx) => {
-    if (idx >= cfg.maxVisible) {
-      item.classList.add('cvp-hidden');
-      item.hidden = true;
-    }
-  });
-
-  const seeAllBtn = document.createElement('a');
-  seeAllBtn.className = 'cvp-see-all-btn';
-  seeAllBtn.textContent = cfg.seeAllLabel;
-
-  if (cfg.seeAllHref) {
-    seeAllBtn.href = cfg.seeAllHref;
-  } else {
-    seeAllBtn.href = '#';
-    seeAllBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      items.forEach((item) => {
-        item.classList.remove('cvp-hidden');
-        item.hidden = false;
-      });
-      seeAllBtn.remove();
-    });
-  }
-
-  block.append(seeAllBtn);
-}
-
 export async function decorateBlock(block) {
   const cfg = readBlockConfig(block);
   const {
@@ -485,7 +448,7 @@ export async function decorateBlock(block) {
       });
 
       assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
-      applyMaxVisible(block, cfg);
+
 
       // Listen for playlist item changes
       bcPlayer.on('playlistitem', () => {
