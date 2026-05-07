@@ -59,7 +59,6 @@ function parseItems(block) {
       const cells = [...row.children];
       return {
         videoId: cells[0]?.textContent?.trim() ?? '',
-        thumbnail: cells[1]?.querySelector('picture') ?? null,
         nameBanner: cells[2]?.textContent?.trim() ?? '',
         // cells[3] = transcriptHref (Rinvoq field, skipped for Linzess)
         transcript: cells[4] ?? null,
