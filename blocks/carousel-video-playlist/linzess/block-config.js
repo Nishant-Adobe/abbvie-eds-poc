@@ -1,21 +1,5 @@
-const BRIGHTCOVE_ACCOUNTS = {
-  linzess: 'LINZESS_ACCOUNT_ID_PLACEHOLDER',
-  rinvoq: 'RINVOQ_ACCOUNT_ID_PLACEHOLDER',
-  mavyret: 'MAVYRET_ACCOUNT_ID_PLACEHOLDER',
-};
-
-const BC_PLAYER_ID = 'default';
 const loadedScripts = {};
 let playerCounter = 0;
-
-function getBrand() {
-  const { classList } = document.body;
-  return Object.keys(BRIGHTCOVE_ACCOUNTS).find((b) => classList.contains(b)) || 'linzess';
-}
-
-function getAccountId() {
-  return BRIGHTCOVE_ACCOUNTS[getBrand()];
-}
 
 function loadBrightcoveScript(accountId, playerId) {
   const key = `${accountId}/${playerId}_default`;
@@ -44,11 +28,14 @@ function isItemRow(row) {
 
 function parseConfig(block) {
   const cfgRows = [...block.children].filter((r) => !isItemRow(r));
-  // cfgRows[0] = classes/layout row; cfgRows[1] = heading; cfgRows[2] = description
+  // cfgRows[0]=classes, [1]=heading, [2]=description, [3]=maxVisible,
+  // [4]=accountId, [5]=playlistId, [6]=playerId
   const cellText = (i) => cfgRows[i]?.firstElementChild?.textContent?.trim() ?? '';
   return {
     heading: cellText(1),
     description: cellText(2),
+    accountId: cellText(4),
+    playerId: cellText(6) || 'default',
   };
 }
 
@@ -70,15 +57,14 @@ function parseItems(block) {
     .filter(({ videoId }) => videoId);
 }
 
-function createVideoEl(videoId) {
-  const accountId = getAccountId();
+function createVideoEl(videoId, accountId, playerId) {
   playerCounter += 1;
   const id = `linz-cvp-${playerCounter}`;
 
   const videoEl = document.createElement('video-js');
   videoEl.id = id;
   videoEl.setAttribute('data-account', accountId);
-  videoEl.setAttribute('data-player', BC_PLAYER_ID);
+  videoEl.setAttribute('data-player', playerId);
   videoEl.setAttribute('data-embed', 'default');
   videoEl.setAttribute('data-video-id', videoId);
   videoEl.setAttribute('preload', 'none');
@@ -88,12 +74,11 @@ function createVideoEl(videoId) {
 }
 
 // Initialise player in poster-only mode (preload=none shows BC poster, no stream loaded).
-// Returns a play() function — call it to start playback.
-function initPosterPlayer(container, videoId, playBtn) {
-  const { videoEl, id } = createVideoEl(videoId);
+function initPosterPlayer(container, videoId, playBtn, accountId, playerId) {
+  const { videoEl, id } = createVideoEl(videoId, accountId, playerId);
   container.append(videoEl);
 
-  loadBrightcoveScript(getAccountId(), BC_PLAYER_ID).then(() => {
+  loadBrightcoveScript(accountId, playerId).then(() => {
     if (typeof window.bc === 'function') window.bc(videoEl);
   });
 
@@ -104,8 +89,7 @@ function initPosterPlayer(container, videoId, playBtn) {
       if (p) p.ready(() => p.play());
       else requestAnimationFrame(poll);
     };
-    // Ensure BC script is loaded before polling
-    loadBrightcoveScript(getAccountId(), BC_PLAYER_ID).then(poll);
+    loadBrightcoveScript(accountId, playerId).then(poll);
   });
 
   return id;
@@ -158,7 +142,7 @@ function createTranscriptToggle(transcriptCell, container) {
 
 // ── Grid mode (homepage) ─────────────────────────────────────────────────────
 
-function buildGridMode(block, cfg, items) {
+function buildGridMode(block, cfg, items, accountId, playerId) {
   if (cfg.heading || cfg.description) {
     const header = document.createElement('div');
     header.className = 'cvp-header';
@@ -223,7 +207,7 @@ function buildGridMode(block, cfg, items) {
     const obs = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) return;
       obs.disconnect();
-      initPosterPlayer(playerWrap, item.videoId, playBtn);
+      initPosterPlayer(playerWrap, item.videoId, playBtn, accountId, playerId);
     }, { rootMargin: '300px' });
     obs.observe(card);
 
@@ -248,7 +232,7 @@ function buildGridMode(block, cfg, items) {
 
 // ── Featured mode (patient experiences) ─────────────────────────────────────
 
-function buildFeaturedMode(block, items) {
+function buildFeaturedMode(block, items, accountId, playerId) {
   if (!items.length) return;
 
   let activePlayerId = null;
@@ -311,7 +295,8 @@ function buildFeaturedMode(block, items) {
   }
 
   // Init featured player in poster mode — BC poster loads automatically
-  activePlayerId = initPosterPlayer(featuredWrap, items[0].videoId, featuredPlayBtn);
+  // eslint-disable-next-line max-len
+  activePlayerId = initPosterPlayer(featuredWrap, items[0].videoId, featuredPlayBtn, accountId, playerId);
 
   // ── Part B: Thumbnail playlist row ───────────────────────────
   const playlistRow = document.createElement('div');
@@ -443,10 +428,12 @@ async function decorateBlock(block) {
     return;
   }
 
+  const { accountId, playerId } = cfg;
+
   if (isFeatured) {
-    buildFeaturedMode(block, items);
+    buildFeaturedMode(block, items, accountId, playerId);
   } else {
-    buildGridMode(block, cfg, items);
+    buildGridMode(block, cfg, items, accountId, playerId);
   }
 }
 
