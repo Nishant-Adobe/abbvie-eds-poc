@@ -27,11 +27,12 @@ function isItemRow(row) {
 
 function parseConfig(block) {
   const cfgRows = [...block.children].filter((r) => !isItemRow(r));
+  // cfgRows[0] = classes/layout row; content fields start at index 1
   const cellText = (ri, ci = 0) => cfgRows[ri]?.children[ci]?.textContent?.trim() ?? '';
   return {
-    sectionHeading: cellText(0),
-    sectionDescription: cellText(1),
-    maxVisible: parseInt(cellText(2), 10) || 0,
+    sectionHeading: cellText(1),
+    sectionDescription: cellText(2),
+    maxVisible: parseInt(cellText(3), 10) || 0,
   };
 }
 
@@ -44,10 +45,11 @@ function parseItems(block) {
         videoId: cells[0]?.textContent?.trim() ?? '',
         thumbnail: cells[1]?.querySelector('picture') ?? null,
         title: cells[2]?.textContent?.trim() ?? '',
-        transcriptCell: cells[3] ?? null,
-        patientName: cells[4]?.textContent?.trim() ?? '',
-        condition: cells[5]?.textContent?.trim() ?? '',
-        quote: cells[6]?.textContent?.trim() ?? '',
+        // cells[3] = transcriptHref (Rinvoq/base field, skipped by Linzess)
+        transcriptCell: cells[4] ?? null,
+        patientName: cells[5]?.textContent?.trim() ?? '',
+        condition: cells[6]?.textContent?.trim() ?? '',
+        quote: cells[7]?.textContent?.trim() ?? '',
       };
     })
     .filter(({ videoId }) => videoId);
