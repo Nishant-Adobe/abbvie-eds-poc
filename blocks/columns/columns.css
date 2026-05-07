@@ -1,30 +1,25 @@
 /* ============================================================
    Columns Block
    DOM: .columns > .columns-item > .columns-item-image | .columns-item-content
-   .columns lives inside .abbvie-container which is already a CSS grid.
-   .columns itself becomes the grid for its column items.
+   .columns lives inside .abbvie-container which sets:
+     - display: grid (12 cols)
+     - all descendant divs: grid-column: 1 / span 12
+   We override that on .columns-item so the columns grid places them naturally.
    Variants: columns-offset, columns-flush, columns-reverse
    ============================================================ */
 
 .columns {
+  
   --columns-gap: var(--spacing-24);
-  display: flex;
-  flex-direction: column;
+
+  display: grid;
+  grid-template-columns: 1fr;
   gap: var(--columns-gap);
 }
 
+/* Override global .abbvie-container div { grid-column: 1 / span 12 } */
 .columns>.columns-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.columns>.columns-item>.columns-item-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.columns>.columns-item>.columns-item-content ol {
-  margin-left: 18px;
+  grid-column: auto;
 }
 
 .columns>.columns-item>.columns-item-image img {
@@ -32,30 +27,43 @@
   display: block;
 }
 
-.columns.columns-reverse>.columns-item {
-  flex-direction: column-reverse;
-}
-
+/* Desktop: equal columns — count driven by number of authored column items */
 @media (width >=768px) {
   .columns {
-    flex-direction: row;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    align-items: start;
   }
+}
 
-  .columns.columns-offset .columns-item {
-    flex: 1;
-  }
+/* ---- Variants ---- */
 
-  .columns.columns-offset .columns-item:first-child {
-    width: 33%;
-    flex: none;
-  }
-
-  .columns.columns-reverse>.columns-item {
-    flex-direction: column;
+/* offset: first column 33%, second column 66% */
+@media (width >=768px) {
+  .columns.columns-offset {
+    grid-template-columns: 1fr 2fr;
   }
 }
 
 /* flush: zero gap */
 .columns.columns-flush {
   --columns-gap: var(--spacing-00);
+}
+
+/* reverse: swap column order via grid item order property */
+.columns.columns-reverse>.columns-item:first-child {
+  order: 2;
+}
+
+.columns.columns-reverse>.columns-item:last-child {
+  order: 1;
+}
+
+@media (width >=768px) {
+  .columns.columns-reverse>.columns-item:first-child {
+    order: 1;
+  }
+
+  .columns.columns-reverse>.columns-item:last-child {
+    order: 2;
+  }
 }
