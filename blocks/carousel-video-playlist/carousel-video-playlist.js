@@ -79,20 +79,37 @@ function isItemRow(row) {
 function readBlockConfig(block) {
   const rows = [...block.children];
   const configRows = rows.filter((r) => !isItemRow(r));
-  const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
 
+  // Positional reading matching component-model field order:
+  // 0: classes (layout), 1: accountId, 2: playlistId, 3: playerId, 4: enableCaptions, 5: anchorId
+  const getText = (idx) => configRows[idx]?.firstElementChild?.textContent?.trim() || '';
+
+  const layoutVal = getText(0);
   const layouts = ['cards', 'bottom', 'top', 'left', 'right'];
-  const numbers = values.filter((v) => /^\d{5,}$/.test(v));
-  const layout = values.find((v) => layouts.includes(v)) || 'cards';
-  const enableCaptions = values.includes('true');
-  const playerId = values.find(
-    (v) => v && !layouts.includes(v) && v !== 'true' && v !== 'false' && !/^\d{5,}$/.test(v),
-  ) || '';
+  let playlistLayout = layouts.includes(layoutVal) ? layoutVal : 'cards';
+  let accountId = getText(1);
+  let playlistId = getText(2);
+  let playerId = getText(3);
+  let enableCaptions = getText(4) === 'true';
+
+  // Fallback: if positional reading gives no account ID, try pattern-based detection
+  if (!accountId) {
+    const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
+    const numbers = values.filter((v) => /^\d{5,}$/.test(v));
+    const layout = values.find((v) => layouts.includes(v));
+    if (layout) playlistLayout = layout;
+    accountId = numbers[0] || '';
+    playlistId = numbers[1] || '';
+    playerId = values.find(
+      (v) => v && !layouts.includes(v) && v !== 'true' && v !== 'false' && !/^\d{5,}$/.test(v),
+    ) || '';
+    enableCaptions = values.includes('true');
+  }
 
   return {
-    playlistLayout: layout,
-    accountId: numbers[0] || '',
-    playlistId: numbers[1] || '',
+    playlistLayout,
+    accountId,
+    playlistId,
     playerId,
     enableCaptions,
   };
