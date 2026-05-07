@@ -486,4 +486,101 @@
   }
 }
 
-/* linzess carousel-video-playlist overrides */
+/* Linzess carousel-video-playlist — dark purple section, cards grid */
+
+.carousel-video-playlist {
+  --cvp-color-bg: var(--color-brand-primary);
+  --cvp-color-text: var(--linz-white);
+  --cvp-color-card-title: var(--linz-white);
+  --cvp-color-active: var(--linz-white);
+  --cvp-spacing-cards-gap: var(--spacing-24);
+
+  background: var(--cvp-color-bg);
+  padding: var(--spacing-40) var(--spacing-24);
+  border-radius: var(--linz-rounded-corner-sm);
+  color: var(--cvp-color-text);
+}
+
+/* Cards grid — 3 columns on desktop */
+
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--cvp-spacing-cards-gap);
+}
+
+/* Card item */
+
+.carousel-video-playlist .cvp-playlist-item {
+  background: transparent;
+  border: none;
+  border-radius: var(--linz-rounded-corner-sm);
+  overflow: hidden;
+  text-align: left;
+}
+
+/* Thumbnail */
+
+.carousel-video-playlist .cvp-playlist-thumb {
+  border-radius: var(--linz-rounded-corner-sm);
+  overflow: hidden;
+}
+
+/* Play icon — centered, larger */
+
+.carousel-video-playlist .cvp-playlist-play-icon {
+  width: var(--spacing-56, 56px);
+  height: var(--spacing-56, 56px);
+}
+
+/* Overlay title on thumbnail — white, bold */
+
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-overlay-title {
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-16);
+  text-transform: uppercase;
+}
+
+/* Title below thumbnail */
+
+.carousel-video-playlist .cvp-playlist-item-title {
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-16);
+  text-transform: uppercase;
+  margin-top: var(--spacing-10);
+}
+
+/* Active title (main player area) */
+
+.carousel-video-playlist .cvp-active-title {
+  color: var(--linz-white);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Transcript link — white */
+
+.carousel-video-playlist .cvp-transcript-link {
+  color: var(--linz-white);
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+}
+
+/* Active state — border highlight */
+
+.carousel-video-playlist .cvp-playlist-item.is-active {
+  outline: var(--border-02) solid var(--linz-orange);
+  border-radius: var(--linz-rounded-corner-sm);
+}
+
+/* Responsive: 1 column on mobile */
+
+@media (max-width: 768px) {
+  .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+    grid-template-columns: 1fr;
+  }
+}
