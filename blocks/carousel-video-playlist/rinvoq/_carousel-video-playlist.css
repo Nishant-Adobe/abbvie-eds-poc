@@ -1,3 +1,43 @@
 @import '../carousel-video-playlist.css';
 
-/* Brand-specific overrides for rinvoq */
+/* Rinvoq DTC — override custom properties only, no hardcoded values */
+.carousel-video-playlist {
+  --cvp-color-text: var(--color-text, #25282a);
+  --cvp-color-active: var(--color-accent, #90124a);
+  --cvp-spacing-cards-gap: var(--spacing-cards-gap, 7px);
+  --cvp-play-icon-size: var(--icon-size-md, 40px);
+  --cvp-play-icon-bg-size: var(--icon-size-sm, 16px);
+  --cvp-play-icon-cards-size: var(--icon-size-md, 40px);
+  --cvp-play-icon-cards-bg-size: var(--icon-size-sm, 16px);
+  --cvp-font-size-title: var(--heading-font-size-s, 20px);
+  --cvp-font-weight-title: var(--heading-font-weight, 400);
+  --cvp-line-height-title: var(--heading-line-height, 24px);
+  --cvp-font-size-desc: var(--body-font-size-m, 16px);
+  --cvp-line-height-desc: var(--body-line-height, 24px);
+  --cvp-font-size-transcript: var(--body-font-size-xs, 10px);
+  --cvp-font-size-card-title: var(--body-font-size-s, 14px);
+  --cvp-font-weight-card-title: var(--font-weight-bold, 700);
+  --cvp-line-height-card-title: var(--body-line-height-tight, 19px);
+  --cvp-size-max-width: var(--content-max-width, 720px);
+  --cvp-font-family-body: var(--font-family-body, "Helvetica Neue", Arial, sans-serif);
+  --cvp-font-family-heading: var(--font-family-heading, "Neue Haas Grotesk Disp", Arial, sans-serif);
+
+  font-family: var(--cvp-font-family-body);
+  max-width: var(--cvp-size-max-width);
+}
+
+.carousel-video-playlist .cvp-active-title {
+  font-family: var(--cvp-font-family-heading);
+}
+
+.carousel-video-playlist .cvp-active-desc {
+  font-family: var(--cvp-font-family-body);
+}
+
+.carousel-video-playlist .cvp-transcript-link {
+  font-family: var(--cvp-font-family-heading);
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-overlay-title {
+  font-family: var(--cvp-font-family-body);
+}
