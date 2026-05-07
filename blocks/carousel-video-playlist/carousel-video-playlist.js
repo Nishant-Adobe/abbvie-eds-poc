@@ -104,14 +104,17 @@ function readBlockConfig(block) {
     };
   }
 
-  // Positional reading (UE-authored with classes/layout field at position 0)
-  // Field order: classes(0), accountId(1), playlistId(2), playerId(3), captions(4), anchorId(5)
+  // Backward compat: old model had accountId at position 1 (long number).
+  // New model: classes(0), Linzess(1-3), accountId(4), playlistId(5), playerId(6), captions(7).
+  const accountIdOldPos = values[1] || '';
+  const accountIdNewPos = values[4] || '';
+  const isOldFormat = /^\d{8,}$/.test(accountIdOldPos);
   return {
     playlistLayout: layouts.includes(firstVal) ? firstVal : 'cards',
-    accountId: values[1] || '',
-    playlistId: values[2] || '',
-    playerId: values[3] || '',
-    enableCaptions: values[4] === 'true',
+    accountId: isOldFormat ? accountIdOldPos : accountIdNewPos,
+    playlistId: isOldFormat ? (values[2] || '') : (values[5] || ''),
+    playerId: isOldFormat ? (values[3] || '') : (values[6] || ''),
+    enableCaptions: isOldFormat ? (values[4] === 'true') : (values[7] === 'true'),
   };
 }
 
