@@ -1,0 +1,69 @@
+@import '../footer.css';
+@import '../../../styles/rinvoq-hcp/tokens.css';
+
+/* ============================================================
+   RINVOQ HCP — Footer brand overrides
+   Live: www.rinvoqhcp.com/dermatology
+   - Muted gray text (--color-silver #c9c9ca)
+   - Padding-based spacing (matches live `.abbv-footer-horizontal`)
+   - 48px gap between legal text and legal-number/logo row
+   - Border-top separator between link rows
+   ============================================================ */
+
+
+/* Brand token overrides */
+.footer-wrapper {
+  /* Live: .abbv-footer ul.abbv-footer-horizontal li a { color: var(--silver); } */
+  --footer-color-text: var(--color-silver);
+
+  /* Live footer bg is pure black (not the brand --color-background-footer #17181b) */
+  --footer-color-bg: var(--color-black);
+
+  /* Live: font-family: "Graphik Semibold", "Helvetica Neue", arial, helvetica, sans-serif */
+  --footer-font-family: var(--font-family-semibold);
+}
+
+/* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
+   add bottom padding so logo/legal-number don't touch the footer's bottom edge.
+   Centering (max-width + padding-inline max()) is inherited from base. */
+.footer {
+  padding-block: 0 var(--spacing-20);
+}
+
+/* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0 */
+.footer .footer-links-primary ul {
+  padding: var(--spacing-24) 0;
+  margin: var(--spacing-04) 0 0;
+}
+
+/* Reset the column's flex gap — UL padding handles vertical spacing */
+.footer .footer-links-primary {
+  gap: 0;
+}
+
+/* Border separator on second UL (matches live `abbv-footer-border-top`) */
+.footer .footer-links-primary ul + ul {
+  border-top: 1px solid var(--color-steel);
+}
+
+/* Footer bottom: legal text uses smaller font, no flex gap (use padding instead) */
+.footer .footer-bottom {
+  /* Live: .abbv-legal-text { font-size: 0.75rem } = 12px */
+  --footer-font-size: var(--footer-font-size-small);
+
+  gap: 0;
+  margin-top: 0;
+}
+
+/* Live: .abbv-footer .logo { padding: 48px 0 0 } — same as legal-number */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  padding-top: var(--spacing-48);
+  margin: 0;
+}
+
+/* Live: .abbv-legal-number { padding: 48px 0 0 } — 48px top space */
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+  padding-top: var(--spacing-48);
+}
