@@ -127,7 +127,12 @@
 .carousel-video-playlist.grid .cvp-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: var(--spacing-24);
+}
+
+/* Reset global .abbvie-container div grid-column override */
+.carousel-video-playlist.grid .cvp-grid > div {
+  grid-column: auto;
 }
 
 .carousel-video-playlist.grid .cvp-card {
@@ -135,6 +140,7 @@
   flex-direction: column;
   border-radius: 8px;
   overflow: hidden;
+  grid-column: auto;
 }
 
 /* The cvp-player-wrap inside grid cards — name banner sits above footer */
