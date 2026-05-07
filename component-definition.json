@@ -170,6 +170,120 @@
           }
         },
         {
+          "title": "Anchor Nav",
+          "id": "anchor-nav",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Anchor Nav",
+                  "model": "anchor-nav",
+                  "filter": "anchor-nav",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Anchor Nav Item",
+          "id": "anchor-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Anchor Nav Item",
+                  "model": "anchor-nav-item",
+                  "label": "Section Label",
+                  "targetId": "section-id"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Banner Ad",
+          "id": "banner-ad",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Banner Ad",
+                  "model": "banner-ad",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Brand Explorer",
+          "id": "brand-explorer",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Brand Explorer",
+                  "model": "brand-explorer",
+                  "filter": "brand-explorer",
+                  "blockId": "id:",
+                  "barLabel": "Explore AbbVie",
+                  "brand_explorer_rinvoq": {
+                    "name": "Brand Explorer Item",
+                    "model": "brand-explorer-item",
+                    "brandName": "RINVOQ",
+                    "brandUrl": "https://www.rinvoqhcp.com/",
+                    "therapeuticArea": "Immunology",
+                    "description": "Treatment for rheumatoid arthritis, psoriatic arthritis, and more.",
+                    "safetyText": "<b>Please see Important Safety Information, including BOXED WARNING on Serious Infections, Mortality, Malignancies, Major Adverse Cardiovascular Events, and Thrombosis.</b>",
+                    "indications": "Rheumatoid Arthritis|https://www.rinvoqhcp.com/rheumatoid-arthritis|moderate\nPsoriatic Arthritis|https://www.rinvoqhcp.com/psoriatic-arthritis|active\nAnkylosing Spondylitis|https://www.rinvoqhcp.com/axspa|active\nNon-radiographic Axial Spondyloarthritis|https://www.rinvoqhcp.com/axspa|active\nGiant Cell Arteritis|https://www.rinvoqhcp.com/giant-cell-arteritis|\nAtopic Dermatitis|https://www.rinvoqhcp.com/atopic-dermatitis|refractory\nUlcerative Colitis|https://www.rinvoqhcp.com/ulcerative-colitis|moderate\nCrohn's Disease|https://www.rinvoqhcp.com/crohns-disease|moderate"
+                  },
+                  "brand_explorer_skyrizi": {
+                    "name": "Brand Explorer Item",
+                    "model": "brand-explorer-item",
+                    "brandName": "SKYRIZI",
+                    "brandUrl": "https://www.skyrizihcp.com/",
+                    "therapeuticArea": "Immunology",
+                    "description": "Treatment for plaque psoriasis, psoriatic arthritis, and more.",
+                    "indications": "Plaque Psoriasis|https://www.skyrizihcp.com/dermatology|moderate\nPsoriatic Arthritis|https://www.skyrizihcp.com/rheumatology|active\nUlcerative Colitis|https://www.skyrizihcp.com/gastroenterology/ulcerative-colitis|moderate\nCrohn's Disease|https://www.skyrizihcp.com/gastroenterology/crohns-disease|moderate"
+                  },
+                  "brand_explorer_humira": {
+                    "name": "Brand Explorer Item",
+                    "model": "brand-explorer-item",
+                    "brandName": "HUMIRA",
+                    "brandUrl": "https://www.humirapro.com/",
+                    "therapeuticArea": "Immunology",
+                    "description": "Treatment for multiple immunological conditions.",
+                    "safetyText": "<b>Please see Important Safety Information, including BOXED WARNING on Serious Infections and Malignancy.</b>",
+                    "indications": "Hidradenitis Suppurativa|https://www.humirapro.com/hidradenitis-suppurativa|moderate\nJuvenile Idiopathic Arthritis|https://www.humirapro.com/jia|moderate\nPediatric Crohn's Disease|https://www.humirapro.com/pediatric-crohns-disease|moderate\nPediatric Ulcerative Colitis|https://www.humirapro.com/pediatric-ulcerative-colitis|moderate\nPediatric Uveitis|https://www.humirapro.com/uveitis-pediatric|noninfectious\nUveitis (Adult)|https://www.humirapro.com/uveitis|noninfectious\nOther Indications|https://www.humirapro.com/|"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Brand Explorer Item",
+          "id": "brand-explorer-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Brand Explorer Item",
+                  "model": "brand-explorer-item",
+                  "brandName": "Brand Name",
+                  "brandUrl": "https://example.com"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Breadcrumb",
           "id": "breadcrumb",
           "plugins": {
@@ -330,6 +444,58 @@
           }
         },
         {
+          "title": "Chart",
+          "id": "chart",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Chart",
+                  "model": "chart",
+                  "filter": "chart",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Chart Data Point",
+          "id": "chart-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Chart Data Point",
+                  "model": "chart-item"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Clinical Data Panel",
+          "id": "clinical-data-panel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Clinical Data Panel",
+                  "model": "clinical-data-panel",
+                  "title": "",
+                  "chartAlt": "",
+                  "footnotes": "",
+                  "studyDesignLabel": "",
+                  "studyDesignLink": ""
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Columns",
           "id": "columns",
           "plugins": {
@@ -372,6 +538,42 @@
           }
         },
         {
+          "title": "Custom Image",
+          "id": "custom-image",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Custom Image",
+                  "model": "custom-image",
+                  "presetType": "",
+                  "imagePreset": "",
+                  "rendition": "",
+                  "imageModifiers": "",
+                  "imageAlt": "",
+                  "getAltFromDAM": false,
+                  "imageIsDecorative": false,
+                  "caption": "",
+                  "getCaptionFromDAM": false,
+                  "displayCaptionBelowImage": false,
+                  "enableLink": false,
+                  "target": "",
+                  "clickBehavior": "_self",
+                  "modalPanelId": "",
+                  "enableWarnOnLeave": false,
+                  "warnOnLeavePath": "",
+                  "linkAriaLabel": "",
+                  "analyticsInteractionId": "",
+                  "blockId": "id:",
+                  "classes_commonCustomClass": "",
+                  "language": "lang:none"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Custom Title",
           "id": "custom-title",
           "plugins": {
@@ -385,6 +587,54 @@
                   "title": "",
                   "titleType": "h1",
                   "language": "lang:none",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Dismissible",
+          "id": "dismissible",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Dismissible",
+                  "model": "dismissible",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Doctor Locator",
+          "id": "doctor-locator",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Doctor Locator",
+                  "model": "doctor-locator",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Drcom Widget",
+          "id": "drcom-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Drcom Widget",
+                  "model": "drcom-widget",
                   "blockId": "id:"
                 }
               }
@@ -469,6 +719,23 @@
           }
         },
         {
+          "title": "Formulary Lookup",
+          "id": "formulary-lookup",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Formulary Lookup",
+                  "model": "formulary-lookup",
+                  "blockId": "id:",
+                  "classes": ""
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Fragment",
           "id": "fragment",
           "plugins": {
@@ -484,6 +751,21 @@
           }
         },
         {
+          "title": "Header",
+          "id": "header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Header",
+                  "model": "header"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
@@ -493,6 +775,93 @@
                 "template": {
                   "name": "Hero",
                   "model": "hero"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hotspot",
+          "id": "hotspot",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Hotspot",
+                  "model": "hotspot",
+                  "filter": "hotspot",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hotspot Point",
+          "id": "hotspot-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Hotspot Point",
+                  "model": "hotspot-item",
+                  "title": "Point Label",
+                  "content": "",
+                  "left": "50%",
+                  "top": "50%",
+                  "position": "top-right"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Image Compare",
+          "id": "image-compare",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Image Compare",
+                  "model": "image-compare",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Info Tree",
+          "id": "info-tree",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Info Tree",
+                  "model": "info-tree",
+                  "filter": "info-tree",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Info Tree Answer",
+          "id": "info-tree-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Info Tree Answer",
+                  "model": "info-tree-item",
+                  "answerLabel": "Yes",
+                  "answerContent": ""
                 }
               }
             }
@@ -638,6 +1007,61 @@
           }
         },
         {
+          "title": "Promo Drawer",
+          "id": "promo-drawer",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Promo Drawer",
+                  "model": "promo-drawer",
+                  "classes": "",
+                  "handleLabel": "Savings",
+                  "heading": "",
+                  "closeLabel": "Close",
+                  "anchorId": "",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Quick Poll",
+          "id": "quick-poll",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Quick Poll",
+                  "model": "quick-poll",
+                  "filter": "quick-poll",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Poll Option",
+          "id": "quick-poll-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Poll Option",
+                  "model": "quick-poll-item",
+                  "optionLabel": "Option text",
+                  "optionId": "option-a"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Quote",
           "id": "quote",
           "plugins": {
@@ -663,6 +1087,22 @@
           }
         },
         {
+          "title": "Safety Bar",
+          "id": "safety-bar",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Safety Bar",
+                  "model": "safety-bar",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Search",
           "id": "search",
           "plugins": {
@@ -673,6 +1113,22 @@
                   "name": "Search",
                   "model": "search",
                   "filter": "search"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Send Mail",
+          "id": "send-mail",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Send Mail",
+                  "model": "send-mail",
+                  "blockId": "id:"
                 }
               }
             }
@@ -721,6 +1177,22 @@
                 "template": {
                   "name": "Social Link",
                   "model": "social-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Sticky Sidebar",
+          "id": "sticky-sidebar",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Sticky Sidebar",
+                  "model": "sticky-sidebar",
+                  "blockId": "id:"
                 }
               }
             }
@@ -1038,143 +1510,6 @@
           }
         },
         {
-          "title": "Video",
-          "id": "video",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Video",
-                  "model": "video",
-                  "filter": "video",
-                  "language": "lang:none",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Safety Bar",
-          "id": "safety-bar",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Safety Bar",
-                  "model": "safety-bar",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Anchor Nav",
-          "id": "anchor-nav",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Anchor Nav",
-                  "model": "anchor-nav",
-                  "filter": "anchor-nav",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Anchor Nav Item",
-          "id": "anchor-nav-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Anchor Nav Item",
-                  "model": "anchor-nav-item",
-                  "label": "Section Label",
-                  "targetId": "section-id"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Promo Drawer",
-          "id": "promo-drawer",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Promo Drawer",
-                  "model": "promo-drawer",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Dismissible",
-          "id": "dismissible",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Dismissible",
-                  "model": "dismissible",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Hotspot",
-          "id": "hotspot",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Hotspot",
-                  "model": "hotspot",
-                  "filter": "hotspot",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Hotspot Point",
-          "id": "hotspot-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Hotspot Point",
-                  "model": "hotspot-item",
-                  "title": "Point Label",
-                  "content": "",
-                  "left": "50%",
-                  "top": "50%",
-                  "position": "top-right"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Tooltip",
           "id": "tooltip",
           "plugins": {
@@ -1184,260 +1519,6 @@
                 "template": {
                   "name": "Tooltip",
                   "model": "tooltip",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Image Compare",
-          "id": "image-compare",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Image Compare",
-                  "model": "image-compare",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Sticky Sidebar",
-          "id": "sticky-sidebar",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Sticky Sidebar",
-                  "model": "sticky-sidebar",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Chart",
-          "id": "chart",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Chart",
-                  "model": "chart",
-                  "filter": "chart",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Chart Data Point",
-          "id": "chart-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Chart Data Point",
-                  "model": "chart-item",
-                  "label": "Category Label",
-                  "value": "0",
-                  "valueLabel": ""
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Quick Poll",
-          "id": "quick-poll",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Quick Poll",
-                  "model": "quick-poll",
-                  "filter": "quick-poll",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Poll Option",
-          "id": "quick-poll-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Poll Option",
-                  "model": "quick-poll-item",
-                  "optionLabel": "Option text",
-                  "optionId": "option-a"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Info Tree",
-          "id": "info-tree",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Info Tree",
-                  "model": "info-tree",
-                  "filter": "info-tree",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Info Tree Answer",
-          "id": "info-tree-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Info Tree Answer",
-                  "model": "info-tree-item",
-                  "answerLabel": "Yes",
-                  "answerContent": ""
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Doctor Locator",
-          "id": "doctor-locator",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Doctor Locator",
-                  "model": "doctor-locator",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Formulary Lookup",
-          "id": "formulary-lookup",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Formulary Lookup",
-                  "model": "formulary-lookup",
-                  "blockId": "id:",
-                  "classes": ""
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Send Mail",
-          "id": "send-mail",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Send Mail",
-                  "model": "send-mail",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Brand Explorer",
-          "id": "brand-explorer",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Brand Explorer",
-                  "model": "brand-explorer",
-                  "filter": "brand-explorer",
-                  "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Brand Explorer Item",
-          "id": "brand-explorer-item",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Brand Explorer Item",
-                  "model": "brand-explorer-item",
-                  "brandName": "Brand Name",
-                  "brandUrl": "https://example.com"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Clinical Data Panel",
-          "id": "clinical-data-panel",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Clinical Data Panel",
-                  "model": "clinical-data-panel",
-                  "title": "",
-                  "chartAlt": "",
-                  "footnotes": "",
-                  "studyDesignLabel": "",
-                  "studyDesignLink": ""
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Drcom Widget",
-          "id": "drcom-widget",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Drcom Widget",
-                  "model": "drcom-widget",
                   "blockId": "id:"
                 }
               }
@@ -1461,15 +1542,17 @@
           }
         },
         {
-          "title": "Banner Ad",
-          "id": "banner-ad",
+          "title": "Video",
+          "id": "video",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Banner Ad",
-                  "model": "banner-ad",
+                  "name": "Video",
+                  "model": "video",
+                  "filter": "video",
+                  "language": "lang:none",
                   "blockId": "id:"
                 }
               }
