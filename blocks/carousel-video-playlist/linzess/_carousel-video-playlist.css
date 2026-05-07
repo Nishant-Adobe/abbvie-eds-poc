@@ -1,341 +1,323 @@
 @import '../carousel-video-playlist.css';
 
-/* Linzess carousel-video-playlist — two layout variations */
-
-.carousel-video-playlist {
-  --cvp-linz-color-purple: var(--linz-dark-purple);
-  --cvp-linz-color-purple-light: var(--linz-light-purple);
-  --cvp-linz-card-radius: var(--linz-rounded-corner-sm);
-}
+/* Linzess carousel-video-playlist — grid (homepage) + featured (patient experiences) */
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   CARDS LAYOUT — homepage: dark purple bg, 3-col thumbnail grid
+   SHARED — player wrap, play button, name banner, transcript
    ───────────────────────────────────────────────────────────────────────────── */
 
-.carousel-video-playlist.cvp-layout-cards {
-  background: var(--cvp-linz-color-purple);
-  color: var(--linz-white);
-  padding: var(--spacing-48, 48px) var(--spacing-24, 24px);
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-section-heading {
-  color: var(--linz-white);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-h1, 2rem);
-  text-transform: uppercase;
-  text-align: center;
-  margin: 0 0 var(--spacing-08, 8px);
-  line-height: 1.1;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-section-desc {
-  color: var(--linz-white);
-  font-size: var(--font-size-body, 14px);
-  line-height: 1.5;
-  text-align: center;
-  margin: 0 0 var(--spacing-32, 32px);
-}
-
-/* 3-col grid */
-.carousel-video-playlist.cvp-layout-cards .cvp-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-24, 24px);
-}
-
-/* Card */
-.carousel-video-playlist.cvp-layout-cards .cvp-card {
-  border-radius: var(--cvp-linz-card-radius);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Card thumbnail */
-.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb {
+.carousel-video-playlist .cvp-player-wrap {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  cursor: pointer;
   background: #000;
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb picture {
+.carousel-video-playlist .cvp-thumb-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-video-playlist .cvp-thumb-img picture {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb img {
+.carousel-video-playlist .cvp-thumb-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-card-thumb[hidden] {
-  display: none;
-}
-
-/* Play button — white circle centered */
-.carousel-video-playlist.cvp-layout-cards .cvp-card-play-btn {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-card-play-btn::after {
-  content: '';
-  display: block;
-  width: var(--spacing-56, 56px);
-  height: var(--spacing-56, 56px);
-  border: 3px solid rgb(255 255 255 / 85%);
-  border-radius: 50%;
-  background:
-    rgb(255 255 255 / 15%)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
-    center / 22px no-repeat;
-  transition: background-color 200ms;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-card-play-btn:hover::after {
-  background-color: rgb(255 255 255 / 30%);
-}
-
-/* Overlay title strip — solid purple bar at bottom of thumbnail */
-.carousel-video-playlist.cvp-layout-cards .cvp-card-overlay-title {
+.carousel-video-playlist .cvp-name-banner {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--cvp-linz-color-purple);
-  color: var(--linz-white);
+  background: #4a2d7f;
+  color: #fff;
   font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-body, 14px);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-body-small, 12px);
   text-transform: uppercase;
-  padding: var(--spacing-08, 8px) var(--spacing-16, 16px);
+  padding: 6px 12px;
+  line-height: 1.2;
   pointer-events: none;
-  line-height: 1.2;
+  z-index: 1;
 }
 
-/* Inline player */
-.carousel-video-playlist.cvp-layout-cards .cvp-card-player {
-  aspect-ratio: 16 / 9;
-  position: relative;
-  background: #000;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-card-player video-js,
-.carousel-video-playlist.cvp-layout-cards .cvp-card-player .video-js {
+.carousel-video-playlist .cvp-play-btn {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid rgb(255 255 255 / 85%);
+  background:
+    rgb(255 255 255 / 15%)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
+    center / 24px no-repeat;
+  cursor: pointer;
+  font-size: 0;
+  z-index: 2;
+  transition: background-color 200ms;
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-card-player[hidden] {
-  display: none;
+.carousel-video-playlist .cvp-play-btn:hover {
+  background-color: rgb(255 255 255 / 30%);
 }
 
-/* Card footer: story title left + transcript toggle right */
-.carousel-video-playlist.cvp-layout-cards .cvp-card-footer {
-  background: rgb(255 255 255 / 10%);
-  padding: var(--spacing-08, 8px) var(--spacing-16, 16px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-08, 8px);
-  min-height: 40px;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-card-title {
-  color: var(--linz-white);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-body, 14px);
-  text-transform: uppercase;
-  line-height: 1.2;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-transcript-toggle {
+.carousel-video-playlist .cvp-transcript-toggle {
   background: none;
   border: none;
-  color: var(--linz-white);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-body-small, 12px);
   cursor: pointer;
   text-decoration: underline;
   padding: 0;
+}
+
+.carousel-video-playlist .cvp-transcript-toggle:hover {
+  text-decoration: none;
+}
+
+.carousel-video-playlist .cvp-transcript-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.carousel-video-playlist .cvp-transcript-panel.is-open {
+  max-height: 600px;
+}
+
+.carousel-video-playlist .cvp-placeholder {
+  padding: 48px 24px;
+  text-align: center;
+  color: #666;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GRID MODE — homepage: dark purple bg, gold accent, 3-col card grid
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.carousel-video-playlist.grid {
+  background: #4a2d7f;
+  color: #fff;
+  padding: 48px 24px;
+}
+
+/* Section header */
+.carousel-video-playlist.grid .cvp-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.carousel-video-playlist.grid .cvp-accent-line {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #c8973f;
+  margin: 0 auto 16px;
+}
+
+.carousel-video-playlist.grid .cvp-heading {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-h1, 2rem);
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+
+.carousel-video-playlist.grid .cvp-description {
+  color: rgb(255 255 255 / 85%);
+  font-size: var(--font-size-body, 14px);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 3-col card grid */
+.carousel-video-playlist.grid .cvp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.carousel-video-playlist.grid .cvp-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* The cvp-player-wrap inside grid cards — name banner sits above footer */
+.carousel-video-playlist.grid .cvp-card .cvp-name-banner {
+  bottom: 0;
+}
+
+/* Card footer */
+.carousel-video-playlist.grid .cvp-card-footer {
+  background: rgb(255 255 255 / 10%);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.carousel-video-playlist.grid .cvp-title {
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-body, 14px);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.carousel-video-playlist.grid .cvp-transcript-toggle {
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small, 12px);
   flex-shrink: 0;
   white-space: nowrap;
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-transcript-toggle:hover {
-  text-decoration: none;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-transcript-panel {
-  background: var(--cvp-linz-color-purple-light);
-  padding: var(--spacing-16, 16px);
+.carousel-video-playlist.grid .cvp-transcript-panel {
+  background: rgb(255 255 255 / 10%);
+  padding: 0 16px;
   font-size: var(--font-size-body-small, 12px);
   line-height: 1.6;
-  color: var(--cvp-linz-color-purple);
+  color: rgb(255 255 255 / 90%);
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-transcript-panel[hidden] {
-  display: none;
+.carousel-video-playlist.grid .cvp-transcript-panel.is-open {
+  padding: 16px;
 }
 
-/* Hidden cards (maxVisible) */
-.carousel-video-playlist.cvp-layout-cards .cvp-card.cvp-hidden {
-  display: none;
-}
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   BOTTOM LAYOUT — patient experiences: white bg, player + info panel + carousel
-   ───────────────────────────────────────────────────────────────────────────── */
-
-.carousel-video-playlist.cvp-layout-bottom {
-  background: var(--linz-white);
-  color: var(--linz-grey);
-  padding: var(--spacing-48, 48px) var(--spacing-24, 24px);
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-section-heading {
-  color: var(--cvp-linz-color-purple);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-h1, 2rem);
-  text-transform: uppercase;
-  margin: 0 0 var(--spacing-32, 32px);
-  line-height: 1.1;
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-section-desc {
-  color: var(--linz-grey);
-  font-size: var(--font-size-body, 14px);
-  line-height: 1.6;
-  margin: 0 0 var(--spacing-24, 24px);
-}
-
-/* Player area: video left + info panel right */
-.carousel-video-playlist.cvp-layout-bottom .cvp-player-area {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: var(--spacing-24, 24px);
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-video-container {
-  flex: 0 0 65%;
-  position: relative;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  overflow: hidden;
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-video-container video-js,
-.carousel-video-playlist.cvp-layout-bottom .cvp-video-container .video-js {
+/* Video-js player fills player-wrap */
+.carousel-video-playlist.grid .cvp-player-wrap video-js,
+.carousel-video-playlist.grid .cvp-player-wrap .video-js {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
 
-/* Patient info panel */
-.carousel-video-playlist.cvp-layout-bottom .cvp-patient-info {
-  flex: 1;
-  background: var(--cvp-linz-color-purple-light);
-  padding: var(--spacing-24, 24px) var(--spacing-32, 32px);
+/* ─────────────────────────────────────────────────────────────────────────────
+   FEATURED MODE — patient experiences: white bg, 70/30 split, thumbnail strip
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.carousel-video-playlist.featured {
+  background: #fff;
+  color: #333;
+  padding: 48px 24px;
+}
+
+/* Featured row: video (70%) + quote panel (30%) */
+.carousel-video-playlist.featured .cvp-featured-row {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.carousel-video-playlist.featured .cvp-featured-player {
+  flex: 0 0 70%;
+  position: relative;
+}
+
+/* Video-js player fills featured player wrap */
+.carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap video-js,
+.carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap .video-js {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Quote panel */
+.carousel-video-playlist.featured .cvp-quote-panel {
+  flex: 0 0 30%;
+  background: #e8e0f0;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-08, 8px);
+  gap: 12px;
   justify-content: center;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-patient-quote {
+.carousel-video-playlist.featured .cvp-quote {
   font-family: var(--body-font-family);
   font-size: var(--font-size-md, 17px);
   font-style: italic;
-  color: var(--cvp-linz-color-purple);
+  color: #4a2d7f;
   line-height: 1.5;
-  margin: 0 0 var(--spacing-08, 8px);
-  border: none;
-  padding: 0;
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-patient-name {
-  font-family: var(--body-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-body, 14px);
-  color: var(--cvp-linz-color-purple);
   margin: 0;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-patient-condition {
+.carousel-video-playlist.featured .cvp-patient-name {
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-body, 14px);
+  color: #4a2d7f;
+  margin: 0;
+}
+
+.carousel-video-playlist.featured .cvp-prescribed {
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small, 12px);
   font-style: italic;
-  color: var(--cvp-linz-color-purple);
+  color: #4a2d7f;
   margin: 0;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-toggle {
-  background: none;
-  border: none;
-  color: var(--cvp-linz-color-purple);
+.carousel-video-playlist.featured .cvp-transcript-toggle {
+  color: #4a2d7f;
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small, 12px);
-  font-weight: var(--font-weight-bold);
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 0;
+  font-weight: var(--font-weight-bold, 700);
   text-align: left;
   align-self: flex-start;
-  margin-top: var(--spacing-08, 8px);
+  margin-top: 4px;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-toggle:hover {
-  text-decoration: none;
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-panel {
-  background: var(--linz-off-white);
-  border-radius: var(--cvp-linz-card-radius);
-  padding: var(--spacing-16, 16px);
+.carousel-video-playlist.featured .cvp-transcript-panel {
+  background: #f5f0ff;
+  border-radius: 4px;
+  padding: 0 16px;
   font-size: var(--font-size-body-small, 12px);
   line-height: 1.6;
-  color: var(--linz-grey);
+  color: #333;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-panel[hidden] {
-  display: none;
+.carousel-video-playlist.featured .cvp-transcript-panel.is-open {
+  padding: 16px;
 }
 
-/* Carousel: prev | playlist | next */
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-wrapper {
+/* Playlist row: prev | thumbnails | next */
+.carousel-video-playlist.featured .cvp-playlist-row {
   display: flex;
   align-items: center;
-  gap: var(--spacing-08, 8px);
+  gap: 8px;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev,
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next {
+.carousel-video-playlist.featured .cvp-prev,
+.carousel-video-playlist.featured .cvp-next {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 2px solid var(--cvp-linz-color-purple);
-  background: var(--linz-white);
+  border: none;
+  background: #4a2d7f;
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -343,196 +325,146 @@
   transition: background 200ms;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev:hover,
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next:hover {
-  background: var(--cvp-linz-color-purple-light);
+.carousel-video-playlist.featured .cvp-prev:hover,
+.carousel-video-playlist.featured .cvp-next:hover {
+  background: #3a2060;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev::after,
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next::after {
-  content: '';
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-top: 2px solid var(--cvp-linz-color-purple);
-  border-right: 2px solid var(--cvp-linz-color-purple);
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-prev::after {
-  transform: rotate(-135deg);
-  margin-left: 3px;
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-carousel-next::after {
-  transform: rotate(45deg);
-  margin-right: 3px;
-}
-
-/* Playlist track */
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist {
+.carousel-video-playlist.featured .cvp-thumbnails {
   display: flex;
   flex: 1;
-  gap: var(--spacing-16, 16px);
+  gap: 12px;
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist::-webkit-scrollbar {
+.carousel-video-playlist.featured .cvp-thumbnails::-webkit-scrollbar {
   display: none;
 }
 
-/* Playlist item (thumbnail button) */
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item {
+.carousel-video-playlist.featured .cvp-thumb {
   flex-shrink: 0;
-  width: 220px;
-  background: transparent;
-  border: 2px solid transparent;
-  border-radius: var(--cvp-linz-card-radius);
-  overflow: hidden;
+  width: 180px;
   cursor: pointer;
-  text-align: left;
-  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 3px solid transparent;
   transition: border-color 200ms;
-  display: flex;
-  flex-direction: column;
+  background: transparent;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item:hover {
-  border-color: var(--linz-purple);
+.carousel-video-playlist.featured .cvp-thumb:hover {
+  border-color: rgb(74 45 127 / 50%);
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item.is-active {
-  border-color: var(--cvp-linz-color-purple);
+.carousel-video-playlist.featured .cvp-thumb.active {
+  outline: 3px solid #4a2d7f;
+  outline-offset: 0;
 }
 
-/* Playlist thumbnail */
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-thumb {
+.carousel-video-playlist.featured .cvp-thumb-wrap {
   position: relative;
-  width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
+  background: #000;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-thumb picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-thumb img {
+.carousel-video-playlist.featured .cvp-thumb-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Play icon */
-.carousel-video-playlist.cvp-layout-bottom .cvp-play-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 36px;
-  height: 36px;
-  border: 2px solid rgb(255 255 255 / 90%);
-  border-radius: 50%;
-  background:
-    rgb(0 0 0 / 30%)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
-    center / 16px no-repeat;
-  pointer-events: none;
+/* Name banner on thumbnail — reuse shared but smaller */
+.carousel-video-playlist.featured .cvp-thumbnails .cvp-name-banner {
+  font-size: 10px;
+  padding: 4px 8px;
 }
 
-/* Overlay title strip */
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-overlay-title {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--cvp-linz-color-purple);
-  color: var(--linz-white);
+/* Small play icon on thumbnails */
+.carousel-video-playlist.featured .cvp-thumbnails .cvp-play-btn {
+  width: 32px;
+  height: 32px;
+  border-width: 2px;
+  background-size: 14px;
+}
+
+.carousel-video-playlist.featured .cvp-thumb-title {
   font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold, 700);
   font-size: var(--font-size-body-small, 12px);
   text-transform: uppercase;
-  padding: var(--spacing-08, 8px);
-  pointer-events: none;
+  color: #4a2d7f;
+  margin: 4px 0 0;
+  padding: 0 4px;
   line-height: 1.2;
-}
-
-/* Item title below thumbnail */
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item-title {
-  display: block;
-  color: var(--cvp-linz-color-purple);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-body, 14px);
-  text-transform: uppercase;
-  padding: var(--spacing-08, 8px);
-  line-height: 1.2;
+  text-align: left;
 }
 
 /* ── Mobile ──────────────────────────────────────────────────────────────────── */
 
 @media (width < 768px) {
-  .carousel-video-playlist.cvp-layout-cards {
-    padding: var(--spacing-32, 32px) var(--spacing-16, 16px);
+  .carousel-video-playlist.grid {
+    padding: 32px 16px;
   }
 
-  /* Cards grid → horizontal scroll carousel on mobile */
-  .carousel-video-playlist.cvp-layout-cards .cvp-grid {
+  /* Mobile: horizontal scroll carousel */
+  .carousel-video-playlist.grid .cvp-grid {
     display: flex;
     grid-template-columns: unset;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    gap: var(--spacing-16, 16px);
-    padding-bottom: var(--spacing-08, 8px);
+    gap: 16px;
+    padding-bottom: 8px;
   }
 
-  .carousel-video-playlist.cvp-layout-cards .cvp-grid::-webkit-scrollbar {
+  .carousel-video-playlist.grid .cvp-grid::-webkit-scrollbar {
     display: none;
   }
 
-  .carousel-video-playlist.cvp-layout-cards .cvp-card {
+  .carousel-video-playlist.grid .cvp-card {
     flex: 0 0 82%;
     scroll-snap-align: start;
   }
 
-  /* Bottom layout: stack vertically on mobile */
-  .carousel-video-playlist.cvp-layout-bottom {
-    padding: var(--spacing-32, 32px) var(--spacing-16, 16px);
+  .carousel-video-playlist.featured {
+    padding: 32px 16px;
   }
 
-  .carousel-video-playlist.cvp-layout-bottom .cvp-player-area {
+  /* Stack featured row vertically on mobile */
+  .carousel-video-playlist.featured .cvp-featured-row {
     flex-direction: column;
   }
 
-  .carousel-video-playlist.cvp-layout-bottom .cvp-video-container {
+  .carousel-video-playlist.featured .cvp-featured-player,
+  .carousel-video-playlist.featured .cvp-quote-panel {
     flex: unset;
     width: 100%;
   }
 
-  .carousel-video-playlist.cvp-layout-bottom .cvp-patient-info {
-    width: 100%;
-  }
-
-  .carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item {
-    width: 160px;
+  .carousel-video-playlist.featured .cvp-thumb {
+    width: 140px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .carousel-video-playlist .cvp-grid,
-  .carousel-video-playlist .cvp-playlist {
+  .carousel-video-playlist .cvp-thumbnails {
     scroll-behavior: auto;
   }
 
-  .carousel-video-playlist .cvp-card-play-btn::after,
-  .carousel-video-playlist .cvp-playlist-item,
-  .carousel-video-playlist .cvp-carousel-prev,
-  .carousel-video-playlist .cvp-carousel-next {
+  .carousel-video-playlist .cvp-transcript-panel {
+    transition: none;
+  }
+
+  .carousel-video-playlist .cvp-play-btn,
+  .carousel-video-playlist .cvp-prev,
+  .carousel-video-playlist .cvp-next,
+  .carousel-video-playlist .cvp-thumb {
     transition: none;
   }
 }

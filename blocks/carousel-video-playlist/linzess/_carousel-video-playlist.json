@@ -43,8 +43,8 @@
           "name": "classes",
           "label": "Layout",
           "options": [
-            { "name": "Cards Grid (default)", "value": "" },
-            { "name": "Carousel", "value": "carousel" }
+            { "name": "Grid — homepage (default)", "value": "grid" },
+            { "name": "Featured — patient experiences", "value": "featured" }
           ]
         },
         {
@@ -92,7 +92,14 @@
           "valueType": "string",
           "name": "title",
           "value": "",
-          "label": "Patient Name"
+          "label": "Name Banner (e.g. DIAN'S LINZESS STORY)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "transcriptHref",
+          "value": "",
+          "label": "Transcript URL (leave blank for inline transcript)"
         },
         {
           "component": "richtext",
@@ -100,6 +107,27 @@
           "name": "transcript",
           "value": "",
           "label": "Transcript (inline — shown/hidden via toggle)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "patientName",
+          "value": "",
+          "label": "Patient Name (e.g. Dian, 43)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "condition",
+          "value": "",
+          "label": "Prescribed Info (e.g. Prescribed LINZESS for CIC)"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "quote",
+          "value": "",
+          "label": "Patient Quote"
         }
       ]
     }
