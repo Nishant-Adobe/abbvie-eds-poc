@@ -423,8 +423,8 @@ function buildFeaturedMode(block, items) {
 // ── Main entry ───────────────────────────────────────────────────────────────
 
 async function decorateBlock(block) {
-  // Skip in Universal Editor — decoration would wipe authored content
-  if (block.dataset.aueResource !== undefined) return;
+  // Skip in Universal Editor canvas (page loaded in iframe)
+  if (window.self !== window.top) return;
 
   const isFeatured = block.classList.contains('featured');
 
