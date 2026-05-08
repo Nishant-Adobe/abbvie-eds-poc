@@ -111,7 +111,12 @@ export default function decorate(block) {
   }
 
   // --- Build CTA ---
-  if (ctaLabel) {
+  // Stretched variant needs an invisible full-card link even without a visible label,
+  // so the condition also fires when there is a destination (href or modal) and the
+  // block is in stretched mode.
+  const isStretched = block.classList.contains('image-text-stretched');
+  const hasDestination = ctaHref || modalId;
+  if (ctaLabel || (isStretched && hasDestination)) {
     const buttonP = document.createElement('p');
     buttonP.classList.add('button-container');
 
