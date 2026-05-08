@@ -513,8 +513,14 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--color-brand-primary);
-  font-size: 0;
-  color: transparent;
+}
+
+/* Hide ALL text inside player wrap (Brightcove injects metadata descriptions) */
+
+.carousel-video-playlist .cvp-player-wrap :not(.cvp-name-banner):not(.cvp-play-btn) {
+  font-size: 0 !important;
+  color: transparent !important;
+  line-height: 0 !important;
 }
 
 .carousel-video-playlist .cvp-name-banner {
