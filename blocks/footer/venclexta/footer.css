@@ -1,4 +1,5 @@
-/** TODO  - Fix ESlint Issue */
+/* stylelint-disable no-descending-specificity, selector-not-notation, no-duplicate-selectors, media-feature-range-notation, declaration-block-no-redundant-longhand-properties */
+
 /* ============================================================
    Footer Block — Base styles
    Live-matching flat horizontal layout (matches all 6 AbbVie brand sites):
@@ -9,7 +10,9 @@
      --color-background-footer, --color-text-on-dark,
      --body-font-family, --font-size-footer
    ============================================================ */
+
 /* ── Block-scoped tokens (W3C DTCG: --footer-{type}-{semantic}-{variant}) ── */
+
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
   --footer-color-text: var(--color-text-on-dark, #fff);
@@ -26,11 +29,15 @@
   --footer-spacing-legal-gap: var(--spacing-60);
   --footer-spacing-bottom-gap: var(--spacing-12);
   --footer-logo-height: var(--spacing-22);
+  --footer-content-max-width: 1200px;
 }
+
 /* ── Container: flat, full-bleed ─────────────────────────────── */
+
 .footer-wrapper {
   margin-top: 0;
 }
+
 .footer {
   background-color: var(--footer-color-bg);
   color: var(--footer-color-text);
@@ -41,22 +48,32 @@
   border-top-left-radius: 0;
   max-width: none;
   margin: 0;
-  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
+  padding-block: var(--footer-spacing-padding-y);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
   position: relative;
   box-sizing: border-box;
 }
+
 .footer p {
   margin: 0;
 }
+
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
+
 /* Auto-hide any empty column (depends on what's authored) */
+
 .footer .footer-column:empty {
   display: none;
 }
+
 /* ── Link rows ──────────────────────────────────────────────── */
+
 .footer .footer-columns {
   display: flex;
   flex-direction: column;
@@ -64,27 +81,35 @@
   margin: 0;
   padding: 0;
 }
+
 .footer .footer-column {
   width: 100%;
   margin: 0;
   text-align: center;
 }
+
 /* Primary column may hold both link rows (when 2 ULs authored in section 1) — stack them */
+
 .footer .footer-links-primary {
   display: flex;
   flex-direction: column;
   gap: var(--footer-spacing-row-gap);
 }
+
 /* Reset legacy "first p as label" styling */
+
 .footer .footer-column p:first-child {
   text-transform: none;
   margin-bottom: 0;
 }
+
 .footer .footer-links-tertiary p:last-child {
   margin-top: 0;
   text-align: center;
 }
+
 /* UL row — flex layout, gap-separated */
+
 .footer .footer-links-primary ul,
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
@@ -102,6 +127,7 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
+
 .footer .footer-links-primary li,
 .footer .footer-links-secondary li,
 .footer .footer-links-tertiary li,
@@ -111,7 +137,9 @@
   margin: 0;
   padding: 0;
 }
+
 /* Link styling — high specificity to override legacy heading-style rules */
+
 .footer .footer-links-primary li a,
 .footer .footer-links-secondary li a,
 .footer .footer-links-tertiary li a {
@@ -124,6 +152,7 @@
   text-decoration: none;
   white-space: nowrap;
 }
+
 .footer .footer-links-primary li a:hover,
 .footer .footer-links-secondary li a:hover,
 .footer .footer-links-tertiary li a:hover {
@@ -131,7 +160,9 @@
   font-weight: var(--footer-font-weight);
   text-decoration: underline;
 }
+
 /* P-based authoring fallback (pipe-separated text) */
+
 .footer .footer-links-secondary p,
 .footer .footer-links-tertiary p {
   margin: 0;
@@ -143,7 +174,9 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
+
 /* External link icon */
+
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -156,7 +189,9 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
+
 /* ── Footer bottom: legal text + number + logo ──────────────── */
+
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -165,6 +200,7 @@
   padding: 0;
   margin-top: var(--footer-spacing-legal-gap);
 }
+
 .footer .footer-bottom p {
   margin: 0;
   text-align: center;
@@ -174,7 +210,9 @@
   line-height: var(--footer-line-height);
   text-transform: none;
 }
+
 /* Anchors inside footer-bottom paragraphs inherit text styling */
+
 .footer .footer-bottom p a {
   color: var(--footer-color-link);
   font-family: inherit;
@@ -183,67 +221,84 @@
   line-height: inherit;
   text-decoration: underline;
 }
+
 .footer .footer-bottom p a:hover {
   text-decoration: none;
 }
-/* Strip button-pill styling when legal text is authored as a button (legacy) */
-.footer .footer-bottom a.button,
-.footer .footer-bottom .button-container a {
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  color: var(--footer-color-link) !important;
-  font-size: var(--footer-font-size) !important;
-  font-weight: var(--footer-font-weight) !important;
-  text-decoration: underline !important;
-  text-transform: none !important;
-  display: inline !important;
-  white-space: normal !important;
-  line-height: var(--footer-line-height) !important;
+
+/* Strip button-pill styling when legal text is authored as a button (legacy).
+   Selector specificity (0,4,1) beats global a.button rules in styles/styles.css
+   without needing !important. */
+
+.footer-wrapper .footer .footer-bottom a.button,
+.footer-wrapper .footer .footer-bottom .button-container a {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--footer-color-link);
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
+  text-decoration: underline;
+  text-transform: none;
+  display: inline;
+  white-space: normal;
+  line-height: var(--footer-line-height);
 }
-.footer .footer-bottom a.button:hover,
-.footer .footer-bottom .button-container a:hover {
-  text-decoration: none !important;
+
+.footer-wrapper .footer .footer-bottom a.button:hover,
+.footer-wrapper .footer .footer-bottom .button-container a:hover {
+  text-decoration: none;
 }
+
 /* Legal number — small text. Detected by .legal-number class OR by being
    the 2nd-to-last child (paragraph immediately before the logo picture) */
+
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
   font-size: var(--footer-font-size-small);
 }
+
 /* Logo — centered mobile, right-aligned desktop, white via filter (raster) or fill (SVG) */
+
 .footer .footer-bottom p:has(picture),
 .footer .footer-bottom p:has(img) {
   margin: var(--footer-spacing-bottom-gap) 0 0;
   text-align: center;
 }
+
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
   height: var(--footer-logo-height);
   width: auto;
   mix-blend-mode: screen;
 }
+
 .footer .footer-bottom svg {
   height: var(--footer-logo-height);
   width: auto;
   fill: var(--footer-color-text);
 }
+
 /* Legacy ul fallback inside footer-bottom */
+
 .footer .footer-bottom ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
 }
+
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
   color: var(--footer-color-text);
   font-size: var(--footer-font-size);
   text-decoration: none;
 }
+
 /* ── Desktop ≥601px (matches live media query) ──────────────── */
+
 @media (min-width: 601px) {
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
@@ -284,6 +339,7 @@
     margin: 0;
   }
 }
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -295,11 +351,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
+
 @custom-media --bp-tablet (min-width: 744px);
+
 @custom-media --bp-desktop (min-width: 1024px);
+
 @custom-media --bp-wide (min-width: 1440px);
+
 :root {
 /* -----------------------------------------------------------
    PX → REM Conversion Helper
@@ -484,8 +545,10 @@
   --spacing-110: 11rem;
   --spacing-120: 12rem;
   --spacing-124: 12.4rem;
+  --spacing-155: 15.5rem;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
+  --spacing-200: 20rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
   --spacing-320: 32rem;
@@ -680,6 +743,7 @@
   --cdp-max-width: 1180px;
   --cdp-letter-spacing-title: 0.02em;
 }
+
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -687,6 +751,7 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
+
 @media (--bp-desktop) {
   :root {
     --border-top-radius: 8rem;
@@ -694,64 +759,82 @@
     --hero-tall-image-container-height: 60.8rem;
   }
 }
+
 /* ============================================================
-   RINVOQ DTC — Brand Token Overrides
-   Source: rinvoq.com/atopic-dermatitis (Platform C)
-   Font: Graphik family (same as HCP)
-   Note: Shares the RINVOQ design system with HCP but uses
-         consumer-friendly styling and language.
+   VENCLEXTA DTC — Brand Token Overrides
+   Source: venclexta.com/aml (Platform C)
+   Framework Font: Graphik family
+   Brand Font: Red Hat Display (brand-specific elements)
    ============================================================ */
+
 :root {
   /* ---- Color: Brand Primary ---- */
-  --color-brand-primary: #90124a;
-  --color-brand-primary-dark: #25282a;
-  --color-brand-primary-light: #b15980;
+  --color-brand-primary: #005272;
+  --color-brand-primary-dark: #003b52;
+  --color-brand-primary-light: #e8edef;
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #ffd100;
-  --color-brand-accent-butter: #fff1b3;
-  --color-brand-accent-lemon: #ffe673;
+  --color-brand-accent-teal: #005272;
 
-  /* ---- Color: Named Palette ---- */
+  /* ---- Color: Named Palette (shared AbbVie framework) ---- */
   --color-plum: #90124a;
-  --color-mulberry: #b15980;
-  --color-heather: #d3a0b7;
   --color-gold: #ffd100;
   --color-charcoal: #25282a;
   --color-iron: #46484a;
-  --color-steel: #87898a;
-  --color-pewter: #929495;
-  --color-silver: #c9c9ca;
   --color-glacier: #f5f5f5;
+
+  /* ---- Color: Venclexta-specific ---- */
+  --color-venclexta-teal: #005272;
+  --color-venclexta-teal-dark: #003b52;
+  --color-venclexta-navy: #071d49;
 
   /* ---- Color: Text ---- */
   --text-color: #46484a;
   --color-text-heading: #25282a;
+  --color-text-heading-brand: #005272;
   --color-text-on-dark: #fff;
   --color-text-link: #90124a;
+  --color-text-legal: #404040;
+  /* Live venclexta.com renders footer link text in off-white (#e8edef) */
+  --color-text-footer-link: var(--color-brand-primary-light);
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
   --color-background-light: #f5f5f5;
-  --color-background-footer: #17181b;
+  /* Live venclexta.com footer bg is dark teal #003b52, not pure black */
+  --color-background-footer: var(--color-brand-primary-dark);
   --color-background-safety-bar: #f5f5f5;
+  --color-background-container: #003b52;
 
   /* ---- Color: Border ---- */
+  --color-border-brand: #005272;
   --color-border-safety: #ffd100;
+  --color-border-default: #ccc;
+
+  /* ---- Color: Shadow ---- */
+  --shadow-card: rgb(85, 85, 85) 0px 3px 10px 1px;
+  --shadow-table: 0 4px 5px 0 rgba(0, 0, 0, 0.1);
+  --shadow-default: 0 4px 19px 0 rgba(0, 0, 0, 0.07);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
   --heading-font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
   --heading-font-family-bold: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
   --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-semibold: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --font-family-brand: 'Red Hat Display', sans-serif;
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
+  --font-size-body-small: 11px;
+  --font-size-nav: 16px;
+  --font-size-footer: 16px;
   --font-size-h1: 26px;
   --font-size-h2: 20px;
   --font-size-h3: 14px;
+  --font-size-h4-brand: 16px;
+  --font-size-h5-brand: 17.6px;
   --font-size-h-xl: 35.2px;
   --font-size-button: 16px;
 
@@ -759,15 +842,20 @@
   --font-weight-body: 400;
   --font-weight-heading: 600;
   --font-weight-button: 700;
+  --font-weight-brand-heading: 700;
 
   /* ---- Font: Line Height ---- */
   --line-height-body: 24px;
   --line-height-h1: 27.625px;
   --line-height-h2: 25px;
   --line-height-h3: 16.8px;
+  --line-height-h5-brand: 22px;
+  --line-height-h-xl: 52.8px;
 
   /* ---- Border: Radius ---- */
   --border-radius-button-primary: 100px;
+  --border-radius-card: 10px;
+  --border-radius-card-corner: 14px;
 
   /* ---- Button: Primary ---- */
   --button-primary-color: #fff;
@@ -777,292 +865,308 @@
   /* ---- Link ---- */
   --link-color: #90124a;
 }
+
 /* ============================================================
-   RINVOQ DTC — Footer brand overrides
-   Live: www.rinvoq.com/atopic-dermatitis
-   - Light gray bg (--color-glacier #f5f5f5)
-   - 3-column grid layout (each col: H5 + vertical UL)
-   - Magenta links (--color-plum #90124a)
-   - Logo on bottom-left, indication code + legal text on right
+   VENCLEXTA DTC — Footer brand overrides
+   Live: www.venclexta.com/aml
+   - Dark teal bg (--color-background-footer #003b52) edge-to-edge
+   - 5-column heading-based grid (h5 + vertical UL per column)
+   - White headings, off-white link text (--color-text-footer-link)
+   - Footer-bottom: horizontal sub-links + legal text + indication code
+   - Centering (1200px max-width) inherited from base
    ============================================================ */
-/* stylelint-disable */
+
 /* Brand token overrides */
+
 .footer-wrapper {
-  --footer-color-bg: var(--color-glacier);
-  --footer-color-text: var(--color-charcoal);
-  --footer-color-link: var(--color-plum);
-  --footer-spacing-padding-y: var(--spacing-40);
-  --footer-spacing-padding-x: var(--spacing-30);
-  --footer-spacing-legal-gap: var(--spacing-30);
-  --footer-content-max-width: 1200px;
+  --footer-color-bg: var(--color-background-footer);
+  --footer-color-text: var(--color-text-on-dark);
+  --footer-color-link: var(--color-text-footer-link);
+  --footer-font-family: var(--font-family-brand);
+  --footer-font-size: var(--font-size-footer);
+  --footer-line-height: var(--line-height-body);
+
+  /* Footer-logos box dimensions (semantic names — brand logo is taller than
+     partner logos to visually dominate, matching the live design). */
+  --footer-logo-width: var(--spacing-200);
+  --footer-logo-partner-height: var(--spacing-20);
+  --footer-logo-brand-height: var(--spacing-155);
 }
-/* Container: white bg (gray scoped to .footer-columns only) */
-.footer {
-  background-color: var(--background-color);
-  color: var(--footer-color-text);
-  padding: 0;
-  margin: 0;
-  max-width: none;
-  border-radius: 0;
-  border-top-left-radius: 0;
-}
-/* Hide any empty column */
-.footer .footer-column:empty {
-  display: none;
-}
-/* ── Footer top: indication code (white bg, ABOVE gray columns) ── */
-.footer .footer-top {
-  background-color: var(--background-color);
-  padding-block: var(--spacing-12);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
-}
-.footer .footer-top p {
-  margin: 0;
-  text-align: left;
-  color: var(--color-charcoal);
-  font-family: var(--footer-font-family);
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-20);
-}
-/* ── 3-column grid (GRAY bg only here, NOT on .footer) ──────── */
+
+/* ── 5-column heading-based grid ────────────────────────────── */
+
 .footer .footer-columns {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-32);
   margin: 0;
-  padding-block: var(--footer-spacing-padding-y);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
-  background-color: var(--footer-color-bg);
-  position: relative;
 }
-@media (min-width: 744px) {
+
+@media (width >= 744px) {
   .footer .footer-columns {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  /* Replace per-heading borders with a single continuous line under headings */
-  .footer .footer-column h1,
-  .footer .footer-column h2,
-  .footer .footer-column h3,
-  .footer .footer-column h4,
-  .footer .footer-column h5,
-  .footer .footer-column h6 {
-    border-bottom: none;
-  }
-
-  .footer .footer-columns::after {
-    content: '';
-    position: absolute;
-    top: calc(
-      var(--footer-spacing-padding-y) + var(--line-height-22) + var(--spacing-12)
-    );
-    left: max(
-      var(--footer-spacing-padding-x),
-      calc((100% - var(--footer-content-max-width)) / 2)
-    );
-    right: max(
-      var(--footer-spacing-padding-x),
-      calc((100% - var(--footer-content-max-width)) / 2)
-    );
-    height: 1px;
-    background-color: var(--color-black);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-/* Each column — left-aligned */
+
+@media (width >= 1024px) {
+  .footer .footer-columns {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Each column — left-aligned vertical list */
+
 .footer .footer-column {
   width: 100%;
-  margin: 0;
   text-align: left;
   display: flex;
   flex-direction: column;
 }
-/* Reset legacy "first p as label" */
-.footer .footer-column p:first-child {
-  text-transform: none;
-  margin-bottom: 0;
-}
-/* Column heading (H5) */
+
+/* Column heading (H5 in live) — white bold */
+
 .footer .footer-column h1,
 .footer .footer-column h2,
 .footer .footer-column h3,
 .footer .footer-column h4,
 .footer .footer-column h5,
 .footer .footer-column h6 {
-  color: var(--color-charcoal);
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-16);
+  color: var(--footer-color-text);
+  font-family: var(--footer-font-family);
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-heading);
-  line-height: var(--line-height-22);
+  line-height: var(--line-height-body);
   margin: 0 0 var(--spacing-16) 0;
-  padding-bottom: var(--spacing-12);
-  border-bottom: 1px solid var(--color-silver);
 }
-/* Vertical link list */
+
+/* Heading-only column (e.g. "Side Effects") — anchor inside H5 inherits
+   heading color instead of the global link color. */
+
+.footer .footer-column h1 a,
+.footer .footer-column h2 a,
+.footer .footer-column h3 a,
+.footer .footer-column h4 a,
+.footer .footer-column h5 a,
+.footer .footer-column h6 a {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+.footer .footer-column h1 a:hover,
+.footer .footer-column h2 a:hover,
+.footer .footer-column h3 a:hover,
+.footer .footer-column h4 a:hover,
+.footer .footer-column h5 a:hover,
+.footer .footer-column h6 a:hover {
+  text-decoration: underline;
+}
+
+/* Vertical link list — no bullets, gap-separated */
+
 .footer .footer-column ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-12);
-  font-family: var(--footer-font-family);
+  gap: var(--spacing-16);
 }
+
 .footer .footer-column li {
   margin: 0;
   padding: 0;
 }
-/* High-specificity link override (matches base `.footer .footer-links-primary li a`) */
-.footer .footer-column li a,
-.footer .footer-column ul li a {
-  color: var(--color-plum);
+
+/* `.footer-wrapper` prefix raises specificity above the heading-anchor
+   `:hover` rules above so stylelint's no-descending-specificity passes. */
+
+.footer-wrapper .footer .footer-column li a,
+.footer-wrapper .footer .footer-column ul li a {
+  color: var(--footer-color-link);
   font-family: var(--footer-font-family);
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-400);
-  line-height: var(--line-height-20);
-  margin: 0;
+  font-size: var(--footer-font-size);
+  font-weight: var(--font-weight-body);
+  line-height: var(--footer-line-height);
   text-decoration: none;
   white-space: normal;
 }
-.footer .footer-column li a:hover {
-  font-family: var(--footer-font-family);
-  font-weight: var(--font-weight-400);
+
+.footer-wrapper .footer .footer-column li a:hover {
+  color: var(--footer-color-text);
   text-decoration: underline;
 }
-/* Override base @media font-size bumps */
-@media (min-width: 744px) {
-  .footer .footer-column li a {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-20);
-  }
-}
-@media (min-width: 1024px) {
-  .footer .footer-column li a {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-20);
-  }
-}
-/* ── Footer bottom: legal text + number + logo (GRAY bg, same as columns) ── */
+
+/* ── Footer bottom: sub-links + legal text + indication code ── */
+
 .footer .footer-bottom {
+  /* Live venclexta footer-bottom uses 14px / weight 500 (smaller than columns) */
+  --footer-font-size: var(--font-size-14);
+  --footer-font-weight: var(--font-weight-500);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+
+  /* reset base: base footer-bottom has top-border + padding which we don't want */
+  border: none;
+  padding: 0;
+  margin-top: var(--spacing-40);
+}
+
+/* Sub-links UL — horizontal on desktop, separated by 1px top border */
+
+.footer .footer-bottom ul {
+  list-style: none;
+  padding: var(--spacing-24) 0 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-12);
-  border: none;
-  padding-block: var(--footer-spacing-legal-gap);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
-  margin-top: 0;
-  background-color: var(--footer-color-bg);
-  position: relative;
-}
-/* 1px separator between columns and legal/logo row — full viewport width */
-.footer .footer-bottom::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: var(--color-black);
-}
-.footer .footer-bottom p {
-  margin: 0;
+  border-top: 1px solid var(--footer-color-text);
   text-align: left;
-  color: var(--color-charcoal);
+}
+
+/* Spacing handled per-<li> (margin-right) instead of UL gap so it matches the
+   live abbv-footer pattern: padding-right + margin-right cumulatively = 40px
+   between items, with row-gap implicitly 0 when wrapped lines stack. */
+
+@media (width >= 744px) {
+  .footer .footer-bottom ul {
+    flex-flow: row wrap;
+    gap: 0;
+  }
+
+  .footer .footer-bottom ul li {
+    margin-right: var(--spacing-40);
+  }
+}
+
+/* `.footer-wrapper` prefix raises specificity above the heading-anchor
+   `:hover` rules so the bottom-section overrides the column section. The
+   inline disable acknowledges that the cleaner alternative — interleaving
+   selectors by specificity rather than by section — would scatter the
+   bottom-section rules and hurt readability. */
+
+/* stylelint-disable no-descending-specificity */
+
+.footer-wrapper .footer .footer-bottom ul li,
+.footer-wrapper .footer .footer-bottom ul li a {
+  color: var(--footer-color-text);
   font-family: var(--footer-font-family);
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-20);
-  text-transform: none;
-}
-.footer .footer-bottom p a {
-  color: var(--color-plum);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  text-decoration: underline;
-}
-.footer .footer-bottom p a:hover {
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
   text-decoration: none;
 }
-/* Strip button styling on legacy authoring */
-.footer .footer-bottom a.button,
-.footer .footer-bottom .button-container a {
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  color: var(--color-plum) !important;
-  font-size: var(--font-size-12) !important;
-  font-weight: var(--font-weight-400) !important;
-  text-decoration: underline !important;
-  text-transform: none !important;
-  display: inline !important;
-  white-space: normal !important;
+
+/* stylelint-enable no-descending-specificity */
+
+.footer-wrapper .footer .footer-bottom ul li a:hover {
+  text-decoration: underline;
 }
-/* Legal number — small gray text */
-.footer .footer-bottom > p.legal-number,
-.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-  font-size: var(--font-size-12);
-  color: var(--color-pewter);
-}
-/* Logo — DTC has dark logo on light bg, no filter */
-.footer .footer-bottom p:has(picture),
-.footer .footer-bottom p:has(img) {
+
+.footer .footer-bottom p {
+  color: var(--footer-color-text);
+  font-family: var(--footer-font-family);
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
+  line-height: var(--footer-line-height);
   margin: 0;
   text-align: left;
 }
+
+/* Logo image (if authored) — right-aligned on desktop */
+
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  text-align: right;
+  margin-top: var(--spacing-16);
+}
+
+/* Indication code — small text, slight top spacing */
+
+.footer .footer-bottom > p.legal-number,
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+  font-size: var(--footer-font-size-small);
+  margin-top: var(--spacing-04);
+}
+
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
   height: var(--footer-logo-height);
   width: auto;
-  filter: none;
-  mix-blend-mode: normal;
 }
-.footer .footer-bottom svg {
-  height: var(--footer-logo-height);
-  width: auto;
-  fill: var(--color-charcoal);
+
+/* ── Footer logos: partner logos (left) + brand logo (right) ── */
+
+.footer .footer-logos {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--spacing-20);
+  margin-top: var(--spacing-32);
 }
-/* ── Desktop ≥601px: legal text + number row, logo left ─────── */
-@media (min-width: 601px) {
-  .footer .footer-bottom {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: var(--spacing-24);
-    row-gap: var(--spacing-12);
-    align-items: center;
+
+/* EDS wraps each authored image in a <p> — these flex props center the
+   <picture>/<img> vertically inside the box defined by --footer-logo-*-height. */
+
+.footer .footer-logos > * {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Brand logo (3rd child) wraps to its own row on mobile */
+.footer .footer-logos > *:nth-child(3) {
+  flex-basis: 100%;
+}
+
+/* Partner logos (1st, 2nd) get a small fixed box; brand logo (3rd, Venclexta)
+   gets a taller box so it visually dominates as in the live design.
+   Explicit width + height with object-fit defeats EDS's intrinsic <img>
+   width/height attributes. `.footer-wrapper` prefix also raises specificity
+   above the .footer-bottom img selectors so no-descending-specificity passes. */
+
+.footer-wrapper .footer .footer-logos img {
+  width: var(--spacing-100);
+  height: var(--footer-logo-partner-height);
+  object-fit: contain;
+  object-position: left center;
+}
+
+.footer-wrapper .footer .footer-logos > *:nth-child(3) img {
+  width: var(--footer-logo-width);
+  height: var(--footer-logo-brand-height);
+  object-position: right center;
+}
+
+/* White pipe divider after first partner logo — shared mobile + desktop */
+.footer .footer-logos > *:first-child {
+  position: relative;
+  padding-right: var(--spacing-20);
+}
+
+.footer .footer-logos > *:first-child::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: var(--separator-height-1);
+  height: var(--spacing-24);
+  background-color: var(--footer-color-text);
+  transform: translateY(-50%);
+}
+
+@media (width >= 744px) {
+  .footer .footer-logos {
+    flex-wrap: nowrap;
+    gap: var(--spacing-20);
   }
 
-  /* Logo on the LEFT (DTC-specific, opposite of HCP) */
-  .footer .footer-bottom > p:has(picture),
-  .footer .footer-bottom > p:has(img) {
-    grid-column: 1;
-    grid-row: 2;
-    text-align: left;
-  }
-
-  /* Legal text paragraphs span full width on top row */
-  .footer .footer-bottom > .button-container,
-  .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    margin: 0;
-  }
-
-  /* Legal number — bottom-right, next to logo */
-  .footer .footer-bottom > p.legal-number,
-  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-    grid-column: 2;
-    grid-row: 2;
-    margin: 0;
+  /* Push the third (brand) logo to the right edge; reset mobile full-width */
+  .footer .footer-logos > *:nth-child(3) {
+    flex-basis: auto;
+    margin-left: auto;
   }
 }
