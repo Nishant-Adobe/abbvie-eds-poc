@@ -529,16 +529,30 @@
   max-width: var(--cvp-size-max-width);
 }
 
+/* Player area: title + description ABOVE the video */
+
+.carousel-video-playlist .cvp-player-area {
+  display: flex;
+  flex-direction: column;
+}
+
 .carousel-video-playlist .cvp-active-title {
   font-family: var(--cvp-font-family-heading);
+  order: -2;
 }
 
 .carousel-video-playlist .cvp-active-desc {
   font-family: var(--cvp-font-family-body);
+  order: -1;
+}
+
+.carousel-video-playlist .cvp-video-container {
+  order: 0;
 }
 
 .carousel-video-playlist .cvp-transcript-link {
   font-family: var(--cvp-font-family-heading);
+  order: 1;
 }
 
 .carousel-video-playlist.cvp-layout-cards .cvp-playlist-overlay-title {
