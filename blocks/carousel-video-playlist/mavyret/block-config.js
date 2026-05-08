@@ -40,7 +40,8 @@ function parseItems(block) {
         videoId: cells[0]?.textContent?.trim() ?? '',
         title: cells[1]?.textContent?.trim() ?? '',
         transcriptHref: cells[2]?.textContent?.trim() ?? '',
-        description: cells[3]?.textContent?.trim() ?? '',
+        transcript: cells[3] ?? null,
+        description: cells[4]?.textContent?.trim() ?? '',
       };
     })
     .filter(({ videoId }) => videoId);
@@ -111,8 +112,34 @@ function openVideoModal(item, accountId, playerId) {
   videoEl.className = 'video-js vjs-fluid';
   content.append(videoEl);
 
-  // Transcript link
-  if (item.transcriptHref) {
+  // Inline transcript toggle (Mavyret shows transcript inside modal)
+  if (item.transcript) {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.type = 'button';
+    toggleBtn.className = 'cvp-modal-transcript-toggle';
+    toggleBtn.textContent = 'View Transcript';
+    toggleBtn.setAttribute('aria-expanded', 'false');
+
+    const panel = document.createElement('div');
+    panel.className = 'cvp-modal-transcript-panel';
+    panel.hidden = true;
+    if (typeof item.transcript === 'string') {
+      panel.innerHTML = item.transcript;
+    } else if (item.transcript.innerHTML) {
+      panel.innerHTML = item.transcript.innerHTML;
+    } else {
+      [...item.transcript.childNodes].forEach((n) => panel.append(n.cloneNode(true)));
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!expanded));
+      toggleBtn.textContent = expanded ? 'View Transcript' : 'Hide Transcript';
+      panel.hidden = expanded;
+    });
+
+    content.append(toggleBtn, panel);
+  } else if (item.transcriptHref) {
     const link = document.createElement('a');
     link.className = 'cvp-modal-transcript';
     link.href = item.transcriptHref;

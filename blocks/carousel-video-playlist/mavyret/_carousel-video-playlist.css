@@ -158,6 +158,36 @@
   font-size: 1.2em;
 }
 
+/* Inline transcript toggle */
+.cvp-modal-transcript-toggle {
+  display: block;
+  margin-top: var(--spacing-16);
+  text-align: right;
+  color: var(--color-brand-primary, #21406d);
+  font-weight: var(--font-weight-bold, 700);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-body, 14px);
+  margin-left: auto;
+}
+
+.cvp-modal-transcript-toggle::after {
+  content: ' \203A';
+  font-size: 1.2em;
+}
+
+.cvp-modal-transcript-panel {
+  margin-top: var(--spacing-16);
+  padding: var(--spacing-16);
+  background: var(--color-background-light, #f5f5f5);
+  border-radius: var(--spacing-08, 8px);
+  font-size: var(--font-size-body, 14px);
+  line-height: 1.6;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
 body.cvp-modal-is-open {
   overflow: hidden;
 }
