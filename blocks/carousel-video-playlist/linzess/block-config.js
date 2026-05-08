@@ -219,7 +219,7 @@ function buildGridMode(block, cfg, items, accountId, playerId) {
         initPosterPlayer(playerWrap, item.videoId, playBtn, accountId, playerId);
       }, { rootMargin: '0px' });
       obs.observe(card);
-    }, 3000);
+    }, 5000);
 
     grid.append(card);
   });
@@ -383,7 +383,7 @@ function buildFeaturedMode(block, items, accountId, playerId) {
         });
       }, { rootMargin: '0px' });
       thumbObs.observe(thumbWrap);
-    }, 3000);
+    }, 5000);
 
     thumb.append(thumbWrap);
 
