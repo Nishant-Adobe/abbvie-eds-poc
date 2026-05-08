@@ -120,19 +120,26 @@
 
 .cvp-modal-close {
   position: absolute;
-  top: var(--spacing-08);
-  right: var(--spacing-08);
-  background: none;
-  border: none;
-  font-size: 24px;
+  top: 8px;
+  right: 8px;
+  background: #fff;
+  border: 2px solid #333;
+  border-radius: 50%;
+  font-size: 18px;
   cursor: pointer;
   color: #333;
   z-index: 10;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: bold;
+  transition: background 200ms;
+}
+
+.cvp-modal-close:hover {
+  background: #f0f0f0;
 }
 
 .cvp-modal-content {
@@ -142,6 +149,12 @@
 .cvp-modal-content .video-js {
   width: 100%;
   aspect-ratio: 16 / 9;
+}
+
+/* Hide Brightcove dock text in modal */
+.cvp-modal-content .vjs-dock-text,
+.cvp-modal-content .vjs-dock-shelf {
+  display: none !important;
 }
 
 .cvp-modal-transcript {
@@ -170,11 +183,20 @@
   cursor: pointer;
   font-size: var(--font-size-body, 14px);
   margin-left: auto;
+  padding: 8px 0;
+  text-decoration: underline;
+}
+
+.cvp-modal-transcript-toggle:hover {
+  color: var(--color-brand-primary, #21406d);
+  opacity: 0.8;
 }
 
 .cvp-modal-transcript-toggle::after {
   content: ' \203A';
   font-size: 1.2em;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .cvp-modal-transcript-panel {
