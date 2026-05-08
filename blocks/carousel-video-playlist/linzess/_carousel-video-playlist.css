@@ -13,21 +13,32 @@
   background: var(--color-brand-primary);
 }
 
-/* Hide ALL text inside player wrap (Brightcove injects metadata descriptions) */
-
-/* Hide Brightcove dock title/description — we use our own name-banner */
-.carousel-video-playlist .vjs-dock-text {
-  display: none !important;
-}
-
-/* Hide any other Brightcove injected text overlays */
-.carousel-video-playlist .vjs-dock-shelf {
-  display: none !important;
-}
-
-/* Hide Brightcove's play button — we use our own .cvp-play-btn */
+/* Hide Brightcove UI overlays — we use our own name-banner + play button */
+.carousel-video-playlist .vjs-dock-text,
+.carousel-video-playlist .vjs-dock-title,
+.carousel-video-playlist .vjs-dock-description,
+.carousel-video-playlist .vjs-dock-shelf,
 .carousel-video-playlist .vjs-big-play-button {
   display: none !important;
+}
+
+/* Hide our play button when video is playing */
+.carousel-video-playlist .cvp-player-wrap .vjs-playing ~ .cvp-play-btn,
+.carousel-video-playlist .cvp-player-wrap .vjs-has-started ~ .cvp-play-btn {
+  display: none;
+}
+
+/* Ensure Brightcove controls ARE visible when playing */
+.carousel-video-playlist .vjs-control-bar {
+  font-size: 12px !important;
+  color: #fff !important;
+  line-height: normal !important;
+}
+
+.carousel-video-playlist .vjs-control-bar * {
+  font-size: inherit !important;
+  color: inherit !important;
+  line-height: inherit !important;
 }
 
 .carousel-video-playlist .cvp-name-banner {
@@ -159,9 +170,9 @@
   grid-column: auto;
 }
 
-/* The cvp-player-wrap inside grid cards — name banner sits above footer */
+/* Hide name banner in grid mode — footer already shows the title */
 .carousel-video-playlist.grid .cvp-card .cvp-name-banner {
-  bottom: 0;
+  display: none;
 }
 
 /* Only show player-wrap and card-footer — hide any other direct children of card */
