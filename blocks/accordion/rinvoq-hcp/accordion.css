@@ -932,8 +932,9 @@
   }
 }
 /* ============================================================
-   RINVOQ — Brand Token Overrides
-   Source: rinvoq.com (Platform C)
+   RINVOQ HCP — Brand Token Overrides
+   Source: rinvoqhcp.com/dermatology (Platform C)
+   Font: Graphik family
    ============================================================ */
 :root {
   /* ---- Color: Brand Primary ---- */
@@ -943,24 +944,32 @@
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #ffd100;
+  --color-brand-accent-light: #ffe673;
   --color-brand-accent-butter: #fff1b3;
   --color-brand-accent-lemon: #ffe673;
 
-  /* ---- Color: Named Palette ---- */
+  /* ---- Color: Named Palette (from CSS vars) ---- */
   --color-plum: #90124a;
   --color-mulberry: #b15980;
   --color-heather: #d3a0b7;
   --color-gold: #ffd100;
+  --color-light-gold: rgba(255, 209, 0, 0.55);
+  --color-lemon: #ffe673;
+  --color-butter: #fff1b3;
   --color-charcoal: #25282a;
   --color-iron: #46484a;
   --color-steel: #87898a;
   --color-silver: #c9c9ca;
+  --color-whisper: #ececec;
+  --color-ash: #e3e3e3;
   --color-glacier: #f5f5f5;
+  --color-footer-bg: #17181b;
 
   /* ---- Color: Text ---- */
   --text-color: #46484a;
   --color-text-heading: #25282a;
   --color-text-on-dark: #fff;
+  --color-text-muted: #696969;
   --color-text-link: #90124a;
 
   /* ---- Color: Background ---- */
@@ -969,8 +978,23 @@
   --color-background-footer: #17181b;
   --color-background-safety-bar: #f5f5f5;
 
+  /* ---- Color: Accordion ---- */
+  --color-accordion-text: #1a1a3e;
+  --color-accordion-accent: #c8373e;
+  --color-accordion-separator: #d0d0d8;
+  --color-accordion-tab-inactive: #767688;
+
   /* ---- Color: Border ---- */
+  --color-border-default: #c9c9ca;
   --color-border-safety: #ffd100;
+
+  /* ---- Color: Status ---- */
+  --color-success: #068c5a;
+  --color-error: #d62a24;
+
+  /* ---- Color: Shadow ---- */
+  --shadow-table: 0 4px 5px 0 rgba(0, 0, 0, 0.1);
+  --shadow-default: 0 4px 19px 0 rgba(0, 0, 0, 0.07);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
@@ -982,14 +1006,23 @@
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
+  --font-size-body-small: 12px;
+  --font-size-body-xs: 11.2px;
+  --font-size-legal: 12.992px;
+  --font-size-nav: 16px;
+  --font-size-footer: 16px;
   --font-size-h1: 26px;
   --font-size-h2: 20px;
   --font-size-h3: 14px;
+  --font-size-h4: 14px;
   --font-size-h-xl: 35.2px;
+  --font-size-h-featured: 22px;
   --font-size-button: 16px;
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-heading: 600;
   --font-weight-button: 700;
 
@@ -998,9 +1031,13 @@
   --line-height-h1: 27.625px;
   --line-height-h2: 25px;
   --line-height-h3: 16.8px;
+  --line-height-h-xl: 52.8px;
+  --line-height-h-featured: 27.5px;
+  --line-height-link: 19.2px;
 
   /* ---- Border: Radius ---- */
   --border-radius-button-primary: 100px;
+  --border-radius-card: 0px;
 
   /* ---- Button: Primary ---- */
   --button-primary-color: #fff;
@@ -1009,148 +1046,250 @@
 
   /* ---- Link ---- */
   --link-color: #90124a;
-}
-/* Rinvoq DTC accordion — gold-accent style matching rinvoq.com/faq */
-.accordion {
-    --accordion-rinvoq-color-primary: var(--color-brand-primary);
-    --accordion-rinvoq-color-accent: var(--color-brand-accent);
-    --accordion-rinvoq-color-text: var(--color-text-heading);
-    --accordion-rinvoq-color-body: var(--text-color);
-    --accordion-rinvoq-color-label: var(--color-text-heading);
-    --accordion-rinvoq-color-hover-bg: var(--color-brand-accent-butter);
-    --footer-seperator-color: var(--color-brand-accent);
-    --highlight-dark-background-color: transparent;
-    --accordion-rinvoq-icon-size: 2rem;
-    --accordion-rinvoq-summary-line-height: 1.3;
-    --accordion-rinvoq-body-line-height: 1.6;
 
-    background: transparent;
-    overflow-x: hidden;
+  /* ---- Formulary Lookup ---- */
+  --color-formulary-submit-bg: #820043;
+  --color-formulary-submit-hover: rgb(100 0 52);
+  --color-formulary-accent: #daaa00;
+  --color-formulary-highlight: rgb(255 243 200);
+  --color-formulary-filter-clear: #820043;
+  --color-formulary-link: #820043;
+
+  /* Formulary: Layout */
+  --formulary-form-width: 520px;
+  --formulary-input-width: 520px;
+
+  /* Formulary: Heading */
+  --formulary-heading-size: 24px;
+  --formulary-heading-weight: 700;
+  --formulary-heading-spacing: 32px;
+  --formulary-heading-line-height: 1.3;
+  --formulary-heading-accent-height: 8px;
+  --formulary-heading-accent-offset: -14px;
+
+  /* Formulary: Input/Select */
+  --formulary-input-height: 56px;
+  --formulary-input-radius: 10px;
+  --formulary-input-size: 18px;
+  --formulary-input-padding: 18px 16px;
+  --formulary-input-spacing: 24px;
+
+  /* Formulary: Label (floating) */
+  --formulary-label-size: 12px;
+  --formulary-label-weight: 400;
+  --formulary-label-offset-left: 16px;
+
+  /* Formulary: Submit */
+  --formulary-submit-size: 18px;
+  --formulary-submit-weight: 700;
+  --formulary-submit-radius: 100px;
+  --formulary-submit-height: 56px;
+  --formulary-submit-padding: 14px 60px 14px 32px;
+  --formulary-submit-spacing: 24px;
+  --formulary-submit-icon-offset: 24px;
+
+  /* Formulary: Card */
+  --formulary-card-radius: 10px;
+  --formulary-card-shadow: rgb(0 0 0 / 15%) 0 2px 12px 0;
+  --formulary-card-padding: 48px 40px 40px;
+
+  /* Formulary: Header */
+  --formulary-header-spacing: 48px;
+  --formulary-header-gap: 16px;
+  --formulary-icon-size: 56px;
+
+  /* Formulary: Filter */
+  --formulary-filter-radius: 10px;
+  --formulary-filter-spacing: 24px;
+  --formulary-filter-chevron-size: 24px;
+
+  /* Formulary: Indications */
+  --formulary-indication-spacing: 24px;
+  --formulary-radio-size: 18px;
+
+  /* Formulary: Results */
+  --formulary-results-radius: 8px;
+  --formulary-results-shadow: rgb(0 0 0 / 10%) 0 2px 8px 0;
+
+  /* Formulary: Disclaimer/Notice */
+  --formulary-disclaimer-size: 14px;
+  --formulary-recaptcha-size: 12px;
+
+  /* Formulary: ZIP Input */
+  --formulary-zip-weight: 700;
+  --formulary-zip-margin-top: 8px;
+
+  /* Formulary: Floating Label Detail */
+  --formulary-label-left: 12px;
+  --formulary-label-line-height: 16px;
+  --formulary-chevron-bg-size: 14px;
 }
-/* Item — white bg, gold left border, gap between items */
-.accordion .accordion-item {
-    border-bottom: var(--border-01) solid var(--color-border-default);
-    border-left: var(--spacing-05) solid var(--accordion-rinvoq-color-accent);
+/* Rinvoq HCP accordion — inline-toggle is the default style */
+.accordion {
+    --accordion-toggle-color-text: var(--color-accordion-text);
+    --accordion-toggle-color-chevron: var(--color-accordion-accent);
+    --accordion-toggle-color-separator: var(--color-accordion-separator);
+    --accordion-toggle-font-size: var(--body-font-size-s);
+    --accordion-toggle-tab-color-active: var(--color-accordion-text);
+    --accordion-toggle-tab-color-inactive: var(--color-accordion-tab-inactive);
+    --accordion-toggle-tab-color-indicator: var(--color-accordion-accent);
+    --footer-seperator-color: var(--color-brand-primary);
+    --highlight-dark-background-color: var(--color-brand-primary);
+
     background: var(--background-color);
-    margin-bottom: var(--spacing-16);
-    border-radius: 0;
-    overflow: hidden;
+    margin-bottom: var(--spacing-00);
 }
-/* Summary — circle icon left, text follows, compact height */
+.accordion .accordion-block-heading-wrapper {
+    display: none;
+}
+.accordion .accordion-item {
+    border-bottom: var(--border-01) solid var(--accordion-toggle-color-separator);
+}
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: var(--spacing-08) var(--spacing-16);
+    padding: var(--spacing-10) var(--spacing-00);
     display: flex;
     align-items: center;
+    gap: var(--spacing-08);
+    background: none;
+    font-size: var(--accordion-toggle-font-size);
+    font-weight: var(--font-weight-medium);
+    color: var(--accordion-toggle-color-text);
     justify-content: flex-start;
-    gap: var(--spacing-10);
-    background: var(--background-color);
-    color: var(--accordion-rinvoq-color-text);
-    overflow: hidden;
-    font-size: var(--body-font-size-s);
-    line-height: var(--accordion-rinvoq-summary-line-height);
 }
-/* Focus */
 .accordion summary:focus-visible {
-    outline: var(--spacing-02) solid var(--accordion-rinvoq-color-accent);
-    outline-offset: var(--spacing-02);
+    background: none;
+    outline: var(--border-02) solid var(--accordion-toggle-color-chevron);
+    outline-offset: var(--border-02);
 }
-/* Label text — dark gold, bold */
+/* Chevron ▼ before the label text */
+.accordion summary::before {
+    content: '';
+    display: inline-block;
+    flex-shrink: 0;
+    width: var(--spacing-08);
+    height: var(--spacing-08);
+    border-right: var(--border-02) solid var(--accordion-toggle-color-chevron);
+    border-bottom: var(--border-02) solid var(--accordion-toggle-color-chevron);
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+    margin-top: var(--spacing-neg-03, -3px);
+}
+.accordion .accordion-item[open] summary::before {
+    transform: rotate(-135deg);
+    margin-top: var(--spacing-03, 3px);
+}
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
 .accordion .accordion-item-label h4,
 .accordion .accordion-item-label h5,
 .accordion .accordion-item-label h6 {
-    color: var(--accordion-rinvoq-color-label);
-    font-family: var(--heading-font-family);
-    font-size: var(--body-font-size-m);
-    font-weight: var(--font-weight-heading);
+    color: var(--accordion-toggle-color-text);
+    font-size: var(--accordion-toggle-font-size);
+    font-weight: var(--font-weight-medium);
     text-transform: none;
     letter-spacing: normal;
-    padding-right: 0;
     margin: 0;
 }
-/* Plum circle + icon on LEFT (collapsed) */
-.accordion summary::before {
-    content: '';
-    display: inline-block;
-    flex-shrink: 0;
-    width: var(--accordion-rinvoq-icon-size);
-    height: var(--accordion-rinvoq-icon-size);
-    min-width: var(--accordion-rinvoq-icon-size);
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-/* Plum circle − icon (expanded) */
-.accordion .accordion-item[open] summary::before {
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-/* Hover — no background or font change */
-.accordion .accordion-item:hover summary {
-    background: var(--background-color);
-}
-.accordion .accordion-item-label.open .accordion-item-label-text,
-.accordion .accordion-item-label .accordion-item-label-text:hover,
-.accordion .accordion-item:hover .accordion-item-label p,
-.accordion .accordion-item:hover .accordion-item-label-text {
-    font-family: var(--heading-font-family) !important;
-    font-size: var(--body-font-size-m) !important;
-    font-weight: var(--font-weight-heading) !important;
-    color: var(--accordion-rinvoq-color-label) !important;
-}
-/* Open state — bright gold header, no left border so expanded item aligns flush */
-.accordion .accordion-item[open] {
-    border-left: none;
-}
-.accordion .accordion-item[open] summary,
-.accordion .accordion-item[open]:hover summary {
-    background: var(--accordion-rinvoq-color-accent);
-}
-/* Hide icon-font icons */
+/* Hide icon-font based icons — replaced by CSS chevron */
 .accordion .item-icon-plus::after,
-.accordion .item-icon-minus::after,
-.accordion-icon-font .item-icon-plus::after,
-.accordion-icon-font .item-icon-minus::after {
-    display: none !important;
+.accordion .item-icon-minus::after {
+    display: none;
 }
-/* Body — glacier gray, standard padding */
+.accordion .accordion-item:hover summary,
+.accordion .accordion-item[open] summary {
+    background: none;
+}
+.accordion .accordion-expand-all {
+    color: var(--accordion-toggle-color-text);
+    font-family: var(--heading-font-family);
+}
+.accordion .accordion-expand-all:focus {
+    border-color: var(--accordion-toggle-color-chevron);
+}
 .accordion .accordion-item-body {
-    background: var(--color-glacier) !important;
-    padding: var(--spacing-16) var(--spacing-20) var(--spacing-24);
-}
-.accordion .accordion-item-body .accordion-item-body-text {
-    color: var(--accordion-rinvoq-color-body);
-    font-family: var(--body-font-family);
-    font-size: var(--body-font-size-s);
-    line-height: var(--accordion-rinvoq-body-line-height);
-}
-/* Body links — plum */
-.accordion .accordion-item-body a,
-.accordion .accordion-item-body a.button {
-    background: none;
-    color: var(--accordion-rinvoq-color-primary);
-    text-decoration: underline;
-    padding: 0;
-    border-radius: 0;
-    transition: color var(--transition-duration-fast) var(--transition-easing-standard);
-}
-.accordion .accordion-item-body a:hover,
-.accordion .accordion-item-body a.button:hover {
-    background: none;
-    color: var(--color-brand-primary-light);
+    padding: var(--spacing-16) var(--spacing-00) var(--spacing-24);
+    background: var(--background-color);
 }
 /* Suppress external-link ::after glyph */
 .accordion .accordion-item-body .external-link::after,
 .accordion .accordion-item-body a::after {
     display: none;
 }
-/* Expand all button */
-.accordion .accordion-expand-all {
-    color: var(--accordion-rinvoq-color-primary);
-    font-family: var(--heading-font-family);
-    font-weight: var(--font-weight-heading);
+/* Reset body link styles */
+.accordion .accordion-item-body a,
+.accordion .accordion-item-body a.button {
+    background: none;
+    color: var(--accordion-toggle-color-text);
+    text-decoration: underline;
+    padding: 0;
+    border-radius: 0;
+    transition: color 0.1s ease;
 }
-.accordion .accordion-expand-all:focus {
-    border-color: var(--accordion-rinvoq-color-accent);
-    border-radius: var(--border-radius-s);
+.accordion .accordion-item-body a:hover,
+.accordion .accordion-item-body a.button:hover {
+    background: none;
+    color: var(--accordion-toggle-color-chevron);
+}
+/* ---- Nested tabs inside accordion body ---- */
+.accordion .accordion-item-body .tabs .tabs-list {
+    border-bottom: var(--border-02) solid var(--accordion-toggle-color-separator);
+    gap: var(--spacing-00);
+    margin-bottom: var(--spacing-16);
+}
+.accordion .accordion-item-body .tabs .tabs-list button {
+    background: none;
+    border: none;
+    border-bottom: var(--spacing-03, 3px) solid transparent;
+    margin-bottom: var(--spacing-neg-02, -2px);
+    padding: var(--spacing-08) var(--spacing-20) var(--spacing-10);
+    color: var(--accordion-toggle-tab-color-inactive);
+    font-size: var(--accordion-toggle-font-size);
+    font-weight: var(--font-weight-body);
+    transition:
+        color 0.15s ease,
+        border-color 0.15s ease;
+}
+.accordion .accordion-item-body .tabs .tabs-list button:hover {
+    color: var(--accordion-toggle-tab-color-active);
+    background: none;
+}
+/* Active tab — bold, red underline indicator */
+.accordion .accordion-item-body .tabs .tabs-list button[aria-selected='true'] {
+    color: var(--accordion-toggle-tab-color-active);
+    font-weight: var(--font-weight-button);
+    border-bottom-color: var(--accordion-toggle-tab-color-indicator);
+    background: none;
+    cursor: default;
+}
+/* Tab panel — no border box */
+.accordion .accordion-item-body .tabs .tabs-panel {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+/* Dark theme — Rinvoq HCP navy background */
+.accordion.accordion-dark {
+    background-color: var(--color-background-footer);
+    padding: var(--spacing-24) var(--spacing-32);
+}
+.accordion.accordion-dark .accordion-item {
+    border-bottom-color: rgb(255 255 255 / 20%);
+}
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion.accordion-dark summary,
+.accordion.accordion-dark .accordion-item-label {
+    color: var(--light-color);
+}
+.accordion.accordion-dark .accordion-item-label p,
+.accordion.accordion-dark .accordion-item-label h2,
+.accordion.accordion-dark .accordion-item-label h3,
+.accordion.accordion-dark .accordion-item-label h4,
+.accordion.accordion-dark .accordion-item-label h5,
+.accordion.accordion-dark .accordion-item-label h6 {
+    color: var(--light-color);
+}
+.accordion.accordion-dark .accordion-item[open] summary {
+    background-color: var(--color-brand-primary);
 }
