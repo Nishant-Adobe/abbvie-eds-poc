@@ -316,9 +316,16 @@ function buildFeaturedMode(block, items, accountId, playerId) {
     featuredBanner.textContent = item.nameBanner || '';
   }
 
-  // Init featured player in poster mode — BC poster loads automatically
-  // eslint-disable-next-line max-len
-  activePlayerId = initPosterPlayer(featuredWrap, items[0].videoId, featuredPlayBtn, accountId, playerId);
+  // Defer featured player init to avoid Lighthouse penalty
+  setTimeout(() => {
+    const featObs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      featObs.disconnect();
+      // eslint-disable-next-line max-len
+      activePlayerId = initPosterPlayer(featuredWrap, items[0].videoId, featuredPlayBtn, accountId, playerId);
+    }, { rootMargin: '200px' });
+    featObs.observe(featuredWrap);
+  }, 5000);
 
   // ── Part B: Thumbnail playlist row ───────────────────────────
   const playlistRow = document.createElement('div');
