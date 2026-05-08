@@ -287,15 +287,27 @@ function buildFeaturedMode(block, items, accountId, playerId) {
   prescribedEl.className = 'cvp-prescribed';
   prescribedEl.textContent = items[0].prescribed || '';
 
-  quotePanel.append(quoteEl, patientNameEl, prescribedEl);
+  const transcriptLink = document.createElement('a');
+  transcriptLink.className = 'cvp-view-transcript';
+  transcriptLink.textContent = 'View Transcript';
+  transcriptLink.href = items[0].transcriptHref || '#';
+  if (!items[0].transcriptHref) transcriptLink.hidden = true;
+
+  quotePanel.append(quoteEl, patientNameEl, prescribedEl, transcriptLink);
   createTranscriptToggle(items[0].transcript, quotePanel);
   featuredRow.append(quotePanel);
   block.append(featuredRow);
 
   function updateQuotePanel(item) {
-    quoteEl.textContent = item.quote ? `“${item.quote}”` : '';
+    quoteEl.textContent = item.quote ? `”${item.quote}”` : '';
     patientNameEl.textContent = item.patientName || '';
     prescribedEl.textContent = item.prescribed || '';
+    if (item.transcriptHref) {
+      transcriptLink.href = item.transcriptHref;
+      transcriptLink.hidden = false;
+    } else {
+      transcriptLink.hidden = true;
+    }
     quotePanel.querySelectorAll('.cvp-transcript-toggle, .cvp-transcript-panel')
       .forEach((el) => el.remove());
     createTranscriptToggle(item.transcript, quotePanel);
