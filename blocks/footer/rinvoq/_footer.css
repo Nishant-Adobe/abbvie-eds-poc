@@ -270,31 +270,18 @@
 }
 
 /* Mobile first: logo appears before legal text on mobile */
-.footer .footer-bottom > p:has(picture),
-.footer .footer-bottom > p:has(img) {
+.footer-wrapper .footer .footer-bottom > p:has(picture),
+.footer-wrapper .footer .footer-bottom > p:has(img) {
   order: -1;
 }
 
 /* ── Desktop ≥601px: legal text + number row, logo left ─────── */
 @media (width >= 601px) {
-  /* Reset order — grid placement handles logo position on desktop */
-  .footer .footer-bottom > p:has(picture),
-  .footer .footer-bottom > p:has(img) {
-    order: 0;
-  }
   .footer .footer-bottom {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: var(--spacing-12) var(--spacing-24);
     align-items: center;
-  }
-
-  /* Logo on the LEFT (DTC-specific, opposite of HCP) */
-  .footer .footer-bottom > p:has(picture),
-  .footer .footer-bottom > p:has(img) {
-    grid-column: 1;
-    grid-row: 2;
-    text-align: left;
   }
 
   /* Legal text paragraphs span full width on top row */
@@ -311,5 +298,14 @@
     grid-column: 2;
     grid-row: 2;
     margin: 0;
+  }
+
+  /* Reset order; place logo on the LEFT (DTC-specific, opposite of HCP) */
+  .footer-wrapper .footer .footer-bottom > p:has(picture),
+  .footer-wrapper .footer .footer-bottom > p:has(img) {
+    order: 0;
+    grid-column: 1;
+    grid-row: 2;
+    text-align: left;
   }
 }

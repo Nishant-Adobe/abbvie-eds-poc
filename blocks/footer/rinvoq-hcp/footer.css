@@ -920,10 +920,16 @@
     calc((100% - var(--footer-content-max-width)) / 2)
   );
 }
-/* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0 */
+/* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0;
+   mobile row-wrap centers links within --footer-links-max-width */
 .footer .footer-links-primary ul {
   padding: var(--spacing-24) 0;
   margin: var(--spacing-04) 0 0;
+  flex-flow: row wrap;
+  justify-content: center;
+  max-width: var(--footer-links-max-width);
+  margin-inline: auto;
+  column-gap: var(--spacing-16);
 }
 /* Reset the column's flex gap — UL padding handles vertical spacing */
 .footer .footer-links-primary {
@@ -933,24 +939,16 @@
 .footer .footer-links-primary ul + ul {
   border-top: var(--separator-height-1) solid var(--color-steel);
 }
-/* Footer bottom: legal text uses smaller font, no flex gap (use padding instead) */
+/* Footer bottom: grid layout — smaller font, legal/logo in two-column row */
 .footer .footer-bottom {
   /* Live: .abbv-legal-text { font-size: 0.75rem } = 12px */
   --footer-font-size: var(--footer-font-size-small);
-  gap: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: var(--spacing-24);
+  align-items: center;
   margin-top: 0;
 }
-/* ── Mobile-first defaults ──────────────────────────────────── */
-
-/* Row-wrap within 335px — matches live abbv-footer-horizontal on mobile */
-.footer .footer-links-primary ul {
-  flex-flow: row wrap;
-  justify-content: center;
-  max-width: var(--footer-links-max-width);
-  margin-inline: auto;
-  column-gap: var(--spacing-16);
-}
-
 /* Indication code left + logo right in same row via grid */
 .footer .footer-bottom > p:has(picture),
 .footer .footer-bottom > p:has(img) {
@@ -965,13 +963,6 @@
 /* Compact line-height on first legal paragraph (matches live 1.2rem) */
 .footer .footer-bottom > p:first-of-type {
   line-height: var(--spacing-12);
-}
-
-.footer .footer-bottom {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  row-gap: var(--spacing-24);
-  align-items: center;
 }
 
 .footer .footer-bottom > p:not(:has(picture), :has(img), .legal-number, :nth-last-child(2)) {

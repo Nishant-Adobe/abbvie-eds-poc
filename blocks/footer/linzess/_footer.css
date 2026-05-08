@@ -280,13 +280,10 @@
   text-align: left;
 }
 
-.footer .footer-bottom-texts > p {
-  display: inline;
-}
-
 /* `.footer-wrapper` prefix raises specificity above `.footer-bottom-logos > p:first-child`
-   above so the no-descending-specificity rule passes without disable comments. */
+   so the no-descending-specificity rule passes without disable comments. */
 .footer-wrapper .footer .footer-bottom-texts > p {
+  display: inline;
   margin: 0;
 }
 
@@ -297,7 +294,7 @@
     gap: var(--spacing-24);
   }
 
-  .footer .footer-bottom-texts > p {
+  .footer-wrapper .footer .footer-bottom-texts > p {
     display: block;
   }
 

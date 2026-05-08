@@ -228,17 +228,17 @@
   padding-bottom: var(--spacing-40);
 }
 
-/* Brand logo (3rd child) wraps to its own row on mobile */
-.footer .footer-logos > *:nth-child(3) {
-  flex-basis: 100%;
-}
-
 /* EDS wraps each authored image in a <p> — these flex props center the
    <picture>/<img> vertically inside the box defined by --footer-logo-*-height. */
 .footer .footer-logos > * {
   margin: 0;
   display: flex;
   align-items: center;
+}
+
+/* Brand logo (3rd child) wraps to its own row on mobile */
+.footer .footer-logos > *:nth-child(3) {
+  flex-basis: 100%;
 }
 
 /* Partner logos (1st, 2nd) get a small fixed box; brand logo (3rd, Venclexta)
