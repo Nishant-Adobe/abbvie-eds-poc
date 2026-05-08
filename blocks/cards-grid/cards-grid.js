@@ -199,6 +199,10 @@ const LINZESS_BUTTON_CLASSES = [
   'abbv-icon-keyboard_arrow_right abbv-button-primary i-a abbv-button-primary',
 ];
 
+const LINZESS_FLEX_CONTAINER_CLASS = (
+  'abbv-flex-container-v2 flexbox-column-mobile flexbox-cards margin-top-80 savings-card-cards'
+);
+
 function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
   const directDivs = [...wrapper.children].filter((c) => c.tagName === 'DIV');
   const linkCell = directDivs[0];
@@ -213,10 +217,11 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
   const titleP = titleDiv?.querySelector('p');
   const bodyP = bodyDiv?.querySelector('p');
 
-  const flexItemClass = LINZESS_FLEX_ITEM_CLASSES[columnIndex % LINZESS_FLEX_ITEM_CLASSES.length];
-  const imageTextRootClass = LINZESS_IMAGE_TEXT_ROOT_CLASSES[columnIndex % LINZESS_IMAGE_TEXT_ROOT_CLASSES.length];
-  const headingClass = LINZESS_HEADING_CLASS[columnIndex % LINZESS_HEADING_CLASS.length];
-  const buttonClass = LINZESS_BUTTON_CLASSES[columnIndex % LINZESS_BUTTON_CLASSES.length];
+  const linzIdx = columnIndex % LINZESS_FLEX_ITEM_CLASSES.length;
+  const flexItemClass = LINZESS_FLEX_ITEM_CLASSES[linzIdx];
+  const imageTextRootClass = LINZESS_IMAGE_TEXT_ROOT_CLASSES[linzIdx];
+  const headingClass = LINZESS_HEADING_CLASS[linzIdx];
+  const buttonClass = LINZESS_BUTTON_CLASSES[linzIdx];
 
   const col = document.createElement('div');
   col.className = 'flexboxitem-v2 parbase';
@@ -389,16 +394,15 @@ export default function decorate(block) {
     wrappers.forEach((wrapper) => {
       const gridItem = createWrapperATag(wrapper);
       const anchor = gridItem.querySelector('a.grid-card');
-  
+
       decorateLine1(anchor);
       decorateLine2(anchor);
       decorateLine3(anchor);
       decorateLine4(anchor);
-  
+
       wrapper.replaceWith(gridItem);
     });
-  }
-  else if (block.classList.contains('cards-grid-image-text')) {
+  } else if (block.classList.contains('cards-grid-image-text')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -413,8 +417,7 @@ export default function decorate(block) {
     });
 
     block.append(row);
-  }
-  else if (block.classList.contains('cards-grid-linzess-icon-image-card')) {
+  } else if (block.classList.contains('cards-grid-linzess-icon-image-card')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -424,8 +427,7 @@ export default function decorate(block) {
     flexboxV2.className = 'flexbox-v2 parbase';
 
     const flexContainer = document.createElement('div');
-    flexContainer.className =
-      'abbv-flex-container-v2 flexbox-column-mobile flexbox-cards margin-top-80 savings-card-cards';
+    flexContainer.className = LINZESS_FLEX_CONTAINER_CLASS;
 
     wrappers.forEach((wrapper, index) => {
       flexContainer.append(buildLinzessIconImageCardColumn(wrapper, index));
