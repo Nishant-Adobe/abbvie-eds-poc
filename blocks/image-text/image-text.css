@@ -36,7 +36,7 @@
 /* ── Tablet+: two-column layout ── */
 @media (width >= 768px) {
   .image-text {
-    grid-template-columns: 1fr fit-content(50%);
+    grid-template-columns: 1fr 1fr;
     gap: var(--spacing-32, 2rem);
   }
 }
@@ -49,16 +49,13 @@
 
 /* ── Variant: Reverse (text left, image right) ── */
 @media (width >= 768px) {
-  .image-text.image-text-reverse {
-    grid-template-columns: fit-content(50%) 1fr;
-  }
-
   .image-text.image-text-reverse .image-text-image-col {
     order: 2;
   }
 
   .image-text.image-text-reverse .image-text-content-col {
     order: 1;
+    text-align: end;
   }
 }
 
