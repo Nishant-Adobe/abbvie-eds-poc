@@ -1,6 +1,31 @@
 import { getMetadata } from '../../scripts/aem.js';
+import { renderBlock } from '../../scripts/multi-theme.js';
 import decorateExternalLinksUtility from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
+
+/**
+ * Load the footer fragment from the page's `footer` metadata,
+ * falling back to `/footer` when no override is set.
+ * @returns {Promise<Element>} fragment root element
+ */
+export async function loadFooterFragment() {
+  const footerMeta = getMetadata('footer');
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
+  return loadFragment(footerPath);
+}
+
+/**
+ * Collect children from default-content-wrapper and social-media-wrapper
+ * inside a section, in document order.
+ * @param {Element} section
+ * @returns {Element[]} children (live references — clone before insertion)
+ */
+export function getSectionChildren(section) {
+  const children = [];
+  const wrappers = section.querySelectorAll('.default-content-wrapper, .social-media-wrapper');
+  wrappers.forEach((wrapper) => children.push(...wrapper.children));
+  return children;
+}
 
 function createColumn(className, children) {
   const column = document.createElement('div');
@@ -8,109 +33,130 @@ function createColumn(className, children) {
   children.forEach((child) => column.appendChild(child));
   return column;
 }
-/**
- * loads and decorates the footer
- * @param {Element} block The footer block element
- */
-export default async function decorate(block) {
-  const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
 
+/**
+ * Default positional column strategy: leading picture → logo,
+ * UL/social run → primary, P+UL pair → secondary, remainder → tertiary.
+ * @param {Element[]} children
+ * @returns {Element} .footer-columns container
+ */
+export function buildColumnsByPosition(children) {
+  const container = document.createElement('div');
+  container.className = 'footer-columns';
+  let cursor = 0;
+
+  const logoChildren = [];
+  if (children[cursor] && children[cursor].querySelector('picture')) {
+    logoChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
+  }
+  container.appendChild(createColumn('footer-column footer-logo', logoChildren));
+
+  const primaryLinkChildren = [];
+  while (
+    cursor < children.length
+    && (children[cursor].tagName === 'UL' || children[cursor].classList.contains('social-media'))
+  ) {
+    primaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
+  }
+  container.appendChild(createColumn('footer-column footer-links-primary', primaryLinkChildren));
+
+  const secondaryLinkChildren = [];
+  if (cursor < children.length && children[cursor].tagName === 'P') {
+    secondaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
+  }
+  if (cursor < children.length && children[cursor].tagName === 'UL') {
+    secondaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
+  }
+  container.appendChild(createColumn('footer-column footer-links-secondary', secondaryLinkChildren));
+
+  const tertiaryLinkChildren = [];
+  while (cursor < children.length) {
+    tertiaryLinkChildren.push(children[cursor].cloneNode(true));
+    cursor += 1;
+  }
+  container.appendChild(createColumn('footer-column footer-links-tertiary', tertiaryLinkChildren));
+
+  return container;
+}
+
+/**
+ * Heading-based column strategy: each H1–H6 starts a new column.
+ * Children before any heading are placed in an implicit first column.
+ * @param {Element[]} children
+ * @returns {Element} .footer-columns container
+ */
+export function buildColumnsByHeading(children) {
+  const container = document.createElement('div');
+  container.className = 'footer-columns';
+  let currentColumn = null;
+  let columnIndex = 0;
+
+  const startColumn = () => {
+    columnIndex += 1;
+    currentColumn = document.createElement('div');
+    currentColumn.className = `footer-column footer-column-${columnIndex}`;
+    container.appendChild(currentColumn);
+  };
+
+  children.forEach((child) => {
+    if (/^H[1-6]$/.test(child.tagName) || !currentColumn) {
+      startColumn();
+    }
+    currentColumn.appendChild(child.cloneNode(true));
+  });
+
+  return container;
+}
+
+/**
+ * Build a `.footer-bottom` container from the given items (cloned).
+ * @param {Element[]} items
+ * @returns {Element}
+ */
+export function buildBottom(items) {
+  const bottom = document.createElement('div');
+  bottom.className = 'footer-bottom';
+  items.forEach((item) => bottom.appendChild(item.cloneNode(true)));
+  return bottom;
+}
+
+/**
+ * Default footer decoration — positional columns from section 1,
+ * footer-bottom from section 2.
+ * @param {Element} block
+ */
+export async function decorateBlock(block) {
+  const fragment = await loadFooterFragment();
   block.textContent = '';
 
   const sections = fragment.querySelectorAll('.section');
 
   if (sections.length > 0) {
-    const firstSection = sections[0];
-
-    // Get all children from both default-content-wrapper and other wrappers
-    const allChildren = [];
-    const wrappers = firstSection.querySelectorAll('.default-content-wrapper, .social-media-wrapper');
-    wrappers.forEach((wrapper) => {
-      allChildren.push(...Array.from(wrapper.children));
-    });
-
-    const columnsContainer = document.createElement('div');
-    columnsContainer.className = 'footer-columns';
-
-    // Column 1: First picture
-    const col1Children = [];
-    let index = 0;
-    if (allChildren[index] && allChildren[index].querySelector('picture')) {
-      col1Children.push(allChildren[index].cloneNode(true));
-      index += 1;
-    }
-    const col1 = createColumn('footer-column footer-logo', col1Children);
-
-    // Column 2: First ul and social-media block
-    const col2Children = [];
-    while (index < allChildren.length && (allChildren[index].tagName === 'UL' || allChildren[index].classList.contains('social-media'))) {
-      col2Children.push(allChildren[index].cloneNode(true));
-      index += 1;
-    }
-    const col2 = createColumn('footer-column footer-links-primary', col2Children);
-
-    // Column 3: Next p and following ul
-    const col3Children = [];
-    if (index < allChildren.length && allChildren[index].tagName === 'P') {
-      col3Children.push(allChildren[index].cloneNode(true));
-      index += 1;
-    }
-    if (index < allChildren.length && allChildren[index].tagName === 'UL') {
-      col3Children.push(allChildren[index].cloneNode(true));
-      index += 1;
-    }
-    const col3 = createColumn('footer-column footer-links-secondary', col3Children);
-
-    // Column 4: All remaining content from first section
-    const col4Children = [];
-    while (index < allChildren.length) {
-      col4Children.push(allChildren[index].cloneNode(true));
-      index += 1;
-    }
-    const col4 = createColumn('footer-column footer-links-tertiary', col4Children);
-
-    // Append all columns
-    columnsContainer.appendChild(col1);
-    columnsContainer.appendChild(col2);
-    columnsContainer.appendChild(col3);
-    columnsContainer.appendChild(col4);
-
-    block.appendChild(columnsContainer);
-
-    // Decorate external links in the first section
-    decorateExternalLinksUtility(columnsContainer);
+    const columns = buildColumnsByPosition(getSectionChildren(sections[0]));
+    block.appendChild(columns);
+    decorateExternalLinksUtility(columns);
   }
 
-  // Back to top button — placed on the footer-wrapper so it sits half above / half inside
-  const backToTop = document.createElement('button');
-  backToTop.className = 'back-to-top';
-  backToTop.setAttribute('aria-label', 'Back to top');
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  block.prepend(backToTop);
-
-  // Handle second section (bottom links)
   if (sections.length > 1) {
-    const secondSection = sections[1];
-    const secondSectionWrapper = secondSection.querySelector('.default-content-wrapper');
-
-    if (secondSectionWrapper) {
-      const bottomLinks = document.createElement('div');
-      bottomLinks.className = 'footer-bottom';
-
-      // Clone all content from second section
-      Array.from(secondSectionWrapper.children).forEach((child) => {
-        bottomLinks.appendChild(child.cloneNode(true));
-      });
-
-      // Add external link class to bottom links
-      decorateExternalLinksUtility(bottomLinks);
-
-      block.appendChild(bottomLinks);
+    const wrapper = sections[1].querySelector('.default-content-wrapper');
+    if (wrapper) {
+      const bottom = buildBottom(Array.from(wrapper.children));
+      decorateExternalLinksUtility(bottom);
+      block.appendChild(bottom);
     }
   }
+}
+
+/**
+ * Default export — entry point called by the block loader.
+ * Delegates to renderBlock which loads block-config.js (global + brand merge)
+ * and runs the configured decorations hooks.
+ * @param {Element} block
+ */
+export default async function decorate(block) {
+  await renderBlock(block);
 }
