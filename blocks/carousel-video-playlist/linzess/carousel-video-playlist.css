@@ -517,7 +517,7 @@
 
 /* Hide ALL text inside player wrap (Brightcove injects metadata descriptions) */
 
-.carousel-video-playlist .cvp-player-wrap :not(.cvp-name-banner):not(.cvp-play-btn) {
+.carousel-video-playlist .cvp-player-wrap :not(.cvp-name-banner, .cvp-play-btn) {
   font-size: 0 !important;
   color: transparent !important;
   line-height: 0 !important;
@@ -659,6 +659,12 @@
 
 .carousel-video-playlist.grid .cvp-card .cvp-name-banner {
   bottom: 0;
+}
+
+/* Only show player-wrap and card-footer — hide any other direct children of card */
+
+.carousel-video-playlist.grid .cvp-card > :not(.cvp-player-wrap):not(.cvp-card-footer) {
+  display: none;
 }
 
 /* Card footer */
