@@ -406,6 +406,16 @@ function buildFeaturedMode(block, items, accountId, playerId) {
 
   const scrollAmt = 200;
 
+  function updateNavButtons() {
+    const atStart = thumbnails.scrollLeft <= 0;
+    const atEnd = thumbnails.scrollLeft + thumbnails.clientWidth >= thumbnails.scrollWidth - 2;
+    prevBtn.disabled = atStart;
+    nextBtn.disabled = atEnd;
+  }
+
+  thumbnails.addEventListener('scroll', updateNavButtons);
+  setTimeout(updateNavButtons, 100);
+
   prevBtn.addEventListener('click', () => {
     thumbnails.scrollBy({ left: -scrollAmt, behavior: 'smooth' });
   });
