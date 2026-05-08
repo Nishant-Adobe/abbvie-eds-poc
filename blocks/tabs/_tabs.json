@@ -14,146 +14,19 @@
           }
         }
       }
-    },
-    {
-      "title": "Tab Item",
-      "id": "tabs-item",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/section/v1/section",
-            "template": {
-              "name": "Tab",
-              "model": "tabs-item",
-              "filter": "tabs-item"
-            }
-          }
-        }
-      }
     }
   ],
   "models": [
     {
       "id": "tabs",
       "fields": []
-    },
-    {
-      "id": "tabs-item",
-      "fields": [
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "value": "",
-          "label": "Tab Title"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "content_heading",
-          "value": "",
-          "label": "Heading"
-        },
-        {
-          "component": "select",
-          "valueType": "string",
-          "name": "content_headingType",
-          "value": "",
-          "label": "Heading Type",
-          "options": [
-            {
-              "name": "H3",
-              "value": "h3"
-            },
-            {
-              "name": "H4",
-              "value": "h4"
-            },
-            {
-              "name": "H5",
-              "value": "h5"
-            },
-            {
-              "name": "H6",
-              "value": "h6"
-            }
-          ]
-        },
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "content_image",
-          "label": "Image",
-          "multi": false
-        },
-        {
-          "component": "richtext",
-          "name": "content_richtext",
-          "value": "",
-          "label": "Content",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "sectionId",
-          "value": "",
-          "label": "Section ID"
-        }
-      ]
     }
   ],
   "filters": [
     {
       "id": "tabs",
       "components": [
-        "tabs-item"
-      ]
-    },
-    {
-      "id": "tabs-item",
-      "components": [
-        "accordion",
-        "breadcrumb",
-        "button",
-        "story-cards",
-        "cards",
-        "carousel",
-        "social-media",
-        "columns",
-        "embed",
-        "fragment",
-        "press-releases",
-        "separator",
-        "story-card",
-        "form",
-        "hero",
-        "navigation-content",
-        "stock-ticker",
-        "eds-form",
-        "embed-form",
-        "image",
-        "quote",
-        "search",
-        "tabs",
-        "table",
-        "text",
-        "title",
-        "video",
-        "custom-title",
-        "text-container",
-        "cta",
-        "linklist",
-        "brightcove-video",
-        "tag-utility-nav",
-        "fact-card",
-        "brightcove-podcast-player",
-        "news-feed",
-        "pipeline-utility-nav",
-        "brand-explorer",
-        "clinical-data-panel",
-        "safety-bar",
-        "promo-drawer"
+        "section"
       ]
     }
   ]
