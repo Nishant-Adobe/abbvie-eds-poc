@@ -34,9 +34,11 @@
 }
 
 /* ── Tablet+: two-column layout ── */
+/* Default DOM order: image-col first, content-col second.
+   Column 1 = image, Column 2 = content. */
 @media (width >= 768px) {
   .image-text {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;     /* image=50%, content=50% */
     gap: var(--spacing-32, 2rem);
   }
 }
@@ -47,40 +49,32 @@
   }
 }
 
-/* ── Variant: Reverse (text left, image right) ── */
+/* ── Image size variants (default layout: image col 1, content col 2) ── */
+@media (width >= 768px) {
+  .image-text.image-text-image-large  { grid-template-columns: 3fr 2fr; } /* image=60% */
+  .image-text.image-text-image-medium { grid-template-columns: 2fr 3fr; } /* image=40% */
+  .image-text.image-text-image-small  { grid-template-columns: 1fr 2fr; } /* image=33% */
+}
+
+/* ── Variant: Reverse (text left, image right) ──
+   `order` makes CSS Grid auto-place items in order sequence:
+   content-col (order:1) → column 1 (left track)
+   image-col   (order:2) → column 2 (right track)
+   So all grid-template-columns here are written as [content-track] [image-track].
+   No gap — text sits flush against the image. */
 @media (width >= 768px) {
   .image-text.image-text-reverse {
-    grid-template-columns: fit-content(50%) 1fr;
+    grid-template-columns: 1fr 1fr;     /* content=50%, image=50% */
+    gap: 0;
   }
 
-  .image-text.image-text-reverse .image-text-image-col {
-    order: 2;
-  }
+  .image-text.image-text-reverse .image-text-image-col  { order: 2; }
+  .image-text.image-text-reverse .image-text-content-col { order: 1; }
 
-  .image-text.image-text-reverse .image-text-content-col {
-    order: 1;
-  }
-}
-
-/* ── Variant: Image Large (image column takes 60%) ── */
-@media (width >= 768px) {
-  .image-text.image-text-image-large {
-    grid-template-columns: 3fr 2fr;
-  }
-}
-
-/* ── Variant: Image Medium (image column takes 40%) ── */
-@media (width >= 768px) {
-  .image-text.image-text-image-medium {
-    grid-template-columns: 2fr 3fr;
-  }
-}
-
-/* ── Variant: Image Small (image column takes ~33%) ── */
-@media (width >= 768px) {
-  .image-text.image-text-image-small {
-    grid-template-columns: 1fr 2fr;
-  }
+  /* Mirror the image-size proportions so image always gets the correct share */
+  .image-text.image-text-reverse.image-text-image-large  { grid-template-columns: 2fr 3fr; } /* content=40%, image=60% */
+  .image-text.image-text-reverse.image-text-image-medium { grid-template-columns: 3fr 2fr; } /* content=60%, image=40% */
+  .image-text.image-text-reverse.image-text-image-small  { grid-template-columns: 2fr 1fr; } /* content=67%, image=33% */
 }
 
 /* ── Variant: Scale (CSS transform on image hover) ── */
