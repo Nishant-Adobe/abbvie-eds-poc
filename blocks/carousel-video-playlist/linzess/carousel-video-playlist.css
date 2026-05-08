@@ -885,24 +885,25 @@
 .carousel-video-playlist.featured .cvp-prev,
 .carousel-video-playlist.featured .cvp-next {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: none;
-  background: #4a2d7f;
+  border: 2px solid var(--color-brand-primary, #4a2d7f);
+  background: var(--color-brand-primary, #4a2d7f);
   color: #fff;
-  font-size: 24px;
+  font-size: 14px;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 200ms;
+  transition: opacity 200ms;
+  opacity: 0.8;
 }
 
 .carousel-video-playlist.featured .cvp-prev:hover,
 .carousel-video-playlist.featured .cvp-next:hover {
-  background: #3a2060;
+  opacity: 1;
 }
 
 .carousel-video-playlist.featured .cvp-thumbnails {
