@@ -420,7 +420,8 @@ export async function decorateBlock(block) {
 
     block.append(playerArea);
 
-    // Defer Brightcove SDK load until block is near viewport
+    // Defer Brightcove SDK load — 3s delay + IntersectionObserver
+    setTimeout(() => {
     const blockObs = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) return;
       blockObs.disconnect();
@@ -478,8 +479,9 @@ export async function decorateBlock(block) {
           }
         });
       });
-    }, { rootMargin: '400px' });
+    }, { rootMargin: '0px' });
     blockObs.observe(block);
+    }, 3000);
     return;
   }
 

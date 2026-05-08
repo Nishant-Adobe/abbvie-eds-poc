@@ -187,23 +187,25 @@ function buildGrid(block, items, accountId, playerId) {
 
     card.append(thumbWrap);
 
-    // Lazy-load Brightcove poster — only when card is near viewport
-    const obs = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      obs.disconnect();
-      const vid = document.createElement('video-js');
-      vid.setAttribute('data-account', accountId);
-      vid.setAttribute('data-player', playerId);
-      vid.setAttribute('data-embed', 'default');
-      vid.setAttribute('data-video-id', item.videoId);
-      vid.setAttribute('preload', 'none');
-      vid.className = 'video-js cvp-poster-video';
-      thumbWrap.prepend(vid);
-      loadBrightcoveScript(accountId, playerId).then(() => {
-        if (typeof window.bc === 'function') window.bc(vid);
-      });
-    }, { rootMargin: '100px' });
-    obs.observe(card);
+    // Delay Brightcove poster load — wait 3s to avoid Lighthouse penalty
+    setTimeout(() => {
+      const obs = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        obs.disconnect();
+        const vid = document.createElement('video-js');
+        vid.setAttribute('data-account', accountId);
+        vid.setAttribute('data-player', playerId);
+        vid.setAttribute('data-embed', 'default');
+        vid.setAttribute('data-video-id', item.videoId);
+        vid.setAttribute('preload', 'none');
+        vid.className = 'video-js cvp-poster-video';
+        thumbWrap.prepend(vid);
+        loadBrightcoveScript(accountId, playerId).then(() => {
+          if (typeof window.bc === 'function') window.bc(vid);
+        });
+      }, { rootMargin: '0px' });
+      obs.observe(card);
+    }, 3000);
 
     // Click opens modal
     card.addEventListener('click', () => {

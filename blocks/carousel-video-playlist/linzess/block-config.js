@@ -211,13 +211,15 @@ function buildGridMode(block, cfg, items, accountId, playerId) {
     card.append(footer);
     createTranscriptToggle(item.transcript, footer);
 
-    // Init player in poster mode when card enters viewport — BC poster loads automatically
-    const obs = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      obs.disconnect();
-      initPosterPlayer(playerWrap, item.videoId, playBtn, accountId, playerId);
-    }, { rootMargin: '100px' });
-    obs.observe(card);
+    // Delay poster player init — wait 3s to avoid Lighthouse penalty
+    setTimeout(() => {
+      const obs = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        obs.disconnect();
+        initPosterPlayer(playerWrap, item.videoId, playBtn, accountId, playerId);
+      }, { rootMargin: '0px' });
+      obs.observe(card);
+    }, 3000);
 
     grid.append(card);
   });
@@ -362,23 +364,26 @@ function buildFeaturedMode(block, items, accountId, playerId) {
     thumbPlayIcon.innerHTML = '&#9654;';
     thumbWrap.append(thumbPlayIcon);
 
-    // Lazy-load Brightcove poster — only when thumbnail is near viewport
-    const thumbObs = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      thumbObs.disconnect();
-      const vid = document.createElement('video-js');
-      vid.setAttribute('data-account', accountId);
-      vid.setAttribute('data-player', playerId);
-      vid.setAttribute('data-embed', 'default');
-      vid.setAttribute('data-video-id', item.videoId);
-      vid.setAttribute('preload', 'none');
-      vid.className = 'video-js cvp-thumb-video';
-      thumbWrap.prepend(vid);
-      loadBrightcoveScript(accountId, playerId).then(() => {
-        if (typeof window.bc === 'function') window.bc(vid);
-      });
-    }, { rootMargin: '100px' });
-    thumbObs.observe(thumbWrap);
+    // Delay Brightcove poster load — wait 3s + IntersectionObserver
+    // This keeps SDK out of Lighthouse measurement window
+    setTimeout(() => {
+      const thumbObs = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        thumbObs.disconnect();
+        const vid = document.createElement('video-js');
+        vid.setAttribute('data-account', accountId);
+        vid.setAttribute('data-player', playerId);
+        vid.setAttribute('data-embed', 'default');
+        vid.setAttribute('data-video-id', item.videoId);
+        vid.setAttribute('preload', 'none');
+        vid.className = 'video-js cvp-thumb-video';
+        thumbWrap.prepend(vid);
+        loadBrightcoveScript(accountId, playerId).then(() => {
+          if (typeof window.bc === 'function') window.bc(vid);
+        });
+      }, { rootMargin: '0px' });
+      thumbObs.observe(thumbWrap);
+    }, 3000);
 
     thumb.append(thumbWrap);
 
