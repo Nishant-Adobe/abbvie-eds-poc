@@ -211,13 +211,21 @@ function buildGridMode(block, cfg, items, accountId, playerId) {
     card.append(footer);
     createTranscriptToggle(item.transcript, footer);
 
-    // Init player in poster mode when card enters viewport — BC poster loads automatically
-    const obs = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      obs.disconnect();
+    // Show poster image (no Brightcove SDK load until play clicked)
+    const posterImg = document.createElement('img');
+    posterImg.className = 'cvp-card-poster';
+    posterImg.alt = item.nameBanner || '';
+    posterImg.loading = 'lazy';
+    posterImg.src = `https://cf-images.us-east-1.prod.boltdns.net/v1/jit/${accountId}/${item.videoId}/main/1280x720/match/image.jpg`;
+    posterImg.onerror = () => { posterImg.style.display = 'none'; };
+    playerWrap.prepend(posterImg);
+
+    // Only init Brightcove player on play button click
+    playBtn.addEventListener('click', () => {
+      playBtn.style.display = 'none';
+      posterImg.style.display = 'none';
       initPosterPlayer(playerWrap, item.videoId, playBtn, accountId, playerId);
-    }, { rootMargin: '300px' });
-    obs.observe(card);
+    });
 
     grid.append(card);
   });
@@ -362,23 +370,15 @@ function buildFeaturedMode(block, items, accountId, playerId) {
     thumbPlayIcon.innerHTML = '&#9654;';
     thumbWrap.append(thumbPlayIcon);
 
-    // Lazy-load Brightcove poster on thumbnail — only when visible
-    const thumbObs = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      thumbObs.disconnect();
-      const vid = document.createElement('video-js');
-      vid.setAttribute('data-account', accountId);
-      vid.setAttribute('data-player', playerId);
-      vid.setAttribute('data-embed', 'default');
-      vid.setAttribute('data-video-id', item.videoId);
-      vid.setAttribute('preload', 'none');
-      vid.className = 'video-js cvp-thumb-video';
-      thumbWrap.prepend(vid);
-      loadBrightcoveScript(accountId, playerId).then(() => {
-        if (typeof window.bc === 'function') window.bc(vid);
-      });
-    }, { rootMargin: '200px' });
-    thumbObs.observe(thumbWrap);
+    // Thumbnail poster — use Brightcove poster URL pattern (no SDK load needed)
+    // Poster loads via img tag when thumbnail scrolls into view
+    const thumbImg = document.createElement('img');
+    thumbImg.className = 'cvp-thumb-poster';
+    thumbImg.alt = item.nameBanner || '';
+    thumbImg.loading = 'lazy';
+    thumbImg.src = `https://cf-images.us-east-1.prod.boltdns.net/v1/jit/${accountId}/${item.videoId}/main/1280x720/match/image.jpg`;
+    thumbImg.onerror = () => { thumbImg.style.display = 'none'; };
+    thumbWrap.prepend(thumbImg);
 
     thumb.append(thumbWrap);
 

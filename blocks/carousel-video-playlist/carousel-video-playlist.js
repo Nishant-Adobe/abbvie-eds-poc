@@ -420,7 +420,11 @@ export async function decorateBlock(block) {
 
     block.append(playerArea);
 
-    initPlaylistPlayer(videoContainer, accountId, player, playlistId, enableCaptions, (bcPlayer) => { // eslint-disable-line max-len
+    // Defer Brightcove SDK load until block is near viewport
+    const blockObs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      blockObs.disconnect();
+      initPlaylistPlayer(videoContainer, accountId, player, playlistId, enableCaptions, (bcPlayer) => { // eslint-disable-line max-len
       loadingEl.remove();
 
       if (!bcPlayer) {
@@ -474,6 +478,8 @@ export async function decorateBlock(block) {
         }
       });
     });
+    }, { rootMargin: '400px' });
+    blockObs.observe(block);
     return;
   }
 
