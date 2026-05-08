@@ -365,25 +365,26 @@
 .carousel-video-playlist.featured .cvp-prev,
 .carousel-video-playlist.featured .cvp-next {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: 2px solid var(--color-brand-primary, #4a2d7f);
-  background: var(--color-brand-primary, #4a2d7f);
-  color: #fff;
-  font-size: 14px;
+  background: transparent;
+  color: var(--color-brand-primary, #4a2d7f);
+  font-size: 12px;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 200ms;
-  opacity: 0.8;
+  transition: background 200ms;
+  padding: 0;
 }
 
 .carousel-video-playlist.featured .cvp-prev:hover,
 .carousel-video-playlist.featured .cvp-next:hover {
-  opacity: 1;
+  background: var(--color-brand-primary, #4a2d7f);
+  color: #fff;
 }
 
 .carousel-video-playlist.featured .cvp-thumbnails {
