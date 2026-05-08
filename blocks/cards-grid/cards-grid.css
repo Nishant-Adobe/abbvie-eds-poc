@@ -629,8 +629,15 @@
     position: relative;
   }
   
+  /*
+   * Project base sets img, picture { display: block } (styles.css), so text-align:center
+   * on .abbv-flex-item-v2 does not center icons like the standalone linzess demo (inline img).
+   */
   .cards-grid.cards-grid-linzess-icon-image-card .abbv-image-text-v2 .abbv-image-content-container-v2 {
     position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
   
   .cards-grid.cards-grid-linzess-icon-image-card .abbv-image-text-content-container-v2.abbv-image-text-out .abbv-image-text-content-v2 .abbv-image-text-display-v2 {
