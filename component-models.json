@@ -43,20 +43,40 @@
         "name": "pageSubtitle",
         "label": "Page Subtitle"
       },
-      
       {
         "component": "select",
         "valueType": "string",
         "name": "brand",
         "label": "Brand",
         "options": [
-          { "name": "AbbVie (default)", "value": "" },
-          { "name": "Skyrizi HCP", "value": "skyrizi-hcp" },
-          { "name": "Rinvoq DTC", "value": "rinvoq-dtc" },
-          { "name": "Rinvoq HCP", "value": "rinvoq-hcp" },
-          { "name": "Mavyret", "value": "mavyret" },
-          { "name": "Venclexta", "value": "venclexta" },
-          { "name": "Linzess", "value": "linzess" }
+          {
+            "name": "AbbVie (default)",
+            "value": ""
+          },
+          {
+            "name": "Skyrizi HCP",
+            "value": "skyrizi-hcp"
+          },
+          {
+            "name": "Rinvoq DTC",
+            "value": "rinvoq-dtc"
+          },
+          {
+            "name": "Rinvoq HCP",
+            "value": "rinvoq-hcp"
+          },
+          {
+            "name": "Mavyret",
+            "value": "mavyret"
+          },
+          {
+            "name": "Venclexta",
+            "value": "venclexta"
+          },
+          {
+            "name": "Linzess",
+            "value": "linzess"
+          }
         ]
       },
       {
@@ -177,7 +197,6 @@
         "label": "Brand & Theme",
         "name": "tabBrand"
       },
-      
       {
         "component": "text",
         "valueType": "string",
@@ -9075,9 +9094,18 @@
         "label": "Variant",
         "description": "Visual layout variant.",
         "options": [
-          { "name": "Default (Full explorer with filter tabs)", "value": "" },
-          { "name": "Cards (Grid layout)", "value": "cards" },
-          { "name": "Navigation (Link list)", "value": "nav" }
+          {
+            "name": "Default (Full explorer with filter tabs)",
+            "value": ""
+          },
+          {
+            "name": "Cards (Grid layout)",
+            "value": "cards"
+          },
+          {
+            "name": "Navigation (Link list)",
+            "value": "nav"
+          }
         ]
       },
       {
@@ -9538,6 +9566,141 @@
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "image-text",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Style",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Reverse (text left, image right)",
+            "value": "reverse"
+          },
+          {
+            "name": "Image Size",
+            "children": [
+              {
+                "name": "Large Image",
+                "value": "image-large"
+              },
+              {
+                "name": "Medium Image",
+                "value": "image-medium"
+              },
+              {
+                "name": "Small Image",
+                "value": "image-small"
+              }
+            ]
+          },
+          {
+            "name": "Swap (responsive image at mobile)",
+            "value": "swap"
+          },
+          {
+            "name": "Scale (image scales on hover)",
+            "value": "scale"
+          },
+          {
+            "name": "Stretched Link (entire card clickable)",
+            "value": "stretched-link"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Mobile Image (swap variant only)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content",
+        "value": "",
+        "label": "Content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLabel",
+        "value": "",
+        "label": "CTA Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaHref",
+        "value": "",
+        "label": "CTA URL"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "ctaTarget",
+        "value": "_self",
+        "label": "CTA Target",
+        "options": [
+          {
+            "name": "Same Tab",
+            "value": "_self"
+          },
+          {
+            "name": "New Tab",
+            "value": "_blank"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "modalId",
+        "value": "",
+        "label": "Modal ID (overrides CTA URL with modal trigger)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "analyticsId",
+        "value": "",
+        "label": "Analytics ID"
       }
     ]
   }
