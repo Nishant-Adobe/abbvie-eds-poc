@@ -136,9 +136,16 @@ export default function decorate(block) {
   }
 
   // --- Rebuild block ---
+  // For reverse, put content first so DOM order matches visual order.
+  // This avoids CSS `order` and lets grid-template-columns read left→right.
   block.innerHTML = '';
-  block.appendChild(imageCol);
-  block.appendChild(contentCol);
+  if (block.classList.contains('image-text-reverse')) {
+    block.appendChild(contentCol);
+    block.appendChild(imageCol);
+  } else {
+    block.appendChild(imageCol);
+    block.appendChild(contentCol);
+  }
 
   // --- Swap variant: swap image src at mobile breakpoint ---
   if (block.classList.contains('image-text-swap') && mobilePicture) {

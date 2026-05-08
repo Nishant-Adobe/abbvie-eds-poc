@@ -57,21 +57,18 @@
 }
 
 /* ── Variant: Reverse (text left, image right) ──
-   `order` makes CSS Grid auto-place items in order sequence:
-   content-col (order:1) → column 1 (left track)
-   image-col   (order:2) → column 2 (right track)
-   So all grid-template-columns here are written as [content-track] [image-track].
+   JS appends content-col FIRST, image-col SECOND for this variant,
+   so col 1 = content, col 2 = image — no CSS `order` needed.
+   fit-content(50%): text takes only its content width, capped at 50%.
+   1fr: image fills every remaining pixel.
    No gap — text sits flush against the image. */
 @media (width >= 768px) {
   .image-text.image-text-reverse {
-    grid-template-columns: 1fr 1fr;     /* content=50%, image=50% */
+    grid-template-columns: fit-content(50%) 1fr;
     gap: 0;
   }
 
-  .image-text.image-text-reverse .image-text-image-col  { order: 2; }
-  .image-text.image-text-reverse .image-text-content-col { order: 1; }
-
-  /* Mirror the image-size proportions so image always gets the correct share */
+  /* Size variants: col 1 = content track, col 2 = image track */
   .image-text.image-text-reverse.image-text-image-large  { grid-template-columns: 2fr 3fr; } /* content=40%, image=60% */
   .image-text.image-text-reverse.image-text-image-medium { grid-template-columns: 3fr 2fr; } /* content=60%, image=40% */
   .image-text.image-text-reverse.image-text-image-small  { grid-template-columns: 2fr 1fr; } /* content=67%, image=33% */
