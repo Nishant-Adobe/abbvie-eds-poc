@@ -527,11 +527,10 @@
   display: none !important;
 }
 
-/* Hide our play button when video is playing */
+/* Hide play button when hidden attribute set by JS on click */
 
-.carousel-video-playlist .cvp-player-wrap .vjs-playing ~ .cvp-play-btn,
-.carousel-video-playlist .cvp-player-wrap .vjs-has-started ~ .cvp-play-btn {
-  display: none;
+.carousel-video-playlist .cvp-play-btn[hidden] {
+  display: none !important;
 }
 
 /* Ensure Brightcove controls ARE visible when playing */

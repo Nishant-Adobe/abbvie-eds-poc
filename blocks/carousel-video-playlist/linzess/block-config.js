@@ -88,6 +88,7 @@ function initPosterPlayer(container, videoId, playBtn, accountId, playerId) {
 
   playBtn.addEventListener('click', () => {
     playBtn.hidden = true;
+    playBtn.style.display = 'none';
     const poll = () => {
       const p = getVideoJsPlayer(id);
       if (p) p.ready(() => p.play());
