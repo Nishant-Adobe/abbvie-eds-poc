@@ -11,29 +11,52 @@ export default async function decorate(block) {
   tablist.setAttribute('role', 'tablist');
   tablist.id = `tablist-${tabBlockCnt += 1}`;
 
-  // the first cell of each row is the title of the tab
-  const tabHeadings = [...block.children]
-    .filter((child) => child.firstElementChild && child.firstElementChild.children.length > 0)
-    .map((child) => child.firstElementChild);
+  const tabItems = [...block.children];
 
-  tabHeadings.forEach((tab, i) => {
+  tabItems.forEach((tabItem, i) => {
     const id = `tabpanel-${tabBlockCnt}-tab-${i + 1}`;
 
-    // decorate tabpanel
-    const tabpanel = block.children[i];
-    tabpanel.className = 'tabs-panel';
-    tabpanel.id = id;
-    tabpanel.setAttribute('aria-hidden', !!i);
-    tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
-    tabpanel.setAttribute('role', 'tabpanel');
+    // First row contains the tab item fields (title, heading, image, content)
+    // Remaining rows are the sections
+    const itemContentRow = tabItem.firstElementChild;
 
-    // build tab button
+    // Extract tab title from first cell of first row
+    const titleCell = itemContentRow?.firstElementChild;
+    const title = titleCell?.textContent.trim() || `Tab ${i + 1}`;
+
+    // Build tab item content wrapper for the tab's own content (heading, image, richtext)
+    const tabItemContent = document.createElement('div');
+    tabItemContent.className = 'tabs-panel-content';
+
+    // Move item content (heading, image, richtext) into wrapper
+    // Skip the first cell (title) and process remaining cells
+    const contentCells = [...itemContentRow.children].slice(1);
+    contentCells.forEach((cell) => {
+      // Clone and append each content cell
+      const cellContent = cell.cloneNode(true);
+      tabItemContent.appendChild(cellContent);
+    });
+
+    // Remove the first row (item content row) from tabItem
+    itemContentRow.remove();
+
+    // Setup tab panel (contains item content + sections)
+    tabItem.className = 'tabs-panel';
+    tabItem.id = id;
+    tabItem.setAttribute('aria-hidden', !!i);
+    tabItem.setAttribute('aria-labelledby', `tab-${id}`);
+    tabItem.setAttribute('role', 'tabpanel');
+
+    // Prepend tab item content before sections (if it has any content)
+    if (tabItemContent.children.length > 0) {
+      tabItem.prepend(tabItemContent);
+    }
+
+    // Build tab button
     const button = document.createElement('button');
     button.className = 'tabs-tab';
     button.id = `tab-${id}`;
-
-    button.innerHTML = tab.innerHTML;
-
+    button.textContent = title;
     button.setAttribute('aria-controls', id);
     button.setAttribute('aria-selected', !i);
     button.setAttribute('role', 'tab');
@@ -46,21 +69,19 @@ export default async function decorate(block) {
       tablist.querySelectorAll('button').forEach((btn) => {
         btn.setAttribute('aria-selected', false);
       });
-      tabpanel.setAttribute('aria-hidden', false);
+      tabItem.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
     });
 
-    // add the new tab list button, to the tablist
     tablist.append(button);
 
-    // remove the tab heading from the dom, which also removes it from the UE tree
-    tab.remove();
-
-    // remove the instrumentation from the button's h1, h2 etc (this removes it from the tree)
+    // Remove instrumentation from button
     if (button.firstElementChild) {
       moveInstrumentation(button.firstElementChild, null);
     }
   });
 
   block.prepend(tablist);
+
+  // Sections and their blocks are automatically decorated by EDS framework
 }
