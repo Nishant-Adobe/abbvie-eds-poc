@@ -140,6 +140,16 @@ export default function decorate(block) {
     contentCol.appendChild(buttonP);
   }
 
+  // --- Set sizes hint for responsive image loading ---
+  const img = picture?.querySelector('img');
+  if (img && !img.sizes) {
+    let colWidth = '50vw';
+    if (block.classList.contains('image-text-image-large')) colWidth = '60vw';
+    else if (block.classList.contains('image-text-image-medium')) colWidth = '40vw';
+    else if (block.classList.contains('image-text-image-small')) colWidth = '33vw';
+    img.sizes = `(max-width: 767px) 100vw, ${colWidth}`;
+  }
+
   // --- Rebuild block ---
   // For reverse, put content first so DOM order matches visual order.
   // This avoids CSS `order` and lets grid-template-columns read left→right.
