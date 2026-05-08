@@ -49,6 +49,14 @@ function parseItems(block) {
 // ── Modal overlay (shared singleton) ──
 let modal = null;
 
+function closeModal() {
+  if (!modal) return;
+  modal.classList.remove('is-open');
+  document.body.classList.remove('cvp-modal-is-open');
+  const content = modal.querySelector('.cvp-modal-content');
+  content.innerHTML = '';
+}
+
 function getModal() {
   if (modal) return modal;
 
@@ -83,14 +91,6 @@ function getModal() {
   });
 
   return modal;
-}
-
-function closeModal() {
-  if (!modal) return;
-  modal.classList.remove('is-open');
-  document.body.classList.remove('cvp-modal-is-open');
-  const content = modal.querySelector('.cvp-modal-content');
-  content.innerHTML = '';
 }
 
 function openVideoModal(item, accountId, playerId) {
