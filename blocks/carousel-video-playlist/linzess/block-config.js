@@ -362,19 +362,23 @@ function buildFeaturedMode(block, items, accountId, playerId) {
     thumbPlayIcon.innerHTML = '&#9654;';
     thumbWrap.append(thumbPlayIcon);
 
-    // Load Brightcove poster for thumbnail
-    const thumbVideo = document.createElement('video-js');
-    thumbVideo.setAttribute('data-account', accountId);
-    thumbVideo.setAttribute('data-player', playerId);
-    thumbVideo.setAttribute('data-embed', 'default');
-    thumbVideo.setAttribute('data-video-id', item.videoId);
-    thumbVideo.setAttribute('preload', 'none');
-    thumbVideo.className = 'video-js cvp-thumb-video';
-    thumbWrap.prepend(thumbVideo);
-
-    loadBrightcoveScript(accountId, playerId).then(() => {
-      if (typeof window.bc === 'function') window.bc(thumbVideo);
-    });
+    // Lazy-load Brightcove poster on thumbnail — only when visible
+    const thumbObs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      thumbObs.disconnect();
+      const vid = document.createElement('video-js');
+      vid.setAttribute('data-account', accountId);
+      vid.setAttribute('data-player', playerId);
+      vid.setAttribute('data-embed', 'default');
+      vid.setAttribute('data-video-id', item.videoId);
+      vid.setAttribute('preload', 'none');
+      vid.className = 'video-js cvp-thumb-video';
+      thumbWrap.prepend(vid);
+      loadBrightcoveScript(accountId, playerId).then(() => {
+        if (typeof window.bc === 'function') window.bc(vid);
+      });
+    }, { rootMargin: '200px' });
+    thumbObs.observe(thumbWrap);
 
     thumb.append(thumbWrap);
 
