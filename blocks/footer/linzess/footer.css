@@ -902,7 +902,7 @@
 
   /* Arc top decoration height — matches live `.abbv-footer:before { height: 255px }`.
      Block-scoped raw value (precedent: `--footer-content-max-width: 1200px` in base). */
-  --footer-arc-height: 255px;
+  --footer-arc-height: var(--spacing-255);
 }
 
 /* Curved arc top decoration — replicates the live `.abbv-footer:before`.
@@ -916,7 +916,7 @@
 .footer::before {
   content: '';
   position: absolute;
-  top: calc(0px - var(--spacing-60));
+  top: calc(-1 * var(--spacing-60));
   left: 50%;
   transform: translateX(-50%);
   width: 130%;
@@ -1080,7 +1080,7 @@
   /* row-gap spaces wrapped lines; column-gap stays 0 (margin-right per <li>
      handles the inline spacing so the `|` separator can sit between items). */
   gap: var(--spacing-12) 0;
-  border-top: 1px solid var(--footer-color-separator);
+  border-top: var(--separator-height-1) solid var(--footer-color-separator);
 }
 
 /* `|` separator after every item except the last */
@@ -1093,7 +1093,7 @@
 .footer .footer-bottom ul li:not(:last-child)::after {
   content: '|';
   position: absolute;
-  right: calc(0px - var(--spacing-16));
+  right: calc(-1 * var(--spacing-16));
   color: var(--footer-color-separator);
 }
 
@@ -1157,15 +1157,19 @@
 
 .footer .footer-bottom-logos > p:first-child {
   padding-right: var(--spacing-16);
-  border-right: 1px solid var(--footer-color-separator);
+  border-right: var(--separator-height-1) solid var(--footer-color-separator);
 }
 
-/* Stack copyright + indication code in the texts wrapper, both right-aligned */
+/* Stack copyright + indication code in the texts wrapper.
+   Mobile: paragraphs flow as a single inline text block. */
 
 .footer .footer-bottom-texts {
-  display: flex;
-  gap: var(--spacing-24);
+  display: block;
   text-align: left;
+}
+
+.footer .footer-bottom-texts > p {
+  display: inline;
 }
 
 /* `.footer-wrapper` prefix raises specificity above `.footer-bottom-logos > p:first-child`
@@ -1175,21 +1179,17 @@
   margin: 0;
 }
 
-/* ── Mobile (< 744px): copyright + indication code flow inline ─ */
-@media (width < 744px) {
-  /* Override flex-row so the two text paragraphs flow as a single inline
-     text block: "…All rights reserved. US-LIN-250071" wraps naturally. */
+@media (width >= 744px) {
+  /* Restore flex layout for the texts wrapper */
   .footer .footer-bottom-texts {
-    display: block;
+    display: flex;
+    gap: var(--spacing-24);
   }
 
   .footer .footer-bottom-texts > p {
-    display: inline;
+    display: block;
   }
 
-}
-
-@media (width >= 744px) {
   /* Section 2 grid: sublinks + 2 legal paragraphs full-width on stacked rows;
      bottom row puts the .footer-bottom-logos wrapper on the left and the
      .footer-bottom-texts wrapper on the right, separated by a 1fr spacer. */
@@ -1217,7 +1217,7 @@
   /* US-residents disclaimer + bottom separator above the logo/text row */
   .footer .footer-bottom > p:nth-of-type(2) {
     grid-area: legal2;
-    border-bottom: 1px solid var(--footer-color-separator);
+    border-bottom: var(--separator-height-1) solid var(--footer-color-separator);
     padding-bottom: var(--spacing-24);
   }
 

@@ -43,7 +43,7 @@
 
 /* Border separator on second UL (matches live `abbv-footer-border-top`) */
 .footer .footer-links-primary ul + ul {
-  border-top: 1px solid var(--color-steel);
+  border-top: var(--separator-height-1) solid var(--color-steel);
 }
 
 /* Footer bottom: legal text uses smaller font, no flex gap (use padding instead) */
@@ -55,60 +55,81 @@
   margin-top: 0;
 }
 
-/* Live: .abbv-footer .logo { padding: 48px 0 0 } — same as legal-number */
+/* ── Mobile-first defaults ──────────────────────────────────── */
+
+/* Row-wrap within 335px — matches live abbv-footer-horizontal on mobile */
+.footer .footer-links-primary ul {
+  flex-flow: row wrap;
+  justify-content: center;
+  max-width: var(--footer-links-max-width);
+  margin-inline: auto;
+  column-gap: var(--spacing-16);
+}
+
+/* Indication code left + logo right in same row via grid */
 .footer .footer-bottom > p:has(picture),
 .footer .footer-bottom > p:has(img) {
-  padding-top: var(--spacing-48);
+  grid-column: 2;
+  padding-top: 0;
   margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-/* Live: .abbv-legal-number { padding: 48px 0 0 } — 48px top space */
+/* Compact line-height on first legal paragraph (matches live 1.2rem) */
+.footer .footer-bottom > p:first-of-type {
+  line-height: var(--spacing-12);
+}
+
+.footer .footer-bottom {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: var(--spacing-24);
+  align-items: center;
+}
+
+.footer .footer-bottom > p:not(:has(picture), :has(img), .legal-number, :nth-last-child(2)) {
+  grid-column: 1 / -1;
+}
+
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
-  padding-top: var(--spacing-48);
+  grid-column: 1;
+  text-align: left;
+  padding-top: 0;
 }
 
-/* ── Mobile / narrow tablet (< 768px) ──────────────────────── */
-@media (width <= 767px) {
-  /* Fix 1: row-wrap within 335px — matches live abbv-footer-horizontal on mobile */
+/* ── Desktop (≥ 768px): reset mobile-only overrides ────────── */
+@media (width >= 768px) {
+  /* Remove 335px mobile constraint; base CSS handles row-wrap for links */
   .footer .footer-links-primary ul {
-    flex-flow: row wrap;
-    justify-content: center;
-    max-width: 335px;
-    margin-inline: auto;
-    column-gap: var(--spacing-16);
+    max-width: none;
+    margin-inline: 0;
+    column-gap: 0;
   }
 
-  /* Fix 3: indication code left + logo right in same row via grid */
+  /* Live: .abbv-footer .logo { padding: 48px 0 0 } */
   .footer .footer-bottom > p:has(picture),
   .footer .footer-bottom > p:has(img) {
-    grid-column: 2;
-    padding-top: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    display: block;
+    padding-top: var(--spacing-48);
   }
 
-  /* Fix 2: compact line-height on first legal paragraph (matches live 1.2rem) */
+  /* Restore default line-height */
   .footer .footer-bottom > p:first-of-type {
-    line-height: var(--spacing-12);
+    line-height: var(--footer-line-height);
   }
 
+  /* Reset mobile row-gap and align-items; base CSS handles grid layout */
   .footer .footer-bottom {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    row-gap: var(--spacing-24);
-    align-items: center;
+    row-gap: 0;
+    align-items: normal;
   }
 
-  .footer .footer-bottom > p:not(:has(picture), :has(img), .legal-number, :nth-last-child(2)) {
-    grid-column: 1 / -1;
-  }
-
+  /* Live: .abbv-legal-number { padding: 48px 0 0 } */
   .footer .footer-bottom > p.legal-number,
   .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
-    grid-column: 1;
-    text-align: left;
-    padding-top: 0;
+    padding-top: var(--spacing-48);
   }
 }

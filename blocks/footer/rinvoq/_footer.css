@@ -96,7 +96,7 @@
       var(--footer-spacing-padding-x),
       calc((100% - var(--footer-content-max-width)) / 2)
     );
-    height: 1px;
+    height: var(--separator-height-1);
     background-color: var(--color-black);
   }
 }
@@ -130,7 +130,7 @@
   line-height: var(--line-height-22);
   margin: 0 0 var(--spacing-16) 0;
   padding-bottom: var(--spacing-12);
-  border-bottom: 1px solid var(--color-silver);
+  border-bottom: var(--separator-height-1) solid var(--color-silver);
 }
 
 /* Vertical link list */
@@ -191,7 +191,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
+  height: var(--separator-height-1);
   background-color: var(--color-black);
 }
 
@@ -269,16 +269,19 @@
   fill: var(--color-navy);
 }
 
-/* ── Mobile (< 601px): logo first, then legal text ─────────── */
-@media (width < 601px) {
-  .footer .footer-bottom > p:has(picture),
-  .footer .footer-bottom > p:has(img) {
-    order: -1;
-  }
+/* Mobile first: logo appears before legal text on mobile */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  order: -1;
 }
 
 /* ── Desktop ≥601px: legal text + number row, logo left ─────── */
 @media (width >= 601px) {
+  /* Reset order — grid placement handles logo position on desktop */
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    order: 0;
+  }
   .footer .footer-bottom {
     display: grid;
     grid-template-columns: auto 1fr;

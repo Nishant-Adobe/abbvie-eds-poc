@@ -1101,11 +1101,17 @@
 
 .footer .footer-logos {
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
+  justify-content: flex-start;
   align-items: center;
-  gap: var(--spacing-24);
+  gap: var(--spacing-20);
   margin-top: var(--spacing-32);
   padding-bottom: var(--spacing-40);
+}
+
+/* Brand logo (3rd child) wraps to its own row on mobile */
+.footer .footer-logos > *:nth-child(3) {
+  flex-basis: 100%;
 }
 
 /* EDS wraps each authored image in a <p> — these flex props center the
@@ -1147,37 +1153,21 @@
   position: absolute;
   right: 0;
   top: 50%;
-  width: 1px;
+  width: var(--separator-height-1);
   height: var(--spacing-24);
   background-color: var(--footer-color-text);
   transform: translateY(-50%);
 }
 
-/* ── Mobile (< 744px): partner logos row, brand logo on next line ── */
-@media (width < 744px) {
-  .footer .footer-logos {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: var(--spacing-20);
-  }
-
-  /* Brand logo (3rd child) wraps to its own row */
-  .footer .footer-logos > *:nth-child(3) {
-    flex-basis: 100%;
-  }
-}
-
 @media (width >= 744px) {
   .footer .footer-logos {
-    flex-direction: row;
-    justify-content: flex-start;
+    flex-wrap: nowrap;
     gap: var(--spacing-20);
   }
 
-  /* Push the third (brand) logo to the right edge */
+  /* Push the third (brand) logo to the right edge; reset mobile full-width */
   .footer .footer-logos > *:nth-child(3) {
+    flex-basis: auto;
     margin-left: auto;
   }
 }

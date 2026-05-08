@@ -1044,31 +1044,53 @@
   );
 }
 
-/* ── Mobile only (< 601px) ─────────────────────────────────── */
-@media (max-width: 600px) {
-  /* 1. Tighter gap between stacked link items */
+/* ── Mobile-first defaults ──────────────────────────────────── */
+
+/* 1. Tighter gap between stacked link items on mobile */
+.footer .footer-links-primary ul,
+.footer .footer-links-secondary ul,
+.footer .footer-links-tertiary ul {
+  gap: var(--spacing-08);
+}
+
+/* 2. Tighter gap between footer-bottom content blocks on mobile */
+.footer .footer-bottom {
+  gap: var(--spacing-01);
+}
+
+/* 3. Center AbbVie logo on mobile — text-align won't work on display:block
+   children, so flex+justify-content is used instead */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-08);
+}
+
+/* Indication code (e.g. US-SKZD-260038) — 40px top gap matches live site */
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+  margin-top: var(--spacing-40);
+}
+
+/* ── Desktop (≥ 601px): reset mobile-only overrides ────────── */
+@media (width >= 601px) {
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
   .footer .footer-links-tertiary ul {
-    gap: var(--spacing-08);
+    gap: var(--footer-spacing-row-gap);
   }
 
-  /* 2. Reduce gap between footer-bottom content blocks */
   .footer .footer-bottom {
-    gap: var(--spacing-01);
+    gap: var(--footer-spacing-bottom-gap);
   }
 
-  /* Indication code (3rd p, e.g. US-SKZD-260038) — 40px top gap matches live site */
-  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-    margin-top: var(--spacing-40);
-  }
-
-  /* 3. Center AbbVie logo — picture/img are display:block globally so
-     text-align won't work; flex+justify-content centers block children */
   .footer .footer-bottom > p:has(picture),
   .footer .footer-bottom > p:has(img) {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--spacing-08);
+    display: block;
+    margin-top: 0;
+  }
+
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+    margin-top: 0;
   }
 }
