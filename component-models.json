@@ -9530,5 +9530,81 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "tab-section",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Section Name",
+        "description": "The label shown for this section in the Content Tree",
+        "value": "Tab Section",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_tabVariant",
+        "label": "Tab Variant",
+        "required": true,
+        "description": "Choose the tab display variant",
+        "options": [
+          {
+            "name": "Simple Tab",
+            "value": "simple-tab"
+          },
+          {
+            "name": "Pill Tab",
+            "value": "pill-tab"
+          },
+          {
+            "name": "Underline Tab",
+            "value": "underline-tab"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabName",
+        "label": "Tab Name",
+        "required": true,
+        "description": "Enter the name of the tab",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "sectionId",
+        "label": "Section ID",
+        "description": "Adds an HTML id attribute to the section",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "classes_style",
+        "label": "Style",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Section type: Full Bleed Background",
+            "value": "full-bleed"
+          },
+          {
+            "name": "Light Background",
+            "value": "light-bg"
+          },
+          {
+            "name": "Dark Background",
+            "value": "dark-bg"
+          }
+        ]
+      }
+    ]
   }
 ]
