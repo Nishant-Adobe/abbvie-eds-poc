@@ -58,16 +58,8 @@
 
 /* ── Variant: Reverse (text left, image right) ──
    JS appends content-col FIRST, image-col SECOND for this variant,
-   so col 1 = content, col 2 = image — no CSS `order` needed.
-   fit-content(50%): text takes only its content width, capped at 50%.
-   1fr: image fills every remaining pixel.
-   No gap — text sits flush against the image. */
+   so col 1 = content, col 2 = image — no CSS `order` needed. */
 @media (width >= 768px) {
-  .image-text.image-text-reverse {
-    grid-template-columns: fit-content(50%) 1fr;
-    gap: 0;
-  }
-
   /* Size variants: col 1 = content track, col 2 = image track */
   .image-text.image-text-reverse.image-text-image-large  { grid-template-columns: 2fr 3fr; } /* content=40%, image=60% */
   .image-text.image-text-reverse.image-text-image-medium { grid-template-columns: 3fr 2fr; } /* content=60%, image=40% */
