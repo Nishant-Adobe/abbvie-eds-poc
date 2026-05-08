@@ -42,15 +42,13 @@
   line-height: inherit !important;
 }
 
-/* Poster images (loaded without Brightcove SDK for performance) */
-.carousel-video-playlist .cvp-card-poster,
-.carousel-video-playlist .cvp-thumb-poster {
+/* Thumbnail video-js — only shows poster image */
+.carousel-video-playlist .cvp-thumb-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  pointer-events: none;
 }
 
 .carousel-video-playlist .cvp-name-banner {

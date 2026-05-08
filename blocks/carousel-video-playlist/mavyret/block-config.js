@@ -187,14 +187,23 @@ function buildGrid(block, items, accountId, playerId) {
 
     card.append(thumbWrap);
 
-    // Poster image (no Brightcove SDK load — performance optimization)
-    const posterImg = document.createElement('img');
-    posterImg.className = 'cvp-poster-img';
-    posterImg.alt = item.title || '';
-    posterImg.loading = 'lazy';
-    posterImg.src = `https://cf-images.us-east-1.prod.boltdns.net/v1/jit/${accountId}/${item.videoId}/main/1280x720/match/image.jpg`;
-    posterImg.onerror = () => { posterImg.style.display = 'none'; };
-    thumbWrap.prepend(posterImg);
+    // Lazy-load Brightcove poster — only when card is near viewport
+    const obs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const vid = document.createElement('video-js');
+      vid.setAttribute('data-account', accountId);
+      vid.setAttribute('data-player', playerId);
+      vid.setAttribute('data-embed', 'default');
+      vid.setAttribute('data-video-id', item.videoId);
+      vid.setAttribute('preload', 'none');
+      vid.className = 'video-js cvp-poster-video';
+      thumbWrap.prepend(vid);
+      loadBrightcoveScript(accountId, playerId).then(() => {
+        if (typeof window.bc === 'function') window.bc(vid);
+      });
+    }, { rootMargin: '100px' });
+    obs.observe(card);
 
     // Click opens modal
     card.addEventListener('click', () => {
