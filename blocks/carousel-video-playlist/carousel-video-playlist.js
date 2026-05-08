@@ -425,59 +425,59 @@ export async function decorateBlock(block) {
       if (!entries[0].isIntersecting) return;
       blockObs.disconnect();
       initPlaylistPlayer(videoContainer, accountId, player, playlistId, enableCaptions, (bcPlayer) => { // eslint-disable-line max-len
-      loadingEl.remove();
+        loadingEl.remove();
 
-      if (!bcPlayer) {
-        const msg = document.createElement('div');
-        msg.className = 'cvp-placeholder';
-        msg.textContent = 'Playlist plugin not available — check Player ID';
-        videoContainer.append(msg);
-        return;
-      }
+        if (!bcPlayer) {
+          const msg = document.createElement('div');
+          msg.className = 'cvp-placeholder';
+          msg.textContent = 'Playlist plugin not available — check Player ID';
+          videoContainer.append(msg);
+          return;
+        }
 
-      const playlist = bcPlayer.playlist() || [];
-      if (!playlist.length) return;
+        const playlist = bcPlayer.playlist() || [];
+        if (!playlist.length) return;
 
-      const items = playlist.map((video) => ({
-        videoId: video.id,
-        thumbnail: video.thumbnail || video.poster || '',
-        title: video.name || '',
-        description: video.description || '',
-        transcriptHref: '',
-      }));
+        const items = playlist.map((video) => ({
+          videoId: video.id,
+          thumbnail: video.thumbnail || video.poster || '',
+          title: video.name || '',
+          description: video.description || '',
+          transcriptHref: '',
+        }));
 
-      activeTitle.textContent = items[0].title;
-      activeDesc.textContent = items[0].description;
+        activeTitle.textContent = items[0].title;
+        activeDesc.textContent = items[0].description;
 
-      const playlistArea = renderPlaylist({
-        items, isCardsLayout, videoContainer, activeTitle, transcriptLink,
-      });
+        const playlistArea = renderPlaylist({
+          items, isCardsLayout, videoContainer, activeTitle, transcriptLink,
+        });
 
-      // Override card click to use Brightcove playlist index
-      playlistArea.querySelectorAll('.cvp-playlist-item').forEach((card, idx) => {
-        card.addEventListener('click', () => {
-          bcPlayer.playlist.currentItem(idx);
-          activeTitle.textContent = items[idx].title;
-          activeDesc.textContent = items[idx].description;
+        // Override card click to use Brightcove playlist index
+        playlistArea.querySelectorAll('.cvp-playlist-item').forEach((card, idx) => {
+          card.addEventListener('click', () => {
+            bcPlayer.playlist.currentItem(idx);
+            activeTitle.textContent = items[idx].title;
+            activeDesc.textContent = items[idx].description;
+          });
+        });
+
+        assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
+
+        // Listen for playlist item changes
+        bcPlayer.on('playlistitem', () => {
+          const currentIdx = bcPlayer.playlist.currentItem();
+          if (currentIdx >= 0 && items[currentIdx]) {
+            activeTitle.textContent = items[currentIdx].title;
+            activeDesc.textContent = items[currentIdx].description;
+
+            playlistArea.querySelectorAll('.cvp-playlist-item').forEach((btn, i) => {
+              btn.classList.toggle('is-active', i === currentIdx);
+              btn.setAttribute('aria-selected', i === currentIdx ? 'true' : 'false');
+            });
+          }
         });
       });
-
-      assembleLayout(block, playlistArea, playerArea, playlistLayout, isCardsLayout);
-
-      // Listen for playlist item changes
-      bcPlayer.on('playlistitem', () => {
-        const currentIdx = bcPlayer.playlist.currentItem();
-        if (currentIdx >= 0 && items[currentIdx]) {
-          activeTitle.textContent = items[currentIdx].title;
-          activeDesc.textContent = items[currentIdx].description;
-
-          playlistArea.querySelectorAll('.cvp-playlist-item').forEach((btn, i) => {
-            btn.classList.toggle('is-active', i === currentIdx);
-            btn.setAttribute('aria-selected', i === currentIdx ? 'true' : 'false');
-          });
-        }
-      });
-    });
     }, { rootMargin: '400px' });
     blockObs.observe(block);
     return;
