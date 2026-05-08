@@ -1,0 +1,165 @@
+/* ============================================================
+   cards-grid — abbv-row / abbv-row-flush variant
+   Scoped to legacy AEM layout selectors .abbv-row and .abbv-row-flush.
+   Overrides the default skyrizi-hcp styles so the grid fills flush
+   within AEM row containers (no horizontal padding bleed).
+   ============================================================ */
+
+/* ---- Section container reset for abbv-row context ---- */
+.abbv-row .cards-grid-section,
+.abbv-row-flush .cards-grid-section {
+  background: #d1f1fc;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ---- Grid wrapper: flush inside the row container ---- */
+.abbv-row .cards-grid,
+.abbv-row-flush .cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 4px 0 0;
+  padding: 0;
+  background: #d1f1fc;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* abbv-row carries padding-left/right on itself; abbv-row-flush strips it */
+.abbv-row-flush .cards-grid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ---- Card items ---- */
+.abbv-row .card-grid-item,
+.abbv-row-flush .card-grid-item {
+  margin: 24px 32px 24px 36px;
+}
+
+.abbv-row .card-grid-item p,
+.abbv-row-flush .card-grid-item p {
+  margin: 0;
+}
+
+.abbv-row .card-grid-item p a,
+.abbv-row-flush .card-grid-item p a {
+  position: relative;
+  display: block;
+  max-width: 300px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  color: #193052;
+  text-decoration: none;
+  font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+}
+
+.abbv-row .card-grid-item p a::before,
+.abbv-row-flush .card-grid-item p a::before {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(90deg, #00a7df 0%, #004c97 88%);
+  border-radius: 0 0 8px 8px;
+  content: "";
+}
+
+.abbv-row .card-grid-item p a > span,
+.abbv-row-flush .card-grid-item p a > span {
+  display: block;
+  line-height: 1;
+}
+
+/* ---- Line typography ---- */
+.abbv-row .card-grid-item-line-1,
+.abbv-row-flush .card-grid-item-line-1 {
+  font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  font-weight: 700;
+  font-size: 2.375rem;
+}
+
+.abbv-row .card-grid-item-line-1::after,
+.abbv-row-flush .card-grid-item-line-1::after {
+  margin-top: 4px;
+  margin-left: 24px;
+  background-color: #1ba2da;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.5rem;
+  vertical-align: top;
+}
+
+.abbv-row .card-grid-item-line-2,
+.abbv-row-flush .card-grid-item-line-2 {
+  font-family: "Univers Bold", "Univers Regular", Arial, sans-serif;
+  font-weight: 600;
+}
+
+.abbv-row .card-grid-item-line-3,
+.abbv-row-flush .card-grid-item-line-3 {
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.abbv-row .card-grid-item-line-4,
+.abbv-row-flush .card-grid-item-line-4 {
+  font-family: "Univers Bold", "Univers Regular", Arial, sans-serif;
+  font-weight: 700;
+}
+
+.abbv-row .card-grid-item-risa-pri,
+.abbv-row-flush .card-grid-item-risa-pri {
+  color: #1ba2da;
+}
+
+/* ---- Hover animation ---- */
+.abbv-row .cards-grid .card-grid-item,
+.abbv-row-flush .cards-grid .card-grid-item {
+  transition: transform 0.3s ease;
+}
+
+@media only screen and (min-width: 896px) {
+  .abbv-row .cards-grid .card-grid-item:hover,
+  .abbv-row-flush .cards-grid .card-grid-item:hover {
+    transform: scale(1.15);
+  }
+}
+
+@media only screen and (max-width: 895px) {
+  .abbv-row .cards-grid .card-grid-item:hover,
+  .abbv-row-flush .cards-grid .card-grid-item:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* ---- Icon font pseudo-elements (inherited from skyrizi-hcp) ---- */
+.abbv-row .i-b::before,
+.abbv-row .i-a::after,
+.abbv-row-flush .i-b::before,
+.abbv-row-flush .i-a::after {
+  font-family: 'abbv-iconFont', sans-serif !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+}
+
+.abbv-row .abbv-icon-keyboard_arrow_right.i-b::before,
+.abbv-row .abbv-icon-keyboard_arrow_right.i-a::after,
+.abbv-row-flush .abbv-icon-keyboard_arrow_right.i-b::before,
+.abbv-row-flush .abbv-icon-keyboard_arrow_right.i-a::after {
+  content: '\e315';
+}
