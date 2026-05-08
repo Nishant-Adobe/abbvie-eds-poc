@@ -51,9 +51,12 @@
         "label": "Brand",
         "options": [
           { "name": "AbbVie (default)", "value": "" },
-          { "name": "Rinvoq", "value": "rinvoq" },
-          { "name": "Botox", "value": "botox" },
-           { "name": "mavyret", "value": "mavyret" }
+          { "name": "Skyrizi HCP", "value": "skyrizi-hcp" },
+          { "name": "Rinvoq DTC", "value": "rinvoq-dtc" },
+          { "name": "Rinvoq HCP", "value": "rinvoq-hcp" },
+          { "name": "Mavyret", "value": "mavyret" },
+          { "name": "Venclexta", "value": "venclexta" },
+          { "name": "Linzess", "value": "linzess" }
         ]
       },
       {
@@ -1682,6 +1685,14 @@
         "label": "Aria Collapse All Label"
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "analyticsId",
+        "value": "",
+        "label": "Analytics ID",
+        "description": "Optional ID used for analytics tracking of this accordion block."
+      },
+      {
         "component": "tab",
         "label": "Styles",
         "name": "styles"
@@ -1975,6 +1986,28 @@
         "name": "ariaCollapseLabel",
         "value": "",
         "label": "Aria Collapse Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID",
+        "description": "Optional ID for deep-linking directly to this accordion item."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Item Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Item Image Alt Text"
       }
     ]
   },

@@ -189,23 +189,23 @@
 /* Strip button-pill styling when legal text is authored as a button (legacy) */
 .footer .footer-bottom a.button,
 .footer .footer-bottom .button-container a {
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  color: var(--footer-color-link);
-  font-size: var(--footer-font-size);
-  font-weight: var(--footer-font-weight);
-  text-decoration: underline;
-  text-transform: none;
-  display: inline;
-  white-space: normal;
-  line-height: var(--footer-line-height);
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--footer-color-link) !important;
+  font-size: var(--footer-font-size) !important;
+  font-weight: var(--footer-font-weight) !important;
+  text-decoration: underline !important;
+  text-transform: none !important;
+  display: inline !important;
+  white-space: normal !important;
+  line-height: var(--footer-line-height) !important;
 }
 .footer .footer-bottom a.button:hover,
 .footer .footer-bottom .button-container a:hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 /* Legal number — small text. Detected by .legal-number class OR by being
    the 2nd-to-last child (paragraph immediately before the logo picture) */
@@ -695,11 +695,9 @@
   }
 }
 /* ============================================================
-   RINVOQ DTC — Brand Token Overrides
-   Source: rinvoq.com/atopic-dermatitis (Platform C)
-   Font: Graphik family (same as HCP)
-   Note: Shares the RINVOQ design system with HCP but uses
-         consumer-friendly styling and language.
+   RINVOQ HCP — Brand Token Overrides
+   Source: rinvoqhcp.com/dermatology (Platform C)
+   Font: Graphik family
    ============================================================ */
 :root {
   /* ---- Color: Brand Primary ---- */
@@ -709,26 +707,32 @@
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #ffd100;
+  --color-brand-accent-light: #ffe673;
   --color-brand-accent-butter: #fff1b3;
   --color-brand-accent-lemon: #ffe673;
 
-  /* ---- Color: Named Palette ---- */
+  /* ---- Color: Named Palette (from CSS vars) ---- */
   --color-plum: #90124a;
   --color-mulberry: #b15980;
   --color-heather: #d3a0b7;
   --color-gold: #ffd100;
+  --color-light-gold: rgba(255, 209, 0, 0.55);
+  --color-lemon: #ffe673;
+  --color-butter: #fff1b3;
   --color-charcoal: #25282a;
   --color-iron: #46484a;
   --color-steel: #87898a;
-  --color-pewter: #929495;
   --color-silver: #c9c9ca;
+  --color-whisper: #ececec;
+  --color-ash: #e3e3e3;
   --color-glacier: #f5f5f5;
-  --color-navy: #194560;
+  --color-footer-bg: #17181b;
 
   /* ---- Color: Text ---- */
   --text-color: #46484a;
   --color-text-heading: #25282a;
   --color-text-on-dark: #fff;
+  --color-text-muted: #696969;
   --color-text-link: #90124a;
 
   /* ---- Color: Background ---- */
@@ -738,7 +742,16 @@
   --color-background-safety-bar: #f5f5f5;
 
   /* ---- Color: Border ---- */
+  --color-border-default: #c9c9ca;
   --color-border-safety: #ffd100;
+
+  /* ---- Color: Status ---- */
+  --color-success: #068c5a;
+  --color-error: #d62a24;
+
+  /* ---- Color: Shadow ---- */
+  --shadow-table: 0 4px 5px 0 rgba(0, 0, 0, 0.1);
+  --shadow-default: 0 4px 19px 0 rgba(0, 0, 0, 0.07);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
@@ -750,14 +763,23 @@
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
+  --font-size-body-small: 12px;
+  --font-size-body-xs: 11.2px;
+  --font-size-legal: 12.992px;
+  --font-size-nav: 16px;
+  --font-size-footer: 16px;
   --font-size-h1: 26px;
   --font-size-h2: 20px;
   --font-size-h3: 14px;
+  --font-size-h4: 14px;
   --font-size-h-xl: 35.2px;
+  --font-size-h-featured: 22px;
   --font-size-button: 16px;
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-heading: 600;
   --font-weight-button: 700;
 
@@ -766,9 +788,13 @@
   --line-height-h1: 27.625px;
   --line-height-h2: 25px;
   --line-height-h3: 16.8px;
+  --line-height-h-xl: 52.8px;
+  --line-height-h-featured: 27.5px;
+  --line-height-link: 19.2px;
 
   /* ---- Border: Radius ---- */
   --border-radius-button-primary: 100px;
+  --border-radius-card: 0px;
 
   /* ---- Button: Primary ---- */
   --button-primary-color: #fff;
@@ -777,303 +803,209 @@
 
   /* ---- Link ---- */
   --link-color: #90124a;
+
+  /* ---- Brand Explorer Block ---- */
+  --be-color-text: #46484a;
+  --be-color-text-light: #46484a;
+  --be-color-bar-bg: #25282a;
+  --be-font-body: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --be-font-heading: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --be-font-weight-bold: 600;
+  /* ---- Formulary Lookup ---- */
+  --color-formulary-submit-bg: #820043;
+  --color-formulary-submit-hover: rgb(100 0 52);
+  --color-formulary-accent: #daaa00;
+  --color-formulary-highlight: rgb(255 243 200);
+  --color-formulary-filter-clear: #820043;
+  --color-formulary-link: #820043;
+
+  /* Formulary: Layout */
+  --formulary-form-width: 520px;
+  --formulary-input-width: 520px;
+
+  /* Formulary: Heading */
+  --formulary-heading-size: 24px;
+  --formulary-heading-weight: 700;
+  --formulary-heading-spacing: 32px;
+  --formulary-heading-line-height: 1.3;
+  --formulary-heading-accent-height: 8px;
+  --formulary-heading-accent-offset: -14px;
+
+  /* Formulary: Input/Select */
+  --formulary-input-height: 56px;
+  --formulary-input-radius: 10px;
+  --formulary-input-size: 18px;
+  --formulary-input-padding: 18px 16px;
+  --formulary-input-spacing: 24px;
+
+  /* Formulary: Label (floating) */
+  --formulary-label-size: 12px;
+  --formulary-label-weight: 400;
+  --formulary-label-offset-left: 16px;
+
+  /* Formulary: Submit */
+  --formulary-submit-size: 18px;
+  --formulary-submit-weight: 700;
+  --formulary-submit-radius: 100px;
+  --formulary-submit-height: 56px;
+  --formulary-submit-padding: 14px 60px 14px 32px;
+  --formulary-submit-spacing: 24px;
+  --formulary-submit-icon-offset: 24px;
+
+  /* Formulary: Card */
+  --formulary-card-radius: 10px;
+  --formulary-card-shadow: rgb(0 0 0 / 15%) 0 2px 12px 0;
+  --formulary-card-padding: 48px 40px 40px;
+
+  /* Formulary: Header */
+  --formulary-header-spacing: 48px;
+  --formulary-header-gap: 16px;
+  --formulary-icon-size: 56px;
+
+  /* Formulary: Filter */
+  --formulary-filter-radius: 10px;
+  --formulary-filter-spacing: 24px;
+  --formulary-filter-chevron-size: 24px;
+
+  /* Formulary: Indications */
+  --formulary-indication-spacing: 24px;
+  --formulary-radio-size: 18px;
+
+  /* Formulary: Results */
+  --formulary-results-radius: 8px;
+  --formulary-results-shadow: rgb(0 0 0 / 10%) 0 2px 8px 0;
+
+  /* Formulary: Disclaimer/Notice */
+  --formulary-disclaimer-size: 14px;
+  --formulary-recaptcha-size: 12px;
+
+  /* Formulary: ZIP Input */
+  --formulary-zip-weight: 700;
+  --formulary-zip-margin-top: 8px;
+
+  /* Formulary: Floating Label Detail */
+  --formulary-label-left: 12px;
+  --formulary-label-line-height: 16px;
+  --formulary-chevron-bg-size: 14px;
 }
 /* ============================================================
-   RINVOQ DTC — Footer brand overrides
-   Live: www.rinvoq.com/atopic-dermatitis
-   - Light gray bg (--color-glacier #f5f5f5)
-   - 3-column grid layout (each col: H5 + vertical UL)
-   - Magenta links (--color-plum #90124a)
-   - Logo on bottom-left, indication code + legal text on right
+   RINVOQ HCP — Footer brand overrides
+   Live: www.rinvoqhcp.com/dermatology
+   - Muted gray text (--color-silver #c9c9ca)
+   - Padding-based spacing (matches live `.abbv-footer-horizontal`)
+   - 48px gap between legal text and legal-number/logo row
+   - Border-top separator between link rows
    ============================================================ */
 /* stylelint-disable */
 /* Brand token overrides */
 .footer-wrapper {
-  --footer-color-bg: var(--color-glacier);
-  --footer-color-text: var(--color-charcoal);
-  --footer-color-link: var(--color-plum);
-  --footer-spacing-padding-y: var(--spacing-40);
-  --footer-spacing-padding-x: var(--spacing-30);
-  --footer-spacing-legal-gap: var(--spacing-30);
+  /* Live: .abbv-footer ul.abbv-footer-horizontal li a { color: var(--silver); } */
+  --footer-color-text: var(--color-silver);
+
+  /* Live footer bg is pure black (not the brand --color-background-footer #17181b) */
+  --footer-color-bg: var(--color-black);
+
+  /* Live: font-family: "Graphik Semibold", "Helvetica Neue", arial, helvetica, sans-serif */
+  --footer-font-family: var(--font-family-semibold);
+
   --footer-content-max-width: 1200px;
 }
-/* Container: white bg (gray scoped to .footer-columns only) */
+/* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
+   add bottom padding so logo/legal-number don't touch the footer's bottom edge.
+   bg stays edge-to-edge, content is constrained to a centered max-width via padding-inline max() */
 .footer {
-  background-color: var(--background-color);
-  color: var(--footer-color-text);
-  padding: 0;
-  margin: 0;
-  max-width: none;
-  border-radius: 0;
-  border-top-left-radius: 0;
-}
-/* Hide any empty column */
-.footer .footer-column:empty {
-  display: none;
-}
-/* ── Footer top: indication code (white bg, ABOVE gray columns) ── */
-.footer .footer-top {
-  background-color: var(--background-color);
-  padding-block: var(--spacing-12);
+  padding-block: 0 var(--spacing-20);
   padding-inline: max(
     var(--footer-spacing-padding-x),
     calc((100% - var(--footer-content-max-width)) / 2)
   );
 }
-.footer .footer-top p {
-  margin: 0;
-  text-align: left;
-  color: var(--color-charcoal);
-  font-family: var(--footer-font-family);
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-20);
+/* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0;
+   mobile row-wrap centers links within --footer-links-max-width */
+.footer .footer-links-primary ul {
+  padding: var(--spacing-24) 0;
+  margin: var(--spacing-04) 0 0;
+  flex-flow: row wrap;
+  justify-content: center;
+  max-width: var(--footer-links-max-width);
+  margin-inline: auto;
+  column-gap: var(--spacing-16);
 }
-/* ── 3-column grid (GRAY bg only here, NOT on .footer) ──────── */
-.footer .footer-columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-32);
-  margin: 0;
-  padding-block: var(--footer-spacing-padding-y);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
-  background-color: var(--footer-color-bg);
-  position: relative;
+/* Reset the column's flex gap — UL padding handles vertical spacing */
+.footer .footer-links-primary {
+  gap: 0;
 }
-@media (min-width: 744px) {
-  .footer .footer-columns {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  /* Replace per-heading borders with a single continuous line under headings */
-  .footer .footer-column h1,
-  .footer .footer-column h2,
-  .footer .footer-column h3,
-  .footer .footer-column h4,
-  .footer .footer-column h5,
-  .footer .footer-column h6 {
-    border-bottom: none;
-  }
-
-  .footer .footer-columns::after {
-    content: '';
-    position: absolute;
-    top: calc(
-      var(--footer-spacing-padding-y) + var(--line-height-22) + var(--spacing-12)
-    );
-    left: max(
-      var(--footer-spacing-padding-x),
-      calc((100% - var(--footer-content-max-width)) / 2)
-    );
-    right: max(
-      var(--footer-spacing-padding-x),
-      calc((100% - var(--footer-content-max-width)) / 2)
-    );
-    height: var(--separator-height-1);
-    background-color: var(--color-black);
-  }
+/* Border separator on second UL (matches live `abbv-footer-border-top`) */
+.footer .footer-links-primary ul + ul {
+  border-top: var(--separator-height-1) solid var(--color-steel);
 }
-/* Each column — left-aligned */
-.footer .footer-column {
-  width: 100%;
-  margin: 0;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-}
-/* Reset legacy "first p as label" */
-.footer .footer-column p:first-child {
-  text-transform: none;
-  margin-bottom: 0;
-}
-/* Column heading (H5) */
-.footer .footer-column h1,
-.footer .footer-column h2,
-.footer .footer-column h3,
-.footer .footer-column h4,
-.footer .footer-column h5,
-.footer .footer-column h6 {
-  color: var(--color-charcoal);
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-heading);
-  line-height: var(--line-height-22);
-  margin: 0 0 var(--spacing-16) 0;
-  padding-bottom: var(--spacing-12);
-  border-bottom: var(--separator-height-1) solid var(--color-silver);
-}
-/* Vertical link list */
-.footer .footer-column ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  font-family: var(--footer-font-family);
-}
-.footer .footer-column li {
-  margin: 0;
-  padding: 0;
-}
-/* High-specificity link override (matches base `.footer .footer-links-primary li a`) */
-.footer .footer-column li a,
-.footer .footer-column ul li a {
-  color: var(--color-plum);
-  font-family: var(--footer-font-family);
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-400);
-  line-height: var(--line-height-20);
-  margin: 0;
-  text-decoration: none;
-  white-space: normal;
-}
-.footer .footer-column li a:hover {
-  font-family: var(--footer-font-family);
-  font-weight: var(--font-weight-400);
-  text-decoration: underline;
-}
-/* Override base @media font-size bumps */
-@media (min-width: 744px) {
-  .footer .footer-column li a {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-20);
-  }
-}
-@media (min-width: 1024px) {
-  .footer .footer-column li a {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-20);
-  }
-}
-/* ── Footer bottom: legal text + number + logo (GRAY bg, same as columns) ── */
+/* Footer bottom: grid layout — smaller font, legal/logo in two-column row */
 .footer .footer-bottom {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  border: none;
-  padding-block: var(--footer-spacing-legal-gap);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
+  /* Live: .abbv-legal-text { font-size: 0.75rem } = 12px */
+  --footer-font-size: var(--footer-font-size-small);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: var(--spacing-24);
+  align-items: center;
   margin-top: 0;
-  background-color: var(--footer-color-bg);
-  position: relative;
 }
-/* 1px separator between columns and legal/logo row — full viewport width */
-.footer .footer-bottom::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--separator-height-1);
-  background-color: var(--color-black);
-}
-.footer .footer-bottom p {
+/* Indication code left + logo right in same row via grid */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
+  grid-column: 2;
+  padding-top: 0;
   margin: 0;
-  text-align: left;
-  color: var(--color-charcoal);
-  font-family: var(--footer-font-family);
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-20);
-  text-transform: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
-.footer .footer-bottom p a {
-  color: var(--color-plum);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  text-decoration: underline;
+
+/* Compact line-height on first legal paragraph (matches live 1.2rem) */
+.footer .footer-bottom > p:first-of-type {
+  line-height: var(--spacing-12);
 }
-.footer .footer-bottom p a:hover {
-  text-decoration: none;
+
+.footer .footer-bottom > p:not(:has(picture), :has(img), .legal-number, :nth-last-child(2)) {
+  grid-column: 1 / -1;
 }
-/* Strip button styling on legacy authoring */
-.footer-wrapper .footer .footer-bottom a.button,
-.footer-wrapper .footer .footer-bottom .button-container a {
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  color: var(--color-plum);
-  font-size: var(--font-size-12);
-  font-weight: var(--font-weight-400);
-  text-decoration: underline;
-  text-transform: none;
-  display: inline;
-  white-space: normal;
-}
-/* Legal number — small gray text */
+
 .footer .footer-bottom > p.legal-number,
-.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-  font-size: var(--font-size-12);
-  color: var(--color-pewter);
-}
-/* Logo — DTC has dark logo on light bg.
-   Live: `.logo svg { fill: #194560 }` — dark navy/teal (--color-navy).
-   For <img> SVG (white source): filter chain converts white → ~--color-navy.
-   For inline SVG: fill override applies the token directly. */
-.footer .footer-bottom p:has(picture),
-.footer .footer-bottom p:has(img) {
-  margin: 0;
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+  grid-column: 1;
   text-align: left;
-}
-.footer .footer-bottom p:has(picture) img,
-.footer .footer-bottom p:has(img) img {
-  height: var(--footer-logo-height);
-  width: auto;
-  filter: sepia(1) brightness(0.25) saturate(18) hue-rotate(143deg);
-  mix-blend-mode: normal;
-}
-.footer .footer-bottom svg {
-  height: var(--footer-logo-height);
-  width: auto;
-  fill: var(--color-navy);
-}
-/* Mobile first: logo appears before legal text on mobile */
-.footer-wrapper .footer .footer-bottom > p:has(picture),
-.footer-wrapper .footer .footer-bottom > p:has(img) {
-  order: -1;
+  padding-top: 0;
 }
 
-/* ── Desktop ≥601px: legal text + number row, logo left ─────── */
-@media (min-width: 601px) {
+/* ── Desktop (≥ 768px): reset mobile-only overrides ────────── */
+@media (width >= 768px) {
+  /* Remove 335px mobile constraint; base CSS handles row-wrap for links */
+  .footer .footer-links-primary ul {
+    max-width: none;
+    margin-inline: 0;
+    column-gap: 0;
+  }
+
+  /* Live: .abbv-footer .logo { padding: 48px 0 0 } */
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    display: block;
+    padding-top: var(--spacing-48);
+  }
+
+  /* Restore default line-height */
+  .footer .footer-bottom > p:first-of-type {
+    line-height: var(--footer-line-height);
+  }
+
+  /* Reset mobile row-gap and align-items; base CSS handles grid layout */
   .footer .footer-bottom {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: var(--spacing-24);
-    row-gap: var(--spacing-12);
-    align-items: center;
+    row-gap: 0;
+    align-items: normal;
   }
 
-  /* Legal text paragraphs span full width on top row */
-  .footer .footer-bottom > .button-container,
-  .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    margin: 0;
-  }
-
-  /* Legal number — bottom-right, next to logo */
+  /* Live: .abbv-legal-number { padding: 48px 0 0 } */
   .footer .footer-bottom > p.legal-number,
-  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-    grid-column: 2;
-    grid-row: 2;
-    margin: 0;
-  }
-
-  /* Reset order; place logo on the LEFT (DTC-specific, opposite of HCP) */
-  .footer-wrapper .footer .footer-bottom > p:has(picture),
-  .footer-wrapper .footer .footer-bottom > p:has(img) {
-    order: 0;
-    grid-column: 1;
-    grid-row: 2;
-    text-align: left;
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+    padding-top: var(--spacing-48);
   }
 }

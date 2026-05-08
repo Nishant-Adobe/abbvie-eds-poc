@@ -932,59 +932,76 @@
   }
 }
 /* ============================================================
-   RINVOQ — Brand Token Overrides
-   Source: rinvoq.com (Platform C)
+   VENCLEXTA DTC — Brand Token Overrides
+   Source: venclexta.com/aml (Platform C)
+   Framework Font: Graphik family
+   Brand Font: Red Hat Display (brand-specific elements)
    ============================================================ */
 :root {
   /* ---- Color: Brand Primary ---- */
-  --color-brand-primary: #90124a;
-  --color-brand-primary-dark: #25282a;
-  --color-brand-primary-light: #b15980;
+  --color-brand-primary: #005272;
+  --color-brand-primary-dark: #003b52;
+  --color-brand-primary-light: #e8edef;
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #ffd100;
-  --color-brand-accent-butter: #fff1b3;
-  --color-brand-accent-lemon: #ffe673;
+  --color-brand-accent-teal: #005272;
 
-  /* ---- Color: Named Palette ---- */
+  /* ---- Color: Named Palette (shared AbbVie framework) ---- */
   --color-plum: #90124a;
-  --color-mulberry: #b15980;
-  --color-heather: #d3a0b7;
   --color-gold: #ffd100;
   --color-charcoal: #25282a;
   --color-iron: #46484a;
-  --color-steel: #87898a;
-  --color-silver: #c9c9ca;
   --color-glacier: #f5f5f5;
+
+  /* ---- Color: Venclexta-specific ---- */
+  --color-venclexta-teal: #005272;
+  --color-venclexta-teal-dark: #003b52;
+  --color-venclexta-navy: #071d49;
 
   /* ---- Color: Text ---- */
   --text-color: #46484a;
   --color-text-heading: #25282a;
+  --color-text-heading-brand: #005272;
   --color-text-on-dark: #fff;
   --color-text-link: #90124a;
+  --color-text-legal: #404040;
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
   --color-background-light: #f5f5f5;
-  --color-background-footer: #17181b;
+  --color-background-footer: #000;
   --color-background-safety-bar: #f5f5f5;
+  --color-background-container: #003b52;
 
   /* ---- Color: Border ---- */
+  --color-border-brand: #005272;
   --color-border-safety: #ffd100;
+  --color-border-default: #ccc;
+
+  /* ---- Color: Shadow ---- */
+  --shadow-card: rgb(85, 85, 85) 0px 3px 10px 1px;
+  --shadow-table: 0 4px 5px 0 rgba(0, 0, 0, 0.1);
+  --shadow-default: 0 4px 19px 0 rgba(0, 0, 0, 0.07);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
   --heading-font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
   --heading-font-family-bold: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
   --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-semibold: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --font-family-brand: 'Red Hat Display', sans-serif;
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
+  --font-size-body-small: 11px;
+  --font-size-nav: 16px;
+  --font-size-footer: 16px;
   --font-size-h1: 26px;
   --font-size-h2: 20px;
   --font-size-h3: 14px;
+  --font-size-h4-brand: 16px;
+  --font-size-h5-brand: 17.6px;
   --font-size-h-xl: 35.2px;
   --font-size-button: 16px;
 
@@ -992,15 +1009,20 @@
   --font-weight-body: 400;
   --font-weight-heading: 600;
   --font-weight-button: 700;
+  --font-weight-brand-heading: 700;
 
   /* ---- Font: Line Height ---- */
   --line-height-body: 24px;
   --line-height-h1: 27.625px;
   --line-height-h2: 25px;
   --line-height-h3: 16.8px;
+  --line-height-h5-brand: 22px;
+  --line-height-h-xl: 52.8px;
 
   /* ---- Border: Radius ---- */
   --border-radius-button-primary: 100px;
+  --border-radius-card: 10px;
+  --border-radius-card-corner: 14px;
 
   /* ---- Button: Primary ---- */
   --button-primary-color: #fff;
@@ -1010,147 +1032,160 @@
   /* ---- Link ---- */
   --link-color: #90124a;
 }
-/* Rinvoq DTC accordion — gold-accent style matching rinvoq.com/faq */
+/* Venclexta DTC accordion — White BG variation matching venclexta.com */
 .accordion {
-    --accordion-rinvoq-color-primary: var(--color-brand-primary);
-    --accordion-rinvoq-color-accent: var(--color-brand-accent);
-    --accordion-rinvoq-color-text: var(--color-text-heading);
-    --accordion-rinvoq-color-body: var(--text-color);
-    --accordion-rinvoq-color-label: var(--color-text-heading);
-    --accordion-rinvoq-color-hover-bg: var(--color-brand-accent-butter);
-    --footer-seperator-color: var(--color-brand-accent);
+    --accordion-ven-text-color: var(--color-brand-primary);
+    --accordion-ven-icon-color: var(--text-color);
+    --accordion-ven-bg: var(--background-color);
+    --accordion-ven-border: var(--color-border-default);
+    --footer-seperator-color: transparent;
     --highlight-dark-background-color: transparent;
-    --accordion-rinvoq-icon-size: 2rem;
-    --accordion-rinvoq-summary-line-height: 1.3;
-    --accordion-rinvoq-body-line-height: 1.6;
 
     background: transparent;
-    overflow-x: hidden;
 }
-/* Item — white bg, gold left border, gap between items */
+/* Item — white bg, light border, spaced apart */
 .accordion .accordion-item {
-    border-bottom: var(--border-01) solid var(--color-border-default);
-    border-left: var(--spacing-05) solid var(--accordion-rinvoq-color-accent);
-    background: var(--background-color);
-    margin-bottom: var(--spacing-16);
+    border: var(--border-01) solid var(--accordion-ven-border);
     border-radius: 0;
-    overflow: hidden;
+    margin-bottom: var(--spacing-16);
+    background: var(--accordion-ven-bg);
 }
-/* Summary — circle icon left, text follows, compact height */
+/* Summary row */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: var(--spacing-08) var(--spacing-16);
+    padding: var(--spacing-16);
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: var(--spacing-10);
-    background: var(--background-color);
-    color: var(--accordion-rinvoq-color-text);
-    overflow: hidden;
-    font-size: var(--body-font-size-s);
-    line-height: var(--accordion-rinvoq-summary-line-height);
+    justify-content: space-between;
+    gap: var(--spacing-16);
+    background: var(--accordion-ven-bg);
 }
-/* Focus */
-.accordion summary:focus-visible {
-    outline: var(--spacing-02) solid var(--accordion-rinvoq-color-accent);
-    outline-offset: var(--spacing-02);
-}
-/* Label text — dark gold, bold */
+/* Heading text — brand teal, medium weight */
 .accordion .accordion-item-label p,
 .accordion .accordion-item-label h2,
 .accordion .accordion-item-label h3,
 .accordion .accordion-item-label h4,
 .accordion .accordion-item-label h5,
 .accordion .accordion-item-label h6 {
-    color: var(--accordion-rinvoq-color-label);
-    font-family: var(--heading-font-family);
-    font-size: var(--body-font-size-m);
-    font-weight: var(--font-weight-heading);
+    color: var(--accordion-ven-text-color);
+    font-family: var(--body-font-family);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-h5-brand);
     text-transform: none;
     letter-spacing: normal;
-    padding-right: 0;
     margin: 0;
 }
-/* Plum circle + icon on LEFT (collapsed) */
-.accordion summary::before {
-    content: '';
-    display: inline-block;
-    flex-shrink: 0;
-    width: var(--accordion-rinvoq-icon-size);
-    height: var(--accordion-rinvoq-icon-size);
-    min-width: var(--accordion-rinvoq-icon-size);
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-/* Plum circle − icon (expanded) */
-.accordion .accordion-item[open] summary::before {
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%2390124a'/%3E%3Cpath d='M7 12h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-/* Hover — no background or font change */
-.accordion .accordion-item:hover summary {
-    background: var(--background-color);
-}
-.accordion .accordion-item-label.open .accordion-item-label-text,
-.accordion .accordion-item-label .accordion-item-label-text:hover,
+/* Prevent heading change on hover/open */
 .accordion .accordion-item:hover .accordion-item-label p,
-.accordion .accordion-item:hover .accordion-item-label-text {
-    font-family: var(--heading-font-family) !important;
-    font-size: var(--body-font-size-m) !important;
-    font-weight: var(--font-weight-heading) !important;
-    color: var(--accordion-rinvoq-color-label) !important;
+.accordion .accordion-item:hover .accordion-item-label h2,
+.accordion .accordion-item:hover .accordion-item-label h3,
+.accordion .accordion-item:hover .accordion-item-label h4,
+.accordion .accordion-item:hover .accordion-item-label h5,
+.accordion .accordion-item:hover .accordion-item-label h6,
+.accordion .accordion-item-label.open .accordion-item-label-text,
+.accordion .accordion-item-label .accordion-item-label-text:hover {
+    color: var(--accordion-ven-text-color);
+    font-family: var(--body-font-family);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-h5-brand);
 }
-/* Open state — bright gold header, no left border so expanded item aligns flush */
-.accordion .accordion-item[open] {
-    border-left: none;
+/* Icon — outline circled +/− in dark gray via summary::after */
+.accordion summary::after {
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    width: var(--spacing-24);
+    height: var(--spacing-24);
+    min-width: var(--spacing-24);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%23404040' stroke-width='1.5' fill='none'/%3E%3Cpath d='M12 7v10M7 12h10' stroke='%23404040' stroke-width='1.5'/%3E%3C/svg%3E") center / contain no-repeat;
+    font-family: inherit;
+    font-size: 0;
+    transform: none;
 }
-.accordion .accordion-item[open] summary,
-.accordion .accordion-item[open]:hover summary {
-    background: var(--accordion-rinvoq-color-accent);
+.accordion .accordion-item[open] summary::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' stroke='%23404040' stroke-width='1.5' fill='none'/%3E%3Cpath d='M7 12h10' stroke='%23404040' stroke-width='1.5'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-/* Hide icon-font icons */
-.accordion .item-icon-plus::after,
-.accordion .item-icon-minus::after,
+/* Hide icon-font duplicates */
+.accordion-icon-font .icon-plus::after,
+.accordion-icon-font .icon-minus::after,
 .accordion-icon-font .item-icon-plus::after,
 .accordion-icon-font .item-icon-minus::after {
     display: none !important;
 }
-/* Body — glacier gray, standard padding */
+/* Hover/Open — no background change */
+.accordion .accordion-item:hover summary,
+.accordion .accordion-item[open] summary {
+    background: var(--accordion-ven-bg);
+}
+/* Body content */
 .accordion .accordion-item-body {
-    background: var(--color-glacier) !important;
-    padding: var(--spacing-16) var(--spacing-20) var(--spacing-24);
+    padding: var(--spacing-16) var(--spacing-16) var(--spacing-24);
+    background: var(--accordion-ven-bg);
 }
-.accordion .accordion-item-body .accordion-item-body-text {
-    color: var(--accordion-rinvoq-color-body);
+.accordion .accordion-item-body p.accordion-item-body-text,
+.accordion .accordion-item-body p { /* stylelint-disable-line no-descending-specificity */
+    color: var(--text-color);
     font-family: var(--body-font-family);
-    font-size: var(--body-font-size-s);
-    line-height: var(--accordion-rinvoq-body-line-height);
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-body);
+    line-height: 1.5;
 }
-/* Body links — plum */
+/* Body links */
 .accordion .accordion-item-body a,
 .accordion .accordion-item-body a.button {
     background: none;
-    color: var(--accordion-rinvoq-color-primary);
+    color: var(--color-brand-primary);
     text-decoration: underline;
     padding: 0;
     border-radius: 0;
-    transition: color var(--transition-duration-fast) var(--transition-easing-standard);
 }
-.accordion .accordion-item-body a:hover,
-.accordion .accordion-item-body a.button:hover {
+.accordion .accordion-item-body a:hover {
     background: none;
-    color: var(--color-brand-primary-light);
+    color: var(--color-brand-primary-dark);
 }
-/* Suppress external-link ::after glyph */
+/* Hide external link ::after */
 .accordion .accordion-item-body .external-link::after,
 .accordion .accordion-item-body a::after {
     display: none;
 }
+/* Icon row — inline images with text labels */
+.accordion .accordion-item-body p img {
+    display: inline-block;
+    vertical-align: middle;
+    width: var(--spacing-40);
+    height: var(--spacing-40);
+    margin-right: var(--spacing-08);
+}
+/* Content cards — paragraphs with strong headings get card treatment */
+.accordion .accordion-item-body .columns {
+    display: flex;
+    gap: var(--spacing-16);
+    flex-wrap: wrap;
+    margin: var(--spacing-24) var(--spacing-00);
+}
+.accordion .accordion-item-body .columns > div {
+    flex: 1;
+    min-width: var(--spacing-200, 200px);
+    background: var(--background-color);
+    border: var(--border-01) solid var(--color-border-default);
+    border-radius: var(--spacing-08);
+    padding: var(--spacing-24);
+    text-align: center;
+}
+.accordion .accordion-item-body .columns > div h2, /* stylelint-disable-line no-descending-specificity */
+.accordion .accordion-item-body .columns > div h3, /* stylelint-disable-line no-descending-specificity */
+.accordion .accordion-item-body .columns > div h4 { /* stylelint-disable-line no-descending-specificity */
+    color: var(--color-brand-primary);
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-heading);
+    margin-bottom: var(--spacing-16);
+}
 /* Expand all button */
 .accordion .accordion-expand-all {
-    color: var(--accordion-rinvoq-color-primary);
-    font-family: var(--heading-font-family);
-    font-weight: var(--font-weight-heading);
+    color: var(--accordion-ven-text-color);
+    font-family: var(--body-font-family);
+    font-weight: var(--font-weight-medium);
 }
 .accordion .accordion-expand-all:focus {
-    border-color: var(--accordion-rinvoq-color-accent);
-    border-radius: var(--border-radius-s);
+    border-color: var(--accordion-ven-text-color);
 }

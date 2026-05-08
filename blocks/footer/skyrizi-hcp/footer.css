@@ -189,23 +189,23 @@
 /* Strip button-pill styling when legal text is authored as a button (legacy) */
 .footer .footer-bottom a.button,
 .footer .footer-bottom .button-container a {
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  color: var(--footer-color-link);
-  font-size: var(--footer-font-size);
-  font-weight: var(--footer-font-weight);
-  text-decoration: underline;
-  text-transform: none;
-  display: inline;
-  white-space: normal;
-  line-height: var(--footer-line-height);
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--footer-color-link) !important;
+  font-size: var(--footer-font-size) !important;
+  font-weight: var(--footer-font-weight) !important;
+  text-decoration: underline !important;
+  text-transform: none !important;
+  display: inline !important;
+  white-space: normal !important;
+  line-height: var(--footer-line-height) !important;
 }
 .footer .footer-bottom a.button:hover,
 .footer .footer-bottom .button-container a:hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 /* Legal number — small text. Detected by .legal-number class OR by being
    the 2nd-to-last child (paragraph immediately before the logo picture) */
@@ -695,385 +695,402 @@
   }
 }
 /* ============================================================
-   RINVOQ DTC — Brand Token Overrides
-   Source: rinvoq.com/atopic-dermatitis (Platform C)
-   Font: Graphik family (same as HCP)
-   Note: Shares the RINVOQ design system with HCP but uses
-         consumer-friendly styling and language.
+   SKYRIZI HCP — Brand Token Overrides
+   Source: skyrizihcp.com/dermatology (Platform C)
+   Font: Red Hat Display
    ============================================================ */
 :root {
+    /* ---- Color: Brand Primary ---- */
+    --color-brand-primary: #005272;
+    --color-brand-primary-dark: #003b52;
+    --color-brand-primary-light: #e8edef;
+
+    /* ---- Color: Brand Accent ---- */
+    --color-brand-accent: #ffce00;
+    --color-brand-accent-teal: #008481;
+    --color-brand-accent-blue: #3860be;
+
+    /* ---- Color: Text ---- */
+    --text-color: #404040;
+    --color-text-heading: #005272;
+    --color-text-on-dark: #fff;
+    --color-text-muted: #696969;
+    --color-text-legal: #555;
+    --color-text-black: #071d49;
+
+    /* ---- Color: Background ---- */
+    --background-color: #fff;
+    --color-background-light: #f8f8f8;
+    --color-background-tint: #e8edef;
+    --color-background-footer: #071d49;
+    --color-background-blue: #d3f3ff;
+
+    /* ---- Color: Border ---- */
+    --color-border-default: #ccc;
+    --color-border-muted: #b3b3b3;
+    --color-border-dark: #555;
+
+    /* ---- Color: Overlay ---- */
+    --color-overlay-dark: rgba(22, 22, 22, 0.75);
+
+    /* ---- Color: ISI / Safety ---- */
+    --color-safety-bar-bg: #fff;
+    --color-safety-bar-border: #999;
+
+    /* ---- Font: Family ---- */
+    --body-font-family: "Red Hat Display", sans-serif;
+    --heading-font-family: "Red Hat Display", sans-serif;
+    --heading-font-family-bold: "Red Hat Display", sans-serif;
+    --icon-font-family: "abbv-iconFont";
+
+    /* ---- Font: Size ---- */
+    --font-size-body: 16px;
+    --font-size-body-small: 14.4px;
+    --font-size-body-xs: 13px;
+    --font-size-legal: 12.992px;
+    --font-size-nav: 14px;
+    --font-size-footer: 14px;
+    --font-size-h1: 32px;
+    --font-size-h1-hero: 25px;
+    --font-size-h2: 24px;
+    --font-size-h3: 18.72px;
+    --font-size-h4: 16px;
+    --font-size-h-xl: 35.2px;
+    --font-size-button: 17.6px;
+    --font-size-button-tertiary: 18px;
+    --font-size-eyebrow: 11px;
+
+    /* ---- Font: Weight ---- */
+    --font-weight-body: 400;
+    --font-weight-medium: 500;
+    --font-weight-heading: 700;
+
+    /* ---- Font: Line Height ---- */
+    --line-height-body: normal;
+    --line-height-nav: 22px;
+    --line-height-h1-hero: 24.992px;
+    --line-height-h2: 35px;
+    --line-height-legal: 19.488px;
+
+    /* ---- Border: Radius ---- */
+    --border-radius-button-primary: 6px;
+    --border-radius-button-tertiary: 10px;
+    --border-radius-nav: 10px;
+    --border-radius-safety-bar: 5px;
+
+    /* ---- Button: Primary ---- */
+    --button-primary-color: #000;
+    --button-primary-bg: #ffce00;
+    --button-primary-border: #fff;
+    --button-primary-padding: 20px 42px 20px 20px;
+
+    /* ---- Button: Tertiary ---- */
+    --button-tertiary-color: #005272;
+    --button-tertiary-bg: transparent;
+    --button-tertiary-border: #555;
+    --button-tertiary-padding: 16px 70px 16px 24px;
+
+    /* ---- Link ---- */
+    --link-color: #005272;
+
+    /* ---- Gradient ---- */
+    --gradient-fade: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0) 0px,
+        rgb(243, 243, 243) 100%
+    );
+
+    /* ---- Brand Explorer Block ---- */
+    --be-color-text: #21406d;
+    --be-color-text-light: #21406d;
+    --be-color-bar-bg: #25282a;
+    --be-font-body: "Red Hat Display", sans-serif;
+    --be-font-heading: "Red Hat Display", sans-serif;
+
+    /* ---- Formulary Lookup ---- */
+    --color-formulary-text: #21406d;
+    --color-formulary-heading: #21406d;
+    --color-formulary-label: #21406d;
+    --color-formulary-submit-bg: #071d49;
+    --color-formulary-submit-border: #071d49;
+    --color-border-input: #c2c2c2;
+    --color-error: #eb3c36;
+
+    /* Formulary: Layout */
+    --formulary-form-width: 600px;
+    --formulary-input-width: 600px;
+
+    /* Formulary: Heading */
+    --formulary-heading-size: 16px;
+    --formulary-heading-weight: 400;
+    --formulary-heading-spacing: 16px;
+    --formulary-heading-line-height: 20px;
+
+    /* Formulary: Input/Select */
+    --formulary-input-height: 44px;
+    --formulary-input-radius: 2px;
+    --formulary-input-size: 14px;
+    --formulary-input-padding: 12px 15px;
+
+    /* Formulary: Label */
+    --formulary-label-size: 16px;
+    --formulary-label-weight: 400;
+
+    /* Formulary: Submit */
+    --formulary-submit-size: 14px;
+    --formulary-submit-weight: 700;
+    --formulary-submit-radius: 30px;
+    --formulary-submit-height: 44px;
+    --formulary-submit-padding: 14px 50px 14px 30px;
+    --formulary-submit-icon-offset: 20px;
+
+    /* Formulary: Results */
+    --formulary-results-radius: 4px;
+    --formulary-results-shadow: rgb(16 164 222 / 20%) 0 5px 15px 0;
+
+    /* Formulary: Input Group */
+    --formulary-input-group-gap: 8px;
+    --formulary-zip-min-width: 200px;
+
+    /* Formulary: Disclaimer/Notice */
+    --formulary-disclaimer-size: 13px;
+    --formulary-disclaimer-width: 700px;
+    --formulary-recaptcha-size: 11px;   
   /* ---- Color: Brand Primary ---- */
-  --color-brand-primary: #90124a;
-  --color-brand-primary-dark: #25282a;
-  --color-brand-primary-light: #b15980;
+  --color-brand-primary: #005272;
+  --color-brand-primary-dark: #003b52;
+  --color-brand-primary-light: #e8edef;
 
   /* ---- Color: Brand Accent ---- */
-  --color-brand-accent: #ffd100;
-  --color-brand-accent-butter: #fff1b3;
-  --color-brand-accent-lemon: #ffe673;
-
-  /* ---- Color: Named Palette ---- */
-  --color-plum: #90124a;
-  --color-mulberry: #b15980;
-  --color-heather: #d3a0b7;
-  --color-gold: #ffd100;
-  --color-charcoal: #25282a;
-  --color-iron: #46484a;
-  --color-steel: #87898a;
-  --color-pewter: #929495;
-  --color-silver: #c9c9ca;
-  --color-glacier: #f5f5f5;
-  --color-navy: #194560;
+  --color-brand-accent: #ffce00;
+  --color-brand-accent-teal: #008481;
+  --color-brand-accent-blue: #3860be;
 
   /* ---- Color: Text ---- */
-  --text-color: #46484a;
-  --color-text-heading: #25282a;
+  --text-color: #404040;
+  --color-text-heading: #005272;
   --color-text-on-dark: #fff;
-  --color-text-link: #90124a;
+  --color-text-muted: #696969;
+  --color-text-legal: #555;
+  --color-text-black: #071d49;
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
-  --color-background-light: #f5f5f5;
-  --color-background-footer: #17181b;
-  --color-background-safety-bar: #f5f5f5;
+  --color-background-light: #f8f8f8;
+  --color-background-tint: #e8edef;
+  --color-background-footer: #071d49;
+  --color-background-blue:#d3f3ff;
 
   /* ---- Color: Border ---- */
-  --color-border-safety: #ffd100;
+  --color-border-default: #ccc;
+  --color-border-muted: #b3b3b3;
+  --color-border-dark: #555;
+
+  /* ---- Color: Overlay ---- */
+  --color-overlay-dark: rgba(22, 22, 22, 0.75);
+
+  /* ---- Color: ISI / Safety ---- */
+  --color-safety-bar-bg: #fff;
+  --color-safety-bar-border: #999;
 
   /* ---- Font: Family ---- */
-  --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family-bold: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-semibold: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --body-font-family: 'Red Hat Display', sans-serif;
+  --heading-font-family: 'Red Hat Display', sans-serif;
+  --heading-font-family-bold: 'Red Hat Display', sans-serif;
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
-  --font-size-h1: 26px;
-  --font-size-h2: 20px;
-  --font-size-h3: 14px;
+  --font-size-body-small: 14.4px;
+  --font-size-body-xs: 13px;
+  --font-size-legal: 12.992px;
+  --font-size-nav: 14px;
+  --font-size-footer: 14px;
+  --font-size-h1: 32px;
+  --font-size-h1-hero: 25px;
+  --font-size-h2: 24px;
+  --font-size-h3: 18.72px;
+  --font-size-h4: 16px;
   --font-size-h-xl: 35.2px;
-  --font-size-button: 16px;
+  --font-size-button: 17.6px;
+  --font-size-button-tertiary: 18px;
+  --font-size-eyebrow: 11px;
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
-  --font-weight-heading: 600;
-  --font-weight-button: 700;
+  --font-weight-medium: 500;
+  --font-weight-heading: 700;
 
   /* ---- Font: Line Height ---- */
-  --line-height-body: 24px;
-  --line-height-h1: 27.625px;
-  --line-height-h2: 25px;
-  --line-height-h3: 16.8px;
+  --line-height-body: normal;
+  --line-height-nav: 22px;
+  --line-height-h1-hero: 24.992px;
+  --line-height-h2: 35px;
+  --line-height-legal: 19.488px;
 
   /* ---- Border: Radius ---- */
-  --border-radius-button-primary: 100px;
+  --border-radius-button-primary: 6px;
+  --border-radius-button-tertiary: 10px;
+  --border-radius-nav: 10px;
+  --border-radius-safety-bar: 5px;
 
   /* ---- Button: Primary ---- */
-  --button-primary-color: #fff;
-  --button-primary-bg: #90124a;
-  --button-primary-padding: 16px 54px 16px 32px;
+  --button-primary-color: #000;
+  --button-primary-bg: #ffce00;
+  --button-primary-border: #fff;
+  --button-primary-padding: 20px 42px 20px 20px;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-color: #005272;
+  --button-tertiary-bg: transparent;
+  --button-tertiary-border: #555;
+  --button-tertiary-padding: 16px 70px 16px 24px;
 
   /* ---- Link ---- */
-  --link-color: #90124a;
+  --link-color: #005272;
+
+  /* ---- Gradient ---- */
+  --gradient-fade: linear-gradient(to top, rgba(255, 255, 255, 0) 0px, rgb(243, 243, 243) 100%);
+
+  /* ---- Spacing: Common ---- */
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+
+  /* ---- Clinical Data Panel Block ---- */
+  --cdp-color-text: #21406d;
+  --cdp-color-heading: #21406d;
+  --cdp-color-accent: #1ba2da;
+  --cdp-color-muted: #50535c;
+  --cdp-color-cta: #071d49;
+  --cdp-font-body: var(--body-font-family);
+  --cdp-font-heading: var(--heading-font-family);
+  --cdp-font-size-title: 22px;
+  --cdp-font-size-callout: 26px;
+  --cdp-font-size-body: 14px;
+  --cdp-font-size-small: 12.8px;
+  --cdp-line-height-callout: 30px;
+  --cdp-line-height-body: 18px;
+  --cdp-line-height-default: 16px;
+  /* ---- Formulary Lookup ---- */
+  --color-formulary-text: #21406d;
+  --color-formulary-heading: #21406d;
+  --color-formulary-label: #21406d;
+  --color-formulary-submit-bg: #071d49;
+  --color-formulary-submit-border: #071d49;
+  --color-border-input: #c2c2c2;
+  --color-error: #eb3c36;
+
+  /* Formulary: Layout */
+  --formulary-form-width: 600px;
+  --formulary-input-width: 600px;
+
+  /* Formulary: Heading */
+  --formulary-heading-size: 16px;
+  --formulary-heading-weight: 400;
+  --formulary-heading-spacing: 16px;
+  --formulary-heading-line-height: 20px;
+
+  /* Formulary: Input/Select */
+  --formulary-input-height: 44px;
+  --formulary-input-radius: 2px;
+  --formulary-input-size: 14px;
+  --formulary-input-padding: 12px 15px;
+
+  /* Formulary: Label */
+  --formulary-label-size: 16px;
+  --formulary-label-weight: 400;
+
+  /* Formulary: Submit */
+  --formulary-submit-size: 14px;
+  --formulary-submit-weight: 700;
+  --formulary-submit-radius: 30px;
+  --formulary-submit-height: 44px;
+  --formulary-submit-padding: 14px 50px 14px 30px;
+  --formulary-submit-icon-offset: 20px;
+
+  /* Formulary: Results */
+  --formulary-results-radius: 4px;
+  --formulary-results-shadow: rgb(16 164 222 / 20%) 0 5px 15px 0;
+
+  /* Formulary: Input Group */
+  --formulary-input-group-gap: 8px;
+  --formulary-zip-min-width: 200px;
+
+  /* Formulary: Disclaimer/Notice */
+  --formulary-disclaimer-size: 13px;
+  --formulary-disclaimer-width: 700px;
+  --formulary-recaptcha-size: 11px;
 }
 /* ============================================================
-   RINVOQ DTC — Footer brand overrides
-   Live: www.rinvoq.com/atopic-dermatitis
-   - Light gray bg (--color-glacier #f5f5f5)
-   - 3-column grid layout (each col: H5 + vertical UL)
-   - Magenta links (--color-plum #90124a)
-   - Logo on bottom-left, indication code + legal text on right
+   SKYRIZI HCP — Footer brand overrides
+   Live: www.skyrizihcp.com/dermatology
+   Background, font-family, font-size all flow through brand tokens
+   in styles/skyrizi-hcp/tokens.css. Only brand-specific tweaks live here.
    ============================================================ */
 /* stylelint-disable */
-/* Brand token overrides */
+/* Live SkyRizi HCP uses slightly off-white #e2e4e3 (lighter than pure white)
+   instead of the default --color-text-on-dark: #fff */
 .footer-wrapper {
-  --footer-color-bg: var(--color-glacier);
-  --footer-color-text: var(--color-charcoal);
-  --footer-color-link: var(--color-plum);
-  --footer-spacing-padding-y: var(--spacing-40);
-  --footer-spacing-padding-x: var(--spacing-30);
-  --footer-spacing-legal-gap: var(--spacing-30);
+  --footer-color-text: #e2e4e3;
   --footer-content-max-width: 1200px;
 }
-/* Container: white bg (gray scoped to .footer-columns only) */
+/* Centered max-width: bg stays edge-to-edge, content (already center-aligned
+   from base CSS) is constrained to a centered max-width via padding-inline max() */
 .footer {
-  background-color: var(--background-color);
-  color: var(--footer-color-text);
-  padding: 0;
-  margin: 0;
-  max-width: none;
-  border-radius: 0;
-  border-top-left-radius: 0;
-}
-/* Hide any empty column */
-.footer .footer-column:empty {
-  display: none;
-}
-/* ── Footer top: indication code (white bg, ABOVE gray columns) ── */
-.footer .footer-top {
-  background-color: var(--background-color);
-  padding-block: var(--spacing-12);
   padding-inline: max(
     var(--footer-spacing-padding-x),
     calc((100% - var(--footer-content-max-width)) / 2)
   );
 }
-.footer .footer-top p {
-  margin: 0;
-  text-align: left;
-  color: var(--color-charcoal);
-  font-family: var(--footer-font-family);
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-20);
-}
-/* ── 3-column grid (GRAY bg only here, NOT on .footer) ──────── */
-.footer .footer-columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-32);
-  margin: 0;
-  padding-block: var(--footer-spacing-padding-y);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
-  background-color: var(--footer-color-bg);
-  position: relative;
-}
-@media (min-width: 744px) {
-  .footer .footer-columns {
-    grid-template-columns: repeat(3, 1fr);
-  }
 
-  /* Replace per-heading borders with a single continuous line under headings */
-  .footer .footer-column h1,
-  .footer .footer-column h2,
-  .footer .footer-column h3,
-  .footer .footer-column h4,
-  .footer .footer-column h5,
-  .footer .footer-column h6 {
-    border-bottom: none;
-  }
+/* ── Mobile-first defaults ──────────────────────────────────── */
 
-  .footer .footer-columns::after {
-    content: '';
-    position: absolute;
-    top: calc(
-      var(--footer-spacing-padding-y) + var(--line-height-22) + var(--spacing-12)
-    );
-    left: max(
-      var(--footer-spacing-padding-x),
-      calc((100% - var(--footer-content-max-width)) / 2)
-    );
-    right: max(
-      var(--footer-spacing-padding-x),
-      calc((100% - var(--footer-content-max-width)) / 2)
-    );
-    height: var(--separator-height-1);
-    background-color: var(--color-black);
-  }
+/* 1. Tighter gap between stacked link items on mobile */
+.footer .footer-links-primary ul,
+.footer .footer-links-secondary ul,
+.footer .footer-links-tertiary ul {
+  gap: var(--spacing-08);
 }
-/* Each column — left-aligned */
-.footer .footer-column {
-  width: 100%;
-  margin: 0;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-}
-/* Reset legacy "first p as label" */
-.footer .footer-column p:first-child {
-  text-transform: none;
-  margin-bottom: 0;
-}
-/* Column heading (H5) */
-.footer .footer-column h1,
-.footer .footer-column h2,
-.footer .footer-column h3,
-.footer .footer-column h4,
-.footer .footer-column h5,
-.footer .footer-column h6 {
-  color: var(--color-charcoal);
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-16);
-  font-weight: var(--font-weight-heading);
-  line-height: var(--line-height-22);
-  margin: 0 0 var(--spacing-16) 0;
-  padding-bottom: var(--spacing-12);
-  border-bottom: var(--separator-height-1) solid var(--color-silver);
-}
-/* Vertical link list */
-.footer .footer-column ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  font-family: var(--footer-font-family);
-}
-.footer .footer-column li {
-  margin: 0;
-  padding: 0;
-}
-/* High-specificity link override (matches base `.footer .footer-links-primary li a`) */
-.footer .footer-column li a,
-.footer .footer-column ul li a {
-  color: var(--color-plum);
-  font-family: var(--footer-font-family);
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-400);
-  line-height: var(--line-height-20);
-  margin: 0;
-  text-decoration: none;
-  white-space: normal;
-}
-.footer .footer-column li a:hover {
-  font-family: var(--footer-font-family);
-  font-weight: var(--font-weight-400);
-  text-decoration: underline;
-}
-/* Override base @media font-size bumps */
-@media (min-width: 744px) {
-  .footer .footer-column li a {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-20);
-  }
-}
-@media (min-width: 1024px) {
-  .footer .footer-column li a {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-20);
-  }
-}
-/* ── Footer bottom: legal text + number + logo (GRAY bg, same as columns) ── */
+
+/* 2. Tighter gap between footer-bottom content blocks on mobile */
 .footer .footer-bottom {
+  gap: var(--spacing-01);
+}
+
+/* 3. Center AbbVie logo on mobile — text-align won't work on display:block
+   children, so flex+justify-content is used instead */
+.footer .footer-bottom > p:has(picture),
+.footer .footer-bottom > p:has(img) {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  border: none;
-  padding-block: var(--footer-spacing-legal-gap);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
-  margin-top: 0;
-  background-color: var(--footer-color-bg);
-  position: relative;
-}
-/* 1px separator between columns and legal/logo row — full viewport width */
-.footer .footer-bottom::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--separator-height-1);
-  background-color: var(--color-black);
-}
-.footer .footer-bottom p {
-  margin: 0;
-  text-align: left;
-  color: var(--color-charcoal);
-  font-family: var(--footer-font-family);
-  font-size: var(--font-size-12);
-  line-height: var(--line-height-20);
-  text-transform: none;
-}
-.footer .footer-bottom p a {
-  color: var(--color-plum);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  text-decoration: underline;
-}
-.footer .footer-bottom p a:hover {
-  text-decoration: none;
-}
-/* Strip button styling on legacy authoring */
-.footer-wrapper .footer .footer-bottom a.button,
-.footer-wrapper .footer .footer-bottom .button-container a {
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  color: var(--color-plum);
-  font-size: var(--font-size-12);
-  font-weight: var(--font-weight-400);
-  text-decoration: underline;
-  text-transform: none;
-  display: inline;
-  white-space: normal;
-}
-/* Legal number — small gray text */
-.footer .footer-bottom > p.legal-number,
-.footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-  font-size: var(--font-size-12);
-  color: var(--color-pewter);
-}
-/* Logo — DTC has dark logo on light bg.
-   Live: `.logo svg { fill: #194560 }` — dark navy/teal (--color-navy).
-   For <img> SVG (white source): filter chain converts white → ~--color-navy.
-   For inline SVG: fill override applies the token directly. */
-.footer .footer-bottom p:has(picture),
-.footer .footer-bottom p:has(img) {
-  margin: 0;
-  text-align: left;
-}
-.footer .footer-bottom p:has(picture) img,
-.footer .footer-bottom p:has(img) img {
-  height: var(--footer-logo-height);
-  width: auto;
-  filter: sepia(1) brightness(0.25) saturate(18) hue-rotate(143deg);
-  mix-blend-mode: normal;
-}
-.footer .footer-bottom svg {
-  height: var(--footer-logo-height);
-  width: auto;
-  fill: var(--color-navy);
-}
-/* Mobile first: logo appears before legal text on mobile */
-.footer-wrapper .footer .footer-bottom > p:has(picture),
-.footer-wrapper .footer .footer-bottom > p:has(img) {
-  order: -1;
+  justify-content: center;
+  margin-top: var(--spacing-08);
 }
 
-/* ── Desktop ≥601px: legal text + number row, logo left ─────── */
-@media (min-width: 601px) {
+/* Indication code (e.g. US-SKZD-260038) — 40px top gap matches live site */
+.footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+  margin-top: var(--spacing-40);
+}
+
+/* ── Desktop (≥ 601px): reset mobile-only overrides ────────── */
+@media (width >= 601px) {
+  .footer .footer-links-primary ul,
+  .footer .footer-links-secondary ul,
+  .footer .footer-links-tertiary ul {
+    gap: var(--footer-spacing-row-gap);
+  }
+
   .footer .footer-bottom {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: var(--spacing-24);
-    row-gap: var(--spacing-12);
-    align-items: center;
+    gap: var(--footer-spacing-bottom-gap);
   }
 
-  /* Legal text paragraphs span full width on top row */
-  .footer .footer-bottom > .button-container,
-  .footer .footer-bottom > p:not(:has(picture)):not(:has(img)):not(.legal-number):not(:nth-last-child(2)) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    margin: 0;
+  .footer .footer-bottom > p:has(picture),
+  .footer .footer-bottom > p:has(img) {
+    display: block;
+    margin-top: 0;
   }
 
-  /* Legal number — bottom-right, next to logo */
-  .footer .footer-bottom > p.legal-number,
-  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
-    grid-column: 2;
-    grid-row: 2;
-    margin: 0;
-  }
-
-  /* Reset order; place logo on the LEFT (DTC-specific, opposite of HCP) */
-  .footer-wrapper .footer .footer-bottom > p:has(picture),
-  .footer-wrapper .footer .footer-bottom > p:has(img) {
-    order: 0;
-    grid-column: 1;
-    grid-row: 2;
-    text-align: left;
+  .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
+    margin-top: 0;
   }
 }
