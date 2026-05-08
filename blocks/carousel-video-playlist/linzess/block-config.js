@@ -31,9 +31,10 @@ function parseConfig(block) {
   // cfgRows[0]=classes, [1]=heading, [2]=description,
   // [3]=accountId, [4]=playlistId, [5]=playerId, [6]=maxVisible
   const cellText = (i) => cfgRows[i]?.firstElementChild?.textContent?.trim() ?? '';
+  const cellHtml = (i) => cfgRows[i]?.firstElementChild?.innerHTML?.trim() ?? '';
   return {
     heading: cellText(1),
-    description: cellText(2),
+    description: cellHtml(2),
     accountId: cellText(3),
     playlistId: cellText(4),
     playerId: cellText(5) || 'default',
@@ -46,14 +47,15 @@ function parseItems(block) {
     .filter(isItemRow)
     .map((row) => {
       const cells = [...row.children];
+      const getText = (i) => cells[i]?.textContent?.trim() ?? '';
       return {
-        videoId: cells[0]?.textContent?.trim() ?? '',
-        nameBanner: cells[1]?.textContent?.trim() ?? '',
-        // cells[2] = transcriptHref (Rinvoq field, skipped for Linzess)
+        videoId: getText(0),
+        nameBanner: getText(1),
+        transcriptHref: getText(2),
         transcript: cells[3] ?? null,
-        patientName: cells[4]?.textContent?.trim() ?? '',
-        prescribed: cells[5]?.textContent?.trim() ?? '',
-        quote: cells[6]?.textContent?.trim() ?? '',
+        patientName: getText(4),
+        prescribed: getText(5),
+        quote: getText(6),
       };
     })
     .filter(({ videoId }) => videoId);
@@ -157,11 +159,14 @@ function buildGridMode(block, cfg, items, accountId, playerId) {
       h2.textContent = cfg.heading;
       header.append(h2);
     }
-    if (cfg.description) {
-      const p = document.createElement('p');
-      p.className = 'cvp-description';
-      p.textContent = cfg.description;
-      header.append(p);
+    if (cfg.description && !/^\d+$/.test(cfg.description.replace(/<[^>]+>/g, '').trim())) {
+      const desc = document.createElement('div');
+      desc.className = 'cvp-description';
+      desc.innerHTML = cfg.description;
+      header.append(desc);
+    }
+    if (cfg.maxVisible > 0) {
+      block.dataset.maxVisible = cfg.maxVisible;
     }
     block.append(header);
   }
