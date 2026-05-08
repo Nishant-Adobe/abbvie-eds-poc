@@ -10,7 +10,16 @@
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #000;
+  background: var(--color-brand-primary);
+  font-size: 0;
+  color: transparent;
+}
+
+/* Only show name banner and play button text — hide Brightcove metadata */
+.carousel-video-playlist .cvp-player-wrap .cvp-name-banner,
+.carousel-video-playlist .cvp-player-wrap .cvp-play-btn {
+  font-size: var(--font-size-body-small, 12px);
+  color: var(--linz-white);
 }
 
 
