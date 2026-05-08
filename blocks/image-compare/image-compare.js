@@ -41,7 +41,6 @@ function getText(cell) {
 function cloneImg(img) {
   if (!img) return null;
   const clone = img.cloneNode(true);
-  clone.removeAttribute('loading');
   return clone;
 }
 
@@ -436,7 +435,12 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
     afterImg.addEventListener('load', fixBeforeWidth);
     if (afterImg.complete) fixBeforeWidth();
   }
-  window.addEventListener('resize', fixBeforeWidth);
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fixBeforeWidth, 100);
+  }, { passive: true });
 
   setPosition(startPct);
 
@@ -456,16 +460,16 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
       const prompt = container.querySelector('.image-compare-prompt');
       if (prompt) prompt.classList.add('is-hidden');
     }
-  });
+  }, { passive: true });
 
   container.addEventListener('pointermove', (e) => {
     if (dragging) setPosition(getX(e));
-  });
+  }, { passive: true });
 
   container.addEventListener('pointerup', (e) => {
     dragging = false;
     container.releasePointerCapture(e.pointerId);
-  });
+  }, { passive: true });
 }
 
 /* --- Legacy format --- */
