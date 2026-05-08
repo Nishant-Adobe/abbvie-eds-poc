@@ -71,7 +71,9 @@
   transition: transform 0.3s ease;
 }
 
-.image-text.image-text-scale .image-text-image-col:hover img {
+/* Use :hover on the block so the scale fires even when the stretched-link overlay
+   intercepts pointer events over the image column. */
+.image-text.image-text-scale:hover .image-text-image-col img {
   transform: scale(1.05);
 }
 
