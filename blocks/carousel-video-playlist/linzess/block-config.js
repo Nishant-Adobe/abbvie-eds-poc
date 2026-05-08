@@ -350,6 +350,20 @@ function buildFeaturedMode(block, items, accountId, playerId) {
     thumbPlayIcon.innerHTML = '&#9654;';
     thumbWrap.append(thumbPlayIcon);
 
+    // Load Brightcove poster for thumbnail
+    const thumbVideo = document.createElement('video-js');
+    thumbVideo.setAttribute('data-account', accountId);
+    thumbVideo.setAttribute('data-player', playerId);
+    thumbVideo.setAttribute('data-embed', 'default');
+    thumbVideo.setAttribute('data-video-id', item.videoId);
+    thumbVideo.setAttribute('preload', 'none');
+    thumbVideo.className = 'video-js cvp-thumb-video';
+    thumbWrap.prepend(thumbVideo);
+
+    loadBrightcoveScript(accountId, playerId).then(() => {
+      if (typeof window.bc === 'function') window.bc(thumbVideo);
+    });
+
     thumb.append(thumbWrap);
 
     const thumbTitle = document.createElement('p');
