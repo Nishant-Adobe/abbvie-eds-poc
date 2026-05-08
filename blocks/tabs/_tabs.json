@@ -16,24 +16,16 @@
       }
     },
     {
-      "title": "Tabs Item",
+      "title": "Tab Item",
       "id": "tabs-item",
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
+            "resourceType": "core/franklin/components/section/v1/section",
             "template": {
               "name": "Tab",
               "model": "tabs-item",
-              "filter": "tabs-item",
-              "title": "Tab Name",
-              "content_headingType": "h3",
-              "sections": [
-                {
-                  "name": "Section",
-                  "model": "section"
-                }
-              ]
+              "filter": "tabs-item"
             }
           }
         }
@@ -100,6 +92,13 @@
           "value": "",
           "label": "Content",
           "valueType": "string"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "sectionId",
+          "value": "",
+          "label": "Section ID"
         }
       ]
     }
@@ -114,7 +113,48 @@
     {
       "id": "tabs-item",
       "components": [
-        "section"
+        "section",
+        "accordion",
+        "breadcrumb",
+        "button",
+        "story-cards",
+        "cards",
+        "carousel",
+        "social-media",
+        "columns",
+        "embed",
+        "fragment",
+        "press-releases",
+        "separator",
+        "story-card",
+        "form",
+        "hero",
+        "navigation-content",
+        "stock-ticker",
+        "eds-form",
+        "embed-form",
+        "image",
+        "quote",
+        "search",
+        "tabs",
+        "table",
+        "text",
+        "title",
+        "video",
+        "custom-title",
+        "text-container",
+        "cta",
+        "linklist",
+        "brightcove-video",
+        "tag-utility-nav",
+        "fact-card",
+        "brightcove-podcast-player",
+        "news-feed",
+        "pipeline-utility-nav",
+        "brand-explorer",
+        "clinical-data-panel",
+        "safety-bar",
+        "promo-drawer"
       ]
     }
   ]
