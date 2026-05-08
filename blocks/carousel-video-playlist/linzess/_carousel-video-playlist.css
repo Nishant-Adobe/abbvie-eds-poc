@@ -22,11 +22,15 @@
   display: none !important;
 }
 
+/* stylelint-disable no-descending-specificity */
+
 /* Hide our play button when video is playing */
 .carousel-video-playlist .cvp-player-wrap .vjs-playing ~ .cvp-play-btn,
 .carousel-video-playlist .cvp-player-wrap .vjs-has-started ~ .cvp-play-btn {
   display: none;
 }
+
+/* stylelint-enable no-descending-specificity */
 
 /* Ensure Brightcove controls ARE visible when playing */
 .carousel-video-playlist .vjs-control-bar {
