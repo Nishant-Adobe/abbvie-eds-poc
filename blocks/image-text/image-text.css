@@ -5,10 +5,14 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-24, 1.5rem);
-  max-width: var(--content-max-width, 1200px);
-  margin: 0 auto var(--spacing-80, 5rem);
-  padding: var(--spacing-32, 2rem) var(--spacing-16, 1rem);
+  margin-bottom: var(--spacing-80, 5rem);
   position: relative;
+}
+
+/* Reset the .abbvie-container div { grid-column: 1 / span N } override
+   so our own grid places the two children side by side. */
+.image-text > div {
+  grid-column: auto;
 }
 
 .image-text .image-text-image-col {
@@ -30,23 +34,21 @@
 }
 
 /* ── Tablet+: two-column layout ── */
-@media (min-width: 600px) {
+@media (width >= 768px) {
   .image-text {
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-32, 2rem);
-    padding-inline: var(--spacing-24, 1.5rem);
   }
 }
 
-@media (min-width: 900px) {
+@media (width >= 1024px) {
   .image-text {
     gap: var(--spacing-48, 3rem);
-    padding-inline: 0;
   }
 }
 
 /* ── Variant: Reverse (text left, image right) ── */
-@media (min-width: 600px) {
+@media (width >= 768px) {
   .image-text.image-text-reverse .image-text-image-col {
     order: 2;
   }
@@ -57,21 +59,21 @@
 }
 
 /* ── Variant: Image Large (image column takes 60%) ── */
-@media (min-width: 600px) {
+@media (width >= 768px) {
   .image-text.image-text-image-large {
     grid-template-columns: 3fr 2fr;
   }
 }
 
 /* ── Variant: Image Medium (image column takes 40%) ── */
-@media (min-width: 600px) {
+@media (width >= 768px) {
   .image-text.image-text-image-medium {
     grid-template-columns: 2fr 3fr;
   }
 }
 
-/* ── Variant: Image Small (image column takes ~30%) ── */
-@media (min-width: 600px) {
+/* ── Variant: Image Small (image column takes ~33%) ── */
+@media (width >= 768px) {
   .image-text.image-text-image-small {
     grid-template-columns: 1fr 2fr;
   }
