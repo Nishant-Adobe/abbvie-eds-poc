@@ -51,7 +51,6 @@ export default async function decorate(block) {
 
   // If something failed to render, bail out safely
   if (!symbolEl || !timestampEl || !priceEl || !changeEl || !iconEl || !valueEl) {
-    // eslint-disable-next-line no-console
     console.warn('Stock Ticker: Missing required DOM elements.');
     return;
   }
@@ -100,7 +99,7 @@ export default async function decorate(block) {
       const percent = prev ? (diff / prev) * 100 : 0;
 
       // ---------------------------------------------------------
-      // UPDATE UI â€” WITH Fallbacks
+      // UPDATE UI — WITH Fallbacks
       // ---------------------------------------------------------
       symbolEl.textContent = data?.symbol ?? '--';
       timestampEl.textContent = `${formatTimestamp(data?.timestamp)} EST`;
@@ -127,7 +126,6 @@ export default async function decorate(block) {
         valueEl.textContent = '0.00 (0.00%)';
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error('Stock Ticker Error:', error);
       block.innerHTML = '<p>Error fetching stock data</p>';
     }
