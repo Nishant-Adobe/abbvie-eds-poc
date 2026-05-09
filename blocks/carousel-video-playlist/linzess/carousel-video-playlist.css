@@ -517,6 +517,34 @@
   background: var(--color-brand-primary);
 }
 
+/* Loading shimmer — visible until video-js is injected */
+
+.carousel-video-playlist .cvp-player-wrap::before,
+.carousel-video-playlist .cvp-thumb-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 15%) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: cvp-shimmer 1.5s infinite;
+}
+
+.carousel-video-playlist .cvp-player-wrap:has(video-js)::before,
+.carousel-video-playlist .cvp-thumb-wrap:has(video-js)::before {
+  display: none;
+}
+
+@keyframes cvp-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* Hide Brightcove UI overlays — we use our own name-banner + play button */
 
 .carousel-video-playlist .vjs-dock-text,
