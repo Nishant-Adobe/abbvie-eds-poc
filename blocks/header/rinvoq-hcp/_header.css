@@ -1,0 +1,205 @@
+@import '../header.css';
+
+/* ═══════════════════════════════════════════════
+   RINVOQ HCP — Header Brand Overrides
+   Source: rinvoqhcp.com
+   - Brand row: black bg (#17181b), white text, logo + search
+   - Nav row: gold (#ffd100), dark bold text, full width
+   ═══════════════════════════════════════════════ */
+
+/* Nav wrapper — black */
+header .nav-wrapper {
+  background-color: var(--color-background-footer);
+}
+
+/* Default nav text — white for brand row */
+header nav {
+  color: var(--color-text-on-dark);
+}
+
+/* Hamburger */
+header nav .nav-hamburger button {
+  background: transparent;
+  border: none;
+}
+
+header nav .nav-hamburger button > span {
+  background: var(--color-text-on-dark);
+}
+
+/* Logo */
+header nav .nav-brand img {
+  width: var(--header-logo-width);
+  height: auto;
+  max-width: unset;
+}
+
+/* Hide utility bar — not present on rinvoq-hcp */
+header .nav-utility {
+  display: none;
+}
+
+/* ── Mobile ── */
+@media (width <= 1023px) {
+  header nav .nav-sections {
+    background-color: var(--color-background-footer);
+    color: var(--color-text-on-dark);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button {
+    color: var(--color-text-on-dark);
+  }
+
+  header nav[aria-expanded='true'] {
+    background-color: var(--color-background-footer);
+  }
+}
+
+/* ── Desktop ── */
+@media (width >= 1024px) {
+  /* 2-row grid: black brand row top, yellow sections row below */
+  header .nav-wrapper nav {
+    display: grid;
+    grid-template:
+      'brand info tools hamburger' auto
+      'sections sections sections sections' auto
+      / auto 1fr auto auto;
+    height: auto;
+    padding: var(--spacing-00);
+    width: 100%;
+    max-width: unset;
+  }
+
+  /* Brand row — logo padding */
+  header nav .nav-brand {
+    padding: var(--spacing-20) var(--spacing-24) var(--spacing-20) var(--spacing-35);
+  }
+
+  /* Hide brand-info column */
+  header .nav-wrapper nav .nav-brand-info {
+    display: none;
+  }
+
+  /* Tools — search, sits right of logo in brand row */
+  header .nav-wrapper nav .nav-tools {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-00) var(--spacing-35) var(--spacing-00) var(--spacing-24);
+    background: transparent;
+    color: var(--color-text-on-dark);
+  }
+
+  header nav .nav-tools .icon-search svg {
+    fill: var(--color-text-on-dark);
+    stroke: var(--color-text-on-dark);
+  }
+
+  /* Hide hamburger on desktop */
+  header nav .nav-hamburger {
+    display: none;
+  }
+
+  /* Yellow nav sections — full-width second row */
+  header .nav-wrapper nav .nav-sections {
+    background-color: var(--color-gold);
+    color: var(--color-charcoal);
+    width: 100%;
+    padding: var(--spacing-00) var(--spacing-35);
+    margin-left: var(--spacing-00);
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 60;
+    overflow: visible;
+    visibility: visible;
+    opacity: 1;
+    height: auto;
+    min-height: auto;
+  }
+
+  header .nav-wrapper nav .nav-sections .default-content-wrapper {
+    width: 100%;
+    max-width: var(--header-content-max-width);
+    margin: 0 auto;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul {
+    justify-content: flex-start;
+    gap: var(--gap-32);
+  }
+
+  /* Nav buttons — dark bold text on yellow */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+    color: var(--color-charcoal);
+    font-weight: var(--font-weight-600);
+    font-size: var(--font-size-16);
+    padding: var(--spacing-14) 0;
+    line-height: var(--header-nav-line-height);
+  }
+
+  /* Active underline — dark on yellow */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
+    background: var(--color-charcoal);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:hover::after {
+    display: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:hover,
+  .navigation-item.navigation-item-level-1:hover {
+    background: var(--color-butter);
+  }
+
+  
+  /* Submenu — dark bg, white text, gold top border */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+    background: var(--color-gold);
+    color: var(--color-text-on-dark);
+    width: var(--header-submenu-width);
+    padding: 0;
+    border-top: var(--header-submenu-border-width) solid var(--color-gold);
+    margin: 0;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-08);
+    padding: var(--spacing-00);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-link {
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-400);
+    text-decoration: none;
+    display: block;
+  }
+
+  .navigation-item.navigation-item-level-1 {
+    padding: var(--spacing-10) var(--spacing-18);
+  }
+
+  .navigation-item-level-1>a,
+  .navigation-item-level-1 .level-two-link-adjustment {
+    font-size: var(--font-size-16);
+    padding: 0;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-link:hover {
+    color: var(--color-gold);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .close-btn {
+    display: none;
+  }
+
+  /* Mobile nav — expanded state */
+  header nav[aria-expanded='true'] {
+    background-color: var(--color-background-footer);
+  }
+}
