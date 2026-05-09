@@ -215,7 +215,7 @@ function setupGlobalTriggers() {
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-modal-id]');
     if (!trigger) return;
-    const modalId = trigger.dataset.modalId;
+    const { modalId } = trigger.dataset;
     const block = document.querySelector(`.modal[data-modal-id="${modalId}"]`);
     if (!block) return;
 
@@ -223,7 +223,7 @@ function setupGlobalTriggers() {
     const variants = [...block.classList]
       .filter((c) => c !== 'modal' && c !== 'block')
       .map((c) => c.replace('modal-', ''));
-    const fragmentPath = block.dataset.fragmentPath;
+    const { fragmentPath } = block.dataset;
     openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
   });
 }
@@ -247,20 +247,39 @@ export default async function decorate(block) {
   let modalId;
 
   if (rows[0]?.children.length >= 2) {
+    // Key-value format (two cells per row)
     const config = {};
     rows.forEach((row) => {
-      const key = row.children[0]?.textContent?.trim();
-      const value = row.children[1]?.textContent?.trim();
-      if (key && value) config[key] = value;
+      const key = row.children[0]?.textContent?.trim().toLowerCase();
+      const value = row.children[1]?.textContent?.trim()
+        || row.children[1]?.querySelector('a')?.getAttribute('href') || '';
+      if (key) config[key] = value;
     });
-    modalId = config.modalId || config['modal-id'] || '';
-    fragmentPath = config.fragmentPath || config['fragment-path'];
-    openLabel = config.openLabel || config['open-label'] || 'Open modal';
+    modalId = config.modalid || config['modal-id'] || '';
+    fragmentPath = config.fragmentpath || config['fragment-path'] || config.path || '';
+    openLabel = config.openlabel || config['open-label'] || 'Open modal';
   } else {
-    modalId = rows[0]?.children[0]?.textContent?.trim() || '';
-    fragmentPath = rows[1]?.querySelector('a')?.getAttribute('href')
-      || rows[1]?.children[0]?.textContent?.trim();
-    openLabel = rows[2]?.children[0]?.textContent?.trim() || 'Open modal';
+    // UE single-cell format: row order matches model fields
+    // Model field order: [0]=classes, [1]=modalId, [2]=fragmentPath, [3]=openLabel
+    const getText = (i) => rows[i]?.children[0]?.textContent?.trim() || '';
+    const getLink = (i) => rows[i]?.querySelector('a')?.getAttribute('href') || '';
+
+    // Detect if first row looks like a modalId (no spaces, short) or classes field
+    const row0Text = getText(0);
+    const looksLikeVariant = ['panel', 'exit', 'exit-small', 'small', 'media',
+      'image', 'information', 'once', 'once-session', 'force', ''].includes(row0Text);
+
+    if (looksLikeVariant && rows.length >= 4) {
+      // UE format with classes field: [0]=classes, [1]=modalId, [2]=fragmentPath, [3]=openLabel
+      modalId = getText(1);
+      fragmentPath = getLink(2) || getText(2);
+      openLabel = getText(3) || 'Open modal';
+    } else {
+      // Legacy format without classes: [0]=modalId, [1]=fragmentPath, [2]=openLabel
+      modalId = getText(0);
+      fragmentPath = getLink(1) || getText(1);
+      openLabel = getText(2) || 'Open modal';
+    }
   }
 
   if (!fragmentPath) return;
