@@ -72,7 +72,7 @@
 }
 
 /* Override abbvie-container grid-column on block wrappers */
-main .tabs-panel > .section.abbvie-container > div {
+.tabs-panel > .section.abbvie-container > div {
   grid-column: unset;
   min-width: 0;
 }
@@ -83,16 +83,16 @@ main .tabs-panel > .section.abbvie-container > div {
   }
 
   /* 1 block → spans all 12 columns */
-  main .tabs-panel > .section.abbvie-container > div:only-child {
+  .tabs-panel > .section.abbvie-container > div:only-child {
     grid-column: span 12;
   }
 
   /* 2 blocks → first 4 columns, second 8 columns */
-  main .tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2) {
+  .tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2) {
     grid-column: span 4;
   }
 
-  main .tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2) ~ div {
+  .tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2) ~ div {
     grid-column: span 8;
   }
 }
