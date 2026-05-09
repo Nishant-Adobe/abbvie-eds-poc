@@ -21,6 +21,7 @@
     "scaffold:create:log": "plop component --plopfile theme-tools/plopfile.mjs --verbose",
     "scaffold:start": "NODE_OPTIONS='--max-old-space-size=4096' npx gulp createBrandCSS && npx gulp default",
     "scaffold:build": "NODE_OPTIONS='--max-old-space-size=4096' npx gulp createBrandCSS",
+    "scaffold:build:block": "node theme-tools/build-scoped.js",
     "scaffold:build:log": "NODE_OPTIONS='--max-old-space-size=4096' node theme-tools/generate-css.js --verbose",
     "scaffold:remove": "plop remove --plopfile theme-tools/plopfile.mjs",
     "scaffold:remove:log": "plop remove --plopfile theme-tools/plopfile.mjs --verbose",
