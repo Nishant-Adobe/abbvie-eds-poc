@@ -95,7 +95,7 @@ function decorateTabContainer(block, container) {
         } else {
           const targetPanel = builtPanels[panelIdx] || builtPanels[builtPanels.length - 1];
           if (targetPanel) targetPanel.append(child);
-          else i += 1;
+          i += 1;
         }
       }
 
