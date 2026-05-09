@@ -5154,24 +5154,46 @@
     "id": "modal",
     "fields": [
       {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variant",
+        "options": [
+          { "name": "Standard (default)", "value": "" },
+          { "name": "Panel — slide-in from right", "value": "panel" },
+          { "name": "Exit — triggered on mouse leave", "value": "exit" },
+          { "name": "Exit Small", "value": "exit-small" },
+          { "name": "Small — narrow dialog", "value": "small" },
+          { "name": "Media — wide, no padding", "value": "media" },
+          { "name": "Image — lightbox", "value": "image" },
+          { "name": "Information — accent border", "value": "information" },
+          { "name": "Show Once (cookie)", "value": "once" },
+          { "name": "Show Once (session)", "value": "once-session" },
+          { "name": "Force Open — no dismiss", "value": "force" }
+        ]
+      },
+      {
         "component": "text",
+        "valueType": "string",
         "name": "modalId",
         "label": "Modal ID",
-        "description": "Unique slug, e.g. promo-1, faq-modal.",
+        "description": "Unique slug — triggers reference this via data-modal-id attribute",
         "required": true
       },
       {
         "component": "text",
+        "valueType": "string",
         "name": "fragmentPath",
         "label": "Fragment Path",
-        "description": "Path to the fragment that contains modal content, e.g. /us/en/fragments/promo-1.",
+        "description": "Path to the fragment that contains modal content, e.g. /linzess/fragments/external-link-warning",
         "required": true
       },
       {
         "component": "text",
+        "valueType": "string",
         "name": "openLabel",
-        "label": "Open Button Label",
-        "description": "Label for the trigger button.",
+        "label": "Trigger Button Label",
+        "description": "Label for the trigger button (not used for exit/once/force variants)",
         "value": "Open modal"
       }
     ]
