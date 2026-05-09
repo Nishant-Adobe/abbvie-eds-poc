@@ -34,6 +34,16 @@ header nav {
   color: var(--color-text-on-dark);
 }
 
+/* Utility button — must precede more-specific hamburger button selector */
+header .nav-utility button {
+  margin: 0;
+  padding: 0 var(--spacing-12);
+  color: var(--color-nav-utility);
+  font-size: var(--font-size-13);
+  font-weight: var(--font-weight-600);
+  height: 100%;
+}
+
 /* Hamburger — white bars on dark header */
 header nav .nav-hamburger button {
   background: transparent;
@@ -79,15 +89,6 @@ header .nav-utility a.button {
   white-space: nowrap;
 }
 
-header .nav-utility button {
-  margin: 0;
-  padding: 0 var(--spacing-12);
-  color: var(--color-nav-utility);
-  font-size: var(--font-size-13);
-  font-weight: var(--font-weight-600);
-  height: 100%;
-}
-
 header .nav-utility ul[role="menu"] {
   width: 100%;
   min-width: 100%;
@@ -99,22 +100,28 @@ header .nav-utility ul[role="menubar"] {
   justify-content: space-evenly;
 }
 
-header .nav-utility ul[role="menu"] li:first-child {
-  border-bottom: var(--separator-height-1) solid var(--header-utility-divider-color);
-}
-
-/* Hover + open state — yellow bg on full li, black text */
+/* Hover + open state — yellow bg on full li, black text (before first-child rule for specificity order) */
 header .nav-utility li:hover,
 header .nav-utility li:has(button[aria-expanded='true']) {
   background-color: var(--color-nav-active);
 }
-header .nav-utility ul[role="menu"] a:hover  {
+
+header .nav-utility li:hover > a,
+header .nav-utility li:hover > button {
+  color: var(--color-nav-dark);
+  text-decoration: none;
   background-color: var(--color-nav-active);
 }
 
-header .nav-utility li:hover > a,
+header .nav-utility ul[role="menu"] li:first-child {
+  border-bottom: var(--separator-height-1) solid var(--header-utility-divider-color);
+}
+
+header .nav-utility ul[role="menu"] a:hover {
+  background-color: var(--color-nav-active);
+}
+
 header .nav-utility li:hover > a.button,
-header .nav-utility li:hover > button,
 header .nav-utility li:has(button[aria-expanded='true']) > button {
   color: var(--color-nav-dark);
   text-decoration: none;
@@ -216,7 +223,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
   flex-direction: column;
 }
 
-header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li:before {
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li::before {
   content: "";
   left: var(--header-submenu-indent);
   width: var(--header-nav-indicator-width);
@@ -233,6 +240,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
   font-size: var(--font-size-12);
   line-height: var(--line-height-20);
 }
+
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover {
   color: var(--header-nav-indicator-color);
 }
@@ -250,14 +258,15 @@ header nav[aria-expanded='true'] .nav-sections {
   background-color: var(--color-nav-dark);
 }
 
-/* Nav separator — subtle white on dark */
-header nav .nav-sections .default-content-wrapper > ul > li {
-  border-bottom-color: var(--color-nav-separator);
-}
-
 /* Back button — plum accent */
 header nav .nav-item-level-0 .back-btn {
   color: var(--color-plum);
+}
+
+/* Nav separator — subtle white on dark */
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom-color: var(--color-nav-separator);
 }
 
 /* Eyebrow top bar — legal text size, bold anchors */
@@ -265,6 +274,7 @@ header .nav-eyebrow-top p {
   font-size: var(--font-size-legal);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 header .nav-eyebrow-top p a {
   font-weight: var(--font-weight-700);
   font-family: var(--font-family-bold);
@@ -307,8 +317,7 @@ header .nav-eyebrow-top p a {
   header .nav-wrapper nav .nav-brand-info {
     grid-area: info;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-end;
     gap: var(--spacing-20);

@@ -519,7 +519,7 @@ function buildLevelTwoLanguageLinks(selector) {
  * @param {Element} block - The block element.
  * @returns {Element} - The search form element.
  */
-function createSearchForm(block) {
+function createSearchForm() {
   const text = 'Search';
   const maindiv = createElement('div', { className: 'search-main-wrapper' });
   const wrapperdiv = createElement('div', { className: 'search-wrapper' });
@@ -661,7 +661,8 @@ function buildMenuItem(block, isNavigation = false) {
     document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', expanded);
   });
 
-  // Desktop: hover opens submenu (mouseenter/mouseleave with small delay to allow moving into submenu)
+  // Desktop: hover opens submenu
+  // (mouseenter/mouseleave with small delay to allow moving into submenu)
   if (isNavigation) {
     let hoverTimer = null;
 
@@ -794,7 +795,8 @@ function buildCtaGroup(headerEl) {
 
   const cell = ctaBlock.querySelector(':scope > div > div');
   const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
-  const ctaParas = paras.slice(4); // skip 4 template defaults (icon, eyebrowPos, isiExpand, isiCollapse)
+  // skip 4 template defaults: icon, eyebrowPos, isiExpand, isiCollapse
+  const ctaParas = paras.slice(4);
   if (!ctaParas.length) return null;
 
   const group = createElement('div', { className: 'nav-cta-group' });
@@ -921,7 +923,8 @@ export default async function decorate(block) {
       //   child[n-1]     = floatingIsiCollapseLabel <p> (template default)
       const cell = utilBlock.querySelector(':scope > div > div');
       const children = [...(cell?.children || [])];
-      const authoredChildren = children.slice(1, -3); // skip icon; skip 3 trailing template defaults
+      // skip icon (first); skip 3 trailing template defaults
+      const authoredChildren = children.slice(1, -3);
 
       authoredChildren.forEach((child, idx) => {
         if (child.tagName !== 'P') return; // <ul> nodes are handled by the preceding <p>
@@ -935,7 +938,9 @@ export default async function decorate(block) {
           // Dropdown: preceding <p> is the trigger label, following <ul> holds the items
           const dropLi = createElement('li', { attributes: { role: 'none' } });
           const btn = createElement('button', {
-            attributes: { type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false', role: 'menuitem' },
+            attributes: {
+              type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false', role: 'menuitem',
+            },
             textContent: link.textContent.trim(),
           });
           const dropMenu = createElement('ul', { attributes: { role: 'menu' } });

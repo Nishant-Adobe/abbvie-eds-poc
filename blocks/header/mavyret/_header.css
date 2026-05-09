@@ -9,10 +9,12 @@
    - Submenu: white bg, brand-primary text
    - Mobile: white bg
 ────────────────────────────────────────── */
+
 /* Main header wrapper — white (logo row) */
 header.header-wrapper {
   background-color: var(--color-background-footer);
 }
+
 header .nav-wrapper {
   background-color: var(--background-color);
 }
@@ -25,16 +27,19 @@ header nav {
 header nav .nav-hamburger button > span {
   background: var(--color-brand-primary);
 }
+
 header nav .nav-brand {
   padding: var(--header-logo-row-padding-top) 0 var(--spacing-18);
   margin-left: var(--header-logo-row-indent);
 }
+
 /* Logo — full color, fixed width */
 header nav .nav-brand img {
   max-width: unset;
   width: var(--header-logo-width);
   height: auto;
 }
+
 .header .nav-utility {
   background-color: inherit;
   max-width: var(--header-content-max-width);
@@ -42,6 +47,11 @@ header nav .nav-brand img {
 }
 
 /* Utility bar — white bg, right-aligned, › separators */
+
+.navigation-item-level-1>a {
+  font-size: var(--font-size-16);
+}
+
 /* Live: Barlow Semi Condensed, 0.875rem (14px), weight 500 */
 header .nav-utility a,
 header .nav-utility a.button {
@@ -70,6 +80,13 @@ header .nav-utility li + li::before {
   font-size: var(--font-size-body);
   padding: 0 var(--spacing-04);
 }
+
+header .nav-eyebrow-top a {
+  color: var(--color-text-on-dark);
+  text-decoration: underline;
+  font-weight: var(--font-weight-heading);
+}
+
 header .nav-utility ul[role="menubar"] > li > a,
 header .nav-utility ul[role="menubar"] > li > button {
     color: var(--color-black);
@@ -79,8 +96,8 @@ header .nav-utility ul[role="menubar"] > li > button {
     font-weight: var(--font-weight-500);
 }
 
-header .nav-utility li:hover > a,
-header .nav-utility li:hover > button {
+header .nav-utility ul[role="menubar"] > li:hover > a,
+header .nav-utility ul[role="menubar"] > li:hover > button {
   text-decoration: underline;
 }
 
@@ -108,7 +125,7 @@ header nav .nav-sections {
 }
 
 /* Live: Barlow 1.125rem (18px), font-weight 600, no text-transform */
-header nav .nav-sections .default-content-wrapper > ul > li > button {
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
   color: var(--color-text-on-dark);
   font-weight: var(--font-weight-600);
   font-size: var(--font-size-18);
@@ -126,6 +143,14 @@ header nav .nav-tools .icon-search svg {
   stroke: var(--color-text-on-dark);
 }
 
+/* Broad nav hover — lower specificity, placed before higher-specificity nav-sections selectors */
+header nav .nav-item-level-0 .default-content-wrapper ul li button:hover,
+header nav .nav-item-level-0 .default-content-wrapper ul li a:hover,
+header nav .nav-item-level-0 .default-content-wrapper ul li button.active {
+  font-weight: var(--font-weight-400);
+  font-family: inherit;
+}
+
 /* Submenu — white bg, dark text */
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
   background: var(--background-color);
@@ -138,22 +163,28 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
   color: var(--color-brand-primary);
 }
 
- header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>button:hover,
- header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:hover,
- header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:focus,
- header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:focus-visible,
- header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:hover,
- header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:focus,
- header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:focus-visible,
- header nav .nav-item-level-0 .default-content-wrapper>ul>li>a.nav-item-link  {
+header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
   color: var(--color-text-on-dark);
   opacity: 1;
   font-weight: var(--font-weight-600);
   font-family: inherit;
 }
 
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:hover:after,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>button:hover:after {
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>button:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:focus,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:focus-visible,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:focus,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:focus-visible {
+  color: var(--color-text-on-dark);
+  opacity: 1;
+  font-weight: var(--font-weight-600);
+  font-family: inherit;
+}
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:hover::after,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>button:hover::after {
     content: "";
     background: var(--color-white);
     bottom: 0;
@@ -172,12 +203,6 @@ header .nav-eyebrow-top {
   font-size: var(--font-size-body-small);
   padding: var(--spacing-08) var(--spacing-24);
   line-height: var(--header-eyebrow-line-height);
-}
-
-header .nav-eyebrow-top a {
-  color: var(--color-text-on-dark);
-  text-decoration: underline;
-  font-weight: var(--font-weight-heading);
 }
 
 /* Mobile open — white bg */
@@ -199,9 +224,7 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
 }
 
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover  {
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
   color: var(--color-brand-primary);
   padding: 0;
 }
@@ -210,17 +233,6 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
   background: var(--color-black);
   color: var(--color-text-on-dark);
-}
-
-.navigation-item-level-1>a {
-  font-size: var(--font-size-16);
-}
-
-header nav .nav-item-level-0 .default-content-wrapper ul li button:hover,
-header nav .nav-item-level-0 .default-content-wrapper ul li a:hover,
-header nav .nav-item-level-0 .default-content-wrapper ul li button.active {
-  font-weight: var(--font-weight-400);
-  font-family: inherit;
 }
 
 /* Desktop */
