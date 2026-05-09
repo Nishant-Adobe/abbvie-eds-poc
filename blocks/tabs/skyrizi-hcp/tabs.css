@@ -109,12 +109,18 @@
 }
 
 /* ── Sections inside panel — remove default spacing ── */
-.tabs-panel > .section {
+.tabs-panel > .section.abbvie-container {
   margin: 0;
   padding: 0;
+  max-width: none;
 }
 
 /* ── Text container inside tab panels ── */
+.tabs-panel .text-container-wrapper {
+  background: var(--color-background-blue);
+  padding: var(--spacing-40);
+}
+
 .tabs-panel .text-container-text {
   color: var(--color-tabs-text);
   font-family: var(--font-family-tabs-text);
@@ -132,15 +138,15 @@
   margin: 0 0 var(--spacing-10);
 }
 
+/* ── Clinical data panel inside tab panels ── */
+.tabs-panel .clinical-data-panel-wrapper {
+  padding: var(--spacing-40);
+}
+
 /* ── Tablet+ ── */
 @media (width >= 600px) {
   .tabs-container .tabs-wrapper {
     margin-top: calc(-1 * var(--spacing-20));
     margin-bottom: calc(-1 * var(--spacing-06));
-  }
-
-  .tabs-panel {
-    padding-left: var(--spacing-55);
-    padding-right: var(--spacing-55);
   }
 }
