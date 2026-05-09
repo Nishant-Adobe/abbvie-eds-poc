@@ -99,41 +99,40 @@
 }
 
 
+/* ── Content containment ── */
+.tabs-panel {
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-20);
+  padding-right: var(--spacing-20);
+}
+
 /* ── Sections inside panel — remove default spacing ── */
 .tabs-panel > .section {
   margin: 0;
   padding: 0;
 }
 
-/* ── Left column text styling (4-col section) ── */
-.tabs-panel > .section .default-content-wrapper p:first-child {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-body-small);
-  color: var(--text-color);
-  line-height: var(--line-height-20);
-  margin-bottom: var(--spacing-08);
+/* ── Text container inside tab panels ── */
+.tabs-panel .text-container-text {
+  color: var(--color-tabs-text);
+  font-family: var(--font-family-tabs-text);
 }
 
-.tabs-panel > .section .default-content-wrapper h2,
-.tabs-panel > .section .default-content-wrapper p:nth-child(2) {
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-h2);
+.tabs-panel .text-container-text p {
+  font-size: var(--font-size-16);
+  margin: 0 0 var(--spacing-10);
+}
+
+.tabs-panel .text-container-text h5 {
+  font-size: var(--font-size-26);
+  font-family: var(--font-family-tabs-text);
   font-weight: var(--font-weight-heading);
-  color: var(--color-text-heading);
-  line-height: var(--line-height-h2);
-  text-transform: uppercase;
-  margin-bottom: var(--spacing-16);
+  margin: 0 0 var(--spacing-10);
 }
 
-.tabs-panel > .section .default-content-wrapper p:nth-child(n+3) {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-body-small);
-  color: var(--text-color);
-  line-height: var(--line-height-20);
-  margin-bottom: var(--spacing-10);
-}
-
-/* ── Desktop ── */
+/* ── Tablet+ ── */
 @media (width >= 600px) {
   .tabs-container .tabs-wrapper {
     margin-top: calc(-1 * var(--spacing-20));
@@ -141,6 +140,7 @@
   }
 
   .tabs-panel {
-    padding: var(--spacing-40) var(--spacing-32);
+    padding-left: var(--spacing-55);
+    padding-right: var(--spacing-55);
   }
 }
