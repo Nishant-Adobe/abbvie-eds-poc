@@ -1,5 +1,7 @@
 @import '../modal.css';
 
+/* stylelint-disable no-descending-specificity */
+
 /* Linzess DTC modal — Lato body, Bebas headings, purple/orange palette */
 
 .modal-overlay {
@@ -33,7 +35,7 @@
 }
 
 /* Links inside modal styled as buttons */
-.modal-content a {
+.modal-dialog .modal-content a[href] {
   display: inline-block;
   padding: 12px 28px;
   border-radius: var(--border-radius-button-primary);
@@ -45,22 +47,17 @@
   margin-top: 16px;
   transition: background 0.2s, border-color 0.2s;
   background: var(--button-primary-bg);
-  color: var(--button-primary-color);
+  color: var(--button-primary-color) !important;
   border: 2px solid var(--button-primary-bg);
 }
 
-.modal-content a:first-of-type {
-  background: var(--button-primary-bg);
-  color: var(--button-primary-color);
-  border-color: var(--button-primary-bg);
-}
-
-.modal-content a:last-of-type {
+.modal-dialog .modal-content p:last-child a[href],
+.modal-dialog .modal-content a[href]:last-of-type {
   background: transparent;
-  color: var(--color-brand-primary);
+  color: var(--color-brand-primary) !important;
   border: 2px solid var(--color-brand-primary);
 }
 
-.modal-content a:hover {
+.modal-dialog .modal-content a[href]:hover {
   opacity: 0.85;
 }
