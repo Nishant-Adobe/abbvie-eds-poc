@@ -32,7 +32,8 @@ function decorateTabContainer(block, container) {
   // Tab Panels can be:
   // 1. Direct child sections with data-tab-name (doc-based delivery)
   // 2. Nested divs with data-aue-component="tab-panel" (xwalk/UE delivery)
-  // 3. Divs inside default-content-wrapper with data-aue-component="tab-panel"
+  // 3. Divs inside default-content-wrapper with data-aue-model="tab-panel"
+  // 4. Flat content in default-content-wrapper split by tabName paragraphs (doc delivery)
   let panels = [...container.querySelectorAll(':scope > .section[data-tab-name]')]
     .filter((section) => section !== block.closest('.section'));
 
@@ -44,13 +45,68 @@ function decorateTabContainer(block, container) {
     panels = [...container.querySelectorAll('.default-content-wrapper > div[data-aue-model="tab-panel"]')];
   }
 
+  // Fallback: parse flat content split by tabName markers (doc-based delivery)
+  if (panels.length === 0) {
+    const dcw = container.querySelector('.default-content-wrapper');
+    if (dcw) {
+      const children = [...dcw.children];
+      let currentPanel = null;
+      const builtPanels = [];
+
+      children.forEach((child) => {
+        if (child.tagName === 'P' && normalize(child.textContent) === 'tabname') {
+          const nameEl = child.nextElementSibling;
+          if (nameEl) {
+            currentPanel = document.createElement('div');
+            currentPanel.classList.add('tab-panel');
+            currentPanel.dataset.tabName = nameEl.textContent.trim();
+            builtPanels.push(currentPanel);
+          }
+        }
+      });
+
+      if (builtPanels.length > 0) {
+        [currentPanel] = builtPanels;
+        const toRemove = [];
+        children.forEach((child) => {
+          if (child.tagName === 'P' && normalize(child.textContent) === 'tabname') {
+            const nameEl = child.nextElementSibling;
+            const tabName = nameEl?.textContent?.trim() || '';
+            currentPanel = builtPanels.find(
+              (p) => p.dataset.tabName === tabName,
+            );
+            toRemove.push(child);
+            if (nameEl) toRemove.push(nameEl);
+            return;
+          }
+          if (child.tagName === 'P' && normalize(child.textContent) === 'sectionid') {
+            toRemove.push(child);
+            const valEl = child.nextElementSibling;
+            if (valEl && currentPanel) {
+              currentPanel.id = valEl.textContent.trim();
+              toRemove.push(valEl);
+            }
+            return;
+          }
+          if (currentPanel) {
+            currentPanel.append(child);
+          }
+        });
+
+        toRemove.forEach((el) => el.remove());
+        dcw.textContent = '';
+        builtPanels.forEach((p) => dcw.append(p));
+        panels = builtPanels;
+      }
+    }
+  }
+
   // Extract tab-name and split classes from section-metadata inside each panel
   panels.forEach((panel) => {
     if (!panel.dataset.tabName) {
       const name = getTabNameFromMeta(panel);
       if (name) panel.dataset.tabName = name;
     }
-    // Apply split-* class from section-metadata to the panel itself
     const meta = panel.querySelector('.section-metadata');
     if (meta) {
       [...meta.classList].filter((c) => c.startsWith('split-')).forEach((c) => {
@@ -58,8 +114,6 @@ function decorateTabContainer(block, container) {
       });
     }
   });
-
-  // Section metadata is hidden via CSS (.tabs-container .section-metadata { display: none })
 
   const tabItems = [...block.children];
   let firstPanel = null;
