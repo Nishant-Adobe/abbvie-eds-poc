@@ -5,25 +5,24 @@
    SKYRIZI HCP — Tabs brand overrides
    Live: skyrizihcp.com/dermatology/psoriasis-efficacy
    Style: Dark navy pill bar with white text, underline on active
+   Mobile-first: stacked on mobile, inline pill bar on desktop
    ============================================================ */
 
-/* ── Tab controls wrapper — centered, overlapping sections ── */
+/* ── Tab controls wrapper ── */
 .tabs-container .tabs-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   z-index: var(--z-index-2);
-  margin-top: calc(-1 * var(--spacing-20));
-  margin-bottom: calc(-1 * var(--spacing-20));
 }
 
-/* ── Tab controls bar — dark navy pill ── */
+/* ── Tab controls bar — base (mobile) ── */
 .tabs-container .tabs .tabs-list {
-  display: inline-flex;
-  width: auto;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   background: var(--color-tabs-control-bg);
   border-radius: var(--border-radius-button-tertiary);
   padding: var(--spacing-06) var(--spacing-08);
@@ -31,12 +30,12 @@
   border: none;
 }
 
-/* ── Tab buttons (inactive) ── */
+/* ── Tab buttons (inactive) — base (mobile) ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
   display: block;
   width: auto;
   max-width: none;
-  padding: var(--spacing-08) var(--spacing-16);
+  padding: var(--spacing-08) var(--spacing-12);
   margin: 0;
   background: transparent;
   color: var(--color-text-on-dark);
@@ -54,7 +53,7 @@
   cursor: pointer;
 }
 
-/* ── Active tab — bold ── */
+/* ── Active tab — bold with underline ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: transparent;
   color: var(--color-text-on-dark);
@@ -71,10 +70,10 @@
   content: '';
 }
 
-/* ── Tab panels ── */
+/* ── Tab panels — base (mobile) ── */
 .tabs-container .default-content-wrapper .tab-panel {
   position: relative;
-  padding: var(--spacing-24);
+  padding: var(--spacing-16);
   background: var(--background-color);
   border: var(--separator-height-1) solid var(--color-border-default);
   margin: 0 auto;
@@ -98,16 +97,39 @@
   color: var(--text-color);
 }
 
-.tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] p:first-child {
-  font-size: var(--font-size-body-xs);
-  line-height: var(--line-height-20);
-  margin-bottom: var(--spacing-08);
-}
+/* ── Desktop enhancements ── */
+@media (width >= 900px) {
+  .tabs-container .tabs-wrapper {
+    margin-top: calc(-1 * var(--spacing-20));
+    margin-bottom: calc(-1 * var(--spacing-20));
+  }
 
-.tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] h2 {
-  font-size: var(--font-size-h2);
-  line-height: var(--line-height-h2);
-  font-weight: var(--font-weight-heading);
-  color: var(--color-text-heading);
-  margin-bottom: var(--spacing-08);
+  .tabs-container .tabs .tabs-list {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    width: auto;
+    justify-content: space-around;
+  }
+
+  .tabs-container .tabs .tabs-list button.tabs-tab {
+    padding: var(--spacing-08) var(--spacing-16);
+  }
+
+  .tabs-container .default-content-wrapper .tab-panel {
+    padding: var(--spacing-24);
+  }
+
+  .tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] p:first-child {
+    font-size: var(--font-size-body-xs);
+    line-height: var(--line-height-20);
+    margin-bottom: var(--spacing-08);
+  }
+
+  .tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] h2 {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+    font-weight: var(--font-weight-heading);
+    color: var(--color-text-heading);
+    margin-bottom: var(--spacing-08);
+  }
 }

@@ -82,7 +82,7 @@ function decorateTabContainer(block, container) {
     button.id = `tab-${panelId}`;
     button.textContent = title;
     button.setAttribute('aria-controls', panelId);
-    button.setAttribute('aria-selected', !firstPanel && panel);
+    button.setAttribute('aria-selected', !firstPanel && !!panel);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
 
