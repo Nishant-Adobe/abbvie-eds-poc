@@ -6,9 +6,11 @@
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v2/block",
+            "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "blockModelId": "modal"
+              "name": "Modal",
+              "model": "modal",
+              "classes": ""
             }
           }
         }
@@ -20,25 +22,47 @@
       "id": "modal",
       "fields": [
         {
+          "component": "multiselect",
+          "valueType": "string",
+          "name": "classes",
+          "label": "Variant",
+          "options": [
+            { "name": "Standard (default)", "value": "" },
+            { "name": "Panel — slide-in from right", "value": "panel" },
+            { "name": "Exit — triggered on mouse leave", "value": "exit" },
+            { "name": "Exit Small", "value": "exit-small" },
+            { "name": "Small — narrow dialog", "value": "small" },
+            { "name": "Media — wide, no padding", "value": "media" },
+            { "name": "Image — lightbox", "value": "image" },
+            { "name": "Information — accent border", "value": "information" },
+            { "name": "Show Once (cookie)", "value": "once" },
+            { "name": "Show Once (session)", "value": "once-session" },
+            { "name": "Force Open — no dismiss", "value": "force" }
+          ]
+        },
+        {
           "component": "text",
+          "valueType": "string",
           "name": "modalId",
+          "value": "",
           "label": "Modal ID",
-          "description": "Unique slug, e.g. hcp-gate, promo-2025.",
-          "required": true
+          "description": "Unique slug — triggers reference this via data-modal-id attribute"
         },
         {
           "component": "text",
+          "valueType": "string",
           "name": "fragmentPath",
+          "value": "",
           "label": "Fragment Path",
-          "description": "Path to the fragment that contains modal content, e.g. /linzess/fragments/hcp-gate.",
-          "required": true
+          "description": "Path to the fragment that contains modal content"
         },
         {
           "component": "text",
+          "valueType": "string",
           "name": "openLabel",
-          "label": "Open Button Label",
-          "description": "Label for the trigger button.",
-          "value": "Open modal"
+          "value": "Open modal",
+          "label": "Trigger Button Label",
+          "description": "Label for the trigger button (not used for exit/once/force variants)"
         }
       ]
     }

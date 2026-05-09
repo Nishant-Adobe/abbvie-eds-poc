@@ -1,124 +1,877 @@
-/* Linzess — modal brand overrides
-   Loaded by aem.js loadBlock() alongside the base modal.css.
-   All token references include hardcoded Linzess fallbacks so this file works
-   even when styles/linzess/tokens.css has not been loaded at the page level.
+/* Modal Block — overlay shell styles
+   Content inside the modal comes from an EDS fragment and is styled
+   by that fragment's own block CSS. Only the overlay, dialog frame,
+   close button, and trigger button are styled here.
 */
 
-/* ---- Close button color — purple, not the #333 fallback in modal.css ---- */
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-slide-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes modal-slide-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* ---- Overlay ---- */
 
 .modal-overlay {
-  --modal-close-color: var(--color-brand-primary, #422e83);
-  --modal-close-hover-color: var(--color-brand-primary-dark, #2e1f5e);
+  --modal-close-color: var(--color-brand-primary, #333);
+  --modal-close-hover-color: var(--color-brand-primary-dark, #000);
+
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 60%);
+  z-index: var(--z-modal, 1000);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
 
-/* ---- Content spacing ---- */
-
-:root {
-  --modal-dialog-padding-top: 24px;
-  --modal-dialog-padding: 40px;
+.modal-overlay.is-open {
+  display: flex;
+  animation: modal-fade-in 0.25s ease;
 }
 
-/* ---- Dialog sizing ---- */
+/* ---- Dialog ---- */
 
 .modal-dialog {
-  max-width: var(--modal-dialog-max-width, 720px);
-  border: var(--modal-dialog-border, 1px solid #c2c2c2);
-  border-radius: var(--modal-dialog-border-radius, 0);
-}
-
-/* ---- Heading inside fragment content ---- */
-
-.modal-content h1,
-.modal-content h2,
-.modal-content h3 {
-  font-family: var(--body-font-family, 'Lato', sans-serif);
-  color: var(--linz-grey, #4d4d4f);
-  font-size: 1.75rem;
-  line-height: 1.3;
-  font-weight: 400;
-  margin: 0 0 1rem;
-}
-
-/* ---- Body text inside fragment content ---- */
-
-.modal-content p {
-  font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 14px);
-  color: var(--linz-grey, #4d4d4f);
-  line-height: 1.6;
-  margin: 0 0 0.75rem;
-}
-
-.modal-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* ================================================================
-   BUTTONS INSIDE FRAGMENT CONTENT
-   Match real linzess.com: purple filled, rounded pill, arrow icon,
-   displayed side by side.
-   ================================================================ */
-
-.modal-content .button-container {
-  display: inline-block;
-  margin: 0;
-}
-
-.modal-content .button-container a,
-.modal-content .button-container strong a {
-  background: var(--color-brand-primary, #422e83);
-  color: var(--color-text-on-dark, #fff);
-  border-radius: var(--border-radius-button-primary, 16px);
-  padding: 12px 28px;
-  font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-weight: var(--font-weight-bold, 700);
-  font-size: var(--font-size-button, 14.4px);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.2s ease;
-  margin: 0;
-}
-
-.modal-content .button-container a::after {
-  content: '›';
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-.modal-content .button-container a:hover {
-  background: var(--color-brand-primary-dark, #2e1f5e);
-}
-
-/* Side-by-side button row */
-.modal-content .section:has(.button-container) {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 24px;
+  flex-direction: column;
+  background: var(--background-color, #fff);
+  border: var(--modal-dialog-border, none);
+  border-radius: var(--modal-dialog-border-radius, var(--border-radius-card, 8px));
+  max-width: var(--modal-dialog-max-width, 800px);
+  width: 100%;
+  max-height: 90vh;
+  font-family: var(--body-font-family, inherit);
+  animation: modal-slide-up 0.3s ease;
 }
 
-/* ================================================================
-   MOBILE
-   ================================================================ */
+/* ---- Header row (contains close button, never scrolls) ---- */
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 8px 0;
+  flex-shrink: 0;
+}
+
+/* ---- Close button ---- */
+
+.modal-header .modal-close {
+  width: var(--modal-close-size, 32px);
+  height: var(--modal-close-size, 32px);
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--modal-close-font-size, 22px);
+  line-height: 1;
+  color: var(--modal-close-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  max-width: none;
+}
+
+.modal-header .modal-close:hover {
+  color: var(--modal-close-hover-color);
+}
+
+.modal-header .modal-close:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---- Content — scrollable area ---- */
+
+.modal-content {
+  padding: var(--modal-dialog-padding-top, 8px) var(--modal-dialog-padding, 40px) var(--modal-dialog-padding, 40px);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-content .section {
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content .button-container a {
+  margin: 0;
+}
+
+/* ---- Body scroll lock ---- */
+
+body.modal-is-open {
+  overflow: hidden;
+}
+
+/* ---- Loading / error states ---- */
+
+.modal-loading,
+.modal-error {
+  padding: 1rem 0;
+  color: var(--text-color, inherit);
+}
+
+/* ---- Trigger button ---- */
+
+.modal-trigger {
+  display: inline-block;
+  padding: var(--button-primary-padding, 12px 28px);
+  background: var(--button-primary-bg, #222);
+  color: var(--button-primary-color, #fff);
+  border: none;
+  border-radius: var(--border-radius-button-primary, 4px);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-trigger:hover {
+  background: var(--button-primary-bg-hover, #000);
+}
+
+/* ==================================================================
+   VARIANT: small — narrow confirmation dialog
+   ================================================================== */
+
+.modal-overlay.modal-small .modal-dialog {
+  max-width: 480px;
+}
+
+/* ==================================================================
+   VARIANT: media — wide modal for video/image, no inner padding
+   ================================================================== */
+
+.modal-overlay.modal-media .modal-dialog {
+  max-width: 95%;
+  max-height: 90vh;
+}
+
+.modal-overlay.modal-media .modal-content {
+  padding: 0;
+}
+
+.modal-overlay.modal-media .modal-header .modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  background: var(--background-color, #fff);
+  border-radius: 50%;
+}
+
+/* ==================================================================
+   VARIANT: image — full-bleed image lightbox
+   ================================================================== */
+
+.modal-overlay.modal-image .modal-dialog {
+  max-width: none;
+  width: auto;
+  max-height: none;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.modal-overlay.modal-image .modal-content {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.modal-image .modal-content img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  display: block;
+}
+
+.modal-overlay.modal-image .modal-header .modal-close {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: rgb(255 255 255 / 80%);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+/* ==================================================================
+   VARIANT: panel — slide-in side panel from right
+   ================================================================== */
+
+.modal-overlay.modal-panel {
+  justify-content: flex-end;
+  padding: 0;
+}
+
+.modal-overlay.modal-panel .modal-dialog {
+  max-width: 420px;
+  height: 100vh;
+  max-height: 100vh;
+  border-radius: 0;
+  animation: modal-slide-in-right 0.3s ease;
+}
+
+/* ==================================================================
+   VARIANT: exit / exit-small — exit-intent modals
+   ================================================================== */
+
+.modal-overlay.modal-exit .modal-dialog {
+  max-width: 600px;
+}
+
+.modal-overlay.modal-exit-small .modal-dialog {
+  max-width: 420px;
+}
+
+/* ==================================================================
+   VARIANT: information — informational overlay with accent border
+   ================================================================== */
+
+.modal-overlay.modal-information .modal-dialog {
+  border-left: 4px solid var(--color-brand-accent, var(--color-brand-primary, #333));
+}
+
+/* ==================================================================
+   VARIANT: force — no backdrop dismiss, close button hidden
+   ================================================================== */
+
+.modal-overlay.modal-force .modal-header .modal-close {
+  display: none;
+}
+
+/* ==================================================================
+   Mobile: full-width, bottom-anchored (except panel)
+   ================================================================== */
 
 @media (width <= 600px) {
-  .modal-overlay {
-    align-items: center;
-    padding: 16px;
+  .modal-overlay:not(.modal-panel) {
+    padding: 0;
+    align-items: flex-end;
   }
 
-  .modal-dialog {
+  .modal-overlay:not(.modal-panel) .modal-dialog {
     max-width: 100%;
+    border-radius: var(--modal-dialog-border-radius, 8px) var(--modal-dialog-border-radius, 8px) 0 0;
+    max-height: 90vh;
   }
 
-  .modal-content .section:has(.button-container) {
-    flex-direction: column;
+  .modal-overlay.modal-panel .modal-dialog {
+    max-width: 100%;
+    width: 100%;
   }
 
-  .modal-content .button-container a {
-    text-align: center;
-    display: block;
+  .modal-overlay.modal-image .modal-content img {
+    max-width: 100vw;
+    max-height: 80vh;
   }
+}
+
+/* ---- Reduced motion ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay.is-open,
+  .modal-dialog {
+    animation: none;
+  }
+}
+
+/*
+ * Copyright 2020 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
+/* Media Query Breakpoints (min-width, mobile-first)
+   Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
+
+@custom-media --bp-tablet (min-width: 744px);
+
+@custom-media --bp-desktop (min-width: 1024px);
+
+@custom-media --bp-wide (min-width: 1440px);
+
+:root {
+/* -----------------------------------------------------------
+   PX → REM Conversion Helper
+   How to use:
+   - Define a base root font-size (default = 10px)
+   - Use `calc(<px> * var(--px-to-rem))` to convert pixels to rem
+   - Example: calc(24 * var(--px-to-rem)) = 2.4rem
+----------------------------------------------------------- */
+  --base-size: 10; /* 1rem = 10px */
+  --px-to-rem: calc(1rem / var(--base-size));
+
+    /* Colors */
+  --link-color: #035fe6;
+  --link-hover-color: #136ff6;
+
+  /* Secondary link blue (e.g. nav preview tools column; legacy #0662BB) */
+  --color-link-secondary: #0662BB;
+  --background-color: #fff;
+  --highlight-background-color: #f1f3ff;
+  --highlight-dark-background-color:#0066F5;
+  --container-border-color: #a6b5e0;
+  --footer-background-color: #fafafa;
+  --footer-text-color: #666b7a;
+  --footer-link-color: #071d49;
+  --footer-seperator-color: #b9b4b4;
+  --text-color: #071d49; /* primary dark/nav text */
+  --strong-heading: #0066f5;
+  --hero-button-color: #479ff8;
+  --text-color-gray: #808080;
+  --color-text-muted: #555;
+  --color-blue-grey-500: #607d8b;
+  --color-gray-600: #6c7280;
+  --light-color: #f8f8f8;
+  --dark-color: #505050;
+  --overlay-background-color: lightgrey;
+  --color-accent-purple: #8a2ecc;
+  --color-accent-blue: #0066f5;
+  --color-accent-blue-light: #479ff8;
+  --color-accent-green: #338700;
+  --overlay-navy: rgb(7 29 73 / 70%);
+  --overlay-navy-medium: rgb(7 29 73 / 55%);
+  --overlay-navy-light: rgb(7 29 73 / 50%);
+
+  /* Background Colors for Style Field Values */
+  --color-white: #fff;
+  --color-navy-dark: #071d49;
+  --color-blue-light: #a6b5e0;
+  --color-blue-very-light: #f1f3ff;
+  --color-blue-ultra-light: #fafbff;
+  --color-gray-dark: #666b7a;
+  --color-gray-medium: #b9b4b4;
+  --color-gray-light: #f4f4f4;
+  --color-gray-extra-light: #fafafa;
+  --color-purple-primary: #8a2ecc;
+  --color-purple-light: #a86bde;
+  --color-blue-primary: #0066f5;
+  --color-blue-secondary: #479ff8;
+  --color-orange-dark: #cf451c;
+  --color-orange-light: #f7634f;
+  --color-green-primary: #338700;
+
+  /* Alerts */
+  --error-color: #cf451c;
+  --warning-color: #f2dede;
+  --success-color: #2f9ece;
+
+  /* Fonts */
+  --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
+  --heading-font-family: 'F37 Lineca Book', helvetica, arial, sans-serif;
+  --icon-font-family: 'Abbvie Icon';
+  --heading-font-family-bold: 'F37 Lineca Medium', helvetica, arial, sans-serif;
+  --roboto-small-font-family: 'Roboto Small', helvetica, arial, sans-serif;
+  --roboto-bold-font-family: 'Roboto Bold', helvetica, arial, sans-serif;
+  --roboto-medium-font-family: 'Roboto Medium', helvetica, arial, sans-serif;
+  --form-font-family: "Open Sans", sans-serif;
+
+  /* Body sizes (match abbvie breakpoints) */
+  --body-font-size-m: 1.8rem;
+  --body-font-size-s: 1.6rem;
+  --body-font-size-xs: 1.4rem;
+  --font-size-10: 1rem;
+  --font-size-11: 1.1rem;
+  --font-size-12: 1.2rem;
+  --font-size-13: 1.3rem;
+  --font-size-14: 1.4rem;
+  --font-size-16: 1.6rem;
+  --font-size-18: 1.8rem;
+  --font-size-20: 2rem;
+  --font-size-22: 2.2rem;
+  --font-size-24: 2.4rem;
+  --font-size-26: 2.6rem;
+  --font-size-28: 2.8rem;
+  --font-size-32: 3.2rem;
+  --font-size-30: 3rem;
+  --font-size-33: 3.3rem;
+  --font-size-34: 3.4rem;
+  --font-size-36: 3.6rem;
+  --font-size-38: 3.8rem;
+  --font-size-40: 4rem;
+  --font-size-42: 4.2rem;
+  --font-size-50: 5rem;
+  --font-size-625: 6.25rem;
+  --font-size-64: 6.4rem;
+  --font-size-70: 7rem;
+  --font-size-80: 8rem;
+
+  /* Heading sizes */
+  --heading-font-size-xxl: 6.4rem;
+  --heading-font-size-xl: 5.6rem;
+  --heading-font-size-l: 4.8rem;
+  --heading-font-size-m: 4rem;
+  --heading-font-size-s: 3.2rem;
+  --heading-font-size-xs: 2.4rem;
+
+  /* nav height (approx) */
+  --nav-height: calc(72 * var(--px-to-rem));
+  --nav-height-mobile: 72px;
+  --breadcrumbs-height: 34px;
+  --header-height: var(--nav-height);
+
+  /* Spacing Tokens */
+  --space-token-xxs: calc(8 * var(--px-to-rem));
+  --space-token-xs: calc(16 * var(--px-to-rem));
+  --space-token-s: calc(24 * var(--px-to-rem));
+  --space-token-m: calc(32 * var(--px-to-rem));
+  --space-token-l: calc(40 * var(--px-to-rem));
+  --space-token-xl: calc(56 * var(--px-to-rem));
+  --space-token-xxl: calc(80 * var(--px-to-rem));
+  --space-token-xxxl: calc(104 * var(--px-to-rem));
+
+  /* Generalized Spacing Tokens */
+  --spacing-02: 0.2rem;
+  --spacing-03: 0.3rem;
+  --spacing-04: 0.4rem;
+  --spacing-05: 0.5rem;
+  --spacing-06: 0.6rem;
+  --spacing-08: 0.8rem;
+  --spacing-10: 1rem;
+  --spacing-12: 1.2rem;
+  --spacing-14: 1.4rem;
+  --spacing-15: 1.5rem;
+  --spacing-16: 1.6rem;
+  --spacing-17: 1.7rem;
+  --spacing-18: 1.8rem;
+  --spacing-20: 2rem;
+  --spacing-21: 2.1rem;
+  --spacing-22: 2.2rem;
+  --spacing-24: 2.4rem;
+  --spacing-25: 2.5rem;
+  --spacing-26: 2.6rem;
+  --spacing-27: 2.7rem;
+  --spacing-275: 2.75rem;
+  --spacing-30: 3rem;
+  --spacing-32: 3.2rem;
+  --spacing-34: 3.4rem;
+  --spacing-35: 3.5rem;
+  --spacing-36: 3.6rem;
+  --spacing-37-5: 3.75rem;
+  --spacing-38: 3.8rem;
+  --spacing-40: 4rem;
+  --spacing-42: 4.2rem;
+  --spacing-44: 4.4rem;
+  --spacing-46: 4.6rem;
+  --spacing-50: 5rem;
+  --spacing-52: 5.2rem;
+  --spacing-55: 5.5rem;
+  --spacing-56: 5.6rem;
+  --spacing-60: 6rem;
+  --spacing-64: 6.4rem;
+  --spacing-66: 6.6rem;
+  --spacing-70: 7rem;
+  --spacing-72: 7.2rem;
+  --spacing-74: 7.4rem;
+  --spacing-80: 8rem;
+  --spacing-81: 8.1rem;
+  --spacing-85: 8.5rem;
+  --spacing-86: 8.6rem;
+  --spacing-90: 9rem;
+  --spacing-100: 10rem;
+  --spacing-110: 11rem;
+  --spacing-120: 12rem;
+  --spacing-124: 12.4rem;
+  --spacing-168: 16.8rem;
+  --spacing-180: 18rem;
+  --spacing-288: 28.8rem;
+  --spacing-300: 30rem;
+  --spacing-320: 32rem;
+  --spacing-375: 37.5rem;
+  --spacing-420: 42rem;
+  --spacing-500: 50rem;
+  --spacing-585: 58.5rem;
+  --spacing-810: 81rem;
+  --spacing-1000: 100rem;
+  --spacing-1200: 120rem;
+
+  /* Separator Height */
+  --separator-height-1: .1rem;
+  --separator-height-8: .8rem;
+  --separator-height-16: 1.6rem;
+  --separator-height-24: 2.4rem;
+  --separator-height-32: 3.2rem;
+  --separator-height-48: 4.8rem;
+  --separator-height-64: 6.4rem;
+  --separator-height-80: 8rem;
+  --separator-height-96: 9.6rem;
+  --separator-height-112: 11.2rem;
+  --separator-height-128: 12.8rem;
+  --separator-height-144: 14.4rem;
+
+  /* text transform */
+  --font-uppercase: uppercase;
+  --font-lowercase: lowercase;
+  --font-normal: normal;
+
+  /* Border Radius */
+  --border-radius-base: 0.4rem;
+  --border-radius-m: 0.8rem;
+
+  /* z-index */
+  --z-index-negative: -1;
+  --z-index-0 : 0;
+  --z-index-1 : 1;
+  --z-index-2 : 2;
+  --z-index-3 : 3;
+  --z-index-10: 10;
+
+  /* Flex/Grid order */
+  --order-first: -1;
+  --order-0: 0;
+  --order-1: 1;
+  --order-unset: unset;
+
+  /* Layout */
+  --content-max-width: 133rem;
+  --content-max-width-narrow: 110rem;
+  --content-max-width-medium: 90rem;
+  --content-max-width-faq: 80rem;
+  --icon-size: 2.4rem;
+
+  /* Font Weight */
+  --font-weight-300: 300;
+  --font-weight-400: 400;
+  --font-weight-500: 500;
+  --font-weight-600: 600;
+  --font-weight-650: 650;
+  --font-weight-700: 700;
+  --font-weight-800: 800;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  /* Gap */
+  --gap-0: 0;
+  --gap-10: 1rem;
+  --gap-20: 2rem;
+  --gap-24: 2.4rem;
+  --gap-32: 3.2rem;
+  --gap-42: 4.2rem;
+  --border-top-radius: 3.2rem;
+  --hero-section-height: 12rem;
+  --hero-tall-image-container-height: 25.6rem;
+
+  /* Generalized Line Heights */
+  --line-height-16: 1.6rem;
+  --line-height-20: 2rem;
+  --line-height-22: 2.2rem;
+  --line-height-24: 2.4rem;
+  --line-height-26: 2.6rem;
+  --line-height-28: 2.8rem;
+  --line-height-30: 3rem;
+  --line-height-32: 3.2rem;
+  --line-height-34: 3.4rem;
+  --line-height-35: 3.5rem;
+  --line-height-36: 3.6rem;
+  --line-height-44: 4.4rem;
+  --line-height-46: 4.6rem;
+  --line-height-68: 6.8rem;
+  --line-height-64: 6.4rem;
+  --line-height-84: 8.4rem;
+  --line-height-tight: 1.25;
+
+  /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
+  --transition-duration-fast: 0.2s;
+  --transition-duration-medium: 0.3s;
+  --transition-easing-standard: ease;
+  --transition-easing-emphasized: ease-out;
+  --surface-background-default: var(--background-color);
+  --border-subtle: var(--separator-height-1) solid var(--container-border-color);
+  --text-subtle: var(--color-gray-dark);
+  --elevation-card: 0 var(--spacing-08) var(--spacing-20) rgb(7 29 73 / 10%);
+  --focus-ring-default: 0 0 0 var(--spacing-02) rgb(0 102 245 / 16%);
+  --motion-hover-scale: 1.02;
+  --tracking-wide-sm: 0.04em;
+  --tracking-wide-md: 0.06em;
+
+  /* Hero Colors */
+  --hero-overlay-gradient: linear-gradient(to top, rgb(0 0 0 / 90%) 42.91%, transparent);
+  --hero-button-hover-color: var(--container-border-color);
+  --story-card-text-color: var(--footer-link-color);
+  --story-card-link-color: #0066f5;
+  --story-card-hover-bg: #f1f3ff;
+
+  /* Form Colors */
+  --form-background-color: #fff;
+  --form-text-color: #727272;
+  --form-secondary-text-color: #727272;
+  --form-border-color: #ccc;
+  --form-border-hover-color: #000;
+  --form-background-hover-color: #f3f3f3;
+  --form-primary-color: #7c3098;
+  --form-secondary-color: #80379b;
+  --form-secondary-hover-color: #6d2f85;
+  --form-disabled-color: #5e2b72;
+  --form-dark-color: #071d49;
+  --form-white-color: white;
+  --form-error-color: #eb3c36;
+  --form-error-border-color: rgb(212 43 43);
+  --form-shadow-color: rgb(167 167 167);
+  --form-overlay-bg: rgb(255 255 255 / 90%);
+  --form-divider-color: #eee;
+  --form-light-border-color: #d0d0d0;
+  --form-light-bg-color: #f5f5f5;
+  --form-light-text-color: #666;
+  --form-dark-text-color: #333;
+  --form-darker-text-color: #55565a;
+  --form-medium-text-color: #999;
+  --form-light-divider-color: #f0f0f0;
+  --form-medium-border-color: #ddd;
+  --form-orange-color: #e98300;
+  --form-success-color: #2f9ece;
+  --form-warning-color: #d32f2f;
+
+  /* Form Fonts */
+
+  /* ---- Brand Explorer Block (defaults) ---- */
+  --be-color-bg: var(--background-color);
+  --be-color-text: var(--text-color);
+  --be-color-text-light: #21406d;
+  --be-color-bar-bg: #25282a;
+  --be-color-bar-text: #fff;
+  --be-color-border: #d8d8d8;
+  --be-color-border-mobile: #e0e0e0;
+  --be-color-separator: #ccc;
+  --be-color-muted: #50535c;
+  --be-color-btn-hover: #1c2d49;
+  --be-color-btn-no-border: #555;
+  --be-color-btn-no-hover: #f5f5f5;
+  --be-font-body: var(--body-font-family);
+  --be-font-size-body: 14px;
+  --be-font-size-small: 11px;
+  --be-font-size-bar: 0.9rem;
+  --be-font-weight-bold: var(--font-weight-700);
+  --be-font-weight-normal: var(--font-weight-400);
+  --be-line-height-body: 16px;
+  --be-line-height-small: 14px;
+
+  /* ---- Clinical Data Panel Block (defaults) ---- */
+  --cdp-color-text: var(--text-color);
+  --cdp-color-heading: var(--text-color);
+  --cdp-color-accent: var(--link-color);
+  --cdp-color-muted: var(--color-text-muted);
+  --cdp-color-border: var(--container-border-color);
+  --cdp-font-body: var(--body-font-family);
+  --cdp-font-heading: var(--heading-font-family);
+  --cdp-font-size-title: var(--font-size-22);
+  --cdp-font-size-callout: var(--font-size-26);
+  --cdp-font-size-body: var(--font-size-14);
+  --cdp-font-size-small: var(--font-size-13);
+  --cdp-font-weight-bold: var(--font-weight-700);
+  --cdp-font-weight-normal: var(--font-weight-400);
+  --cdp-line-height-callout: var(--line-height-30);
+  --cdp-line-height-body: 18px;
+  --cdp-line-height-default: var(--line-height-16);
+  --cdp-spacing-sm: var(--spacing-08);
+  --cdp-spacing-md: var(--spacing-16);
+  --cdp-spacing-lg: var(--spacing-24);
+  --cdp-max-width: 1180px;
+  --cdp-letter-spacing-title: 0.02em;
+}
+
+@media (--bp-tablet) {
+  :root {
+    --border-top-radius: 6.4rem;
+    --hero-section-height: 26rem;
+    --hero-tall-image-container-height: 41.6rem;
+  }
+}
+
+@media (--bp-desktop) {
+  :root {
+    --border-top-radius: 8rem;
+    --hero-section-height: 28.8rem;
+    --hero-tall-image-container-height: 60.8rem;
+  }
+}
+
+/* ============================================================
+   LINZESS DTC — Brand Token Overrides
+   Source: linzess.com (Platform C)
+   Display Font: Bebas Neue
+   Body Font: Lato
+   Legal Font: BasicCommercialLT
+   ============================================================ */
+
+:root {
+  /* ---- Color: Brand Primary ---- */
+  --color-brand-primary: #422e83;
+  --color-brand-primary-dark: #422e83;
+  --color-brand-primary-light: #60579e;
+  --color-brand-primary-lighter: #d9d7f9;
+
+  /* ---- Color: Brand Accent ---- */
+  --color-brand-accent: #faa633;
+
+  /* ---- Color: Named Palette (from CSS vars) ---- */
+  --linz-dark-purple: #422e83;
+  --linz-purple: #60579e;
+  --linz-light-purple: #d9d7f9;
+  --linz-orange: #faa633;
+  --linz-grey: #4d4d4f;
+  --linz-off-white: #f4f6fb;
+  --linz-white: #fff;
+  --linz-black: #000;
+
+  /* ---- Color: Text ---- */
+  --text-color: #4d4d4f;
+  --color-text-heading: #422e83;
+  --color-text-on-dark: #fff;
+  --color-text-muted: #555;
+
+  /* ---- Color: Background ---- */
+  --background-color: #fff;
+  --color-background-light: #f4f6fb;
+  --color-background-footer: #422e83;
+  --color-background-footer-dark: #151b17;
+
+  /* ---- Color: Border ---- */
+  --color-border-default: #c2c2c2;
+  --color-border-muted: #b8b8b8;
+
+  /* ---- Color: Overlay ---- */
+  --color-overlay-dark: rgba(0, 0, 0, 0.8);
+  --color-overlay-muted: rgba(115, 133, 159, 0.75);
+
+  /* ---- Font: Family ---- */
+  --body-font-family: 'Lato', sans-serif;
+  --heading-font-family: 'Bebas Neue', sans-serif;
+  --heading-font-family-bold: 'Bebas Neue', sans-serif;
+  --font-family-legal: 'BasicCommercialLT-Roman', sans-serif;
+  --font-family-legal-bold: 'BasicCommercialLT-Black', sans-serif;
+  --icon-font-family: 'abbv-iconFont';
+
+  /* ---- Font: Size ---- */
+  --font-size-body: 14px;
+  --font-size-body-small: 12px;
+  --font-size-body-xs: 0.75rem;
+  --font-size-legal: 14px;
+  --font-size-legal-large: 16px;
+  --font-size-nav: 14.4px;
+  --font-size-footer: 14.4px;
+  --font-size-h1: 2rem;
+  --font-size-h1-hero: 56px;
+  --font-size-h2: 1.125rem;
+  --font-size-h2-hero: 32px;
+  --font-size-h3: 14px;
+  --font-size-h-xl: 2.0625rem;
+  --font-size-button: 14.4px;
+  --font-size-eyebrow: 0.75rem;
+  --font-size-md: 1.0625rem;
+
+  /* ---- Font: Weight ---- */
+  --font-weight-body: 400;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+
+  /* ---- Font: Line Height ---- */
+  --line-height-body: normal;
+  --line-height-h1: 1.875rem;
+  --line-height-h1-hero: 50.4px;
+  --line-height-h2-hero: 30px;
+  --line-height-legal: 16px;
+  --line-height-legal-large: 20px;
+
+  /* ---- Border: Radius ---- */
+  --linz-rounded-corner: 16px;
+  --linz-rounded-corner-sm: 8px;
+  --border-radius-button-primary: 16px;
+  --border-radius-safety-bar: 16px 16px 0 0;
+
+  /* ---- Button: Primary ---- */
+  --button-primary-color: #422e83;
+  --button-primary-bg: #faa633;
+  --button-primary-bg-hover: #e8941f;
+  --button-primary-padding: 16px 32px;
+
+  /* ---- Link ---- */
+  --link-color: #422e83;
+
+  /* ---- Modal ---- */
+  --modal-dialog-max-width: 720px;
+  --modal-dialog-padding: 40px;
+  --modal-dialog-border: 1px solid #ccc;
+  --modal-dialog-border-radius: 0px;
+  --modal-close-size: 28px;
+  --modal-close-font-size: 20px;
+
+  /* ---- Shadow ---- */
+  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
+
+  /* ---- Gradient ---- */
+  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+
+  /* ---- Transition ---- */
+  --transition-button: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Linzess DTC modal — Bebas Neue / Lato, purple/orange palette */
+
+.modal {
+  --modal-backdrop: var(--color-overlay-dark, rgb(0 0 0 / 80%));
+  --modal-border-color: var(--color-border-default);
+  --modal-close-color: var(--color-brand-primary);
+}
+
+/* Headings */
+
+.modal dialog .modal-content h2,
+.modal dialog .modal-content h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+}
+
+/* Body text */
+
+.modal dialog .modal-content p {
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+}
+
+/* Close button: purple */
+
+.modal .close-button {
+  color: var(--color-brand-primary);
+}
+
+.modal .close-button:hover {
+  color: var(--color-brand-accent);
+}
+
+/* Panel: orange left accent */
+
+.modal.panel dialog {
+  border-left-color: var(--color-brand-accent);
 }
