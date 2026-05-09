@@ -90,20 +90,19 @@ function decorateTabContainer(block, container) {
       panel.classList.add('tab-panel');
       panel.setAttribute('role', 'tabpanel');
       panel.setAttribute('aria-labelledby', button.id);
+      panel.setAttribute('aria-hidden', !!firstPanel);
 
       if (!firstPanel) {
         firstPanel = panel;
-      } else {
-        panel.classList.add('tab-panel-hidden');
       }
     }
 
     button.addEventListener('click', () => {
-      panels.forEach((p) => p.classList.add('tab-panel-hidden'));
+      panels.forEach((p) => p.setAttribute('aria-hidden', true));
       tablist.querySelectorAll('button').forEach((btn) => {
         btn.setAttribute('aria-selected', false);
       });
-      if (panel) panel.classList.remove('tab-panel-hidden');
+      if (panel) panel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
     });
 
