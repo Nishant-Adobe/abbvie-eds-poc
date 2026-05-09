@@ -1,8 +1,15 @@
 /* stylelint-disable */
-/** TODO Revistit Stylelint and Code Refacor during Block Development */
+.tabs {
+  --tabs-gap: var(--spacing-05);
+  --tabs-panel-padding: var(--spacing-24);
+  --tabs-border-color: var(--container-border-color);
+  --tabs-active-bg: var(--background-color);
+  --tabs-inactive-bg: var(--light-color);
+}
+
 .tabs .tabs-list {
   display: flex;
-  gap: 0.5ch;
+  gap: var(--tabs-gap);
   max-width: 100%;
   font-size: var(--body-font-size-xs);
   overflow-x: auto;
@@ -23,10 +30,10 @@
 .tabs .tabs-list button {
   flex: 0 0 max-content;
   margin: 0;
-  border: 1px solid #dadada;
+  border: var(--separator-height-1) solid var(--tabs-border-color);
   border-radius: 0;
-  padding: 0.5em;
-  background-color: var(--light-color);
+  padding: var(--spacing-05);
+  background-color: var(--tabs-inactive-bg);
   color: initial;
   font-weight: bold;
   line-height: unset;
@@ -41,17 +48,16 @@
   margin: 0;
 }
 
-
 .tabs .tabs-list button[aria-selected='true'] {
-  border-bottom: 1px solid var(--background-color);
-  background-color: var(--background-color);
+  border-bottom-color: var(--tabs-active-bg);
+  background-color: var(--tabs-active-bg);
   cursor: initial;
 }
 
 .tabs .tabs-panel {
-  margin-top: -1px;
-  padding: 24px;
-  border: 1px solid #dadada;
+  margin-top: calc(-1 * var(--separator-height-1));
+  padding: var(--tabs-panel-padding);
+  border: var(--separator-height-1) solid var(--tabs-border-color);
   overflow: auto;
 }
 
@@ -59,69 +65,57 @@
   display: none;
 }
 
-/* Tab Container mode - panel sections */
+/* Tab Container mode — panel visibility */
 .tab-panel-hidden {
   display: none !important;
 }
 
 /* Hide section metadata inside tab container */
+.tabs-container .section-metadata,
+.tabs-container .section-metadata-wrapper,
 [data-identifier="Tab Container"] .section-metadata,
 [data-identifier="Tab Container"] .section-metadata-wrapper {
   display: none !important;
 }
 
 /* Two Column Tab — grid on panels */
-.tab-panel[class*="split-"] {
+.tab-panel[class*="split-"],
+[data-aue-component="tab-panel"][class*="split-"] {
   display: grid;
-  gap: var(--spacing-24, 1.5rem);
-  grid-column: unset;
+  gap: var(--spacing-24);
 }
 
 /* Override abbvie-container grid-column on split panel children */
-.abbvie-container .tab-panel[class*="split-"] > * {
-  grid-column: unset;
-}
-
+.abbvie-container .tab-panel[class*="split-"] > *,
 .abbvie-container [data-aue-component="tab-panel"][class*="split-"] > * {
   grid-column: unset;
+  min-width: 0;
 }
 
 /* Split ratios */
-.tab-panel.split-6-6 { grid-template-columns: 1fr 1fr; }
-.tab-panel.split-4-8 { grid-template-columns: 1fr 2fr; }
-.tab-panel.split-8-4 { grid-template-columns: 2fr 1fr; }
-.tab-panel.split-3-9 { grid-template-columns: 1fr 3fr; }
-.tab-panel.split-9-3 { grid-template-columns: 3fr 1fr; }
-.tab-panel.split-5-7 { grid-template-columns: 5fr 7fr; }
-.tab-panel.split-7-5 { grid-template-columns: 7fr 5fr; }
-
-.tab-panel[class*="split-"] > * {
-  min-width: 0;
-}
-
-/* Section metadata should not participate in grid layout */
-.tab-panel[class*="split-"] > .section-metadata {
-  display: none !important;
-}
-
-/* Also handle [data-aue-component] panels that may not have .tab-panel class yet */
-[data-aue-component="tab-panel"][class*="split-"] {
-  display: grid;
-  gap: var(--spacing-24, 1.5rem);
-}
-
+.tab-panel.split-6-6,
 [data-aue-component="tab-panel"].split-6-6 { grid-template-columns: 1fr 1fr; }
+
+.tab-panel.split-4-8,
 [data-aue-component="tab-panel"].split-4-8 { grid-template-columns: 1fr 2fr; }
+
+.tab-panel.split-8-4,
 [data-aue-component="tab-panel"].split-8-4 { grid-template-columns: 2fr 1fr; }
+
+.tab-panel.split-3-9,
 [data-aue-component="tab-panel"].split-3-9 { grid-template-columns: 1fr 3fr; }
+
+.tab-panel.split-9-3,
 [data-aue-component="tab-panel"].split-9-3 { grid-template-columns: 3fr 1fr; }
+
+.tab-panel.split-5-7,
 [data-aue-component="tab-panel"].split-5-7 { grid-template-columns: 5fr 7fr; }
+
+.tab-panel.split-7-5,
 [data-aue-component="tab-panel"].split-7-5 { grid-template-columns: 7fr 5fr; }
 
-[data-aue-component="tab-panel"][class*="split-"] > * {
-  min-width: 0;
-}
-
+/* Section metadata should not participate in grid */
+.tab-panel[class*="split-"] > .section-metadata,
 [data-aue-component="tab-panel"][class*="split-"] > .section-metadata {
   display: none !important;
 }
