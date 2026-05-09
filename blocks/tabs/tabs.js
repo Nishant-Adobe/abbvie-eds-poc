@@ -7,20 +7,48 @@ function normalize(value) {
   return value?.trim().toLowerCase() || '';
 }
 
+function getTabNameFromMeta(panel) {
+  const meta = panel.querySelector('.section-metadata');
+  if (!meta) return '';
+  const match = [...meta.children].find((row) => {
+    const cells = [...row.children];
+    return cells.length >= 2 && normalize(cells[0]?.textContent) === 'tab-name';
+  });
+  if (!match) return '';
+  return [...match.children][1]?.textContent?.trim() || '';
+}
+
 function decorateTabContainer(block, container) {
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
   tablist.setAttribute('role', 'tablist');
   tablist.id = `tablist-${tabBlockCnt}`;
 
-  const panels = [...container.querySelectorAll(':scope > .section[data-tab-name]')]
+  // Tab Panels can be: sibling .section elements OR nested divs with data-aue-component="tab-panel"
+  let panels = [...container.querySelectorAll(':scope > .section[data-tab-name]')]
     .filter((section) => section !== block.closest('.section'));
 
-  // Remove visible section-metadata from panels
+  // If no sibling sections found, look for nested tab-panel containers (xwalk/UE DOM)
+  if (panels.length === 0) {
+    panels = [...container.querySelectorAll('[data-aue-component="tab-panel"]')];
+  }
+
+  // Extract tab-name from section-metadata inside each panel and set as data attribute
   panels.forEach((panel) => {
-    const meta = panel.querySelector('.section-metadata');
-    if (meta) meta.remove();
+    if (!panel.dataset.tabName) {
+      const name = getTabNameFromMeta(panel);
+      if (name) panel.dataset.tabName = name;
+    }
   });
+
+  // Hide section-metadata inside panels (both nested and wrapper-level)
+  container.querySelectorAll('.section-metadata').forEach((meta) => {
+    meta.style.display = 'none';
+  });
+
+  // Also hide the section-metadata-wrapper at container level
+  const metaWrapper = container.querySelector(':scope > .section-metadata-wrapper');
+  if (metaWrapper) metaWrapper.style.display = 'none';
 
   const tabItems = [...block.children];
   let firstPanel = null;
