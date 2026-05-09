@@ -78,17 +78,22 @@
   bottom: calc(0.6 * var(--spacing-06));
   left: 0;
   width: 100%;
-  height: 3px;
+  height: 2.3px;
   background-color: var(--color-tabs-underline);
   content: '';
 }
 
-/* ── Tab panels ── */
+/* ── Tab container — no padding ── */
+.tabs-container {
+  padding: 0;
+}
+
+/* ── Tab panels — no border ── */
 .tabs-container .default-content-wrapper .tab-panel {
   position: relative;
   padding: var(--spacing-16);
   background: var(--background-color);
-  border: var(--separator-height-1) solid var(--color-border-default);
+  border: none;
   margin: 0 auto;
 }
 
