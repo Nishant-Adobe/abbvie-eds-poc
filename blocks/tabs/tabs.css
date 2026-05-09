@@ -80,6 +80,7 @@ main .tabs-container .tabs-item-hidden {
 }
 
 /* Two Column Tab — split panel grid (mobile-first: single column base) */
+.tabs-container [data-col-split],
 .tabs-container .tab-panel[class*="split-"] {
   display: grid;
   grid-template-columns: 1fr;
@@ -87,23 +88,38 @@ main .tabs-container .tabs-item-hidden {
 }
 
 /* Override abbvie-container grid-column on split panel children */
+.tabs-container [data-col-split] > *,
 .tabs-container .tab-panel[class*="split-"] > * {
   grid-column: unset;
   min-width: 0;
 }
 
 /* Split panel metadata excluded from grid */
+.tabs-container [data-col-split] > .section-metadata,
 .tabs-container .tab-panel[class*="split-"] > .section-metadata {
   display: none;
 }
 
 /* Desktop: apply split ratios */
 @media (width >= 900px) {
-  .tabs-container .tab-panel.split-6-6 { grid-template-columns: 1fr 1fr; }
-  .tabs-container .tab-panel.split-4-8 { grid-template-columns: 1fr 2fr; }
-  .tabs-container .tab-panel.split-8-4 { grid-template-columns: 2fr 1fr; }
-  .tabs-container .tab-panel.split-3-9 { grid-template-columns: 1fr 3fr; }
-  .tabs-container .tab-panel.split-9-3 { grid-template-columns: 3fr 1fr; }
-  .tabs-container .tab-panel.split-5-7 { grid-template-columns: 5fr 7fr; }
-  .tabs-container .tab-panel.split-7-5 { grid-template-columns: 7fr 5fr; }
+  .tabs-container .tab-panel.split-6-6,
+  .tabs-container [data-col-split="split-6-6"] { grid-template-columns: 1fr 1fr; }
+
+  .tabs-container .tab-panel.split-4-8,
+  .tabs-container [data-col-split="split-4-8"] { grid-template-columns: 1fr 2fr; }
+
+  .tabs-container .tab-panel.split-8-4,
+  .tabs-container [data-col-split="split-8-4"] { grid-template-columns: 2fr 1fr; }
+
+  .tabs-container .tab-panel.split-3-9,
+  .tabs-container [data-col-split="split-3-9"] { grid-template-columns: 1fr 3fr; }
+
+  .tabs-container .tab-panel.split-9-3,
+  .tabs-container [data-col-split="split-9-3"] { grid-template-columns: 3fr 1fr; }
+
+  .tabs-container .tab-panel.split-5-7,
+  .tabs-container [data-col-split="split-5-7"] { grid-template-columns: 5fr 7fr; }
+
+  .tabs-container .tab-panel.split-7-5,
+  .tabs-container [data-col-split="split-7-5"] { grid-template-columns: 7fr 5fr; }
 }
