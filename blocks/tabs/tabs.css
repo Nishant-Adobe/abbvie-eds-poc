@@ -87,11 +87,17 @@ main .tabs-container .tabs-item-hidden {
   gap: var(--spacing-24);
 }
 
-/* Override abbvie-container grid-column on split panel children */
-.tabs-container [data-col-split^="split-"] > *,
-.tabs-container .tab-panel[class*="split-"] > * {
+/* Override abbvie-container grid-column on split panel children (divs only) */
+.tabs-container [data-col-split^="split-"] > div,
+.tabs-container .tab-panel[class*="split-"] > div {
   grid-column: unset;
   min-width: 0;
+}
+
+/* Non-div children (paragraphs) span full width in split panels */
+.tabs-container [data-col-split^="split-"] > :not(div),
+.tabs-container .tab-panel[class*="split-"] > :not(div) {
+  grid-column: 1 / -1;
 }
 
 /* Split panel metadata excluded from grid */
