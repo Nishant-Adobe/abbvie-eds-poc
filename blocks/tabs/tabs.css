@@ -74,6 +74,16 @@
 .tab-panel[class*="split-"] {
   display: grid;
   gap: var(--spacing-24, 1.5rem);
+  grid-column: unset;
+}
+
+/* Override abbvie-container grid-column on split panel children */
+.abbvie-container .tab-panel[class*="split-"] > * {
+  grid-column: unset;
+}
+
+.abbvie-container [data-aue-component="tab-panel"][class*="split-"] > * {
+  grid-column: unset;
 }
 
 /* Split ratios */
@@ -89,9 +99,37 @@
   min-width: 0;
 }
 
+/* Section metadata should not participate in grid layout */
+.tab-panel[class*="split-"] > .section-metadata {
+  display: none !important;
+}
+
+/* Also handle [data-aue-component] panels that may not have .tab-panel class yet */
+[data-aue-component="tab-panel"][class*="split-"] {
+  display: grid;
+  gap: var(--spacing-24, 1.5rem);
+}
+
+[data-aue-component="tab-panel"].split-6-6 { grid-template-columns: 1fr 1fr; }
+[data-aue-component="tab-panel"].split-4-8 { grid-template-columns: 1fr 2fr; }
+[data-aue-component="tab-panel"].split-8-4 { grid-template-columns: 2fr 1fr; }
+[data-aue-component="tab-panel"].split-3-9 { grid-template-columns: 1fr 3fr; }
+[data-aue-component="tab-panel"].split-9-3 { grid-template-columns: 3fr 1fr; }
+[data-aue-component="tab-panel"].split-5-7 { grid-template-columns: 5fr 7fr; }
+[data-aue-component="tab-panel"].split-7-5 { grid-template-columns: 7fr 5fr; }
+
+[data-aue-component="tab-panel"][class*="split-"] > * {
+  min-width: 0;
+}
+
+[data-aue-component="tab-panel"][class*="split-"] > .section-metadata {
+  display: none !important;
+}
+
 /* Responsive: collapse to single column on mobile */
 @media (width < 768px) {
-  .tab-panel[class*="split-"] {
+  .tab-panel[class*="split-"],
+  [data-aue-component="tab-panel"][class*="split-"] {
     grid-template-columns: 1fr;
   }
 }
