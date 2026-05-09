@@ -4,43 +4,129 @@
 /* ============================================================
    SKYRIZI HCP — Tabs brand overrides
    Live: skyrizihcp.com/dermatology/psoriasis-efficacy
-   Style: Underline tabs with teal active indicator, uppercase
-   Brand tokens flow from styles/skyrizi-hcp/tokens.css:
-     --color-brand-primary, --color-brand-accent-teal,
-     --color-text-muted, --color-border-default,
-     --heading-font-family, --font-weight-medium, --font-weight-heading
+   Style: Dark navy pill bar with white text, underline on active
    ============================================================ */
 
+/* ── Section containing tab controls ── */
+.section:has(.tabs-list) {
+  background: transparent;
+  padding: 0;
+  margin: 0 auto;
+  margin-top: calc(-1 * var(--spacing-20));
+  margin-bottom: calc(-1 * var(--spacing-20));
+  text-align: center;
+  position: relative;
+  z-index: var(--z-index-2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section:has(.tabs-list) + .section {
+  margin-top: 0;
+  padding-top: var(--spacing-48);
+}
+
+/* ── Tab controls bar ── */
 .tabs .tabs-list {
-  border-bottom: var(--separator-height-1) solid var(--tabs-border-color);
+  display: inline-flex;
+  width: auto;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--color-background-footer);
+  border-radius: var(--border-radius-button-tertiary);
+  padding: var(--spacing-06) var(--spacing-08);
+  gap: 0;
+  border: none;
 }
 
 .tabs .tabs-list button {
-  border: none;
-  border-bottom: 3px solid transparent;
-  background-color: var(--tabs-inactive-bg);
-  color: var(--color-text-muted);
-  padding: var(--spacing-10) var(--spacing-16);
-  margin-bottom: calc(-1 * var(--separator-height-1));
+  display: block;
+  width: auto;
+  max-width: none;
+  padding: var(--spacing-08) var(--spacing-16);
+  margin: 0;
+  background: transparent;
+  color: var(--color-text-on-dark);
   font-family: var(--heading-font-family);
+  font-size: var(--font-size-body-xs);
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide-sm);
-  transition: color var(--transition-duration-fast), border-color var(--transition-duration-fast);
+  border: none;
+  border-radius: var(--border-radius-button-primary);
+  white-space: nowrap;
+  position: relative;
+  line-height: var(--line-height-16);
+  min-height: var(--spacing-34);
+  cursor: pointer;
 }
 
 .tabs .tabs-list button[aria-selected='true'] {
-  border-bottom-color: var(--color-brand-accent-teal);
-  background-color: var(--tabs-active-bg);
-  color: var(--color-brand-primary);
+  background: transparent;
+  color: var(--color-text-on-dark);
   font-weight: var(--font-weight-heading);
 }
 
+.tabs .tabs-list button[aria-selected='true']::after {
+  position: absolute;
+  bottom: var(--spacing-04);
+  left: var(--spacing-12);
+  right: var(--spacing-12);
+  width: auto;
+  height: 2px;
+  background-color: var(--color-text-on-dark);
+  content: '';
+}
+
+/* ── Tab panels ── */
 .tabs .tabs-panel {
   border: none;
-  padding: var(--tabs-panel-padding) 0;
+  padding: var(--spacing-24) 0;
 }
 
 .tabs-container .tab-panel {
-  padding: var(--spacing-24) 0;
+  position: relative;
+  padding: var(--spacing-24);
+  background: var(--background-color);
+  border: var(--separator-height-1) solid var(--color-border-default);
+  margin: 0 auto;
+}
+
+/* Gradient bar on top of panel */
+.tabs-container .tab-panel::before {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--separator-height-1));
+  left: calc(-1 * var(--separator-height-1));
+  right: calc(-1 * var(--separator-height-1));
+  height: var(--spacing-06);
+  background: linear-gradient(to right, var(--color-brand-accent-teal), var(--color-brand-accent-blue));
+  border-radius: var(--border-radius-button-primary) var(--border-radius-button-primary) 0 0;
+}
+
+/* ── Left column rich text styling ── */
+.tabs-container .tab-panel .default-content-wrapper {
+  font-family: var(--body-font-family);
+  color: var(--text-color);
+}
+
+.tabs-container .tab-panel .default-content-wrapper p:first-child {
+  font-size: var(--font-size-body-xs);
+  line-height: var(--line-height-20);
+  margin-bottom: var(--spacing-08);
+}
+
+.tabs-container .tab-panel .default-content-wrapper h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+  font-weight: var(--font-weight-heading);
+  color: var(--color-text-heading);
+  margin-bottom: var(--spacing-08);
+}
+
+.tabs-container .tab-panel .default-content-wrapper p:last-child {
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-legal);
 }
