@@ -95,11 +95,16 @@
   margin-right: auto;
 }
 
-/* ── Sections inside panel — remove default spacing ── */
+/* ── Sections inside panel — reset grid to stacked, remove default spacing ── */
 .tabs-panel > .section.abbvie-container {
+  display: block;
   margin: 0;
   padding: 0;
   max-width: none;
+}
+
+.tabs-panel > .section.abbvie-container > div {
+  grid-column: unset;
 }
 
 /* Single section → full width */
