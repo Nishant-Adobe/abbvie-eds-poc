@@ -1,0 +1,46 @@
+@import '../tabs.css';
+@import '../../../styles/skyrizi-hcp/tokens.css';
+
+/* ============================================================
+   SKYRIZI HCP — Tabs brand overrides
+   Live: skyrizihcp.com/dermatology/psoriasis-efficacy
+   Style: Underline tabs with teal active indicator, uppercase
+   Brand tokens flow from styles/skyrizi-hcp/tokens.css:
+     --color-brand-primary, --color-brand-accent-teal,
+     --color-text-muted, --color-border-default,
+     --heading-font-family, --font-weight-medium, --font-weight-heading
+   ============================================================ */
+
+.tabs .tabs-list {
+  border-bottom: var(--separator-height-1) solid var(--tabs-border-color);
+}
+
+.tabs .tabs-list button {
+  border: none;
+  border-bottom: 3px solid transparent;
+  background-color: var(--tabs-inactive-bg);
+  color: var(--color-text-muted);
+  padding: var(--spacing-10) var(--spacing-16);
+  margin-bottom: calc(-1 * var(--separator-height-1));
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide-sm);
+  transition: color var(--transition-duration-fast), border-color var(--transition-duration-fast);
+}
+
+.tabs .tabs-list button[aria-selected='true'] {
+  border-bottom-color: var(--color-brand-accent-teal);
+  background-color: var(--tabs-active-bg);
+  color: var(--color-brand-primary);
+  font-weight: var(--font-weight-heading);
+}
+
+.tabs .tabs-panel {
+  border: none;
+  padding: var(--tabs-panel-padding) 0;
+}
+
+.tabs-container .tab-panel {
+  padding: var(--spacing-24) 0;
+}
