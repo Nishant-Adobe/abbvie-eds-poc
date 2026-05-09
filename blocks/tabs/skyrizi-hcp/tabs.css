@@ -4,8 +4,8 @@
 /* ============================================================
    SKYRIZI HCP — Tabs brand overrides
    Live: skyrizihcp.com/dermatology/psoriasis-efficacy
-   Style: Dark navy pill bar with white text, underline on active
-   Mobile-first approach
+   Style: Dark navy pill bar, white text, cyan underline on active
+   Panel: white card with gradient top border, 4+8 column split
    ============================================================ */
 
 /* ── Tab controls wrapper — centered with gradient line ── */
@@ -17,7 +17,7 @@
   z-index: var(--z-index-2);
 }
 
-/* Gradient line running full width behind the tab buttons */
+/* Gradient line behind tab buttons */
 .tabs-container .tabs-wrapper::before {
   content: '';
   position: absolute;
@@ -32,23 +32,20 @@
 
 /* ── Tab controls bar — dark navy pill ── */
 .tabs-container .tabs .tabs-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
+  width: auto;
   align-items: center;
   justify-content: center;
   background: var(--color-tabs-control-bg);
   border-radius: var(--border-radius-button-tertiary);
-  padding: var(--spacing-06) var(--spacing-08);
+  padding: var(--spacing-08) var(--spacing-12);
   gap: 0;
   border: none;
 }
 
 /* ── Tab buttons (inactive) ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  display: block;
-  width: auto;
-  max-width: none;
-  padding: var(--spacing-08) var(--spacing-12);
+  padding: var(--spacing-08) var(--spacing-20);
   margin: 0;
   background: transparent;
   color: var(--color-text-on-dark);
@@ -61,12 +58,11 @@
   border-radius: var(--border-radius-button-primary);
   white-space: nowrap;
   position: relative;
-  line-height: var(--line-height-16);
-  min-height: var(--spacing-34);
+  line-height: var(--line-height-20);
   cursor: pointer;
 }
 
-/* ── Active tab — bold with underline ── */
+/* ── Active tab — bold with cyan underline ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: transparent;
   color: var(--color-text-on-dark);
@@ -83,81 +79,70 @@
   content: '';
 }
 
-/* ── Tab container — no padding ── */
-main .section.tabs-container {
+/* ── Tab panel wrapper ── */
+.tabs-panel {
+  background: var(--background-color);
+  border: var(--separator-height-1) solid var(--color-border-default);
+  border-radius: var(--border-radius-button-primary);
+  padding: var(--spacing-30) var(--spacing-24);
+  margin-top: var(--spacing-24);
+  position: relative;
+}
+
+/* Gradient bar on top of panel */
+.tabs-panel::before {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--separator-height-1));
+  left: calc(-1 * var(--separator-height-1));
+  right: calc(-1 * var(--separator-height-1));
+  height: var(--spacing-06);
+  background: var(--gradient-tabs-panel);
+  border-radius: var(--border-radius-button-primary) var(--border-radius-button-primary) 0 0;
+}
+
+/* ── Sections inside panel — remove default spacing ── */
+.tabs-panel > .section {
+  margin: 0;
   padding: 0;
 }
 
-/* ── Tab panels — no border ── */
-.tabs-container .default-content-wrapper .tab-panel {
-  position: relative;
-  padding: var(--spacing-16);
-  background: var(--background-color);
-  border: none;
-  margin: 0 auto;
-}
-
-/* ── Rich text inside panels ── */
-.tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] {
+/* ── Left column text styling (4-col section) ── */
+.tabs-panel > .section .default-content-wrapper p:first-child {
   font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
   color: var(--text-color);
+  line-height: var(--line-height-20);
+  margin-bottom: var(--spacing-08);
 }
 
-/* ── Tablet enhancements ── */
+.tabs-panel > .section .default-content-wrapper h2,
+.tabs-panel > .section .default-content-wrapper p:nth-child(2) {
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-heading);
+  color: var(--color-text-heading);
+  line-height: var(--line-height-h2);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-16);
+}
+
+.tabs-panel > .section .default-content-wrapper p:nth-child(n+3) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  color: var(--text-color);
+  line-height: var(--line-height-20);
+  margin-bottom: var(--spacing-10);
+}
+
+/* ── Desktop ── */
 @media (width >= 600px) {
   .tabs-container .tabs-wrapper {
-    margin-top: calc(-1 * var(--spacing-16));
-    margin-bottom: calc(-1 * var(--spacing-16));
-  }
-
-  .tabs-container .tabs .tabs-list {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    width: auto;
-  }
-
-  .tabs-container .tabs .tabs-list button.tabs-tab {
-    padding: var(--spacing-08) var(--spacing-14);
-  }
-
-  .tabs-container .default-content-wrapper .tab-panel {
-    padding: var(--spacing-20);
-  }
-}
-
-/* ── Desktop enhancements ── */
-@media (width >= 900px) {
-  .tabs-container .tabs-wrapper {
     margin-top: calc(-1 * var(--spacing-20));
-    margin-bottom: calc(-1 * var(--spacing-20));
+    margin-bottom: calc(-1 * var(--spacing-06));
   }
 
-  .tabs-container .tabs .tabs-list {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    width: auto;
-    justify-content: space-around;
-  }
-
-  .tabs-container .tabs .tabs-list button.tabs-tab {
-    padding: var(--spacing-08) var(--spacing-16);
-  }
-
-  .tabs-container .default-content-wrapper .tab-panel {
-    padding: var(--spacing-24);
-  }
-
-  .tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] p:first-child {
-    font-size: var(--font-size-body-xs);
-    line-height: var(--line-height-20);
-    margin-bottom: var(--spacing-08);
-  }
-
-  .tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] h2 {
-    font-size: var(--font-size-h2);
-    line-height: var(--line-height-h2);
-    font-weight: var(--font-weight-heading);
-    color: var(--color-text-heading);
-    margin-bottom: var(--spacing-08);
+  .tabs-panel {
+    padding: var(--spacing-40) var(--spacing-32);
   }
 }
