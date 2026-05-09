@@ -50,50 +50,37 @@ function decorateTabContainer(block, container) {
     const dcw = container.querySelector('.default-content-wrapper');
     if (dcw) {
       const children = [...dcw.children];
-      let currentPanel = null;
       const builtPanels = [];
+      let currentPanel = null;
+      const metaKeys = ['tabname', 'sectionid'];
 
-      children.forEach((child) => {
-        if (child.tagName === 'P' && normalize(child.textContent) === 'tabname') {
-          const nameEl = child.nextElementSibling;
-          if (nameEl) {
-            currentPanel = document.createElement('div');
-            currentPanel.classList.add('tab-panel');
-            currentPanel.dataset.tabName = nameEl.textContent.trim();
-            builtPanels.push(currentPanel);
-          }
+      // Single pass: split content by tabName markers
+      let i = 0;
+      while (i < children.length) {
+        const child = children[i];
+        const key = child.tagName === 'P' ? normalize(child.textContent) : '';
+
+        if (key === 'tabname' && i + 1 < children.length) {
+          const nameEl = children[i + 1];
+          currentPanel = document.createElement('div');
+          currentPanel.classList.add('tab-panel');
+          currentPanel.dataset.tabName = nameEl.textContent.trim();
+          builtPanels.push(currentPanel);
+          i += 2;
+        } else if (key === 'sectionid' && i + 1 < children.length) {
+          if (currentPanel) currentPanel.id = children[i + 1].textContent.trim();
+          i += 2;
+        } else if (metaKeys.includes(key)) {
+          i += 1;
+        } else if (currentPanel) {
+          currentPanel.append(child);
+          i += 1;
+        } else {
+          i += 1;
         }
-      });
+      }
 
       if (builtPanels.length > 0) {
-        [currentPanel] = builtPanels;
-        const toRemove = [];
-        children.forEach((child) => {
-          if (child.tagName === 'P' && normalize(child.textContent) === 'tabname') {
-            const nameEl = child.nextElementSibling;
-            const tabName = nameEl?.textContent?.trim() || '';
-            currentPanel = builtPanels.find(
-              (p) => p.dataset.tabName === tabName,
-            );
-            toRemove.push(child);
-            if (nameEl) toRemove.push(nameEl);
-            return;
-          }
-          if (child.tagName === 'P' && normalize(child.textContent) === 'sectionid') {
-            toRemove.push(child);
-            const valEl = child.nextElementSibling;
-            if (valEl && currentPanel) {
-              currentPanel.id = valEl.textContent.trim();
-              toRemove.push(valEl);
-            }
-            return;
-          }
-          if (currentPanel) {
-            currentPanel.append(child);
-          }
-        });
-
-        toRemove.forEach((el) => el.remove());
         dcw.textContent = '';
         builtPanels.forEach((p) => dcw.append(p));
         panels = builtPanels;
