@@ -25,38 +25,44 @@
 /* ── Tab list — base (folder style) ── */
 .tabs-container .tabs .tabs-list {
   display: flex;
-  gap: var(--spacing-02);
+  align-items: flex-end;
+  gap: 0;
   background: transparent;
   border: none;
+  border-bottom: var(--separator-height-1) solid var(--color-border-default);
   padding: 0;
   border-radius: 0;
 }
 
 /* ── Tab buttons (inactive) — folder style ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  padding: var(--spacing-12) var(--spacing-24);
-  background: var(--color-glacier);
+  padding: var(--spacing-10) var(--spacing-20);
+  background: var(--background-color);
   color: var(--color-charcoal);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-16);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weight-body);
   font-style: normal;
-  border: none;
-  border-radius: var(--spacing-08) var(--spacing-08) 0 0;
+  border: var(--separator-height-1) solid var(--color-border-default);
+  border-bottom: none;
+  border-radius: var(--spacing-04) var(--spacing-04) 0 0;
   white-space: nowrap;
   position: relative;
   cursor: pointer;
-  transition: background-color var(--transition-duration-fast);
+  transition: transform var(--transition-duration-fast), padding var(--transition-duration-fast);
+  align-self: flex-end;
 }
 
-/* ── Active tab — folder style ── */
+/* ── Active tab — folder style: taller, pops up ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--background-color);
   color: var(--color-charcoal);
   font-weight: var(--font-weight-heading);
   font-style: italic;
-  box-shadow: var(--shadow-default);
+  padding: var(--spacing-14) var(--spacing-24);
+  font-size: var(--font-size-16);
   z-index: var(--z-index-1);
+  border-color: var(--color-border-default);
 }
 
 /* ── Pill variation (.tabs-pill class on Tabs block) ── */
@@ -85,8 +91,8 @@
   grid-template-columns: 1fr;
   gap: var(--spacing-24);
   background: var(--background-color);
-  border: none;
-  border-top: var(--separator-height-1) solid var(--color-border-default);
+  border: var(--separator-height-1) solid var(--color-border-default);
+  border-top: none;
   padding: var(--spacing-30) var(--spacing-24);
   margin: 0;
   position: relative;
