@@ -50,12 +50,14 @@ function decorateTabContainer(block, container) {
       const name = getTabNameFromMeta(panel);
       if (name) panel.dataset.tabName = name;
     }
-    // Apply split-* class from section-metadata to the panel itself
+    // Apply split-* and bg-* classes from section-metadata to the panel itself
     const meta = panel.querySelector('.section-metadata');
     if (meta) {
-      [...meta.classList].filter((c) => c.startsWith('split-')).forEach((c) => {
-        panel.classList.add(c);
-      });
+      [...meta.classList]
+        .filter((c) => c.startsWith('split-') || c.startsWith('bg-'))
+        .forEach((c) => {
+          panel.classList.add(c);
+        });
     }
   });
 
