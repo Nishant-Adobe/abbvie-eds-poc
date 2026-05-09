@@ -80,7 +80,7 @@ main .tabs-container .tabs-item-hidden {
 }
 
 /* Two Column Tab — split panel grid (mobile-first: single column base) */
-.tabs-container [data-col-split],
+.tabs-container [data-col-split^="split-"],
 .tabs-container .tab-panel[class*="split-"] {
   display: grid;
   grid-template-columns: 1fr;
@@ -88,14 +88,14 @@ main .tabs-container .tabs-item-hidden {
 }
 
 /* Override abbvie-container grid-column on split panel children */
-.tabs-container [data-col-split] > *,
+.tabs-container [data-col-split^="split-"] > *,
 .tabs-container .tab-panel[class*="split-"] > * {
   grid-column: unset;
   min-width: 0;
 }
 
 /* Split panel metadata excluded from grid */
-.tabs-container [data-col-split] > .section-metadata,
+.tabs-container [data-col-split^="split-"] > .section-metadata,
 .tabs-container .tab-panel[class*="split-"] > .section-metadata {
   display: none;
 }
