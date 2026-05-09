@@ -51,32 +51,51 @@ function decorateTabContainer(block, container) {
     if (dcw) {
       const children = [...dcw.children];
       const builtPanels = [];
-      let currentPanel = null;
       const metaKeys = ['tabname', 'sectionid'];
 
-      // Single pass: split content by tabName markers
+      // First pass: find all tabName markers and their names
+      const markers = [];
+      let idx = 0;
+      while (idx < children.length) {
+        const child = children[idx];
+        if (child.tagName === 'P' && normalize(child.textContent) === 'tabname' && idx + 1 < children.length) {
+          markers.push({ index: idx, name: children[idx + 1].textContent.trim() });
+        }
+        idx += 1;
+      }
+
+      // Create panels for each marker
+      markers.forEach((m) => {
+        const panel = document.createElement('div');
+        panel.classList.add('tab-panel');
+        panel.dataset.tabName = m.name;
+        builtPanels.push(panel);
+      });
+
+      // Second pass: assign content to panels
+      // Pattern: [content, tabName, Name, sectionId, Id, content, tabName, Name, ...]
+      // Content BEFORE a tabName marker belongs to THAT panel (marker closes the panel)
+      let panelIdx = 0;
       let i = 0;
       while (i < children.length) {
         const child = children[i];
         const key = child.tagName === 'P' ? normalize(child.textContent) : '';
 
         if (key === 'tabname' && i + 1 < children.length) {
-          const nameEl = children[i + 1];
-          currentPanel = document.createElement('div');
-          currentPanel.classList.add('tab-panel');
-          currentPanel.dataset.tabName = nameEl.textContent.trim();
-          builtPanels.push(currentPanel);
+          panelIdx += 1;
           i += 2;
         } else if (key === 'sectionid' && i + 1 < children.length) {
-          if (currentPanel) currentPanel.id = children[i + 1].textContent.trim();
+          const currentIdx = Math.max(0, panelIdx - 1);
+          if (builtPanels[currentIdx]) {
+            builtPanels[currentIdx].id = children[i + 1].textContent.trim();
+          }
           i += 2;
         } else if (metaKeys.includes(key)) {
           i += 1;
-        } else if (currentPanel) {
-          currentPanel.append(child);
-          i += 1;
         } else {
-          i += 1;
+          const targetPanel = builtPanels[panelIdx] || builtPanels[builtPanels.length - 1];
+          if (targetPanel) targetPanel.append(child);
+          else i += 1;
         }
       }
 
