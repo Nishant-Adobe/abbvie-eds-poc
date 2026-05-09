@@ -22,15 +22,15 @@
   z-index: var(--z-index-2);
 }
 
-/* Gradient line behind tab buttons */
+/* Gradient line behind tab buttons — full viewport width */
 .tabs-container .tabs-wrapper::before {
   content: '';
   position: absolute;
   top: 50%;
-  left: 0;
-  right: 0;
+  left: 50%;
+  width: 100vw;
   height: var(--spacing-06);
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   background: var(--gradient-tabs-panel);
   z-index: var(--z-index-negative);
 }
