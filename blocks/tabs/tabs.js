@@ -114,20 +114,32 @@ function decorateTabContainer(block, container) {
     }
   }
 
-  // Extract tab-name and split classes from section-metadata or data attributes
+  // Extract tab-name and split from section-metadata or data attributes
   panels.forEach((panel) => {
     if (!panel.dataset.tabName) {
       const name = getTabNameFromMeta(panel);
       if (name) panel.dataset.tabName = name;
     }
-    // Apply split class from section-metadata (xwalk with classes_ prefix)
     const meta = panel.querySelector('.section-metadata');
     if (meta) {
+      // Check classes on section-metadata (classes_ prefix in UE)
       [...meta.classList].filter((c) => c.startsWith('split-')).forEach((c) => {
         panel.classList.add(c);
       });
+      // Check content rows for colSplit key-value (colSplit without classes_ prefix)
+      const splitRow = [...meta.children].find((row) => {
+        const firstChild = row.firstElementChild;
+        return firstChild && normalize(firstChild.textContent) === 'colsplit';
+      });
+      if (splitRow) {
+        const cells = [...splitRow.children];
+        const splitVal = cells[1]?.textContent?.trim();
+        if (splitVal && splitVal.startsWith('split-')) {
+          panel.classList.add(splitVal);
+        }
+      }
     }
-    // Apply split class from data-col-split attribute (xwalk without classes_ prefix)
+    // Check data-col-split attribute
     const { colSplit } = panel.dataset;
     if (colSplit && colSplit.startsWith('split-')) {
       panel.classList.add(colSplit);
