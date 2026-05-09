@@ -8,9 +8,10 @@
    Panel: white card with gradient top border, 4+8 column split
    ============================================================ */
 
-/* ── Tab container — remove bottom spacing ── */
-.tabs-container {
-  margin-bottom: calc(-1 * var(--spacing-20));
+/* ── Tab container — collapse spacing to panel ── */
+.section.tabs-container {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 /* ── Tab controls wrapper — centered with gradient line ── */
@@ -76,9 +77,9 @@
 .tabs-panel {
   background: var(--background-color);
   border: none;
-  border-radius: var(--border-radius-button-primary);
-  padding: var(--spacing-30) var(--spacing-24);
-  margin-top: 0;
+  border-radius: 0;
+  padding: var(--spacing-24) var(--spacing-24) var(--spacing-30);
+  margin: 0;
   position: relative;
   overflow: hidden;
 }
