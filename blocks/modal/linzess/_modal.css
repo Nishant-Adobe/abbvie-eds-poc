@@ -1,37 +1,60 @@
 @import '../modal.css';
-@import '../../../styles/linzess/tokens.css';
 
-/* Linzess DTC modal — Bebas Neue / Lato, purple/orange palette */
+/* Linzess DTC modal — Lato body, Bebas headings, purple/orange palette */
 
-.modal {
-  --modal-backdrop: var(--color-overlay-dark, rgb(0 0 0 / 80%));
-  --modal-border-color: var(--color-border-default);
+.modal-overlay {
   --modal-close-color: var(--color-brand-primary);
+  --modal-close-hover-color: var(--color-brand-primary-dark);
+  --modal-dialog-max-width: var(--modal-dialog-max-width, 720px);
+  --modal-dialog-padding: var(--modal-dialog-padding, 40px);
+  --modal-dialog-border: var(--modal-dialog-border, 1px solid var(--color-border-default));
+  --modal-dialog-border-radius: var(--modal-dialog-border-radius, 0px);
+  --modal-close-size: var(--modal-close-size, 28px);
+  --modal-close-font-size: var(--modal-close-font-size, 20px);
 }
 
-/* Headings */
-.modal dialog .modal-content h2,
-.modal dialog .modal-content h3 {
-  color: var(--color-text-heading);
-  font-family: var(--heading-font-family);
+/* Dialog heading */
+.modal-content h2 {
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-body, 400);
+  font-size: 1.75rem;
+  line-height: 1.3;
+  margin: 0 0 16px;
 }
 
 /* Body text */
-.modal dialog .modal-content p {
+.modal-content p {
   color: var(--text-color);
   font-family: var(--body-font-family);
+  font-size: var(--font-size-body, 14px);
+  line-height: 1.5;
+  margin: 0 0 12px;
 }
 
-/* Close button: purple */
-.modal .close-button {
+/* Button row */
+.modal-content .button-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: flex-end;
+}
+
+.modal-content .button-container a.button.primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-color);
+  border-radius: var(--border-radius-button-primary);
+  padding: 12px 28px;
+  font-weight: var(--font-weight-bold, 700);
+  text-decoration: none;
+}
+
+.modal-content .button-container a.button.secondary {
+  background: transparent;
   color: var(--color-brand-primary);
-}
-
-.modal .close-button:hover {
-  color: var(--color-brand-accent);
-}
-
-/* Panel: orange left accent */
-.modal.panel dialog {
-  border-left-color: var(--color-brand-accent);
+  border: 2px solid var(--color-brand-primary);
+  border-radius: var(--border-radius-button-primary);
+  padding: 12px 28px;
+  font-weight: var(--font-weight-bold, 700);
+  text-decoration: none;
 }
