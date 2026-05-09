@@ -51,7 +51,7 @@ function decorateTabContainer(block, container) {
     if (dcw) {
       const children = [...dcw.children];
       const builtPanels = [];
-      const metaKeys = ['tabname', 'sectionid'];
+      const metaKeys = ['tabname', 'sectionid', 'colsplit', 'col-split', 'classes_colsplit'];
 
       // First pass: find all tabName markers and their names
       const markers = [];
@@ -88,6 +88,13 @@ function decorateTabContainer(block, container) {
           const currentIdx = Math.max(0, panelIdx - 1);
           if (builtPanels[currentIdx]) {
             builtPanels[currentIdx].id = children[i + 1].textContent.trim();
+          }
+          i += 2;
+        } else if ((key === 'colsplit' || key === 'col-split' || key === 'classes_colsplit') && i + 1 < children.length) {
+          const currentIdx = Math.max(0, panelIdx - 1);
+          const splitVal = children[i + 1].textContent.trim();
+          if (builtPanels[currentIdx] && splitVal) {
+            builtPanels[currentIdx].classList.add(splitVal);
           }
           i += 2;
         } else if (metaKeys.includes(key)) {
