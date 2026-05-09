@@ -246,8 +246,14 @@ export default async function decorate(block) {
   let openLabel;
   let modalId;
 
-  if (rows[0]?.children.length >= 2) {
-    // Key-value format (two cells per row)
+  // Method 1: Read from block dataset (v2 block / UE properties)
+  if (block.dataset.modalId || block.dataset.fragmentPath
+    || block.getAttribute('data-modal-id') || block.getAttribute('data-fragment-path')) {
+    modalId = block.dataset.modalId || block.getAttribute('data-modal-id') || '';
+    fragmentPath = block.dataset.fragmentPath || block.getAttribute('data-fragment-path') || '';
+    openLabel = block.dataset.openLabel || block.getAttribute('data-open-label') || 'Open modal';
+  } else if (rows.length && rows[0]?.children.length >= 2) {
+    // Method 2: Key-value format (two cells per row)
     const config = {};
     rows.forEach((row) => {
       const key = row.children[0]?.textContent?.trim().toLowerCase();
@@ -258,27 +264,39 @@ export default async function decorate(block) {
     modalId = config.modalid || config['modal-id'] || '';
     fragmentPath = config.fragmentpath || config['fragment-path'] || config.path || '';
     openLabel = config.openlabel || config['open-label'] || 'Open modal';
-  } else {
-    // UE single-cell format: row order matches model fields
-    // Model field order: [0]=classes, [1]=modalId, [2]=fragmentPath, [3]=openLabel
+  } else if (rows.length) {
+    // Method 3: UE single-cell format — find fields by content heuristics
     const getText = (i) => rows[i]?.children[0]?.textContent?.trim() || '';
     const getLink = (i) => rows[i]?.querySelector('a')?.getAttribute('href') || '';
 
-    // Detect if first row looks like a modalId (no spaces, short) or classes field
-    const row0Text = getText(0);
-    const looksLikeVariant = ['panel', 'exit', 'exit-small', 'small', 'media',
-      'image', 'information', 'once', 'once-session', 'force', ''].includes(row0Text);
+    // Find the fragment path row (contains "/" path separator)
+    let pathIdx = -1;
+    for (let i = 0; i < rows.length; i += 1) {
+      const text = getLink(i) || getText(i);
+      if (text.startsWith('/') || text.startsWith('http')) { pathIdx = i; break; }
+    }
 
-    if (looksLikeVariant && rows.length >= 4) {
-      // UE format with classes field: [0]=classes, [1]=modalId, [2]=fragmentPath, [3]=openLabel
-      modalId = getText(1);
-      fragmentPath = getLink(2) || getText(2);
-      openLabel = getText(3) || 'Open modal';
+    if (pathIdx >= 0) {
+      fragmentPath = getLink(pathIdx) || getText(pathIdx);
+      modalId = pathIdx > 0 ? getText(pathIdx - 1) : '';
+      openLabel = getText(pathIdx + 1) || 'Open modal';
+      // If modalId is empty and there's a row before it, try row before that
+      if (!modalId && pathIdx > 1) modalId = getText(pathIdx - 2);
     } else {
-      // Legacy format without classes: [0]=modalId, [1]=fragmentPath, [2]=openLabel
+      // Fallback: assume order [0]=modalId, [1]=fragmentPath, [2]=openLabel
       modalId = getText(0);
       fragmentPath = getLink(1) || getText(1);
       openLabel = getText(2) || 'Open modal';
+    }
+  } else {
+    // Method 4: No rows at all — try reading from inner text/links directly
+    const allText = block.textContent?.trim() || '';
+    const link = block.querySelector('a');
+    if (link) {
+      fragmentPath = link.getAttribute('href');
+      openLabel = link.textContent?.trim() || 'Open modal';
+    } else if (allText) {
+      fragmentPath = allText;
     }
   }
 
