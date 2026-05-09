@@ -9484,62 +9484,28 @@
     ]
   },
   {
-    "id": "tabs-item",
+    "id": "tab-item",
     "fields": [
-      {
-        "component": "tab",
-        "label": "Tab Content",
-        "name": "content"
-      },
       {
         "component": "text",
         "valueType": "string",
         "name": "tabTitle",
         "value": "",
-        "label": "Tab Title",
-        "description": "Title shown in the tab button"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "heading",
-        "value": "",
-        "label": "Heading",
-        "description": "Heading displayed in the tab panel"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "value": "",
-        "label": "Image Alt Text"
-      },
-      {
-        "component": "richtext",
-        "name": "content",
-        "value": "",
-        "label": "Content",
-        "description": "Tab panel content (appears before sections)",
-        "valueType": "string"
+        "label": "Tab Name",
+        "required": true,
+        "description": "Name shown on the tab button. Must match a Tab Panel's Tab Name (case-insensitive)."
       }
     ]
   },
   {
-    "id": "tab-items",
+    "id": "tab-panel",
     "fields": [
       {
         "component": "text",
         "name": "name",
         "label": "Section Name",
         "description": "The label shown for this section in the Content Tree",
-        "value": "Tab Items",
+        "value": "Tab Panel",
         "valueType": "string"
       },
       {
@@ -9548,8 +9514,25 @@
         "name": "tabName",
         "label": "Tab Name",
         "required": true,
-        "description": "Enter the name of the tab",
+        "description": "Must match a Tab Item's Tab Name (case-insensitive) to link them.",
         "value": ""
+      },
+      {
+        "component": "select",
+        "name": "classes_colSplit",
+        "label": "Column Split",
+        "description": "Only applies when Tabs block uses 'Two Column Tab' layout.",
+        "value": "",
+        "options": [
+          { "name": "Not Set (full width)", "value": "" },
+          { "name": "Equal — 6 + 6", "value": "split-6-6" },
+          { "name": "Narrow Left — 4 + 8", "value": "split-4-8" },
+          { "name": "Wide Left — 8 + 4", "value": "split-8-4" },
+          { "name": "Narrow Left — 3 + 9", "value": "split-3-9" },
+          { "name": "Wide Left — 9 + 3", "value": "split-9-3" },
+          { "name": "Slightly Narrow Left — 5 + 7", "value": "split-5-7" },
+          { "name": "Slightly Wide Left — 7 + 5", "value": "split-7-5" }
+        ]
       },
       {
         "component": "text",

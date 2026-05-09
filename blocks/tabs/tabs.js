@@ -3,6 +3,10 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let tabBlockCnt = 0;
 
+function normalize(value) {
+  return value?.trim().toLowerCase() || '';
+}
+
 function decorateTabContainer(block, container) {
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
@@ -12,14 +16,26 @@ function decorateTabContainer(block, container) {
   const panels = [...container.querySelectorAll(':scope > .section[data-tab-name]')]
     .filter((section) => section !== block.closest('.section'));
 
+  // Remove visible section-metadata from panels
+  panels.forEach((panel) => {
+    const meta = panel.querySelector('.section-metadata');
+    if (meta) meta.remove();
+  });
+
   const tabItems = [...block.children];
+  let firstPanel = null;
 
   tabItems.forEach((tabItem, i) => {
     const titleCell = tabItem.firstElementChild;
     const title = titleCell?.textContent.trim() || `Tab ${i + 1}`;
-    const panel = panels[i];
-    const panelId = panel?.id || `tab-container-panel-${tabBlockCnt}-${i + 1}`;
+    const normalizedTitle = normalize(title);
 
+    // Match by normalized name (case-insensitive, trimmed)
+    const panel = panels.find(
+      (p) => normalize(p.dataset.tabName) === normalizedTitle,
+    );
+
+    const panelId = panel?.id || `tab-container-panel-${tabBlockCnt}-${i + 1}`;
     if (panel && !panel.id) panel.id = panelId;
 
     const button = document.createElement('button');
@@ -27,7 +43,7 @@ function decorateTabContainer(block, container) {
     button.id = `tab-${panelId}`;
     button.textContent = title;
     button.setAttribute('aria-controls', panelId);
-    button.setAttribute('aria-selected', !i);
+    button.setAttribute('aria-selected', !firstPanel && panel);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
 
@@ -35,7 +51,12 @@ function decorateTabContainer(block, container) {
       panel.classList.add('tab-panel');
       panel.setAttribute('role', 'tabpanel');
       panel.setAttribute('aria-labelledby', button.id);
-      if (i > 0) panel.classList.add('tab-panel-hidden');
+
+      if (!firstPanel) {
+        firstPanel = panel;
+      } else {
+        panel.classList.add('tab-panel-hidden');
+      }
     }
 
     button.addEventListener('click', () => {
@@ -50,7 +71,6 @@ function decorateTabContainer(block, container) {
     tablist.append(button);
   });
 
-  // Clear block content (tab items used only for button data) and insert tablist
   block.textContent = '';
   block.append(tablist);
 }
@@ -75,8 +95,7 @@ function decorateStandalone(block) {
 
     const contentCells = [...itemContentRow.children].slice(1);
     contentCells.forEach((cell) => {
-      const cellContent = cell.cloneNode(true);
-      tabItemContent.appendChild(cellContent);
+      tabItemContent.appendChild(cell.cloneNode(true));
     });
 
     itemContentRow.remove();

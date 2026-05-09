@@ -19,14 +19,26 @@
   "models": [
     {
       "id": "tabs",
-      "fields": []
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes",
+          "label": "Layout",
+          "value": "",
+          "options": [
+            { "name": "Simple Tab — Full width panels", "value": "" },
+            { "name": "Two Column Tab — Split panel layout", "value": "tabs-two-column" }
+          ]
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "tabs",
       "components": [
-        "tabs-item"
+        "tab-item"
       ]
     }
   ]
