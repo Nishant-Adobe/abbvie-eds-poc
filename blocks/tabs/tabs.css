@@ -53,79 +53,12 @@
   cursor: initial;
 }
 
-.tabs .tabs-panel {
-  margin-top: calc(-1 * var(--separator-height-1));
-  padding: var(--tabs-panel-padding);
-  border: var(--separator-height-1) solid var(--tabs-border-color);
-  overflow: auto;
-}
-
-.tabs .tabs-panel[aria-hidden='true'] {
+/* Hidden tab items (kept in DOM for UE content tree) */
+.tabs .tabs-item-hidden {
   display: none;
 }
 
-/* Tab Container mode — hidden states */
-main .tabs-container .tab-panel[aria-hidden='true'] {
+/* Tab panels — hidden by default, shown when active */
+.section.tabs-panel[aria-hidden='true'] {
   display: none;
-}
-
-main .tabs-container .tabs-item-hidden {
-  display: none;
-}
-
-/* Hide section metadata inside tab container */
-.tabs-container .section-metadata,
-.tabs-container .section-metadata-wrapper {
-  display: none;
-}
-
-/* Two Column Tab — split panel grid (mobile-first: single column base) */
-.tabs-container [data-col-split^="split-"],
-.tabs-container .tab-panel[class*="split-"] {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-24);
-}
-
-/* Override abbvie-container grid-column on split panel children (divs only) */
-.tabs-container [data-col-split^="split-"] > div,
-.tabs-container .tab-panel[class*="split-"] > div {
-  grid-column: unset;
-  min-width: 0;
-}
-
-/* Non-div children (paragraphs) span full width in split panels */
-.tabs-container [data-col-split^="split-"] > :not(div),
-.tabs-container .tab-panel[class*="split-"] > :not(div) {
-  grid-column: 1 / -1;
-}
-
-/* Split panel metadata excluded from grid */
-.tabs-container [data-col-split^="split-"] > .section-metadata,
-.tabs-container .tab-panel[class*="split-"] > .section-metadata {
-  display: none;
-}
-
-/* Desktop: apply split ratios */
-@media (width >= 900px) {
-  .tabs-container .tab-panel.split-6-6,
-  .tabs-container [data-col-split="split-6-6"] { grid-template-columns: 1fr 1fr; }
-
-  .tabs-container .tab-panel.split-4-8,
-  .tabs-container [data-col-split="split-4-8"] { grid-template-columns: 1fr 2fr; }
-
-  .tabs-container .tab-panel.split-8-4,
-  .tabs-container [data-col-split="split-8-4"] { grid-template-columns: 2fr 1fr; }
-
-  .tabs-container .tab-panel.split-3-9,
-  .tabs-container [data-col-split="split-3-9"] { grid-template-columns: 1fr 3fr; }
-
-  .tabs-container .tab-panel.split-9-3,
-  .tabs-container [data-col-split="split-9-3"] { grid-template-columns: 3fr 1fr; }
-
-  .tabs-container .tab-panel.split-5-7,
-  .tabs-container [data-col-split="split-5-7"] { grid-template-columns: 5fr 7fr; }
-
-  .tabs-container .tab-panel.split-7-5,
-  .tabs-container [data-col-split="split-7-5"] { grid-template-columns: 7fr 5fr; }
 }
