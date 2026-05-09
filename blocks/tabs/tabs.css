@@ -71,28 +71,27 @@
 }
 
 /* Two Column Tab — grid on panels */
-[data-identifier="Tab Container"]:has(.tabs.tabs-two-column) > .section[data-tab-name] {
+.tab-panel[class*="split-"] {
   display: grid;
-  grid-template-columns: 1fr;
   gap: var(--spacing-24, 1.5rem);
 }
 
 /* Split ratios */
-.section.split-6-6 { grid-template-columns: 1fr 1fr; }
-.section.split-4-8 { grid-template-columns: 1fr 2fr; }
-.section.split-8-4 { grid-template-columns: 2fr 1fr; }
-.section.split-3-9 { grid-template-columns: 1fr 3fr; }
-.section.split-9-3 { grid-template-columns: 3fr 1fr; }
-.section.split-5-7 { grid-template-columns: 5fr 7fr; }
-.section.split-7-5 { grid-template-columns: 7fr 5fr; }
+.tab-panel.split-6-6 { grid-template-columns: 1fr 1fr; }
+.tab-panel.split-4-8 { grid-template-columns: 1fr 2fr; }
+.tab-panel.split-8-4 { grid-template-columns: 2fr 1fr; }
+.tab-panel.split-3-9 { grid-template-columns: 1fr 3fr; }
+.tab-panel.split-9-3 { grid-template-columns: 3fr 1fr; }
+.tab-panel.split-5-7 { grid-template-columns: 5fr 7fr; }
+.tab-panel.split-7-5 { grid-template-columns: 7fr 5fr; }
 
-[data-identifier="Tab Container"]:has(.tabs.tabs-two-column) > .section[data-tab-name] > * {
+.tab-panel[class*="split-"] > * {
   min-width: 0;
 }
 
 /* Responsive: collapse to single column on mobile */
 @media (width < 768px) {
-  .section[class*="split-"] {
+  .tab-panel[class*="split-"] {
     grid-template-columns: 1fr;
   }
 }

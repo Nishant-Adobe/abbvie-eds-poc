@@ -42,22 +42,28 @@ function decorateTabContainer(block, container) {
     panels = [...container.querySelectorAll('.default-content-wrapper > div[data-aue-model="tab-panel"]')];
   }
 
-  // Extract tab-name from section-metadata inside each panel and set as data attribute
+  // Extract tab-name and split classes from section-metadata inside each panel
   panels.forEach((panel) => {
     if (!panel.dataset.tabName) {
       const name = getTabNameFromMeta(panel);
       if (name) panel.dataset.tabName = name;
     }
+    // Apply split-* class from section-metadata to the panel itself
+    const meta = panel.querySelector('.section-metadata');
+    if (meta) {
+      [...meta.classList].filter((c) => c.startsWith('split-')).forEach((c) => {
+        panel.classList.add(c);
+      });
+    }
   });
 
-  // Hide section-metadata inside panels (both nested and wrapper-level)
+  // Hide all section-metadata elements inside the container
   container.querySelectorAll('.section-metadata').forEach((meta) => {
     meta.style.display = 'none';
   });
-
-  // Also hide the section-metadata-wrapper at container level
-  const metaWrapper = container.querySelector(':scope > .section-metadata-wrapper');
-  if (metaWrapper) metaWrapper.style.display = 'none';
+  container.querySelectorAll('.section-metadata-wrapper').forEach((wrapper) => {
+    wrapper.style.display = 'none';
+  });
 
   const tabItems = [...block.children];
   let firstPanel = null;
@@ -108,8 +114,11 @@ function decorateTabContainer(block, container) {
     tablist.append(button);
   });
 
-  block.textContent = '';
-  block.append(tablist);
+  // Hide original tab items but keep them in DOM for UE content tree
+  tabItems.forEach((tabItem) => {
+    tabItem.style.display = 'none';
+  });
+  block.prepend(tablist);
 }
 
 function decorateStandalone(block) {
