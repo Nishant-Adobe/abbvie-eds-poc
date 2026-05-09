@@ -7,28 +7,19 @@
    Style: Dark navy pill bar with white text, underline on active
    ============================================================ */
 
-/* ── Section containing tab controls ── */
-.section:has(.tabs-list) {
-  background: transparent;
-  padding: 0;
-  margin: 0 auto;
-  margin-top: calc(-1 * var(--spacing-20));
-  margin-bottom: calc(-1 * var(--spacing-20));
-  text-align: center;
-  position: relative;
-  z-index: var(--z-index-2);
+/* ── Tab controls wrapper — centered, overlapping sections ── */
+.tabs-container .tabs-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: var(--z-index-2);
+  margin-top: calc(-1 * var(--spacing-20));
+  margin-bottom: calc(-1 * var(--spacing-20));
 }
 
-.section:has(.tabs-list) + .section {
-  margin-top: 0;
-  padding-top: var(--spacing-48);
-}
-
-/* ── Tab controls bar ── */
-.tabs .tabs-list {
+/* ── Tab controls bar — dark navy pill ── */
+.tabs-container .tabs .tabs-list {
   display: inline-flex;
   width: auto;
   align-items: center;
@@ -40,7 +31,8 @@
   border: none;
 }
 
-.tabs .tabs-list button {
+/* ── Tab buttons ── */
+.tabs-container .tabs .tabs-list button.tabs-tab {
   display: block;
   width: auto;
   max-width: none;
@@ -62,13 +54,14 @@
   cursor: pointer;
 }
 
-.tabs .tabs-list button[aria-selected='true'] {
+/* ── Active tab ── */
+.tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: transparent;
   color: var(--color-text-on-dark);
   font-weight: var(--font-weight-heading);
 }
 
-.tabs .tabs-list button[aria-selected='true']::after {
+.tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true']::after {
   position: absolute;
   bottom: var(--spacing-04);
   left: var(--spacing-12);
@@ -80,12 +73,7 @@
 }
 
 /* ── Tab panels ── */
-.tabs .tabs-panel {
-  border: none;
-  padding: var(--spacing-24) 0;
-}
-
-.tabs-container .tab-panel {
+.tabs-container .default-content-wrapper .tab-panel {
   position: relative;
   padding: var(--spacing-24);
   background: var(--background-color);
@@ -94,7 +82,7 @@
 }
 
 /* Gradient bar on top of panel */
-.tabs-container .tab-panel::before {
+.tabs-container .default-content-wrapper .tab-panel::before {
   content: '';
   position: absolute;
   top: calc(-1 * var(--separator-height-1));
@@ -105,28 +93,22 @@
   border-radius: var(--border-radius-button-primary) var(--border-radius-button-primary) 0 0;
 }
 
-/* ── Left column rich text styling ── */
-.tabs-container .tab-panel .default-content-wrapper {
+/* ── Rich text inside panels ── */
+.tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] {
   font-family: var(--body-font-family);
   color: var(--text-color);
 }
 
-.tabs-container .tab-panel .default-content-wrapper p:first-child {
+.tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] p:first-child {
   font-size: var(--font-size-body-xs);
   line-height: var(--line-height-20);
   margin-bottom: var(--spacing-08);
 }
 
-.tabs-container .tab-panel .default-content-wrapper h2 {
+.tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] h2 {
   font-size: var(--font-size-h2);
   line-height: var(--line-height-h2);
   font-weight: var(--font-weight-heading);
   color: var(--color-text-heading);
   margin-bottom: var(--spacing-08);
-}
-
-.tabs-container .tab-panel .default-content-wrapper p:last-child {
-  font-size: var(--font-size-legal);
-  line-height: var(--line-height-legal);
-  color: var(--color-text-legal);
 }
