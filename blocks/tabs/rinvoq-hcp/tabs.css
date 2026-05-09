@@ -1,0 +1,127 @@
+@import '../tabs.css';
+@import '../../../styles/rinvoq-hcp/tokens.css';
+
+/* ============================================================
+   RINVOQ HCP — Tabs brand overrides
+   Live: rinvoqhcp.com/atopic-dermatitis/efficacy
+   Variations:
+     1. Folder tab (default): gray inactive, white active + italic bold
+     2. Pill tab (.tabs-pill): bordered pills, bold active
+   ============================================================ */
+
+/* ── Tab container — collapse spacing to panel ── */
+.section.tabs-container {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* ── Tab controls wrapper — left-aligned ── */
+.tabs-container .tabs-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+/* ── Tab list — base (folder style) ── */
+.tabs-container .tabs .tabs-list {
+  display: flex;
+  gap: var(--spacing-02);
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ── Tab buttons (inactive) — folder style ── */
+.tabs-container .tabs .tabs-list button.tabs-tab {
+  padding: var(--spacing-12) var(--spacing-24);
+  background: var(--color-glacier);
+  color: var(--color-charcoal);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-body);
+  font-style: normal;
+  border: none;
+  border-radius: var(--spacing-08) var(--spacing-08) 0 0;
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+  transition: background-color var(--transition-duration-fast);
+}
+
+/* ── Active tab — folder style ── */
+.tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  background: var(--background-color);
+  color: var(--color-charcoal);
+  font-weight: var(--font-weight-heading);
+  font-style: italic;
+  box-shadow: var(--shadow-default);
+  z-index: var(--z-index-1);
+}
+
+/* ── Pill variation (.tabs-pill class on Tabs block) ── */
+.tabs-container .tabs.tabs-pill .tabs-list {
+  gap: var(--spacing-08);
+}
+
+.tabs-container .tabs.tabs-pill .tabs-list button.tabs-tab {
+  border: var(--separator-height-1) solid var(--color-border-default);
+  border-radius: var(--spacing-06);
+  background: var(--background-color);
+  padding: var(--spacing-10) var(--spacing-20);
+  font-style: normal;
+}
+
+.tabs-container .tabs.tabs-pill .tabs-list button.tabs-tab[aria-selected='true'] {
+  font-weight: var(--font-weight-heading);
+  font-style: normal;
+  border-color: var(--color-charcoal);
+  box-shadow: none;
+}
+
+/* ── Panel wrapper ── */
+.tabs-panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-24);
+  background: var(--background-color);
+  border: none;
+  border-top: var(--separator-height-1) solid var(--color-border-default);
+  padding: var(--spacing-30) var(--spacing-24);
+  margin: 0;
+  position: relative;
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Sections inside panel — remove default spacing ── */
+.tabs-panel > .section.abbvie-container {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+/* Single section → full width */
+.tabs-panel > .section:only-child {
+  grid-column: 1 / -1;
+}
+
+/* ── Tablet+: 2 sections side by side (8+4 grid) ── */
+@media (width >= 600px) {
+  .tabs-panel:has(> .section:first-child:nth-last-child(2)) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .tabs-panel > .section:first-child:nth-last-child(2) {
+    grid-column: span 8;
+  }
+
+  .tabs-panel > .section:first-child:nth-last-child(2) ~ .section {
+    grid-column: span 4;
+  }
+
+  .tabs-container .tabs .tabs-list button.tabs-tab {
+    padding: var(--spacing-14) var(--spacing-30);
+  }
+}
