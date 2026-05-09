@@ -5,10 +5,10 @@
    SKYRIZI HCP — Tabs brand overrides
    Live: skyrizihcp.com/dermatology/psoriasis-efficacy
    Style: Dark navy pill bar with white text, underline on active
-   Mobile-first: stacked on mobile, inline pill bar on desktop
+   Mobile-first approach
    ============================================================ */
 
-/* ── Tab controls wrapper ── */
+/* ── Tab controls wrapper — centered with gradient line ── */
 .tabs-container .tabs-wrapper {
   display: flex;
   justify-content: center;
@@ -17,7 +17,20 @@
   z-index: var(--z-index-2);
 }
 
-/* ── Tab controls bar — base (mobile) ── */
+/* Gradient line running full width behind the tab buttons */
+.tabs-container .tabs-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: var(--spacing-06);
+  transform: translateY(-50%);
+  background: var(--gradient-tabs-panel);
+  z-index: var(--z-index-negative);
+}
+
+/* ── Tab controls bar — dark navy pill ── */
 .tabs-container .tabs .tabs-list {
   display: flex;
   flex-wrap: wrap;
@@ -30,7 +43,7 @@
   border: none;
 }
 
-/* ── Tab buttons (inactive) — base (mobile) ── */
+/* ── Tab buttons (inactive) ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
   display: block;
   width: auto;
@@ -70,7 +83,7 @@
   content: '';
 }
 
-/* ── Tab panels — base (mobile) ── */
+/* ── Tab panels ── */
 .tabs-container .default-content-wrapper .tab-panel {
   position: relative;
   padding: var(--spacing-16);
@@ -79,22 +92,32 @@
   margin: 0 auto;
 }
 
-/* Gradient bar on top of panel */
-.tabs-container .default-content-wrapper .tab-panel::before {
-  content: '';
-  position: absolute;
-  top: calc(-1 * var(--separator-height-1));
-  left: calc(-1 * var(--separator-height-1));
-  right: calc(-1 * var(--separator-height-1));
-  height: var(--spacing-06);
-  background: var(--gradient-tabs-panel);
-  border-radius: var(--border-radius-button-primary) var(--border-radius-button-primary) 0 0;
-}
-
 /* ── Rich text inside panels ── */
 .tabs-container .default-content-wrapper .tab-panel [data-aue-prop="text"] {
   font-family: var(--body-font-family);
   color: var(--text-color);
+}
+
+/* ── Tablet enhancements ── */
+@media (width >= 600px) {
+  .tabs-container .tabs-wrapper {
+    margin-top: calc(-1 * var(--spacing-16));
+    margin-bottom: calc(-1 * var(--spacing-16));
+  }
+
+  .tabs-container .tabs .tabs-list {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    width: auto;
+  }
+
+  .tabs-container .tabs .tabs-list button.tabs-tab {
+    padding: var(--spacing-08) var(--spacing-14);
+  }
+
+  .tabs-container .default-content-wrapper .tab-panel {
+    padding: var(--spacing-20);
+  }
 }
 
 /* ── Desktop enhancements ── */
