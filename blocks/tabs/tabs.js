@@ -11,11 +11,14 @@ function getTabNameFromMeta(panel) {
   const meta = panel.querySelector('.section-metadata');
   if (!meta) return '';
   const match = [...meta.children].find((row) => {
-    const cells = [...row.children];
-    return cells.length >= 2 && normalize(cells[0]?.textContent) === 'tab-name';
+    const firstChild = row.firstElementChild;
+    if (!firstChild) return false;
+    const key = normalize(firstChild.textContent);
+    return key === 'tab-name' || key === 'tabname' || key === 'tab name';
   });
   if (!match) return '';
-  return [...match.children][1]?.textContent?.trim() || '';
+  const cells = [...match.children];
+  return cells[1]?.textContent?.trim() || '';
 }
 
 function decorateTabContainer(block, container) {
@@ -24,13 +27,19 @@ function decorateTabContainer(block, container) {
   tablist.setAttribute('role', 'tablist');
   tablist.id = `tablist-${tabBlockCnt}`;
 
-  // Tab Panels can be: sibling .section elements OR nested divs with data-aue-component="tab-panel"
+  // Tab Panels can be:
+  // 1. Direct child sections with data-tab-name (doc-based delivery)
+  // 2. Nested divs with data-aue-component="tab-panel" (xwalk/UE delivery)
+  // 3. Divs inside default-content-wrapper with data-aue-component="tab-panel"
   let panels = [...container.querySelectorAll(':scope > .section[data-tab-name]')]
     .filter((section) => section !== block.closest('.section'));
 
-  // If no sibling sections found, look for nested tab-panel containers (xwalk/UE DOM)
   if (panels.length === 0) {
     panels = [...container.querySelectorAll('[data-aue-component="tab-panel"]')];
+  }
+
+  if (panels.length === 0) {
+    panels = [...container.querySelectorAll('.default-content-wrapper > div[data-aue-model="tab-panel"]')];
   }
 
   // Extract tab-name from section-metadata inside each panel and set as data attribute
@@ -171,7 +180,9 @@ function decorateStandalone(block) {
 export default async function decorate(block) {
   tabBlockCnt += 1;
 
-  const container = block.closest('[data-identifier="Tab Container"]');
+  const container = block.closest('[data-identifier="Tab Container"]')
+    || block.closest('.tabs-container')
+    || block.closest('[data-aue-model="tab-container"]');
 
   if (container) {
     decorateTabContainer(block, container);
