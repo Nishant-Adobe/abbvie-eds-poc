@@ -1052,6 +1052,39 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     background: var(--nav-active-indicator, var(--text-color));
   }
 
+  /* Leaf nav item rendered as <a> when it has no submenu */
+  header nav .nav-item-level-0 .default-content-wrapper>ul>li>a.nav-item-link {
+    flex: 0 1 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-18);
+    line-height: var(--line-height-24);
+    background: none;
+    color: var(--text-color);
+    font-weight: var(--font-weight-400);
+    padding: var(--spacing-32) var(--spacing-00);
+    font-family: var(--body-font-family);
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper>ul>li>a.nav-item-link::after {
+    background: transparent;
+    bottom: var(--spacing-00);
+    content: "";
+    height: 4px;
+    left: var(--spacing-00);
+    position: absolute;
+    width: 100%;
+    transition: background-color 0.2s ease;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper>ul>li>a.nav-item-link:hover::after,
+  header nav .nav-item-level-0 .default-content-wrapper>ul>li>a.nav-item-link:focus::after {
+    background: var(--nav-active-indicator, var(--text-color));
+  }
+
   header nav .nav-item-level-0 .close-btn-wrapper .close-btn {
     margin: var(--spacing-00);
     border-radius: var(--border-radius-00);

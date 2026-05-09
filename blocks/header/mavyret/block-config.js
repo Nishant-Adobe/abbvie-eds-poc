@@ -4,23 +4,31 @@ export default async function getBlockConfigs() {
     variations: [],
     decorations: {
       afterDecorate: (block) => {
-        // Home icon on the first utility nav link
-        const utilityUl = block.querySelector('.nav-utility ul[role="menubar"]');
-        if (utilityUl) {
-          const firstLi = utilityUl.querySelector('li:first-child');
-          const firstLink = firstLi?.querySelector('a');
-          if (firstLink && !firstLink.querySelector('.nav-utility-home-icon')) {
-            firstLi.classList.add('nav-utility-home');
-            const homeIcon = document.createElement('span');
-            homeIcon.className = 'nav-utility-home-icon';
-            homeIcon.setAttribute('aria-hidden', 'true');
-            homeIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
-            firstLink.prepend(homeIcon);
-          }
+        // Home icon as first item in orange nav bar
+        const navUl = block.querySelector('.nav-sections .default-content-wrapper > ul');
+        if (navUl && !navUl.querySelector('.nav-home-item')) {
+          const homeLi = document.createElement('li');
+          homeLi.className = 'nav-home-item';
+          const homeLink = document.createElement('a');
+          homeLink.href = '/mavyret/';
+          homeLink.setAttribute('aria-label', 'Home');
+          homeLink.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
+          homeLi.appendChild(homeLink);
+          navUl.prepend(homeLi);
         }
 
-        // Desktop hover — open nav section submenu on hover (no new HTML)
-        const navItems = [...block.querySelectorAll('.nav-sections .default-content-wrapper > ul > li')];
+        // Style "Request a Rep" utility link as a CTA button
+        block.querySelectorAll('.nav-utility a').forEach((link) => {
+          if (link.textContent.trim().toLowerCase().includes('request a rep')) {
+            link.classList.add('nav-utility-cta');
+          }
+        });
+
+        // Remove external-link class — not needed in header nav
+        block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
+
+        // Desktop hover — open nav section submenu on hover
+        const navItems = [...block.querySelectorAll('.nav-sections .default-content-wrapper > ul > li:not(.nav-home-item)')];
         if (!navItems.length) return;
 
         const desktopMQ = window.matchMedia('(min-width: 1024px)');
@@ -43,10 +51,8 @@ export default async function getBlockConfigs() {
 
         navItems.forEach((li) => {
           const submenu = li.querySelector('.submenu-level-1');
-
           li.addEventListener('mouseenter', () => { if (desktopMQ.matches) openItem(li); });
           li.addEventListener('mouseleave', () => { if (desktopMQ.matches) closeAll(); });
-
           submenu?.addEventListener('mouseenter', () => { if (desktopMQ.matches) clearTimeout(navTimer); });
           submenu?.addEventListener('mouseleave', () => { if (desktopMQ.matches) closeAll(); });
         });
@@ -54,9 +60,6 @@ export default async function getBlockConfigs() {
         document.addEventListener('click', (e) => {
           if (!block.querySelector('.nav-sections').contains(e.target)) closeAll();
         });
-
-        // Remove external-link class — not needed in header nav
-        block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
       },
     },
   };

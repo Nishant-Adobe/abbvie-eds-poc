@@ -4,6 +4,7 @@ import { loadFragment } from '../fragment/fragment.js';
 import IndexUtils from '../../scripts/index-utils.js';
 import { fetchDashboardCardData } from '../../scripts/cfUtil.js';
 import decorateExternalLinksUtility from '../../scripts/utils.js';
+import { renderBlock } from '../../scripts/multi-theme.js';
 
 // Constants for maintainability
 const DESKTOP_BREAKPOINT = '(min-width: 1024px)';
@@ -89,7 +90,7 @@ function toggleMenu(nav, _navSections, forceExpanded = null) {
  * @returns {Object} - { submenu, closeBtn }
  */
 function createSubmenuWrapper(label) {
-  const slug = label.toLowerCase().replace(/\s+/g, '-');
+  const slug = label.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   const submenu = createElement('div', {
     className: 'submenu-level-1',
     attributes: { id: `submenu-${slug}`, role: 'menu', 'data-label': label },
@@ -358,16 +359,17 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
   const selector = languageLinkData ? 'span:last-child' : 'span';
   const label = block.querySelector(selector)?.textContent?.trim() || '';
   if (!label) return;
-  const navigation = label.toLowerCase().replace(/\s+/g, '-');
+  const navigation = label.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
   let navigationData;
+  let navItemPath;
   if (languageLinkData) {
     navigationData = { children: parseUl(languageLinkData) };
     languageLinkData.remove();
   } else {
     const anchor = block.querySelector('a');
     const href = anchor?.href ?? null;
-    const path = href ? new URL(href).pathname : `/${navigation}`;
-    navigationData = await getNavigationByPath(path);
+    navItemPath = href ? new URL(href).pathname : `/${navigation}`;
+    navigationData = await getNavigationByPath(navItemPath);
   }
   const level2Container = document.querySelector(`#submenu-${navigation}`);
   if (!level2Container) return;
@@ -445,6 +447,25 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
     }
     ul.appendChild(li);
   });
+
+  if (!ul.children.length && !megaMenu) {
+    const parentLi = level2Container.closest('li');
+    level2Container.remove();
+    const parentBtn = parentLi?.querySelector('button');
+    if (parentBtn && navItemPath) {
+      const navLink = createElement('a', {
+        className: 'nav-item-link',
+        attributes: { href: navItemPath },
+      });
+      if (parentBtn.classList.contains('selected')) navLink.classList.add('selected');
+      const span = parentBtn.querySelector('span');
+      if (span) navLink.appendChild(span);
+      parentBtn.replaceWith(navLink);
+    } else if (parentBtn) {
+      parentBtn.setAttribute('aria-haspopup', 'false');
+    }
+    return;
+  }
 
   fragment.appendChild(ul);
   if (megaMenu) level2Container.appendChild(megaMenu);
@@ -646,6 +667,7 @@ function buildMenuItem(block, isNavigation = false) {
 
     const openOnHover = async () => {
       if (!isDesktop.matches) return;
+      if (!li.querySelector('.submenu-level-1')) return;
       clearTimeout(hoverTimer);
       const navGroup = li.querySelector('.navigation-group');
       const isParsed = navGroup?.querySelector('.navigation-item');
@@ -884,7 +906,7 @@ export default async function decorate(block) {
   const utilityBlocks = header.querySelectorAll('.navigation-content[data-type="utility-nav"]');
   if (utilityBlocks.length) {
     const utility = createElement('div', { className: 'section nav-utility' });
-    const utilityNav = createElement('nav', {
+    const utilityNav = createElement('div', {
       attributes: { 'aria-label': 'Utility Navigation' },
     });
     const utilityUl = createElement('ul', { attributes: { role: 'menubar' } });
@@ -1051,8 +1073,15 @@ export default async function decorate(block) {
     } else {
       expandableMenu = buildLevelTwoLanguageLinks(tool);
     }
-    if (expandableMenu && li) li.querySelector('.submenu-level-1').appendChild(expandableMenu);
-    if (li) toolsUl.appendChild(li);
+    if (li) {
+      if (expandableMenu) {
+        li.querySelector('.submenu-level-1').appendChild(expandableMenu);
+      } else {
+        li.querySelector('.submenu-level-1')?.remove();
+        li.querySelector('button')?.setAttribute('aria-haspopup', 'false');
+      }
+      toolsUl.appendChild(li);
+    }
   });
 
   toolsWrapper.appendChild(toolsUl);
@@ -1110,4 +1139,6 @@ export default async function decorate(block) {
   backdrop.className = 'nav-backdrop';
   backdrop.setAttribute('aria-hidden', true);
   block.append(backdrop);
+
+  await renderBlock(block);
 }

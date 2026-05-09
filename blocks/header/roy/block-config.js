@@ -9,9 +9,9 @@ export default async function getBlockConfigs() {
       // { variation: 'multi-column-category-banner', module: 'multi-column-cat-banner.js' },
     ],
     decorations: {
-    //   beforeDecorate: async (ctx, blockConfig) => beforeDecorate(ctx, blockConfig),
-    //   decorate: async (ctx, blockConfig) => decorateBlock(ctx, blockConfig),
-    //   afterDecorate: async (ctx, blockConfig) => afterDecorate(ctx, blockConfig),
+      afterDecorate: (block) => {
+        block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
+      },
     },
   };
 }

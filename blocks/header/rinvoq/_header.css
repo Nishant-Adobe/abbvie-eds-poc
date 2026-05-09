@@ -1,1 +1,466 @@
 @import '../header.css';
+
+/* ──────────────────────────────────────────
+   RINVOQ DTC — Header Brand Overrides
+   Source: rinvoq.com/psoriatic-arthritis
+   - Eyebrow bar: crimson (#8c1749), white text
+   - Utility bar: light gray (default), dark text
+   - Main header/nav: dark charcoal (#2d2d2d), white text
+   - Logo: full-color RINVOQ (no filter)
+   - Active indicator: amber (#f5c200)
+   - Desktop: amber left border on each nav item
+   - Brand links: white text, 60% white separators
+   - Mobile open: dark charcoal maintained
+────────────────────────────────────────── */
+
+:root {
+  --nav-bar-bg: var(--color-nav-dark);
+  --nav-bar-bg-scroll: var(--color-nav-bg-scroll);
+  --nav-active-indicator: var(--color-nav-active);
+  --nav-eyebrow-bg: var(--color-nav-eyebrow);
+  --nav-eyebrow-text: var(--color-text-on-dark);
+  --nav-brand-links-color: var(--color-text-on-dark);
+  --nav-brand-links-separator-color: rgb(255 255 255 / 60%);
+  --nav-brand-links-underline-color: transparent;
+}
+
+/* Nav wrapper — dark charcoal */
+header .nav-wrapper {
+  background-color: var(--color-nav-dark);
+}
+
+/* Nav text — white */
+header nav {
+  color: var(--color-text-on-dark);
+}
+
+/* Hamburger — white bars on dark header */
+header nav .nav-hamburger button {
+  background: transparent;
+  border: none;
+}
+
+header nav .nav-hamburger button > span {
+  background: var(--color-text-on-dark);
+}
+
+/* Logo — full-color RINVOQ on dark background */
+header nav .nav-brand img {
+  max-width: unset;
+  height: auto;
+  width: 150px;
+}
+
+/* Brand links — white */
+header .nav-brand-links {
+  color: var(--color-text-on-dark);
+}
+
+header .nav-utility {
+  height: auto;
+}
+
+/* Utility nav — strip global a.button styles; match live site spacing */
+header .nav-utility a,
+header .nav-utility a.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-08);
+  background: none;
+  border: none;
+  border-radius: var(--border-radius-00);
+  padding: 0 var(--spacing-12);
+  margin: var(--spacing-00);
+  height: 100%;
+  color: var(--color-nav-utility);
+  font-size: var(--font-size-13);
+  font-weight: var(--font-weight-600);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+header .nav-utility button {
+  margin: 0;
+  padding: 0 var(--spacing-12);
+  color: var(--color-nav-utility);
+  font-size: var(--font-size-13);
+  font-weight: var(--font-weight-600);
+  height: 100%;
+}
+
+header .nav-utility ul[role="menu"] {
+  width: 100%;
+  min-width: 100%;
+  padding: 0;
+  box-shadow: 0 3px 5px 0 #999;
+}
+
+header .nav-utility ul[role="menubar"] {
+  justify-content: space-evenly;
+}
+
+header .nav-utility ul[role="menu"] li:first-child {
+  border-bottom: 1px solid #979797;
+}
+
+/* Hover + open state — yellow bg on full li, black text */
+header .nav-utility li:hover,
+header .nav-utility li:has(button[aria-expanded='true']) {
+  background-color: var(--color-nav-active);
+}
+header .nav-utility ul[role="menu"] a:hover  {
+  background-color: var(--color-nav-active);
+}
+
+header .nav-utility li:hover > a,
+header .nav-utility li:hover > a.button,
+header .nav-utility li:hover > button,
+header .nav-utility li:has(button[aria-expanded='true']) > button {
+  color: var(--color-nav-dark);
+  text-decoration: none;
+  background-color: var(--color-nav-active);
+}
+
+/* Home icon badge — plum circle with white house (first item only) */
+header .nav-utility .nav-utility-home-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: var(--color-nav-utility);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+header .nav-utility .nav-utility-home-icon svg {
+  width: 13px;
+  height: 13px;
+  fill: var(--color-text-on-dark);
+  display: block;
+}
+
+/* Pipe separator — amber, link padding handles surrounding space */
+header .nav-utility li + li::before {
+  content: '|';
+  color: var(--color-nav-active);
+  opacity: 1;
+  padding: 0;
+  font-size: var(--font-size-13);
+}
+
+.nav-utility-main {
+  display: flex; 
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Primary nav — dark charcoal, white text */
+header nav .nav-sections {
+  background-color: var(--color-nav-dark);
+  color: var(--color-text-on-dark);
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: var(--color-text-on-dark);
+  font-weight: var(--font-weight-600);
+  padding: 0px;
+  font-size: var(--font-size-16);
+}
+
+/* Nav tools — white */
+header nav .nav-tools {
+  color: var(--color-text-on-dark);
+}
+
+header nav .nav-tools .icon-search svg {
+  fill: var(--color-text-on-dark);
+  stroke: var(--color-text-on-dark);
+}
+
+header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover {
+  color: var(--nav-active-indicator);
+}
+
+header nav .nav-item-level-0 .default-content-wrapper>ul>li>button::after,
+header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover::after,
+header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover:focus,
+header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover:focus-visible {
+  content: "";
+  left: 0;
+  width: 2px;
+  height: 12px;
+  position: absolute;
+  background: #ffd100;
+  bottom: 6px;
+}
+
+header nav .nav-sections .default-content-wrapper>ul>li>button span {
+  padding-left: 10px;
+}
+
+/* Submenu — dark charcoal to match main nav */
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: var(--color-nav-dark);
+  color: var(--color-text-on-dark);
+  margin: 0px;
+  width: 220px;
+  border-top: 0px;
+  padding: 15px;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul {
+  background: var(--color-nav-dark);
+  display: flex;
+  flex-direction: column;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li:before {
+  content: "";
+  left: -10px;
+  width: 2px;
+  height: 100%;
+  position: absolute;
+  background: #ffd100;
+  bottom: 2px;
+  top: 0px;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
+  color: var(--color-text-on-dark);
+  padding-left: 0;
+  font-size: 12px;
+  line-height: 20px;
+}
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover {
+  color: #ffd100;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .close-btn {
+  color: var(--color-text-on-dark);
+}
+
+/* Mobile open — dark charcoal maintained */
+header nav[aria-expanded='true'] {
+  background-color: var(--color-nav-dark);
+}
+
+header nav[aria-expanded='true'] .nav-sections {
+  background-color: var(--color-nav-dark);
+}
+
+/* Nav separator — subtle white on dark */
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom-color: var(--color-nav-separator);
+}
+
+/* Back button — plum accent */
+header nav .nav-item-level-0 .back-btn {
+  color: var(--color-plum);
+}
+
+/* Eyebrow top bar — legal text size, bold anchors */
+header .nav-eyebrow-top p {
+  font-size: var(--font-size-legal);
+}
+
+header .nav-eyebrow-top p a {
+  font-weight: var(--font-weight-700);
+  font-family: var(--font-family-bold);
+  font-size: var(--font-size-legal);
+  text-decoration: underline;
+}
+
+/* Mobile: hide brand-info, white chevrons */
+@media (width <= 1023px) {
+  header nav .nav-brand-info {
+    display: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button::before {
+    color: var(--color-text-on-dark);
+  }
+}
+
+/* Desktop: layout + brand-info + nav item amber bars */
+@media (width >= 1024px) {
+  /* Base switches nav to display:flex — restore grid for brand-info column */
+  header .nav-wrapper nav {
+    display: grid;
+    grid-template:
+      'brand info tools hamburger'
+      'sections sections sections sections' auto
+      / auto 1fr auto auto;
+    height: auto;
+    max-width: 1150px;
+    margin: 0 auto;
+  }
+
+  /* nav-tools: all items are duplicates of nav-sections (language-links type).
+     Hide entirely since rinvoq has no search or auth tools. */
+  header .nav-wrapper nav .nav-tools {
+    display: none;
+  }
+
+  /* Brand-info — right of logo, horizontal flex, white text */
+  header .nav-wrapper nav .nav-brand-info {
+    grid-area: info;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-20);
+    padding-right: var(--spacing-20);
+    color: var(--color-text-on-dark);
+  }
+
+  header .nav-wrapper nav .nav-brand-info > ul,
+  header .nav-wrapper nav .nav-brand-info > p {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: var(--spacing-12);
+    white-space: nowrap;
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-12);
+  }
+
+  header .nav-wrapper nav .nav-brand-info li,
+  header .nav-wrapper nav .nav-brand-info p {
+    white-space: nowrap;
+    font-size: var(--font-size-12);
+  }
+
+  header .nav-wrapper nav .nav-brand-info a {
+    color: var(--color-text-on-dark);
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: var(--font-size-12);
+    position: relative;
+  }
+
+  header .nav-wrapper nav .nav-brand-info a:hover {
+    text-decoration: none;
+  }
+
+  header .nav-wrapper nav .nav-brand-info a::after{
+    background: #d7196e;
+    bottom: -2px;
+    content: "";
+    height: 1px;
+    position: absolute;
+    right: 0;
+    width: 100%;
+  }
+
+  header .nav-wrapper nav .nav-brand-info a:hover::after {
+    height: 2px;
+  }
+
+  header .nav-wrapper nav .nav-brand-info a.external-link::after {
+    mask: none;
+  }
+
+  /* Nav sections — reset base margin-left offset */
+  header .nav-wrapper nav .nav-sections {
+    margin-left: var(--spacing-00);
+    display: flex;
+    padding:0;
+    margin-top: -30px;
+    position: relative;
+    background: transparent;
+    z-index: 60;
+    overflow: visible;
+    visibility: visible;
+    opacity: 1;
+    height: auto;
+    min-height: auto;
+    margin-left: 200px;
+  }
+
+  header .nav-wrapper nav .nav-sections .default-content-wrapper {
+    width: 100%;
+  }
+
+  header nav .nav-sections .default-content-wrapper>ul {
+    justify-content: space-between;
+  }
+
+  /* Active/hovered nav button — amber text */
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button,
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover {
+    color: var(--color-nav-active);
+  }
+
+  /* Submenu dropdown — override base mega-menu-wrapper chrome */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+    padding: var(--spacing-15) var(--spacing-15);
+    min-height: auto;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-wrapper {
+    display: block;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    grid-template-columns: 1fr;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-left {
+    display: block;
+    grid-column: auto;
+    margin: 0;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card {
+    display: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .close-btn {
+    display: none;
+  }
+
+  /* Navigation group — override base white bg and massive padding */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-08);
+    padding: 0;
+    grid-template-columns: unset;
+  }
+
+  /* Each nav item — amber left border */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-level-2 {
+    border-left: 2px solid var(--color-nav-active);
+    padding-left: var(--spacing-12);
+    margin-bottom: 0;
+  }
+
+  /* Nav links — white, 14px */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-link {
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-400);
+    text-decoration: none;
+    display: block;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-link:hover {
+    text-decoration: underline;
+    font-weight: var(--font-weight-400);
+  }
+
+  header.hide-nav .nav-wrapper {
+    background: var(--color-nav-bg-scroll);
+  }
+
+  header.hide-nav .nav-wrapper:hover {
+    background: var(--color-nav-dark);
+  }
+}
