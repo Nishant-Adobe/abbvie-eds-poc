@@ -22,6 +22,8 @@ function getTabNameFromMeta(panel) {
 }
 
 function decorateTabContainer(block, container) {
+  container.classList.add('tabs-container');
+
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
   tablist.setAttribute('role', 'tablist');
@@ -57,13 +59,7 @@ function decorateTabContainer(block, container) {
     }
   });
 
-  // Hide all section-metadata elements inside the container
-  container.querySelectorAll('.section-metadata').forEach((meta) => {
-    meta.style.display = 'none';
-  });
-  container.querySelectorAll('.section-metadata-wrapper').forEach((wrapper) => {
-    wrapper.style.display = 'none';
-  });
+  // Section metadata is hidden via CSS (.tabs-container .section-metadata { display: none })
 
   const tabItems = [...block.children];
   let firstPanel = null;
@@ -116,7 +112,7 @@ function decorateTabContainer(block, container) {
 
   // Hide original tab items but keep them in DOM for UE content tree
   tabItems.forEach((tabItem) => {
-    tabItem.style.display = 'none';
+    tabItem.classList.add('tabs-item-hidden');
   });
   block.prepend(tablist);
 }
