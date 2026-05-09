@@ -97,10 +97,6 @@ export default async function decorate(block) {
       wrapper.setAttribute('aria-labelledby', button.id);
       wrapper.setAttribute('aria-hidden', !firstTab);
 
-      if (matched.length === 2) {
-        wrapper.classList.add('tabs-panel-split');
-      }
-
       // Move matched sections into wrapper
       const insertBefore = matched[0];
       main.insertBefore(wrapper, insertBefore);
