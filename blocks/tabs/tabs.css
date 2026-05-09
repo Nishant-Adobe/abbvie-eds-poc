@@ -1,6 +1,5 @@
 .tabs {
   --tabs-gap: var(--spacing-05);
-  --tabs-panel-padding: var(--spacing-24);
   --tabs-border-color: var(--container-border-color);
   --tabs-active-bg: var(--background-color);
   --tabs-inactive-bg: var(--light-color);
@@ -58,7 +57,26 @@
   display: none;
 }
 
-/* Tab panels — hidden by default, shown when active */
-.section.tabs-panel[aria-hidden='true'] {
+/* Tab panels — hidden when inactive */
+.tabs-panel[aria-hidden='true'] {
   display: none;
+}
+
+/* Two matched sections — side by side (40/60 split) */
+.tabs-panel-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-24);
+}
+
+@media (width >= 900px) {
+  .tabs-panel-split {
+    grid-template-columns: 2fr 3fr;
+  }
+}
+
+/* Sections inside panel wrapper retain visibility */
+.tabs-panel > .section {
+  display: block;
+  margin: 0;
 }

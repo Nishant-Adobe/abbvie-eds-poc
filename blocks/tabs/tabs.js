@@ -8,11 +8,12 @@ function normalize(value) {
 }
 
 /**
- * Get section name from section-metadata or data attributes.
- * Checks: data-tab-name, section-metadata rows (tabName, name), data-aue-label.
+ * Get section name/ID to match against tab names.
+ * Checks: id attribute, data-aue-label, section-metadata name/tabName rows.
  */
-function getSectionName(section) {
-  if (section.dataset.tabName) return section.dataset.tabName;
+function getSectionIdentifier(section) {
+  if (section.id) return section.id;
+  if (section.dataset.aueLabel) return section.dataset.aueLabel;
 
   const meta = section.querySelector('.section-metadata');
   if (meta) {
@@ -45,67 +46,82 @@ export default async function decorate(block) {
   let panels = [];
 
   if (main) {
-    const allSections = [...main.children].filter((el) => el.classList.contains('section'));
-    const blockIdx = allSections.indexOf(blockSection);
-    panels = allSections.slice(blockIdx + 1);
+    const allSections = [...main.children].filter(
+      (el) => el.classList.contains('section') && el !== blockSection,
+    );
+    const blockIdx = [...main.children].indexOf(blockSection);
+    panels = allSections.filter(
+      (el) => [...main.children].indexOf(el) > blockIdx,
+    );
   }
 
-  // Also check for panels inside the same section (UE xwalk delivery)
-  if (panels.length === 0 && blockSection) {
-    panels = [...blockSection.querySelectorAll('[data-aue-component="tab-panel"]')];
-  }
-
-  // Extract names from panels
-  panels.forEach((panel) => {
-    if (!panel.dataset.tabName) {
-      const name = getSectionName(panel);
-      if (name) panel.dataset.tabName = name;
-    }
+  // Extract tab item names from block
+  const tabItems = [...block.children];
+  const tabNames = tabItems.map((item) => {
+    const titleCell = item.firstElementChild;
+    return titleCell?.textContent.trim() || '';
   });
 
-  const tabItems = [...block.children];
-  let firstPanel = null;
-
-  tabItems.forEach((tabItem, i) => {
-    const titleCell = tabItem.firstElementChild;
-    const title = titleCell?.textContent.trim() || `Tab ${i + 1}`;
-    const normalizedTitle = normalize(title);
-
-    // Match by normalized name (case-insensitive, trimmed)
-    const panel = panels.find(
-      (p) => normalize(p.dataset.tabName) === normalizedTitle,
+  // Match sections to tab names (case-insensitive)
+  // Group multiple sections per tab name
+  const tabPanelMap = new Map();
+  tabNames.forEach((name) => {
+    const normalizedName = normalize(name);
+    const matched = panels.filter(
+      (section) => normalize(getSectionIdentifier(section)) === normalizedName,
     );
+    if (matched.length > 0) tabPanelMap.set(name, matched);
+  });
 
-    const panelId = panel?.id || `tab-panel-${tabBlockCnt}-${i + 1}`;
-    if (panel && !panel.id) panel.id = panelId;
+  // Build tab buttons and wrap matched panels
+  let firstTab = true;
+  tabNames.forEach((name, i) => {
+    const matched = tabPanelMap.get(name) || [];
+    const panelId = `tab-panel-${tabBlockCnt}-${i + 1}`;
 
     const button = document.createElement('button');
     button.className = 'tabs-tab';
     button.id = `tab-${panelId}`;
-    button.textContent = title;
+    button.textContent = name || `Tab ${i + 1}`;
     button.setAttribute('aria-controls', panelId);
-    button.setAttribute('aria-selected', !firstPanel && !!panel);
+    button.setAttribute('aria-selected', firstTab && matched.length > 0);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
 
-    if (panel) {
-      panel.classList.add('tabs-panel');
-      panel.setAttribute('role', 'tabpanel');
-      panel.setAttribute('aria-labelledby', button.id);
-      panel.setAttribute('aria-hidden', !!firstPanel);
+    if (matched.length > 0) {
+      // Create a wrapper div for this tab's panel sections
+      const wrapper = document.createElement('div');
+      wrapper.className = 'tabs-panel';
+      wrapper.id = panelId;
+      wrapper.setAttribute('role', 'tabpanel');
+      wrapper.setAttribute('aria-labelledby', button.id);
+      wrapper.setAttribute('aria-hidden', !firstTab);
 
-      if (!firstPanel) {
-        firstPanel = panel;
+      if (matched.length === 2) {
+        wrapper.classList.add('tabs-panel-split');
       }
+
+      // Move matched sections into wrapper
+      const insertBefore = matched[0];
+      main.insertBefore(wrapper, insertBefore);
+      matched.forEach((section) => {
+        section.style.display = '';
+        wrapper.append(section);
+      });
+
+      if (firstTab) firstTab = false;
     }
 
     button.addEventListener('click', () => {
-      panels.forEach((p) => {
-        if (p.dataset.tabName) p.setAttribute('aria-hidden', true);
+      // Hide all panels
+      main.querySelectorAll(`.tabs-panel[id^="tab-panel-${tabBlockCnt}"]`).forEach((p) => {
+        p.setAttribute('aria-hidden', true);
       });
       tablist.querySelectorAll('button').forEach((btn) => {
         btn.setAttribute('aria-selected', false);
       });
+      // Show clicked panel
+      const panel = document.getElementById(panelId);
       if (panel) panel.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
     });
