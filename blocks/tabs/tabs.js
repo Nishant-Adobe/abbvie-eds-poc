@@ -114,17 +114,23 @@ function decorateTabContainer(block, container) {
     }
   }
 
-  // Extract tab-name and split classes from section-metadata inside each panel
+  // Extract tab-name and split classes from section-metadata or data attributes
   panels.forEach((panel) => {
     if (!panel.dataset.tabName) {
       const name = getTabNameFromMeta(panel);
       if (name) panel.dataset.tabName = name;
     }
+    // Apply split class from section-metadata (xwalk with classes_ prefix)
     const meta = panel.querySelector('.section-metadata');
     if (meta) {
       [...meta.classList].filter((c) => c.startsWith('split-')).forEach((c) => {
         panel.classList.add(c);
       });
+    }
+    // Apply split class from data-col-split attribute (xwalk without classes_ prefix)
+    const { colSplit } = panel.dataset;
+    if (colSplit && colSplit.startsWith('split-')) {
+      panel.classList.add(colSplit);
     }
   });
 
