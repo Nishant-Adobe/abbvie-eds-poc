@@ -1,0 +1,138 @@
+@import '../tabs.css';
+@import '../../../styles/mavyret/tokens.css';
+
+/* ============================================================
+   MAVYRET — Tabs brand overrides
+   Live: mavyret.com/hcp/efficacy
+   Style: Dark navy bar, white active tab, orange/green accents
+   ============================================================ */
+
+/* ── Tab container ── */
+.section.tabs-container {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-left: var(--spacing-15);
+  margin-right: var(--spacing-15);
+}
+
+/* ── Tab controls wrapper ── */
+.tabs-container .tabs-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+/* ── Tab list — dark navy bar ── */
+.tabs-container .tabs .tabs-list {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  background: var(--color-brand-primary-dark);
+  border: none;
+  padding: 0;
+  border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
+  overflow: visible;
+  width: 100%;
+}
+
+/* ── Tab buttons (inactive) — dark bg, white text ── */
+.tabs-container .tabs .tabs-list button.tabs-tab {
+  padding: 0.75em 1.5em;
+  background: var(--color-brand-primary-dark);
+  color: var(--color-text-on-dark);
+  font-family: var(--heading-font-family-bold);
+  font-size: var(--font-size-tab);
+  font-weight: var(--font-weight-heading);
+  font-style: normal;
+  border: none;
+  border-radius: 0;
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+  align-self: stretch;
+  flex: 1;
+  text-align: center;
+  line-height: var(--line-height-tab);
+  transition:
+    background-color var(--transition-duration-medium) var(--transition-easing-standard),
+    color var(--transition-duration-medium) var(--transition-easing-standard);
+}
+
+/* ── Active tab — white bg, dark text ── */
+.tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  background: var(--background-color);
+  color: var(--color-text-heading);
+  font-weight: var(--font-weight-heading);
+  border: var(--separator-height-1) solid var(--color-border-default);
+  border-bottom: none;
+  z-index: var(--z-index-1);
+}
+
+/* ── Panel wrapper ── */
+.tabs-panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-24);
+  background: var(--background-color);
+  border: var(--separator-height-1) solid var(--color-border-default);
+  border-top: none;
+  padding: var(--spacing-24) var(--spacing-16);
+  margin: 0;
+  margin-left: var(--spacing-15);
+  margin-right: var(--spacing-15);
+  position: relative;
+}
+
+/* ── Sections inside panel — reset to stacked ── */
+.tabs-panel > .section.abbvie-container {
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+.tabs-panel > .section.abbvie-container > div {
+  grid-column: unset;
+}
+
+/* Single section → full width */
+.tabs-panel > .section:only-child {
+  grid-column: 1 / -1;
+}
+
+/* ── Tablet (600px+): 2-section grid ── */
+@media (width >= 600px) {
+  .tabs-container .tabs .tabs-list button.tabs-tab {
+    font-size: var(--font-size-18);
+    padding: 1em 2em;
+  }
+
+  .tabs-panel {
+    padding: var(--spacing-30) var(--spacing-24);
+  }
+
+  .tabs-panel:has(> .section:first-child:nth-last-child(2)) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .tabs-panel > .section:first-child:nth-last-child(2) {
+    grid-column: span 8;
+  }
+
+  .tabs-panel > .section:first-child:nth-last-child(2) ~ .section {
+    grid-column: span 4;
+  }
+}
+
+/* ── Desktop (900px+) ── */
+@media (width >= 900px) {
+  .tabs-container .tabs .tabs-list button.tabs-tab {
+    font-size: var(--font-size-20);
+    padding: 1em 2.5em;
+  }
+
+  .tabs-panel {
+    padding: var(--spacing-40) var(--spacing-30);
+  }
+}
