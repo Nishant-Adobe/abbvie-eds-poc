@@ -174,6 +174,13 @@ async function openModal(trigger, variants = []) {
     if (fragment) {
       [...fragment.childNodes].forEach((node) => content.append(node));
     }
+    // Links with href="#" inside modal act as close/cancel buttons
+    content.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeModal();
+      });
+    });
   } catch {
     content.innerHTML = '<p class="modal-error">Unable to load content.</p>';
   }
