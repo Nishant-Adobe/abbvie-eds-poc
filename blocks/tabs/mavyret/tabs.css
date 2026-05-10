@@ -102,14 +102,24 @@
 }
 
 /* ── Factoid styling inside tab panels ── */
+/* Container: flex wrap so factoid groups sit side by side */
+.tabs-panel .text-container-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--spacing-08);
+}
+
+/* Large percentage number — starts a new factoid group */
 .tabs-panel .text-container-text h1 {
   font-size: var(--font-size-h2);
   font-family: var(--heading-font-family-bold);
   color: var(--color-fiesta);
   line-height: 1;
-  margin: 0 0 var(--spacing-04);
+  margin: 0;
 }
 
+/* Label group (h5 + h6 + p after h1) — sits beside the percentage */
 .tabs-panel .text-container-text h5 {
   font-size: var(--font-size-14);
   font-family: var(--heading-font-family-bold);
@@ -117,6 +127,7 @@
   text-transform: uppercase;
   margin: 0;
   line-height: var(--line-height-20);
+  align-self: center;
 }
 
 .tabs-panel .text-container-text h6 {
@@ -126,24 +137,28 @@
   margin: 0;
   padding-bottom: var(--spacing-06);
   border-bottom: var(--spacing-03) solid var(--color-green-flash);
-  display: inline-block;
+  align-self: center;
 }
 
 .tabs-panel .text-container-text p {
   font-size: var(--font-size-body);
   color: var(--color-text-secondary);
   margin: var(--spacing-04) 0;
+  align-self: center;
 }
 
+/* Section headings and full-width elements break the flex row */
 .tabs-panel .text-container-text h2 {
   font-size: var(--font-size-h4);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
   text-align: center;
   margin: var(--spacing-24) 0 var(--spacing-16);
+  width: 100%;
 }
 
 .tabs-panel .text-container-text ul {
+  width: 100%;
   padding-left: var(--spacing-16);
   margin: var(--spacing-16) 0;
 }
@@ -156,6 +171,11 @@
 
 .tabs-panel .text-container-text ul li::marker {
   color: var(--color-green-flash);
+}
+
+/* Last paragraph (study description) spans full width */
+.tabs-panel .text-container-text > p:last-child {
+  width: 100%;
 }
 
 /* ── Tablet (600px+): 2-section grid ── */
