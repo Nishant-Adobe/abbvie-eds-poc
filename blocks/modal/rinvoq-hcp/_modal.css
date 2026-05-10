@@ -1,65 +1,172 @@
 @import '../modal.css';
-@import '../../../styles/rinvoq-hcp/tokens.css';
 
-/* Rinvoq HCP modal — Graphik, centered content, red chevron accent */
+/* stylelint-disable no-descending-specificity */
 
-.modal {
-  --modal-backdrop: rgb(37 40 42 / 80%);
-  --modal-border-color: var(--color-border-default);
-  --modal-close-color: var(--color-accordion-text, var(--text-color));
+/* Rinvoq HCP modal — wide study details with tabs, Graphik font */
+
+.modal-overlay {
+  --modal-close-color: #25282a;
+  --modal-close-hover-color: var(--color-brand-primary, #90124a);
+  --modal-dialog-max-width: 900px;
+  --modal-dialog-padding: 32px;
+  --modal-dialog-border: none;
+  --modal-dialog-border-radius: 0;
+  --modal-close-size: 36px;
+  --modal-close-font-size: 28px;
 }
 
-/* Content: centered text for information-style modals */
-.modal.information dialog .modal-content {
-  text-align: center;
+/* Close button */
+.modal-header .modal-close {
+  font-weight: 300;
 }
 
-/* Rich text inside modal — left-align */
-.modal.information dialog .modal-content p {
-  text-align: left;
-}
-
-/* Legal footnotes inside modal */
-.modal dialog .modal-content p.legal {
-  text-align: left;
-  margin-top: var(--spacing-20);
-  font-size: var(--font-size-body-small);
-}
-
-/* Headings */
-.modal dialog .modal-content h2,
-.modal dialog .modal-content h3 {
-  color: var(--color-text-heading);
+/* Dialog heading */
+.modal-content h2 {
+  color: #25282a;
   font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin: 0 0 20px;
+  text-transform: uppercase;
 }
 
-/* Inline close button label — used in confirmation modals */
-.modal dialog .modal-content [data-modal-action="confirm"] {
-  min-width: 8.7rem;
+/* Body text */
+.modal-content p {
+  color: var(--text-color, #46484a);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 12px;
 }
 
-/* Close button hover: red accent */
-.modal .close-button:hover {
-  color: var(--color-accordion-accent, var(--color-brand-primary));
+/* Subheadings inside modal content */
+.modal-content h3 {
+  color: #25282a;
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 20px 0 8px;
 }
 
-/* Dark variant: footer-dark navy background */
-.modal.accordion-dark dialog,
-.modal[data-modal-type="dark"] dialog {
-  background-color: var(--color-background-footer);
-  color: var(--color-text-on-dark);
-  border-color: transparent;
+/* Bold underline labels (Primary endpoint, etc.) */
+.modal-content strong,
+.modal-content b {
+  font-family: var(--font-family-semibold, var(--heading-font-family));
 }
 
-.modal.accordion-dark dialog .modal-content h2,
-.modal.accordion-dark dialog .modal-content h3,
-.modal.accordion-dark dialog .modal-content p,
-.modal[data-modal-type="dark"] dialog .modal-content p {
-  color: var(--color-text-on-dark);
+/* Lists inside modal */
+.modal-content ul,
+.modal-content ol {
+  padding-left: 20px;
+  margin: 8px 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-color, #46484a);
 }
 
-.modal.accordion-dark .close-button,
-.modal[data-modal-type="dark"] .close-button {
-  color: var(--color-text-on-dark);
+/* Compliance code */
+.modal-content p:last-of-type {
+  font-size: 11px;
+  color: #6c757d;
+  margin-top: 20px;
+}
+
+/* Links styled as buttons — HCP gate modals */
+.modal-dialog .modal-content a[href] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 140px;
+  padding: 14px 36px;
+  border-radius: var(--border-radius-button-primary, 100px);
+  font-weight: 700;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  text-decoration: none;
+  margin-right: 16px;
+  margin-top: 12px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  background: var(--button-primary-bg, #90124a);
+  color: var(--button-primary-color, #fff) !important;
+  border: 2px solid var(--button-primary-bg, #90124a);
+}
+
+.modal-dialog .modal-content a[href]::after {
+  content: '›';
+  font-size: 1.3em;
+  line-height: 1;
+}
+
+.modal-dialog .modal-content a[href]:last-of-type {
+  background: transparent;
+  color: var(--color-brand-primary, #90124a) !important;
+  border: 2px solid var(--color-brand-primary, #90124a);
+}
+
+.modal-overlay .modal-dialog .modal-content a[href]:hover {
+  opacity: 0.85;
+}
+
+/* ---- Media variant: wider modal for study details with tabs ---- */
+
+.modal-overlay.modal-media .modal-dialog {
+  max-width: 1000px;
+}
+
+.modal-overlay.modal-media .modal-content {
+  padding: 0 32px 32px;
+}
+
+/* Tabs inside media modal — override tab block styles for modal context */
+.modal-overlay.modal-media .modal-content .tabs {
+  margin: 0;
+}
+
+.modal-overlay.modal-media .modal-content .tabs-list {
+  border-bottom: 2px solid #dde1e6;
+  margin-bottom: 24px;
+  gap: 0;
+}
+
+.modal-overlay.modal-media .modal-content .tabs-list button {
+  padding: 12px 24px;
+  font-family: var(--font-family-semibold, var(--body-font-family));
+  font-size: 14px;
+  color: var(--text-color, #46484a);
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.modal-overlay.modal-media .modal-content .tabs-list button[aria-selected="true"],
+.modal-overlay.modal-media .modal-content .tabs-list button.active {
+  color: var(--color-brand-primary, #90124a);
+  border-bottom-color: var(--color-brand-primary, #90124a);
+}
+
+.modal-overlay.modal-media .modal-content .tabs-panel {
+  padding: 0;
+}
+
+/* Don't style links as buttons inside media/study detail modals */
+.modal-overlay.modal-media .modal-dialog .modal-content a[href] {
+  display: inline;
+  padding: 0;
+  border-radius: 0;
+  font-weight: 400;
+  font-size: inherit;
+  color: var(--color-brand-primary, #90124a) !important;
+  border: none;
+  margin: 0;
+  text-decoration: underline;
+  background: none;
+  min-width: 0;
+}
+
+.modal-overlay.modal-media .modal-dialog .modal-content a[href]::after {
+  content: none;
 }
