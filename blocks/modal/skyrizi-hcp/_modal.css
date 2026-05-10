@@ -1,63 +1,112 @@
 @import '../modal.css';
-@import '../../../styles/skyrizi-hcp/tokens.css';
 
-/* Skyrizi HCP modal — Red Hat Display, teal/navy palette, skyrizihcp.com */
+/* stylelint-disable no-descending-specificity */
 
-.modal {
-  --modal-backdrop: var(--color-overlay-dark, rgb(22 22 22 / 75%));
-  --modal-border-color: var(--color-border-default);
-  --modal-close-color: var(--color-brand-primary);
+/* Skyrizi HCP modal — Red Hat Display, teal/navy, skyrizihcp.com */
+
+.modal-overlay {
+  --modal-close-color: #25282a;
+  --modal-close-hover-color: var(--color-brand-primary, #005272);
+  --modal-dialog-max-width: 640px;
+  --modal-dialog-padding: 32px;
+  --modal-dialog-border: 1px solid var(--color-border-default, #ccc);
+  --modal-dialog-border-radius: 0;
+  --modal-close-size: 36px;
+  --modal-close-font-size: 28px;
 }
 
-/* Focus: remove default outline on interactive elements in modal */
-.modal dialog .modal-content [role="button"]:focus,
-.modal dialog .modal-content [role="button"]:active {
-  outline: none;
+/* Close button */
+.modal-header .modal-close {
+  font-weight: 300;
 }
 
-/* Buttons inside modal */
-.modal dialog .modal-content a.button {
+/* Dialog heading */
+.modal-content h2 {
+  color: #25282a;
   font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.3;
+  margin: 0 0 20px;
 }
 
-/* Headings */
-.modal dialog .modal-content h2,
-.modal dialog .modal-content h3 {
-  color: var(--color-brand-primary);
-  font-family: var(--heading-font-family);
+/* Body text */
+.modal-content p {
+  color: var(--text-color, #404040);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 16px;
 }
 
-/* Close button: teal */
-.modal .close-button {
-  color: var(--color-brand-primary);
+/* Compliance code */
+.modal-content p:last-of-type {
+  font-size: 11px;
+  color: #6c757d;
+  margin-top: 20px;
 }
 
-/* UC-style modal: plum close button, compact */
-.modal[data-modal-id^="uc"] .close-button,
-.modal.uc dialog .close-button {
-  background: var(--color-brand-primary);
-  color: var(--color-text-on-dark);
-  width: var(--spacing-24);
-  height: var(--spacing-24);
+/* Links styled as buttons */
+.modal-dialog .modal-content a[href] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  padding: 12px 32px;
+  border-radius: var(--border-radius-button-primary, 6px);
+  font-weight: 700;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  text-decoration: none;
+  margin-right: 16px;
+  margin-top: 12px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  background: var(--color-brand-primary, #005272);
+  color: var(--color-text-on-dark, #fff) !important;
+  border: 2px solid var(--color-brand-primary, #005272);
 }
 
-/* Panel: teal left border */
-.modal.panel dialog {
-  border-left-color: var(--color-brand-primary);
+.modal-dialog .modal-content a[href]:last-of-type {
+  background: transparent;
+  color: var(--color-brand-primary, #005272) !important;
+  border: 2px solid var(--color-brand-primary, #005272);
 }
 
-/* Safety/study data modals — tab controls inside dialog */
-.modal dialog .modal-content .tabs-list {
-  width: fit-content;
-  margin: var(--spacing-10) auto;
-  padding: var(--spacing-04);
-  border: var(--border-01, 1px) solid var(--color-border-default);
-  background-color: var(--color-background-light);
-  border-radius: var(--spacing-10);
+.modal-overlay .modal-dialog .modal-content a[href]:hover {
+  opacity: 0.85;
 }
 
-.modal dialog .modal-content .tabs-list button[aria-selected="true"] {
-  background-color: var(--background-color);
-  border-radius: var(--spacing-10);
-  color: var(--color-brand-primary);
+/* Media variant — wider, for study details */
+.modal-overlay.modal-media .modal-dialog {
+  max-width: 900px;
+}
+
+.modal-overlay.modal-media .modal-content {
+  padding: 0 32px 32px;
+}
+
+/* Don't style links as buttons inside media modals */
+.modal-overlay.modal-media .modal-dialog .modal-content a[href] {
+  display: inline;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-weight: 400;
+  font-size: inherit;
+  color: var(--color-brand-primary, #005272) !important;
+  background: none;
+  text-decoration: underline;
+  min-width: 0;
+  margin: 0;
+}
+
+/* Tabs inside modal (when tabs block is built) */
+.modal-overlay.modal-media .modal-content .tabs-list {
+  border-bottom: 2px solid #dde1e6;
+  margin-bottom: 24px;
+}
+
+.modal-overlay.modal-media .modal-content .tabs-list button[aria-selected="true"] {
+  color: var(--color-brand-primary, #005272);
+  border-bottom-color: var(--color-brand-primary, #005272);
 }
