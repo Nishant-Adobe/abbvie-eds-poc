@@ -22,27 +22,27 @@
   align-items: stretch;
 }
 
-/* ── Tab list — mobile: vertical stack ── */
+/* ── Tab list — mobile: horizontal row, compact ── */
 .tabs-container .tabs .tabs-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: stretch;
   gap: 0;
-  background: transparent;
+  background: var(--color-black);
   border: none;
   padding: 0;
-  border-radius: 0;
-  overflow: visible;
+  border-radius: var(--spacing-10) var(--spacing-10) 0 0;
+  overflow: hidden;
   width: 100%;
 }
 
-/* ── Tab buttons (inactive) — mobile: black bg, white text, full width ── */
+/* ── Tab buttons (inactive) — mobile: black bg, white text ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  padding: var(--spacing-14) var(--spacing-20);
+  padding: var(--spacing-10) var(--spacing-08);
   background: var(--color-black);
   color: var(--color-text-on-dark);
   font-family: var(--heading-font-family-bold);
-  font-size: var(--font-size-tab);
+  font-size: var(--font-size-12);
   font-weight: var(--font-weight-heading);
   font-style: normal;
   border: none;
@@ -51,6 +51,7 @@
   position: relative;
   cursor: pointer;
   text-align: center;
+  flex: 1;
   line-height: var(--line-height-tab);
   transition:
     background-color var(--transition-duration-medium) var(--transition-easing-standard),
@@ -62,11 +63,12 @@
   color: var(--color-green-flash);
 }
 
-/* ── Active tab — mobile: white bg, green border ── */
+/* ── Active tab — white bg, green border ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--background-color);
   color: var(--color-text-heading);
   border: var(--spacing-03) solid var(--color-green-flash);
+  border-bottom: none;
   z-index: var(--z-index-1);
 }
 
