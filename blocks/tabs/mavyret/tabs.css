@@ -101,17 +101,26 @@
   grid-column: 1 / -1;
 }
 
-/* ── Factoid styling — targets Columns block inside tab panels ── */
+/* ── Factoid styling — targets Columns block ── */
+
+/* Columns block — left-align, remove center */
+.columns-container .columns {
+  text-align: left;
+}
+
+.columns-container .columns .columns-item {
+  align-items: flex-start;
+}
 
 /* Column with percentage — vertically center the big number */
-.columns .columns-item-content:has(h1) {
+.columns-container .columns .columns-item-content:has(h1) {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 /* Large percentage number */
-.columns .columns-item-content h1 {
+.columns-container .columns .columns-item-content h1 {
   font-size: var(--font-size-h2);
   font-family: var(--heading-font-family-bold);
   color: var(--color-fiesta);
@@ -120,7 +129,7 @@
 }
 
 /* Label (ITT / mITT) */
-.columns .columns-item-content h5 {
+.columns-container .columns .columns-item-content h5 {
   font-size: var(--font-size-14);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
@@ -130,7 +139,7 @@
 }
 
 /* "Cure Rate" with green underline */
-.columns .columns-item-content h6 {
+.columns-container .columns .columns-item-content h6 {
   font-size: var(--font-size-h4);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
@@ -141,7 +150,7 @@
 }
 
 /* Sample size text */
-.columns .columns-item-content p {
+.columns-container .columns .columns-item-content p {
   font-size: var(--font-size-body);
   color: var(--color-text-secondary);
   margin: var(--spacing-04) 0;
