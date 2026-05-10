@@ -5,8 +5,8 @@
 /* Rinvoq DTC modal — HCP Gate pattern matching rinvoq.com */
 
 .modal-overlay {
-  --modal-close-color: #25282a;
-  --modal-close-hover-color: #000;
+  --modal-close-color: var(--color-charcoal);
+  --modal-close-hover-color: var(--color-brand-primary-dark);
   --modal-dialog-max-width: 640px;
   --modal-dialog-padding: 40px;
   --modal-dialog-border: 1px solid var(--color-border-default, #ccc);
@@ -22,7 +22,7 @@
 
 /* Dialog heading — black, centered, large bold */
 .modal-content h2 {
-  color: #25282a;
+  color: var(--color-charcoal);
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: 1.75rem;
@@ -44,13 +44,13 @@
 .modal-content p:nth-of-type(2) {
   font-weight: 700;
   text-align: center;
-  color: #25282a;
+  color: var(--color-charcoal);
 }
 
 /* Compliance code */
 .modal-content p:last-of-type {
   font-size: 12px;
-  color: #6c757d;
+  color: var(--color-text-compliance);
   margin-top: 24px;
 }
 
@@ -91,6 +91,6 @@
 
 .modal-overlay .modal-dialog .modal-content a[href]:hover {
   background: var(--color-brand-primary, #90124a) !important;
-  color: #fff !important;
+  color: var(--color-text-on-dark) !important;
   opacity: 1;
 }

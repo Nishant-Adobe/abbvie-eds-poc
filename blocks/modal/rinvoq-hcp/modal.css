@@ -35,7 +35,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 60%);
+  background: var(--color-overlay-dark, rgb(0 0 0 / 60%));
   z-index: var(--z-modal, 1000);
   align-items: center;
   justify-content: center;
@@ -213,7 +213,7 @@ body.modal-is-open {
   position: fixed;
   top: 16px;
   right: 16px;
-  background: rgb(255 255 255 / 80%);
+  background: var(--color-overlay-light, rgb(255 255 255 / 80%));
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -305,7 +305,7 @@ body.modal-is-open {
 /* Rinvoq HCP modal — wide study details with tabs, Graphik font */
 
 .modal-overlay {
-  --modal-close-color: #25282a;
+  --modal-close-color: var(--color-charcoal);
   --modal-close-hover-color: var(--color-brand-primary, #90124a);
   --modal-dialog-max-width: 900px;
   --modal-dialog-padding: 32px;
@@ -324,7 +324,7 @@ body.modal-is-open {
 /* Dialog heading */
 
 .modal-content h2 {
-  color: #25282a;
+  color: var(--color-charcoal);
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: 1.5rem;
@@ -346,7 +346,7 @@ body.modal-is-open {
 /* Subheadings inside modal content */
 
 .modal-content h3 {
-  color: #25282a;
+  color: var(--color-charcoal);
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: 1.1rem;
@@ -375,7 +375,7 @@ body.modal-is-open {
 
 .modal-content p:last-of-type {
   font-size: 11px;
-  color: #6c757d;
+  color: var(--color-text-compliance);
   margin-top: 20px;
 }
 
@@ -434,7 +434,7 @@ body.modal-is-open {
 }
 
 .modal-overlay.modal-media .modal-content .tabs-list {
-  border-bottom: 2px solid #dde1e6;
+  border-bottom: 2px solid var(--color-border-tabs);
   margin-bottom: 24px;
   gap: 0;
 }
