@@ -101,19 +101,17 @@
   grid-column: 1 / -1;
 }
 
-/* ── Factoid styling inside tab panels ── */
-/* Flex container: UE = div.text-container-text, Preview = div:has(> h1.text-container-text) */
-.text-container-text:has(> h1),
-.text-container > div:has(> h1.text-container-text) {
+/* ── Factoid styling — targets Columns block inside tab panels ── */
+
+/* Column with percentage — vertically center the big number */
+.columns .columns-item-content:has(h1) {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--spacing-08);
+  align-items: center;
+  justify-content: center;
 }
 
 /* Large percentage number */
-.text-container-text h1,
-h1.text-container-text {
+.columns .columns-item-content h1 {
   font-size: var(--font-size-h2);
   font-family: var(--heading-font-family-bold);
   color: var(--color-fiesta);
@@ -122,37 +120,34 @@ h1.text-container-text {
 }
 
 /* Label (ITT / mITT) */
-.text-container-text h5,
-h5.text-container-text {
+.columns .columns-item-content h5 {
   font-size: var(--font-size-14);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
   text-transform: uppercase;
   margin: 0;
   line-height: var(--line-height-20);
-  align-self: center;
 }
 
 /* "Cure Rate" with green underline */
-.text-container-text h6,
-h6.text-container-text {
+.columns .columns-item-content h6 {
   font-size: var(--font-size-h4);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
   margin: 0;
   padding-bottom: var(--spacing-06);
   border-bottom: var(--spacing-03) solid var(--color-green-flash);
-  align-self: center;
+  display: inline-block;
 }
 
-/* Sample size and body text */
-.text-container-text p,
-p.text-container-text {
+/* Sample size text */
+.columns .columns-item-content p {
   font-size: var(--font-size-body);
   color: var(--color-text-secondary);
   margin: var(--spacing-04) 0;
-  align-self: center;
 }
+
+/* ── Text Container styling inside tab panels ── */
 
 /* Section heading (Acute HCV, Chronic HCV) */
 .text-container-text h2,
@@ -164,13 +159,11 @@ h3.text-container-text {
   color: var(--color-text-heading);
   text-align: center;
   margin: var(--spacing-24) 0 var(--spacing-16);
-  width: 100%;
 }
 
-/* Bullet list — full width below factoids */
+/* Bullet list */
 .text-container-text ul,
 ul.text-container-text {
-  width: 100%;
   padding-left: var(--spacing-16);
   margin: var(--spacing-16) 0;
 }
