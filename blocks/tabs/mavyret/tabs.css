@@ -102,16 +102,16 @@
 }
 
 /* ── Factoid styling inside tab panels ── */
-/* Container: flex wrap so factoid groups sit side by side */
-.tabs-panel .text-container-text {
+/* The inner div wrapper of text-container becomes flex for side-by-side layout */
+.text-container > div:has(> h1.text-container-text) {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   gap: var(--spacing-08);
 }
 
-/* Large percentage number — starts a new factoid group */
-.tabs-panel .text-container-text h1 {
+/* Large percentage number */
+h1.text-container-text {
   font-size: var(--font-size-h2);
   font-family: var(--heading-font-family-bold);
   color: var(--color-fiesta);
@@ -119,8 +119,8 @@
   margin: 0;
 }
 
-/* Label group (h5 + h6 + p after h1) — sits beside the percentage */
-.tabs-panel .text-container-text h5 {
+/* Label (ITT / mITT) */
+h5.text-container-text {
   font-size: var(--font-size-14);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
@@ -130,7 +130,8 @@
   align-self: center;
 }
 
-.tabs-panel .text-container-text h6 {
+/* "Cure Rate" with green underline */
+h6.text-container-text {
   font-size: var(--font-size-h4);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
@@ -140,15 +141,17 @@
   align-self: center;
 }
 
-.tabs-panel .text-container-text p {
+/* Sample size and body text */
+p.text-container-text {
   font-size: var(--font-size-body);
   color: var(--color-text-secondary);
   margin: var(--spacing-04) 0;
   align-self: center;
 }
 
-/* Section headings and full-width elements break the flex row */
-.tabs-panel .text-container-text h2 {
+/* Section heading (Acute HCV, Chronic HCV) */
+h2.text-container-text,
+h3.text-container-text {
   font-size: var(--font-size-h4);
   font-family: var(--heading-font-family-bold);
   color: var(--color-text-heading);
@@ -157,25 +160,21 @@
   width: 100%;
 }
 
-.tabs-panel .text-container-text ul {
+/* Bullet list — full width below factoids */
+ul.text-container-text {
   width: 100%;
   padding-left: var(--spacing-16);
   margin: var(--spacing-16) 0;
 }
 
-.tabs-panel .text-container-text ul li {
+ul.text-container-text li {
   font-size: var(--font-size-body);
   color: var(--color-text-heading);
   margin-bottom: var(--spacing-04);
 }
 
-.tabs-panel .text-container-text ul li::marker {
+ul.text-container-text li::marker {
   color: var(--color-green-flash);
-}
-
-/* Last paragraph (study description) spans full width */
-.tabs-panel .text-container-text > p:last-child {
-  width: 100%;
 }
 
 /* ── Tablet (600px+): 2-section grid ── */
