@@ -4,15 +4,15 @@
 /* ============================================================
    MAVYRET — Tabs brand overrides
    Live: mavyret.com/hcp/efficacy
-   Style: Dark navy bar, white active tab, orange/green accents
+   Style: Black bar, white active tab with green border, green hover
    ============================================================ */
 
 /* ── Tab container ── */
 .section.tabs-container {
   margin-bottom: 0;
   padding-bottom: 0;
-  margin-left: var(--spacing-15);
-  margin-right: var(--spacing-15);
+  margin-left: var(--spacing-20);
+  margin-right: var(--spacing-20);
 }
 
 /* ── Tab controls wrapper ── */
@@ -22,25 +22,25 @@
   align-items: stretch;
 }
 
-/* ── Tab list — dark navy bar ── */
+/* ── Tab list — black bar with rounded ends ── */
 .tabs-container .tabs .tabs-list {
   display: flex;
   align-items: stretch;
   justify-content: flex-start;
   gap: 0;
-  background: var(--color-brand-primary-dark);
+  background: var(--color-black);
   border: none;
   padding: 0;
-  border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
-  overflow: visible;
+  border-radius: var(--spacing-10) var(--spacing-10) 0 0;
+  overflow: hidden;
   width: 100%;
 }
 
-/* ── Tab buttons (inactive) — dark bg, white text ── */
+/* ── Tab buttons (inactive) — black bg, green text ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
   padding: 0.75em 1.5em;
-  background: var(--color-brand-primary-dark);
-  color: var(--color-text-on-dark);
+  background: var(--color-black);
+  color: var(--color-green-flash);
   font-family: var(--heading-font-family-bold);
   font-size: var(--font-size-tab);
   font-weight: var(--font-weight-heading);
@@ -59,12 +59,17 @@
     color var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
-/* ── Active tab — white bg, dark text ── */
+/* Hover — green background flash */
+.tabs-container .tabs .tabs-list button.tabs-tab:hover {
+  background: var(--color-green-flash);
+  color: var(--color-black);
+}
+
+/* ── Active tab — white bg, black text, green border ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--background-color);
   color: var(--color-text-heading);
-  font-weight: var(--font-weight-heading);
-  border: var(--separator-height-1) solid var(--color-border-default);
+  border: var(--spacing-03) solid var(--color-green-flash);
   border-bottom: none;
   z-index: var(--z-index-1);
 }
@@ -79,8 +84,8 @@
   border-top: none;
   padding: var(--spacing-24) var(--spacing-16);
   margin: 0;
-  margin-left: var(--spacing-15);
-  margin-right: var(--spacing-15);
+  margin-left: var(--spacing-20);
+  margin-right: var(--spacing-20);
   position: relative;
 }
 
@@ -99,99 +104,6 @@
 /* Single section → full width */
 .tabs-panel > .section:only-child {
   grid-column: 1 / -1;
-}
-
-/* ── Factoid styling — targets Columns block ── */
-
-/* Hide empty columns-item that has no authored content */
-.columns-container .columns .columns-item:not(:has(.columns-item-content)) {
-  display: none;
-}
-
-/* Columns block — left-align, remove center */
-.columns-container .columns {
-  text-align: left;
-}
-
-.columns-container .columns .columns-item {
-  align-items: flex-start;
-}
-
-/* Column with percentage — vertically center the big number */
-.columns-container .columns .columns-item-content:has(h1) {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-/* Large percentage number */
-.columns-container .columns .columns-item-content h1 {
-  font-size: var(--font-size-h2);
-  font-family: var(--heading-font-family-bold);
-  color: var(--color-fiesta);
-  line-height: 1;
-  margin: 0;
-}
-
-/* Label (ITT / mITT) */
-.columns-container .columns .columns-item-content h5 {
-  font-size: var(--font-size-14);
-  font-family: var(--heading-font-family-bold);
-  color: var(--color-text-heading);
-  text-transform: uppercase;
-  margin: 0;
-  line-height: var(--line-height-20);
-}
-
-/* "Cure Rate" with green underline */
-.columns-container .columns .columns-item-content h6 {
-  font-size: var(--font-size-h4);
-  font-family: var(--heading-font-family-bold);
-  color: var(--color-text-heading);
-  margin: 0;
-  padding-bottom: var(--spacing-06);
-  border-bottom: var(--spacing-03) solid var(--color-green-flash);
-  display: inline-block;
-}
-
-/* Sample size text */
-.columns-container .columns .columns-item-content p {
-  font-size: var(--font-size-body);
-  color: var(--color-text-secondary);
-  margin: var(--spacing-04) 0;
-}
-
-/* ── Text Container styling inside tab panels ── */
-
-/* Section heading (Acute HCV, Chronic HCV) */
-.text-container-text h2,
-.text-container-text h3,
-h2.text-container-text,
-h3.text-container-text {
-  font-size: var(--font-size-h4);
-  font-family: var(--heading-font-family-bold);
-  color: var(--color-text-heading);
-  text-align: center;
-  margin: var(--spacing-24) 0 var(--spacing-16);
-}
-
-/* Bullet list */
-.text-container-text ul,
-ul.text-container-text {
-  padding-left: var(--spacing-16);
-  margin: var(--spacing-16) 0;
-}
-
-.text-container-text ul li,
-ul.text-container-text li {
-  font-size: var(--font-size-body);
-  color: var(--color-text-heading);
-  margin-bottom: var(--spacing-04);
-}
-
-.text-container-text ul li::marker,
-ul.text-container-text li::marker {
-  color: var(--color-green-flash);
 }
 
 /* ── Tablet (600px+): 2-section grid ── */
