@@ -103,6 +103,11 @@
 
 /* ── Factoid styling — targets Columns block ── */
 
+/* Hide empty columns-item that has no authored content */
+.columns-container .columns .columns-item:not(:has(.columns-item-content)) {
+  display: none;
+}
+
 /* Columns block — left-align, remove center */
 .columns-container .columns {
   text-align: left;
