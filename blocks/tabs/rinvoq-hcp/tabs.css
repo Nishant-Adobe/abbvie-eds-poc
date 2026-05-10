@@ -6,10 +6,15 @@
    Live: rinvoqhcp.com/atopic-dermatitis/efficacy
    ============================================================ */
 
-/* ── Tab container — collapse spacing to panel ── */
+/* ── Tab container — collapse spacing, align with panel ── */
 .section.tabs-container {
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+.section.tabs-container .tabs-wrapper {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* ── Tab controls wrapper — left-aligned ── */
@@ -27,8 +32,9 @@
   gap: var(--spacing-06);
   background: transparent;
   border: none;
-  border-bottom: var(--separator-height-1) solid var(--color-border-default);
+  border-bottom: none;
   padding: var(--spacing-10) 0 0;
+  margin: 0;
   border-radius: 0;
   overflow: visible;
 }
@@ -69,7 +75,7 @@
   margin-bottom: calc(-1 * var(--separator-height-1));
 }
 
-/* ── Panel wrapper ── */
+/* ── Panel wrapper — flush with tab list edges ── */
 .tabs-panel {
   display: grid;
   grid-template-columns: 1fr;
@@ -80,9 +86,6 @@
   padding: var(--spacing-10);
   margin: 0;
   position: relative;
-  max-width: var(--content-max-width);
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* ── Sections inside panel — reset to stacked ── */
