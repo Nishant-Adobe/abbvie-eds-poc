@@ -43,11 +43,11 @@
 
 /* ── Tab buttons (inactive) ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  padding: 0.75em 1.5em;
+  padding: 0.5em 0.8em;
   background: var(--color-ash);
   color: var(--color-charcoal);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-12);
+  font-size: var(--font-size-11);
   font-weight: var(--font-weight-body);
   font-style: normal;
   border: var(--separator-height-1) solid var(--color-border-default);
@@ -66,7 +66,7 @@
 
 /* ── Active tab — pops up via extra top padding ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-  padding: 1.2em 1.5em 0.75em;
+  padding: 0.8em 0.8em 0.5em;
   background: var(--color-glacier);
   color: var(--color-charcoal);
   font-weight: var(--font-weight-heading);
@@ -124,10 +124,15 @@
   grid-column: 1 / -1;
 }
 
-/* ── Tablet (600px+): larger font + 2-section grid ── */
+/* ── Tablet (600px+): larger font + padding + 2-section grid ── */
 @media (width >= 600px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
-    font-size: var(--font-size-14);
+    font-size: var(--font-size-12);
+    padding: 0.75em 1.5em;
+  }
+
+  .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+    padding: 1.2em 1.5em 0.75em;
   }
 
   .tabs-panel:has(> .section:first-child:nth-last-child(2)) {
@@ -143,9 +148,14 @@
   }
 }
 
-/* ── Desktop (900px+): larger font ── */
+/* ── Desktop (900px+): larger font + padding ── */
 @media (width >= 900px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
-    font-size: var(--font-size-16);
+    font-size: var(--font-size-14);
+    padding: 0.75em 1.5em;
+  }
+
+  .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+    padding: 1.2em 1.5em 0.75em;
   }
 }
