@@ -50,7 +50,7 @@
   align-self: flex-end;
 }
 
-/* ── Active tab — bold, connects to panel ── */
+/* ── Active tab — same size on mobile, bold only ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--color-glacier);
   color: var(--color-charcoal);
@@ -90,7 +90,7 @@
   grid-column: unset;
 }
 
-/* ── Text container text in sidebar — bordered card ── */
+/* ── Text container text — bordered card ── */
 .tabs-panel .text-container-text {
   border: var(--separator-height-1) solid var(--color-silver);
   padding: var(--spacing-15);
@@ -107,7 +107,7 @@
   grid-column: 1 / -1;
 }
 
-/* ── Tablet (600px+): tab transformation + 2-section grid ── */
+/* ── Tablet (600px+): tab size transformation + 2-section grid ── */
 @media (width >= 600px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
     padding: var(--spacing-10) var(--spacing-20);
