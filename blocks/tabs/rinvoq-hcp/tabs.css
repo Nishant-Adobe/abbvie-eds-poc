@@ -27,14 +27,14 @@
   background: transparent;
   border: none;
   border-bottom: var(--separator-height-1) solid var(--color-border-default);
-  padding: 0;
+  padding: var(--spacing-10) 0 0;
   border-radius: 0;
-  overflow-x: auto;
+  overflow: visible;
 }
 
 /* ── Tab buttons (inactive) ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  padding: var(--spacing-08) var(--spacing-12);
+  padding: 0.75em 1.5em;
   background: var(--color-ash);
   color: var(--color-charcoal);
   font-family: var(--body-font-family);
@@ -48,10 +48,18 @@
   position: relative;
   cursor: pointer;
   align-self: flex-end;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    padding 0.3s ease;
 }
 
-/* ── Active tab — same size on mobile, bold only ── */
+/* ── Active tab — pops up with transform ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  padding: 1.2em 1.5em;
+  transform: translateY(-8px);
   background: var(--color-glacier);
   color: var(--color-charcoal);
   font-weight: var(--font-weight-heading);
@@ -107,17 +115,10 @@
   grid-column: 1 / -1;
 }
 
-/* ── Tablet (600px+): tab size transformation + 2-section grid ── */
+/* ── Tablet (600px+): larger font + 2-section grid ── */
 @media (width >= 600px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
-    padding: var(--spacing-10) var(--spacing-20);
     font-size: var(--font-size-14);
-    transition: padding var(--transition-duration-fast), font-size var(--transition-duration-fast);
-  }
-
-  .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-    padding: var(--spacing-14) var(--spacing-24);
-    font-size: var(--font-size-16);
   }
 
   .tabs-panel:has(> .section:first-child:nth-last-child(2)) {
@@ -133,15 +134,9 @@
   }
 }
 
-/* ── Desktop (900px+): larger tab padding ── */
+/* ── Desktop (900px+): larger font ── */
 @media (width >= 900px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
-    padding: var(--spacing-12) var(--spacing-24);
-    font-size: var(--font-size-14);
-  }
-
-  .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-    padding: var(--spacing-16) var(--spacing-30);
-    font-size: var(--font-size-18);
+    font-size: var(--font-size-16);
   }
 }
