@@ -23,7 +23,7 @@
 .tabs-container .tabs .tabs-list {
   display: flex;
   align-items: flex-end;
-  gap: 0;
+  gap: 6px;
   background: transparent;
   border: none;
   border-bottom: var(--separator-height-1) solid var(--color-border-default);
@@ -86,12 +86,16 @@
   max-width: none;
 }
 
+.tabs-panel > .section.abbvie-container > div {
+  grid-column: unset;
+}
+
 /* ── Text container text — bordered card ── */
 .tabs-panel .text-container-text {
-  border: var(--separator-height-1) solid var(--color-silver);
+  /* border: var(--separator-height-1) solid var(--color-silver); */
   padding: var(--spacing-15);
   border-radius: var(--spacing-10);
-  margin-top: var(--spacing-38);
+  /* margin-top: var(--spacing-38); */
 }
 
 .tabs-panel .text-container-text p {
