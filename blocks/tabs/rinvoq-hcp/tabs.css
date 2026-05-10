@@ -85,7 +85,7 @@
   background: var(--color-glacier);
   border: var(--separator-height-1) solid var(--color-border-default);
   border-top: none;
-  padding: var(--spacing-10);
+  padding: var(--spacing-10) var(--spacing-16);
   margin: 0;
   margin-left: var(--spacing-15);
   margin-right: var(--spacing-15);
@@ -106,11 +106,13 @@
 
 /* ── Safety callout (right sidebar section only) — bordered white card ── */
 .tabs-panel > .section:first-child:nth-last-child(2) ~ .section .text-container-text {
+  margin-top: var(--spacing-74);
+  max-width: var(--spacing-320);
+  padding: var(--spacing-24);
   border: var(--separator-height-1) solid var(--color-silver);
   background: var(--background-color);
-  padding: var(--spacing-15);
   border-radius: var(--spacing-10);
-  margin-top: var(--spacing-90);
+  box-shadow: var(--shadow-default);
 }
 
 .tabs-panel > .section:first-child:nth-last-child(2) ~ .section .text-container-text p {
