@@ -78,16 +78,20 @@
   margin-right: auto;
 }
 
-/* ── Sections inside panel — reset to stacked ── */
-.tabs-panel > .section {
+/* ── Sections inside panel — reset to stacked (override base 12-col grid) ── */
+.tabs-panel > .section,
+.tabs-panel > .section.abbvie-container {
   display: block;
-  grid-template-columns: none;
   margin: 0;
   padding: 0;
   max-width: none;
 }
 
-.tabs-panel > .section > div {
+/* Kill the base 4+8 grid split on block wrappers */
+.tabs-panel > .section.abbvie-container > div,
+.tabs-panel > .section.abbvie-container > div:only-child,
+.tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2),
+.tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2) ~ div {
   grid-column: unset;
 }
 
