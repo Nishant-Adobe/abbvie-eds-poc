@@ -11,8 +11,8 @@
 .section.tabs-container {
   margin-bottom: 0;
   padding-bottom: 0;
-  margin-left: var(--spacing-110);
-  margin-right: var(--spacing-20);
+  margin-left: var(--spacing-15);
+  margin-right: var(--spacing-15);
 }
 
 /* ── Tab controls wrapper ── */
@@ -22,23 +22,23 @@
   align-items: stretch;
 }
 
-/* ── Tab list — black bar with rounded ends ── */
+/* ── Tab list — mobile: vertical stack ── */
 .tabs-container .tabs .tabs-list {
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  justify-content: flex-start;
   gap: 0;
-  background: var(--color-black);
+  background: transparent;
   border: none;
   padding: 0;
-  border-radius: var(--spacing-18) var(--spacing-18) 0 0;
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
   width: 100%;
 }
 
-/* ── Tab buttons (inactive) — black bg, green text ── */
+/* ── Tab buttons (inactive) — mobile: black bg, white text, full width ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  padding: 0.75em 1.5em;
+  padding: var(--spacing-14) var(--spacing-20);
   background: var(--color-black);
   color: var(--color-text-on-dark);
   font-family: var(--heading-font-family-bold);
@@ -50,8 +50,6 @@
   white-space: nowrap;
   position: relative;
   cursor: pointer;
-  align-self: stretch;
-  flex: 1;
   text-align: center;
   line-height: var(--line-height-tab);
   transition:
@@ -64,12 +62,11 @@
   color: var(--color-green-flash);
 }
 
-/* ── Active tab — white bg, black text, green border ── */
+/* ── Active tab — mobile: white bg, green border ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--background-color);
   color: var(--color-text-heading);
   border: var(--spacing-03) solid var(--color-green-flash);
-  border-bottom: none;
   z-index: var(--z-index-1);
 }
 
@@ -83,6 +80,7 @@
   border-top: none;
   padding: var(--spacing-24) var(--spacing-16);
   margin: 0;
+  margin-top: calc(-1 * var(--spacing-08));
   margin-left: var(--spacing-20);
   margin-right: var(--spacing-20);
   position: relative;
@@ -105,11 +103,27 @@
   grid-column: 1 / -1;
 }
 
-/* ── Tablet (600px+): 2-section grid ── */
+/* ── Tablet (600px+): horizontal black bar + 2-section grid ── */
 @media (width >= 600px) {
+  .section.tabs-container {
+    margin-left: var(--spacing-110);
+  }
+
+  .tabs-container .tabs .tabs-list {
+    flex-direction: row;
+    background: var(--color-black);
+    border-radius: var(--spacing-18) var(--spacing-18) 0 0;
+    overflow: hidden;
+  }
+
   .tabs-container .tabs .tabs-list button.tabs-tab {
+    flex: 1;
     font-size: var(--font-size-18);
     padding: 1em 2em;
+  }
+
+  .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+    border-bottom: none;
   }
 
   .tabs-panel {
