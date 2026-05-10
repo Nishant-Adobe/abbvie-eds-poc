@@ -5,7 +5,7 @@
    RINVOQ HCP — Tabs brand overrides
    Live: rinvoqhcp.com/atopic-dermatitis/efficacy
    Variations:
-     1. Folder tab (default): gray inactive, white active + italic bold
+     1. Folder tab (default): gray inactive, white active + bold
      2. Pill tab (.tabs-pill): bordered pills, bold active
    ============================================================ */
 
@@ -32,16 +32,18 @@
   border-bottom: var(--separator-height-1) solid var(--color-border-default);
   padding: 0;
   border-radius: 0;
+  overflow-x: auto;
 }
 
 /* ── Tab buttons (inactive) — folder style ── */
+/* Mobile: no size transformation, all tabs same height */
 .tabs-container .tabs .tabs-list button.tabs-tab {
   padding: var(--spacing-08) var(--spacing-12);
   background: var(--color-ash);
   color: var(--color-charcoal);
   font-family: var(--body-font-family);
   font-size: var(--font-size-12);
-  font-weight: var(--font-weight-heading);
+  font-weight: var(--font-weight-body);
   font-style: normal;
   border: var(--separator-height-1) solid var(--color-border-default);
   border-bottom: none;
@@ -49,18 +51,15 @@
   white-space: nowrap;
   position: relative;
   cursor: pointer;
-  transition: padding var(--transition-duration-fast), font-size var(--transition-duration-fast);
   align-self: flex-end;
 }
 
-/* ── Active tab — folder style: taller, pops up ── */
+/* ── Active tab — mobile: same size, just color change ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--color-glacier);
   color: var(--color-charcoal);
   font-weight: var(--font-weight-heading);
-  font-style: italic;
-  padding: var(--spacing-12) var(--spacing-16);
-  font-size: var(--font-size-14);
+  font-style: normal;
   z-index: var(--z-index-1);
   border-color: var(--color-border-default);
 }
@@ -90,11 +89,12 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-24);
-  background: var(--background-color);
-  border: var(--separator-height-1) solid var(--color-border-default);
+  background: var(--color-glacier);
+  border: var(--separator-height-1) solid var(--color-silver);
   border-top: none;
-  padding: var(--spacing-30) var(--spacing-24);
+  padding: var(--spacing-10);
   margin: 0;
+  margin-top: calc(-1 * var(--spacing-30));
   position: relative;
   max-width: var(--content-max-width);
   margin-left: auto;
@@ -113,16 +113,37 @@
   grid-column: unset;
 }
 
+/* ── Block containers inside panel — bordered card style ── */
+.tabs-panel .text-container-container,
+.tabs-panel .table-container {
+  border: var(--separator-height-1) solid var(--color-silver);
+  padding: var(--spacing-10);
+  background: var(--color-glacier);
+}
+
+/* ── Text container text — card with border and radius ── */
+.tabs-panel .text-container-text {
+  border: var(--separator-height-1) solid var(--color-silver);
+  padding: var(--spacing-15);
+  border-radius: var(--spacing-10);
+  margin-top: var(--spacing-38);
+}
+
+.tabs-panel .text-container-text p {
+  margin-bottom: 0;
+}
+
 /* Single section → full width */
 .tabs-panel > .section:only-child {
   grid-column: 1 / -1;
 }
 
-/* ── Tablet (600px+): scale tabs and enable 2-section grid ── */
+/* ── Tablet (600px+): tab transformation + 2-section grid ── */
 @media (width >= 600px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
     padding: var(--spacing-10) var(--spacing-20);
     font-size: var(--font-size-14);
+    transition: padding var(--transition-duration-fast), font-size var(--transition-duration-fast);
   }
 
   .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
@@ -143,7 +164,7 @@
   }
 }
 
-/* ── Desktop (900px+): larger tab padding ── */
+/* ── Desktop (900px+): larger tab padding with transformation ── */
 @media (width >= 900px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
     padding: var(--spacing-12) var(--spacing-24);
