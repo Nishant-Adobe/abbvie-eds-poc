@@ -22,24 +22,24 @@
   z-index: var(--z-index-1);
 }
 
-/* ── Tab list — rounded bar ── */
+/* ── Tab list — light purple bg bar with rounded ends ── */
 .tabs-container .tabs .tabs-list {
   display: flex;
   flex-direction: row;
   align-items: stretch;
   gap: 0;
-  background: transparent;
+  background: var(--linz-light-purple);
   border: none;
   padding: 0;
   border-radius: var(--linz-rounded-corner);
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
 }
 
-/* ── Tab buttons (inactive) — light purple bg ── */
+/* ── Tab buttons (inactive) — transparent on purple bar ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
   padding: var(--spacing-14) var(--spacing-20);
-  background: var(--linz-light-purple);
+  background: transparent;
   color: var(--color-text-heading);
   font-family: var(--body-font-family);
   font-size: var(--font-size-body);
@@ -58,17 +58,38 @@
     color var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
+/* First tab — rounded left corners */
+.tabs-container .tabs .tabs-list button.tabs-tab:first-child {
+  border-radius: var(--linz-rounded-corner) 0 0 var(--linz-rounded-corner);
+}
+
+/* Last tab — rounded right corners */
+.tabs-container .tabs .tabs-list button.tabs-tab:last-child {
+  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
+}
+
 /* Hover */
 .tabs-container .tabs .tabs-list button.tabs-tab:hover {
   background: var(--linz-purple);
   color: var(--color-text-on-dark);
 }
 
-/* ── Active tab — dark purple bg, white text ── */
+/* ── Active tab — dark purple, rounded right side only ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--linz-dark-purple);
   color: var(--color-text-on-dark);
+  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
   z-index: var(--z-index-1);
+}
+
+/* If first tab is active — round left side instead */
+.tabs-container .tabs .tabs-list button.tabs-tab:first-child[aria-selected='true'] {
+  border-radius: var(--linz-rounded-corner);
+}
+
+/* If last tab is active — round right side */
+.tabs-container .tabs .tabs-list button.tabs-tab:last-child[aria-selected='true'] {
+  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
 }
 
 /* ── Panel wrapper ── */
