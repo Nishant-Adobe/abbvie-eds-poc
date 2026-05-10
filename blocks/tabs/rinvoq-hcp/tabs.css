@@ -24,7 +24,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  gap: 6px;
+  gap: var(--spacing-06);
   background: transparent;
   border: none;
   border-bottom: var(--separator-height-1) solid var(--color-border-default);
@@ -50,10 +50,10 @@
   cursor: pointer;
   align-self: flex-end;
   transition:
-    background-color 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease,
-    padding 0.3s ease;
+    background-color var(--transition-duration-medium) var(--transition-easing-standard),
+    box-shadow var(--transition-duration-medium) var(--transition-easing-standard),
+    border-color var(--transition-duration-medium) var(--transition-easing-standard),
+    padding var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
 /* ── Active tab — pops up via extra top padding ── */
