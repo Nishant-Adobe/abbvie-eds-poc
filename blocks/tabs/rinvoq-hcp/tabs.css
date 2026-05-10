@@ -10,6 +10,8 @@
 .section.tabs-container {
   margin-bottom: 0;
   padding-bottom: 0;
+  margin-left: var(--spacing-15);
+  margin-right: var(--spacing-15);
 }
 
 .section.tabs-container .tabs-wrapper {
@@ -85,6 +87,8 @@
   border-top: none;
   padding: var(--spacing-10);
   margin: 0;
+  margin-left: var(--spacing-15);
+  margin-right: var(--spacing-15);
   position: relative;
 }
 
@@ -100,16 +104,16 @@
   grid-column: unset;
 }
 
-/* ── Text container text (safety callout) — bordered white card ── */
-.tabs-panel .text-container-text {
+/* ── Safety callout (right sidebar section only) — bordered white card ── */
+.tabs-panel > .section:first-child:nth-last-child(2) ~ .section .text-container-text {
   border: var(--separator-height-1) solid var(--color-silver);
   background: var(--background-color);
   padding: var(--spacing-15);
   border-radius: var(--spacing-10);
-  margin-top: var(--spacing-20);
+  margin-top: var(--spacing-90);
 }
 
-.tabs-panel .text-container-text p {
+.tabs-panel > .section:first-child:nth-last-child(2) ~ .section .text-container-text p {
   margin-bottom: 0;
 }
 
