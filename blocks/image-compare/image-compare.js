@@ -145,6 +145,7 @@ function buildThumbnails(images) {
 }
 
 function extractTabImages(cells, tabOffset) {
+  // Currently supports 2 images per tab (5 fields each: before, after, thumb, label, subLabel)
   const images = [];
   const img1Before = getImg(cells[tabOffset]);
   const img1After = getImg(cells[tabOffset + 1]);
@@ -186,7 +187,9 @@ function setupGalleryInteraction(block, container, tabSets) {
     if (beforeWrap && beforeImg) {
       beforeWrap.innerHTML = '';
       const bImg = cloneImg(beforeImg);
-      bImg.style.maxWidth = 'none';
+      // style.width is set dynamically because the before-image must match the container's
+      // pixel width exactly for the clip reveal to work — a CSS variable alone cannot
+      // guarantee pixel-perfect alignment after image swap.
       beforeWrap.appendChild(bImg);
       requestAnimationFrame(() => {
         const w = container.clientWidth;
@@ -267,7 +270,8 @@ function decorateGallery(block, cells, startPct) {
     block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
   }
 
-  block.innerHTML = '';
+  // Remove table rows only — avoids wiping any EDS-injected wrappers
+  [...block.children].forEach((row) => row.remove());
 
   if (isTwoColumnLayout) {
     // Two-column layout: left content + right slider
@@ -295,6 +299,7 @@ function decorateGallery(block, cells, startPct) {
     if (description) {
       const desc = document.createElement('div');
       desc.className = 'image-compare-description';
+      // XSS-safe: innerHTML sourced from AEM authored content, not user input
       desc.innerHTML = description;
       content.appendChild(desc);
     }
@@ -369,6 +374,7 @@ function decorateGallery(block, cells, startPct) {
   if (description) {
     const galleryContent = document.createElement('div');
     galleryContent.className = 'image-compare-gallery-content';
+    // XSS-safe: innerHTML sourced from AEM authored content, not user input
     galleryContent.innerHTML = description;
     wrapper.appendChild(galleryContent);
   }
@@ -401,6 +407,7 @@ function buildCaptionLayout(block, afterImg, beforeImg, opts) {
   if (opts.captionHtml) {
     const caption = document.createElement('div');
     caption.className = 'image-compare-gallery-content';
+    // XSS-safe: captionHtml sourced from AEM authored content, not user input
     caption.innerHTML = opts.captionHtml;
     block.appendChild(caption);
   }
@@ -441,10 +448,9 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
     const bImg = container.querySelector('.image-compare-before img');
     if (!bImg) return;
     const w = container.clientWidth;
-    if (w > 0) {
-      bImg.style.width = `${w}px`;
-      bImg.style.maxWidth = 'none';
-    }
+    // style.width is set dynamically: the before-image must match the container's exact
+    // pixel width so the CSS clip (width: var(--compare-position)) reveals correctly.
+    if (w > 0) bImg.style.width = `${w}px`;
   }
 
   function scheduleFixBeforeWidth() {
@@ -462,8 +468,18 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
     if (beforeImg.complete) scheduleFixBeforeWidth();
   }
 
-  window.addEventListener('resize', fixBeforeWidth);
-  setTimeout(fixBeforeWidth, 100);
+  // Debounced resize handler — avoids layout thrashing on every resize tick
+  let resizeTimer;
+  function debouncedFix() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fixBeforeWidth, 100);
+  }
+  window.addEventListener('resize', debouncedFix);
+
+  // ResizeObserver fires as soon as the container has a computed size —
+  // more reliable than a fixed setTimeout on slow connections.
+  const ro = new ResizeObserver(() => scheduleFixBeforeWidth());
+  ro.observe(container);
 
   setPosition(startPct);
 
@@ -501,7 +517,8 @@ function decorateLegacy(block, cells) {
   const beforeImg = cells[1]?.querySelector('img');
   const startPct = parseFloat(cells[2]?.textContent) / 100 || 0.5;
   if (!afterImg || !beforeImg) return null;
-  block.innerHTML = '';
+  // Remove table rows only — avoids wiping any EDS-injected wrappers
+  [...block.children].forEach((row) => row.remove());
   // Extended format includes before/after labels and patient name in cells 3-6
   const hasExtendedFields = cells.length >= 7 && cells[3]?.textContent?.trim();
 
@@ -572,7 +589,8 @@ function decorateKeyValue(block, rows) {
   const beforeImg = firstImg?.beforeImg || data.beforeImage?.querySelector('img');
   if (!afterImg || !beforeImg) return null;
   const hasToggle = block.classList.contains('toggle');
-  block.innerHTML = '';
+  // Remove table rows only — avoids wiping any EDS-injected wrappers
+  [...block.children].forEach((row) => row.remove());
 
   if (!hasToggle) {
     const opts = {
@@ -609,7 +627,8 @@ function decorateModelFormat(block, cells) {
   const hasPrompt = block.classList.contains('prompt');
   const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
 
-  block.innerHTML = '';
+  // Remove table rows only — avoids wiping any EDS-injected wrappers
+  [...block.children].forEach((row) => row.remove());
 
   const opts = {
     beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE',

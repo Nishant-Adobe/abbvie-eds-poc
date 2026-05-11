@@ -46,6 +46,9 @@
 
 .image-compare-before img {
   object-position: left;
+
+  /* max-width set to none here; JS sets exact pixel width for the clip reveal */
+  max-width: none;
 }
 
 /* =========================================
@@ -200,10 +203,13 @@
 
 /* =========================================
    TABS
+   Mobile default: stacked column.
+   At ≥600px: single row (overridden in media query below).
 ========================================= */
 
 .image-compare-tabs {
   display: flex;
+  flex-direction: column;
   gap: 8px;
   margin-bottom: 16px;
 }
@@ -238,6 +244,7 @@
 ========================================= */
 
 .image-compare-tabs-toggle {
+  flex-direction: row;
   gap: 0;
 }
 
@@ -270,6 +277,8 @@
 
 /* =========================================
    THUMBNAILS
+   Mobile default: 64px wide thumbnails.
+   At ≥600px: 74px (overridden in media query below).
 ========================================= */
 
 .image-compare-thumbnails {
@@ -284,7 +293,7 @@
 .image-compare-thumb {
   position: relative;
   flex: 0 0 auto;
-  width: 74px;
+  width: 64px;
   border: none;
   border-radius: 0;
   overflow: hidden;
@@ -316,26 +325,31 @@
 }
 
 /* =========================================
-   RESPONSIVE
+   MOBILE-HIDDEN VARIANT
+   Hidden on small screens, visible at ≥900px.
 ========================================= */
 
-@media (width <= 768px) {
-  .image-compare.mobile-hidden {
-    display: none;
-  }
+.image-compare.mobile-hidden {
+  display: none;
 }
 
-@media (width <= 600px) {
-  .image-compare-tabs {
-    flex-direction: column;
-  }
+/* =========================================
+   RESPONSIVE — mobile-first (min-width)
+========================================= */
 
-  .image-compare-tabs-toggle {
+@media (width >= 600px) {
+  .image-compare-tabs {
     flex-direction: row;
   }
 
   .image-compare-thumb {
-    width: 64px;
+    width: 74px;
+  }
+}
+
+@media (width >= 900px) {
+  .image-compare.mobile-hidden {
+    display: block;
   }
 }
 
