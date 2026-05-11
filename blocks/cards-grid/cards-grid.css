@@ -966,12 +966,42 @@
 
   .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy,
   .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p:not(.subhead),
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul,
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ol,
   .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy li {
-    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 1.45;
+  }
+
+  /* Match mavyrethcp `.rich-text ul` bullets (custom •), not native disc markers. */
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul {
+    list-style: none;
+    padding-left: 14px;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul li {
+    list-style: none;
+    padding-bottom: 4px;
+    position: relative;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul li:last-child {
+    padding-bottom: 12px;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul li::before {
+    color: #76bd22;
+    content: "•";
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    left: -10px;
+    line-height: 1.45;
+    position: absolute;
+    top: 0;
   }
 
   /* p.subhead: must beat p:not(.subhead); live mavyrethcp uses Barlow Condensed 1.75rem / 600 (1.5rem ≤985px). */
@@ -996,11 +1026,12 @@
   }
 
   .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p,
-  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul {
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul,
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ol {
     margin: 0;
   }
 
-  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul {
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ol {
     padding-left: 1.25em;
   }
 
