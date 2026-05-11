@@ -4,6 +4,12 @@
 .image-compare {
   --color-rinvoq-yellow: var(--color-gold);
   --color-rinvoq-dark: var(--color-charcoal);
+  --color-rinvoq-gallery-bg: #666869;
+  --color-rinvoq-prompt-bg: rgb(51 51 51 / 85%);
+  --image-compare-gallery-max-width: 765px;
+  --image-compare-prompt-max-width: 160px;
+  --image-compare-tabs-radius: 5px;
+  --image-compare-tab-inner-radius: 3px;
 }
 
 .image-compare.gallery {
@@ -18,7 +24,7 @@
   color: var(--color-rinvoq-dark);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-body);
-  padding: 6px 15px;
+  padding: var(--spacing-06) var(--spacing-15);
   border-radius: 0;
   z-index: 3;
   text-align: right;
@@ -33,7 +39,7 @@
   color: var(--color-rinvoq-dark);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-body);
-  padding: 6px 15px;
+  padding: var(--spacing-06) var(--spacing-15);
   border-radius: 0;
   z-index: 4;
   text-align: left;
@@ -67,25 +73,25 @@
   top: 50%;
   left: var(--compare-position);
   transform: translate(-50%, -50%);
-  background: rgb(51 51 51 / 85%);
+  background: var(--color-rinvoq-prompt-bg);
   color: var(--color-text-on-dark);
-  font-size: 11px;
+  font-size: var(--font-size-11);
   font-weight: var(--font-weight-button);
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: var(--spacing-08) var(--spacing-12);
+  border-radius: var(--border-radius-base);
   text-align: center;
   white-space: normal;
-  max-width: 160px;
+  max-width: var(--image-compare-prompt-max-width);
   line-height: 1.4;
   z-index: 5;
 }
 
 .image-compare .image-compare-gallery-content {
-  background: #666869;
+  background: var(--color-rinvoq-gallery-bg);
   color: var(--color-text-on-dark);
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-button);
-  padding: 5px 10px;
+  padding: var(--spacing-05) var(--spacing-10);
   text-align: center;
   margin-bottom: 0;
 }
@@ -94,9 +100,9 @@
   display: flex;
   justify-content: center;
   gap: 0;
-  margin: 24px 0 16px;
+  margin: var(--spacing-24) 0 var(--spacing-16);
   border: 2px solid var(--color-brand-primary);
-  border-radius: 5px;
+  border-radius: var(--image-compare-tabs-radius);
   overflow: hidden;
 }
 
@@ -108,7 +114,7 @@
   border-radius: 0;
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-button);
-  padding: 10px 20px;
+  padding: var(--spacing-10) var(--spacing-20);
   cursor: pointer;
   text-align: center;
 }
@@ -120,19 +126,19 @@
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:first-child {
-  border-radius: 3px 0 0 3px;
+  border-radius: var(--image-compare-tab-inner-radius) 0 0 var(--image-compare-tab-inner-radius);
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:last-child {
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 var(--image-compare-tab-inner-radius) var(--image-compare-tab-inner-radius) 0;
 }
 
 .image-compare .image-compare-thumbnails {
   display: flex;
-  gap: 16px;
+  gap: var(--spacing-16);
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding: 16px 0;
+  padding: var(--spacing-16) 0;
   background: transparent;
   border-radius: 0;
   overflow: visible;
@@ -144,7 +150,7 @@
   width: 130px;
   height: auto;
   border: 3px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--border-radius-m);
   padding: 0;
   overflow: hidden;
   cursor: pointer;
@@ -166,7 +172,7 @@
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: var(--image-compare-tabs-radius);
 }
 
 .image-compare .image-compare-thumb-label {
@@ -176,7 +182,7 @@
   color: var(--color-text-on-dark);
   position: absolute;
   bottom: 28px;
-  left: 8px;
+  left: var(--spacing-08);
   text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
@@ -186,8 +192,8 @@
   font-weight: var(--font-weight-body);
   color: var(--color-text-on-dark);
   position: absolute;
-  bottom: 10px;
-  left: 8px;
+  bottom: var(--spacing-10);
+  left: var(--spacing-08);
   text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
@@ -247,7 +253,7 @@
   }
 
   .image-compare .image-compare-thumbnails {
-    gap: 10px;
+    gap: var(--spacing-10);
   }
 
   .image-compare .image-compare-thumb {

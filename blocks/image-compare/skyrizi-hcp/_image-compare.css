@@ -7,6 +7,12 @@
   --color-skyrizi-blue: #1398d1;
   --color-skyrizi-thumb-bg: #add8e6;
   --color-skyrizi-hover: var(--color-brand-primary-dark);
+  --image-compare-layout-max-width: 1160px;
+  --image-compare-container-ratio: 535 / 439;
+  --image-compare-thumb-width: 121px;
+  --image-compare-thumb-height: 103px;
+  --image-compare-thumb-img-width: 99px;
+  --image-compare-thumb-img-height: 79px;
 }
 
 .image-compare.gallery {
@@ -21,73 +27,73 @@
 .image-compare .image-compare-layout {
   display: flex;
   flex-direction: column;
-  max-width: 1160px;
-  margin: 0 auto 32px;
-  padding: 10px;
+  max-width: var(--image-compare-layout-max-width);
+  margin: 0 auto var(--spacing-32);
+  padding: var(--spacing-10);
   background: var(--background-color);
-  border-radius: 8px;
+  border-radius: var(--border-radius-m);
 }
 
 .image-compare .image-compare-content {
   flex: 1 1 0%;
-  padding: 5px 20px;
+  padding: var(--spacing-05) var(--spacing-20);
 }
 
 .image-compare .image-compare-eyebrow {
   display: block;
-  font-size: 20px;
+  font-size: var(--font-size-20);
   font-weight: var(--font-weight-body);
   color: var(--color-skyrizi-navy);
   text-transform: uppercase;
-  line-height: 20px;
-  margin-bottom: 16px;
+  line-height: var(--line-height-20);
+  margin-bottom: var(--spacing-16);
 }
 
 .image-compare .image-compare-heading {
-  font-size: 28px;
-  line-height: 32px;
+  font-size: var(--font-size-28);
+  line-height: var(--line-height-32);
   font-weight: var(--font-weight-body);
   color: var(--color-skyrizi-blue);
-  margin: 0 0 16px;
+  margin: 0 0 var(--spacing-16);
 }
 
 .image-compare .image-compare-heading::after {
   content: '';
   display: block;
-  margin-top: 20px;
-  height: 1px;
+  margin-top: var(--spacing-20);
+  height: var(--separator-height-1);
   background: var(--color-border-default);
 }
 
 .image-compare .image-compare-description {
   font-size: var(--font-size-body-small);
-  line-height: 16px;
+  line-height: var(--line-height-16);
   color: var(--color-skyrizi-navy);
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-24);
 }
 
 .image-compare .image-compare-description p {
-  margin: 0 0 8px;
+  margin: 0 0 var(--spacing-08);
 }
 
 .image-compare .image-compare-cta {
   display: inline-block;
   background: var(--color-skyrizi-navy);
   color: var(--color-text-on-dark);
-  padding: 14px 56px 14px 30px;
-  border-radius: 5px;
+  padding: var(--spacing-14) var(--spacing-56) var(--spacing-14) var(--spacing-30);
+  border-radius: var(--border-radius-safety-bar);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-body);
   text-decoration: none;
   text-transform: uppercase;
   position: relative;
-  transition: background var(--transition-fast);
+  transition: background var(--transition-duration-fast);
 }
 
 .image-compare .image-compare-cta::after {
   content: '';
   position: absolute;
-  right: 16px;
+  right: var(--spacing-16);
   top: 50%;
   transform: translateY(-50%);
   width: 21px;
@@ -106,19 +112,19 @@
 
 .image-compare .image-compare-slider-wrapper {
   flex: 1 1 0%;
-  padding: 5px;
+  padding: var(--spacing-05);
   min-width: 0;
   width: 100%;
 }
 
 .image-compare .image-compare-container {
   width: 100%;
-  aspect-ratio: 535 / 439;
+  aspect-ratio: var(--image-compare-container-ratio);
   height: auto;
   margin-bottom: 0;
   border-left: 4px solid var(--color-skyrizi-blue);
   border-radius: 0;
-  padding-top: 20px;
+  padding-top: var(--spacing-20);
 }
 
 .image-compare .image-compare-after img,
@@ -156,35 +162,35 @@
   color: var(--color-text-on-dark);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-button);
-  padding: 4px 12px;
+  padding: var(--spacing-04) var(--spacing-12);
   margin-top: 0;
 }
 
 .image-compare .image-compare-patient {
   background: var(--color-skyrizi-navy);
   color: var(--color-text-on-dark);
-  font-size: 18px;
+  font-size: var(--font-size-18);
   font-weight: var(--font-weight-button);
-  padding: 8px 12px 16px;
+  padding: var(--spacing-08) var(--spacing-12) var(--spacing-16);
 }
 
 .image-compare .image-compare-thumbnails {
   display: flex;
   justify-content: flex-start;
-  padding: 12px 11px;
+  padding: var(--spacing-12) 11px;
   background: var(--color-skyrizi-thumb-bg);
   overflow-x: auto;
   margin: 0 auto;
-  max-width: 1160px;
-  border-radius: 0 0 8px 8px;
+  max-width: var(--image-compare-layout-max-width);
+  border-radius: 0 0 var(--border-radius-m) var(--border-radius-m);
 }
 
 .image-compare .image-compare-thumb {
-  width: 121px;
-  height: 103px;
+  width: var(--image-compare-thumb-width);
+  height: var(--image-compare-thumb-height);
   border-radius: 0;
   border: none;
-  padding: 12px 11px;
+  padding: var(--spacing-12) 11px;
   position: relative;
   flex-shrink: 0;
   overflow: hidden;
@@ -213,8 +219,8 @@
 }
 
 .image-compare .image-compare-thumb-image {
-  width: 99px;
-  height: 79px;
+  width: var(--image-compare-thumb-img-width);
+  height: var(--image-compare-thumb-img-height);
   object-fit: cover;
 }
 
@@ -238,8 +244,8 @@
 @media (width >= 900px) {
   .image-compare .image-compare-layout {
     flex-direction: row;
-    padding: 10px 0 0;
-    margin-bottom: 64px;
+    padding: var(--spacing-10) 0 0;
+    margin-bottom: var(--spacing-64);
   }
 
   .image-compare .image-compare-slider-wrapper {
@@ -252,7 +258,7 @@
 
   .image-compare .image-compare-heading {
     font-size: var(--font-size-h-xl);
-    line-height: 40px;
+    line-height: var(--spacing-40);
   }
 
   .image-compare .image-compare-thumbnails {
