@@ -95,6 +95,19 @@ function decorateLine4(card) {
   unwrapDirectParagraph(span);
 }
 
+function removeLeadingEmptyLineDivs(container) {
+  if (!container) return;
+  let el = container.firstElementChild;
+  while (el && el.tagName === 'DIV') {
+    const text = el.textContent.replace(/\u00a0/g, ' ').trim();
+    const hasMedia = el.querySelector('img, picture, iframe, svg, video');
+    if (text.length > 0 || hasMedia) break;
+    const next = el.nextElementSibling;
+    el.remove();
+    el = next;
+  }
+}
+
 function createWrapperATag(wrapper) {
   const card = document.createElement('a');
   card.className = 'grid-card';
@@ -574,7 +587,7 @@ export default function decorate(block) {
     wrappers.forEach((wrapper) => {
       const gridItem = createWrapperATag(wrapper);
       const anchor = gridItem.querySelector('a.grid-card');
-
+      removeLeadingEmptyLineDivs(anchor);
       decorateLine1(anchor);
       decorateLine2(anchor);
       decorateLine3(anchor);
