@@ -315,13 +315,17 @@ body.modal-is-open {
   --modal-close-font-size: 22px;
 }
 
-/* Close button — light teal filled circle with white X */
+/* Close button — white circle with navy X */
 
 .modal-header .modal-close {
-  background: var(--color-brand-accent-teal, #008481);
-  color: var(--color-text-on-dark, #fff) !important;
+  background: var(--background-color, #fff);
+  color: var(--color-background-footer, #071d49) !important;
   border-radius: 50%;
   font-weight: 700;
+  font-size: 32px;
+  width: 48px;
+  height: 48px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
 }
 
 .modal-header .modal-close:hover {
@@ -367,7 +371,7 @@ body.modal-is-open {
   text-align: center;
 }
 
-/* Links styled as buttons — dark navy filled + outlined */
+/* Links styled as buttons — dark navy filled pill + outlined pill */
 
 .modal-dialog .modal-content a[href] {
   display: inline-flex;
@@ -375,7 +379,7 @@ body.modal-is-open {
   justify-content: center;
   min-width: 160px;
   padding: 16px 48px;
-  border-radius: var(--border-radius-button-primary, 6px);
+  border-radius: 30px;
   font-weight: 700;
   font-family: var(--body-font-family);
   font-size: 15px;
@@ -384,17 +388,17 @@ body.modal-is-open {
   margin-right: 16px;
   margin-top: 16px;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
-  background: var(--color-charcoal, #25282a);
+  background: var(--color-background-footer, #071d49);
   color: var(--color-text-on-dark, #fff) !important;
-  border: 2px solid var(--color-charcoal, #25282a);
+  border: none;
 }
 
-/* Second button — thin outlined */
+/* Second button — outlined with dark navy border */
 
 .modal-dialog .modal-content a[href]:last-of-type {
-  background: transparent;
-  color: var(--color-charcoal, #25282a) !important;
-  border: 1px solid var(--color-border-default, #ccc);
+  background: var(--background-color, #fff);
+  color: var(--color-background-footer, #071d49) !important;
+  border: 1px solid var(--color-background-footer, #071d49);
 }
 
 .modal-overlay .modal-dialog .modal-content a[href]:hover {
