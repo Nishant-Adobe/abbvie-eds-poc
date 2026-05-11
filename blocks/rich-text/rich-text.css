@@ -95,7 +95,13 @@
   line-height: 0;
 }
 
-/* Lists — base rules before :last-child and nested overrides */
+/* Lists — base rules before nested overrides and :last-child */
+
+.rich-text p,
+.rich-text ul,
+.rich-text ol {
+  margin-bottom: var(--spacing-16, 1rem);
+}
 
 .rich-text ul {
   list-style: disc;
@@ -107,6 +113,12 @@
   padding-left: var(--spacing-16);
 }
 
+.rich-text p:last-child,
+.rich-text ul:last-child,
+.rich-text ol:last-child {
+  margin-bottom: 0;
+}
+
 .rich-text ul ul,
 .rich-text ol ol,
 .rich-text ul ol,
@@ -114,18 +126,6 @@
   margin-top: var(--spacing-06);
   margin-bottom: var(--spacing-06);
   padding-left: var(--spacing-16);
-}
-
-.rich-text p,
-.rich-text ul,
-.rich-text ol {
-  margin-bottom: var(--spacing-16, 1rem);
-}
-
-.rich-text p:last-child,
-.rich-text ul:last-child,
-.rich-text ol:last-child {
-  margin-bottom: 0;
 }
 
 /* Links */
