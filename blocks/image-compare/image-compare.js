@@ -55,8 +55,11 @@ function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   // Handle
   const handle = document.createElement('div');
   handle.className = 'image-compare-handle';
-  handle.setAttribute('role', 'separator');
+  handle.setAttribute('role', 'slider');
   handle.setAttribute('aria-label', 'Image comparison slider');
+  handle.setAttribute('aria-valuemin', '0');
+  handle.setAttribute('aria-valuemax', '100');
+  handle.setAttribute('aria-valuenow', '50');
   handle.setAttribute('tabindex', '0');
   container.appendChild(handle);
 
@@ -450,6 +453,7 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt, isVerti
   function setPosition(pct) {
     const p = Math.min(1, Math.max(0, pct));
     container.style.setProperty('--compare-position', `${p * 100}%`);
+    handle.setAttribute('aria-valuenow', String(Math.round(p * 100)));
   }
 
   // Keep before-image width in sync with container width using ResizeObserver

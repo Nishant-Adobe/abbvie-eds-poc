@@ -1,5 +1,11 @@
 @import '../image-compare.css';
 
+/* Rinvoq brand tokens for image-compare */
+.image-compare {
+  --color-rinvoq-yellow: #ffd100;
+  --color-rinvoq-dark: #25282a;
+}
+
 .image-compare.gallery {
   max-width: 765px;
   margin: 0 auto;
@@ -8,8 +14,8 @@
 .image-compare .image-compare-label-after {
   position: absolute;
   inset: 0 0 auto;
-  background: #ffd100;
-  color: #25282a;
+  background: var(--color-rinvoq-yellow);
+  color: var(--color-rinvoq-dark);
   font-size: 16px;
   font-weight: 400;
   padding: 6px 15px;
@@ -23,8 +29,8 @@
   inset: 0 auto auto 0;
   width: var(--compare-position);
   overflow: hidden;
-  background: #ffd100;
-  color: #25282a;
+  background: var(--color-rinvoq-yellow);
+  color: var(--color-rinvoq-dark);
   font-size: 16px;
   font-weight: 400;
   padding: 6px 15px;
@@ -39,16 +45,16 @@
 
 .image-compare .image-compare-handle {
   width: 4px;
-  background-color: #25282a;
+  background-color: var(--color-rinvoq-dark);
 }
 
 .image-compare .image-compare-handle::before {
   display: block;
   width: 40px;
   height: 40px;
-  background-color: #ffd100;
+  background-color: var(--color-rinvoq-yellow);
   border-radius: 50%;
-  border: 2px solid #25282a;
+  border: 2px solid var(--color-rinvoq-dark);
   box-shadow: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2325282a'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
   background-size: 22px;
@@ -235,7 +241,7 @@
   display: none;
 }
 
-@media (width <= 768px) {
+@media (max-width: 768px) {
   .image-compare.gallery {
     max-width: 100%;
   }
@@ -248,7 +254,3 @@
     width: 100px;
   }
 }
-
-
-
-
