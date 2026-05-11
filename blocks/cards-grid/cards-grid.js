@@ -232,6 +232,179 @@ const RINVOQ_COMMON_FLEX_CONTAINER_CLASS = (
 /** Mavyret HCP nurse-ambassador icon row (mavyret-common-cards.html). */
 const MAVYRET_FLEX_ICON_RICH_CLASS = 'abbv-rich-text stacking-copy abbv-rich-text-common';
 
+/**
+ * Phase title after the icon must be a direct `<p class="subhead">` (no wrapper `div`).
+ * UE/Word often inserts a `div`; replace it with one plain `p.subhead`.
+ */
+function ensureMavyretSubheadAfterIcon(iconP) {
+  let next = iconP.nextElementSibling;
+  while (next && next.tagName === 'SCRIPT') {
+    next = next.nextElementSibling;
+  }
+  if (!next) return;
+
+  if (next.tagName === 'P') {
+    if (!next.classList.contains('subhead')) {
+      next.classList.add('subhead');
+    }
+    return;
+  }
+
+  if (next.tagName !== 'DIV') return;
+
+  const scopedPs = [...next.querySelectorAll(':scope > p')];
+  let body = '';
+  if (scopedPs.length >= 1) {
+    body = (scopedPs[0].innerHTML || '').trim();
+  }
+  if (!body) {
+    body = (next.innerHTML || '').trim();
+  }
+  const plain = (next.textContent || '').trim();
+  if (!body && !plain) return;
+
+  const sub = document.createElement('p');
+  sub.className = 'subhead';
+  if (body) {
+    sub.innerHTML = body;
+  } else {
+    sub.textContent = plain;
+  }
+  next.replaceWith(sub);
+}
+
+/** UE table cells: icon in `div > picture`, title in `div > p`, list in `div > ul`. */
+function isMavyretCellIconDiv(el) {
+  if (!el || el.tagName !== 'DIV') return false;
+  const hasMedia = el.querySelector(':scope > picture, :scope > img');
+  if (!hasMedia) return false;
+  return !el.querySelector(':scope > p');
+}
+
+/**
+ * Flatten Franklin/UE cell wrappers into mavyret-common-cards.html stacking-copy markup.
+ */
+function normalizeMavyretFromTableCellRows(abbvRt) {
+  const kids = [...abbvRt.children];
+  if (!kids.some(isMavyretCellIconDiv)) return false;
+
+  const iconIdx = kids.findIndex(isMavyretCellIconDiv);
+  const iconDiv = kids[iconIdx];
+  const legacyImg = iconDiv.querySelector('picture img') || iconDiv.querySelector('img');
+  if (!legacyImg) return false;
+
+  const src = (legacyImg.getAttribute('src') || legacyImg.currentSrc || '').trim();
+  const alt = (legacyImg.getAttribute('alt') || '').trim();
+
+  const iconP = document.createElement('p');
+  iconP.className = 'text-center';
+  if (src) {
+    const imgEl = document.createElement('img');
+    imgEl.src = src;
+    imgEl.className = 'icon';
+    imgEl.setAttribute('loading', 'lazy');
+    if (alt) {
+      imgEl.setAttribute('alt', alt);
+    }
+    const w = legacyImg.getAttribute('width');
+    const h = legacyImg.getAttribute('height');
+    if (w) imgEl.setAttribute('width', w);
+    if (h) imgEl.setAttribute('height', h);
+    iconP.append(imgEl);
+  }
+
+  const built = [iconP];
+  let titleDone = false;
+
+  for (let i = iconIdx + 1; i < kids.length; i += 1) {
+    const el = kids[i];
+    if (el.tagName === 'DIV') {
+      const ulEl = el.querySelector(':scope > ul');
+      if (ulEl) {
+        ulEl.remove();
+        built.push(ulEl);
+        break;
+      }
+
+      const scopedPs = [...el.querySelectorAll(':scope > p')];
+      const plain = (el.textContent || '').trim();
+      if (plain || scopedPs.length > 0) {
+        if (!titleDone) {
+          const sub = document.createElement('p');
+          sub.className = 'subhead';
+          if (scopedPs.length >= 1) {
+            sub.innerHTML = scopedPs[0].innerHTML.trim();
+          } else {
+            sub.textContent = plain;
+          }
+          built.push(sub);
+          for (let j = 1; j < scopedPs.length; j += 1) {
+            const p = document.createElement('p');
+            p.innerHTML = scopedPs[j].innerHTML;
+            built.push(p);
+          }
+          titleDone = true;
+        } else {
+          scopedPs.forEach((srcP) => {
+            const p = document.createElement('p');
+            p.innerHTML = srcP.innerHTML;
+            built.push(p);
+          });
+          if (scopedPs.length === 0 && plain) {
+            const p = document.createElement('p');
+            p.textContent = plain;
+            built.push(p);
+          }
+        }
+      }
+    }
+  }
+
+  abbvRt.replaceChildren(...built);
+  return true;
+}
+
+function normalizeMavyretFromIconParagraph(abbvRt) {
+  const ps = [...abbvRt.querySelectorAll('p')];
+  const idx = ps.findIndex((p) => p.querySelector('img'));
+  if (idx < 0) return;
+
+  const iconP = ps[idx];
+  iconP.className = 'text-center';
+
+  const legacyImg = iconP.querySelector('picture img') || iconP.querySelector('img');
+  if (!legacyImg) return;
+
+  const src = (legacyImg.getAttribute('src') || legacyImg.currentSrc || '').trim();
+  const alt = (legacyImg.getAttribute('alt') || '').trim();
+
+  if (src) {
+    iconP.replaceChildren();
+    const imgEl = document.createElement('img');
+    imgEl.src = src;
+    imgEl.className = 'icon';
+    imgEl.setAttribute('loading', 'lazy');
+    if (alt) {
+      imgEl.setAttribute('alt', alt);
+    }
+    iconP.append(imgEl);
+  } else {
+    legacyImg.classList.add('icon');
+    if (!legacyImg.getAttribute('loading')) {
+      legacyImg.setAttribute('loading', 'lazy');
+    }
+  }
+
+  ensureMavyretSubheadAfterIcon(iconP);
+}
+
+function normalizeMavyretStackingCopyDom(abbvRt) {
+  if (normalizeMavyretFromTableCellRows(abbvRt)) {
+    return;
+  }
+  normalizeMavyretFromIconParagraph(abbvRt);
+}
+
 function buildMavyretFlexIconColumn(wrapper) {
   const richTextOuter = document.createElement('div');
   richTextOuter.className = 'rich-text';
@@ -247,6 +420,12 @@ function buildMavyretFlexIconColumn(wrapper) {
       abbvRt.append(wrapper.firstChild);
     }
   }
+
+  abbvRt.querySelectorAll('p').forEach((p) => {
+    fixEncodedSupInParagraph(p);
+  });
+
+  normalizeMavyretStackingCopyDom(abbvRt);
 
   abbvRt.querySelectorAll('p').forEach((p) => {
     fixEncodedSupInParagraph(p);
