@@ -1,4 +1,4 @@
-/* Model field order → column indices (tabs/classes excluded from column output) */
+/* Model field order â†’ column indices (tabs/classes excluded from column output) */
 const COL = {
   heading: 0,
   description: 1,
@@ -38,6 +38,13 @@ function getText(cell) {
   return cell?.textContent?.trim() || '';
 }
 
+function cloneImg(img) {
+  if (!img) return null;
+  const clone = img.cloneNode(true);
+  clone.removeAttribute('loading');
+  return clone;
+}
+
 function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   const container = document.createElement('div');
   container.className = 'image-compare-container';
@@ -52,14 +59,9 @@ function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   beforeWrap.appendChild(beforeImg);
   container.appendChild(beforeWrap);
 
-  // Handle
   const handle = document.createElement('div');
   handle.className = 'image-compare-handle';
-  handle.setAttribute('role', 'slider');
-  handle.setAttribute('aria-label', 'Image comparison slider');
-  handle.setAttribute('aria-valuemin', '0');
-  handle.setAttribute('aria-valuemax', '100');
-  handle.setAttribute('aria-valuenow', '50');
+  handle.setAttribute('role', 'separator');
   handle.setAttribute('tabindex', '0');
   container.appendChild(handle);
 
@@ -109,12 +111,13 @@ function buildThumbnails(images) {
   thumbsDiv.className = 'image-compare-thumbnails';
 
   images.forEach((img, i) => {
-    if (!img.thumbImg) return;
+    const sourceImg = img.thumbImg || img.beforeImg;
+    if (!sourceImg) return;
     const btn = document.createElement('button');
     btn.className = 'image-compare-thumb';
     if (i === 0) btn.classList.add('is-active');
 
-    const thumbImg = img.thumbImg.cloneNode(true);
+    const thumbImg = cloneImg(sourceImg);
     if (thumbImg) {
       thumbImg.className = 'image-compare-thumb-image';
       btn.appendChild(thumbImg);
@@ -177,10 +180,18 @@ function setupGalleryInteraction(block, container, tabSets) {
     const afterWrap = container.querySelector('.image-compare-after');
     const beforeWrap = container.querySelector('.image-compare-before');
     if (afterWrap && afterImg) {
-      afterWrap.replaceChildren(afterImg.cloneNode(true));
+      afterWrap.innerHTML = '';
+      afterWrap.appendChild(cloneImg(afterImg));
     }
     if (beforeWrap && beforeImg) {
-      beforeWrap.replaceChildren(beforeImg.cloneNode(true));
+      beforeWrap.innerHTML = '';
+      const bImg = cloneImg(beforeImg);
+      bImg.style.maxWidth = 'none';
+      beforeWrap.appendChild(bImg);
+      requestAnimationFrame(() => {
+        const w = container.clientWidth;
+        if (w > 0) bImg.style.width = `${w}px`;
+      });
     }
   }
 
@@ -227,18 +238,19 @@ function setupGalleryInteraction(block, container, tabSets) {
   }
 }
 
-/*
- * decorateGalleryWithLayout: Two-column layout variant (content left, slider right).
- * Activated via the 'gallery' class when the block does NOT have the 'toggle' class.
- * Brand-specific visual styling is handled entirely in CSS (_image-compare.css overrides).
- */
-function decorateGalleryWithLayout(block, cells, startPct) {
+function decorateGallery(block, cells, startPct) {
+  const hasToggle = block.classList.contains('toggle');
+  const hasPrompt = block.classList.contains('prompt');
+  const isTwoColumnLayout = !hasToggle;
+
   const beforeLabel = getText(cells[COL.beforeLabelPrefix]) || 'BEFORE';
   const afterLabel = getText(cells[COL.afterLabelPrefix]) || 'AFTER';
+  const promptText = hasPrompt
+    ? (getText(cells[COL.sliderPrompt]) || 'CLICK AND DRAG TO SEE RESULTS')
+    : '';
   const tab1Label = getText(cells[COL.tab1Label]);
   const tab2Label = getText(cells[COL.tab2Label]);
   const heading = getText(cells[COL.heading]);
-  // description comes from trusted authoring content (UE model field)
   const description = cells[COL.description]?.innerHTML || '';
 
   const tab1Images = extractTabImages(cells, COL.tab1Img1Before);
@@ -255,119 +267,96 @@ function decorateGalleryWithLayout(block, cells, startPct) {
     block.id = tab1Label.toLowerCase().replace(/\s+/g, '-');
   }
 
-  block.replaceChildren();
+  block.innerHTML = '';
 
-  // Two-column layout: left content + right slider
-  const layout = document.createElement('div');
-  layout.className = 'image-compare-layout';
+  if (isTwoColumnLayout) {
+    // Two-column layout: left content + right slider
+    const layout = document.createElement('div');
+    layout.className = 'image-compare-layout';
 
-  // Left content panel
-  const content = document.createElement('div');
-  content.className = 'image-compare-content';
+    // Left content panel
+    const content = document.createElement('div');
+    content.className = 'image-compare-content';
 
-  if (tab1Label) {
-    const eyebrow = document.createElement('span');
-    eyebrow.className = 'image-compare-eyebrow';
-    eyebrow.textContent = tab1Label;
-    content.appendChild(eyebrow);
+    if (tab1Label) {
+      const eyebrow = document.createElement('span');
+      eyebrow.className = 'image-compare-eyebrow';
+      eyebrow.textContent = tab1Label;
+      content.appendChild(eyebrow);
+    }
+
+    if (heading) {
+      const h = document.createElement('h2');
+      h.className = 'image-compare-heading';
+      h.textContent = heading;
+      content.appendChild(h);
+    }
+
+    if (description) {
+      const desc = document.createElement('div');
+      desc.className = 'image-compare-description';
+      desc.innerHTML = description;
+      content.appendChild(desc);
+    }
+
+    if (tab2Label) {
+      const cta = document.createElement('a');
+      cta.className = 'image-compare-cta';
+      const targetId = tab2Label.toLowerCase().replace(/\s+/g, '-');
+      cta.href = `#${targetId}`;
+      cta.textContent = `VIEW ${tab2Label.toUpperCase()} RESULTS`;
+      cta.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.getElementById(targetId);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+      content.appendChild(cta);
+    }
+
+    // Right slider panel (or left if reversed)
+    const sliderWrap = document.createElement('div');
+    sliderWrap.className = 'image-compare-slider-wrapper';
+
+    layout.appendChild(content);
+
+    const sliderOpts = { beforeLabel, afterLabel };
+    const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
+    sliderWrap.appendChild(slider.container);
+
+    const bottomBar = document.createElement('div');
+    bottomBar.className = 'image-compare-bottom-bar';
+    const leftSpan = document.createElement('span');
+    leftSpan.textContent = beforeLabel;
+    const rightSpan = document.createElement('span');
+    rightSpan.textContent = afterLabel;
+    bottomBar.appendChild(leftSpan);
+    bottomBar.appendChild(rightSpan);
+    sliderWrap.appendChild(bottomBar);
+
+    const patientName = firstImg?.label || getText(cells[COL.tab1Img1Label]) || '';
+    if (patientName) {
+      const patient = document.createElement('div');
+      patient.className = 'image-compare-patient';
+      patient.textContent = patientName;
+      sliderWrap.appendChild(patient);
+    }
+
+    layout.appendChild(sliderWrap);
+    block.appendChild(layout);
+
+    // Thumbnails below layout
+    const activeImages = tab1Images.length ? tab1Images : tab2Images;
+    if (activeImages.length) {
+      const thumbsEl = buildThumbnails(activeImages);
+      block.appendChild(thumbsEl);
+    }
+
+    const tabSets = [tab1Images, tab2Images];
+    setupGalleryInteraction(block, slider.container, tabSets);
+    return { ...slider, startPct, hasPrompt: false };
   }
 
-  if (heading) {
-    const h = document.createElement('h2');
-    h.className = 'image-compare-heading';
-    h.textContent = heading;
-    content.appendChild(h);
-  }
-
-  if (description) {
-    const desc = document.createElement('div');
-    desc.className = 'image-compare-description';
-    // Safe: description is authored content from the UE content model
-    desc.innerHTML = description;
-    content.appendChild(desc);
-  }
-
-  if (tab2Label) {
-    const cta = document.createElement('a');
-    cta.className = 'image-compare-cta';
-    cta.href = `#${tab2Label.toLowerCase().replace(/\s+/g, '-')}`;
-    cta.textContent = `VIEW ${tab2Label.toUpperCase()} RESULTS`;
-    content.appendChild(cta);
-  }
-
-  // Right slider panel (or left if reversed via CSS class)
-  const sliderWrap = document.createElement('div');
-  sliderWrap.className = 'image-compare-slider-wrapper';
-
-  layout.appendChild(content);
-
-  const sliderOpts = { beforeLabel, afterLabel };
-  const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
-  sliderWrap.appendChild(slider.container);
-
-  const bottomBar = document.createElement('div');
-  bottomBar.className = 'image-compare-bottom-bar';
-  const leftSpan = document.createElement('span');
-  leftSpan.textContent = beforeLabel;
-  const rightSpan = document.createElement('span');
-  rightSpan.textContent = afterLabel;
-  bottomBar.appendChild(leftSpan);
-  bottomBar.appendChild(rightSpan);
-  sliderWrap.appendChild(bottomBar);
-
-  const patientName = firstImg?.label || getText(cells[COL.tab1Img1Label]) || '';
-  if (patientName) {
-    const patient = document.createElement('div');
-    patient.className = 'image-compare-patient';
-    patient.textContent = patientName;
-    sliderWrap.appendChild(patient);
-  }
-
-  layout.appendChild(sliderWrap);
-  block.appendChild(layout);
-
-  // Thumbnails below layout
-  const activeImages = tab1Images.length ? tab1Images : tab2Images;
-  if (activeImages.length) {
-    const thumbsEl = buildThumbnails(activeImages);
-    block.appendChild(thumbsEl);
-  }
-
-  const tabSets = [tab1Images, tab2Images];
-  setupGalleryInteraction(block, slider.container, tabSets);
-  return { ...slider, startPct, hasPrompt: false };
-}
-
-/*
- * decorateGalleryWithToggle: Single-column layout with toggle tabs + thumbnails.
- * Activated via 'gallery toggle' classes.
- * Brand-specific visual styling is handled entirely in CSS (_image-compare.css overrides).
- */
-function decorateGalleryWithToggle(block, cells, startPct) {
-  const hasPrompt = block.classList.contains('prompt');
-  const beforeLabel = getText(cells[COL.beforeLabelPrefix]) || 'BEFORE';
-  const afterLabel = getText(cells[COL.afterLabelPrefix]) || 'AFTER';
-  const promptText = hasPrompt
-    ? (getText(cells[COL.sliderPrompt]) || 'CLICK AND DRAG TO SEE RESULTS')
-    : '';
-  const tab1Label = getText(cells[COL.tab1Label]);
-  const tab2Label = getText(cells[COL.tab2Label]);
-  // description comes from trusted authoring content (UE model field)
-  const description = cells[COL.description]?.innerHTML || '';
-
-  const tab1Images = extractTabImages(cells, COL.tab1Img1Before);
-  const tab2Images = extractTabImages(cells, COL.tab2Img1Before);
-
-  const firstImg = tab1Images[0];
-  const afterImg = firstImg?.afterImg || getImg(cells[COL.afterImage]);
-  const beforeImg = firstImg?.beforeImg || getImg(cells[COL.beforeImage]);
-  if (!afterImg || !beforeImg) return null;
-
-  const anchorId = getText(cells[COL.anchorId]);
-  if (anchorId) block.id = anchorId;
-
-  block.replaceChildren();
-
+  // Rinvoq toggle layout
   const wrapper = document.createElement('div');
   wrapper.className = 'image-compare-wrapper';
 
@@ -380,13 +369,12 @@ function decorateGalleryWithToggle(block, cells, startPct) {
   if (description) {
     const galleryContent = document.createElement('div');
     galleryContent.className = 'image-compare-gallery-content';
-    // Safe: description is authored content from the UE content model
     galleryContent.innerHTML = description;
     wrapper.appendChild(galleryContent);
   }
 
   if (tab1Label && tab2Label) {
-    const tabsEl = buildTabs([tab1Label, tab2Label], true);
+    const tabsEl = buildTabs([tab1Label, tab2Label], hasToggle);
     wrapper.appendChild(tabsEl);
   }
 
@@ -404,23 +392,15 @@ function decorateGalleryWithToggle(block, cells, startPct) {
   return { ...slider, startPct, hasPrompt: !!promptText };
 }
 
-function decorateGallery(block, cells, startPct) {
-  const hasToggle = block.classList.contains('toggle');
-  return hasToggle
-    ? decorateGalleryWithToggle(block, cells, startPct)
-    : decorateGalleryWithLayout(block, cells, startPct);
-}
-
 /* --- Simple slider builders (non-gallery) --- */
 
-function buildSliderWithCaption(block, afterImg, beforeImg, opts) {
+function buildCaptionLayout(block, afterImg, beforeImg, opts) {
   const slider = buildSliderContainer(afterImg, beforeImg, opts);
   const { container } = slider;
 
   if (opts.captionHtml) {
     const caption = document.createElement('div');
     caption.className = 'image-compare-gallery-content';
-    // Safe: captionHtml is authored content from the UE content model
     caption.innerHTML = opts.captionHtml;
     block.appendChild(caption);
   }
@@ -429,7 +409,7 @@ function buildSliderWithCaption(block, afterImg, beforeImg, opts) {
   return slider;
 }
 
-function buildWrappedSlider(block, afterImg, beforeImg, opts) {
+function buildWrapperLayout(block, afterImg, beforeImg, opts) {
   const wrapper = document.createElement('div');
   wrapper.className = 'image-compare-wrapper';
 
@@ -449,20 +429,41 @@ function buildWrappedSlider(block, afterImg, beforeImg, opts) {
   return slider;
 }
 
-function setupSlider(container, beforeWrap, handle, startPct, hasPrompt, isVertical) {
+function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
+  const afterImg = container.querySelector('.image-compare-after img');
+
   function setPosition(pct) {
     const p = Math.min(1, Math.max(0, pct));
     container.style.setProperty('--compare-position', `${p * 100}%`);
-    handle.setAttribute('aria-valuenow', String(Math.round(p * 100)));
   }
 
-  // Keep before-image width in sync with container width using ResizeObserver
-  // (scoped to this container — no global window listener accumulation)
-  const ro = new ResizeObserver(() => {
+  function fixBeforeWidth() {
     const bImg = container.querySelector('.image-compare-before img');
-    if (bImg) bImg.style.width = `${container.clientWidth}px`;
-  });
-  ro.observe(container);
+    if (!bImg) return;
+    const w = container.clientWidth;
+    if (w > 0) {
+      bImg.style.width = `${w}px`;
+      bImg.style.maxWidth = 'none';
+    }
+  }
+
+  function scheduleFixBeforeWidth() {
+    requestAnimationFrame(fixBeforeWidth);
+  }
+
+  if (afterImg) {
+    afterImg.addEventListener('load', scheduleFixBeforeWidth);
+    if (afterImg.complete) scheduleFixBeforeWidth();
+  }
+
+  const beforeImg = container.querySelector('.image-compare-before img');
+  if (beforeImg) {
+    beforeImg.addEventListener('load', scheduleFixBeforeWidth);
+    if (beforeImg.complete) scheduleFixBeforeWidth();
+  }
+
+  window.addEventListener('resize', fixBeforeWidth);
+  setTimeout(fixBeforeWidth, 100);
 
   setPosition(startPct);
 
@@ -482,53 +483,35 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt, isVerti
       const prompt = container.querySelector('.image-compare-prompt');
       if (prompt) prompt.classList.add('is-hidden');
     }
-  }, { passive: true });
+  });
 
   container.addEventListener('pointermove', (e) => {
     if (dragging) setPosition(getX(e));
-  }, { passive: true });
+  });
 
   container.addEventListener('pointerup', (e) => {
     dragging = false;
     container.releasePointerCapture(e.pointerId);
-  }, { passive: true });
-
-  handle.addEventListener('keydown', (e) => {
-    const cur = parseFloat(
-      container.style.getPropertyValue('--compare-position') || `${startPct * 100}`,
-    );
-    const step = e.shiftKey ? 10 : 5;
-    if (isVertical) {
-      if (e.key === 'ArrowUp') { e.preventDefault(); setPosition((cur - step) / 100); }
-      if (e.key === 'ArrowDown') { e.preventDefault(); setPosition((cur + step) / 100); }
-    } else {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); setPosition((cur - step) / 100); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); setPosition((cur + step) / 100); }
-    }
   });
 }
 
-/* --- Legacy format (direct image cells in a single row) --- */
+/* --- Legacy format --- */
 function decorateLegacy(block, cells) {
   const afterImg = cells[0]?.querySelector('img');
   const beforeImg = cells[1]?.querySelector('img');
   const startPct = parseFloat(cells[2]?.textContent) / 100 || 0.5;
   if (!afterImg || !beforeImg) return null;
+  block.innerHTML = '';
+  // Extended format includes before/after labels and patient name in cells 3-6
+  const hasExtendedFields = cells.length >= 7 && cells[3]?.textContent?.trim();
 
-  block.replaceChildren();
-
-  // Use the 'wrapped' CSS class to opt into the two-column layout variant.
-  // Avoids fragile cell-count detection that silently misfires when authors
-  // add or remove content fields.
-  const useLayout = block.classList.contains('wrapped');
-
-  if (useLayout) {
+  if (hasExtendedFields) {
     const opts = {
       beforeLabel: cells[3]?.textContent?.trim() || 'BEFORE | WEEK 0',
       afterLabel: cells[4]?.textContent?.trim() || 'AFTER | WEEK 16',
-      patientName: cells[5]?.textContent?.trim() || '',
+      patientName: cells[6]?.textContent?.trim() || '',
     };
-    const parts = buildWrappedSlider(block, afterImg, beforeImg, opts);
+    const parts = buildWrapperLayout(block, afterImg, beforeImg, opts);
     return { ...parts, startPct, hasPrompt: false };
   }
 
@@ -538,7 +521,7 @@ function decorateLegacy(block, cells) {
     prompt: 'CLICK AND DRAG TO SEE RESULTS',
     captionHtml: cells[3]?.innerHTML || '',
   };
-  const parts = buildSliderWithCaption(block, afterImg, beforeImg, opts);
+  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts);
   return { ...parts, startPct, hasPrompt: true };
 }
 
@@ -588,9 +571,8 @@ function decorateKeyValue(block, rows) {
   const afterImg = firstImg?.afterImg || data.afterImage?.querySelector('img');
   const beforeImg = firstImg?.beforeImg || data.beforeImage?.querySelector('img');
   if (!afterImg || !beforeImg) return null;
-
   const hasToggle = block.classList.contains('toggle');
-  block.replaceChildren();
+  block.innerHTML = '';
 
   if (!hasToggle) {
     const opts = {
@@ -598,7 +580,7 @@ function decorateKeyValue(block, rows) {
       afterLabel: getText(data.afterLabelPrefix) || 'AFTER | WEEK 16',
       patientName: firstImg?.label || '',
     };
-    const parts = buildWrappedSlider(block, afterImg, beforeImg, opts);
+    const parts = buildWrapperLayout(block, afterImg, beforeImg, opts);
     return { ...parts, startPct: 0.5, hasPrompt: false };
   }
 
@@ -608,7 +590,7 @@ function decorateKeyValue(block, rows) {
     prompt: getText(data.sliderPrompt) || 'CLICK AND DRAG TO SEE RESULTS',
     captionHtml: data.description?.innerHTML || '',
   };
-  const parts = buildSliderWithCaption(block, afterImg, beforeImg, opts);
+  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts);
   return { ...parts, startPct: 0.5, hasPrompt: true };
 }
 
@@ -624,17 +606,10 @@ function decorateModelFormat(block, cells) {
   const afterImg = getImg(cells[COL.afterImage]);
   const beforeImg = getImg(cells[COL.beforeImage]);
   if (!afterImg || !beforeImg) return null;
-
-  // Apply alt text from model fields if present
-  const afterAlt = getText(cells[COL.afterAlt]);
-  const beforeAlt = getText(cells[COL.beforeAlt]);
-  if (afterAlt) afterImg.setAttribute('alt', afterAlt);
-  if (beforeAlt) beforeImg.setAttribute('alt', beforeAlt);
-
   const hasPrompt = block.classList.contains('prompt');
   const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
 
-  block.replaceChildren();
+  block.innerHTML = '';
 
   const opts = {
     beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE',
@@ -642,45 +617,33 @@ function decorateModelFormat(block, cells) {
     prompt: promptText || undefined,
     captionHtml: cells[COL.description]?.innerHTML || '',
   };
-  const parts = buildSliderWithCaption(block, afterImg, beforeImg, opts);
+  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts);
   return { ...parts, startPct, hasPrompt: !!promptText };
 }
 
-/*
- * detectFormat: Determines the content structure used in this block instance.
- *
- * Formats:
- *  'model'      — UE model single-row format (all fields in one row, many cells)
- *  'model-rows' — UE model multi-row format (one field per row, single cell)
- *  'keyvalue'   — Legacy key:value row pairs (2 cells per row, first cell is key name)
- *  'legacy'     — Earliest format: images in direct column cells
- */
 function detectFormat(block) {
   const rows = [...block.children];
   if (!rows.length) return null;
 
   const firstRow = rows[0];
   const firstCells = [...firstRow.children];
-  const firstCellText = firstRow.children[0]?.textContent?.trim();
 
-  // Single row with many cells → UE single-row model
-  // (>= 5 covers the minimum viable model: afterImg + beforeImg + 3 label fields)
+  // UE model: single row with many cells (all fields flattened into columns)
+  if (rows.length === 1 && firstCells.length > 10) return 'model';
+  // Legacy: few rows, first cell contains an image (before/after pair)
+  if (rows.length <= 7 && firstCells[0]?.querySelector('img')) return 'legacy';
+  // Key-value: multiple rows with exactly 2 columns (label + value pairs)
+  if (rows.length > 1 && firstCells.length === 2
+    && firstRow.children[0]?.textContent?.trim()) return 'keyvalue';
+  // Model-rows: UE renders each field as its own row (single-column layout)
+  if (rows.length > 10 && firstCells.length === 1) return 'model-rows';
+  // Fallback for shorter UE model output
   if (rows.length === 1 && firstCells.length >= 5) return 'model';
 
-  // Many single-cell rows → UE multi-row model.
-  // The UE model has 28 defined fields (COL map above); use > 5 as a safe lower
-  // bound so this never overlaps with a 2–3 row legacy or key-value block.
-  if (rows.length > 5 && firstCells.length === 1) return 'model-rows';
-
-  // Two cells per row where the first cell contains a text key (no image) → key-value
-  if (rows.length > 1 && firstCells.length === 2
-    && firstCellText && !firstRow.children[0].querySelector('img')) return 'keyvalue';
-
-  // Default: images in first cell → legacy column format
   return 'legacy';
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const format = detectFormat(block);
   if (!format) return;
 
@@ -705,5 +668,5 @@ export default function decorate(block) {
   const {
     container, beforeWrap, handle, startPct, hasPrompt,
   } = result;
-  setupSlider(container, beforeWrap, handle, startPct, hasPrompt, block.classList.contains('vertical'));
+  setupSlider(container, beforeWrap, handle, startPct, hasPrompt);
 }
