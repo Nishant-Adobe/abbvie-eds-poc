@@ -1,0 +1,474 @@
+@import '../header.css';
+
+/* ──────────────────────────────────────────
+   SKYRIZI HCP — Header Brand Overrides
+   Source: skyrizihcp.com
+   - Transparent bg (overlaid on hero)
+   - White text, white inverted logo
+   - Hamburger with "MENU" label
+   - Desktop 2-row: logo + utility row / nav items + search row
+   - Utility: SELECT YOUR SPECIALTY (left) + indication text (right)
+   - Nav row: white uppercase items + search icon
+   - Hover underline: white, centered 80%, 4px
+   - Mobile: gradient bg, dark text
+   - Scrolled: white bg, dark text
+   ────────────────────────────────────────── */
+
+/* ─── All viewports ─── */
+body{
+  background-color: #1ba2da;
+}
+
+/* Nav wrapper — transparent for hero overlay */
+header .nav-wrapper {
+  background-color: transparent;
+}
+
+header nav {
+  color: var(--color-text-on-dark);
+  background-color: transparent;
+}
+
+/* Logo — inverted (white), fixed width */
+header nav .nav-brand img {
+  filter: brightness(0) invert(1);
+  max-width: unset;
+  width: var(--header-logo-width);
+  height: auto;
+}
+
+/* Hamburger — white bars, "MENU" label */
+header nav .nav-hamburger button {
+  background: transparent;
+  border: none;
+}
+
+header nav .nav-hamburger button > span {
+  background: var(--color-text-on-dark);
+}
+
+header nav .nav-hamburger button::after {
+  content: 'MENU';
+  display: block;
+  font-size: var(--font-size-10);
+  color: var(--color-text-on-dark);
+  font-weight: var(--font-weight-700);
+  letter-spacing: var(--header-hamburger-letter-spacing);
+  margin-top: var(--spacing-04);
+}
+
+/* Nav sections — transparent, white text */
+header nav .nav-sections {
+  background-color: transparent;
+  color: var(--color-text-on-dark);
+}
+
+/* Nav buttons — white */
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: var(--color-text-on-dark);
+  font-weight: var(--font-weight-body);
+  font-size: var(--font-size-16);
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 0;
+}
+
+/* Nav tools — white */
+header nav .nav-tools {
+  color: var(--color-text-on-dark);
+}
+
+header nav .nav-tools .icon-search svg {
+  fill: var(--color-text-on-dark);
+  stroke: var(--color-text-on-dark);
+}
+
+/* Icons — inverted for white */
+header nav .nav-sections .icon,
+header nav .nav-tools .icon {
+  filter: brightness(0) invert(1);
+}
+
+/* Nav separator — subtle white on dark */
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom-color: var(--header-nav-separator);
+}
+
+/* Mobile open — gradient bg */
+header nav[aria-expanded='true'] {
+  background: transparent;
+}
+
+header nav[aria-expanded='true'] .nav-sections {
+  background: transparent;
+}
+
+/* Submenu — white bg, brand text */
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Nav submenu width — scoped to nav-sections only so search panel stays full-width */
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  width: var(--header-submenu-width);
+}
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
+  color: var(--color-brand-primary);
+}
+
+/* Nav direct link */
+header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+  color: var(--color-text-on-dark);
+  font-weight: var(--font-weight-body);
+  font-size: var(--font-size-16);
+}
+
+/* ─── Mobile (<1024px) ─── */
+@media (width <= 1023px) {
+  /* Hide utility bar on mobile */
+  header .nav-utility {
+    display: none;
+  }
+
+  /* Dark text on gradient open menu */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+    color: var(--color-text-black);
+    font-size: var(--font-size-18);
+    line-height: var(--font-size-18);
+    padding: var(--spacing-08) var(--spacing-16);
+  }
+
+  /* Chevron — dark on gradient */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button::before {
+    color: var(--color-text-black);
+  }
+}
+
+/* ─── Desktop (≥1024px) ─── */
+@media (width >= 1024px) {
+  /* Nav wrapper: positioned context for absolute utility bar */
+  header .nav-wrapper {
+    position: relative;
+    padding: var(--spacing-20) 0 0;
+    max-width: var(--header-content-max-width);
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Nav: 2-row grid — brand row (logo) + nav row (sections + search) */
+  header .nav-wrapper > nav {
+    display: grid;
+    grid-template:
+      'brand . hamburger' var(--header-brand-row-height)
+      'sections sections tools' auto
+      / auto 1fr auto;
+    height: auto;
+    padding: 0;
+    max-width: unset;
+    width: 100%;
+    align-items: center;
+  }
+
+  /* Logo — brand row, left column */
+  header nav .nav-brand {
+    grid-area: brand;
+    padding: var(--spacing-20) var(--spacing-12) var(--spacing-20) 0;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Hide hamburger on desktop */
+  header nav .nav-hamburger {
+    display: none;
+  }
+
+  /* Hide brand-info if any */
+  header .nav-wrapper nav .nav-brand-info {
+    display: none;
+  }
+
+  /* Utility bar — absolutely positioned in brand row, right of logo */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header .nav-utility:has(ul) {
+    position: absolute;
+    top: 0;
+    left: var(--header-brand-col-width);
+    right: 0;
+    height: var(--header-brand-row-height);
+    display: flex;
+    align-items: stretch;
+    background: transparent;
+    padding: 0;
+    line-height: normal;
+    z-index: var(--z-index-60);
+  }
+
+  /* Utility inner container — flex row: ul left, p right */
+  header .nav-utility > div {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-20);
+    width: 100%;
+    padding: var(--spacing-20) 0 var(--spacing-20) var(--spacing-52);
+  }
+
+  /* Utility ul (SELECT YOUR SPECIALTY + dropdown) — left, no grow */
+  header .nav-utility ul[role="menubar"] {
+    flex-shrink: 0;
+    height: auto;
+    padding: 0;
+    gap: 0;
+    width: auto;
+  }
+
+  /* SELECT YOUR SPECIALTY button */
+  header .nav-utility ul[role="menubar"] li > button {
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-700);
+    text-transform: uppercase;
+    letter-spacing: var(--header-utility-letter-spacing);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 0;
+    line-height: var(--line-height-20);
+  }
+
+  /* Indication text wrapper — right, fills remaining space */
+  header .nav-utility .nav-indication {
+    flex: 1;
+    text-align: right;
+  }
+
+  header .nav-utility .nav-indication p {
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-12);
+    line-height: var(--line-height-20);
+    margin: 0;
+  }
+
+  /* ── Nav sections row ── */
+  header .nav-wrapper nav .nav-sections {
+    grid-area: sections;
+    width: 100%;
+    margin-left: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    position: relative;
+    z-index: var(--z-index-60);
+    overflow: visible;
+    visibility: visible;
+    opacity: var(--opacity-full);
+    height: auto;
+    min-height: auto;
+  }
+
+  header .nav-wrapper nav .nav-sections .default-content-wrapper {
+    width: 100%;
+  }
+
+  /* Nav list — left to right */
+  header nav .nav-sections .default-content-wrapper > ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px !important;
+    margin: 0;
+  }
+
+  /* Nav items */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-sections .default-content-wrapper > ul > li {
+    border: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Nav buttons/links — white, 16px, no vertical padding (matches live site) */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-body);
+    line-height: var(--font-size-16);
+    background-color: transparent;
+    padding: 0 var(--spacing-09);
+  }
+
+  /* Hover/active — dimmed */
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button {
+    color: var(--color-text-on-dark);
+    opacity: var(--opacity-hover);
+  }
+
+  /* Hover underline — white, centered 80%, 4px */
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button::after {
+    content: '';
+    background: var(--color-text-on-dark);
+    position: absolute;
+    bottom: var(--header-nav-underline-bottom);
+    left: 50%;
+    width: 80%;
+    height: var(--spacing-04);
+    transform: translateX(-50%);
+  }
+
+  /* ── Tools (search) — nav row, right ── */
+  header .nav-wrapper nav .nav-tools {
+    grid-area: tools;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    color: var(--color-text-on-dark);
+    background: transparent;
+  }
+
+  /* Hide non-search items in nav-tools — they also render in nav-sections */
+  header .nav-wrapper nav .nav-tools .default-content-wrapper > ul > li:not(.menu-search) {
+    display: none;
+  }
+
+  /* ── Submenu desktop ── */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+    min-height: auto;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-wrapper {
+    background: var(--background-color);
+    border-radius: 0;
+    padding: var(--spacing-20);
+    margin: 0;
+    display: block;
+    grid-template-columns: 1fr;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-left {
+    display: block;
+    grid-column: auto;
+    margin: 0;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card {
+    display: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .close-btn {
+    display: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    grid-template-columns: unset;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li {
+    position: relative;
+    overflow: visible;
+    margin-bottom: var(--spacing-04);
+    padding: var(--spacing-10);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link {
+    color: var(--color-brand-primary);
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-body);
+    text-decoration: none;
+    display: block;
+    line-height: var(--line-height-20);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link:hover {
+    color: var(--color-brand-accent);
+    text-decoration: underline;
+  }
+
+  /* Search panel — compact right-aligned box (higher specificity beats base 100vw rule) */
+  header .nav-wrapper nav .nav-tools .menu-search .submenu-level-1 {
+    width: var(--header-search-panel-width);
+    left: auto;
+    right: 0;
+    margin-left: 0;
+    border: var(--header-search-panel-border);
+  }
+
+  header .nav-wrapper .nav-tools .search-main-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    column-gap: 0;
+  }
+
+  header .nav-wrapper .nav-tools .search-wrapper {
+    grid-column: auto;
+  }
+
+  header .nav-wrapper .nav-tools .search-input {
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-20);
+    font-family: var(--body-font-family);
+    font-weight: var(--font-weight-body);
+  }
+
+  header .nav-wrapper .nav-tools .search-input-label {
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-20);
+  }
+
+  /* ── Scrolled state — white bg, dark text ── */
+  header.hide-nav .nav-wrapper {
+    background: var(--header-scroll-bg);
+  }
+
+  header.hide-nav .nav-wrapper:hover {
+    background: var(--background-color);
+  }
+
+  header.hide-nav nav {
+    color: var(--text-color);
+  }
+
+  header.hide-nav nav .nav-brand img {
+    filter: none;
+  }
+
+  header.hide-nav nav .nav-sections .icon,
+  header.hide-nav nav .nav-tools .icon {
+    filter: none;
+  }
+
+  header.hide-nav nav .nav-tools .icon-search svg {
+    fill: var(--text-color);
+    stroke: var(--text-color);
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header.hide-nav .nav-utility ul[role="menubar"] li > button,
+  header.hide-nav .nav-utility .nav-indication p {
+    color: var(--text-color);
+  }
+}
+
+/* Wider nav item padding at 985px+ */
+@media (width >= 985px) {
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+    padding: 0 var(--spacing-20);
+  }
+}

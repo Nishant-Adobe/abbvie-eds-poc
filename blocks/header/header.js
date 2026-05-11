@@ -893,6 +893,7 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
+  if (!fragment) return;
   const header = fragment.querySelector('.navigation-content-container');
   if (!header) return;
 
@@ -912,6 +913,7 @@ export default async function decorate(block) {
       attributes: { 'aria-label': 'Utility Navigation' },
     });
     const utilityUl = createElement('ul', { attributes: { role: 'menubar' } });
+    const indicationWrapper = createElement('div', { className: 'nav-indication' });
 
     utilityBlocks.forEach((utilBlock) => {
       // content_utilityItems is a richtext field that can contain <p> and <ul> elements.
@@ -929,7 +931,15 @@ export default async function decorate(block) {
       authoredChildren.forEach((child, idx) => {
         if (child.tagName !== 'P') return; // <ul> nodes are handled by the preceding <p>
         const link = child.querySelector('a');
-        if (!link) return;
+        if (!link) {
+          // Plain text paragraph — collected into indicationWrapper, appended after utilityUl
+          const text = child.textContent.trim();
+          if (!text) return;
+          const p = document.createElement('p');
+          p.textContent = text;
+          indicationWrapper.appendChild(p);
+          return;
+        }
 
         const nextChild = authoredChildren[idx + 1];
         const hasDropdown = nextChild?.tagName === 'UL';
@@ -973,6 +983,7 @@ export default async function decorate(block) {
     });
 
     utilityNav.appendChild(utilityUl);
+    if (indicationWrapper.children.length) utilityNav.appendChild(indicationWrapper);
     utility.appendChild(utilityNav);
     // Utility bar stored for later insertion before nav in wrapper
     nav.utilityBar = utility;

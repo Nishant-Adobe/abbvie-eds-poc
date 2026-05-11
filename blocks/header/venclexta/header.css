@@ -1974,46 +1974,84 @@ body:has(.nav-floating-isi-open) {
 }
 
 /* ──────────────────────────────────────────
-   SKYRIZI HCP — Header Brand Overrides
-   Source: skyrizihcp.com
-   - Transparent bg (overlaid on hero)
-   - White text, white inverted logo
-   - Hamburger with "MENU" label
-   - Desktop 2-row: logo + utility row / nav items + search row
-   - Utility: SELECT YOUR SPECIALTY (left) + indication text (right)
-   - Nav row: white uppercase items + search icon
-   - Hover underline: white, centered 80%, 4px
-   - Mobile: gradient bg, dark text
-   - Scrolled: white bg, dark text
-   ────────────────────────────────────────── */
+   VENCLEXTA DTC — Header Brand Overrides
+   Source: venclexta.com/aml
+   - Utility bar: teal (#005272) bg, white text, uppercase, | separators
+   - Logo row: white bg, full-color logo, brand info right
+   - Nav bar: white bg, dark charcoal text
+   - Submenu: white bg, brand-primary teal text
+   - Mobile: white bg
+────────────────────────────────────────── */
 
-/* ─── All viewports ─── */
+/* Override utility bar base tokens — teal bg, white text */
 
-body{
-  background-color: #1ba2da;
+:root {
+  --nav-utility-bg: var(--color-venclexta-teal);
+  --nav-utility-text: var(--color-text-on-dark);
+  --nav-utility-link-hover: var(--color-text-on-dark);
 }
 
-/* Nav wrapper — transparent for hero overlay */
+/* Nav wrapper — white */
 
 header .nav-wrapper {
-  background-color: transparent;
+  background-color: var(--background-color);
 }
 
 header nav {
+  color: var(--color-charcoal);
+}
+
+/* Utility bar — teal bg overrides base gray */
+
+header .nav-utility {
+  background-color: var(--color-venclexta-teal);
+}
+
+header .nav-utility>div {
+  width: 100%;
+  max-width: var(--header-content-max-width);
+  margin: 0 auto;
+}
+
+/* Utility bar links — white uppercase */
+
+header .nav-utility a,
+header .nav-utility a.button {
   color: var(--color-text-on-dark);
-  background-color: transparent;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-500);
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  text-decoration: none;
 }
 
-/* Logo — inverted (white), fixed width */
+/* Utility button — must precede more-specific hamburger button selector */
 
-header nav .nav-brand img {
-  filter: brightness(0) invert(1);
-  max-width: unset;
-  width: var(--header-logo-width);
-  height: auto;
+header .nav-utility button {
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-500);
+  text-transform: uppercase;
 }
 
-/* Hamburger — white bars, "MENU" label */
+/* Utility items — centered */
+
+header .nav-utility ul[role="menubar"] {
+  justify-content: flex-end;
+}
+
+/* Pipe separator — white at 50% opacity */
+
+header .nav-utility li + li::before {
+  content: '|';
+  color: var(--color-text-on-dark);
+  opacity: var(--opacity-muted);
+  font-size: var(--font-size-body-small);
+  padding: 0 var(--spacing-08);
+}
+
+/* Hamburger — dark bars on white header */
 
 header nav .nav-hamburger button {
   background: transparent;
@@ -2021,84 +2059,74 @@ header nav .nav-hamburger button {
 }
 
 header nav .nav-hamburger button > span {
-  background: var(--color-text-on-dark);
+  background: var(--color-charcoal);
 }
 
-header nav .nav-hamburger button::after {
-  content: 'MENU';
-  display: block;
-  font-size: var(--font-size-10);
+/* Logo — full color, fixed width */
+
+header nav .nav-brand img {
+  max-width: unset;
+  width: var(--header-logo-width);
+  height: auto;
+}
+
+/* Eyebrow top bar link */
+
+header .nav-eyebrow-top a {
   color: var(--color-text-on-dark);
-  font-weight: var(--font-weight-700);
-  letter-spacing: var(--header-hamburger-letter-spacing);
-  margin-top: var(--spacing-04);
+  text-decoration: underline;
+  font-weight: var(--font-weight-600);
 }
 
-/* Nav sections — transparent, white text */
+/* Primary nav — white bg, dark charcoal text */
 
 header nav .nav-sections {
-  background-color: transparent;
-  color: var(--color-text-on-dark);
+  background-color: var(--background-color);
+  color: var(--color-charcoal);
 }
 
-/* Nav buttons — white */
+/* Nav buttons — dark charcoal, 600 weight */
 
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
-  color: var(--color-text-on-dark);
-  font-weight: var(--font-weight-body);
-  font-size: var(--font-size-16);
+  color: var(--color-charcoal);
+  font-weight: var(--font-weight-500);
+  font-size: var(--font-size-nav-button);
   text-transform: none;
   letter-spacing: 0;
-  padding: 0;
 }
 
-/* Nav tools — white */
+/* Nav tools — dark */
 
 header nav .nav-tools {
-  color: var(--color-text-on-dark);
+  color: var(--color-charcoal);
 }
 
 header nav .nav-tools .icon-search svg {
-  fill: var(--color-text-on-dark);
-  stroke: var(--color-text-on-dark);
+  fill: var(--color-charcoal);
+  stroke: var(--color-charcoal);
 }
 
-/* Icons — inverted for white */
+/* Broad nav hover — lower specificity, must precede nav-sections hover selectors */
 
-header nav .nav-sections .icon,
-header nav .nav-tools .icon {
-  filter: brightness(0) invert(1);
+header nav .nav-item-level-0 .default-content-wrapper ul li button:hover,
+header nav .nav-item-level-0 .default-content-wrapper ul li a:hover,
+header nav .nav-item-level-0 .default-content-wrapper ul li button.active {
+  font-weight: var(--font-weight-400);
+  font-family: inherit;
 }
 
-/* Nav separator — subtle white on dark */
-
-/* stylelint-disable-next-line no-descending-specificity */
-
-header nav .nav-sections .default-content-wrapper > ul > li {
-  border-bottom-color: var(--header-nav-separator);
-}
-
-/* Mobile open — gradient bg */
-
-header nav[aria-expanded='true'] {
-  background: transparent;
-}
-
-header nav[aria-expanded='true'] .nav-sections {
-  background: transparent;
-}
-
-/* Submenu — white bg, brand text */
+/* Submenu — white bg, teal text */
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
   background: var(--background-color);
-  color: var(--text-color);
+  color: var(--color-brand-primary);
 }
 
 /* Nav submenu width — scoped to nav-sections only so search panel stays full-width */
 
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
   width: var(--header-submenu-width);
+  margin-left: 0;
 }
 
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
@@ -2108,67 +2136,150 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
 /* Nav direct link */
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+  color: var(--color-charcoal);
+  opacity: var(--opacity-full);
+  font-weight: var(--font-weight-500);
+  font-family: inherit;
+  font-size: var(--font-size-nav-button);
+}
+
+/* Nav hover — dark charcoal maintained */
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > button:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:focus,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:focus-visible,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:focus,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:focus-visible {
+  color: var(--color-brand-primary);
+  opacity: var(--opacity-full);
+  font-weight: var(--font-weight-600);
+  font-family: inherit;
+}
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:hover::after,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after {
+  content: "";
+  background: var(--color-brand-primary);
+  bottom: 0;
+  height: var(--spacing-02);
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+/* Mobile open — white bg */
+
+header nav[aria-expanded='true'] {
+  background-color: var(--background-color);
+}
+
+header nav[aria-expanded='true'] .nav-sections {
+  background-color: var(--background-color);
+}
+
+/* Nav separator — subtle dark for white bg */
+
+/* stylelint-disable-next-line no-descending-specificity */
+
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom-color: var(--header-nav-separator);
+}
+
+/* Submenu list items */
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li {
+  padding: var(--spacing-10);
+}
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
+  color: var(--color-brand-primary);
+  padding: 0;
+}
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
+  background: var(--color-brand-primary);
   color: var(--color-text-on-dark);
-  font-weight: var(--font-weight-body);
-  font-size: var(--font-size-16);
 }
 
-/* ─── Mobile (<1024px) ─── */
-
-@media (width <= 1023px) {
-  /* Hide utility bar on mobile */
-  header .nav-utility {
-    display: none;
-  }
-
-  /* Dark text on gradient open menu */
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
-    color: var(--color-text-black);
-    font-size: var(--font-size-18);
-    line-height: var(--font-size-18);
-    padding: var(--spacing-08) var(--spacing-16);
-  }
-
-  /* Chevron — dark on gradient */
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button::before {
-    color: var(--color-text-black);
-  }
-}
-
-/* ─── Desktop (≥1024px) ─── */
+/* Desktop */
 
 @media (width >= 1024px) {
-  /* Nav wrapper: positioned context for absolute utility bar */
-  header .nav-wrapper {
-    position: relative;
-    padding: var(--spacing-20) 0 0;
-    max-width: var(--header-content-max-width);
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  /* Nav: 2-row grid — brand row (logo) + nav row (sections + search) */
-  header .nav-wrapper > nav {
+  /* 2-row grid: logo+info row (white) + nav sections row (white, full-width) */
+  header .nav-wrapper nav {
     display: grid;
     grid-template:
-      'brand . hamburger' var(--header-brand-row-height)
-      'sections sections tools' auto
-      / auto 1fr auto;
+      'brand info tools hamburger' auto
+      'sections sections sections sections' auto
+      / auto 1fr auto auto;
     height: auto;
     padding: 0;
-    max-width: unset;
     width: 100%;
-    align-items: center;
+    max-width: var(--header-content-max-width);
+    margin: 0 auto;
   }
 
-  /* Logo — brand row, left column */
+  /* Logo — vertical padding for brand row height */
   header nav .nav-brand {
-    grid-area: brand;
-    padding: var(--spacing-20) var(--spacing-12) var(--spacing-20) 0;
+    padding: var(--spacing-18) var(--spacing-24) var(--spacing-18) var(--spacing-35);
+  }
+
+  /* Brand-info — right of logo, teal phone link */
+  header .nav-wrapper nav .nav-brand-info {
+    grid-area: info;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-12);
+    color: var(--color-charcoal);
+  }
+
+  header .nav-wrapper nav .nav-brand-info > ul,
+  header .nav-wrapper nav .nav-brand-info > p {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: var(--spacing-08);
+    white-space: nowrap;
+    color: var(--color-charcoal);
+    font-size: var(--font-size-14);
+  }
+
+  header .nav-wrapper nav .nav-brand-info li,
+  header .nav-wrapper nav .nav-brand-info p {
+    white-space: nowrap;
+    font-size: var(--font-size-14);
+  }
+
+  header .nav-wrapper nav .nav-brand-info a {
+    color: var(--color-brand-primary);
+    text-decoration: none;
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-600);
+  }
+
+  header .nav-wrapper nav .nav-brand-info a:hover {
+    text-decoration: underline;
+  }
+
+  /* Tools — search icon only in brand row */
+  header .nav-wrapper nav .nav-tools {
     display: flex;
     align-items: center;
+    padding: 0 var(--spacing-10) 0 var(--spacing-10);
+    background: transparent;
+    color: var(--color-charcoal);
+  }
+
+  /* Hide language-links duplicates from nav-tools — they also render in nav-sections */
+  header .nav-wrapper nav .nav-tools .default-content-wrapper > ul > li:not(.menu-search) {
+    display: none;
   }
 
   /* Hide hamburger on desktop */
@@ -2176,82 +2287,15 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     display: none;
   }
 
-  /* Hide brand-info if any */
-  header .nav-wrapper nav .nav-brand-info {
-    display: none;
-  }
-
-  /* Utility bar — absolutely positioned in brand row, right of logo */
-  /* stylelint-disable-next-line no-descending-specificity */
-  header .nav-utility:has(ul) {
-    position: absolute;
-    top: 0;
-    left: var(--header-brand-col-width);
-    right: 0;
-    height: var(--header-brand-row-height);
-    display: flex;
-    align-items: stretch;
-    background: transparent;
-    padding: 0;
-    line-height: normal;
-    z-index: var(--z-index-60);
-  }
-
-  /* Utility inner container — flex row: ul left, p right */
-  header .nav-utility > div {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--spacing-20);
-    width: 100%;
-    padding: var(--spacing-20) 0 var(--spacing-20) var(--spacing-52);
-  }
-
-  /* Utility ul (SELECT YOUR SPECIALTY + dropdown) — left, no grow */
-  header .nav-utility ul[role="menubar"] {
-    flex-shrink: 0;
-    height: auto;
-    padding: 0;
-    gap: 0;
-    width: auto;
-  }
-
-  /* SELECT YOUR SPECIALTY button */
-  header .nav-utility ul[role="menubar"] li > button {
-    color: var(--color-text-on-dark);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-700);
-    text-transform: uppercase;
-    letter-spacing: var(--header-utility-letter-spacing);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-    padding: 0;
-    line-height: var(--line-height-20);
-  }
-
-  /* Indication text wrapper — right, fills remaining space */
-  header .nav-utility .nav-indication {
-    flex: 1;
-    text-align: right;
-  }
-
-  header .nav-utility .nav-indication p {
-    color: var(--color-text-on-dark);
-    font-size: var(--font-size-12);
-    line-height: var(--line-height-20);
-    margin: 0;
-  }
-
-  /* ── Nav sections row ── */
+  /* Nav sections — white full-width second row */
   header .nav-wrapper nav .nav-sections {
-    grid-area: sections;
     width: 100%;
     margin-left: 0;
-    padding: 0;
+    padding: 0 var(--spacing-35);
     display: flex;
     align-items: center;
-    background: transparent;
+    background: var(--background-color);
+    color: var(--color-charcoal);
     position: relative;
     z-index: var(--z-index-60);
     overflow: visible;
@@ -2263,73 +2307,35 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
 
   header .nav-wrapper nav .nav-sections .default-content-wrapper {
     width: 100%;
+    max-width: var(--header-content-max-width);
+    margin: 0 auto;
   }
 
-  /* Nav list — left to right */
   header nav .nav-sections .default-content-wrapper > ul {
-    display: flex;
     justify-content: flex-end;
-    gap: 30px !important;
-    margin: 0;
+    gap: var(--gap-32);
   }
 
-  /* Nav items */
-  /* stylelint-disable-next-line no-descending-specificity */
-  header nav .nav-sections .default-content-wrapper > ul > li {
-    border: 0;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  /* Nav buttons/links — white, 16px, no vertical padding (matches live site) */
+  /* Nav button padding */
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
-    color: var(--color-text-on-dark);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-body);
-    line-height: var(--font-size-16);
-    background-color: transparent;
-    padding: 0 var(--spacing-09);
+    padding: var(--spacing-14) 0;
+    line-height: var(--header-nav-line-height);
   }
 
-  /* Hover/active — dimmed */
+  /* Active/hovered nav button — teal text + underline */
   header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button {
-    color: var(--color-text-on-dark);
-    opacity: var(--opacity-hover);
+    color: var(--color-brand-primary);
+    opacity: var(--opacity-full);
   }
 
-  /* Hover underline — white, centered 80%, 4px */
   header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button::after {
-    content: '';
-    background: var(--color-text-on-dark);
-    position: absolute;
-    bottom: var(--header-nav-underline-bottom);
-    left: 50%;
-    width: 80%;
-    height: var(--spacing-04);
-    transform: translateX(-50%);
+    background: var(--color-brand-primary);
   }
 
-  /* ── Tools (search) — nav row, right ── */
-  header .nav-wrapper nav .nav-tools {
-    grid-area: tools;
-    display: flex;
-    align-items: center;
-    padding: 0;
-    color: var(--color-text-on-dark);
-    background: transparent;
-  }
-
-  /* Hide non-search items in nav-tools — they also render in nav-sections */
-  header .nav-wrapper nav .nav-tools .default-content-wrapper > ul > li:not(.menu-search) {
-    display: none;
-  }
-
-  /* ── Submenu desktop ── */
+  /* Submenu desktop styling */
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
     min-height: auto;
   }
@@ -2371,7 +2377,10 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     position: relative;
     overflow: visible;
     margin-bottom: var(--spacing-04);
-    padding: var(--spacing-10);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-level-2:not(:last-child) {
+    margin-bottom: var(--spacing-04);
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link {
@@ -2388,77 +2397,12 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     text-decoration: underline;
   }
 
-  /* Search panel — compact right-aligned box (higher specificity beats base 100vw rule) */
-  header .nav-wrapper nav .nav-tools .menu-search .submenu-level-1 {
-    width: var(--header-search-panel-width);
-    left: auto;
-    right: 0;
-    margin-left: 0;
-    border: var(--header-search-panel-border);
-  }
-
-  header .nav-wrapper .nav-tools .search-main-wrapper {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    column-gap: 0;
-  }
-
-  header .nav-wrapper .nav-tools .search-wrapper {
-    grid-column: auto;
-  }
-
-  header .nav-wrapper .nav-tools .search-input {
-    font-size: var(--font-size-16);
-    line-height: var(--line-height-20);
-    font-family: var(--body-font-family);
-    font-weight: var(--font-weight-body);
-  }
-
-  header .nav-wrapper .nav-tools .search-input-label {
-    font-size: var(--font-size-16);
-    line-height: var(--line-height-20);
-  }
-
-  /* ── Scrolled state — white bg, dark text ── */
+  /* Scrolled state — fade to white */
   header.hide-nav .nav-wrapper {
     background: var(--header-scroll-bg);
   }
 
   header.hide-nav .nav-wrapper:hover {
     background: var(--background-color);
-  }
-
-  header.hide-nav nav {
-    color: var(--text-color);
-  }
-
-  header.hide-nav nav .nav-brand img {
-    filter: none;
-  }
-
-  header.hide-nav nav .nav-sections .icon,
-  header.hide-nav nav .nav-tools .icon {
-    filter: none;
-  }
-
-  header.hide-nav nav .nav-tools .icon-search svg {
-    fill: var(--text-color);
-    stroke: var(--text-color);
-  }
-
-  /* stylelint-disable-next-line no-descending-specificity */
-  header.hide-nav .nav-utility ul[role="menubar"] li > button,
-  header.hide-nav .nav-utility .nav-indication p {
-    color: var(--text-color);
-  }
-}
-
-/* Wider nav item padding at 985px+ */
-
-@media (width >= 985px) {
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
-    padding: 0 var(--spacing-20);
   }
 }

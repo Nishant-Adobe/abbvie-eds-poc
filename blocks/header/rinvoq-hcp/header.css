@@ -2141,10 +2141,22 @@ header .nav-utility {
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
     background: var(--color-gold);
     color: var(--color-text-on-dark);
-    width: var(--header-submenu-width);
     padding: 0;
     border-top: var(--header-submenu-border-width) solid var(--color-gold);
     margin: 0;
+  }
+
+  /* Nav submenu width — scoped to nav-sections only so search panel stays full-width */
+  header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+    width: var(--header-submenu-width);
+  }
+
+  /* Search submenu — white bg, full-width */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-tools .menu-search .submenu-level-1 {
+    background: var(--background-color);
+    color: var(--text-color);
+    border-top: none;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group {

@@ -1,0 +1,321 @@
+@import '../header.css';
+
+/* ──────────────────────────────────────────
+   LINZESS DTC — Header Brand Overrides
+   Source: linzess.com (Platform C)
+   - Eyebrow bar: linz-purple (#60579e), white text, centered
+   - Utility bar: dark (#231d1d), white text, centered, | separators
+   - Main header/nav: dark (#231d1d), white text
+   - Logo: full-color LINZESS (no filter)
+   - Nav items: white uppercase, small font, bold, letter-spacing
+   - CTA: "Check My Symptoms" — white rounded button, pushed far right
+   - Submenu: white bg
+   - Mobile open: dark maintained
+────────────────────────────────────────── */
+
+/* Override eyebrow bg token — purple instead of inheriting dark utility bg */
+:root {
+  --nav-eyebrow-bg: var(--header-eyebrow-bg);
+  --nav-eyebrow-text: var(--color-text-on-dark);
+  --nav-utility-bg: var(--color-nav-dark);
+  --nav-utility-text: var(--color-text-on-dark);
+  --nav-utility-height: var(--header-utility-height);
+  --nav-utility-link-hover: var(--color-text-on-dark);
+}
+
+/* Nav wrapper — dark charcoal */
+header .nav-wrapper {
+  background-color: var(--color-nav-dark);
+}
+
+/* Nav text — white */
+header nav {
+  color: var(--color-text-on-dark);
+  background-color: var(--color-nav-dark);
+}
+
+/* Utility bar — dark bg, bottom border separator */
+header .nav-utility {
+  border-bottom: var(--separator-height-1) solid var(--header-utility-border);
+}
+
+/* Utility nav — strip global a.button styles */
+header .nav-utility a,
+header .nav-utility a.button {
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-400);
+  text-transform: none;
+  background: none;
+  border: none;
+  text-decoration: none;
+}
+
+/* Utility button — must precede more-specific hamburger button selector */
+header .nav-utility button {
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-body-small);
+}
+
+/* Utility items — centered */
+header .nav-utility ul[role="menubar"] {
+  justify-content: center;
+}
+
+/* Pipe separator — white at 40% opacity */
+header .nav-utility li + li::before {
+  color: var(--color-text-on-dark);
+  opacity: var(--opacity-muted);
+  font-size: var(--font-size-body-small);
+  padding: 0 var(--spacing-08);
+}
+
+/* Hamburger — white bars on dark header */
+header nav .nav-hamburger button {
+  background: transparent;
+  border: none;
+}
+
+header nav .nav-hamburger button > span {
+  background: var(--color-text-on-dark);
+}
+
+/* Logo — full-color, fixed width */
+header nav .nav-brand img {
+  max-width: unset;
+  width: var(--header-logo-width);
+  height: auto;
+}
+
+/* Primary nav — dark bg, white text */
+header nav .nav-sections {
+  background-color: var(--color-nav-dark);
+  color: var(--color-text-on-dark);
+}
+
+/* Nav buttons — white uppercase small bold */
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: var(--color-text-on-dark);
+  font-weight: var(--font-weight-700);
+  font-size: var(--font-size-body-small);
+  text-transform: uppercase;
+  letter-spacing: var(--header-nav-letter-spacing);
+}
+
+/* Nav tools — hide entirely (Linzess has no search block) */
+header nav .nav-tools {
+  display: none;
+}
+
+/* "Check My Symptoms" CTA button — white bg, linzess-purple text, rounded */
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link,
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button {
+  background-color: var(--color-text-on-dark);
+  color: var(--color-brand-primary);
+  border-radius: var(--border-radius-button-primary);
+  padding: var(--spacing-08) var(--spacing-20);
+  font-weight: var(--font-weight-700);
+  font-size: var(--font-size-body-small);
+  text-transform: uppercase;
+  letter-spacing: var(--header-nav-letter-spacing);
+  text-decoration: none;
+  line-height: var(--header-nav-line-height);
+}
+
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link:hover,
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button:hover {
+  background-color: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  opacity: var(--opacity-full);
+}
+
+/* Remove underline hover indicator for CTA button */
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link::after,
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button::after {
+  display: none;
+}
+
+/* Submenu — white bg, dark text */
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: var(--background-color);
+  color: var(--text-color);
+  width: var(--header-submenu-width);
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
+  color: var(--color-brand-primary);
+  font-size: var(--font-size-body-small);
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover {
+  color: var(--color-brand-accent);
+  text-decoration: underline;
+}
+
+/* Mobile open — dark maintained */
+header nav[aria-expanded='true'] {
+  background-color: var(--color-nav-dark);
+}
+
+header nav[aria-expanded='true'] .nav-sections {
+  background-color: var(--color-nav-dark);
+}
+
+/* Nav separator — subtle white on dark */
+/* stylelint-disable-next-line no-descending-specificity */
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border-bottom-color: var(--header-nav-separator);
+}
+
+/* Mobile: white chevron on nav buttons */
+@media (width <= 1023px) {
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button::before {
+    color: var(--color-text-on-dark);
+  }
+
+  /* CTA full-width in mobile menu */
+  header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms {
+    margin-left: 0;
+  }
+}
+
+/* Desktop */
+@media (width >= 1024px) {
+  /* Single-row flex layout — logo left, sections right */
+  header .nav-wrapper nav {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-35);
+    max-width: var(--header-content-max-width);
+    margin: 0 auto;
+    height: var(--nav-height);
+  }
+
+  /* Logo — vertical centering in single nav row */
+  header nav .nav-brand {
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  /* Sections — flex-fill, align right */
+  header .nav-wrapper nav .nav-sections {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    margin-left: var(--spacing-35);
+    padding: 0;
+    background: transparent;
+    position: relative;
+    z-index: var(--z-index-60);
+    overflow: visible;
+    visibility: visible;
+    opacity: var(--opacity-full);
+    height: auto;
+    min-height: auto;
+  }
+
+  header .nav-wrapper nav .nav-sections .default-content-wrapper {
+    width: 100%;
+  }
+
+  /* Nav items — flex row, push CTA to far right */
+  header nav .nav-sections .default-content-wrapper > ul {
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--gap-32);
+    margin: 0;
+  }
+
+  /* "Check My Symptoms" — pushed to far right via auto left-margin */
+  header nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms {
+    margin-left: auto;
+  }
+
+  /* Nav button padding */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+    padding: var(--spacing-14) 0;
+    line-height: var(--header-nav-line-height);
+    color: var(--color-text-on-dark);
+  }
+
+  /* Active/hovered nav button — white underline indicator */
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button {
+    color: var(--color-text-on-dark);
+    opacity: var(--opacity-hover);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button::after {
+    background: var(--color-text-on-dark);
+  }
+
+  /* Submenu desktop styling */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+    min-height: auto;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-wrapper {
+    background: var(--background-color);
+    border-radius: 0;
+    padding: var(--spacing-20);
+    margin: 0;
+    display: block;
+    grid-template-columns: 1fr;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-left {
+    display: block;
+    grid-column: auto;
+    margin: 0;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card {
+    display: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .close-btn {
+    display: none;
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    grid-template-columns: unset;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li {
+    position: relative;
+    overflow: visible;
+    margin-bottom: var(--spacing-04);
+    padding: var(--spacing-10);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link {
+    color: var(--color-brand-primary);
+    font-size: var(--font-size-body-small);
+    font-weight: var(--font-weight-400);
+    text-decoration: none;
+    display: block;
+    line-height: var(--line-height-20);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link:hover {
+    color: var(--color-brand-accent);
+    text-decoration: underline;
+  }
+
+  /* Scrolled state — dark maintained */
+  header.hide-nav .nav-wrapper {
+    background: var(--header-scroll-bg);
+  }
+
+  header.hide-nav .nav-wrapper:hover {
+    background: var(--color-nav-dark);
+  }
+}
