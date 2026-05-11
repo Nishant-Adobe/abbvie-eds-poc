@@ -528,18 +528,18 @@ p.text-container-text:last-child,
   margin-bottom: var(--spacing-08);
 }
 
-/* VARIANT: Glossary */
+/* VARIANT: Glossary — mobile-first (1 column base, 2 columns at 744px+) */
 
 .text-container.glossary {
   font-size: var(--font-size-12);
   color: var(--color-text-muted);
   line-height: 1.5;
-  columns: 2;
-  column-gap: var(--spacing-24);
+  columns: 1;
 }
 
-@media (width < 744px) {
+@media (width >= 744px) {
   .text-container.glossary {
-    columns: 1;
+    columns: 2;
+    column-gap: var(--spacing-24);
   }
 }
