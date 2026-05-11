@@ -907,6 +907,9 @@ export default function decorate(block) {
       wrapper.remove();
     });
 
-    block.append(outer);
+    const demoWrap = document.createElement('div');
+    demoWrap.className = 'demo-wrap';
+    demoWrap.append(outer);
+    block.append(demoWrap);
   }
 }
