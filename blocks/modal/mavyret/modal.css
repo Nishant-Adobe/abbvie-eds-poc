@@ -305,20 +305,47 @@ body.modal-is-open {
 /* Mavyret HCP modal — Univers Condensed, navy/orange palette */
 
 .modal-overlay {
-  --modal-close-color: var(--color-brand-primary, #21406d);
-  --modal-close-hover-color: var(--color-fiesta, #e65400);
+  --modal-close-color: var(--color-green-flash, #76bd22);
+  --modal-close-hover-color: var(--color-green-flash, #76bd22);
   --modal-dialog-max-width: 640px;
   --modal-dialog-padding: 32px;
   --modal-dialog-border: none;
   --modal-dialog-border-radius: 0;
-  --modal-close-size: 36px;
-  --modal-close-font-size: 28px;
+  --modal-close-size: 40px;
+  --modal-close-font-size: 22px;
 }
 
-/* Close button */
+/* Close button — green circle with X */
 
 .modal-header .modal-close {
-  font-weight: 300;
+  background: var(--color-green-flash, #76bd22);
+  color: var(--color-text-on-dark, #fff) !important;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.modal-header .modal-close:hover {
+  opacity: 0.85;
+}
+
+/* Green scrollbar */
+
+.modal-dialog .modal-content {
+  scrollbar-color: var(--color-green-flash, #76bd22) transparent;
+  scrollbar-width: thin;
+}
+
+.modal-dialog .modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-dialog .modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-dialog .modal-content::-webkit-scrollbar-thumb {
+  background: var(--color-green-flash, #76bd22);
+  border-radius: 4px;
 }
 
 /* Dialog heading — navy with bold portion */
