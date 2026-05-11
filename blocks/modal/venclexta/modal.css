@@ -343,12 +343,22 @@ body.modal-is-open {
   margin: 0 0 16px;
 }
 
-/* "Do you wish to leave this site?" — centered */
+/* "Do you wish to leave this site?" — centered, bold */
 
 .modal-content p:nth-last-of-type(3) {
   text-align: center;
   margin-top: 24px;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Button paragraph — centered flex */
+
+.modal-dialog .modal-content p:has(a[href]) {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 /* Compliance code at bottom */
@@ -359,21 +369,20 @@ body.modal-is-open {
   margin-top: 24px;
 }
 
-/* Links styled as equal-width outlined buttons side by side */
+/* Links styled as equal-width outlined buttons — centered */
 
 .modal-dialog .modal-content a[href] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 200px;
-  padding: 16px 40px;
+  min-width: 180px;
+  padding: 16px 48px;
   border-radius: 0;
   font-weight: 700;
   font-family: var(--body-font-family);
   font-size: 16px;
   text-decoration: none;
-  margin-right: 16px;
-  margin-top: 12px;
+  margin: 0;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
   background: transparent;
   color: var(--color-brand-primary, #005272) !important;
