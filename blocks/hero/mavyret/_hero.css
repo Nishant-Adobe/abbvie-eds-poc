@@ -69,3 +69,8 @@
 .hero.solid :where(a).button {
   color: var(--color-brand-accent);
 }
+
+/* No-padding variant: center content vertically when no indication banner is present */
+.hero.no-padding:not(:has(.hero-indication)) {
+  justify-content: center;
+}
