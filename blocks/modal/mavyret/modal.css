@@ -315,11 +315,11 @@ body.modal-is-open {
   --modal-close-font-size: 22px;
 }
 
-/* Close button — green circle with X */
+/* Close button — green circle with black X */
 
 .modal-header .modal-close {
   background: var(--color-green-flash, #76bd22);
-  color: var(--color-text-on-dark, #fff) !important;
+  color: var(--color-black, #000) !important;
   border-radius: 50%;
   font-weight: 700;
 }
@@ -328,24 +328,25 @@ body.modal-is-open {
   opacity: 0.85;
 }
 
-/* Green scrollbar */
+/* Scrollbar — black thumb on green track */
 
 .modal-dialog .modal-content {
-  scrollbar-color: var(--color-green-flash, #76bd22) transparent;
+  scrollbar-color: var(--color-black, #000) var(--color-green-flash, #76bd22);
   scrollbar-width: thin;
 }
 
 .modal-dialog .modal-content::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 .modal-dialog .modal-content::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--color-green-flash, #76bd22);
+  border-radius: 5px;
 }
 
 .modal-dialog .modal-content::-webkit-scrollbar-thumb {
-  background: var(--color-green-flash, #76bd22);
-  border-radius: 4px;
+  background: var(--color-black, #000);
+  border-radius: 5px;
 }
 
 /* Dialog heading — centered, condensed font, large, black */
