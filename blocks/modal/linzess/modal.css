@@ -35,7 +35,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 60%);
+  background: var(--color-overlay-dark, rgb(0 0 0 / 60%));
   z-index: var(--z-modal, 1000);
   align-items: center;
   justify-content: center;
@@ -213,7 +213,7 @@ body.modal-is-open {
   position: fixed;
   top: 16px;
   right: 16px;
-  background: rgb(255 255 255 / 80%);
+  background: var(--color-overlay-light, rgb(255 255 255 / 80%));
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -336,6 +336,13 @@ body.modal-is-open {
   margin: 0 0 12px;
 }
 
+/* Button container — make link paragraphs inline */
+
+.modal-dialog .modal-content .button-container,
+.modal-dialog .modal-content p:has(a[href]) {
+  display: inline;
+}
+
 /* Links inside modal styled as buttons */
 
 .modal-dialog .modal-content a[href] {
@@ -346,21 +353,17 @@ body.modal-is-open {
   font-family: var(--body-font-family);
   font-size: var(--font-size-body, 14px);
   text-decoration: none;
+  text-transform: uppercase;
   margin-right: 12px;
   margin-top: 16px;
   transition: background 0.2s, border-color 0.2s;
-  background: var(--button-primary-bg);
-  color: var(--button-primary-color) !important;
-  border: 2px solid var(--button-primary-bg);
-}
-
-.modal-dialog .modal-content p:last-child a[href],
-.modal-dialog .modal-content a[href]:last-of-type {
   background: transparent;
   color: var(--color-brand-primary) !important;
   border: 2px solid var(--color-brand-primary);
 }
 
-.modal-dialog .modal-content a[href]:hover {
-  opacity: 0.85;
+.modal-overlay .modal-dialog .modal-content a[href]:hover {
+  background: var(--color-brand-primary) !important;
+  color: var(--color-text-on-dark) !important;
+  opacity: 1;
 }
