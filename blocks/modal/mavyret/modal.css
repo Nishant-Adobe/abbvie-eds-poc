@@ -401,36 +401,35 @@ body.modal-is-open {
   margin-top: 20px;
 }
 
-/* Links styled as buttons — small, square, green border (matching live site) */
+/* Links styled as buttons — square, gray border, matching live site exactly */
 
 .modal-dialog .modal-content a[href] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 80px;
-  padding: 10px 24px;
+  padding: 8px 16px;
   border-radius: 0;
-  font-weight: 400;
+  font-weight: 600;
   font-family: var(--body-font-family);
-  font-size: 14px;
+  font-size: 18px;
   text-decoration: none;
   margin-right: 12px;
   margin-top: 12px;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
-  background: transparent;
+  background: var(--background-color, #fff);
   color: var(--color-black, #000) !important;
-  border: 3px solid var(--color-green-flash, #76bd22);
+  border: 2px solid var(--color-border-dark, #636366);
 }
 
 .modal-dialog .modal-content a[href]:last-of-type {
-  background: transparent;
+  background: var(--background-color, #fff);
   color: var(--color-black, #000) !important;
-  border: 3px solid var(--color-green-flash, #76bd22);
+  border: 2px solid var(--color-border-dark, #636366);
 }
 
 .modal-overlay .modal-dialog .modal-content a[href]:hover {
-  background: var(--color-black, #000) !important;
-  color: var(--color-green-flash, #76bd22) !important;
+  background: var(--color-green-flash, #76bd22) !important;
+  color: var(--color-black, #000) !important;
   border-color: var(--color-green-flash, #76bd22);
 }
 
