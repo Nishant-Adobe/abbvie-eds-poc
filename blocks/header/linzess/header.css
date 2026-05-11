@@ -1997,10 +1997,14 @@ body:has(.nav-floating-isi-open) {
   --nav-utility-link-hover: var(--color-text-on-dark);
 }
 
+header .nav-eyebrow a, header .nav-eyebrow p {
+  font-size: 14px;
+}
+
 /* Nav wrapper — dark charcoal */
 
 header .nav-wrapper {
-  background-color: var(--color-nav-dark);
+  background-color: transparent;
 }
 
 /* Nav text — white */
@@ -2014,6 +2018,7 @@ header nav {
 
 header .nav-utility {
   border-bottom: var(--separator-height-1) solid var(--header-utility-border);
+  background-color: transparent;
 }
 
 /* Utility nav — strip global a.button styles */
@@ -2065,9 +2070,9 @@ header nav .nav-hamburger button > span {
 /* Logo — full-color, fixed width */
 
 header nav .nav-brand img {
-  max-width: unset;
-  width: var(--header-logo-width);
-  height: auto;
+  width: 148px;
+  height: 72px;
+  filter: brightness(0) invert(1);
 }
 
 /* Primary nav — dark bg, white text */
@@ -2183,6 +2188,7 @@ header nav .nav-sections .default-content-wrapper > ul > li {
     max-width: var(--header-content-max-width);
     margin: 0 auto;
     height: var(--nav-height);
+    background-color: transparent;
   }
 
   /* Logo — vertical centering in single nav row */
