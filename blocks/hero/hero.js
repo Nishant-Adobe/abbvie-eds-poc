@@ -48,13 +48,16 @@ function extractRows(block) {
 
   // Caption row: plain text with no markup — e.g. "Actor portrayal."
   const captionRow = rows.slice(1).find((row) => {
-    if (row === textRow || row === videoRow || row === mobileImageRow || row === indicationRow) return false;
+    if (row === textRow || row === videoRow
+      || row === mobileImageRow || row === indicationRow) return false;
     const cell = row.firstElementChild;
     const text = cell?.textContent?.trim();
     return text && !cell.querySelector('picture,img,a,h1,h2,h3,h4,h5,h6');
   });
 
-  return { imageRow, textRow, videoRow, mobileImageRow, indicationRow, captionRow };
+  return {
+    imageRow, textRow, videoRow, mobileImageRow, indicationRow, captionRow,
+  };
 }
 
 function absorbBreadcrumb(textCell, section) {
@@ -228,7 +231,9 @@ export default function decorate(block) {
   const section = block.closest('.section');
   addSectionClasses(block, section);
 
-  const { imageRow, textRow, videoRow, mobileImageRow, indicationRow, captionRow } = extractRows(block);
+  const {
+    imageRow, textRow, videoRow, mobileImageRow, indicationRow, captionRow,
+  } = extractRows(block);
   const imageCell = imageRow?.firstElementChild;
   const textCell = textRow?.firstElementChild;
   const textContainer = textCell?.parentElement;
