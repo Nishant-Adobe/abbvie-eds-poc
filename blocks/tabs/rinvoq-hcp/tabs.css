@@ -61,12 +61,13 @@
     background-color var(--transition-duration-medium) var(--transition-easing-standard),
     box-shadow var(--transition-duration-medium) var(--transition-easing-standard),
     border-color var(--transition-duration-medium) var(--transition-easing-standard),
-    padding var(--transition-duration-medium) var(--transition-easing-standard);
+    transform var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
-/* ── Active tab — pops up via extra top padding ── */
+/* ── Active tab — pops up via transform (no layout shift) ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-  padding: var(--spacing-08) var(--spacing-08) var(--spacing-05);
+  padding: var(--spacing-05) var(--spacing-08);
+  transform: translateY(calc(-1 * var(--spacing-03)));
   background: var(--color-glacier);
   color: var(--color-charcoal);
   font-weight: var(--font-weight-heading);
@@ -89,6 +90,7 @@
   margin: 0;
   margin-left: var(--spacing-15);
   margin-right: var(--spacing-15);
+  min-height: var(--spacing-500);
   position: relative;
 }
 
@@ -132,7 +134,7 @@
   }
 
   .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-    padding: var(--spacing-12) var(--spacing-15) var(--spacing-08);
+    transform: translateY(calc(-1 * var(--spacing-04)));
   }
 
   .tabs-panel:has(> .section:first-child:nth-last-child(2)) {
@@ -156,6 +158,6 @@
   }
 
   .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-    padding: var(--spacing-12) var(--spacing-15) var(--spacing-08);
+    transform: translateY(calc(-1 * var(--spacing-05)));
   }
 }
