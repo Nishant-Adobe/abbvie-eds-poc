@@ -621,6 +621,12 @@ function decorateModelFormat(block, cells) {
   const beforeImg = getImg(cells[COL.beforeImage]);
   if (!afterImg || !beforeImg) return null;
 
+  // Apply alt text from model fields if present
+  const afterAlt = getText(cells[COL.afterAlt]);
+  const beforeAlt = getText(cells[COL.beforeAlt]);
+  if (afterAlt) afterImg.setAttribute('alt', afterAlt);
+  if (beforeAlt) beforeImg.setAttribute('alt', beforeAlt);
+
   const hasPrompt = block.classList.contains('prompt');
   const promptText = hasPrompt ? getText(cells[COL.sliderPrompt]) : '';
 
