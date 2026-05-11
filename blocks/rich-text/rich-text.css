@@ -43,12 +43,6 @@
   font-size: var(--font-size-14);
 }
 
-.rich-text.boxed-warning strong:first-child {
-  display: block;
-  text-transform: uppercase;
-  margin-bottom: var(--spacing-08);
-}
-
 /* VARIANT: Glossary — mobile-first (1 column base, 2 columns at 744px+) */
 
 .rich-text.glossary {
@@ -65,41 +59,16 @@
   }
 }
 
-.rich-text p,
-.rich-text ul,
-.rich-text ol {
-  margin-bottom: var(--spacing-16, 1rem);
-}
-
-/* stylelint-disable no-descending-specificity */
-.rich-text p:last-child,
-.rich-text ul:last-child,
-.rich-text ol:last-child {
-  margin-bottom: 0;
-}
-/* stylelint-enable no-descending-specificity */
-
-.rich-text ul {
-  list-style: disc;
-  padding-left: var(--spacing-16);
-}
-
-.rich-text ol {
-  list-style: decimal;
-  padding-left: var(--spacing-16);
-}
-
-.rich-text ul ul,
-.rich-text ol ol,
-.rich-text ul ol,
-.rich-text ol ul {
-  margin-top: var(--spacing-06);
-  margin-bottom: var(--spacing-06);
-  padding-left: var(--spacing-16);
-}
+/* Typography — base rules first, then overrides */
 
 .rich-text strong {
   font-weight: var(--font-weight-700, 700);
+}
+
+.rich-text.boxed-warning strong:first-child {
+  display: block;
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-08);
 }
 
 .rich-text em {
@@ -126,6 +95,41 @@
   line-height: 0;
 }
 
+/* Lists — base rules before :last-child and nested overrides */
+
+.rich-text ul {
+  list-style: disc;
+  padding-left: var(--spacing-16);
+}
+
+.rich-text ol {
+  list-style: decimal;
+  padding-left: var(--spacing-16);
+}
+
+.rich-text ul ul,
+.rich-text ol ol,
+.rich-text ul ol,
+.rich-text ol ul {
+  margin-top: var(--spacing-06);
+  margin-bottom: var(--spacing-06);
+  padding-left: var(--spacing-16);
+}
+
+.rich-text p,
+.rich-text ul,
+.rich-text ol {
+  margin-bottom: var(--spacing-16, 1rem);
+}
+
+.rich-text p:last-child,
+.rich-text ul:last-child,
+.rich-text ol:last-child {
+  margin-bottom: 0;
+}
+
+/* Links */
+
 .rich-text a {
   color: var(--link-color);
   text-decoration: underline;
@@ -146,6 +150,8 @@
   font-size: 0.8em;
   opacity: 0.7;
 }
+
+/* Tables */
 
 .rich-text table {
   width: 100%;
@@ -172,6 +178,8 @@
   background: var(--footer-background-color);
 }
 
+/* Blockquote */
+
 .rich-text blockquote {
   border-left: 4px solid var(--highlight-dark-background-color);
   padding: var(--spacing-12) var(--spacing-16);
@@ -180,11 +188,15 @@
   color: var(--color-text-muted);
 }
 
+/* Horizontal rule */
+
 .rich-text hr {
   border: none;
   border-top: 1px solid var(--container-border-color);
   margin: var(--spacing-24) 0;
 }
+
+/* Code */
 
 .rich-text code {
   font-family: monospace;
@@ -208,6 +220,8 @@
   background: none;
   padding: 0;
 }
+
+/* Headings */
 
 .rich-text h1,
 .rich-text h2,
