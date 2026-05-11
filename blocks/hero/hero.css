@@ -777,6 +777,12 @@ color: inherit;
   margin-top: var(--spacing-16);
 }
 
+/* full/solid/video/compact/centered :where(a).button placed here so they appear
+   before .hero.dual-cta .button-container selectors in source order (no-descending-specificity) */
+.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
+
+.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
+
 /* =====================================================
    Hero Eyebrow Text
    Detected by JS: first <p> before <h1>/<h2> with no links
@@ -800,7 +806,7 @@ color: inherit;
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: rgba(0 0 0 / 70%);
+  background-color: rgb(0 0 0 / 70%);
   color: #fff;
   padding: var(--spacing-16, 1rem) var(--spacing-24, 1.5rem);
   font-size: var(--font-size-body-small, 13px);
@@ -824,7 +830,7 @@ color: inherit;
   bottom: var(--spacing-08, 0.8rem);
   right: var(--spacing-08, 0.8rem);
   font-size: var(--font-size-body-small, 11px);
-  color: rgba(255 255 255 / 80%);
+  color: rgb(255 255 255 / 80%);
   font-style: italic;
   pointer-events: none;
 }
@@ -913,7 +919,7 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 0%, transparent 60%);
+  background: linear-gradient(to right, rgb(0 0 0 / 60%) 0%, transparent 60%);
   z-index: 1;
   pointer-events: none;
 }
@@ -938,11 +944,13 @@ color: inherit;
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
 
-.hero.full p { color: rgba(255 255 255 / 90%); }
+.hero.full p {
+  color: rgb(255 255 255 / 90%);
+}
 
-.hero.full .hero-eyebrow { color: rgba(255 255 255 / 80%); }
-
-.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.full .hero-eyebrow {
+  color: rgb(255 255 255 / 80%);
+}
 
 @media (width < 744px) {
   .hero.full {
@@ -1011,7 +1019,7 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, transparent 65%);
+  background: linear-gradient(to right, rgb(0 0 0 / 55%) 0%, transparent 65%);
   z-index: 1;
   pointer-events: none;
 }
@@ -1036,9 +1044,13 @@ color: inherit;
   line-height: var(--line-height-h2, 2.5rem);
 }
 
-.hero.compact p { color: rgba(255 255 255 / 90%); }
+.hero.compact p {
+  color: rgb(255 255 255 / 90%);
+}
 
-.hero.compact .hero-eyebrow { color: rgba(255 255 255 / 80%); }
+.hero.compact .hero-eyebrow {
+  color: rgb(255 255 255 / 80%);
+}
 
 @media (width < 744px) {
   .hero.compact {
@@ -1175,7 +1187,7 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgb(0 0 0 / 45%);
   z-index: 1;
   pointer-events: none;
 }
@@ -1200,9 +1212,12 @@ color: inherit;
   text-align: center;
 }
 
-.hero.centered p { color: rgba(255 255 255 / 90%); text-align: center; }
+.hero.centered p {
+  color: rgb(255 255 255 / 90%);
+  text-align: center;
+}
 
-.hero.centered .hero-eyebrow { color: rgba(255 255 255 / 80%); }
+.hero.centered .hero-eyebrow { color: rgb(255 255 255 / 80%); }
 
 @media (width < 744px) {
   .hero.centered {
@@ -1284,7 +1299,7 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 0%, transparent 60%);
+  background: linear-gradient(to right, rgb(0 0 0 / 60%) 0%, transparent 60%);
   z-index: 2;
   pointer-events: none;
 }
@@ -1305,9 +1320,13 @@ color: inherit;
 
 .hero.video h1 { color: var(--color-text-on-dark, #fff); }
 
-.hero.video p { color: rgba(255 255 255 / 90%); }
+.hero.video p {
+  color: rgb(255 255 255 / 90%);
+}
 
-.hero.video .hero-eyebrow { color: rgba(255 255 255 / 80%); }
+.hero.video .hero-eyebrow {
+  color: rgb(255 255 255 / 80%);
+}
 
 /* Mobile: hide video, show fallback poster image only */
 @media (width < 744px) {
@@ -1393,11 +1412,13 @@ color: inherit;
   color: var(--color-text-on-dark, #fff);
 }
 
-.hero.solid p { color: rgba(255 255 255 / 90%); }
+.hero.solid p {
+  color: rgb(255 255 255 / 90%);
+}
 
-.hero.solid .hero-eyebrow { color: rgba(255 255 255 / 80%); }
-
-.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.solid .hero-eyebrow {
+  color: rgb(255 255 255 / 80%);
+}
 
 @media (width < 744px) {
   .hero.solid {
