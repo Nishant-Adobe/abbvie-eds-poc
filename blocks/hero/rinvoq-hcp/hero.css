@@ -1,10 +1,9 @@
 /* ============================================================
-   RINVOQ DTC — Hero Block Overrides
+   RINVOQ HCP — Hero Block Overrides
    Fonts: Graphik family
    Profile band: charcoal (--color-charcoal #25282a)
    Solid bg: charcoal
    CTA: plum (--link-color #90124a)
-   Multilayer: slower transition for buddy-state patient switching
    ============================================================ */
 
 /* Heading + body: Graphik */
@@ -40,49 +39,20 @@
   color: var(--color-text-on-dark);
 }
 
-/* Multilayer transition: slower cross-fade for patient state switching */
-.hero.multilayer .hero-layer {
-  transition: opacity 0.8s ease-in-out;
-}
-
 /* Stat numbers: gold accent */
 .hero.stat-overlay .hero-stat-number {
   color: var(--color-brand-accent);
 }
 
-/* CTA button: plum filled pill with right arrow */
+/* CTA: plum on light bg, gold on dark bg */
 .hero :where(a).button {
-  position: relative;
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-color);
-  border-color: var(--button-primary-bg);
-  border-radius: var(--border-radius-button-primary);
-  padding: var(--button-primary-padding);
-  font-size: var(--font-size-button);
-  font-weight: var(--font-weight-button);
+  color: var(--color-text-link);
 }
 
-.hero :where(a).button::after {
-  content: '›';
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.4em;
-  line-height: 1;
-}
-
-/* Dark variants: same plum pill — button stays on-brand regardless of bg */
 .hero.landing :where(a).button,
 .hero.full :where(a).button,
-.hero.video :where(a).button,
-.hero.solid :where(a).button {
-  background-color: var(--button-primary-color);
-  color: var(--button-primary-bg);
-  border-color: var(--button-primary-bg);
-  border-radius: 0;
-  padding: 16px 32px;
-  border: solid 2px var(--button-primary-bg);
+.hero.video :where(a).button {
+  color: var(--color-brand-accent);
 }
 
 /* Solid background: charcoal */
@@ -90,6 +60,6 @@
   background-color: var(--color-charcoal);
 }
 
-.hero.text-center p {
-  margin-top: 400px;
+.hero.solid :where(a).button {
+  color: var(--color-brand-accent);
 }
