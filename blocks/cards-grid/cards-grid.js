@@ -211,6 +211,66 @@ const LINZESS_ARTICLE_FLEX_CONTAINER_CLASS = (
 
 const LINZESS_ARTICLE_FLEX_ITEM_CLASS = 'abbv-flex-item-v2 background-light-purple rounded-corners';
 
+/** Rinvoq HCP flex columns (e.g. real-patients MEASURE UP 1 / 2). */
+const RINVOQ_COMMON_FLEX_CONTAINER_CLASS = (
+  'abbv-flex-container-v2 flexbox--break-row-column'
+);
+
+/** If no bold tags, wrap MEASURE UP / stat lead segments (split by br) in strong. */
+function ensureRinvoqStatLineStrongTags(p) {
+  if (!p || /<strong\b|<b\b/i.test(p.innerHTML)) return;
+  const parts = p.innerHTML.split(/(<br\s*\/?>)/i);
+  for (let i = 0; i < parts.length; i += 2) {
+    const chunk = parts[i];
+    if (chunk && chunk.trim()) {
+      const plain = chunk.replace(/<[^>]+>/g, '').trim();
+      const isTitle = /^MEASURE UP\s*\d/i.test(plain);
+      const isStat = /^\d+%\*/.test(plain) || /^\d+%\s*\(/.test(plain);
+      if (isTitle || isStat) {
+        parts[i] = `<strong>${chunk.trim()}</strong>`;
+      }
+    }
+  }
+  p.innerHTML = parts.join('');
+}
+
+/** RTE column: rich-text / abbv-rich-text-common; col 0 adds section-padding-right on first p. */
+function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
+  const richTextOuter = document.createElement('div');
+  richTextOuter.className = 'rich-text';
+
+  const abbvRt = document.createElement('div');
+  abbvRt.className = 'abbv-rich-text abbv-rich-text-common';
+
+  let paragraphs = [...wrapper.querySelectorAll(':scope > p')];
+  if (paragraphs.length === 0) {
+    paragraphs = [...wrapper.querySelectorAll('p')];
+  }
+
+  const addSectionPadding = columnIndex === 0;
+
+  if (paragraphs.length > 0) {
+    paragraphs.forEach((srcP, pi) => {
+      const p = srcP.cloneNode(true);
+      if (addSectionPadding && pi === 0) {
+        p.classList.add('section-padding-right');
+      }
+      fixEncodedSupInParagraph(p);
+      ensureRinvoqStatLineStrongTags(p);
+      abbvRt.append(p);
+    });
+  } else {
+    abbvRt.innerHTML = wrapper.innerHTML.trim();
+    abbvRt.querySelectorAll('p').forEach((p) => {
+      fixEncodedSupInParagraph(p);
+      ensureRinvoqStatLineStrongTags(p);
+    });
+  }
+
+  richTextOuter.append(abbvRt);
+  return richTextOuter;
+}
+
 function resolveLinzessArticleCta(ctaDiv) {
   if (!ctaDiv) return { href: '#', label: 'Read the article' };
   const a = ctaDiv.querySelector('a[href]');
@@ -577,5 +637,44 @@ export default function decorate(block) {
     flexboxV2.append(flexContainer);
     demoWrap.append(flexboxV2);
     block.append(demoWrap);
+  } else if (block.classList.contains('cards-grid-rinvoq-common-cards')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return;
+
+    let introWrapper = null;
+    let columnWrappers;
+    if (wrappers[0]?.classList.contains('rinvoq-common-intro')) {
+      [introWrapper, ...columnWrappers] = wrappers;
+    } else {
+      columnWrappers = wrappers;
+    }
+    if (columnWrappers.length === 0) return;
+
+    const outer = document.createElement('div');
+    outer.className = 'flexboxitem-v2 parbase';
+
+    const flexItem = document.createElement('div');
+    flexItem.className = 'abbv-flex-item-v2';
+
+    if (introWrapper) {
+      flexItem.append(buildRinvoqCommonRichTextColumn(introWrapper, -1));
+      introWrapper.remove();
+    }
+
+    const flexboxV2 = document.createElement('div');
+    flexboxV2.className = 'flexbox-v2 parbase';
+
+    const flexContainer = document.createElement('div');
+    flexContainer.className = RINVOQ_COMMON_FLEX_CONTAINER_CLASS;
+
+    columnWrappers.forEach((wrapper, index) => {
+      flexContainer.append(buildRinvoqCommonRichTextColumn(wrapper, index));
+      wrapper.remove();
+    });
+
+    flexboxV2.append(flexContainer);
+    flexItem.append(flexboxV2);
+    outer.append(flexItem);
+    block.append(outer);
   }
 }
