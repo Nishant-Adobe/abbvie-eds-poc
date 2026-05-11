@@ -229,6 +229,33 @@ const RINVOQ_COMMON_FLEX_CONTAINER_CLASS = (
   'abbv-flex-container-v2 flexbox--break-row-column'
 );
 
+/** Mavyret HCP nurse-ambassador icon row (mavyret-common-cards.html). */
+const MAVYRET_FLEX_ICON_RICH_CLASS = 'abbv-rich-text stacking-copy abbv-rich-text-common';
+
+function buildMavyretFlexIconColumn(wrapper) {
+  const richTextOuter = document.createElement('div');
+  richTextOuter.className = 'rich-text';
+
+  const abbvRt = document.createElement('div');
+  abbvRt.className = MAVYRET_FLEX_ICON_RICH_CLASS;
+
+  const existingRt = wrapper.querySelector(':scope > .abbv-rich-text');
+  if (existingRt) {
+    abbvRt.innerHTML = existingRt.innerHTML;
+  } else {
+    while (wrapper.firstChild) {
+      abbvRt.append(wrapper.firstChild);
+    }
+  }
+
+  abbvRt.querySelectorAll('p').forEach((p) => {
+    fixEncodedSupInParagraph(p);
+  });
+
+  richTextOuter.append(abbvRt);
+  return richTextOuter;
+}
+
 /** If no bold tags, wrap MEASURE UP / stat lead segments (split by br) in strong. */
 function ensureRinvoqStatLineStrongTags(p) {
   if (!p || /<strong\b|<b\b/i.test(p.innerHTML)) return;
@@ -688,6 +715,19 @@ export default function decorate(block) {
     flexboxV2.append(flexContainer);
     flexItem.append(flexboxV2);
     outer.append(flexItem);
+    block.append(outer);
+  } else if (block.classList.contains('cards-grid-mavyret-common-cards')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return;
+
+    const outer = document.createElement('div');
+    outer.className = 'abbv-container flex-icon';
+
+    wrappers.forEach((wrapper) => {
+      outer.append(buildMavyretFlexIconColumn(wrapper));
+      wrapper.remove();
+    });
+
     block.append(outer);
   }
 }

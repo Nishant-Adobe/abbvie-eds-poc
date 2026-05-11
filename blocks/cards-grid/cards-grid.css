@@ -1,3 +1,49 @@
+/*
+ * Mavyret cards-grid: Barlow Condensed + Roboto (latin woff2) in /fonts/cards-grid-mavyret/
+ * (self-hosted; no runtime request to fonts.gstatic.com / fonts.googleapis.com).
+ */
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/cards-grid-mavyret/barlow-condensed-latin-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/cards-grid-mavyret/barlow-condensed-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/cards-grid-mavyret/barlow-condensed-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/cards-grid-mavyret/roboto-latin-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/cards-grid-mavyret/roboto-latin-500.woff2') format('woff2');
+}
+
 @font-face {
     font-family: abbv-iconFont;
     src: url("/fonts/skyrizi-hcp/abbv_iconFont.woff") format("woff");
@@ -893,4 +939,78 @@
     .cards-grid.cards-grid-rinvoq-common-cards .section-padding-right {
       padding-right: 0;
     }
+  }
+
+  /*
+   * Mavyret — abbv-container.flex-icon (mavyret-common-cards.html).
+   * Site root is html 62.5% (1rem = 10px); mavyrethcp assumes ~16px root — use px + webfonts to match live.
+   */
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-container.flex-icon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 24px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-container.flex-icon > .rich-text {
+    flex: 1 1 260px;
+    min-width: 0;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy,
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p:not(.subhead),
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy li {
+    font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  /* p.subhead: must beat p:not(.subhead); live mavyrethcp uses Barlow Condensed 1.75rem / 600 (1.5rem ≤985px). */
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p.subhead {
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0 0 16px;
+  }
+
+  @media (width <= 985px) {
+    .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p.subhead {
+      font-size: 24px;
+      line-height: 1.4;
+    }
+
+    .cards-grid.cards-grid-mavyret-common-cards .abbv-container.flex-icon {
+      flex-direction: column;
+    }
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p,
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul {
+    margin: 0;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul {
+    padding-left: 1.25em;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy img.icon {
+    width: auto;
+    height: 90px;
+  }
+
+  .cards-grid.cards-grid-mavyret-common-cards .rich-text .abbv-rich-text.stacking-copy strong,
+  .cards-grid.cards-grid-mavyret-common-cards .rich-text .abbv-rich-text.stacking-copy b {
+    font-family: inherit !important;
+    font-weight: 700 !important;
   }
