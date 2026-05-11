@@ -1,5 +1,10 @@
 import { applyCommonProps } from '../../scripts/utils.js';
 
+/**
+ * Extracts trimmed text content from a block row's first cell.
+ * @param {HTMLElement|undefined} row - The block row element
+ * @returns {string} The extracted text content
+ */
 function cellText(row) {
   if (!row) return '';
   const el = row.children?.[0];
@@ -7,11 +12,21 @@ function cellText(row) {
   return text;
 }
 
+/**
+ * Extracts the href value from a row (prefers anchor href, falls back to text).
+ * @param {HTMLElement|undefined} row - The block row element
+ * @returns {string} The extracted URL or text
+ */
 function cellHref(row) {
   const a = row?.querySelector('a');
   return a ? a.getAttribute('href') || a.href : cellText(row);
 }
 
+/**
+ * Extracts image source from a row (img src or picture source srcset).
+ * @param {HTMLElement|undefined} row - The block row element
+ * @returns {string} The image URL or empty string
+ */
 function cellImage(row) {
   const img = row?.querySelector('img');
   if (img) return img.getAttribute('src') || img.src;
@@ -20,6 +35,12 @@ function cellImage(row) {
   return '';
 }
 
+/**
+ * Parses the block's authored rows into a structured configuration object.
+ * Row order: label, href, ariaLabel, target, modalId, then icon rows.
+ * @param {HTMLElement} block - The CTA block element
+ * @returns {Object} Configuration with label, href, ariaLabel, target, modalId, icon properties
+ */
 function readConfig(block) {
   const rows = [...block.children];
   const label = cellText(rows[0]) || 'Button';
@@ -43,8 +64,9 @@ function readConfig(block) {
       iconPosition = text;
     } else if (img) {
       iconImage = img;
-    } else if (text && /[0-9a-f]{3,6}/i.test(text) && !iconFont) {
-      [iconFont] = text.match(/[0-9a-f]{3,6}/i);
+    } else if (text && /^[/\\]?(?:u\+?|0x|x)?[0-9a-f]{3,6}$/i.test(text) && !iconFont) {
+      const match = text.match(/[0-9a-f]{3,6}/i);
+      iconFont = match ? match[0] : '';
     }
   }
 
@@ -69,6 +91,12 @@ function getVariant(block) {
   return variants.find((v) => block.classList.contains(v)) || 'abbv-button-primary';
 }
 
+/**
+ * Pushes CTA interaction events to GTM dataLayer.
+ * @param {Object} cfg - CTA configuration object
+ * @param {HTMLElement} block - The block element
+ * @param {string} action - The interaction type (click, toggle_on, toggle_off)
+ */
 function pushAnalytics(cfg, block, action) {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
@@ -110,6 +138,11 @@ function buildToggle(cfg, block) {
   return wrapper;
 }
 
+/**
+ * Creates an icon element based on config (font icon or image icon).
+ * @param {Object} cfg - CTA configuration with iconType, iconFont, iconImage
+ * @returns {HTMLElement|null} The icon span element, or null if no icon
+ */
 function buildIcon(cfg) {
   if (!cfg.iconType || cfg.iconType === 'none') return null;
 
