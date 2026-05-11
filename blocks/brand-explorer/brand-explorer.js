@@ -212,44 +212,22 @@ export default function decorate(block) {
     a.href = link.href;
     a.textContent = link.text;
     a.target = link.target;
-    if (link.href === '#' || link.href.includes('/fragments/')) {
-      const fragmentPath = link.href !== '#' ? link.href : '';
-      a.href = '#';
-      a.dataset.modalPath = fragmentPath;
-      a.addEventListener('click', async (e) => {
+
+    const href = link.href?.trim() || '';
+
+    if (href.startsWith('#') && href.length > 1) {
+      // Modal ID — open an existing modal on the page by ID
+      a.addEventListener('click', (e) => {
         e.preventDefault();
-        const path = a.dataset.modalPath;
-        if (!path) return;
-        let modal = document.querySelector('.brand-explorer-modal');
-        if (!modal) {
-          modal = document.createElement('div');
-          modal.className = 'brand-explorer-modal';
-          modal.setAttribute('role', 'dialog');
-          modal.setAttribute('aria-modal', 'true');
-          const overlay = document.createElement('div');
-          overlay.className = 'brand-explorer-modal-overlay';
-          overlay.addEventListener('click', () => { modal.hidden = true; document.body.classList.remove('brand-explorer-modal-open'); });
-          const dialog = document.createElement('div');
-          dialog.className = 'brand-explorer-modal-dialog';
-          const closeBtn = document.createElement('button');
-          closeBtn.className = 'brand-explorer-modal-close';
-          closeBtn.setAttribute('aria-label', 'Close modal');
-          closeBtn.addEventListener('click', () => { modal.hidden = true; document.body.classList.remove('brand-explorer-modal-open'); });
-          dialog.append(closeBtn);
-          const content = document.createElement('div');
-          content.className = 'brand-explorer-modal-content';
-          try {
-            const resp = await fetch(`${path}.plain.html`);
-            if (resp.ok) content.innerHTML = await resp.text();
-          } catch { /* fragment load failed silently */ }
-          dialog.append(content);
-          modal.append(overlay, dialog);
-          document.body.append(modal);
-        }
-        modal.hidden = false;
-        document.body.classList.add('brand-explorer-modal-open');
+        const modalEl = document.getElementById(href.slice(1));
+        if (modalEl) modalEl.hidden = false;
       });
+    } else if (href === '#' || !href) {
+      // No action — empty link
+      a.addEventListener('click', (e) => { e.preventDefault(); });
     }
+    // Otherwise: normal link — browser handles navigation
+
     barRight.append(a);
   });
 
