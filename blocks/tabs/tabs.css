@@ -39,7 +39,7 @@
   text-overflow: unset;
   overflow: unset;
   white-space: unset;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition-duration-fast);
 }
 
 .tabs .tabs-list button p {
@@ -50,6 +50,11 @@
   border-bottom-color: var(--tabs-active-bg);
   background-color: var(--tabs-active-bg);
   cursor: initial;
+}
+
+.tabs .tabs-list button:focus-visible {
+  outline: var(--spacing-02) solid var(--link-color);
+  outline-offset: var(--spacing-02);
 }
 
 /* Hidden tab items (kept in DOM for UE content tree) */
@@ -63,7 +68,7 @@
 }
 
 /* Tab panel — sections inside use 12-column grid */
-.tabs-panel > .section {
+.tabs-panel > .section[data-tabs-grid] {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-24);
@@ -72,27 +77,27 @@
 }
 
 /* Override abbvie-container grid-column on block wrappers */
-.tabs-panel > .section.abbvie-container > div {
+.tabs-panel > .section[data-tabs-grid].abbvie-container > div {
   grid-column: unset;
   min-width: 0;
 }
 
 @media (width >= 600px) {
-  .tabs-panel > .section {
+  .tabs-panel > .section[data-tabs-grid] {
     grid-template-columns: repeat(12, 1fr);
   }
 
   /* 1 block → spans all 12 columns */
-  .tabs-panel > .section.abbvie-container > div:only-child {
+  .tabs-panel > .section[data-tabs-grid].abbvie-container > div:only-child {
     grid-column: span 12;
   }
 
   /* 2 blocks → first 4 columns, second 8 columns */
-  .tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2) {
+  .tabs-panel > .section[data-tabs-grid].abbvie-container > div:first-child:nth-last-child(2) {
     grid-column: span 4;
   }
 
-  .tabs-panel > .section.abbvie-container > div:first-child:nth-last-child(2) ~ div {
+  .tabs-panel > .section[data-tabs-grid].abbvie-container > div:first-child:nth-last-child(2) ~ div {
     grid-column: span 8;
   }
 }

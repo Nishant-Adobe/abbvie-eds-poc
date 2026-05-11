@@ -74,7 +74,7 @@ export default async function decorate(block) {
   });
 
   // Build tab buttons and wrap matched panels
-  let firstTab = true;
+  let hasActiveTab = false;
   tabNames.forEach((name, i) => {
     const matched = tabPanelMap.get(name) || [];
     const panelId = `tab-panel-${tabBlockCnt}-${i + 1}`;
@@ -84,28 +84,32 @@ export default async function decorate(block) {
     button.id = `tab-${panelId}`;
     button.textContent = name || `Tab ${i + 1}`;
     button.setAttribute('aria-controls', panelId);
-    button.setAttribute('aria-selected', firstTab && matched.length > 0);
     button.setAttribute('role', 'tab');
     button.setAttribute('type', 'button');
+    button.setAttribute('tabindex', hasActiveTab || matched.length === 0 ? '-1' : '0');
+
+    const shouldActivate = matched.length > 0 && !hasActiveTab;
+    button.setAttribute('aria-selected', shouldActivate);
+
+    let wrapper = null;
 
     if (matched.length > 0) {
-      // Create a wrapper div for this tab's panel sections
-      const wrapper = document.createElement('div');
+      wrapper = document.createElement('div');
       wrapper.className = 'tabs-panel';
       wrapper.id = panelId;
       wrapper.setAttribute('role', 'tabpanel');
       wrapper.setAttribute('aria-labelledby', button.id);
-      wrapper.setAttribute('aria-hidden', !firstTab);
+      wrapper.setAttribute('aria-hidden', !shouldActivate);
 
-      // Move matched sections into wrapper
       const insertBefore = matched[0];
       main.insertBefore(wrapper, insertBefore);
       matched.forEach((section) => {
+        section.dataset.tabsGrid = 'true';
         section.style.display = '';
         wrapper.append(section);
       });
 
-      if (firstTab) firstTab = false;
+      if (shouldActivate) hasActiveTab = true;
     }
 
     button.addEventListener('click', () => {
@@ -115,11 +119,14 @@ export default async function decorate(block) {
       });
       tablist.querySelectorAll('button').forEach((btn) => {
         btn.setAttribute('aria-selected', false);
+        btn.setAttribute('tabindex', '-1');
       });
       // Show clicked panel
-      const panel = document.getElementById(panelId);
-      if (panel) panel.setAttribute('aria-hidden', false);
+      if (wrapper) wrapper.setAttribute('aria-hidden', false);
       button.setAttribute('aria-selected', true);
+      button.setAttribute('tabindex', '0');
+      // Update URL hash
+      window.history.replaceState(null, '', `#${panelId}`);
     });
 
     tablist.append(button);
@@ -134,4 +141,42 @@ export default async function decorate(block) {
     tabItem.classList.add('tabs-item-hidden');
   });
   block.prepend(tablist);
+
+  // Keyboard navigation (ARIA tabs pattern)
+  tablist.addEventListener('keydown', (e) => {
+    const buttons = [...tablist.querySelectorAll('button')];
+    const currentIndex = buttons.indexOf(document.activeElement);
+    let targetIndex = currentIndex;
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault();
+        targetIndex = currentIndex > 0 ? currentIndex - 1 : buttons.length - 1;
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        targetIndex = currentIndex < buttons.length - 1 ? currentIndex + 1 : 0;
+        break;
+      case 'Home':
+        e.preventDefault();
+        targetIndex = 0;
+        break;
+      case 'End':
+        e.preventDefault();
+        targetIndex = buttons.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    buttons[targetIndex]?.click();
+    buttons[targetIndex]?.focus();
+  });
+
+  // Deep link support — activate tab from URL hash
+  const hash = window.location.hash.slice(1);
+  if (hash) {
+    const targetButton = tablist.querySelector(`[aria-controls="${hash}"]`);
+    if (targetButton) targetButton.click();
+  }
 }

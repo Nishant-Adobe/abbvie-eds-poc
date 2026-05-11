@@ -43,7 +43,7 @@
 
 /* ── Tab buttons (inactive) ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  padding: 0.5em 0.8em;
+  padding: var(--spacing-05) var(--spacing-08);
   background: var(--color-ash);
   color: var(--color-charcoal);
   font-family: var(--body-font-family);
@@ -66,7 +66,7 @@
 
 /* ── Active tab — pops up via extra top padding ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-  padding: 0.8em 0.8em 0.5em;
+  padding: var(--spacing-08) var(--spacing-08) var(--spacing-05);
   background: var(--color-glacier);
   color: var(--color-charcoal);
   font-weight: var(--font-weight-heading);
@@ -128,11 +128,11 @@
 @media (width >= 600px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
     font-size: var(--font-size-12);
-    padding: 0.75em 1.5em;
+    padding: var(--spacing-08) var(--spacing-15);
   }
 
   .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-    padding: 1.2em 1.5em 0.75em;
+    padding: var(--spacing-12) var(--spacing-15) var(--spacing-08);
   }
 
   .tabs-panel:has(> .section:first-child:nth-last-child(2)) {
@@ -152,10 +152,10 @@
 @media (width >= 900px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
     font-size: var(--font-size-14);
-    padding: 0.75em 1.5em;
+    padding: var(--spacing-08) var(--spacing-15);
   }
 
   .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
-    padding: 1.2em 1.5em 0.75em;
+    padding: var(--spacing-12) var(--spacing-15) var(--spacing-08);
   }
 }
