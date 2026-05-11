@@ -24,7 +24,7 @@
 .rich-text.disclaimer {
   font-size: var(--font-size-12);
   color: var(--color-text-muted);
-  line-height: 1.4;
+  line-height: var(--line-height-20, 1.25rem);
 }
 
 .rich-text.footnote {
@@ -84,13 +84,13 @@
 }
 
 .rich-text sup {
-  font-size: 0.7em;
+  font-size: var(--font-size-sup, 0.7em);
   vertical-align: super;
   line-height: 0;
 }
 
 .rich-text sub {
-  font-size: 0.7em;
+  font-size: var(--font-size-sup, 0.7em);
   vertical-align: sub;
   line-height: 0;
 }
@@ -200,7 +200,7 @@
 
 .rich-text code {
   font-family: monospace;
-  font-size: 0.875em;
+  font-size: var(--font-size-code, 0.875em);
   background: var(--highlight-background-color);
   padding: 0.125em 0.375em;
   border-radius: 3px;

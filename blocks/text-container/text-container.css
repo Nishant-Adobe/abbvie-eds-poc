@@ -312,13 +312,13 @@ p.text-container-text:last-child,
 /* Superscript / Subscript (pharma footnotes) */
 
 .text-container sup {
-  font-size: 0.7em;
+  font-size: var(--font-size-sup, 0.7em);
   vertical-align: super;
   line-height: 0;
 }
 
 .text-container sub {
-  font-size: 0.7em;
+  font-size: var(--font-size-sup, 0.7em);
   vertical-align: sub;
   line-height: 0;
 }
@@ -404,7 +404,7 @@ p.text-container-text:last-child,
   font-size: var(--font-size-12);
   color: var(--color-text-muted);
   margin-top: var(--spacing-06);
-  line-height: 1.4;
+  line-height: var(--line-height-20, 1.25rem);
 }
 
 /* Tel: links */
@@ -434,7 +434,7 @@ p.text-container-text:last-child,
 
 .text-container code {
   font-family: monospace;
-  font-size: 0.875em;
+  font-size: var(--font-size-code, 0.875em);
   background: var(--highlight-background-color);
   padding: 0.125em 0.375em;
   border-radius: 3px;
@@ -470,7 +470,7 @@ p.text-container-text:last-child,
 .text-container.footnote {
   font-size: var(--font-size-12);
   color: var(--color-text-muted);
-  line-height: 1.4;
+  line-height: var(--line-height-20, 1.25rem);
   border-top: 1px solid var(--container-border-color);
   padding-top: var(--spacing-10);
   margin-top: var(--spacing-16);
@@ -482,7 +482,7 @@ p.text-container-text:last-child,
   font-size: var(--font-size-12);
   color: var(--color-text-muted);
   font-style: italic;
-  line-height: 1.4;
+  line-height: var(--line-height-20, 1.25rem);
 }
 
 /* VARIANT: References */
@@ -509,7 +509,7 @@ p.text-container-text:last-child,
 .text-container.legal {
   font-size: var(--font-size-12);
   color: var(--color-text-muted);
-  line-height: 1.4;
+  line-height: var(--line-height-20, 1.25rem);
 }
 
 /* VARIANT: Boxed Warning */
