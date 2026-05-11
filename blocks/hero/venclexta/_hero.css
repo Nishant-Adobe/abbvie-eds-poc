@@ -256,6 +256,7 @@
   font-weight: 700;
   line-height: 1.2;
   color: var(--color-text-on-dark);
+  padding-bottom: 0;
 }
 
 .hero.full .hero-image-caption {
@@ -265,7 +266,7 @@
   padding: 1.6rem 2rem;
   color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
-  font-size: 1.35rem;
+  font-size: 18px;
   line-height: 1.28;
   font-style: normal;
   text-align: center;
@@ -411,5 +412,11 @@
   .hero.full .hero-image-caption {
     font-size: 1.2rem;
     line-height: 1.34;
+  }
+}
+
+@media (width >= 1024px) {
+  .hero.full > .hero-content-stack {
+    width: 1180px;
   }
 }
