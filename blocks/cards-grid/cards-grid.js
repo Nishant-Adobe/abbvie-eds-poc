@@ -203,6 +203,118 @@ const LINZESS_FLEX_CONTAINER_CLASS = (
   'abbv-flex-container-v2 flexbox-column-mobile flexbox-cards margin-top-80 savings-card-cards'
 );
 
+/** Resources article row — matches linzess.com/resources flashcard strip. */
+const LINZESS_ARTICLE_FLEX_CONTAINER_CLASS = (
+  'abbv-flex-container-v2 flexbox-column-mobile flexbox-cards flexbox-article-cards '
+  + 'article-flashcards resources-flexbox-column'
+);
+
+const LINZESS_ARTICLE_FLEX_ITEM_CLASS = 'abbv-flex-item-v2 background-light-purple rounded-corners';
+
+function resolveLinzessArticleCta(ctaDiv) {
+  if (!ctaDiv) return { href: '#', label: 'Read the article' };
+  const a = ctaDiv.querySelector('a[href]');
+  if (a) {
+    return {
+      href: a.getAttribute('href') || '#',
+      label: (a.textContent || '').trim() || 'Read the article',
+    };
+  }
+  const href = resolveLinzessCtaHref(ctaDiv);
+  const label = (ctaDiv.textContent || '').trim() || 'Read the article';
+  return { href, label };
+}
+
+function buildLinzessArticleCardColumn(wrapper) {
+  const directDivs = [...wrapper.children].filter((c) => c.tagName === 'DIV');
+  let pictureDiv;
+  let titleDiv;
+  let bodyDiv;
+  let ctaDiv;
+  if (directDivs.length >= 5) {
+    [, pictureDiv, titleDiv, bodyDiv, ctaDiv] = directDivs;
+  } else {
+    [pictureDiv, titleDiv, bodyDiv, ctaDiv] = directDivs;
+  }
+
+  const { href, label } = resolveLinzessArticleCta(ctaDiv);
+
+  const col = document.createElement('div');
+  col.className = 'flexboxitem-v2 parbase';
+
+  const flexItem = document.createElement('div');
+  flexItem.className = LINZESS_ARTICLE_FLEX_ITEM_CLASS;
+
+  const imageTextParbase = document.createElement('div');
+  imageTextParbase.className = 'image-text-v2 parbase';
+
+  const rootImageText = document.createElement('div');
+  rootImageText.className = 'abbv-image-text-v2 abbv-image-scale';
+
+  const imgContainer = document.createElement('div');
+  imgContainer.className = 'abbv-image-content-container-v2';
+
+  if (pictureDiv) {
+    const picture = pictureDiv.querySelector('picture');
+    const loneImg = pictureDiv.querySelector(':scope > img');
+    if (picture) {
+      imgContainer.append(picture);
+    } else if (loneImg) {
+      imgContainer.append(loneImg);
+    }
+  }
+
+  const outContainer = document.createElement('div');
+  outContainer.className = 'abbv-image-text-content-container-v2 abbv-image-text-out';
+  const contentV2 = document.createElement('div');
+  contentV2.className = 'abbv-image-text-content-v2';
+  const displayV2 = document.createElement('div');
+  displayV2.className = 'abbv-image-text-display-v2';
+  const bodyStretch = document.createElement('div');
+  bodyStretch.className = 'abbv-stretched-card-body';
+
+  const titleP = titleDiv?.querySelector('p');
+  if (titleP) {
+    const tp = document.createElement('p');
+    tp.className = 'c-linz-dark-purple';
+    tp.innerHTML = titleP.innerHTML;
+    fixLinzessEncodedBoldInParagraph(tp);
+    fixEncodedSupInParagraph(tp);
+    bodyStretch.append(tp);
+  }
+
+  if (bodyDiv) {
+    bodyDiv.querySelectorAll(':scope > p').forEach((srcP) => {
+      const bp = document.createElement('p');
+      bp.className = srcP.className;
+      bp.innerHTML = srcP.innerHTML;
+      fixLinzessEncodedBoldInParagraph(bp);
+      fixEncodedSupInParagraph(bp);
+      bodyStretch.append(bp);
+    });
+  }
+
+  const ctaA = document.createElement('a');
+  ctaA.className = 'abbv-button-primary abbv-image-text-link';
+  ctaA.href = href;
+  ctaA.target = '_self';
+  ctaA.title = label;
+  ctaA.setAttribute('role', 'link');
+  ctaA.setAttribute('aria-label', label);
+  ctaA.textContent = label;
+  bodyStretch.append(ctaA);
+
+  displayV2.append(bodyStretch);
+  contentV2.append(displayV2);
+  outContainer.append(contentV2);
+  rootImageText.append(imgContainer, outContainer);
+  imageTextParbase.append(rootImageText);
+  flexItem.append(imageTextParbase);
+  col.append(flexItem);
+
+  return col;
+}
+
 function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
   const directDivs = [...wrapper.children].filter((c) => c.tagName === 'DIV');
   const linkCell = directDivs[0];
@@ -431,6 +543,26 @@ export default function decorate(block) {
 
     wrappers.forEach((wrapper, index) => {
       flexContainer.append(buildLinzessIconImageCardColumn(wrapper, index));
+      wrapper.remove();
+    });
+
+    flexboxV2.append(flexContainer);
+    demoWrap.append(flexboxV2);
+    block.append(demoWrap);
+  } else if (block.classList.contains('cards-grid-linzess-article-cards')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return;
+
+    const demoWrap = document.createElement('div');
+    demoWrap.className = 'demo-wrap';
+    const flexboxV2 = document.createElement('div');
+    flexboxV2.className = 'flexbox-v2 parbase';
+
+    const flexContainer = document.createElement('div');
+    flexContainer.className = LINZESS_ARTICLE_FLEX_CONTAINER_CLASS;
+
+    wrappers.forEach((wrapper) => {
+      flexContainer.append(buildLinzessArticleCardColumn(wrapper));
       wrapper.remove();
     });
 
