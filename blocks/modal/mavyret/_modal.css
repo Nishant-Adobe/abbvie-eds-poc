@@ -94,35 +94,36 @@
   margin-top: 20px;
 }
 
-/* Links styled as buttons — for WoL modals (Yes/No) */
+/* Links styled as buttons — small, square, outlined (matching live site) */
 .modal-dialog .modal-content a[href] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-width: 140px;
-  padding: 14px 36px;
-  border-radius: var(--border-radius-button-primary, 30px);
-  font-weight: 700;
+  min-width: 80px;
+  padding: 10px 24px;
+  border-radius: 0;
+  font-weight: 400;
   font-family: var(--body-font-family);
   font-size: 14px;
   text-decoration: none;
-  margin-right: 16px;
+  margin-right: 12px;
   margin-top: 12px;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
-  background: var(--color-brand-primary, #21406d);
-  color: var(--color-text-on-dark, #fff) !important;
-  border: 2px solid var(--color-brand-primary, #21406d);
+  background: transparent;
+  color: var(--color-black, #000) !important;
+  border: 1px solid var(--color-black, #000);
 }
 
 .modal-dialog .modal-content a[href]:last-of-type {
   background: transparent;
-  color: var(--color-brand-primary, #21406d) !important;
-  border: 2px solid var(--color-brand-primary, #21406d);
+  color: var(--color-black, #000) !important;
+  border: 1px solid var(--color-black, #000);
 }
 
 .modal-overlay .modal-dialog .modal-content a[href]:hover {
-  opacity: 0.85;
+  background: var(--color-brand-primary, #21406d);
+  color: var(--color-text-on-dark, #fff) !important;
+  border-color: var(--color-brand-primary, #21406d);
 }
 
 /* Information variant — no button styling on links */
