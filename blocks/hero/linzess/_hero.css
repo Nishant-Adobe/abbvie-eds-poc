@@ -1,0 +1,71 @@
+@import '../hero.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* ============================================================
+   LINZESS DTC — Hero Block Overrides (XWalk/UE preview)
+   ============================================================ */
+
+/* Heading: Bebas Neue, uppercase, purple */
+.hero h1 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h1-hero);
+  line-height: var(--line-height-h1-hero);
+  text-transform: uppercase;
+}
+
+.hero h2,
+.hero h3 {
+  font-family: var(--heading-font-family);
+  text-transform: uppercase;
+}
+
+/* Body: Lato */
+.hero p {
+  font-family: var(--body-font-family);
+}
+
+/* Profile band: purple */
+.hero.profile > :where(div):first-child {
+  background-color: var(--color-brand-primary);
+}
+
+/* Profile text panel: white text on purple band */
+.hero.profile h1,
+.hero.profile h2,
+.hero.profile h3,
+.hero.profile p {
+  color: var(--color-text-on-dark);
+}
+
+.hero.profile .hero-breadcrumbs :where(ol li),
+.hero.profile .hero-breadcrumbs :where(li a) {
+  color: var(--color-text-on-dark);
+}
+
+/* CTA button: orange accent */
+.hero :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+.hero.landing :where(a).button,
+.hero.full :where(a).button,
+.hero.video :where(a).button {
+  color: var(--color-brand-accent);
+}
+
+/* Landing/full gradient: dark-to-transparent overlay from tokens */
+.hero.landing::after,
+.hero.full::after,
+.hero.video::after {
+  background: var(--gradient-hero-overlay, linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%));
+}
+
+/* Solid background: purple */
+.hero.solid {
+  background-color: var(--color-brand-primary);
+}
+
+.hero.solid :where(a).button {
+  color: var(--color-brand-accent);
+}
