@@ -435,6 +435,135 @@ function buildMavyretFlexIconColumn(wrapper) {
   return richTextOuter;
 }
 
+/**
+ * CTA anchor classes + AEM attrs (mavyret-cta-cards.html).
+ * @param {HTMLAnchorElement} a
+ */
+function finalizeMavyretCtaAnchorFromUe(a) {
+  if (!a || a.tagName !== 'A') return;
+  if (!a.getAttribute('role')) {
+    a.setAttribute('role', 'link');
+  }
+  a.setAttribute('aria-hidden', 'false');
+  const href = (a.getAttribute('href') || '').trim();
+  const isTel = /^tel:/i.test(href);
+  if (isTel) {
+    a.className = 'abbv-button-plain cta--phone';
+    if (!a.hasAttribute('data-linktype')) {
+      a.setAttribute('data-linktype', 'internal');
+    }
+    if (!a.hasAttribute('target')) {
+      a.setAttribute('target', '_self');
+    }
+    return;
+  }
+  a.className = 'abbv-icon-keyboard_arrow_right abbv-button-primary i-a';
+  if (!a.hasAttribute('data-linktype')) {
+    if (/\.pdf(\?|$)/i.test(href)) {
+      a.setAttribute('data-linktype', 'download');
+    } else if (/^https?:\/\//i.test(href)) {
+      a.setAttribute('data-linktype', 'external');
+    }
+  }
+  if (!a.hasAttribute('target')) {
+    a.setAttribute('target', '_blank');
+  }
+  const lab = (a.textContent || '').trim();
+  if (lab && !a.getAttribute('aria-label')) {
+    a.setAttribute('aria-label', `${lab}, Opens in a new window`);
+  }
+}
+
+/**
+ * UE column row → mavyret-cta-cards.html column (container > abbv-container > rich-text + cta).
+ * Cell order: [0] link, [1] icon, [2] title, [3] body, [4] CTA label, …
+ * @param {HTMLElement} wrapper
+ */
+function buildMavyretCtaCardsColumnFromUeRow(wrapper) {
+  const cells = [...wrapper.querySelectorAll(':scope > div')];
+  const linkEl = cells[0]?.querySelector('a[href]') || wrapper.querySelector('a[href]');
+  let href = (linkEl?.getAttribute('href') || '').trim();
+  if (!href) href = '#';
+
+  const iconCell = cells.find((c, idx) => idx > 0 && c.querySelector('picture, img')) || cells[1];
+  const titleText = (cells[2]?.textContent || '').trim();
+  const bodyText = (cells[3]?.textContent || '').trim();
+  let ctaLabel = (cells[4]?.textContent || '').trim();
+  if (!ctaLabel) {
+    ctaLabel = (linkEl?.textContent || '').trim() || 'Learn more';
+  }
+
+  const containerParbase = document.createElement('div');
+  containerParbase.className = 'container parbase';
+  const abbvInner = document.createElement('div');
+  abbvInner.className = 'abbv-container ';
+  const richTextOuter = document.createElement('div');
+  richTextOuter.className = 'rich-text';
+  const abbvRt = document.createElement('div');
+  abbvRt.className = MAVYRET_FLEX_ICON_RICH_CLASS;
+
+  const iconP = document.createElement('p');
+  iconP.className = 'center';
+  const pic = iconCell?.querySelector(':scope picture');
+  const loneImg = iconCell?.querySelector(':scope > img');
+  if (pic) {
+    const picClone = pic.cloneNode(true);
+    iconP.append(picClone);
+    const im = iconP.querySelector('img');
+    if (im) {
+      im.classList.add('icon');
+      if (!im.getAttribute('loading')) im.setAttribute('loading', 'lazy');
+    }
+  } else if (loneImg) {
+    const legacyImg = loneImg;
+    const src = (legacyImg.getAttribute('src') || legacyImg.currentSrc || '').trim();
+    const alt = (legacyImg.getAttribute('alt') || '').trim();
+    if (src) {
+      const imgEl = document.createElement('img');
+      imgEl.src = src;
+      imgEl.className = 'icon';
+      imgEl.setAttribute('loading', 'lazy');
+      if (alt) imgEl.setAttribute('alt', alt);
+      ['width', 'height'].forEach((attr) => {
+        const v = legacyImg.getAttribute(attr);
+        if (v) imgEl.setAttribute(attr, v);
+      });
+      iconP.append(imgEl);
+    }
+  }
+  abbvRt.append(iconP);
+
+  const sub = document.createElement('p');
+  sub.className = 'subhead';
+  sub.textContent = titleText;
+  abbvRt.append(sub);
+
+  if (bodyText) {
+    const bp = document.createElement('p');
+    bp.textContent = bodyText;
+    abbvRt.append(bp);
+  }
+
+  abbvRt.querySelectorAll('p').forEach((p) => {
+    fixEncodedSupInParagraph(p);
+  });
+
+  richTextOuter.append(abbvRt);
+  abbvInner.append(richTextOuter);
+
+  const ctaWrap = document.createElement('div');
+  ctaWrap.className = 'cta parbase';
+  const ctaA = document.createElement('a');
+  ctaA.href = href;
+  ctaA.textContent = ctaLabel;
+  finalizeMavyretCtaAnchorFromUe(ctaA);
+  ctaWrap.append(ctaA);
+  abbvInner.append(ctaWrap);
+
+  containerParbase.append(abbvInner);
+  return containerParbase;
+}
+
 /** If no bold tags, wrap MEASURE UP / stat lead segments (split by br) in strong. */
 function ensureRinvoqStatLineStrongTags(p) {
   if (!p || /<strong\b|<b\b/i.test(p.innerHTML)) return;
@@ -905,6 +1034,22 @@ export default function decorate(block) {
     wrappers.forEach((wrapper) => {
       outer.append(buildMavyretFlexIconColumn(wrapper));
       wrapper.remove();
+    });
+
+    const demoWrap = document.createElement('div');
+    demoWrap.className = 'demo-wrap';
+    demoWrap.append(outer);
+    block.append(demoWrap);
+  } else if (block.classList.contains('cards-grid-mavyret-cta-cards')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return;
+
+    const outer = document.createElement('div');
+    outer.className = 'abbv-container flex-icon text-center flex-icon__cta-at-bottom';
+
+    wrappers.forEach((w) => {
+      outer.append(buildMavyretCtaCardsColumnFromUeRow(w));
+      w.remove();
     });
 
     const demoWrap = document.createElement('div');
