@@ -3,10 +3,10 @@
 /* Skyrizi HCP brand tokens for image-compare */
 .image-compare {
   --color-skyrizi-light-blue: #d1f1fc;
-  --color-skyrizi-navy: #071d49;
+  --color-skyrizi-navy: var(--color-background-footer);
   --color-skyrizi-blue: #1398d1;
   --color-skyrizi-thumb-bg: #add8e6;
-  --color-skyrizi-hover: #0a3d6b;
+  --color-skyrizi-hover: var(--color-brand-primary-dark);
 }
 
 .image-compare.gallery {
@@ -24,7 +24,7 @@
   max-width: 1160px;
   margin: 0 auto 32px;
   padding: 10px;
-  background: #fff;
+  background: var(--background-color);
   border-radius: 8px;
 }
 
@@ -36,7 +36,7 @@
 .image-compare .image-compare-eyebrow {
   display: block;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
   color: var(--color-skyrizi-navy);
   text-transform: uppercase;
   line-height: 20px;
@@ -46,7 +46,7 @@
 .image-compare .image-compare-heading {
   font-size: 28px;
   line-height: 32px;
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
   color: var(--color-skyrizi-blue);
   margin: 0 0 16px;
 }
@@ -56,11 +56,11 @@
   display: block;
   margin-top: 20px;
   height: 1px;
-  background: #ccc;
+  background: var(--color-border-default);
 }
 
 .image-compare .image-compare-description {
-  font-size: 14px;
+  font-size: var(--font-size-body-small);
   line-height: 16px;
   color: var(--color-skyrizi-navy);
   margin-bottom: 24px;
@@ -73,15 +73,15 @@
 .image-compare .image-compare-cta {
   display: inline-block;
   background: var(--color-skyrizi-navy);
-  color: #fff;
+  color: var(--color-text-on-dark);
   padding: 14px 56px 14px 30px;
   border-radius: 5px;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body);
   text-decoration: none;
   text-transform: uppercase;
   position: relative;
-  transition: background 200ms;
+  transition: background var(--transition-fast);
 }
 
 .image-compare .image-compare-cta::after {
@@ -92,7 +92,7 @@
   transform: translateY(-50%);
   width: 21px;
   height: 21px;
-  border: 2px solid #fff;
+  border: 2px solid var(--background-color);
   border-radius: 50%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3Cpath d='M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z'/%3E%3C/svg%3E");
   background-size: 12px;
@@ -137,7 +137,7 @@
   display: block;
   width: 50px;
   height: 50px;
-  background-color: #fff;
+  background-color: var(--background-color);
   box-shadow: 0 2px 10px rgb(0 0 0 / 40%);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
   background-size: 20px;
@@ -153,18 +153,18 @@
   display: flex;
   justify-content: space-between;
   background: var(--color-skyrizi-navy);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-button);
   padding: 4px 12px;
   margin-top: 0;
 }
 
 .image-compare .image-compare-patient {
   background: var(--color-skyrizi-navy);
-  color: #fff;
+  color: var(--color-text-on-dark);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: var(--font-weight-button);
   padding: 8px 12px 16px;
 }
 
@@ -247,11 +247,11 @@
   }
 
   .image-compare .image-compare-patient {
-    font-size: 24px;
+    font-size: var(--font-size-h2);
   }
 
   .image-compare .image-compare-heading {
-    font-size: 44px;
+    font-size: var(--font-size-h-xl);
     line-height: 40px;
   }
 

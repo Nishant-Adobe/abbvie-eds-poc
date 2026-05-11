@@ -2,8 +2,8 @@
 
 /* Rinvoq brand tokens for image-compare */
 .image-compare {
-  --color-rinvoq-yellow: #ffd100;
-  --color-rinvoq-dark: #25282a;
+  --color-rinvoq-yellow: var(--color-gold);
+  --color-rinvoq-dark: var(--color-charcoal);
 }
 
 .image-compare.gallery {
@@ -16,8 +16,8 @@
   inset: 0 0 auto;
   background: var(--color-rinvoq-yellow);
   color: var(--color-rinvoq-dark);
-  font-size: 16px;
-  font-weight: 400;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
   padding: 6px 15px;
   border-radius: 0;
   z-index: 3;
@@ -31,8 +31,8 @@
   overflow: hidden;
   background: var(--color-rinvoq-yellow);
   color: var(--color-rinvoq-dark);
-  font-size: 16px;
-  font-weight: 400;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
   padding: 6px 15px;
   border-radius: 0;
   z-index: 4;
@@ -68,9 +68,9 @@
   left: var(--compare-position);
   transform: translate(-50%, -50%);
   background: rgb(51 51 51 / 85%);
-  color: #fff;
+  color: var(--color-text-on-dark);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: var(--font-weight-button);
   padding: 8px 12px;
   border-radius: 4px;
   text-align: center;
@@ -82,9 +82,9 @@
 
 .image-compare .image-compare-gallery-content {
   background: #666869;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-button);
   padding: 5px 10px;
   text-align: center;
   margin-bottom: 0;
@@ -95,28 +95,28 @@
   justify-content: center;
   gap: 0;
   margin: 24px 0 16px;
-  border: 2px solid #90124a;
+  border: 2px solid var(--color-brand-primary);
   border-radius: 5px;
   overflow: hidden;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab {
   flex: 1;
-  background: #fff;
-  color: #90124a;
+  background: var(--background-color);
+  color: var(--color-brand-primary);
   border: none;
   border-radius: 0;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-button);
   padding: 10px 20px;
   cursor: pointer;
   text-align: center;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab.is-active {
-  background: #90124a;
-  color: #fff;
-  border-color: #90124a;
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  border-color: var(--color-brand-primary);
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:first-child {
@@ -154,7 +154,7 @@
 }
 
 .image-compare .image-compare-thumb.is-active {
-  border-color: #90124a;
+  border-color: var(--color-brand-primary);
   outline: none;
 }
 
@@ -171,9 +171,9 @@
 
 .image-compare .image-compare-thumb-label {
   display: block;
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-button);
+  color: var(--color-text-on-dark);
   position: absolute;
   bottom: 28px;
   left: 8px;
@@ -182,9 +182,9 @@
 
 .image-compare .image-compare-thumb-sublabel {
   display: block;
-  font-size: 12px;
-  font-weight: 400;
-  color: #fff;
+  font-size: var(--font-size-body-xs);
+  font-weight: var(--font-weight-body);
+  color: var(--color-text-on-dark);
   position: absolute;
   bottom: 10px;
   left: 8px;
