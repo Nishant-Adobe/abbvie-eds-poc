@@ -757,6 +757,12 @@ color: inherit;
   opacity: 1;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
+.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
+
+/* stylelint-disable-next-line no-descending-specificity */
+.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
+
 /* =====================================================
    Hero Dual-CTA Variant — two side-by-side CTAs
    Authoring: use block name "Hero (dual-cta)"
@@ -776,12 +782,6 @@ color: inherit;
 .hero.dual-cta .button-container :where(a).button:not(:first-child) {
   margin-top: var(--spacing-16);
 }
-
-/* full/solid/video/compact/centered :where(a).button placed here so they appear
-   before .hero.dual-cta .button-container selectors in source order (no-descending-specificity) */
-.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
-
-.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
 
 /* =====================================================
    Hero Eyebrow Text
