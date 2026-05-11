@@ -277,7 +277,15 @@ function buildLinzessArticleCardColumn(wrapper) {
   if (titleP) {
     const tp = document.createElement('p');
     tp.className = 'c-linz-dark-purple';
-    tp.innerHTML = titleP.innerHTML;
+    const rawHtml = titleP.innerHTML?.trim() || '';
+    const hasBoldTag = /<b\b|<strong\b/i.test(rawHtml) || rawHtml.includes('&lt;b');
+    if (hasBoldTag) {
+      tp.innerHTML = titleP.innerHTML;
+    } else {
+      const b = document.createElement('b');
+      b.textContent = titleP.textContent?.trim() || '';
+      tp.append(b);
+    }
     fixLinzessEncodedBoldInParagraph(tp);
     fixEncodedSupInParagraph(tp);
     bodyStretch.append(tp);
