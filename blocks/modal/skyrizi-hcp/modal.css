@@ -310,7 +310,7 @@ body.modal-is-open {
   --modal-dialog-max-width: 700px;
   --modal-dialog-padding: 40px;
   --modal-dialog-border: none;
-  --modal-dialog-border-radius: 0;
+  --modal-dialog-border-radius: 8px;
   --modal-close-size: 44px;
   --modal-close-font-size: 22px;
 }
@@ -330,6 +330,16 @@ body.modal-is-open {
 
 .modal-header .modal-close:hover {
   opacity: 0.85;
+}
+
+/* Blue gradient top border on dialog */
+
+.modal-overlay .modal-dialog::before {
+  content: '';
+  display: block;
+  height: 5px;
+  background: linear-gradient(90deg, var(--color-brand-accent-sky, #2196c8), var(--color-brand-primary, #005272));
+  border-radius: 8px 8px 0 0;
 }
 
 /* Dialog heading — centered, large, bold, black */
