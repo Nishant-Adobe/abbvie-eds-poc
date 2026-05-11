@@ -1,4 +1,7 @@
 // v3.0 — support delivered xwalk format
+
+const ABBVIE_LOGO_SVG = '<svg viewBox="0 0 124.4 21.5" class="brand-explorer-abbvie-logo"><g><path fill="currentColor" d="M123.8,20.8c0-1.3-0.8-1.8-2-1.8c-0.7,0-9.2,0-9.2,0c-4.5,0-5.6-2.7-5.8-4.4c0,0,9.5,0,12.5,0c3.8,0,5-2.8,5-4.6c0-1.9-1.2-4.6-5-4.6c-3.4,0-6.9,0-6.9,0c-6.5,0-8.6,4.4-8.6,8c0,3.9,2.4,8,8.6,8h11.4C123.8,21.5,123.8,20.9,123.8,20.8z M112.6,7.8c1,0,4.6,0,6,0c2.2,0,2.7,1.3,2.7,2.2c0,0.8-0.5,2.2-2.7,2.2c-1.5,0-12,0-12,0C106.8,10.8,108.1,7.8,112.6,7.8z M85.9,20.5c-0.7,0.9-1,1.3-1.7,1.3c-0.9,0-1.1-0.4-1.7-1.3c-1.4-2-9.8-15-9.8-15s0.6,0,1.2,0c2,0,2.6,0.9,3.2,1.9c0.5,0.8,7.3,11.2,7.3,11.2s6.4-9.9,7.3-11.3c0.6-0.9,1.4-1.8,3.3-1.8c0.4,0,0.9,0,0.9,0S87.1,18.9,85.9,20.5z M22.8,21.5c-1.5,0-2.1-0.6-2.3-1.8L20.1,18c-0.4,0.7-2.4,3.5-6.8,3.5c0,0-2.2,0-4.5,0c-6.8,0-8.7-4.6-8.7-8c0-3.8,2.3-8,8.7-8c1.3,0,2.7,0,4.8,0c4.9,0,7.6,2.8,8.2,6.3c0.5,2.9,1.8,9.7,1.8,9.7S23.3,21.5,22.8,21.5z M12.9,8c-1.6,0-2,0-3.8,0C4.5,8,3,10.9,3,13.5S4.5,19,9.1,19c1.9,0,2.5,0,3.8,0c4.8,0,6.1-3,6.1-5.5C19,11.3,17.8,8,12.9,8z M99,2.9c0.7,0,1.4-0.4,1.4-1.3c0-0.2,0-0.4,0-0.5c0-0.8-0.7-1.3-1.4-1.3c-0.7,0-1.4,0.4-1.4,1.3c0,0.1,0,0.3,0,0.5C97.6,2.5,98.3,2.9,99,2.9z M97.7,5.5c0,0,0.4,0,0.6,0c1.3,0,2.1,0.7,2.1,2.1c0,0.2,0,13.9,0,13.9s-0.3,0-0.6,0c-1.3,0-2.1-0.8-2.1-2.2C97.7,19.2,97.7,5.5,97.7,5.5z M28.1,7.8c0.6-0.6,2.4-2.3,5.9-2.3c0,0,2.2,0,4.5,0c6.8,0,8.8,4.6,8.8,8c0,3.8-2.4,8-8.8,8c-1.3,0-2.7,0-4.8,0c-4.9,0-8.4-3.1-8.4-8c0-1.6,0-13.4,0-13.4s0.5,0,0.8,0c1.4,0,2,0.7,2,1.9C28.1,2.2,28.1,7.8,28.1,7.8z M34.4,19c1.6,0,2,0,3.8,0c4.5,0,6.1-2.9,6.1-5.5S42.8,8,38.2,8c-1.9,0-2.5,0-3.8,0c-4.8,0-6.1,3-6.1,5.5C28.2,15.7,29.5,19,34.4,19z M53.2,7.8c0.6-0.6,2.4-2.3,5.9-2.3c0,0,2.2,0,4.5,0c6.8,0,8.7,4.6,8.7,8c0,3.8-2.3,8-8.7,8c-1.3,0-2.7,0-4.8,0c-4.9,0-8.4-3.1-8.4-8c0-1.6,0-13.4,0-13.4s0.5,0,0.8,0c1.4,0,2,0.7,2,1.9C53.2,2.2,53.2,7.8,53.2,7.8z M59.5,19c1.6,0,2,0,3.8,0c4.6,0,6.1-2.9,6.1-5.5S67.9,8,63.3,8c-1.9,0-2.4,0-3.8,0c-4.8,0-6.1,3-6.1,5.5C53.3,15.7,54.6,19,59.5,19z"/></g></svg>';
+
 export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
@@ -170,16 +173,10 @@ export default function decorate(block) {
     }
   }
 
-  if (!utilityLinks.length) {
-    utilityLinks.push(
-      { text: 'Contact Medical Info', href: '#', target: '_self' },
-      { text: 'Full Prescribing Information', href: 'https://www.rxabbvie.com/pdf/skyrizi_pi.pdf', target: '_blank' },
-      { text: 'Patient Site', href: 'https://www.skyrizi.com', target: '_blank' },
-    );
-  }
+  // No hardcoded fallback — utility links must come from authored content (UE fields)
 
   // Hide all original rows
-  rows.forEach((row) => { row.style.display = 'none'; });
+  rows.forEach((row) => { row.classList.add('brand-explorer-hidden'); });
 
   // Build bar
   const bar = document.createElement('div');
@@ -193,14 +190,18 @@ export default function decorate(block) {
   logoLink.target = '_blank';
   logoLink.className = 'brand-explorer-logo-link';
   logoLink.setAttribute('aria-label', 'AbbVie');
-  logoLink.innerHTML = '<svg viewBox="0 0 124.4 21.5" class="brand-explorer-abbvie-logo"><g><path fill="currentColor" d="M123.8,20.8c0-1.3-0.8-1.8-2-1.8c-0.7,0-9.2,0-9.2,0c-4.5,0-5.6-2.7-5.8-4.4c0,0,9.5,0,12.5,0c3.8,0,5-2.8,5-4.6c0-1.9-1.2-4.6-5-4.6c-3.4,0-6.9,0-6.9,0c-6.5,0-8.6,4.4-8.6,8c0,3.9,2.4,8,8.6,8h11.4C123.8,21.5,123.8,20.9,123.8,20.8z M112.6,7.8c1,0,4.6,0,6,0c2.2,0,2.7,1.3,2.7,2.2c0,0.8-0.5,2.2-2.7,2.2c-1.5,0-12,0-12,0C106.8,10.8,108.1,7.8,112.6,7.8z M85.9,20.5c-0.7,0.9-1,1.3-1.7,1.3c-0.9,0-1.1-0.4-1.7-1.3c-1.4-2-9.8-15-9.8-15s0.6,0,1.2,0c2,0,2.6,0.9,3.2,1.9c0.5,0.8,7.3,11.2,7.3,11.2s6.4-9.9,7.3-11.3c0.6-0.9,1.4-1.8,3.3-1.8c0.4,0,0.9,0,0.9,0S87.1,18.9,85.9,20.5z M22.8,21.5c-1.5,0-2.1-0.6-2.3-1.8L20.1,18c-0.4,0.7-2.4,3.5-6.8,3.5c0,0-2.2,0-4.5,0c-6.8,0-8.7-4.6-8.7-8c0-3.8,2.3-8,8.7-8c1.3,0,2.7,0,4.8,0c4.9,0,7.6,2.8,8.2,6.3c0.5,2.9,1.8,9.7,1.8,9.7S23.3,21.5,22.8,21.5z M12.9,8c-1.6,0-2,0-3.8,0C4.5,8,3,10.9,3,13.5S4.5,19,9.1,19c1.9,0,2.5,0,3.8,0c4.8,0,6.1-3,6.1-5.5C19,11.3,17.8,8,12.9,8z M99,2.9c0.7,0,1.4-0.4,1.4-1.3c0-0.2,0-0.4,0-0.5c0-0.8-0.7-1.3-1.4-1.3c-0.7,0-1.4,0.4-1.4,1.3c0,0.1,0,0.3,0,0.5C97.6,2.5,98.3,2.9,99,2.9z M97.7,5.5c0,0,0.4,0,0.6,0c1.3,0,2.1,0.7,2.1,2.1c0,0.2,0,13.9,0,13.9s-0.3,0-0.6,0c-1.3,0-2.1-0.8-2.1-2.2C97.7,19.2,97.7,5.5,97.7,5.5z M28.1,7.8c0.6-0.6,2.4-2.3,5.9-2.3c0,0,2.2,0,4.5,0c6.8,0,8.8,4.6,8.8,8c0,3.8-2.4,8-8.8,8c-1.3,0-2.7,0-4.8,0c-4.9,0-8.4-3.1-8.4-8c0-1.6,0-13.4,0-13.4s0.5,0,0.8,0c1.4,0,2,0.7,2,1.9C28.1,2.2,28.1,7.8,28.1,7.8z M34.4,19c1.6,0,2,0,3.8,0c4.5,0,6.1-2.9,6.1-5.5S42.8,8,38.2,8c-1.9,0-2.5,0-3.8,0c-4.8,0-6.1,3-6.1,5.5C28.2,15.7,29.5,19,34.4,19z M53.2,7.8c0.6-0.6,2.4-2.3,5.9-2.3c0,0,2.2,0,4.5,0c6.8,0,8.7,4.6,8.7,8c0,3.8-2.3,8-8.7,8c-1.3,0-2.7,0-4.8,0c-4.9,0-8.4-3.1-8.4-8c0-1.6,0-13.4,0-13.4s0.5,0,0.8,0c1.4,0,2,0.7,2,1.9C53.2,2.2,53.2,7.8,53.2,7.8z M59.5,19c1.6,0,2,0,3.8,0c4.6,0,6.1-2.9,6.1-5.5S67.9,8,63.3,8c-1.9,0-2.4,0-3.8,0c-4.8,0-6.1,3-6.1,5.5C53.3,15.7,54.6,19,59.5,19z"/></g></svg>';
+  logoLink.innerHTML = ABBVIE_LOGO_SVG;
   barLeft.append(logoLink);
 
   const browseBtn = document.createElement('button');
   browseBtn.className = 'brand-explorer-browse';
   browseBtn.setAttribute('aria-expanded', 'false');
   browseBtn.setAttribute('aria-controls', 'brand-explorer-content');
-  browseBtn.innerHTML = `<span>${barLabel}</span><span class="brand-explorer-browse-icon"></span>`;
+  const browseLabelSpan = document.createElement('span');
+  browseLabelSpan.textContent = barLabel;
+  const browseIcon = document.createElement('span');
+  browseIcon.className = 'brand-explorer-browse-icon';
+  browseBtn.append(browseLabelSpan, browseIcon);
   barLeft.append(browseBtn);
 
   const barRight = document.createElement('div');
@@ -211,46 +212,48 @@ export default function decorate(block) {
     a.href = link.href;
     a.textContent = link.text;
     a.target = link.target;
-    if (link.text.toLowerCase().includes('contact medical')) {
+    if (link.href === '#' || link.href.includes('/fragments/')) {
+      const fragmentPath = link.href !== '#' ? link.href : '';
       a.href = '#';
-      a.dataset.modal = 'contact-medical';
+      a.dataset.modalPath = fragmentPath;
+      a.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const path = a.dataset.modalPath;
+        if (!path) return;
+        let modal = document.querySelector('.brand-explorer-modal');
+        if (!modal) {
+          modal = document.createElement('div');
+          modal.className = 'brand-explorer-modal';
+          modal.setAttribute('role', 'dialog');
+          modal.setAttribute('aria-modal', 'true');
+          const overlay = document.createElement('div');
+          overlay.className = 'brand-explorer-modal-overlay';
+          overlay.addEventListener('click', () => { modal.hidden = true; document.body.classList.remove('brand-explorer-modal-open'); });
+          const dialog = document.createElement('div');
+          dialog.className = 'brand-explorer-modal-dialog';
+          const closeBtn = document.createElement('button');
+          closeBtn.className = 'brand-explorer-modal-close';
+          closeBtn.setAttribute('aria-label', 'Close modal');
+          closeBtn.addEventListener('click', () => { modal.hidden = true; document.body.classList.remove('brand-explorer-modal-open'); });
+          dialog.append(closeBtn);
+          const content = document.createElement('div');
+          content.className = 'brand-explorer-modal-content';
+          try {
+            const resp = await fetch(`${path}.plain.html`);
+            if (resp.ok) content.innerHTML = await resp.text();
+          } catch { /* fragment load failed silently */ }
+          dialog.append(content);
+          modal.append(overlay, dialog);
+          document.body.append(modal);
+        }
+        modal.hidden = false;
+        document.body.classList.add('brand-explorer-modal-open');
+      });
     }
     barRight.append(a);
   });
 
   bar.append(barLeft, barRight);
-
-  // Modal
-  const modal = document.createElement('div');
-  modal.className = 'brand-explorer-modal';
-  modal.hidden = true;
-  modal.setAttribute('role', 'dialog');
-  modal.setAttribute('aria-modal', 'true');
-  modal.innerHTML = `
-    <div class="brand-explorer-modal-overlay"></div>
-    <div class="brand-explorer-modal-dialog">
-      <button class="brand-explorer-modal-close" aria-label="Close modal"></button>
-      <h2 class="brand-explorer-modal-title">You are about to enter a site that is for U.S. Healthcare Professionals only.</h2>
-      <p class="brand-explorer-modal-text">By selecting "Yes" below, you certify that you are a Healthcare Professional and that you wish to proceed to the Healthcare Professionals Only section on the AbbVie Medical Information site. Products or treatments described on this site are available in the U.S. but may not be available in all other countries. I am a licensed Healthcare Professional and wish to proceed to the Healthcare Professionals Only AbbVie Medical Information Site.</p>
-      <div class="brand-explorer-modal-actions">
-        <a class="brand-explorer-modal-btn brand-explorer-modal-yes" href="https://www.abbviemedinfo.com" target="_blank">Yes</a>
-        <button class="brand-explorer-modal-btn brand-explorer-modal-no">No</button>
-      </div>
-      <p class="brand-explorer-modal-project">US-SKZ-220057</p>
-    </div>
-  `;
-  document.body.append(modal);
-
-  function openModal() { modal.hidden = false; document.body.style.overflow = 'hidden'; }
-  function closeModal() { modal.hidden = true; document.body.style.overflow = ''; }
-  modal.querySelector('.brand-explorer-modal-close').addEventListener('click', closeModal);
-  modal.querySelector('.brand-explorer-modal-no').addEventListener('click', closeModal);
-  modal.querySelector('.brand-explorer-modal-overlay').addEventListener('click', closeModal);
-  modal.querySelector('.brand-explorer-modal-yes').addEventListener('click', closeModal);
-  barRight.addEventListener('click', (e) => {
-    const trigger = e.target.closest('[data-modal="contact-medical"]');
-    if (trigger) { e.preventDefault(); openModal(); }
-  });
 
   // Content panel
   const content = document.createElement('div');
@@ -261,7 +264,10 @@ export default function decorate(block) {
   const closeBtn = document.createElement('button');
   closeBtn.className = 'brand-explorer-close';
   closeBtn.setAttribute('aria-label', 'Close brand explorer');
-  closeBtn.innerHTML = 'Close <span class="brand-explorer-close-icon"></span>';
+  closeBtn.textContent = 'Close ';
+  const closeIcon = document.createElement('span');
+  closeIcon.className = 'brand-explorer-close-icon';
+  closeBtn.append(closeIcon);
   content.append(closeBtn);
 
   const accordions = document.createElement('div');
@@ -298,16 +304,12 @@ export default function decorate(block) {
       blade.append(subtitle);
     }
 
-    const brandColors = { rinvoq: '#ffd41d', skyrizi: '#00a8e1', humira: '#931947' };
     const nameLower = brand.name.toLowerCase().replace(/[®™]/g, '');
-    const autoColor = Object.keys(brandColors).reduce((c, key) => {
-      if (nameLower.includes(key)) return brandColors[key];
-      return c;
-    }, '');
+    const brandSlugColor = ['rinvoq', 'skyrizi'].find((key) => nameLower.includes(key)) || '';
 
     const separator = document.createElement('hr');
     separator.className = 'brand-explorer-separator';
-    if (autoColor) separator.style.backgroundColor = autoColor;
+    if (brandSlugColor) separator.dataset.brand = brandSlugColor;
     blade.append(separator);
     accordion.append(blade);
 
@@ -326,15 +328,11 @@ export default function decorate(block) {
     const visitLink = document.createElement('a');
     visitLink.href = brand.url;
     visitLink.className = 'brand-explorer-visit';
-    const arrowDark = autoColor === '#ffd41d';
-    const arrowStyle = autoColor
-      ? `background-color:${autoColor}`
-      : '';
-    const arrowClass = arrowDark
-      ? 'brand-explorer-visit-arrow brand-explorer-visit-arrow--dark'
-      : 'brand-explorer-visit-arrow';
-    visitLink.innerHTML = `Visit ${brand.name} `
-      + `<span class="${arrowClass}" ${arrowStyle ? `style="${arrowStyle}"` : ''}></span>`;
+    if (brandSlugColor) visitLink.dataset.brand = brandSlugColor;
+    visitLink.textContent = `Visit ${brand.name} `;
+    const arrow = document.createElement('span');
+    arrow.className = 'brand-explorer-visit-arrow';
+    visitLink.append(arrow);
     links.append(visitLink);
 
     accordion.append(links);

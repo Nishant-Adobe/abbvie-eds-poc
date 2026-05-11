@@ -357,15 +357,15 @@
 }
 
 .brand-explorer-accordion--rinvoq .brand-explorer-indication:hover {
-  color: #b8860b;
+  color: var(--be-color-rinvoq-hover);
 }
 
 .brand-explorer-accordion--skyrizi .brand-explorer-indication:hover {
-  color: #0088b5;
+  color: var(--be-color-skyrizi-hover);
 }
 
 .brand-explorer-accordion--humira .brand-explorer-indication:hover {
-  color: #931947;
+  color: var(--be-color-humira);
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
@@ -549,7 +549,7 @@
 .brand-explorer-modal-overlay {
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 60%);
+  background: var(--be-color-overlay);
 }
 
 .brand-explorer-modal-dialog {
@@ -696,19 +696,47 @@
 }
 
 /* ── container overflow fix for abbvie-container grid ── */
-.brand-explorer-container {
+.section.brand-explorer-container {
   display: block;
-  margin: 0 !important;
-  padding: 0 !important;
-  max-width: 100vw !important;
+  margin: 0;
+  padding: 0;
+  max-width: 100vw;
 }
 
-.brand-explorer-container .brand-explorer-wrapper {
-  max-width: 100% !important;
-  overflow: hidden !important;
+.section.brand-explorer-container .brand-explorer-wrapper {
+  max-width: 100%;
+  overflow: hidden;
 }
 
-.brand-explorer-container .brand-explorer {
-  width: 100% !important;
-  margin: 0 !important;
+.section.brand-explorer-container .brand-explorer {
+  width: 100%;
+  margin: 0;
 }
+
+/* ── Utility classes used by JS (no inline styles) ── */
+.brand-explorer-hidden {
+  display: none;
+}
+
+body.brand-explorer-modal-open {
+  overflow: hidden;
+}
+
+/* ── Brand-specific separator and arrow colors ── */
+.brand-explorer-separator[data-brand="rinvoq"] {
+  background: var(--be-color-rinvoq);
+}
+
+.brand-explorer-separator[data-brand="skyrizi"] {
+  background: var(--be-color-skyrizi);
+}
+
+.brand-explorer-visit[data-brand="rinvoq"] .brand-explorer-visit-arrow {
+  background-color: var(--be-color-rinvoq);
+  color: var(--be-color-text);
+}
+
+.brand-explorer-visit[data-brand="skyrizi"] .brand-explorer-visit-arrow {
+  background-color: var(--be-color-skyrizi);
+}
+
