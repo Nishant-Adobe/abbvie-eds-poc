@@ -51,7 +51,6 @@ export default async function decorate(block) {
 
   // If something failed to render, bail out safely
   if (!symbolEl || !timestampEl || !priceEl || !changeEl || !iconEl || !valueEl) {
-    console.warn('Stock Ticker: Missing required DOM elements.');
     return;
   }
 
@@ -125,8 +124,7 @@ export default async function decorate(block) {
         iconEl.classList.add('up-icon');
         valueEl.textContent = '0.00 (0.00%)';
       }
-    } catch (error) {
-      console.error('Stock Ticker Error:', error);
+    } catch {
       block.innerHTML = '<p>Error fetching stock data</p>';
     }
   }
