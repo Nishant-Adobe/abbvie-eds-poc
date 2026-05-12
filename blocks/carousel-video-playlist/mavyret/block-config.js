@@ -32,6 +32,16 @@ function parseConfig(block) {
     if (cellText(i) === 'inline') { playMode = 'inline'; break; }
   }
 
+  // Find maxVisible — scan for small number (1-20)
+  let maxVisible = 0;
+  for (let i = 0; i < cfgRows.length; i += 1) {
+    const val = cellText(i);
+    if (/^\d{1,2}$/.test(val) && parseInt(val, 10) > 0 && parseInt(val, 10) <= 20) {
+      maxVisible = parseInt(val, 10);
+      break;
+    }
+  }
+
   // Find accountId by scanning for 10+ digit number
   let accountIdx = -1;
   for (let i = 0; i < cfgRows.length; i += 1) {
@@ -43,6 +53,7 @@ function parseConfig(block) {
     accountId: accountIdx >= 0 ? cellText(accountIdx) : '',
     playerId: (playerIdx >= 0 ? cellText(playerIdx) : '') || 'default',
     playMode,
+    maxVisible,
   };
 }
 
@@ -258,6 +269,7 @@ async function decorateBlock(block) {
 
   const cfg = parseConfig(block);
   if (cfg.playMode === 'inline') block.classList.add('mavyret-inline');
+  if (cfg.maxVisible > 0) block.dataset.maxVisible = cfg.maxVisible;
   const items = parseItems(block);
 
   block.textContent = '';
