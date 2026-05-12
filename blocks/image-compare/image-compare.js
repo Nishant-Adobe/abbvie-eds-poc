@@ -321,6 +321,10 @@ function decorateGallery(block, cells, startPct) {
       cta.addEventListener('click', (e) => {
         e.preventDefault();
         const escaped = `#${CSS.escape(targetId)}`;
+        // Intentional: CTA scrolls to a sibling block that may be outside this block's DOM
+        // subtree (e.g. a second image-compare block elsewhere in <main>), so the lookup
+        // must extend to <main>. document.documentElement is the fallback for edge cases
+        // where the block is rendered outside <main> (test harness, future page templates).
         const main = block.closest('main') ?? document.documentElement;
         const target = main.querySelector(escaped);
         if (target) target.scrollIntoView({ behavior: 'smooth' });
@@ -487,18 +491,19 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
 
   // ResizeObserver fires as soon as the container has a computed size —
   // more reliable than a fixed setTimeout on slow connections.
-  const ro = new ResizeObserver(() => scheduleFixBeforeWidth());
-  ro.observe(container);
-
-  // Clean up resize listener and ResizeObserver when container is removed from DOM
-  const mo = new MutationObserver(() => {
+  // It also handles cleanup: when container is disconnected from the DOM,
+  // both the window resize listener and the observer are torn down here,
+  // avoiding the MutationObserver limitation where parent-node replacement
+  // could leave the resize listener leaked.
+  const ro = new ResizeObserver(() => {
     if (!container.isConnected) {
       window.removeEventListener('resize', debouncedFix);
       ro.disconnect();
-      mo.disconnect();
+      return;
     }
+    scheduleFixBeforeWidth();
   });
-  mo.observe(container.parentNode ?? document.body, { childList: true });
+  ro.observe(container);
 
   setPosition(startPct);
 
