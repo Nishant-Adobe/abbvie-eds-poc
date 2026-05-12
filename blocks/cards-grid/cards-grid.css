@@ -1,8 +1,3 @@
-/*
- * Mavyret cards-grid: Barlow Condensed, Barlow Semi Condensed, Roboto (latin woff2)
- * in /fonts/cards-grid-mavyret/ — no runtime request to fonts.gstatic.com / fonts.googleapis.com.
- * CTA primary chevron uses abbv-iconFont from /fonts/skyrizi-hcp/ (already in this stylesheet).
- */
 @font-face {
   font-family: 'Barlow Condensed';
   font-style: normal;
@@ -261,7 +256,6 @@
     }
   }
   
-  /* Utilities — skyrizi_hcp */
   .cards-grid.cards-grid-image-text .tc {
     text-align: center;
   }
@@ -343,7 +337,6 @@
     }
   }
   
-  /* fs-* overrides default `.h1` scale */
   .cards-grid.cards-grid-image-text .h1.fs-20 {
     font-size: 1.25rem !important;
     line-height: 1.25rem !important;
@@ -356,7 +349,6 @@
     }
   }
   
-  /* Image + text */
   .cards-grid.cards-grid-image-text .abbv-image-text--icon img {
     width: auto;
     max-width: 100%;
@@ -368,7 +360,6 @@
     display: inline-block;
   }
   
-  /* Avoid empty icon-font pseudo from clientlib `.i-b:before` when icon font is not loaded */
   .cards-grid.cards-grid-image-text .abbv-image-content-container.i-b::before {
     content: none !important;
     display: none !important;
@@ -458,7 +449,6 @@
     src: url('/fonts/lato-700-latin.woff2') format('woff2');
   }
   
-  /* Google Fonts does not ship Lato 800; map extrabold to the 700 file (same as live fallback). */
   @font-face {
     font-family: Lato;
     font-style: normal;
@@ -480,12 +470,6 @@
     box-sizing: border-box;
   }
   
-  /*
-   * Linzess tokens on linzess.com assume rem against a normal ~16px root.
-   * This project sets html/body font-size: 62.5% (1rem = 10px) in styles.css,
-   * so rem-based Linzess vars shrink on localhost vs file:// linzess-icon-image-card.html.
-   * Use px for font-size tokens so the block matches the standalone demo at default zoom.
-   */
   :root {
     --linz-dark-purple: #422e83;
     --linz-light-purple: #d9d7f9;
@@ -569,7 +553,6 @@
     margin: 0;
   }
   
-  /* Clientlib: icon + links */
   .i-a::after {
     margin-left: 10px;
   }
@@ -613,7 +596,6 @@
     text-decoration: none;
   }
   
-  /* Clientlib: flex v2 */
   :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-flex-container-v2 {
     display: flex;
     flex-wrap: wrap;
@@ -903,7 +885,6 @@
     padding: 24px 16px 80px;
   }
 
-  /* Rinvoq — flexbox-v2 + break-row-column rich-text columns (see rinvoqhcp-real-patients.html) */
   .cards-grid.cards-grid-rinvoq-common-cards .flexboxitem-v2.parbase {
     max-width: 1200px;
     margin: 0 auto;
@@ -930,10 +911,6 @@
     padding-right: 48px;
   }
 
-  /*
-   * Rinvoq brand CSS uses Graphik + font-weight: normal on strong/b; without !important
-   * a late theme rule can match localhost but not the file:// reference bundle.
-   */
   .cards-grid.cards-grid-rinvoq-common-cards .rich-text .abbv-rich-text-common strong,
   .cards-grid.cards-grid-rinvoq-common-cards .rich-text .abbv-rich-text-common b {
     font-family: inherit !important;
@@ -950,10 +927,6 @@
     }
   }
 
-  /*
-   * Mavyret — abbv-container.flex-icon (mavyret-common-cards.html).
-   * Site root is html 62.5% (1rem = 10px); mavyrethcp assumes ~16px root — use px + webfonts to match live.
-   */
   .cards-grid.cards-grid-mavyret-common-cards .abbv-container.flex-icon {
     display: flex;
     flex-wrap: wrap;
@@ -985,7 +958,6 @@
     line-height: 1.45;
   }
 
-  /* Match mavyrethcp `.rich-text ul` bullets (custom •), not native disc markers. */
   .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy ul {
     list-style: none;
     padding-left: 14px;
@@ -1013,7 +985,6 @@
     top: 0;
   }
 
-  /* p.subhead: must beat p:not(.subhead); live mavyrethcp uses Barlow Condensed 1.75rem / 600 (1.5rem ≤985px). */
   .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p.subhead {
     font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
     font-size: 28px;
@@ -1044,7 +1015,6 @@
     padding-left: 1.25em;
   }
 
-  /* Icon row: mavyrethcp uses .text-center; no global utility here — center regardless of img display. */
   .cards-grid.cards-grid-mavyret-common-cards .abbv-rich-text.stacking-copy p.text-center {
     display: flex;
     justify-content: center;
@@ -1063,10 +1033,6 @@
     font-weight: 700 !important;
   }
 
-  /*
-   * Mavyret CTA row — nurse-ambassador (mavyret-cta-cards.html excerpt).
-   * Scoped to .cards-grid-mavyret-cta-cards; fonts from /fonts/cards-grid-mavyret/ only.
-   */
   .cards-grid.cards-grid-mavyret-cta-cards .demo-wrap {
     background: #f5f5f5;
     margin: 0 auto;
@@ -1300,10 +1266,6 @@
     }
   }
 
-  /*
-   * Mavyret section cards — /hcp fiesta + flex-even + cta--card (mavyret-section-cards.html).
-   * Project html/body use font-size 62.5% (~10px/rem); deliverable assumes 16px/rem. Scale rem ×1.6.
-   */
   .cards-grid.cards-grid-mavyret-section-cards {
     box-sizing: border-box;
     display: block;
@@ -1357,7 +1319,6 @@
     line-height: 1.4;
   }
 
-  /* Card titles: mavyrethcp.css groups .cta--card p with callout (1.5rem @ 16px root → 2.4rem here). */
   .cards-grid.cards-grid-mavyret-section-cards .cta--card .abbv-rich-text-common p {
     font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
     font-size: 2.4rem;
@@ -1586,7 +1547,6 @@
     }
   }
 
-  /* Venclexta AML helpful-resources callout cards (venclexta-global.css excerpt + AEM flex utilities), scoped to block */
   .cards-grid.cards-grid-venclexta-callout-cards,
   .cards-grid.cards-grid-venclexta-callout-cards *,
   .cards-grid.cards-grid-venclexta-callout-cards *::before,
@@ -1649,7 +1609,6 @@
       max-width: 83.333%;
     }
 
-    /* Full-width callout row — 83.333% + 200px min buttons caused Website/phone overlap */
     .cards-grid.cards-grid-venclexta-callout-cards
       .abbv-flex-container.learn-more-callouts-flexbox.flex-col-xl-10 {
       max-width: 100%;
@@ -1686,8 +1645,7 @@
 
   .cards-grid.cards-grid-venclexta-callout-cards .leukemia-flex-wrap.flex-row {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     justify-content: center;
     width: 100%;
   }
@@ -1775,8 +1733,7 @@
   .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
     align-items: stretch;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-flow: row nowrap;
     gap: 15px;
     justify-content: center;
     width: 100%;
@@ -1932,8 +1889,7 @@
 
   @media (width <= 627px) {
     .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
-      flex-direction: column;
-      flex-wrap: nowrap;
+      flex-flow: column nowrap;
     }
 
     .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
@@ -1950,3 +1906,388 @@
       line-height: 1.2;
     }
   }
+
+/* Rinvoq adults slider thumbnails — scoped subset from deliverables/commercial-migrations/cards-grid/rinvoq-slider-cards.html */
+.cards-grid.cards-grid-slider-thumbnails {
+  --cg-rinvoq-thumb-white: #fff;
+  --cg-rinvoq-thumb-magenta: #90124a;
+  --cg-rinvoq-thumb-helvetica: arial, "helvetica neue", helvetica, sans-serif;
+  --cg-rinvoq-thumb-haas: arial, "helvetica neue", helvetica, sans-serif;
+  --cg-rinvoq-thumb-fs-0875: 0.875rem;
+  --cg-rinvoq-thumb-fs-0937: 0.9375rem;
+  --cg-rinvoq-thumb-fs-10: 1rem;
+  --cg-rinvoq-thumb-fs-15: 1.5rem;
+  --cg-rinvoq-thumb-lh-14: 0.875rem;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content {
+  overflow-x: hidden;
+
+  /* Deliverable sets body to Helvetica/Arial; Skyrizi (and other brands) use Red Hat etc. — reset the subtree. */
+  font-family: var(--cg-rinvoq-thumb-helvetica) !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content h3,
+.cards-grid.cards-grid-slider-thumbnails .abbv-content p.h3,
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .h3,
+.cards-grid.cards-grid-slider-thumbnails .abbv-content b.h3 {
+  font-family: var(--cg-rinvoq-thumb-haas) !important;
+  line-height: 1.2em;
+  font-weight: normal;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content p.h3,
+.cards-grid.cards-grid-slider-thumbnails .abbv-content h3 {
+  font-size: var(--cg-rinvoq-thumb-fs-15);
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .abbv-button-primary,
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .abbv-button-primary:visited {
+  position: relative;
+  transition: background 0.3s linear;
+  display: inline-block;
+  color: var(--cg-rinvoq-thumb-magenta);
+  background: var(--cg-rinvoq-thumb-white);
+  font-size: var(--cg-rinvoq-thumb-fs-0937);
+  font-family: var(--cg-rinvoq-thumb-haas) !important;
+  border: solid 2px var(--cg-rinvoq-thumb-magenta);
+  border-radius: 5px;
+  min-height: 36px;
+  padding: 7px 22px 7px 10px;
+  font-weight: normal;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .abbv-button-primary:hover {
+  color: var(--cg-rinvoq-thumb-white);
+  background: var(--cg-rinvoq-thumb-magenta);
+}
+
+.cards-grid.cards-grid-slider-thumbnails .font-helveticaRoman,
+.cards-grid.cards-grid-slider-thumbnails .font-helveticaRoman p {
+  font-family: var(--cg-rinvoq-thumb-helvetica) !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .font-helveticaMedium,
+.cards-grid.cards-grid-slider-thumbnails .font-helveticaMedium p {
+  font-family: var(--cg-rinvoq-thumb-helvetica) !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .font-helveticaBold,
+.cards-grid.cards-grid-slider-thumbnails .font-helveticaBold p {
+  font-family: var(--cg-rinvoq-thumb-helvetica) !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .font-line-height-14px,
+.cards-grid.cards-grid-slider-thumbnails .font-line-height-14px p {
+  line-height: var(--cg-rinvoq-thumb-lh-14) !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .font-14px,
+.cards-grid.cards-grid-slider-thumbnails .font-14px p {
+  font-size: var(--cg-rinvoq-thumb-fs-0875) !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .m-auto {
+  margin: auto !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .mr-0 {
+  margin-right: 0 !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .ml-0 {
+  margin-left: 0 !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .p-0 {
+  padding: 0 !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .pr-15 {
+  padding-right: 15px !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .pl-15 {
+  padding-left: 15px !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .abv-custom-txtcolor-white {
+  color: var(--cg-rinvoq-thumb-white) !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .width-100-percent {
+  width: 100% !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .max-width-110 {
+  max-width: 110px !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-content .max-width-400 {
+  max-width: 400px !important;
+}
+
+@media (width >= 601px) {
+  .cards-grid.cards-grid-slider-thumbnails .pl-md-0 {
+    padding-left: 0 !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .pr-md-0 {
+    padding-right: 0 !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .ml-md-10 {
+    margin-left: 10px !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .ml-md-5 {
+    margin-left: 5px !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .mr-md-10 {
+    margin-right: 10px !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .mt-md-10 {
+    margin-top: 10px !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .abbv-content .max-width-md-120 {
+    max-width: 120px !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .abbv-content .max-width-md-540 {
+    max-width: 540px !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .font-md-16px,
+  .cards-grid.cards-grid-slider-thumbnails .font-md-16px p {
+    font-size: var(--cg-rinvoq-thumb-fs-10) !important;
+  }
+}
+
+@media (width >= 985px) {
+  .cards-grid.cards-grid-slider-thumbnails .ml-lg-10 {
+    margin-left: 10px !important;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .abbv-content .max-width-lg-960 {
+    max-width: 960px !important;
+  }
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-flex-container {
+  display: flex;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-flex-container.flex-direction-row {
+  flex-direction: row;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-flex-container.flex-wrap-wrap {
+  flex-wrap: wrap;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-flex-item {
+  padding: 5px;
+  margin: 10px;
+  flex: 0 0 auto;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-image-text-content-container-v2 {
+  position: absolute;
+  display: flex;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 0.9rem;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-image-text-content-v2 {
+  position: unset !important;
+  margin: 20px;
+  width: 25%;
+  background: rgb(204 204 204 / 80%);
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-image-text-display-v2 {
+  padding: 20px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-image-text-display-v2 p {
+  margin: 0 0 20px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-content-container-v2.bottom-left {
+  flex-wrap: wrap;
+  align-content: flex-end;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-image-content-container-v2 {
+  position: relative;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-stretched-card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-stretched-link {
+  position: unset !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-stretched-link::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: auto;
+  content: "";
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2 .abbv-button-primary {
+  padding-left: 12px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable .abbv-image-content-container-v2 img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable .abbv-image-text-content-v2 {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable .abbv-image-text-content-container-v2 .abbv-image-text-content-v2,
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable .abbv-image-text-content-container-v2 .abbv-image-text-display-v2,
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable .abbv-image-text-content-container-v2 .abbv-stretched-card-body {
+  position: unset;
+  height: 100%;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable .abbv-image-text-content-container-v2.bottom-left .image-text-clickable__txtcontent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable a.abbv-button-primary {
+  background: transparent !important;
+  text-indent: -9999px;
+  opacity: 0;
+  min-height: initial;
+  padding: 0;
+  position: absolute !important;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .abbv-image-text-v2.image-text-clickable .image-text-clickable__txtcontent {
+  position: relative;
+  z-index: 2;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults,
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adolescents-thumbnails {
+  gap: 13px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-text-v2 {
+  word-wrap: normal;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-text-display-v2 {
+  padding: 0;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-text-display-v2 p {
+  margin: 0 !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-text-content-v2 {
+  width: 100%;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-text-v2 .abbv-image-text-content-v2 {
+  margin-bottom: 4px;
+  padding-left: 10px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2 .abbv-image-text-content-v2 {
+  margin-bottom: -14px;
+  padding-left: 5px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-swap {
+  width: 100px !important;
+  height: 130px !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-swap {
+  width: 106px !important;
+  height: 86px !important;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-content-container-v2 img {
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-content-container-v2::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  background: linear-gradient(180deg, rgb(76 81 84 / 0%) 0, rgb(37 40 42 / 79%) 100%);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2 > .abbv-image-content-container-v2 {
+  border: 2.1px solid transparent;
+  border-radius: 5px;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active > .abbv-image-content-container-v2 {
+  border-color: #90124a;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active .abbv-image-text-content-v2 {
+  border-bottom: 2.1px solid #90124a;
+}
+
+@media (width >= 601px) and (width <= 984px) {
+  .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-content-container-v2::before {
+    border-radius: 4px;
+  }
+
+  .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active > .abbv-image-content-container-v2 {
+    border-width: 2.3px;
+  }
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.image-text-clickable {
+  cursor: pointer;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .image-text-clickable__txtcontent p:first-child b {
+  font-weight: 700 !important;
+}

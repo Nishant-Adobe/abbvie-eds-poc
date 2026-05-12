@@ -140,7 +140,6 @@ function isInUniversalEditor() {
   return window.self !== window.top;
 }
 
-/** Skyrizi access-enroll column image utility classes (match live AEM image-text instance ids). */
 const IMAGE_TEXT_IMG_CLASSES = [
   'abbv-image-text-img abbv-image-text-v1-1700201083-large',
   'abbv-image-text-img abbv-image-text-v1-880735932-large',
@@ -168,7 +167,6 @@ function fixEncodedSupInParagraph(p) {
   }
 }
 
-/** Decode escaped `<b>` / `</b>` from UE/plain export before sup fix. */
 function fixLinzessEncodedBoldInParagraph(p) {
   if (!p) return;
   let html = p.innerHTML;
@@ -224,18 +222,12 @@ const LINZESS_ARTICLE_FLEX_CONTAINER_CLASS = (
 
 const LINZESS_ARTICLE_FLEX_ITEM_CLASS = 'abbv-flex-item-v2 background-light-purple rounded-corners';
 
-/** Rinvoq HCP flex columns (e.g. real-patients MEASURE UP 1 / 2). */
 const RINVOQ_COMMON_FLEX_CONTAINER_CLASS = (
   'abbv-flex-container-v2 flexbox--break-row-column'
 );
 
-/** Mavyret HCP nurse-ambassador icon row (mavyret-common-cards.html). */
 const MAVYRET_FLEX_ICON_RICH_CLASS = 'abbv-rich-text stacking-copy abbv-rich-text-common';
 
-/**
- * Phase title after the icon must be a direct `<p class="subhead">` (no wrapper `div`).
- * UE/Word often inserts a `div`; replace it with one plain `p.subhead`.
- */
 function ensureMavyretSubheadAfterIcon(iconP) {
   let next = iconP.nextElementSibling;
   while (next && next.tagName === 'SCRIPT') {
@@ -273,7 +265,6 @@ function ensureMavyretSubheadAfterIcon(iconP) {
   next.replaceWith(sub);
 }
 
-/** UE table cells: icon in `div > picture`, title in `div > p`, list in `div > ul`. */
 function isMavyretCellIconDiv(el) {
   if (!el || el.tagName !== 'DIV') return false;
   const hasMedia = el.querySelector(':scope > picture, :scope > img');
@@ -281,9 +272,6 @@ function isMavyretCellIconDiv(el) {
   return !el.querySelector(':scope > p');
 }
 
-/**
- * Flatten Franklin/UE cell wrappers into mavyret-common-cards.html stacking-copy markup.
- */
 function normalizeMavyretFromTableCellRows(abbvRt) {
   const kids = [...abbvRt.children];
   if (!kids.some(isMavyretCellIconDiv)) return false;
@@ -435,10 +423,6 @@ function buildMavyretFlexIconColumn(wrapper) {
   return richTextOuter;
 }
 
-/**
- * CTA anchor classes + AEM attrs (mavyret-cta-cards.html).
- * @param {HTMLAnchorElement} a
- */
 function finalizeMavyretCtaAnchorFromUe(a) {
   if (!a || a.tagName !== 'A') return;
   if (!a.getAttribute('role')) {
@@ -483,14 +467,12 @@ function finalizeMavyretCtaAnchorFromUe(a) {
   }
 }
 
-/** Trailing "| 1" in card body HTML → `<sup>1</sup>` (keeps existing tags like strong). */
 function mavyretSectionCardBodyInnerHtml(inner) {
   const t = (inner || '').trim();
   if (!t) return '';
   return t.replace(/\s*\|\s*1\s*$/i, '<sup>1</sup>');
 }
 
-/** First cell has a link (e.g. p.button-container > a.button). */
 function isMavyretSectionCardUeRow(wrapper) {
   if (!wrapper || wrapper.tagName !== 'DIV') return false;
   const firstCell = wrapper.querySelector(':scope > div');
@@ -498,7 +480,6 @@ function isMavyretSectionCardUeRow(wrapper) {
   return !!firstCell.querySelector('a[href]');
 }
 
-/** Intro: rich-text > abbv-rich-text.section-narrow… (mavyret-section-cards.html). */
 function buildMavyretSectionIntroFromWrapper(wrapper) {
   const richTextOuter = document.createElement('div');
   richTextOuter.className = 'rich-text';
@@ -515,10 +496,6 @@ function buildMavyretSectionIntroFromWrapper(wrapper) {
   return richTextOuter;
 }
 
-/**
- * One cta--card column (mavyret-section-cards.html). UE: [0] link cell, [2] body, [3] CTA label.
- * @param {HTMLElement} wrapper
- */
 function buildMavyretSectionCardColumnFromUeRow(wrapper) {
   const cells = [...wrapper.querySelectorAll(':scope > div')];
   const linkEl = cells[0]?.querySelector('a[href]') || wrapper.querySelector('a[href]');
@@ -585,11 +562,6 @@ function buildMavyretSectionCardColumnFromUeRow(wrapper) {
   return containerParbase;
 }
 
-/**
- * UE column row → mavyret-cta-cards.html column (container > abbv-container > rich-text + cta).
- * Cell order: [0] link, [1] icon, [2] title, [3] body, [4] CTA label, …
- * @param {HTMLElement} wrapper
- */
 function buildMavyretCtaCardsColumnFromUeRow(wrapper) {
   const cells = [...wrapper.querySelectorAll(':scope > div')];
   const linkEl = cells[0]?.querySelector('a[href]') || wrapper.querySelector('a[href]');
@@ -675,7 +647,6 @@ function buildMavyretCtaCardsColumnFromUeRow(wrapper) {
   return containerParbase;
 }
 
-/** UE row: empty link cell, title @ [2], website label @ [3], phone @ [4] (.button-container > a). */
 function isVenclextaCalloutUeRow(wrapper) {
   if (!wrapper || wrapper.tagName !== 'DIV') return false;
   const cells = [...wrapper.querySelectorAll(':scope > div')];
@@ -726,10 +697,6 @@ function normalizeVenclextaTelHref(href) {
   return digits.length > 0 ? `tel:${digits}` : t;
 }
 
-/**
- * One learn-more column (venclexta-callout-cards.html). UE cells: [2] title, [3] website label, [4] phone.
- * @param {HTMLElement} wrapper
- */
 function buildVenclextaCalloutCardColumnFromUeRow(wrapper) {
   const cells = [...wrapper.querySelectorAll(':scope > div')];
   const titleCell = cells[2];
@@ -833,7 +800,159 @@ function buildVenclextaCalloutCardColumnFromUeRow(wrapper) {
   return colItem;
 }
 
-/** If no bold tags, wrap MEASURE UP / stat lead segments (split by br) in strong. */
+const RINVOQ_SLIDER_THUMB_DEFAULT_HASH = '#body-parts-container';
+
+function isRinvoqSliderThumbnailUeRow(wrapper) {
+  if (!wrapper || wrapper.tagName !== 'DIV') return false;
+  const cells = [...wrapper.querySelectorAll(':scope > div')];
+  if (cells.length < 4) return false;
+  const mediaCell = cells[1];
+  if (!mediaCell?.querySelector('picture, img')) return false;
+  const titleRaw = (cells[2]?.textContent || '').trim();
+  return titleRaw.length > 0;
+}
+
+function rinvoqSliderThumbnailAdultsPercentageClass(subtitleText) {
+  const m = (subtitleText || '').match(/(\d+)\s*%/);
+  if (!m) return 'adults-percentage-75';
+  const n = Number(m[1], 10);
+  if (Number.isNaN(n)) return 'adults-percentage-75';
+  if (n >= 90) return 'adults-percentage-90';
+  if (n >= 75) return 'adults-percentage-75';
+  return `adults-percentage-${n}`;
+}
+
+function rinvoqSliderThumbnailFlexItemClass(index, total) {
+  const base = 'abbv-flex-item p-0 max-width-110 max-width-md-120';
+  if (total <= 1) return `${base} ml-0 ml-0 mr-md-10 mr-0`;
+  if (index === 0) return `${base} ml-0 ml-0 mr-md-10 mr-0`;
+  if (index === total - 1) return `${base} ml-md-5 ml-lg-10 ml-0 mt-md-10`;
+  return `${base} ml-md-10 ml-0 mr-md-10 mr-0`;
+}
+
+function clonePictureFromRinvoqSliderThumbnailUeCell(mediaCell) {
+  if (!mediaCell) return null;
+  const pic = mediaCell.querySelector('picture');
+  if (pic) {
+    const clone = /** @type {HTMLPictureElement} */ (pic.cloneNode(true));
+    clone.querySelectorAll('source').forEach((s) => {
+      if (!(s.getAttribute('srcset') || '').trim()) s.remove();
+    });
+    return clone;
+  }
+  const img = mediaCell.querySelector('img');
+  if (!img) return null;
+  const picture = document.createElement('picture');
+  picture.append(img.cloneNode(true));
+  return picture;
+}
+
+function extractRinvoqSliderThumbnailLinkFromUeCells(cells) {
+  for (let i = 0; i < cells.length; i += 1) {
+    const a = cells[i]?.querySelector('a[href]');
+    if (!a) continue;
+    const href = (a.getAttribute('href') || '').trim();
+    if (href) return { href, anchor: a };
+  }
+  return { href: RINVOQ_SLIDER_THUMB_DEFAULT_HASH, anchor: null };
+}
+
+function rinvoqSliderThumbnailLinkDisplayTitle(titleText, subtitleText, anchor) {
+  const fromUe = (anchor?.getAttribute('title') || anchor?.textContent || '').trim();
+  if (fromUe) return fromUe;
+  const combined = `${titleText} ${subtitleText}`.trim().toLowerCase();
+  return combined || 'thumbnail selection';
+}
+
+function buildRinvoqSliderThumbnailFlexItemFromUeRow(wrapper, index, total) {
+  const cells = [...wrapper.querySelectorAll(':scope > div')];
+  const mediaCell = cells[1];
+  const titleText = (cells[2]?.textContent || '').trim();
+  const subtitleText = (cells[3]?.textContent || '').trim();
+  const pctClass = rinvoqSliderThumbnailAdultsPercentageClass(subtitleText);
+  const { href, anchor } = extractRinvoqSliderThumbnailLinkFromUeCells(cells);
+  const displayTitle = rinvoqSliderThumbnailLinkDisplayTitle(titleText, subtitleText, anchor);
+
+  const flexItem = document.createElement('div');
+  flexItem.className = rinvoqSliderThumbnailFlexItemClass(index, total);
+
+  const parbase = document.createElement('div');
+  parbase.className = 'image-text-v2 parbase';
+
+  const cardRoot = document.createElement('div');
+  cardRoot.className = (
+    `width-100-percent trigger1-slider${index + 1} thumbnail1-${index + 1} `
+    + `image-text-clickable ${pctClass} abbv-image-text-v2 abbv-image-swap`
+  );
+  if (index === 0) cardRoot.classList.add('border-thumbnails-active');
+
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'abbv-image-content-container-v2';
+  const picture = clonePictureFromRinvoqSliderThumbnailUeCell(mediaCell);
+  if (picture) imgWrap.append(picture);
+
+  const contentOuter = document.createElement('div');
+  contentOuter.className = 'abbv-image-text-content-container-v2 bottom-left';
+
+  const contentInner = document.createElement('div');
+  contentInner.className = 'abbv-image-text-content-v2';
+
+  const display = document.createElement('div');
+  display.className = 'abbv-image-text-display-v2';
+
+  const body = document.createElement('div');
+  body.className = 'abbv-stretched-card-body';
+
+  const txt = document.createElement('div');
+  txt.className = 'abv-custom-txtcolor-white image-text-clickable__txtcontent';
+
+  const titleP = document.createElement('p');
+  titleP.className = 'mb-0 font-line-height-14px font-helveticaMedium';
+  const titleB = document.createElement('b');
+  titleB.className = 'h3 font-14px font-md-16px font-helveticaBold';
+  titleB.textContent = titleText;
+  titleP.append(titleB);
+
+  const subP = document.createElement('p');
+  subP.className = 'mb-0 font-md-16px';
+  subP.textContent = subtitleText;
+
+  txt.append(titleP);
+  txt.append(subP);
+
+  const link = document.createElement('a');
+  link.className = 'abbv-button-primary abbv-image-text-link abbv-stretched-link';
+  link.href = href;
+  link.setAttribute('title', displayTitle);
+  link.setAttribute('target', '_self');
+  link.textContent = displayTitle;
+
+  body.append(txt);
+  body.append(link);
+  display.append(body);
+  contentInner.append(display);
+  contentOuter.append(contentInner);
+  cardRoot.append(imgWrap);
+  cardRoot.append(contentOuter);
+  parbase.append(cardRoot);
+  flexItem.append(parbase);
+  return flexItem;
+}
+
+function wireRinvoqSliderThumbnailSelection(block) {
+  const row = block.querySelector(':scope .abbv-flex-container.slider-thumbnails.adults');
+  if (!row) return;
+  row.addEventListener('click', (ev) => {
+    const card = ev.target.closest('.abbv-image-text-v2.image-text-clickable');
+    if (!card || !row.contains(card)) return;
+    ev.preventDefault();
+    row.querySelectorAll('.abbv-image-text-v2.image-text-clickable').forEach((c) => {
+      c.classList.remove('border-thumbnails-active');
+    });
+    card.classList.add('border-thumbnails-active');
+  }, true);
+}
+
 function ensureRinvoqStatLineStrongTags(p) {
   if (!p || /<strong\b|<b\b/i.test(p.innerHTML)) return;
   const parts = p.innerHTML.split(/(<br\s*\/?>)/i);
@@ -851,7 +970,6 @@ function ensureRinvoqStatLineStrongTags(p) {
   p.innerHTML = parts.join('');
 }
 
-/** RTE column: rich-text / abbv-rich-text-common; col 0 adds section-padding-right on first p. */
 function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
   const richTextOuter = document.createElement('div');
   richTextOuter.className = 'rich-text';
@@ -1378,5 +1496,33 @@ export default function decorate(block) {
       outer.append(col);
     });
     block.append(outer);
+  } else if (block.classList.contains('cards-grid-slider-thumbnails')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return;
+
+    const thumbRows = wrappers.filter((w) => isRinvoqSliderThumbnailUeRow(w));
+    if (thumbRows.length === 0) return;
+
+    wrappers.forEach((w) => {
+      w.remove();
+    });
+
+    const abbvContent = document.createElement('div');
+    abbvContent.className = 'abbv-content';
+
+    const flexRow = document.createElement('div');
+    flexRow.className = (
+      'abbv-flex-container pl-15 pr-15 pl-md-0 pr-md-0 m-auto max-width-400 '
+      + 'max-width-md-540 max-width-lg-960 slider-thumbnails adults flex-wrap-wrap flex-direction-row'
+    );
+
+    const total = thumbRows.length;
+    thumbRows.forEach((w, index) => {
+      flexRow.append(buildRinvoqSliderThumbnailFlexItemFromUeRow(w, index, total));
+    });
+
+    abbvContent.append(flexRow);
+    block.append(abbvContent);
+    wireRinvoqSliderThumbnailSelection(block);
   }
 }
