@@ -81,24 +81,15 @@
   background-color: var(--image-compare-handle-color, #fff);
   border-radius: 50%;
   box-shadow: 0 var(--spacing-02, 2px) var(--spacing-12, 12px) rgb(0 0 0 / 30%);
-}
 
-.image-compare-handle::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: var(--spacing-26, 26px);
-  height: var(--spacing-26, 26px);
-
-  /* mask-image allows brands to override icon colour via --image-compare-handle-icon-color */
-  background-color: var(--image-compare-handle-icon-color, #333);
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  z-index: var(--z-index-1, 1);
+  /* fill='%23333' (#333) is hardcoded in this data URI — CSS vars cannot reach inside SVG
+     data URIs. To tint the icon per brand, override via -webkit-mask-image / mask-image +
+     background-color on this pseudo-element in brand CSS, or swap to a standalone .svg file.
+     Tracked as a known multi-brand limitation (warning, not blocker). */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: var(--spacing-26, 26px);
 }
 
 .image-compare-handle:focus-visible::before {
