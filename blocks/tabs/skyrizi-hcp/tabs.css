@@ -1,0 +1,153 @@
+@import '../tabs.css';
+@import '../../../styles/skyrizi-hcp/tokens.css';
+
+/* ============================================================
+   SKYRIZI HCP — Tabs brand overrides
+   Live: skyrizihcp.com/dermatology/psoriasis-efficacy
+   Style: Dark navy pill bar, white text, cyan underline on active
+   Panel: white card with gradient top border, 4+8 column split
+   ============================================================ */
+
+/* ── Tab container — collapse spacing to panel ── */
+.section.tabs-container {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* ── Tab controls wrapper — centered with gradient line ── */
+.tabs-container .tabs-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: var(--z-index-2);
+}
+
+
+/* ── Tab controls bar — dark navy pill ── */
+.tabs-container .tabs .tabs-list {
+  display: inline-flex;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-tabs-control-bg);
+  border-radius: var(--border-radius-button-tertiary);
+  padding: var(--spacing-08) var(--spacing-12);
+  gap: 0;
+  border: none;
+}
+
+/* ── Tab buttons (inactive) ── */
+.tabs-container .tabs .tabs-list button.tabs-tab {
+  padding: var(--spacing-08) var(--spacing-20);
+  margin: 0;
+  background: transparent;
+  color: var(--color-text-on-dark);
+  font-family: var(--font-family-tabs-control);
+  font-size: var(--font-size-body-xs);
+  font-weight: var(--font-weight-400);
+  text-transform: none;
+  letter-spacing: var(--tracking-wide-sm);
+  border: none;
+  border-radius: var(--border-radius-button-primary);
+  white-space: nowrap;
+  position: relative;
+  line-height: var(--line-height-20);
+  cursor: pointer;
+}
+
+/* ── Active tab — bold with cyan underline ── */
+.tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  background: transparent;
+  color: var(--color-text-on-dark);
+  font-weight: var(--font-weight-heading);
+}
+
+.tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true']::after {
+  position: absolute;
+  bottom: calc(0.6 * var(--spacing-06));
+  left: 0;
+  width: 100%;
+  height: var(--tabs-underline-height);
+  background-color: var(--color-tabs-underline);
+  content: '';
+}
+
+/* ── Tab panel wrapper ── */
+.tabs-panel {
+  background: var(--background-color);
+  border: none;
+  border-radius: 0;
+  padding: var(--spacing-24) var(--spacing-24) var(--spacing-30);
+  margin: 0;
+  margin-top: calc(-1 * var(--spacing-25));
+  min-height: var(--spacing-420);
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* Gradient line at top of panel — full viewport width */
+.tabs-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: var(--spacing-06);
+  transform: translateX(-50%);
+  background: var(--gradient-tabs-panel);
+}
+
+
+/* ── Content containment ── */
+.tabs-panel {
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-20);
+  padding-right: var(--spacing-20);
+}
+
+/* ── Sections inside panel — remove default spacing ── */
+.tabs-panel > .section.abbvie-container {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+/* ── Text container inside tab panels ── */
+.tabs-panel .text-container-wrapper {
+  background: var(--color-background-blue);
+  padding: var(--spacing-40);
+}
+
+.tabs-panel .text-container-text {
+  color: var(--color-tabs-text);
+  font-family: var(--font-family-tabs-text);
+}
+
+.tabs-panel .text-container-text p {
+  font-size: var(--font-size-16);
+  margin: 0;
+}
+
+.tabs-panel .text-container-text h5 {
+  font-size: var(--font-size-26);
+  font-family: var(--font-family-tabs-text);
+  font-weight: var(--font-weight-heading);
+  margin: 0;
+}
+
+/* ── Clinical data panel inside tab panels ── */
+.tabs-panel .clinical-data-panel-wrapper {
+  padding: var(--spacing-40);
+}
+
+/* ── Tablet+ ── */
+@media (width >= 600px) {
+  .tabs-container .tabs-wrapper {
+    margin-top: calc(-1 * var(--spacing-20));
+    margin-bottom: calc(-1 * var(--spacing-06));
+  }
+}
