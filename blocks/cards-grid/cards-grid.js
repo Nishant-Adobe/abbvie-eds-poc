@@ -1171,10 +1171,9 @@ export default function decorate(block) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
-    let introEl = null;
     let cardStart = 0;
     if (wrappers.length > 0 && !isMavyretSectionCardUeRow(wrappers[0])) {
-      introEl = buildMavyretSectionIntroFromWrapper(wrappers[0]);
+      buildMavyretSectionIntroFromWrapper(wrappers[0]);
       cardStart = 1;
     }
 
