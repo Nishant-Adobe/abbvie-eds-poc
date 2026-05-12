@@ -2028,7 +2028,7 @@ header .nav-utility a.button {
 /* Generic button (dropdown trigger) */
 
 header .nav-utility button {
-  color: #fff;
+  color: var(--color-text-on-dark);
   font-size: var(--font-size-11);
   font-weight: var(--font-weight-700);
   height: 100%;
@@ -2139,8 +2139,8 @@ header nav .nav-hamburger button::after {
 
 header nav .nav-hamburger button > span {
   background: var(--color-text-on-dark);
-  width: 30px;
-  transform-origin: 7px 1px;
+  width: var(--header-hamburger-bar-width);
+  transform-origin: var(--header-hamburger-transform-origin);
 }
 
 header nav .nav-hamburger button > span, 
@@ -2538,8 +2538,8 @@ header nav[aria-expanded='true'] .nav-brand-info > ul a {
     margin-left: var(--spacing-07);
     margin-right: var(--spacing-08);
     text-decoration: none;
-    font-weight: 900;
-    font-size: 22px;
+    font-weight: var(--header-brand-info-font-weight);
+    font-size: var(--font-size-22);
   }
 
   /* stylelint-disable-next-line no-descending-specificity */

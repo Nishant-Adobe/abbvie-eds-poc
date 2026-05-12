@@ -1961,6 +1961,11 @@ header nav {
   color: var(--color-brand-primary);
   margin: 0;
   padding: 0;
+  grid-template: 
+  'brand hamburger' var(--nav-height-mobile)        
+  'sections sections' auto        
+  'tools tools' auto
+  'search search' auto / 1fr auto;
 }
 
 header nav .nav-brand {
@@ -1973,12 +1978,6 @@ header nav .nav-brand img {
   height: auto;
   max-width: unset;
   width: var(--header-logo-width);
-}
-
-/* Nav tools — hidden (Mavyret HCP has no search/auth) */
-
-header nav .nav-tools {
-  display: none;
 }
 
 /* ── Hamburger — green bars (live: background: #76bd22; height: 4px; width: 40px) ── */
@@ -2008,9 +2007,10 @@ header:has(nav[aria-expanded='true']) .nav-hamburger button::after {
   height: var(--header-hamburger-tab-height);
   position: absolute;
   right: calc(-1 * var(--spacing-20));
-  top: calc(-1 * var(--spacing-15));
+  top: calc(-1 * var(--spacing-25));
   width: var(--spacing-80);
   z-index: var(--z-index-0);
+  display: block;
 }
 
 header:has(nav[aria-expanded='true']) .nav-hamburger button::after {
@@ -2019,6 +2019,25 @@ header:has(nav[aria-expanded='true']) .nav-hamburger button::after {
   border-right: var(--header-hamburger-triangle-width) solid var(--color-background-footer);
   border-top: var(--header-hamburger-tab-height) solid transparent;
   right: var(--header-hamburger-triangle-offset);
+}
+
+.nav-tools .nav-cta-group .nav-cta-primary {
+  border: var(--spacing-02) solid var(--color-border-grey);
+  box-shadow: var(--shadow-green-glow);
+  padding: var(--spacing-08) var(--spacing-16) var(--spacing-08) var(--spacing-15);
+  text-decoration: none;
+  font-style: normal;
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-600);
+  line-height: var(--header-cta-line-height);
+  color: var(--color-black);
+  background: transparent;
+  border-radius: 0;
+}
+
+.nav-tools .nav-cta-group .nav-cta-primary:hover {
+  background: var(--color-black);
+  color: var(--color-green-bright);
 }
 
 /* ── Utility bar — lower-specificity selectors before higher-specificity ones ── */
@@ -2228,7 +2247,6 @@ header nav .nav-sections {
 
 header nav[aria-expanded='true'] {
   background-color: var(--background-color);
-  min-height: auto;
 }
 
 header nav[aria-expanded='true'] .nav-sections {
@@ -2237,7 +2255,7 @@ header nav[aria-expanded='true'] .nav-sections {
   height: auto;
   overflow: visible;
   padding: 0 var(--spacing-20);
-  position: absolute;
+  position: static;
   top: var(--spacing-70);
 }
 
@@ -2265,6 +2283,7 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > butto
   font-weight: var(--font-weight-600);
   letter-spacing: 0;
   text-transform: none;
+  padding: 0;
 }
 
 /* ── Hover/active — lower specificity before higher specificity ── */
@@ -2283,6 +2302,8 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
   font-family: inherit;
   font-weight: var(--font-weight-600);
   opacity: 1;
+  font-size: var(--font-size-18);
+  line-height: var(--line-height-40);
 }
 
 /* Nav sections hover/focus — white text at full opacity */
@@ -2342,6 +2363,8 @@ header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role=
   font-weight: var(--font-weight-700);
   padding: 0;
   text-decoration: none;
+  font-size: 18px;
+  line-height: var(--line-height-40);
 }
 
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
@@ -2353,6 +2376,75 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
   background: var(--color-brand-primary);
   color: var(--color-text-on-dark);
+}
+
+header nav .nav-search .search-toggle {
+  display: none;
+}
+
+header nav .nav-search .search-expanded[hidden] {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-08);
+}
+
+header nav .nav-search .search-inner-wrapper input[type="search"] {
+  font-style: normal;
+  font-weight: var(--font-weight-400);
+  background: transparent;
+  border: var(--spacing-02) solid var(--color-white);
+  color: var(--color-white);
+  padding: var(--spacing-08) var(--spacing-48) var(--spacing-08) var(--spacing-08);
+  font-size: var(--font-size-16);
+}
+
+.header nav .nav-search .search-inner-wrapper input[type="search"]::placeholder {
+  color: var(--color-white);
+}
+
+header nav .nav-search .search-inner-wrapper > span.icon-search {
+  top: var(--spacing-08);
+}
+
+header nav .nav-search .search-inner-wrapper > span.icon-search svg {
+  fill: var(--color-white);
+  stroke: var(--color-white);
+}
+
+.nav-tools.nav-item-level-0 .default-content-wrapper .nav-cta-item {
+  display: block;
+  width: 100%;
+}
+
+.nav-tools.nav-item-level-0 .default-content-wrapper .nav-cta-item a {
+  margin: 0;
+  width: 100%;
+}
+
+header nav[aria-expanded="false"] .nav-search .search-expanded[hidden],
+header nav[aria-expanded="false"] .nav-search,
+header nav[aria-expanded="false"] .nav-tools.nav-item-level-0 {
+    display: none;
+}
+
+header nav .nav-tools {
+  background: var(--background-color);
+  width: 100%;
+  display: block;
+  padding: var(--spacing-20);
+}
+
+header nav .nav-search {
+  background: var(--color-background-footer);
+  width: 100%;
+  display: block;
+  padding: var(--spacing-20);
+  grid-area: search;
+}
+
+header nav .nav-search .search-expanded[hidden] {
+  width: 100%;
+  display: block;
 }
 
 /* ══════════════════════════════════════════════════
@@ -2397,9 +2489,11 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
       'sections sections sections' auto
       / 1fr auto auto;
     height: auto;
-    max-width: unset;
-    padding: 0;
-    width: 100%;
+    margin: 0 auto;
+    max-width: var(--header-content-max-width);
+    padding: var(--header-logo-row-padding-top) 0 var(--spacing-18);
+    width: calc(100% - var(--spacing-40));
+    gap: var(--spacing-25);
   }
 
   /* Utility bar width constraint */
@@ -2429,16 +2523,20 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     opacity: 1;
     overflow: visible;
     padding: 0 var(--spacing-35);
-    position: relative;
     visibility: visible;
     width: 100%;
     z-index: var(--z-index-60);
   }
 
-  header .nav-wrapper nav .nav-sections .default-content-wrapper {
-    margin: 0 auto;
-    max-width: var(--header-content-max-width);
-    width: 100%;
+  header .nav-wrapper nav .nav-sections:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: var(--header-sections-bg-height);
+    background-color: var(--color-background-footer);
+    z-index: 0;
+    width: 100vw;
   }
 
   header nav .nav-sections .default-content-wrapper > ul {
@@ -2499,6 +2597,7 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     align-items: center;
     display: inline-flex;
     gap: var(--spacing-06);
+    padding: var(--spacing-10) 0;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li:has(.submenu-level-1 .navigation-group) > button::before {
@@ -2510,11 +2609,6 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     mask: var(--icon-svg-chevron-down) no-repeat center / contain;
     order: var(--order-1);
     width: var(--spacing-12);
-  }
-
-  /* Nav tools — always hidden on desktop for Mavyret HCP */
-  header .nav-wrapper nav .nav-tools {
-    display: none;
   }
 
   /* Mobile utility clone — always hidden on desktop */
@@ -2583,4 +2677,24 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     background: var(--background-color);
   }
 
+  header nav .nav-search {
+    position: absolute;
+    right: var(--header-search-desktop-right);
+    top: var(--header-search-desktop-top);
+    z-index: var(--header-search-z-index);
+    grid-area: tools;
+    width: auto;
+    display: flex;
+    padding: 0;
+  }
+  header nav[aria-expanded="false"] .nav-search .search-expanded[hidden],
+  header nav[aria-expanded="false"] .nav-tools.nav-item-level-0  {
+    display: flex;
+  }
+  header nav .nav-search .search-toggle {
+    display: none;
+  }
+  header nav[aria-expanded="false"] .nav-search {
+    display: flex;
+  }
 }

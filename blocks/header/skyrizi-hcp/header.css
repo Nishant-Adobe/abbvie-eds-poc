@@ -1938,8 +1938,8 @@ body:has(.nav-floating-isi-open) {
 
 /* ─── All viewports ─── */
 
-body{
-  background-color: #1ba2da;
+body {
+  background-color: var(--color-background-page);
 }
 
 /* Nav wrapper — transparent for hero overlay */
@@ -2301,7 +2301,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
   header nav .nav-sections .default-content-wrapper > ul {
     display: flex;
     justify-content: flex-end;
-    gap: 30px !important;
+    gap: var(--header-nav-gap) !important;
     margin: 0;
   }
 
@@ -2341,7 +2341,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     position: absolute;
     bottom: var(--header-nav-underline-bottom);
     left: 50%;
-    width: 80%;
+    width: var(--header-nav-underline-width);
     height: var(--spacing-04);
     transform: translateX(-50%);
   }

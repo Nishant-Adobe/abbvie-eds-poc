@@ -781,7 +781,20 @@ function buildCtaGroup(headerEl) {
   const group = createElement('div', { className: 'nav-cta-group' });
 
   const linkParas = ctaParas.filter((p) => p.querySelector('a'));
-  if (linkParas.length) {
+  const lastPara = ctaParas[ctaParas.length - 1];
+  // If the last para is text-only (no anchor), it's an explicit CTA label
+  const ctaLabel = !lastPara?.querySelector('a') ? lastPara?.textContent.trim() : null;
+  const primaryLinkEl = linkParas[0]?.querySelector('a');
+
+  if (ctaLabel && primaryLinkEl) {
+    // Separate label para exists — build clean anchor (avoids href-as-text EDS default)
+    group.appendChild(createElement('a', {
+      className: 'nav-cta-primary button',
+      attributes: { href: primaryLinkEl.href },
+      textContent: ctaLabel,
+    }));
+  } else if (linkParas.length) {
+    // No separate label — render link paras as-is (guest/user auth split)
     const mid = Math.ceil(linkParas.length / 2);
     const guestWrap = createElement('div', { className: 'nav-cta-guest' });
     guestWrap.innerHTML = linkParas.slice(0, mid).map((p) => p.outerHTML).join('');
@@ -795,17 +808,6 @@ function buildCtaGroup(headerEl) {
       userWrap.innerHTML = linkParas.slice(mid).map((p) => p.outerHTML).join('');
       group.appendChild(userWrap);
     }
-  }
-
-  // Primary CTA: label from last para (text only), link from separate row 1
-  const ctaLabel = ctaParas[ctaParas.length - 1]?.textContent.trim();
-  const ctaLinkEl = ctaBlock.children[1]?.querySelector('a');
-  if (ctaLabel && ctaLinkEl) {
-    group.appendChild(createElement('a', {
-      className: 'nav-cta-primary button',
-      attributes: { href: ctaLinkEl.href },
-      textContent: ctaLabel,
-    }));
   }
 
   return group.children.length ? group : null;
@@ -1043,16 +1045,12 @@ export default async function decorate(block) {
   const toolsWrapper = document.createElement('div');
   toolsWrapper.className = 'default-content-wrapper';
 
-  const toolsUl = document.createElement('ul');
-
   // CTA group (guest/user auth + primary button) — rendered BEFORE search/language-links
   const ctaGroup = buildCtaGroup(header);
-  if (ctaGroup) toolsUl.appendChild(createElement('li', { className: 'nav-cta-item' })).appendChild(ctaGroup);
-
-  // nav-tools: CTA group only — language-links go to nav-sections, search goes to nav-search
-
-  if (toolsUl.children.length) {
-    toolsWrapper.appendChild(toolsUl);
+  if (ctaGroup) {
+    const ctaItem = createElement('div', { className: 'nav-cta-item' });
+    ctaItem.appendChild(ctaGroup);
+    toolsWrapper.appendChild(ctaItem);
     tools.appendChild(toolsWrapper);
     nav.appendChild(tools);
   }
