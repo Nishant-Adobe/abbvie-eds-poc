@@ -127,7 +127,7 @@ function hasSeenModal(modalId, variants) {
     return getCookie(`modal-seen-${modalId}`) === '1';
   }
   if (variants.includes('once-session')) {
-    return sessionStorage.getItem(`modal-seen-${modalId}`) === '1';
+    try { return sessionStorage.getItem(`modal-seen-${modalId}`) === '1'; } catch { /* private browsing */ }
   }
   return false;
 }
@@ -137,7 +137,7 @@ function markModalSeen(modalId, variants) {
     setCookie(`modal-seen-${modalId}`, '1', 365);
   }
   if (variants.includes('once-session')) {
-    sessionStorage.setItem(`modal-seen-${modalId}`, '1');
+    try { sessionStorage.setItem(`modal-seen-${modalId}`, '1'); } catch { /* private browsing */ }
   }
 }
 
@@ -250,11 +250,10 @@ export default async function decorate(block) {
   let modalId;
 
   // Method 1: Read from block dataset (v2 block / UE properties)
-  if (block.dataset.modalId || block.dataset.fragmentPath
-    || block.getAttribute('data-modal-id') || block.getAttribute('data-fragment-path')) {
-    modalId = block.dataset.modalId || block.getAttribute('data-modal-id') || '';
-    fragmentPath = block.dataset.fragmentPath || block.getAttribute('data-fragment-path') || '';
-    openLabel = block.dataset.openLabel || block.getAttribute('data-open-label') || 'Open modal';
+  if (block.dataset.modalId || block.dataset.fragmentPath) {
+    modalId = block.dataset.modalId || '';
+    fragmentPath = block.dataset.fragmentPath || '';
+    openLabel = block.dataset.openLabel || 'Open modal';
   } else if (rows.length && rows[0]?.children.length >= 2) {
     // Method 2: Key-value format (two cells per row)
     const config = {};
