@@ -410,7 +410,8 @@ function buildCaptionLayout(block, afterImg, beforeImg, opts, startPct) {
   if (opts.captionHtml) {
     const caption = document.createElement('div');
     caption.className = 'image-compare-gallery-content';
-    // XSS-safe: captionHtml sourced from AEM authored content, not user input
+    // XSS-safe: innerHTML sourced from AEM authored content
+    // via cells[COL.description], not user input
     caption.innerHTML = opts.captionHtml;
     block.appendChild(caption);
   }
@@ -484,6 +485,16 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
   // more reliable than a fixed setTimeout on slow connections.
   const ro = new ResizeObserver(() => scheduleFixBeforeWidth());
   ro.observe(container);
+
+  // Clean up resize listener and ResizeObserver when container is removed from DOM
+  const mo = new MutationObserver(() => {
+    if (!container.isConnected) {
+      window.removeEventListener('resize', debouncedFix);
+      ro.disconnect();
+      mo.disconnect();
+    }
+  });
+  mo.observe(document.body, { childList: true, subtree: true });
 
   setPosition(startPct);
 
@@ -660,8 +671,8 @@ function detectFormat(block) {
     && firstRow.children[0]?.textContent?.trim()) return 'keyvalue';
   // Model-rows: UE renders each field as its own row (single-column layout)
   if (rows.length > 10 && firstCells.length === 1) return 'model-rows';
-  // Fallback for shorter UE model output
-  if (rows.length === 1 && firstCells.length >= 5) return 'model';
+  // Fallback for shorter UE model output — require at least 10 cells to avoid false positives
+  if (rows.length === 1 && firstCells.length >= 10) return 'model';
 
   return 'legacy';
 }

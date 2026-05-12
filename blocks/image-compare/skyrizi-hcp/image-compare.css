@@ -1,12 +1,376 @@
+/* =========================================================
+   IMAGE COMPARE - CORE ENGINE
+========================================================= */
+
+.image-compare-container {
+  --compare-position: 50%;
+  --image-compare-thumb-bg: #c7e5ef;
+
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+  cursor: col-resize;
+  aspect-ratio: 1 / 1;
+  background: #d9d9d9;
+}
+
+/* =========================================
+   IMAGE LAYERS
+========================================= */
+
+.image-compare-after,
+.image-compare-before {
+  height: 100%;
+}
+
+.image-compare-after {
+  display: block;
+  line-height: 0;
+}
+
+.image-compare-after img,
+.image-compare-before img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.image-compare-before {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width: var(--compare-position);
+}
+
+.image-compare-before img {
+  object-position: left;
+
+  /* max-width set to none here; JS sets exact pixel width for the clip reveal */
+  max-width: none;
+}
+
+/* =========================================
+   HANDLE
+========================================= */
+
+.image-compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--compare-position);
+  transform: translateX(-50%);
+  width: 4px;
+  background-color: var(--image-compare-handle-color, #fff);
+  cursor: col-resize;
+  touch-action: none;
+  z-index: 2;
+}
+
+.image-compare-handle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  background-color: var(--image-compare-handle-color, #fff);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 26px;
+}
+
+.image-compare-handle:focus-visible::before {
+  outline: 2px solid var(--color-focus, #0057cc);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   LABELS
+========================================= */
+
+.image-compare-label {
+  position: absolute;
+  bottom: 14px;
+  background: rgb(0 0 0 / 60%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 0;
+  z-index: 1;
+}
+
+.image-compare-label-before {
+  left: 14px;
+}
+
+.image-compare-label-after {
+  right: 14px;
+}
+
+/* =========================================
+   VERTICAL VARIANT
+========================================= */
+
+.image-compare.vertical .image-compare-container {
+  cursor: row-resize;
+}
+
+.image-compare.vertical .image-compare-before {
+  width: 100%;
+  height: var(--compare-position);
+  inset: 0 0 auto;
+}
+
+.image-compare.vertical .image-compare-before img {
+  object-position: top;
+}
+
+.image-compare.vertical .image-compare-handle {
+  inset: var(--compare-position) 0 auto;
+  width: 100%;
+  height: 4px;
+  transform: translateY(-50%);
+}
+
+.image-compare.vertical .image-compare-label-before {
+  left: 14px;
+  top: 14px;
+  bottom: auto;
+}
+
+.image-compare.vertical .image-compare-label-after {
+  right: 14px;
+  bottom: 14px;
+}
+
+/* =========================================
+   PROMPT
+========================================= */
+
+.image-compare-prompt {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgb(0 0 0 / 70%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 3;
+  white-space: nowrap;
+  transition: opacity 400ms;
+}
+
+.image-compare-prompt.is-hidden {
+  opacity: 0;
+}
+
+/* =========================================
+   WRAPPER
+========================================= */
+
+.image-compare-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+.image-compare-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.image-compare-description {
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+/* =========================================
+   TABS
+   Mobile default: stacked column.
+   At ≥600px: single row (overridden in media query below).
+========================================= */
+
+.image-compare-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.image-compare-tab {
+  background: #f5f5f5;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition:
+    background 200ms,
+    border-color 200ms;
+}
+
+.image-compare-tab.is-active {
+  background: #071d49;
+  border-color: #071d49;
+  color: #fff;
+}
+
+.image-compare-tab:focus-visible {
+  outline: 2px solid #0057cc;
+  outline-offset: 2px;
+}
+
+/* =========================================
+   TOGGLE VARIANT
+========================================= */
+
+.image-compare-tabs-toggle {
+  flex-direction: row;
+  gap: 0;
+}
+
+.image-compare-tabs-toggle .image-compare-tab {
+  flex: 1;
+  text-align: center;
+  border-radius: 0;
+}
+
+.image-compare-tabs-toggle .image-compare-tab:first-child {
+  border-radius: 999px 0 0 999px;
+}
+
+.image-compare-tabs-toggle .image-compare-tab:last-child {
+  border-radius: 0 999px 999px 0;
+}
+
+/* =========================================
+   GALLERY CONTENT
+========================================= */
+
+.image-compare-gallery-content {
+  margin-bottom: 16px;
+}
+
+.image-compare.gallery .image-compare-container {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* =========================================
+   THUMBNAILS
+   Mobile default: 64px wide thumbnails.
+   At ≥600px: 74px (overridden in media query below).
+========================================= */
+
+.image-compare-thumbnails {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 24px;
+  background: var(--image-compare-thumb-bg);
+}
+
+.image-compare-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 64px;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  scroll-snap-align: start;
+}
+
+.image-compare-thumb.is-active {
+  outline: 3px solid var(--image-compare-thumb-active-border, #1398d1);
+}
+
+.image-compare-thumb:focus-visible {
+  outline: 2px solid #0057cc;
+  outline-offset: 2px;
+}
+
+.image-compare-thumb-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.image-compare-thumb-label,
+.image-compare-thumb-sublabel {
+  display: none;
+}
+
+/* =========================================
+   MOBILE-HIDDEN VARIANT
+   Hidden on small screens, visible at ≥900px.
+========================================= */
+
+.image-compare.mobile-hidden {
+  display: none;
+}
+
+/* =========================================
+   RESPONSIVE — mobile-first (min-width)
+========================================= */
+
+@media (width >= 600px) {
+  .image-compare-tabs {
+    flex-direction: row;
+  }
+
+  .image-compare-thumb {
+    width: 74px;
+  }
+}
+
+@media (width >= 900px) {
+  .image-compare.mobile-hidden {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-compare-prompt,
+  .image-compare-tab,
+  .image-compare-thumb {
+    transition: none;
+  }
+}
 
 /* ============================================================
    SKYRIZI HCP — Image Compare block brand overrides
    Pattern: Block-scoped design tokens on .image-compare
    referencing global brand tokens from styles/skyrizi-hcp/tokens.css.
-   Only brand-specific token overrides live here.
+   Mobile-first: base styles target mobile, media queries add desktop.
    ============================================================ */
 
 /* Block-scoped design tokens — references global brand tokens from styles/skyrizi-hcp/tokens.css */
+
 .image-compare {
   --ic-navy: var(--color-skyrizi-navy);
   --ic-navy-dark: var(--color-skyrizi-navy-dark);
@@ -19,22 +383,25 @@
   --ic-thumb-strip-bg: var(--color-skyrizi-thumb-strip);
   --ic-font-body: var(--font-skyrizi-condensed);
   --ic-font-bold: var(--font-skyrizi-bold);
+  --image-compare-thumb-bg: var(--ic-thumb-strip-bg);
 }
 
 /* ── Section container override ─────────────────────────────── */
+
 main > .section.image-compare-container {
-  max-width: none !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-bottom: 0 !important;
-  padding: 0 !important;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  padding: 0;
   overflow: visible;
 }
 
-/* ── Gallery wrapper ────────────────────────────────────────── */
+/* ── Gallery wrapper — mobile base ─────────────────────────── */
+
 .image-compare.gallery {
   background-color: var(--ic-gallery-bg);
-  padding: 40px 20px;
+  padding: 15px 0;
   border-top: 4px solid var(--ic-accent-border);
   border-radius: 0;
   width: 100%;
@@ -45,40 +412,42 @@ main > .section.image-compare-container {
   margin-bottom: 0;
 }
 
-/* ── Layout card ────────────────────────────────────────────── */
+/* ── Layout card — mobile: stacked column ───────────────────── */
+
 .image-compare .image-compare-layout {
   display: flex;
-  flex-direction: row;
+  flex-direction: column-reverse;
   max-width: 1160px;
-  margin: 0 auto;
-  padding: 15px;
+  margin: 0 10px;
+  padding: 0;
   background: #fff;
   border-radius: 0;
   box-shadow: none;
   gap: 0;
 }
 
-/* ── Content panel ──────────────────────────────────────────── */
+/* ── Content panel — mobile ─────────────────────────────────── */
+
 .image-compare .image-compare-content {
-  flex: 0 0 45%;
-  max-width: 45%;
-  padding: 20px;
-  padding-right: 64px;
+  flex: 1 1 auto;
+  max-width: 100%;
+  padding: 15px 12px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 /* ── Eyebrow (Week label) ───────────────────────────────────── */
+
 .image-compare .image-compare-eyebrow {
   display: block;
   font-family: var(--ic-font-bold);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--ic-navy);
   text-transform: uppercase;
-  line-height: 20px;
-  margin-bottom: 16px;
+  line-height: 1;
+  margin-bottom: 10px;
 }
 
 .image-compare .image-compare-eyebrow::after {
@@ -91,14 +460,15 @@ main > .section.image-compare-container {
   background: var(--ic-navy);
 }
 
-/* ── Heading ────────────────────────────────────────────────── */
+/* ── Heading — mobile ───────────────────────────────────────── */
+
 .image-compare .image-compare-heading {
   font-family: var(--ic-font-bold);
-  font-size: 2.75rem;
-  line-height: 40px;
+  font-size: 1.25rem;
+  line-height: 1.2;
   font-weight: 400;
   color: var(--ic-blue);
-  margin: 0 0 16px;
+  margin: 0 0 12px;
 }
 
 .image-compare .image-compare-heading::after {
@@ -111,11 +481,12 @@ main > .section.image-compare-container {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='1'%3E%3Cline x1='0' y1='0.5' x2='3' y2='0.5' stroke='%231ba2da' stroke-width='1'/%3E%3C/svg%3E") repeat-x;
 }
 
-/* ── Description ────────────────────────────────────────────── */
+/* ── Description — mobile ───────────────────────────────────── */
+
 .image-compare .image-compare-description {
   font-family: var(--ic-font-body);
-  font-size: 0.875rem;
-  line-height: 16px;
+  font-size: 0.8rem;
+  line-height: 14px;
   color: var(--ic-navy);
   letter-spacing: 0;
   margin-bottom: 8px;
@@ -125,7 +496,8 @@ main > .section.image-compare-container {
   margin: 0 0 8px;
 }
 
-/* ── CTA button ─────────────────────────────────────────────── */
+/* ── CTA button — mobile ────────────────────────────────────── */
+
 .image-compare .image-compare-cta {
   display: inline-flex;
   align-items: center;
@@ -134,10 +506,10 @@ main > .section.image-compare-container {
   margin-top: 16px;
   background: var(--ic-navy);
   color: #fff;
-  padding: 14px 30px;
+  padding: 12px 20px;
   border-radius: 5px;
   font-family: var(--ic-font-bold);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   line-height: 0.875rem;
   text-decoration: none;
@@ -168,15 +540,18 @@ main > .section.image-compare-container {
   background: var(--ic-blue-hover);
 }
 
-/* ── Slider wrapper ─────────────────────────────────────────── */
+/* ── Slider wrapper — mobile ────────────────────────────────── */
+
 .image-compare .image-compare-slider-wrapper {
-  flex: 0 0 55%;
-  max-width: 55%;
-  padding: 5px;
+  flex: 1 1 auto;
+  max-width: 100%;
+  width: 100%;
   min-width: 0;
+  padding: 0;
 }
 
 /* ── Slider container ───────────────────────────────────────── */
+
 .image-compare .image-compare-container {
   width: 100%;
   height: auto;
@@ -217,6 +592,7 @@ main > .section.image-compare-container {
 }
 
 /* ── Handle ─────────────────────────────────────────────────── */
+
 .image-compare .image-compare-handle {
   width: 1px;
   background-color: rgb(0 0 0 / 50%);
@@ -240,34 +616,37 @@ main > .section.image-compare-container {
   display: none;
 }
 
-/* ── Bottom bar ─────────────────────────────────────────────── */
+/* ── Bottom bar — mobile ────────────────────────────────────── */
+
 .image-compare .image-compare-bottom-bar {
   display: flex;
   justify-content: space-between;
   background: var(--ic-navy);
   color: #fff;
   font-family: var(--ic-font-body);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   padding: 4px 8px;
   margin-top: 0;
 }
 
-/* ── Patient caption ────────────────────────────────────────── */
+/* ── Patient caption — mobile ───────────────────────────────── */
+
 .image-compare .image-compare-patient {
   background: var(--ic-navy-dark);
   color: #fff;
   font-family: var(--ic-font-body);
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
-  line-height: 36px;
+  line-height: 28px;
   padding: 4px 8px;
 }
 
-/* ── Thumbnails ─────────────────────────────────────────────── */
+/* ── Thumbnails — hidden on mobile ─────────────────────────── */
+
 .image-compare .image-compare-thumbnails {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   gap: 12px;
@@ -334,116 +713,105 @@ main > .section.image-compare-container {
   box-shadow: none;
 }
 
-/* ── Reversed layout (Week 52) ──────────────────────────────── */
-.image-compare.gallery.reversed .image-compare-layout {
-  flex-direction: row-reverse;
-}
-
 /* =========================================================
-   RESPONSIVE — Tablet (≤896px)
+   RESPONSIVE — Tablet (≥602px): stacked, medium type
    ========================================================= */
 
-@media (width <= 896px) {
+@media (width >= 602px) {
   .image-compare.gallery {
     padding: 20px 10px;
   }
 
   .image-compare .image-compare-layout {
-    flex-direction: column-reverse;
-    padding: 0;
-  }
-
-  .image-compare.gallery.reversed .image-compare-layout {
-    flex-direction: column-reverse;
+    margin: 0;
   }
 
   .image-compare .image-compare-content {
-    flex: 1 1 auto;
-    max-width: 100%;
     padding: 20px 15px;
-    padding-right: 15px;
-  }
-
-  .image-compare .image-compare-slider-wrapper {
-    flex: 1 1 auto;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .image-compare .image-compare-container {
-    width: 100%;
-    height: auto;
-  }
-
-  .image-compare .image-compare-after img {
-    width: 100%;
-    height: auto;
   }
 
   .image-compare .image-compare-heading {
     font-size: 1.75rem;
     line-height: 1.2;
+    margin-bottom: 0;
   }
 
   .image-compare .image-compare-eyebrow {
     font-size: 1.125rem;
     line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .image-compare .image-compare-description {
+    font-size: 0.875rem;
+    line-height: 16px;
+  }
+
+  .image-compare .image-compare-cta {
+    padding: 14px 30px;
+    font-size: 0.875rem;
   }
 
   .image-compare .image-compare-patient {
     font-size: 18px;
+    line-height: inherit;
   }
 
-  .image-compare .image-compare-thumbnails {
-    display: none;
+  .image-compare .image-compare-bottom-bar {
+    font-size: 14px;
   }
 }
 
 /* =========================================================
-   RESPONSIVE — Mobile (≤601px)
+   RESPONSIVE — Desktop (≥897px): side-by-side, full type
    ========================================================= */
 
-@media (width <= 601px) {
+@media (width >= 897px) {
   .image-compare.gallery {
-    padding: 15px 0;
+    padding: 40px 20px;
   }
 
   .image-compare .image-compare-layout {
-    padding: 0;
-    margin: 0 10px;
+    flex-direction: row;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  .image-compare.gallery.reversed .image-compare-layout {
+    flex-direction: row-reverse;
   }
 
   .image-compare .image-compare-content {
-    padding: 15px 12px;
+    flex: 0 0 45%;
+    max-width: 45%;
+    padding: 20px;
+    padding-right: 64px;
+  }
+
+  .image-compare .image-compare-slider-wrapper {
+    flex: 0 0 55%;
+    max-width: 55%;
+    padding: 5px;
   }
 
   .image-compare .image-compare-heading {
-    margin-bottom: 12px;
-    font-size: 1.25rem;
-    line-height: 1.2;
+    font-size: 2.75rem;
+    line-height: 40px;
+    margin-bottom: 0;
   }
 
   .image-compare .image-compare-eyebrow {
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
-
-  .image-compare .image-compare-description {
-    font-size: 0.8rem;
-    line-height: 14px;
-  }
-
-  .image-compare .image-compare-cta {
-    padding: 12px 20px;
-    font-size: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 20px;
+    margin-bottom: 16px;
   }
 
   .image-compare .image-compare-patient {
-    font-size: 16px;
-    line-height: 28px;
+    font-size: 24px;
+    line-height: 36px;
   }
 
-  .image-compare .image-compare-bottom-bar {
-    font-size: 12px;
+  .image-compare .image-compare-thumbnails {
+    display: flex;
   }
 }

@@ -151,7 +151,7 @@
 
 .image-compare .image-compare-thumbnails {
   display: flex;
-  gap: 16px;
+  gap: 10px;
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 16px 0;
@@ -163,7 +163,7 @@
 }
 
 .image-compare .image-compare-thumb {
-  width: var(--ic-thumb-width);
+  width: var(--ic-thumb-width-mobile);
   height: auto;
   border: 3px solid transparent;
   border-radius: var(--ic-thumb-radius);
@@ -225,54 +225,21 @@
   box-shadow: none;
 }
 
-.image-compare .image-compare-layout {
-  display: block;
-  max-width: none;
-  margin: 0;
-  padding: 0;
-  background: none;
-  border-radius: 0;
-}
-
-.image-compare .image-compare-content {
-  display: none;
-}
-
 .image-compare .image-compare-slider-wrapper {
   padding: 0;
   min-width: 0;
 }
 
-.image-compare .image-compare-bottom-bar {
-  display: none;
-}
-
-.image-compare .image-compare-patient {
-  display: none;
-}
-
-.image-compare .image-compare-eyebrow {
-  display: none;
-}
-
-.image-compare .image-compare-heading::after {
-  display: none;
-}
-
-.image-compare .image-compare-cta {
-  display: none;
-}
-
-@media (width <= 768px) {
+@media (width >= 769px) {
   .image-compare.gallery {
-    max-width: 100%;
+    max-width: var(--ic-gallery-max-width);
   }
 
   .image-compare .image-compare-thumbnails {
-    gap: 10px;
+    gap: 16px;
   }
 
   .image-compare .image-compare-thumb {
-    width: var(--ic-thumb-width-mobile);
+    width: var(--ic-thumb-width);
   }
 }
