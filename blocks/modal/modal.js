@@ -175,6 +175,11 @@ async function openModal(trigger, variants = []) {
     if (fragment) {
       [...fragment.childNodes].forEach((node) => content.append(node));
     }
+    const heading = content.querySelector('h1, h2, h3');
+    if (heading) {
+      if (!heading.id) heading.id = `modal-title-${modalId || 'default'}`;
+      dialog.setAttribute('aria-labelledby', heading.id);
+    }
     // Links with href="#" inside modal act as close/cancel buttons
     content.querySelectorAll('a[href="#"]').forEach((link) => {
       link.addEventListener('click', (e) => {
