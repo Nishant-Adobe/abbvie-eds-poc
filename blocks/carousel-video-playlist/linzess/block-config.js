@@ -1,3 +1,5 @@
+const LABEL_VIEW_TRANSCRIPT = 'View Transcript';
+const LABEL_HIDE_TRANSCRIPT = 'Hide Transcript';
 const loadedScripts = {};
 let playerCounter = 0;
 
@@ -28,17 +30,35 @@ function isItemRow(row) {
 
 function parseConfig(block) {
   const cfgRows = [...block.children].filter((r) => !isItemRow(r));
-  // cfgRows[0]=classes, [1]=heading, [2]=description,
-  // [3]=accountId, [4]=playlistId, [5]=playerId, [6]=maxVisible
   const cellText = (i) => cfgRows[i]?.firstElementChild?.textContent?.trim() ?? '';
   const cellHtml = (i) => cfgRows[i]?.firstElementChild?.innerHTML?.trim() ?? '';
+
+  // Find accountId by scanning for a 10+ digit number
+  let accountIdx = -1;
+  for (let i = 0; i < cfgRows.length; i += 1) {
+    if (/^\d{8,}$/.test(cellText(i))) { accountIdx = i; break; }
+  }
+
+  // Find maxVisible by scanning for a small number (1-20) that isn't the accountId
+  let maxVisible = 0;
+  for (let i = 0; i < cfgRows.length; i += 1) {
+    const val = cellText(i);
+    if (/^\d{1,2}$/.test(val) && parseInt(val, 10) > 0 && parseInt(val, 10) <= 20 && i !== accountIdx) {
+      maxVisible = parseInt(val, 10);
+      break;
+    }
+  }
+
+  const playlistIdx = accountIdx >= 0 ? accountIdx + 1 : -1;
+  const playerIdx = accountIdx >= 0 ? accountIdx + 2 : -1;
+
   return {
     heading: cellText(1),
     description: cellHtml(2),
-    accountId: cellText(3),
-    playlistId: cellText(4),
-    playerId: cellText(5) || 'default',
-    maxVisible: parseInt(cellText(6), 10) || 0,
+    maxVisible,
+    accountId: accountIdx >= 0 ? cellText(accountIdx) : '',
+    playlistId: playlistIdx >= 0 ? cellText(playlistIdx) : '',
+    playerId: (playerIdx >= 0 ? cellText(playerIdx) : '') || 'default',
   };
 }
 
@@ -115,7 +135,7 @@ function createTranscriptToggle(transcriptCell, container) {
   btn.type = 'button';
   btn.className = 'cvp-transcript-toggle';
   btn.setAttribute('aria-expanded', 'false');
-  btn.textContent = 'View Transcript';
+  btn.textContent = LABEL_VIEW_TRANSCRIPT;
 
   const panel = document.createElement('div');
   panel.className = 'cvp-transcript-panel';
@@ -131,14 +151,14 @@ function createTranscriptToggle(transcriptCell, container) {
         const toggleBtn = p.previousElementSibling;
         if (toggleBtn?.classList.contains('cvp-transcript-toggle')) {
           toggleBtn.setAttribute('aria-expanded', 'false');
-          toggleBtn.textContent = 'View Transcript';
+          toggleBtn.textContent = LABEL_VIEW_TRANSCRIPT;
         }
       });
     }
     if (!isOpen) {
       panel.classList.add('is-open');
       btn.setAttribute('aria-expanded', 'true');
-      btn.textContent = 'Hide Transcript';
+      btn.textContent = LABEL_HIDE_TRANSCRIPT;
     }
   });
 
@@ -209,7 +229,17 @@ function buildGridMode(block, cfg, items, accountId, playerId) {
     }
 
     card.append(footer);
-    createTranscriptToggle(item.transcript, footer);
+    if (item.transcript?.textContent?.trim()) {
+      createTranscriptToggle(item.transcript, footer);
+    } else if (item.transcriptHref) {
+      const link = document.createElement('a');
+      link.className = 'cvp-transcript-toggle';
+      link.href = item.transcriptHref;
+      link.textContent = LABEL_VIEW_TRANSCRIPT;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      footer.append(link);
+    }
 
     // Delay poster player init — wait 3s to avoid Lighthouse penalty
     setTimeout(() => {
@@ -291,7 +321,7 @@ function buildFeaturedMode(block, items, accountId, playerId) {
 
   const transcriptLink = document.createElement('a');
   transcriptLink.className = 'cvp-view-transcript';
-  transcriptLink.textContent = 'View Transcript';
+  transcriptLink.textContent = LABEL_VIEW_TRANSCRIPT;
   transcriptLink.href = items[0].transcriptHref || '#';
   if (!items[0].transcriptHref) transcriptLink.hidden = true;
 

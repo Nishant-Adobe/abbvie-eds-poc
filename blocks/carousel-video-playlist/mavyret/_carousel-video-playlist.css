@@ -150,7 +150,7 @@
   background: var(--background-color);
   border: 2px solid var(--color-brand-primary, #21406d);
   border-radius: 0;
-  font-size: 22px;
+  font-size: var(--font-size-h3, 22px);
   cursor: pointer;
   color: var(--color-fiesta, #e65400);
   z-index: 10;
@@ -159,7 +159,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold, 700);
   transition: background 200ms;
 }
 
@@ -257,3 +257,25 @@ body.cvp-modal-is-open {
     max-height: 100vh;
   }
 }
+
+/* ── Inline play mode — show controls, enable pointer events ── */
+
+.carousel-video-playlist.mavyret-inline .cvp-poster-video {
+  pointer-events: auto;
+}
+
+.carousel-video-playlist.mavyret-inline .cvp-thumb-wrap .vjs-control-bar {
+  display: flex !important;
+}
+
+.carousel-video-playlist.mavyret-inline .cvp-card {
+  cursor: default;
+}
+
+/* Max visible cards — hide cards beyond the authored limit */
+.carousel-video-playlist.mavyret-modal-grid[data-max-visible="1"] .cvp-card:nth-child(n+2) { display: none; }
+.carousel-video-playlist.mavyret-modal-grid[data-max-visible="2"] .cvp-card:nth-child(n+3) { display: none; }
+.carousel-video-playlist.mavyret-modal-grid[data-max-visible="3"] .cvp-card:nth-child(n+4) { display: none; }
+.carousel-video-playlist.mavyret-modal-grid[data-max-visible="4"] .cvp-card:nth-child(n+5) { display: none; }
+.carousel-video-playlist.mavyret-modal-grid[data-max-visible="5"] .cvp-card:nth-child(n+6) { display: none; }
+.carousel-video-playlist.mavyret-modal-grid[data-max-visible="6"] .cvp-card:nth-child(n+7) { display: none; }
