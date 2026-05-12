@@ -22,7 +22,7 @@
 }
 
 /* Profile band: dark navy */
-.hero.profile > :where(div):first-child {
+.hero.profile> :where(div):first-child {
   background-color: var(--color-background-footer);
 }
 
@@ -73,4 +73,372 @@
 /* No-padding variant: center content vertically when no indication banner is present */
 .hero.no-padding:not(:has(.hero-indication)) {
   justify-content: center;
+}
+
+
+/* ============================================================
+   MAVYRET data hero
+   Author with custom class: mavyret-data-hero
+   ============================================================ */
+
+.hero.mavyret-data-hero {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  min-height: 53.2rem;
+}
+
+.hero.mavyret-data-hero> :where(div):has(> div:empty) {
+  display: none;
+}
+
+.hero.mavyret-data-hero> :where(div):first-child {
+  position: absolute;
+  inset: 0;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+}
+
+.hero.mavyret-data-hero> :where(div):first-child picture,
+.hero.mavyret-data-hero> :where(div):first-child img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero.mavyret-data-hero> :where(div):first-child img {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  border-radius: 0;
+  max-height: none;
+}
+
+.hero.mavyret-data-hero::after {
+  display: block;
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(90deg, rgba(196, 62, 0, 0.1) 0%, rgba(196, 62, 0, 0.06) 38%, rgba(196, 62, 0, 0) 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero.mavyret-data-hero .hero-text-container {
+  position: relative;
+  z-index: 2;
+  display: block;
+  align-self: center;
+  width: min(100%, 74rem);
+  margin: 0;
+  padding: 4rem 3.5rem 4.8rem;
+  background: transparent;
+  max-width: none;
+}
+
+.hero.mavyret-data-hero .cmp-container-x-large {
+  grid-column: auto;
+  max-width: 49rem;
+}
+
+.hero.mavyret-data-hero h1,
+.hero.mavyret-data-hero h2,
+.hero.mavyret-data-hero h3,
+.hero.mavyret-data-hero p {
+  color: var(--color-text-on-dark);
+}
+
+.hero.mavyret-data-hero h1 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: clamp(4.4rem, 6vw, 7.2rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.hero.mavyret-data-hero h1+h1 {
+  margin-top: 1.6rem;
+}
+
+.hero.mavyret-data-hero h1 strong,
+.hero.mavyret-data-hero h2 strong,
+.hero.mavyret-data-hero p strong {
+  font-family: var(--heading-font-family-bold);
+  font-weight: 700;
+}
+
+.hero.mavyret-data-hero .hero-text-container p {
+  max-width: 48rem;
+  font-size: 1.7rem;
+  line-height: 1.38;
+}
+
+.hero.mavyret-data-hero .hero-text-container p:first-of-type {
+  margin-top: 2.4rem;
+  font-size: 2.2rem;
+  line-height: 1.26;
+}
+
+.hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
+  font-size: 14px;
+  font-family: 'Roboto Bold';
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.hero.mavyret-data-hero .hero-text-container p:nth-of-type(3) {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.hero.mavyret-data-hero .hero-text-container p sup {
+  font-size: 0.7em;
+  line-height: 0;
+}
+
+.hero.mavyret-data-hero .button-container {
+  margin-top: 0;
+  padding-bottom: 0;
+}
+
+.hero.mavyret-data-hero :where(a).button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: unset;
+  padding: 8px 16px;
+  border: 2px solid #636366;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: -2px 2px 4px 0 #8ce02a;
+  color: #111;
+  font-family: var(--heading-font-family-bold);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.hero.mavyret-data-hero :where(a).button::after {
+  content: '\203A';
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.hero.mavyret-data-hero :where(a).button:hover {
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+}
+
+.hero.mavyret-data-hero .hero-image-caption {
+  position: absolute;
+  right: 1.6rem;
+  bottom: 1.4rem;
+  z-index: 3;
+  width: auto;
+  max-width: calc(100% - 3.2rem);
+  padding: 0;
+  background: none;
+  color: var(--color-text-on-dark);
+  font-size: 1.1rem;
+  line-height: 1.2;
+  text-align: right;
+}
+
+.hero.mavyret-data-hero .hero-indication {
+  position: absolute;
+  left: 0;
+  right: auto;
+  top: auto;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  min-height: 7.4rem;
+  width: min(100%, 49.2rem);
+  padding: 1.2rem 3.2rem 1.2rem 4.8rem;
+  background: #6ca342;
+  color: var(--color-text-on-dark);
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 6.4rem) 100%, 0 100%);
+}
+
+.hero.mavyret-data-hero .hero-indication p {
+  width: 100%;
+  margin: 0;
+  max-width: none;
+  color: inherit;
+  font-family: var(--heading-font-family-bold);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+@media (width >=744px) {
+  .hero.mavyret-data-hero {
+    min-height: 58rem;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container {
+    width: min(100%, 82rem);
+    padding: 5.6rem 7rem 6rem;
+  }
+
+  .hero.mavyret-data-hero .cmp-container-x-large {
+    max-width: 52rem;
+  }
+
+  .hero.mavyret-data-hero h1 {
+    font-size: clamp(5.6rem, 6.4vw, 8rem);
+  }
+
+  .hero.mavyret-data-hero .hero-text-container p:first-of-type {
+    font-size: 28px;
+  }
+
+  .hero.mavyret-data-hero .hero-image-caption {
+    right: 3.2rem;
+    bottom: 2rem;
+  }
+
+  .hero.mavyret-data-hero .hero-indication {
+    min-height: 8.4rem;
+    width: min(100%, 59rem);
+    padding: 1.4rem 4rem 1.4rem 7rem;
+  }
+
+  .hero.mavyret-data-hero .hero-indication p {
+    font-size: 1.9rem;
+  }
+}
+
+@media (width >=1024px) {
+  .hero.mavyret-data-hero {
+    min-height: 53.2rem;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container {
+    width: 100%;
+    padding: 3.2rem 5.5rem 4rem;
+  }
+
+  .hero.mavyret-data-hero .cmp-container-x-large {
+    max-width: none;
+  }
+
+  .hero.mavyret-data-hero h1 {
+    font-size: 64px;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container p:first-of-type {
+    max-width: 50rem;
+    font-size: 28px;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
+    font-size: 14px;
+    font-family: 'Roboto Bold';
+    margin: 0;
+    padding-bottom: 0;
+  }
+
+  .hero.mavyret-data-hero :where(a).button {}
+
+  .hero.mavyret-data-hero .hero-image-caption {
+    right: 2.4rem;
+  }
+
+  .hero.mavyret-data-hero .hero-indication {
+    min-height: 7.2rem;
+    width: 49.2rem;
+    padding: 1.1rem 3.2rem 1.1rem 4.8rem;
+  }
+
+  .hero.mavyret-data-hero .hero-indication p {
+    font-size: 1.6rem;
+  }
+}
+
+.hero.mavyret-data-hero.no-padding .hero-text-container {
+  max-width: 1180px;
+}
+
+.hero.mavyret-data-hero.no-padding:not(:has(.hero-indication)) {
+  justify-content: center;
+}
+
+.hero.mavyret-data-hero.no-padding:not(:has(.hero-indication)) .hero-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.hero.mavyret-data-hero.no-padding .hero-indication {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero.mavyret-data-hero.no-padding .hero-indication p:first-child {
+  font-size: 28px;
+  font-weight: 800;
+  padding: 0;
+}
+
+.hero.mavyret-data-hero.no-padding .hero-indication p:last-child {
+  font-size: 28px;
+  font-weight: 400;
+  padding: 0;
+  padding-left: 64px;
+}
+
+.hero.mavyret-data-hero .hero-text-container p:last-child:not(:has(a)) {
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.hero.mavyret-data-hero {
+  height: 364px;
+  min-height: unset;
+}
+
+.hero.mavyret-data-hero.hero-home {
+  height: auto;
+  min-height: 500px;
+}
+
+@media (width <744px) {
+  .hero.mavyret-data-hero .hero-indication {
+    clip-path: none;
+    text-align: left;
+    padding: 1.2rem 3.2rem 1.2rem 2.8rem;
+  }
+
+  .hero.mavyret-data-hero.no-padding .hero-indication p:first-child,
+  .hero.mavyret-data-hero.no-padding .hero-indication p:nth-child(2) {
+    font-size: 24px;
+  }
+
+  .hero.mavyret-data-hero :where(a).button {
+    justify-content: space-between;
+    width: 100%;
+    padding: 4px 16px;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container p:first-of-type {
+    font-size: 24px;
+  }
+
+  .hero.mavyret-data-hero h1 {
+    font-size: 40px;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container {
+    padding: 16px;
+  }
 }
