@@ -458,20 +458,156 @@ function finalizeMavyretCtaAnchorFromUe(a) {
     return;
   }
   a.className = 'abbv-icon-keyboard_arrow_right abbv-button-primary i-a';
+  const isHttp = /^https?:\/\//i.test(href);
+  const isPdf = /\.pdf(\?|$)/i.test(href);
   if (!a.hasAttribute('data-linktype')) {
-    if (/\.pdf(\?|$)/i.test(href)) {
+    if (isPdf) {
       a.setAttribute('data-linktype', 'download');
-    } else if (/^https?:\/\//i.test(href)) {
+    } else if (isHttp) {
       a.setAttribute('data-linktype', 'external');
+    } else if (href.startsWith('/')) {
+      a.setAttribute('data-linktype', 'internal');
     }
   }
   if (!a.hasAttribute('target')) {
-    a.setAttribute('target', '_blank');
+    if (isHttp || isPdf) {
+      a.setAttribute('target', '_blank');
+    } else {
+      a.setAttribute('target', '_self');
+    }
   }
   const lab = (a.textContent || '').trim();
+  const opensNew = (a.getAttribute('target') || '').toLowerCase() === '_blank';
   if (lab && !a.getAttribute('aria-label')) {
-    a.setAttribute('aria-label', `${lab}, Opens in a new window`);
+    a.setAttribute('aria-label', opensNew ? `${lab}, Opens in a new window` : lab);
   }
+}
+
+/** Trailing "| 1" in card body HTML → `<sup>1</sup>` (keeps existing tags like strong). */
+function mavyretSectionCardBodyInnerHtml(inner) {
+  const t = (inner || '').trim();
+  if (!t) return '';
+  return t.replace(/\s*\|\s*1\s*$/i, '<sup>1</sup>');
+}
+
+/** First cell has a link (e.g. p.button-container > a.button). */
+function isMavyretSectionCardUeRow(wrapper) {
+  if (!wrapper || wrapper.tagName !== 'DIV') return false;
+  const firstCell = wrapper.querySelector(':scope > div');
+  if (!firstCell) return false;
+  return !!firstCell.querySelector('a[href]');
+}
+
+/** Intro: rich-text > abbv-rich-text.section-narrow… (mavyret-section-cards.html). */
+function buildMavyretSectionIntroFromWrapper(wrapper) {
+  const richTextOuter = document.createElement('div');
+  richTextOuter.className = 'rich-text';
+  const abbvRt = document.createElement('div');
+  abbvRt.className = (
+    'abbv-rich-text section-narrow color-white text-center section-break-bottom '
+    + 'abbv-rich-text-common'
+  );
+  abbvRt.innerHTML = wrapper.innerHTML.trim();
+  abbvRt.querySelectorAll('p').forEach((p) => {
+    fixEncodedSupInParagraph(p);
+  });
+  richTextOuter.append(abbvRt);
+  return richTextOuter;
+}
+
+/**
+ * One cta--card column (mavyret-section-cards.html). UE: [0] link cell, [2] body, [3] CTA label.
+ * @param {HTMLElement} wrapper
+ */
+function buildMavyretSectionCardColumnFromUeRow(wrapper) {
+  const cells = [...wrapper.querySelectorAll(':scope > div')];
+  const linkEl = cells[0]?.querySelector('a[href]') || wrapper.querySelector('a[href]');
+  let href = (linkEl?.getAttribute('href') || '').trim();
+  if (!href) href = '#';
+
+  const ctaP = cells[3]?.querySelector(':scope > p');
+  let ctaLabel = (ctaP?.textContent || cells[3]?.textContent || '').trim();
+  if (!ctaLabel) {
+    ctaLabel = (linkEl?.textContent || '').trim() || 'Learn more';
+  }
+
+  const containerParbase = document.createElement('div');
+  containerParbase.className = 'container parbase';
+  const abbvInner = document.createElement('div');
+  abbvInner.className = 'abbv-container cta--card';
+  const richTextOuter = document.createElement('div');
+  richTextOuter.className = 'rich-text';
+  const abbvRt = document.createElement('div');
+  abbvRt.className = 'abbv-rich-text abbv-rich-text-common';
+
+  const bodyCell = cells[2];
+  if (bodyCell) {
+    const bodyPs = [...bodyCell.querySelectorAll(':scope > p')];
+    if (bodyPs.length > 0) {
+      bodyPs.forEach((srcP) => {
+        const p = srcP.cloneNode(true);
+        p.innerHTML = mavyretSectionCardBodyInnerHtml(p.innerHTML);
+        fixEncodedSupInParagraph(p);
+        abbvRt.append(p);
+      });
+    } else {
+      const kids = [...bodyCell.children];
+      if (kids.length > 0) {
+        kids.forEach((k) => {
+          abbvRt.append(k.cloneNode(true));
+        });
+      } else {
+        const p = document.createElement('p');
+        const raw = bodyCell.innerHTML.trim() || (bodyCell.textContent || '').trim();
+        p.innerHTML = mavyretSectionCardBodyInnerHtml(raw);
+        abbvRt.append(p);
+      }
+    }
+  }
+
+  abbvRt.querySelectorAll('p').forEach((p) => {
+    fixEncodedSupInParagraph(p);
+  });
+
+  richTextOuter.append(abbvRt);
+  abbvInner.append(richTextOuter);
+
+  const ctaWrap = document.createElement('div');
+  ctaWrap.className = 'cta parbase';
+  const ctaA = document.createElement('a');
+  ctaA.href = href;
+  ctaA.textContent = ctaLabel;
+  finalizeMavyretCtaAnchorFromUe(ctaA);
+  ctaWrap.append(ctaA);
+  abbvInner.append(ctaWrap);
+
+  containerParbase.append(abbvInner);
+  return containerParbase;
+}
+
+/**
+ * Fiesta band + inner tree (mavyret-section-cards.html 517-596).
+ * @param {HTMLElement|null} introRichTextOuter
+ * @param {HTMLElement[]} cardColumns
+ */
+function buildMavyretSectionCardsBackgroundShell(introRichTextOuter, cardColumns) {
+  const wrap = document.createElement('div');
+  wrap.className = 'background-fiesta-gradient';
+  const inner = document.createElement('div');
+  if (introRichTextOuter) {
+    inner.append(introRichTextOuter);
+  }
+  const rowOuter = document.createElement('div');
+  rowOuter.className = 'container parbase';
+  const flexEven = document.createElement('div');
+  flexEven.className = 'abbv-container flex-even section';
+  cardColumns.forEach((col) => {
+    flexEven.append(col);
+  });
+  rowOuter.append(flexEven);
+  inner.append(rowOuter);
+  wrap.append(inner);
+  return wrap;
 }
 
 /**
@@ -1056,5 +1192,29 @@ export default function decorate(block) {
     demoWrap.className = 'demo-wrap';
     demoWrap.append(outer);
     block.append(demoWrap);
+  } else if (block.classList.contains('cards-grid-mavyret-section-cards')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return;
+
+    let introEl = null;
+    let cardStart = 0;
+    if (wrappers.length > 0 && !isMavyretSectionCardUeRow(wrappers[0])) {
+      introEl = buildMavyretSectionIntroFromWrapper(wrappers[0]);
+      cardStart = 1;
+    }
+
+    const cardCols = [];
+    for (let i = cardStart; i < wrappers.length; i += 1) {
+      if (isMavyretSectionCardUeRow(wrappers[i])) {
+        cardCols.push(buildMavyretSectionCardColumnFromUeRow(wrappers[i]));
+      }
+    }
+    if (cardCols.length === 0) return;
+
+    const shell = buildMavyretSectionCardsBackgroundShell(introEl, cardCols);
+    wrappers.forEach((w) => {
+      w.remove();
+    });
+    block.append(shell);
   }
 }
