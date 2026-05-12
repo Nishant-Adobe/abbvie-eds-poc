@@ -55,6 +55,26 @@ export default async function getBlockConfigs() {
           if (!block.querySelector('.nav-sections').contains(e.target)) closeAll();
         });
 
+        // Utility dropdown — open on hover (desktop only; mobile utility bar is hidden)
+        block.querySelectorAll('.nav-utility li:has(button[aria-haspopup])').forEach((dropLi) => {
+          const btn = dropLi.querySelector('button[aria-haspopup]');
+          const menu = dropLi.querySelector('ul[role="menu"]');
+          let hoverTimer = null;
+
+          const openOnHover = () => {
+            clearTimeout(hoverTimer);
+            btn.setAttribute('aria-expanded', 'true');
+          };
+          const closeOnLeave = () => {
+            hoverTimer = setTimeout(() => btn.setAttribute('aria-expanded', 'false'), 150);
+          };
+
+          dropLi.addEventListener('mouseenter', openOnHover);
+          dropLi.addEventListener('mouseleave', closeOnLeave);
+          menu?.addEventListener('mouseenter', () => clearTimeout(hoverTimer));
+          menu?.addEventListener('mouseleave', closeOnLeave);
+        });
+
         // Remove external-link class — not needed in header nav
         block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
       },
