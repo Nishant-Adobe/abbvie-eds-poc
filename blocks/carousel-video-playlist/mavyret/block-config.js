@@ -241,7 +241,7 @@ function buildGrid(block, items, accountId, playerId, playMode) {
           const player = window.videojs?.getPlayer(existing.id);
           if (player) {
             player.controls(true);
-            player.play()?.catch(() => {});
+            player.play()?.catch((e) => { if (e.name !== 'AbortError') throw e; });
             playIcon.hidden = true;
             card.removeEventListener('click', handleInlinePlay);
           }

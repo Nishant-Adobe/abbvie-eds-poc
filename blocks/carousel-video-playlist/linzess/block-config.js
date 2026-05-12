@@ -1,3 +1,5 @@
+const LABEL_VIEW_TRANSCRIPT = 'View Transcript';
+const LABEL_HIDE_TRANSCRIPT = 'Hide Transcript';
 const loadedScripts = {};
 let playerCounter = 0;
 
@@ -133,7 +135,7 @@ function createTranscriptToggle(transcriptCell, container) {
   btn.type = 'button';
   btn.className = 'cvp-transcript-toggle';
   btn.setAttribute('aria-expanded', 'false');
-  btn.textContent = 'View Transcript';
+  btn.textContent = LABEL_VIEW_TRANSCRIPT;
 
   const panel = document.createElement('div');
   panel.className = 'cvp-transcript-panel';
@@ -149,14 +151,14 @@ function createTranscriptToggle(transcriptCell, container) {
         const toggleBtn = p.previousElementSibling;
         if (toggleBtn?.classList.contains('cvp-transcript-toggle')) {
           toggleBtn.setAttribute('aria-expanded', 'false');
-          toggleBtn.textContent = 'View Transcript';
+          toggleBtn.textContent = LABEL_VIEW_TRANSCRIPT;
         }
       });
     }
     if (!isOpen) {
       panel.classList.add('is-open');
       btn.setAttribute('aria-expanded', 'true');
-      btn.textContent = 'Hide Transcript';
+      btn.textContent = LABEL_HIDE_TRANSCRIPT;
     }
   });
 
@@ -233,7 +235,7 @@ function buildGridMode(block, cfg, items, accountId, playerId) {
       const link = document.createElement('a');
       link.className = 'cvp-transcript-toggle';
       link.href = item.transcriptHref;
-      link.textContent = 'View Transcript';
+      link.textContent = LABEL_VIEW_TRANSCRIPT;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
       footer.append(link);
@@ -319,7 +321,7 @@ function buildFeaturedMode(block, items, accountId, playerId) {
 
   const transcriptLink = document.createElement('a');
   transcriptLink.className = 'cvp-view-transcript';
-  transcriptLink.textContent = 'View Transcript';
+  transcriptLink.textContent = LABEL_VIEW_TRANSCRIPT;
   transcriptLink.href = items[0].transcriptHref || '#';
   if (!items[0].transcriptHref) transcriptLink.hidden = true;
 
