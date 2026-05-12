@@ -74,7 +74,7 @@
 }
 
 /* Prevent CLS: sections awaiting tab assignment stay hidden without shift */
-.section[data-section-status='loaded']:has(+ .tabs-panel) {
+.section[data-section-status='loaded']:not(.tabs-container):has(+ .tabs-panel) {
   display: none;
 }
 
