@@ -26,8 +26,13 @@ const COL = {
   tab2Img1Thumb: 23,
   tab2Img1Label: 24,
   tab2Img1SubLabel: 25,
-  initialPosition: 26,
-  anchorId: 27,
+  tab2Img2Before: 26,
+  tab2Img2After: 27,
+  tab2Img2Thumb: 28,
+  tab2Img2Label: 29,
+  tab2Img2SubLabel: 30,
+  initialPosition: 31,
+  anchorId: 32,
 };
 
 function getImg(cell) {
@@ -316,8 +321,8 @@ function decorateGallery(block, cells, startPct) {
       cta.addEventListener('click', (e) => {
         e.preventDefault();
         const escaped = `#${CSS.escape(targetId)}`;
-        const main = block.closest('main');
-        const target = main?.querySelector(escaped) ?? document.getElementById(targetId);
+        const main = block.closest('main') ?? document.documentElement;
+        const target = main.querySelector(escaped);
         if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
       content.appendChild(cta);
