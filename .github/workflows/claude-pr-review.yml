@@ -5,8 +5,6 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - develop
-  issue_comment:
-    types: [created]
 
 permissions:
   contents: read
@@ -14,35 +12,7 @@ permissions:
   issues: write
 
 jobs:
-
-  # ── Job 1 ──────────────────────────────────────────────────────────────────
-  # Runs on every PR open / push. Posts a @claude comment to trigger the review.
-  # ──────────────────────────────────────────────────────────────────────────
-  trigger-review:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Post @claude trigger comment
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              body: '@claude review'
-            })
-
-  # ── Job 2 ──────────────────────────────────────────────────────────────────
-  # Runs when the @claude comment above is created. Claude reads the PR diff
-  # and posts inline review comments + a summary.
-  # ──────────────────────────────────────────────────────────────────────────
   claude-review:
-    if: |
-      github.event_name == 'issue_comment' &&
-      github.event.issue.pull_request != null &&
-      contains(github.event.comment.body, '@claude')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -55,8 +25,7 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          trigger_phrase: "@claude"
-          prompt: |
+          direct_prompt: |
             You are reviewing a Pull Request for an AEM Edge Delivery Services (EDS)
             multi-brand project supporting pharmaceutical brands:
             rinvoq, skyrizi, linzess, venclexta, mavyret, rinvoq-hcp, skyrizi-hcp, abbvie, botox.
