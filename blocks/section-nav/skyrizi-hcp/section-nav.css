@@ -17,13 +17,19 @@
   z-index: var(--z-index-anchor-nav, 100);
 }
 
-/* Shadow appears when the nav is actually pinned to the top */
+/* When the sentinel leaves viewport, switch to fixed so the nav persists
+   across sections (position:sticky only sticks within its own section height) */
 
 .section-nav.sticky.is-stuck {
   box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: var(--header-height, var(--nav-height, 88px));
 }
 
-/* Zero-height sentinel used to detect sticky state */
+/* Zero-height sentinel used to detect sticky state; JS sets height when stuck
+   to reserve the layout space the nav vacates when it becomes position:fixed */
 
 .section-nav-sentinel {
   height: 0;
@@ -73,6 +79,20 @@
 
 .section-nav-toggle {
   display: none; /* visible only on mobile via media query below */
+}
+
+/* ── Mobile Menu variant — desktop: horizontal flex list ────────────────── */
+
+.section-nav.mobile-menu nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.section-nav.mobile-menu nav ul li {
+  align-items: center;
+  display: flex;
 }
 
 /* ── Mobile breakpoint ──────────────────────────────────────────────────── */
@@ -152,9 +172,6 @@
     border-top: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
     display: none;
     flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
     width: 100%;
   }
 
@@ -953,6 +970,7 @@
   background-color: transparent;
   border-bottom: none;
   overflow-x: visible;
+  padding: 0 var(--spacing-20, 20px);
 }
 
 /* ── Inner nav: dark-navy floating pill ──────────────────────────────────── */
@@ -961,7 +979,8 @@
   background-color: var(--color-background-footer, #071d49);
   border-radius: var(--border-radius-nav, 10px);
   justify-content: center;
-  padding: 0;
+  max-width: fit-content;
+  padding: 6px 0;
 }
 
 /* ── Links ───────────────────────────────────────────────────────────────── */
@@ -985,14 +1004,30 @@
   padding-left: 24px;
 }
 
+/* Pipe separators for mobile-menu variant — short centered bar via ::before */
+
+.section-nav.mobile-menu nav ul li + li::before {
+  align-self: center;
+  background-color: rgb(255 255 255 / 30%);
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  height: 14px;
+  width: 1px;
+}
+
 .section-nav a:hover,
 .section-nav a:focus-visible {
   color: #1ba2da;
 }
 
 .section-nav a.is-active {
-  border-bottom-color: #1ba2da;
+  border-bottom-color: transparent;
   color: #fff;
+  text-decoration: underline;
+  text-decoration-color: #1ba2da;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
 }
 
 /* ── Sticky variant (in-flow, not yet pinned) ────────────────────────────── */
@@ -1009,10 +1044,12 @@
   background-color: var(--color-background-footer, #071d49);
   box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
   overflow-x: auto;
+  padding: 0;
 }
 
 .section-nav.sticky.is-stuck nav {
   background-color: transparent;
   border-radius: 0;
+  max-width: var(--section-max-width, var(--section-width, 1200px));
   padding: 0 var(--spacing-24, 24px);
 }

@@ -123,14 +123,19 @@ export default function decorate(block) {
 
   block.replaceChildren(nav);
 
-  // Smooth scroll offset = header height + this nav's height
-  const getOffset = () => {
-    const headerHeight = parseInt(
-      getComputedStyle(document.documentElement).getPropertyValue('--header-height') || '0',
-      10,
-    );
-    return headerHeight + block.offsetHeight;
+  // --header-height resolves to a rem value (e.g. "7.2rem"); parseInt would give 7, not 72.
+  // Multiply by root font-size to get the correct pixel value.
+  const getCssPx = (varName) => {
+    const val = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    if (!val) return 0;
+    if (val.endsWith('rem')) {
+      return parseFloat(val) * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    }
+    return parseFloat(val) || 0;
   };
+
+  // Smooth scroll offset = header height + this nav's height
+  const getOffset = () => getCssPx('--header-height') + block.offsetHeight;
 
   links.forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -145,17 +150,25 @@ export default function decorate(block) {
     });
   });
 
-  // Sticky: sentinel watches for when block becomes pinned, adds .is-stuck for shadow
+  // Sticky: sentinel watches for when block becomes pinned.
+  // On is-stuck the block switches to position:fixed (base CSS), so we reserve
+  // its height via the sentinel to prevent layout shift.
   if (isSticky) {
     const sentinel = document.createElement('div');
     sentinel.className = 'section-nav-sentinel';
     block.before(sentinel);
-    const headerHeight = parseInt(
-      getComputedStyle(document.documentElement).getPropertyValue('--header-height') || '0',
-      10,
-    );
+    const headerHeight = getCssPx('--header-height');
     new IntersectionObserver(
-      ([entry]) => block.classList.toggle('is-stuck', !entry.isIntersecting),
+      ([entry]) => {
+        const stuck = !entry.isIntersecting;
+        if (stuck) {
+          sentinel.style.height = `${block.offsetHeight}px`;
+        }
+        block.classList.toggle('is-stuck', stuck);
+        if (!stuck) {
+          sentinel.style.height = '0';
+        }
+      },
       { rootMargin: `-${headerHeight}px 0px 0px 0px` },
     ).observe(sentinel);
   }

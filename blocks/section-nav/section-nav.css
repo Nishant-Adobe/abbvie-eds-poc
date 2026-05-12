@@ -17,12 +17,18 @@
   z-index: var(--z-index-anchor-nav, 100);
 }
 
-/* Shadow appears when the nav is actually pinned to the top */
+/* When the sentinel leaves viewport, switch to fixed so the nav persists
+   across sections (position:sticky only sticks within its own section height) */
 .section-nav.sticky.is-stuck {
   box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: var(--header-height, var(--nav-height, 88px));
 }
 
-/* Zero-height sentinel used to detect sticky state */
+/* Zero-height sentinel used to detect sticky state; JS sets height when stuck
+   to reserve the layout space the nav vacates when it becomes position:fixed */
 .section-nav-sentinel {
   height: 0;
   pointer-events: none;
@@ -71,6 +77,20 @@
 
 .section-nav-toggle {
   display: none; /* visible only on mobile via media query below */
+}
+
+/* ── Mobile Menu variant — desktop: horizontal flex list ────────────────── */
+
+.section-nav.mobile-menu nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.section-nav.mobile-menu nav ul li {
+  align-items: center;
+  display: flex;
 }
 
 /* ── Mobile breakpoint ──────────────────────────────────────────────────── */
@@ -150,9 +170,6 @@
     border-top: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
     display: none;
     flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
     width: 100%;
   }
 
