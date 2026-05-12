@@ -105,7 +105,7 @@ export default async function decorate(block) {
       main.insertBefore(wrapper, insertBefore);
       matched.forEach((section) => {
         section.dataset.tabsGrid = 'true';
-        section.style.display = '';
+        if (shouldActivate) section.style.display = '';
         wrapper.append(section);
       });
 
@@ -121,8 +121,13 @@ export default async function decorate(block) {
         btn.setAttribute('aria-selected', false);
         btn.setAttribute('tabindex', '-1');
       });
-      // Show clicked panel
-      if (wrapper) wrapper.setAttribute('aria-hidden', false);
+      // Show clicked panel and ensure sections inside are visible
+      if (wrapper) {
+        wrapper.setAttribute('aria-hidden', false);
+        wrapper.querySelectorAll('.section').forEach((s) => {
+          s.style.display = '';
+        });
+      }
       button.setAttribute('aria-selected', true);
       button.setAttribute('tabindex', '0');
       // Update URL hash
