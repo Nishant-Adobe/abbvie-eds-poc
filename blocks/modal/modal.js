@@ -207,13 +207,13 @@ async function openModal(trigger, variants = []) {
 /* Exit-intent listener                                                */
 /* ------------------------------------------------------------------ */
 
-let exitListenerRegistered = false;
+let exitAc = null;
 const exitModals = [];
 
 function registerExitIntent(trigger, variants) {
   exitModals.push({ trigger, variants });
-  if (exitListenerRegistered) return;
-  exitListenerRegistered = true;
+  if (exitAc) return;
+  exitAc = new AbortController();
 
   document.addEventListener('mouseleave', (e) => {
     if (e.clientY > 0) return;
@@ -221,9 +221,10 @@ function registerExitIntent(trigger, variants) {
       (m) => !hasSeenModal(m.trigger.dataset.modalId, m.variants),
     );
     if (!modal) return;
-    exitListenerRegistered = false;
+    exitAc.abort();
+    exitAc = null;
     openModal(modal.trigger, modal.variants).catch(() => {});
-  });
+  }, { signal: exitAc.signal });
 }
 
 /* ------------------------------------------------------------------ */
