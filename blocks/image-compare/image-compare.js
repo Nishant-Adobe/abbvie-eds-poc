@@ -61,7 +61,10 @@ function buildSliderContainer(afterImg, beforeImg, opts = {}) {
 
   const handle = document.createElement('div');
   handle.className = 'image-compare-handle';
-  handle.setAttribute('role', 'separator');
+  handle.setAttribute('role', 'slider');
+  handle.setAttribute('aria-valuemin', '0');
+  handle.setAttribute('aria-valuemax', '100');
+  handle.setAttribute('aria-valuenow', String(Math.round((opts.startPct ?? 0.5) * 100)));
   handle.setAttribute('tabindex', '0');
   container.appendChild(handle);
 
@@ -324,7 +327,7 @@ function decorateGallery(block, cells, startPct) {
 
     layout.appendChild(content);
 
-    const sliderOpts = { beforeLabel, afterLabel };
+    const sliderOpts = { beforeLabel, afterLabel, startPct };
     const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
     sliderWrap.appendChild(slider.container);
 
@@ -365,7 +368,7 @@ function decorateGallery(block, cells, startPct) {
   const wrapper = document.createElement('div');
   wrapper.className = 'image-compare-wrapper';
 
-  const sliderOpts = { beforeLabel, afterLabel };
+  const sliderOpts = { beforeLabel, afterLabel, startPct };
   if (promptText) sliderOpts.prompt = promptText;
 
   const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
@@ -400,8 +403,8 @@ function decorateGallery(block, cells, startPct) {
 
 /* --- Simple slider builders (non-gallery) --- */
 
-function buildCaptionLayout(block, afterImg, beforeImg, opts) {
-  const slider = buildSliderContainer(afterImg, beforeImg, opts);
+function buildCaptionLayout(block, afterImg, beforeImg, opts, startPct) {
+  const slider = buildSliderContainer(afterImg, beforeImg, { ...opts, startPct });
   const { container } = slider;
 
   if (opts.captionHtml) {
@@ -416,11 +419,11 @@ function buildCaptionLayout(block, afterImg, beforeImg, opts) {
   return slider;
 }
 
-function buildWrapperLayout(block, afterImg, beforeImg, opts) {
+function buildWrapperLayout(block, afterImg, beforeImg, opts, startPct) {
   const wrapper = document.createElement('div');
   wrapper.className = 'image-compare-wrapper';
 
-  const slider = buildSliderContainer(afterImg, beforeImg, opts);
+  const slider = buildSliderContainer(afterImg, beforeImg, { ...opts, startPct });
   const { container } = slider;
 
   wrapper.appendChild(container);
@@ -442,6 +445,7 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
   function setPosition(pct) {
     const p = Math.min(1, Math.max(0, pct));
     container.style.setProperty('--compare-position', `${p * 100}%`);
+    handle.setAttribute('aria-valuenow', String(Math.round(p * 100)));
   }
 
   function fixBeforeWidth() {
@@ -528,7 +532,7 @@ function decorateLegacy(block, cells) {
       afterLabel: cells[4]?.textContent?.trim() || 'AFTER | WEEK 16',
       patientName: cells[6]?.textContent?.trim() || '',
     };
-    const parts = buildWrapperLayout(block, afterImg, beforeImg, opts);
+    const parts = buildWrapperLayout(block, afterImg, beforeImg, opts, startPct);
     return { ...parts, startPct, hasPrompt: false };
   }
 
@@ -538,7 +542,7 @@ function decorateLegacy(block, cells) {
     prompt: 'CLICK AND DRAG TO SEE RESULTS',
     captionHtml: cells[3]?.innerHTML || '',
   };
-  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts);
+  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts, startPct);
   return { ...parts, startPct, hasPrompt: true };
 }
 
@@ -598,7 +602,7 @@ function decorateKeyValue(block, rows) {
       afterLabel: getText(data.afterLabelPrefix) || 'AFTER | WEEK 16',
       patientName: firstImg?.label || '',
     };
-    const parts = buildWrapperLayout(block, afterImg, beforeImg, opts);
+    const parts = buildWrapperLayout(block, afterImg, beforeImg, opts, 0.5);
     return { ...parts, startPct: 0.5, hasPrompt: false };
   }
 
@@ -608,7 +612,7 @@ function decorateKeyValue(block, rows) {
     prompt: getText(data.sliderPrompt) || 'CLICK AND DRAG TO SEE RESULTS',
     captionHtml: data.description?.innerHTML || '',
   };
-  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts);
+  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts, 0.5);
   return { ...parts, startPct: 0.5, hasPrompt: true };
 }
 
@@ -636,7 +640,7 @@ function decorateModelFormat(block, cells) {
     prompt: promptText || undefined,
     captionHtml: cells[COL.description]?.innerHTML || '',
   };
-  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts);
+  const parts = buildCaptionLayout(block, afterImg, beforeImg, opts, startPct);
   return { ...parts, startPct, hasPrompt: !!promptText };
 }
 
