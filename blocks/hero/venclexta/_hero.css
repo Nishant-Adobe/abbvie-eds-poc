@@ -21,7 +21,7 @@
 }
 
 /* Profile band: dark teal container bg */
-.hero.profile > :where(div):first-child {
+.hero.profile> :where(div):first-child {
   background-color: var(--color-background-container);
 }
 
@@ -96,22 +96,18 @@
 
 /* Landing gradient: dark teal left-to-right */
 .hero.landing::after {
-  background: linear-gradient(
-    to right,
-    var(--color-background-container) 0%,
-    rgb(0 59 82 / 30%) 100%
-  );
+  background: linear-gradient(to right,
+      var(--color-background-container) 0%,
+      rgb(0 59 82 / 30%) 100%);
 }
 
 /* Full/video overlay: teal gradient */
 .hero.full::after,
 .hero.video::after {
-  background: linear-gradient(
-    to right,
-    var(--color-background-container) 0%,
-    rgb(0 59 82 / 25%) 60%,
-    transparent 100%
-  );
+  background: linear-gradient(to right,
+      var(--color-background-container) 0%,
+      rgb(0 59 82 / 25%) 60%,
+      transparent 100%);
 }
 
 /* Solid background: light gray */
@@ -153,17 +149,15 @@
 
 .hero.full::after {
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgb(0 0 0 / 96%) 0%,
       rgb(0 0 0 / 86%) 22%,
       rgb(0 0 0 / 58%) 46%,
       rgb(0 0 0 / 12%) 72%,
-      rgb(0 0 0 / 0%) 100%
-    );
+      rgb(0 0 0 / 0%) 100%);
 }
 
-.hero.full > :where(div):has(> div:empty) {
+.hero.full> :where(div):has(> div:empty) {
   display: none;
 }
 
@@ -191,7 +185,7 @@
   letter-spacing: -0.03em;
 }
 
-.hero.full h1 + h1 {
+.hero.full h1+h1 {
   margin-top: 0.2rem;
   margin-bottom: 2.4rem;
 }
@@ -274,14 +268,14 @@
   border: 1px solid var(--color-brand-accent);
 }
 
-.hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
   position: absolute;
   right: 2rem;
   bottom: 1.6rem;
   z-index: 3;
 }
 
-.hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) p {
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) p {
   margin: 0;
   padding: 0;
   color: var(--color-text-on-dark);
@@ -293,7 +287,11 @@
   text-shadow: 0 1px 2px rgb(0 0 0 / 60%);
 }
 
-@media (width >= 744px) {
+.hero > div:first-child {
+  min-height: unset;
+}
+
+@media (width >=744px) {
   .hero.full {
     min-height: 64rem;
   }
@@ -315,21 +313,21 @@
     width: calc(100% - 14rem);
   }
 
-  .hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
+  .hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
     right: 7rem;
     bottom: 2rem;
   }
 }
 
-@media (width >= 1024px) {
+@media (width >=1024px) {
   .hero.full {
-    min-height: 73rem;
+    min-height: unset;
   }
 
   .hero.full .hero-text-container {
-    width: min(100%, 89rem);
-    margin-top: 18.6rem;
-    padding: 0 5.5rem 7rem;
+    width: 100%;
+    margin-top: 0;
+    padding: 0;
   }
 
   .hero.full .cmp-container-x-large {
@@ -358,12 +356,10 @@
   }
 
   .hero.full .hero-image-caption {
-    top: 1.3rem;
-    left: 5.5rem;
-    width: calc(100% - 11rem);
+    width: 100%;
   }
 
-  .hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
+  .hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
     right: 5.5rem;
     bottom: 2rem;
   }
@@ -377,18 +373,17 @@
 
   .hero.full::after {
     background:
-      linear-gradient(
-        180deg,
+      linear-gradient(180deg,
         rgb(0 0 0 / 55%) 0%,
         rgb(0 0 0 / 45%) 24%,
-        rgb(0 0 0 / 88%) 100%
-      );
+        rgb(0 0 0 / 88%) 100%);
   }
 
   .hero.full .hero-text-container {
     width: 100%;
-    margin-top: 18.2rem;
-    padding-bottom: 6rem;
+    margin-top: 20px;
+    padding: 0;
+    padding-bottom: 1rem;
   }
 
   .hero.full .cmp-container-x-large {
@@ -406,7 +401,7 @@
   }
 
   .hero.full .hero-indication {
-    top: 12.6rem;
+    margin: 0;
   }
 
   .hero.full .hero-image-caption {
@@ -415,8 +410,84 @@
   }
 }
 
-@media (width >= 1024px) {
-  .hero.full > .hero-content-stack {
+/* ============================================================
+   VENCLEXTA — Custom hero overrides
+   These rules take cascade priority over all base rules above.
+   ============================================================ */
+
+/* Full hero: constrain content stack to 1180px max width */
+.hero.full>.hero-content-stack {
+  max-width: 1180px;
+  width: 100%;
+  padding: 20px 20px 3rem;
+  margin-top: 0;
+}
+
+@media (width >=1024px) {
+  .hero.full>.hero-content-stack {
     width: 1180px;
   }
 }
+
+/* No-padding hero: text container as full-height flex overlay */
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) .hero-text-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  padding: 20px;
+  max-width: 1180px;
+  width: 100%;
+  min-height: auto;
+}
+
+/* No-padding hero: unset absolute positioning on image/picture/img */
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child,
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child picture,
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child img {
+  position: unset;
+}
+
+/* No-padding hero: remove fixed min-height */
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) {
+  min-height: unset;
+}
+
+/* Full hero: bottom footnote/legal row — centered with right-aligned text */
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) p {
+  font-size: 15px;
+  font-weight: 700;
+  max-width: 1180px;
+}
+
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
+  bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p)>div {
+  width: 100%;
+  max-width: 1180px;
+  padding-inline: 20px;
+  text-align: right;
+}
+
+.hero.no-padding img {
+  border-radius: 0;
+  min-height: unset;
+}
+
+/* Full hero: mobile image caption font size */
+@media (width < 744px) {
+  .hero.full .hero-image-caption {
+    font-size: 14px;
+    line-height: 1.34;
+  }
+
+  .hero.no-padding.text-left {
+    min-height: 300px;
+  }
+}
+

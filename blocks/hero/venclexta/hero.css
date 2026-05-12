@@ -99,7 +99,7 @@
 .hero.landing::after {
   background: linear-gradient(to right,
       var(--color-background-container) 0%,
-      rgba(0, 59, 82, 0.3) 100%);
+      rgb(0 59 82 / 30%) 100%);
 }
 
 /* Full/video overlay: teal gradient */
@@ -107,10 +107,9 @@
 .hero.video::after {
   background: linear-gradient(to right,
       var(--color-background-container) 0%,
-      rgba(0, 59, 82, 0.25) 60%,
+      rgb(0 59 82 / 25%) 60%,
       transparent 100%);
 }
-
 
 /* Solid background: light gray (Venclexta uses light, airy presentation) */
 .hero.solid {
@@ -138,14 +137,14 @@
 
 /* ============================================================
    VENCLEXTA simple hero (no-padding)
-   Text overlays the image and caption sits bottom-right.
+   Text overlays the image; caption sits bottom-right.
    ============================================================ */
 
 .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 30rem;
+  min-height: unset;
   overflow: hidden;
 }
 
@@ -153,13 +152,11 @@
   display: none;
 }
 
-.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child {
-  position: absolute;
-  inset: 0;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-  z-index: 0;
+/* Image cell: unset absolute so image dictates height */
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child,
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child picture,
+.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child img {
+  position: unset;
 }
 
 .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child picture,
@@ -168,31 +165,26 @@
   height: 100%;
 }
 
-.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child img {
-  position: absolute;
-  inset: 0;
-  object-fit: contain;
-  border-radius: 0;
-  max-height: none;
-}
-
 .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)::after {
   display: block;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.24) 42%, rgba(0, 0, 0, 0) 72%);
+  background: linear-gradient(90deg, rgb(0 0 0 / 58%) 0%, rgb(0 0 0 / 24%) 42%, rgb(0 0 0 / 0%) 72%);
   z-index: 1;
   pointer-events: none;
 }
 
+/* Text container: full-height flex overlay, 1180px max */
 .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) .hero-text-container {
-  position: relative;
-  z-index: 2;
-  display: block;
-  width: min(100%, 68rem);
-  margin: 0;
-  padding: 4rem 2.4rem 4.8rem;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  padding: 20px;
+  max-width: 1180px;
+  width: 100%;
+  min-height: auto;
   background: transparent;
 }
 
@@ -229,16 +221,11 @@
   font-style: normal;
   line-height: 1.2;
   text-align: right;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgb(0 0 0 / 45%);
 }
 
 @media (width >=744px) {
-  .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) {
-    min-height: 40rem;
-  }
-
   .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) .hero-text-container {
-    padding: 5.6rem 7rem;
     width: min(100%, 78rem);
   }
 
@@ -253,12 +240,7 @@
 }
 
 @media (width >=1024px) {
-  .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) {
-    min-height: 48rem;
-  }
-
   .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) .hero-text-container {
-    padding: 25rem 5.5rem;
     width: min(100%, 86rem);
   }
 
@@ -285,10 +267,25 @@
   align-items: stretch;
 }
 
+.hero.full::after {
+  background:
+    linear-gradient(90deg,
+      rgb(0 0 0 / 96%) 0%,
+      rgb(0 0 0 / 86%) 22%,
+      rgb(0 0 0 / 58%) 46%,
+      rgb(0 0 0 / 12%) 72%,
+      rgb(0 0 0 / 0%) 100%);
+}
+
 .hero.full> :where(div):has(> div:empty) {
   display: none;
 }
 
+.hero > div:first-child {
+  min-height: unset;
+}
+
+/* Content stack: 1180px max, custom padding (custom override merged) */
 .hero.full>.hero-content-stack {
   position: relative;
   z-index: 2;
@@ -298,14 +295,20 @@
   align-self: center;
   background: transparent;
   border-top-left-radius: 0;
-  width: min(100%, 72rem);
-  max-width: none;
+  max-width: 1180px;
+  width: 100%;
   margin: 15rem 0 0;
-  padding: 0 2rem 5.6rem;
+  padding: 20px;
 }
 
 .hero.full .hero-text-container {
-  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: block;
+  align-self: center;
+  width: min(100%, 72rem);
+  margin: 15rem 0 0;
+  padding: 0 2rem 5.6rem;
 }
 
 .hero.full .cmp-container-x-large {
@@ -401,28 +404,39 @@
   line-height: 1.28;
   font-style: normal;
   text-align: center;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgb(0 0 0 / 45%);
   border: 1px solid var(--color-brand-accent);
   position: static;
 }
 
-.hero.full>div:not(:first-child):not(.hero-text-container):not(.hero-indication):not(.hero-content-stack):has(> div > p) {
+/* Bottom footnote/legal row: centered container, right-aligned text (custom) */
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
   position: absolute;
-  right: 2rem;
-  bottom: 1.6rem;
+  bottom: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   z-index: 3;
 }
 
-.hero.full>div:not(:first-child):not(.hero-text-container):not(.hero-indication):not(.hero-content-stack):has(> div > p) p {
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p)>div {
+  width: 100%;
+  max-width: 1180px;
+  padding-inline: 20px;
+  text-align: right;
+}
+
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) p {
   margin: 0;
   padding: 0;
   color: var(--color-text-on-dark);
   font-family: var(--heading-font-family-bold);
-  font-size: 1.2rem;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: 1.2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  max-width: 1180px;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 60%);
 }
 
 @media (width >=744px) {
@@ -436,11 +450,25 @@
     padding: 0 7rem 6.4rem;
   }
 
+  .hero.full .hero-text-container {
+    width: min(100%, 82rem);
+    margin-top: 19.6rem;
+    padding: 0 7rem 6.4rem;
+  }
+
+  .hero.full .hero-indication {
+    top: 16.8rem;
+    left: 7rem;
+  }
+
   .hero.full .hero-image-caption {
+    top: 1.2rem;
+    left: 7rem;
+    width: calc(100% - 14rem);
     margin-bottom: 3.6rem;
   }
 
-  .hero.full>div:not(:first-child):not(.hero-text-container):not(.hero-indication):not(.hero-content-stack):has(> div > p) {
+  .hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
     right: 7rem;
     bottom: 2rem;
   }
@@ -448,13 +476,20 @@
 
 @media (width >=1024px) {
   .hero.full {
-    min-height: 73rem;
+    min-height: unset;
   }
 
   .hero.full>.hero-content-stack {
-    width: min(100%, 89rem);
+    max-width: 1180px;
+    width: 1180px;
     margin-top: 20px;
     padding: 0 5.5rem 7rem;
+  }
+
+  .hero.full .hero-text-container {
+    width: 100%;
+    margin-top: 0;
+    padding: 0;
   }
 
   .hero.full .cmp-container-x-large {
@@ -477,26 +512,52 @@
     font-size: 1.8rem;
   }
 
+  .hero.full .hero-indication {
+    top: 18.2rem;
+    left: 5.5rem;
+  }
+
   .hero.full .hero-image-caption {
+    width: 100%;
     margin-bottom: 4rem;
   }
 
-  .hero.full>div:not(:first-child):not(.hero-text-container):not(.hero-indication):not(.hero-content-stack):has(> div > p) {
+  .hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
     right: 5.5rem;
     bottom: 2rem;
   }
 }
 
+.hero.no-padding img {
+  border-radius: 0;
+  min-height: unset;
+}
+
 @media (width < 744px) {
   .hero.full {
-    min-height: 58rem;
+    min-height: unset;
     align-items: flex-end;
+  }
+
+  .hero.full::after {
+    background:
+      linear-gradient(180deg,
+        rgb(0 0 0 / 55%) 0%,
+        rgb(0 0 0 / 45%) 24%,
+        rgb(0 0 0 / 88%) 100%);
   }
 
   .hero.full>.hero-content-stack {
     width: 100%;
-    margin-top: 18.2rem;
-    padding-bottom: 6rem;
+    margin-top: 0;
+    padding-bottom: 3rem;
+  }
+
+  .hero.full .hero-text-container {
+    width: 100%;
+    margin-top: 20px;
+    padding: 0;
+    padding-bottom: 1rem;
   }
 
   .hero.full .cmp-container-x-large {
@@ -513,32 +574,19 @@
     line-height: 1.24;
   }
 
+  .hero.full .hero-indication {
+    top: 12.6rem;
+    margin: 0;
+  }
+
+  /* Custom: 14px overrides base 1.2rem on mobile */
   .hero.full .hero-image-caption {
-    font-size: 1.2rem;
+    font-size: 14px;
     line-height: 1.34;
   }
+
+  .hero.no-padding.text-left {
+    min-height: 300px;
+  }
+
 }
-
-
-  .hero.full>.hero-content-stack {
-    max-width: 1180px;
-  }
-
-  .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) .hero-text-container {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    height: 100%;
-    padding: 0 !important;
-    min-height: auto;
-  }
-
-  .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child,
-  .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child picture,
-  .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child img {
-    position: unset;
-  }
-
-  .hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) {
-    min-height: unset;
-  }
