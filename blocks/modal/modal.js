@@ -216,6 +216,8 @@ let exitAc = null;
 const exitModals = [];
 
 function registerExitIntent(trigger, variants) {
+  const id = trigger?.dataset?.modalId;
+  if (id && exitModals.some((m) => m.trigger?.dataset?.modalId === id)) return;
   exitModals.push({ trigger, variants });
   if (exitAc) return;
   exitAc = new AbortController();
