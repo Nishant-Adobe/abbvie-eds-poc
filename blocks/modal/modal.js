@@ -233,6 +233,8 @@ async function openModal(trigger, variantsOrOptions = []) {
   const focusable = getFocusable(dialog);
   if (focusable.length) focusable[0].focus();
   else dialog.focus();
+
+  return undefined;
 }
 
 /* ------------------------------------------------------------------ */
