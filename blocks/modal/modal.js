@@ -240,6 +240,9 @@ export default async function decorate(block) {
     globalTriggersSetup = true;
   }
 
+  if (block.modalCleanup) block.modalCleanup();
+  if (block.modalAutoOpenTimer) clearTimeout(block.modalAutoOpenTimer);
+
   const rows = [...block.querySelectorAll(':scope > div')];
 
   let fragmentPath;
@@ -341,6 +344,7 @@ export default async function decorate(block) {
   if (isAutoOpen) {
     if (!hasSeenModal(modalId, variants)) {
       const timerId = setTimeout(() => {
+        if (!block.isConnected) return;
         openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
       }, 500);
       block.modalAutoOpenTimer = timerId;
