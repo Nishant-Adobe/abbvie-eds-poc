@@ -155,6 +155,7 @@ async function openModal(trigger, variants = []) {
   activeVariants = variants;
 
   const fragmentPath = trigger?.dataset?.fragmentPath || trigger?.fragmentPath;
+  if (!fragmentPath) return;
   const modalId = trigger?.dataset?.modalId || '';
   const ov = getOverlay();
   const dialog = ov.querySelector('.modal-dialog');
