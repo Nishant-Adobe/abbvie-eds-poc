@@ -3285,31 +3285,33 @@
       {
         "component": "tab",
         "label": "Overview",
-        "name": "overview"
+        "name": "tab-overview"
       },
       {
         "component": "text",
-        "name": "linkText",
-        "label": "Button Text"
+        "valueType": "string",
+        "name": "label",
+        "label": "Button Text",
+        "value": "Button"
       },
       {
         "component": "aem-content",
-        "name": "link",
+        "name": "href",
         "label": "Target"
       },
       {
         "component": "text",
-        "name": "aria-label",
-        "label": "ARIA Label",
         "valueType": "string",
-        "attribute": "data-aria-label"
+        "name": "ariaLabel",
+        "label": "ARIA Label",
+        "value": ""
       },
       {
         "component": "select",
-        "label": "Click Behavior",
-        "name": "ctaTarget",
-        "value": "_self",
         "valueType": "string",
+        "name": "ctaTarget",
+        "label": "Click Behavior",
+        "value": "_self",
         "options": [
           {
             "name": "Same Tab",
@@ -3318,15 +3320,39 @@
           {
             "name": "New Tab",
             "value": "_blank"
+          },
+          {
+            "name": "Modal",
+            "value": "new-modal"
+          },
+          {
+            "name": "Hidden Panel",
+            "value": "new-hidden-panel"
+          },
+          {
+            "name": "Switch View",
+            "value": "switch-view"
+          },
+          {
+            "name": "Indication Selection",
+            "value": "indicationSelection"
           }
         ]
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "modalId",
+        "label": "Modal ID",
+        "value": "",
+        "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
+      },
+      {
         "component": "select",
         "valueType": "string",
-        "name": "iconVariation",
-        "value": "none",
+        "name": "iconType",
         "label": "Icon Type",
+        "value": "none",
         "description": "Icon type for the button",
         "options": [
           {
@@ -3347,13 +3373,13 @@
         "component": "text",
         "valueType": "string",
         "name": "iconFont",
-        "value": "",
         "label": "Button Font Icon",
+        "value": "",
         "description": "Font icon name for button",
         "condition": {
           "===": [
             {
-              "var": "iconVariation"
+              "var": "iconType"
             },
             "icon-font"
           ]
@@ -3369,7 +3395,7 @@
         "condition": {
           "===": [
             {
-              "var": "iconVariation"
+              "var": "iconType"
             },
             "image"
           ]
@@ -3379,23 +3405,23 @@
         "component": "select",
         "valueType": "string",
         "name": "iconPosition",
-        "value": "after",
         "label": "Icon Position",
-        "description": "Select whether the icon is placed before your button text or after your button text",
+        "value": "i-a",
+        "description": "Select whether the icon is placed before or after your button text",
         "options": [
           {
-            "name": "Before",
-            "value": "before"
+            "name": "Before (left)",
+            "value": "i-b"
           },
           {
-            "name": "After",
-            "value": "after"
+            "name": "After (right)",
+            "value": "i-a"
           }
         ],
         "condition": {
           "in": [
             {
-              "var": "iconVariation"
+              "var": "iconType"
             },
             [
               "icon-font",
@@ -3406,52 +3432,45 @@
       },
       {
         "component": "boolean",
-        "label": "Prevent screen readers from announcing this CTA",
+        "valueType": "boolean",
         "name": "ariaHidden",
-        "value": false,
-        "valueType": "boolean"
+        "label": "Prevent screen readers from announcing this CTA",
+        "value": false
       },
       {
         "component": "tab",
         "label": "Styles",
-        "name": "styles"
+        "name": "tab-styles"
       },
       {
-        "component": "select",
+        "component": "multiselect",
+        "valueType": "string",
         "name": "classes",
-        "label": "Type",
-        "value": "default-cta",
+        "label": "Variant",
         "options": [
           {
-            "name": "default",
-            "value": "default-cta"
+            "name": "Primary (default)",
+            "value": "abbv-button-primary"
           },
           {
-            "name": "Internal CTA",
-            "value": "internal-cta"
+            "name": "Secondary",
+            "value": "abbv-button-secondary"
           },
           {
-            "name": "External CTA",
-            "value": "external-cta"
+            "name": "Tertiary",
+            "value": "abbv-button-tertiary"
           },
           {
-            "name": "Back CTA",
-            "value": "back-cta"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "classes_theme",
-        "label": "Theme",
-        "options": [
-          {
-            "name": "Light",
-            "value": "light-theme"
+            "name": "Plain link",
+            "value": "abbv-button-plain"
           },
           {
-            "name": "Dark",
-            "value": "dark-theme"
+            "name": "Toggle (round)",
+            "value": "abbv-switch-round"
+          },
+          {
+            "name": "Toggle (square)",
+            "value": "abbv-switch-square"
           }
         ]
       },
