@@ -238,12 +238,11 @@ function buildGrid(block, items, accountId, playerId, playMode) {
       const handleInlinePlay = () => {
         const existing = thumbWrap.querySelector('.cvp-poster-video');
         if (existing) {
-          existing.style.pointerEvents = 'auto';
           const player = window.videojs?.getPlayer(existing.id);
           if (player) {
             player.controls(true);
             player.play()?.catch(() => {});
-            playIcon.style.display = 'none';
+            playIcon.hidden = true;
             card.removeEventListener('click', handleInlinePlay);
           }
         }
