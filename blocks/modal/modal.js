@@ -49,7 +49,7 @@ function closeModal() {
   if (activeVariants.includes('force')) return;
 
   const dialog = overlay.querySelector('.modal-dialog');
-  dialog.setAttribute('aria-hidden', 'true');
+  if (dialog) dialog.setAttribute('aria-hidden', 'true');
   overlay.classList.remove('is-open');
   overlay.className = 'modal-overlay';
   document.body.classList.remove('modal-is-open');
@@ -117,7 +117,7 @@ function getOverlay() {
 
 function setCookie(name, value, days) {
   const d = new Date();
-  d.setTime(d.getTime() + days * 86400000);
+  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
   const n = encodeURIComponent(name);
   const v = encodeURIComponent(value);
   document.cookie = `${n}=${v};expires=${d.toUTCString()};path=/;SameSite=Lax`;
