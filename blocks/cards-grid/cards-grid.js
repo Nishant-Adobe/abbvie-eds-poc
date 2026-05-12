@@ -701,12 +701,13 @@ function venclextaCalloutHeadingInnerHtml(titleCell) {
     return venclextaCalloutPipeTitleToEmHtml(raw);
   }
   if (ps.length === 1) {
-    return venclextaCalloutPipeTitleToEmHtml(ps[0].innerHTML.trim());
+    const raw = ps[0].innerHTML.trim();
+    return venclextaCalloutPipeTitleToEmHtml(raw);
   }
   return ps.map((p) => p.innerHTML.trim()).join('<br />');
 }
 
-/** Plain `Cancer|Care` (no tags) → Cancer<em>Care</em> to match venclexta.org markup. */
+/** Plain `Cancer|Care` (no tags) → Cancer<em>Care</em> (author uses `|` in UE). */
 function venclextaCalloutPipeTitleToEmHtml(inner) {
   const trimmed = inner.trim();
   if (/^[^<]+\|[^<]+$/.test(trimmed)) {

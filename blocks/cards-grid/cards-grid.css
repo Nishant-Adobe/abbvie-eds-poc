@@ -1597,13 +1597,15 @@
   .cards-grid.cards-grid-venclexta-callout-cards {
     color: #3f3f3f;
     font-family: "Red Hat Display", Helvetica, Arial, sans-serif;
+    max-width: 100%;
+    width: 100%;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards a {
     color: inherit;
   }
 
-  .cards-grid.cards-grid-venclexta-callout-cards .abbv-flex-container {
+  .cards-grid.cards-grid-venclexta-callout-cards .abbv-flex-container:not(.learn-more-callouts-flexbox) {
     display: flex;
   }
 
@@ -1645,6 +1647,13 @@
     .cards-grid.cards-grid-venclexta-callout-cards .flex-col-xl-10 {
       width: 100%;
       max-width: 83.333%;
+    }
+
+    /* Full-width callout row — 83.333% + 200px min buttons caused Website/phone overlap */
+    .cards-grid.cards-grid-venclexta-callout-cards
+      .abbv-flex-container.learn-more-callouts-flexbox.flex-col-xl-10 {
+      max-width: 100%;
+      width: 100%;
     }
 
     .cards-grid.cards-grid-venclexta-callout-cards .m-xl-auto {
@@ -1755,6 +1764,7 @@
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out h3,
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out .h3 {
     color: #404040;
+    font-weight: 700;
     margin-bottom: 20px;
   }
 
@@ -1762,26 +1772,55 @@
     margin: 0;
   }
 
-  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox {
-    display: grid;
+  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 15px;
-    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    width: 100%;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
+    align-items: stretch;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: flex-start;
     margin: 0;
-    min-width: 100%;
+    max-width: none;
+    min-height: 0;
+    min-width: 0;
     padding: 0;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item > .flexbox.parbase {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
     width: 100%;
   }
 
-  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card {
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .learn-more-callouts-flexbox
+    > .abbv-flex-item
+    > .flexbox.parbase
+    > .abbv-flex-container.venxcleta-yellow-border-card {
     box-sizing: border-box;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
     padding: 46px 17px 42px;
     width: 100%;
+  }
+
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card
+    > .abbv-flex-item:last-child {
+    margin-top: auto;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item {
@@ -1794,30 +1833,54 @@
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container {
-    gap: 9px;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card
+    .abbv-flex-item
+    .abbv-flex-item.d-flex.flex-col-6.flex-justify_center {
+    box-sizing: border-box;
+    flex: 1 1 calc(50% - 6px);
+    height: auto;
+    margin: 0;
+    max-width: calc(50% - 6px);
+    min-width: 0;
+    width: auto;
+  }
+
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card
+    .abbv-flex-item
+    .abbv-flex-container
+    .abbv-button-tertiary,
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card
+    .abbv-flex-item
+    .abbv-flex-container
+    .abbv-button-tertiary:visited {
+    box-sizing: border-box;
+    margin-bottom: 0;
+    min-width: 0;
+    padding-left: 16px;
+    padding-right: 16px;
     width: 100%;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item h3,
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .h3 {
     font-size: 24px;
-    height: 66px;
-    margin-bottom: 28px;
-  }
-
-  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-item.d-flex.flex-col-6.flex-justify_center {
-    flex: 0 0 48%;
+    font-weight: 700;
     height: auto;
-    margin: 0;
-    max-width: 100%;
-    width: 100%;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    min-height: 0;
   }
 
-  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container .abbv-button-tertiary {
-    margin-bottom: 0;
-    padding-left: 16px;
-    padding-right: 16px;
-    width: 100%;
+  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-rich-text h3 em {
+    font-style: italic;
+    font-weight: 700;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container .abbv-icon-call_made {
@@ -1830,7 +1893,7 @@
   }
 
   @media (width <= 1346px) {
-    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox {
+    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
       padding: 15px;
     }
 
@@ -1855,19 +1918,33 @@
   }
 
   @media (width <= 927px) {
-    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox {
-      grid-template-columns: repeat(2, 1fr);
+    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
+      flex-wrap: wrap;
+    }
+
+    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
+      flex: 1 1 calc(50% - 8px);
+      max-width: calc(50% - 8px);
     }
   }
 
   @media (width <= 627px) {
-    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox {
-      grid-template-columns: 1fr;
+    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+
+    .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
+      flex: 1 1 auto;
+      max-width: 100%;
+      width: 100%;
     }
 
     .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item h3,
     .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .h3 {
       font-size: 18px;
+      font-weight: 700;
       height: auto;
+      line-height: 1.2;
     }
   }
