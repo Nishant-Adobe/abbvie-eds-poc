@@ -77,13 +77,24 @@ function extractConfig(block) {
 function extractManualCrumbs(block) {
   const rows = [...block.querySelectorAll(':scope > div')];
   return rows.reduce((crumbs, row) => {
-    const divs = row.querySelectorAll(':scope > div');
-    if (divs.length >= 2) {
-      const label = divs[0]?.textContent?.trim();
-      const href = divs[1]?.querySelector('a')?.getAttribute('href')
-        || divs[1]?.textContent?.trim()
+    const labelEl = row.querySelector('[data-aue-prop="label"]');
+    const hrefEl = row.querySelector('[data-aue-prop="href"]');
+
+    if (labelEl) {
+      const label = labelEl.textContent?.trim();
+      const href = hrefEl?.querySelector('a')?.getAttribute('href')
+        || hrefEl?.textContent?.trim()
         || '';
       if (label) crumbs.push({ label, href });
+    } else {
+      const divs = row.querySelectorAll(':scope > div');
+      if (divs.length >= 2) {
+        const label = divs[0]?.textContent?.trim();
+        const href = divs[1]?.querySelector('a')?.getAttribute('href')
+          || divs[1]?.textContent?.trim()
+          || '';
+        if (label) crumbs.push({ label, href });
+      }
     }
     return crumbs;
   }, []);
