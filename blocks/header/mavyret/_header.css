@@ -60,7 +60,7 @@ header nav .nav-hamburger button > span {
   height: var(--spacing-04);
   transform: none;
   width: var(--spacing-40);
-  transform-origin: 8px 3px;
+  transform-origin: var(--spacing-08) var(--spacing-03);
 }
 
 header nav .nav-hamburger button>span:last-child {
@@ -219,7 +219,7 @@ header nav .nav-sections .default-content-wrapper>ul {
 /* Nav separator lines — translucent white (lower spec than `:has()` utility li below) */
 header nav .nav-sections .default-content-wrapper > ul > li {
   border: none;
-  padding: 15px 0;
+  padding: var(--spacing-15) 0;
 }
 
 header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(1) {
@@ -244,7 +244,8 @@ header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile {
   display: block !important;
   height: auto;
   line-height: normal;
-  padding: var(--spacing-15) var(--spacing-35);
+  padding: 0 var(--spacing-20);
+  margin: 0 calc(-1 * var(--spacing-20));
 }
 
 header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile nav {
@@ -260,9 +261,9 @@ header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role=
 }
 
 header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role="menubar"] > li {
-  border-bottom: var(--separator-height-1) solid var(--color-border-default);
+  border-bottom: none;
   height: auto;
-  padding: var(--spacing-10) 0;
+  padding: var(--spacing-20) 0;
   width: 100%;
 }
 
@@ -290,7 +291,7 @@ header nav[aria-expanded='true'] .nav-sections {
   overflow: visible;
   padding: 0 var(--spacing-20);
   position: absolute;
-  top: 70px;
+  top: var(--spacing-70);
 }
 
 /* ── Home icon — flex align + size ── */
