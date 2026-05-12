@@ -55,6 +55,10 @@ header nav .nav-tools {
 }
 
 /* ── Hamburger — green bars (live: background: #76bd22; height: 4px; width: 40px) ── */
+header nav .nav-hamburger button::before {
+  display: none;
+}
+
 header nav .nav-hamburger button > span {
   background: var(--color-green-flash);
   height: var(--spacing-04);
@@ -508,6 +512,9 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     position: absolute;
   }
 
+  header nav .nav-sections .default-content-wrapper > ul > li{
+    padding: 0;
+  }
 
   /* Home icon nav item */
   header nav .nav-sections .default-content-wrapper > ul > li.nav-home-item > a {

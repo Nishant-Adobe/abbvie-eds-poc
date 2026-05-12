@@ -571,6 +571,43 @@ function buildMenuItem(block, isNavigation = false) {
   const segments = window.location.pathname.split('/').filter(Boolean);
   const currentParentPage = segments[0];
   const li = createElement('li', { className: `menu-${slug}` });
+  const text = createElement('span', { textContent: label });
+
+  const isLinkLanguageBlock = block?.classList.contains('language-links');
+
+  // Leaf nav item: has a direct link and no sub-nav ul → render as anchor immediately
+  if (isNavigation && !isLinkLanguageBlock && !block.classList.contains('search')) {
+    const directAnchor = block.querySelector('a');
+    if (directAnchor && !block.querySelector('ul')) {
+      const navLink = createElement('a', {
+        className: 'nav-item-link',
+        attributes: { href: directAnchor.href },
+      });
+      if (currentParentPage === slug) navLink.classList.add('selected');
+      navLink.appendChild(text);
+      li.appendChild(navLink);
+      return li;
+    }
+  }
+
+  // Language-links single link → render as anchor (avoids anchor-inside-button)
+  if (isLinkLanguageBlock) {
+    const isLinkLanguage = block.querySelector('ul');
+    if (!isLinkLanguage) {
+      const a = block.querySelector('a');
+      if (a) {
+        const navLink = createElement('a', {
+          className: 'nav-item-link',
+          attributes: { href: a.href },
+        });
+        if (currentParentPage === slug) navLink.classList.add('selected');
+        navLink.appendChild(text);
+        li.appendChild(navLink);
+        return li;
+      }
+    }
+  }
+
   const button = createElement('button', {
     attributes: { type: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
   });
@@ -580,23 +617,16 @@ function buildMenuItem(block, isNavigation = false) {
   // Only include the icon if it's the search block (other blocks get the search icon by mistake
   // because content_searchIcon is a template default shared across all navigation-content blocks)
   const icon = block.classList.contains('search') ? block.querySelector('p > span') : null;
-  const text = createElement('span', { textContent: label });
   if (icon) button.appendChild(icon.cloneNode(true));
   button.appendChild(text);
   const { submenu } = createSubmenuWrapper(label);
-  const isLinkLanguageBlock = block?.classList.contains('language-links');
   if (isLinkLanguageBlock) {
     const isLinkLanguage = block.querySelector('ul');
-    if (isLinkLanguage) isLinkLanguage.classList.add('navigation-group');
-    if (!isLinkLanguage) {
-      const a = block.querySelector('a');
-      if (a) {
-        a.style.display = 'none';
-        button.appendChild(a);
+    if (isLinkLanguage) {
+      isLinkLanguage.classList.add('navigation-group');
+      if (isNavigation) {
+        submenu.appendChild(isLinkLanguage.cloneNode(true));
       }
-    }
-    if (isLinkLanguage && isNavigation) {
-      submenu.appendChild(isLinkLanguage.cloneNode(true));
     }
   }
   li.append(button, submenu);
@@ -605,7 +635,7 @@ function buildMenuItem(block, isNavigation = false) {
     e.stopPropagation();
     const mainDiv = button.parentElement;
     const languageLinkData = mainDiv?.querySelector('.navigation-group');
-    const isParsedUl = languageLinkData?.querySelector('.navigation-item');
+    const isParsedUl = languageLinkData?.children.length > 0;
     const subMenuContainer = mainDiv.querySelector('.submenu-level-1');
     if (subMenuContainer && isDesktop.matches) subMenuContainer.classList.add('mega-menu-minimize');
     if (isNavigation && !isParsedUl) {
@@ -650,22 +680,29 @@ function buildMenuItem(block, isNavigation = false) {
   // (mouseenter/mouseleave with small delay to allow moving into submenu)
   if (isNavigation) {
     let hoverTimer = null;
+    let isHovering = false;
+    let isLoading = false;
 
     const openOnHover = async () => {
+      isHovering = true;
+      clearTimeout(hoverTimer); // always cancel pending close before any early return
       if (!isDesktop.matches) return;
       if (!li.querySelector('.submenu-level-1')) return;
-      clearTimeout(hoverTimer);
       const navGroup = li.querySelector('.navigation-group');
-      const isParsed = navGroup?.querySelector('.navigation-item');
-      if (!isParsed) {
+      const isParsed = navGroup?.children.length > 0;
+      if (!isParsed && !isLoading) {
+        isLoading = true;
         await buildLevelTwoNavigations(button, navGroup, block);
+        isLoading = false;
       }
+      if (!isHovering) return; // cursor left during async fetch — don't open
       toggleAllNavSections(false);
       li.setAttribute('aria-expanded', 'true');
       button.setAttribute('aria-expanded', 'true');
     };
 
     const closeOnLeave = () => {
+      isHovering = false;
       if (!isDesktop.matches) return;
       hoverTimer = setTimeout(() => {
         li.setAttribute('aria-expanded', 'false');
