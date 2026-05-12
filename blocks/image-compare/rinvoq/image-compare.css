@@ -46,6 +46,9 @@
 
 .image-compare-before img {
   object-position: left;
+
+  /* max-width set to none here; JS sets exact pixel width for the clip reveal */
+  max-width: none;
 }
 
 /* =========================================
@@ -200,10 +203,13 @@
 
 /* =========================================
    TABS
+   Mobile default: stacked column.
+   At ≥600px: single row (overridden in media query below).
 ========================================= */
 
 .image-compare-tabs {
   display: flex;
+  flex-direction: column;
   gap: 8px;
   margin-bottom: 16px;
 }
@@ -238,6 +244,7 @@
 ========================================= */
 
 .image-compare-tabs-toggle {
+  flex-direction: row;
   gap: 0;
 }
 
@@ -270,6 +277,8 @@
 
 /* =========================================
    THUMBNAILS
+   Mobile default: 64px wide thumbnails.
+   At ≥600px: 74px (overridden in media query below).
 ========================================= */
 
 .image-compare-thumbnails {
@@ -284,7 +293,7 @@
 .image-compare-thumb {
   position: relative;
   flex: 0 0 auto;
-  width: 74px;
+  width: 64px;
   border: none;
   border-radius: 0;
   overflow: hidden;
@@ -316,26 +325,31 @@
 }
 
 /* =========================================
-   RESPONSIVE
+   MOBILE-HIDDEN VARIANT
+   Hidden on small screens, visible at ≥900px.
 ========================================= */
 
-@media (width <= 768px) {
-  .image-compare.mobile-hidden {
-    display: none;
-  }
+.image-compare.mobile-hidden {
+  display: none;
 }
 
-@media (width <= 600px) {
-  .image-compare-tabs {
-    flex-direction: column;
-  }
+/* =========================================
+   RESPONSIVE — mobile-first (min-width)
+========================================= */
 
-  .image-compare-tabs-toggle {
+@media (width >= 600px) {
+  .image-compare-tabs {
     flex-direction: row;
   }
 
   .image-compare-thumb {
-    width: 64px;
+    width: 74px;
+  }
+}
+
+@media (width >= 900px) {
+  .image-compare.mobile-hidden {
+    display: block;
   }
 }
 
@@ -347,19 +361,40 @@
   }
 }
 
+/* Rinvoq image-compare block tokens */
+
+.image-compare {
+  /* ---- Colors ---- */
+  --ic-color-label-bg: var(--color-gold);
+  --ic-color-label-text: var(--color-charcoal);
+  --ic-color-handle: var(--color-charcoal);
+  --ic-color-handle-btn: var(--color-gold);
+  --ic-color-prompt-bg: rgb(51 51 51 / 85%);
+  --ic-color-gallery-bg: #666869;
+
+  /* ---- Layout ---- */
+  --ic-gallery-max-width: 76.5rem;
+  --ic-prompt-max-width: 16rem;
+  --ic-tabs-radius: 0.5rem;
+  --ic-tab-inner-radius: 0.3rem;
+  --ic-thumb-width: 13rem;
+  --ic-thumb-width-mobile: 10rem;
+  --ic-thumb-label-bottom: 2.8rem;
+}
+
 .image-compare.gallery {
-  max-width: 765px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
 .image-compare .image-compare-label-after {
   position: absolute;
   inset: 0 0 auto;
-  background: #ffd100;
-  color: #25282a;
-  font-size: 16px;
-  font-weight: 400;
-  padding: 6px 15px;
+  background: var(--ic-color-label-bg);
+  color: var(--ic-color-label-text);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-400);
+  padding: var(--spacing-06) var(--spacing-15);
   border-radius: 0;
   z-index: 3;
   text-align: right;
@@ -370,11 +405,11 @@
   inset: 0 auto auto 0;
   width: var(--compare-position);
   overflow: hidden;
-  background: #ffd100;
-  color: #25282a;
-  font-size: 16px;
-  font-weight: 400;
-  padding: 6px 15px;
+  background: var(--ic-color-label-bg);
+  color: var(--ic-color-label-text);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-400);
+  padding: var(--spacing-06) var(--spacing-15);
   border-radius: 0;
   z-index: 4;
   text-align: left;
@@ -386,16 +421,16 @@
 
 .image-compare .image-compare-handle {
   width: 4px;
-  background-color: #25282a;
+  background-color: var(--ic-color-handle);
 }
 
 .image-compare .image-compare-handle::before {
   display: block;
   width: 40px;
   height: 40px;
-  background-color: #ffd100;
+  background-color: var(--ic-color-handle-btn);
   border-radius: 50%;
-  border: 2px solid #25282a;
+  border: 2px solid var(--ic-color-handle);
   box-shadow: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2325282a'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
   background-size: 22px;
@@ -408,25 +443,25 @@
   top: 50%;
   left: var(--compare-position);
   transform: translate(-50%, -50%);
-  background: rgb(51 51 51 / 85%);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 8px 12px;
-  border-radius: 4px;
+  background: var(--ic-color-prompt-bg);
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-11);
+  font-weight: var(--font-weight-700);
+  padding: var(--spacing-08) var(--spacing-12);
+  border-radius: var(--border-radius-base);
   text-align: center;
   white-space: normal;
-  max-width: 160px;
+  max-width: var(--ic-prompt-max-width);
   line-height: 1.4;
   z-index: 5;
 }
 
 .image-compare .image-compare-gallery-content {
-  background: #666869;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 5px 10px;
+  background: var(--ic-color-gallery-bg);
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-700);
+  padding: var(--spacing-05) var(--spacing-10);
   text-align: center;
   margin-bottom: 0;
 }
@@ -435,45 +470,45 @@
   display: flex;
   justify-content: center;
   gap: 0;
-  margin: 24px 0 16px;
-  border: 2px solid #90124a;
-  border-radius: 5px;
+  margin: var(--spacing-24) 0 var(--spacing-16);
+  border: 2px solid var(--color-brand-primary);
+  border-radius: var(--ic-tabs-radius);
   overflow: hidden;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab {
   flex: 1;
-  background: #fff;
-  color: #90124a;
+  background: var(--background-color);
+  color: var(--color-brand-primary);
   border: none;
   border-radius: 0;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 10px 20px;
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-700);
+  padding: var(--spacing-10) var(--spacing-20);
   cursor: pointer;
   text-align: center;
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab.is-active {
-  background: #90124a;
-  color: #fff;
-  border-color: #90124a;
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  border-color: var(--color-brand-primary);
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:first-child {
-  border-radius: 3px 0 0 3px;
+  border-radius: var(--ic-tab-inner-radius) 0 0 var(--ic-tab-inner-radius);
 }
 
 .image-compare .image-compare-tabs-toggle .image-compare-tab:last-child {
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 var(--ic-tab-inner-radius) var(--ic-tab-inner-radius) 0;
 }
 
 .image-compare .image-compare-thumbnails {
   display: flex;
-  gap: 16px;
+  gap: var(--spacing-10);
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding: 16px 0;
+  padding: var(--spacing-16) 0;
   background: transparent;
   border-radius: 0;
   overflow: visible;
@@ -482,10 +517,10 @@
 }
 
 .image-compare .image-compare-thumb {
-  width: 130px;
+  width: var(--ic-thumb-width-mobile);
   height: auto;
   border: 3px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--border-radius-m);
   padding: 0;
   overflow: hidden;
   cursor: pointer;
@@ -495,7 +530,7 @@
 }
 
 .image-compare .image-compare-thumb.is-active {
-  border-color: #90124a;
+  border-color: var(--color-brand-primary);
   outline: none;
 }
 
@@ -507,28 +542,28 @@
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: var(--ic-tabs-radius);
 }
 
 .image-compare .image-compare-thumb-label {
   display: block;
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-700);
+  color: var(--color-text-on-dark);
   position: absolute;
-  bottom: 28px;
-  left: 8px;
+  bottom: var(--ic-thumb-label-bottom);
+  left: var(--spacing-08);
   text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
 .image-compare .image-compare-thumb-sublabel {
   display: block;
-  font-size: 12px;
-  font-weight: 400;
-  color: #fff;
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-400);
+  color: var(--color-text-on-dark);
   position: absolute;
-  bottom: 10px;
-  left: 8px;
+  bottom: var(--spacing-10);
+  left: var(--spacing-08);
   text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
@@ -582,16 +617,16 @@
   display: none;
 }
 
-@media (width <= 768px) {
+@media (width >= 769px) {
   .image-compare.gallery {
-    max-width: 100%;
+    max-width: var(--ic-gallery-max-width);
   }
 
   .image-compare .image-compare-thumbnails {
-    gap: 10px;
+    gap: var(--spacing-16);
   }
 
   .image-compare .image-compare-thumb {
-    width: 100px;
+    width: var(--ic-thumb-width);
   }
 }
