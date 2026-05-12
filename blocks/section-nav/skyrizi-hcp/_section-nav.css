@@ -2,94 +2,37 @@
 @import '../../../styles/skyrizi-hcp/tokens.css';
 
 /* Skyrizi HCP — Section Nav Brand Overrides
-   Normal (non-stuck): floating dark-navy rounded pill overlaid on page content
-   Sticky + stuck:     full-width dark-navy header bar, no border-radius
-   Source:             skyrizihcp.com .risa-section-nav / .abbv-fixed pattern
+   Mobile (base):  only shows when sticky+stuck — full-width dark-navy bar with toggle
+   Desktop ≥768px: floating dark-navy rounded pill (non-stuck), full-width bar (stuck)
+   Source:         skyrizihcp.com .risa-section-nav / .abbv-fixed pattern
 */
 
-/* ── Wrapper: transparent in normal flow, dark bg when stuck ─────────────── */
+/* ── Block-scoped tokens ─────────────────────────────────────────────── */
 
 .section-nav {
-  background-color: transparent;
-  border-bottom: none;
-  overflow-x: visible;
-  padding: 0 var(--spacing-20, 20px);
+  --section-nav-text: var(--color-text-on-dark, #fff);
+  --section-nav-active: var(--color-nav-active, #1ba2da);
+  --section-nav-separator: var(--color-nav-separator, rgb(255 255 255 / 30%));
+  --section-nav-dropdown-bg: var(--color-nav-dropdown-bg, #ccc);
+  --section-nav-bg: var(--color-background-footer, #071d49);
 }
 
-/* ── Inner nav: dark-navy floating pill ──────────────────────────────────── */
+/* ── Mobile: hide non-stuck sticky nav ───────────────────────────────── */
 
-.section-nav nav {
-  background-color: var(--color-background-footer, #071d49);
-  border-radius: var(--border-radius-nav, 10px);
-  justify-content: center;
-  max-width: fit-content;
-  padding: 6px 0;
+.section-nav.sticky:not(.is-stuck) {
+  display: none;
 }
 
-/* ── Links ───────────────────────────────────────────────────────────────── */
-
-.section-nav a {
-  border-bottom: 2px solid transparent;
-  color: #fff;
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-nav, 14px);
-  font-weight: var(--font-weight-heading, 700);
-  letter-spacing: 0.04em;
-  padding: 10px 24px;
-  text-transform: uppercase;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-/* Pipe separators — border-left on adjacent siblings (0,1,3 < hover 0,2,1, so comes first) */
-
-.section-nav nav a + a {
-  border-left: 1px solid rgb(255 255 255 / 30%);
-  padding-left: 24px;
-}
-
-/* Pipe separators for mobile-menu variant — short centered bar via ::before */
-
-.section-nav.mobile-menu nav ul li + li::before {
-  align-self: center;
-  background-color: rgb(255 255 255 / 30%);
-  content: '';
-  display: block;
-  flex-shrink: 0;
-  height: 14px;
-  width: 1px;
-}
-
-.section-nav a:hover,
-.section-nav a:focus-visible {
-  color: #1ba2da;
-}
-
-.section-nav a.is-active {
-  border-bottom-color: transparent;
-  color: #fff;
-  text-decoration: underline;
-  text-decoration-color: #1ba2da;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
-}
-
-/* ── Sticky variant (in-flow, not yet pinned) ────────────────────────────── */
-
-.section-nav.sticky {
-  background-color: transparent;
-  box-shadow: none;
-  overflow-x: visible;
-}
-
-/* ── Sticky + stuck: full-width dark-navy bar ────────────────────────────── */
+/* ── Stuck: full-width dark-navy bar (mobile + desktop) ──────────────── */
 
 .section-nav.sticky.is-stuck {
-  background-color: var(--color-background-footer, #071d49);
+  background-color: var(--section-nav-bg);
   box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
   overflow-x: auto;
   padding: 0;
 }
 
+/* Higher specificity (0,3,1) overrides desktop pill nav (0,1,1) */
 .section-nav.sticky.is-stuck nav {
   background-color: transparent;
   border-radius: 0;
@@ -97,116 +40,231 @@
   padding: 0 var(--spacing-24, 24px);
 }
 
-/* ── Mobile (≤767px) — Skyrizi HCP ──────────────────────────────────────── */
+/* ── Links ───────────────────────────────────────────────────────────── */
 
-@media (width <= 767px) {
-  /* Hide nav in normal (non-stuck) flow — only show when stuck */
+.section-nav a {
+  border-bottom: 2px solid transparent;
+  color: var(--section-nav-text);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-nav, 14px);
+  font-weight: var(--font-weight-heading, 700);
+  letter-spacing: var(--letter-spacing-nav, 0.04em);
+  padding: var(--spacing-10, 10px) var(--spacing-24, 24px);
+  text-transform: uppercase;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.section-nav a:hover,
+.section-nav a:focus-visible {
+  color: var(--section-nav-active);
+}
+
+/* Mobile active: full-width blue bottom border + blue text */
+.section-nav a.is-active {
+  border-bottom-color: var(--section-nav-active);
+  color: var(--section-nav-active);
+}
+
+/* ── Mobile menu: hide hamburger + generic label ─────────────────────── */
+
+.section-nav.mobile-menu .section-nav-hamburger,
+.section-nav.mobile-menu .section-nav-toggle-label {
+  display: none;
+}
+
+/* ── Mobile menu: stuck nav fills full viewport width ────────────────── */
+
+.section-nav.mobile-menu.sticky.is-stuck nav {
+  max-width: 100%;
+  padding: 0;
+  width: 100%;
+}
+
+/* ── Toggle button ───────────────────────────────────────────────────── */
+
+.section-nav.mobile-menu .section-nav-toggle {
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--section-nav-text);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-nav, 14px);
+  font-weight: var(--font-weight-heading, 700);
+  justify-content: center;
+  letter-spacing: var(--letter-spacing-nav, 0.04em);
+  margin: 0;
+  padding: 0 var(--spacing-40, 40px) 0 var(--spacing-16, 16px);
+  position: relative;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+/* ── Current section label: centred in collapsed bar ────────────────── */
+
+.section-nav.mobile-menu .section-nav-current-label {
+  display: block;
+  flex: 1;
+  line-height: var(--spacing-32, 32px);
+  text-align: center;
+}
+
+.section-nav.mobile-menu.is-open .section-nav-current-label {
+  visibility: hidden;
+}
+
+/* ── Toggle icon: add_circle — collapsed ─────────────────────────────── */
+
+.section-nav.mobile-menu .section-nav-toggle::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: '';
+  display: block;
+  height: var(--spacing-24, 24px);
+  position: absolute;
+  right: var(--spacing-12, 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--spacing-24, 24px);
+}
+
+/* ── Toggle icon: close — expanded ───────────────────────────────────── */
+
+.section-nav.mobile-menu.is-open .section-nav-toggle::after {
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
+  height: var(--spacing-30, 30px);
+  width: var(--spacing-24, 24px);
+}
+
+/* ── Dropdown list ───────────────────────────────────────────────────── */
+
+.section-nav.mobile-menu nav ul {
+  background-color: var(--section-nav-dropdown-bg);
+  border-top: none;
+  flex-direction: column;
+  padding: 0;
+  width: 100%;
+}
+
+.section-nav.mobile-menu nav ul li + li::before {
+  display: none;
+}
+
+.section-nav.mobile-menu nav ul li {
+  border-bottom: none;
+  display: block;
+}
+
+.section-nav.mobile-menu nav a {
+  border-bottom: none;
+  display: block;
+  padding: var(--spacing-2, 2px) var(--spacing-24, 24px);
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+.section-nav.mobile-menu nav a.is-active {
+  border-bottom: 2px solid var(--section-nav-active);
+  border-left: none;
+  color: var(--section-nav-active);
+  padding-left: var(--spacing-24, 24px);
+  text-decoration: none;
+}
+
+/* ── Desktop ≥768px: floating pill, separators, show in normal flow ──── */
+
+@media (width >= 768px) {
+  /* Show sticky nav in normal flow (floating pill) */
   .section-nav.sticky:not(.is-stuck) {
-    display: none;
-  }
-
-  /* Override stuck-nav constraints so toggle + dropdown fill full viewport width */
-  .section-nav.mobile-menu.sticky.is-stuck nav {
-    max-width: 100%;
-    padding: 0;
-    width: 100%;
-  }
-
-  /* Toggle: hide hamburger and generic "Menu" label */
-  .section-nav.mobile-menu .section-nav-hamburger,
-  .section-nav.mobile-menu .section-nav-toggle-label {
-    display: none;
-  }
-
-  .section-nav.mobile-menu .section-nav-toggle {
-    align-items: center;
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    font-family: var(--body-font-family);
-    font-size: var(--font-size-nav, 14px);
-    font-weight: var(--font-weight-heading, 700);
-    justify-content: center;
-    letter-spacing: 0.04em;
-    margin: 0;
-    padding: 0 40px 0 16px;
-    position: relative;
-    text-transform: uppercase;
-    width: 100%;
-  }
-
-  /* Current label centred in collapsed bar; hidden when menu is open */
-  .section-nav.mobile-menu .section-nav-current-label {
     display: block;
-    flex: 1;
-    line-height: 32px;
-    text-align: center;
   }
 
-  .section-nav.mobile-menu.is-open .section-nav-current-label {
-    visibility: hidden;
+  /* Transparent wrapper — pill background lives on the nav element */
+  .section-nav {
+    background-color: transparent;
+    border-bottom: none;
+    box-shadow: none;
+    overflow-x: visible;
+    padding: 0 var(--spacing-20, 20px);
   }
 
-  /* add_circle icon (Material Icons equivalent via SVG data URI) */
-  .section-nav.mobile-menu .section-nav-toggle::after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-size: contain;
+  /* Floating dark-navy pill */
+  .section-nav nav {
+    background-color: var(--section-nav-bg);
+    border-radius: var(--border-radius-nav, 10px);
+    justify-content: center;
+    max-width: fit-content;
+    padding: var(--spacing-6, 6px) 0;
+  }
+
+  /* Desktop active: underline decoration (border-bottom already transparent from base) */
+  .section-nav a.is-active {
+    border-bottom-color: transparent;
+    color: var(--section-nav-text);
+    text-decoration: underline;
+    text-decoration-color: var(--section-nav-active);
+    text-decoration-thickness: 2px;
+    text-underline-offset: var(--spacing-5, 5px);
+  }
+
+  /* Pipe separators between adjacent links */
+  .section-nav nav a + a {
+    border-left: 1px solid var(--section-nav-separator);
+    padding-left: var(--spacing-24, 24px);
+  }
+
+  /* ── Mobile-menu: reset mobile-base overrides for desktop layout ─────── */
+
+  /* Hide toggle — mobile-base sets display:flex which outlasts the base desktop hide */
+  .section-nav.mobile-menu .section-nav-toggle {
+    display: none;
+  }
+
+  /* Horizontal link list — mobile-base sets column/100% which outlasts base desktop row */
+  .section-nav.mobile-menu nav ul {
+    background-color: transparent;
+    flex-direction: row;
+    width: auto;
+  }
+
+  /* Flex li — mobile-base sets display:block which outlasts base desktop flex */
+  .section-nav.mobile-menu nav ul li {
+    display: flex;
+  }
+
+  /* Inline link — mobile-base sets block/full-width/center which outlasts base desktop */
+  .section-nav.mobile-menu nav a {
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+    padding: var(--spacing-10, 10px) var(--spacing-24, 24px);
+    text-align: unset;
+    width: auto;
+  }
+
+  /* Pipe separators in mobile-menu variant (horizontal on desktop) */
+  .section-nav.mobile-menu nav ul li + li::before {
+    align-self: center;
+    background-color: var(--section-nav-separator);
     content: '';
     display: block;
-    height: 24px;
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 24px;
+    flex-shrink: 0;
+    height: var(--spacing-14, 14px);
+    width: 1px;
   }
 
-  /* close icon (Material Icons equivalent via SVG data URI) */
-  .section-nav.mobile-menu.is-open .section-nav-toggle::after {
-    background-color: transparent;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
-    height: 24px;
-    width: 24px;
-  }
-
-  /* Dropdown list — full-width #ccc background, no dividers */
-  .section-nav.mobile-menu nav ul {
-    background-color: #ccc;
-    border-top: none;
-    flex-direction: column;
-    padding: 0;
-    width: 100%;
-  }
-
-  .section-nav.mobile-menu nav ul li + li::before {
-    display: none;
-  }
-
-  /* Override base mobile li border — no dividers between items */
-  .section-nav.mobile-menu nav ul li {
-    border-bottom: none;
-    display: block;
-  }
-
-  /* No border on any item — only active gets the blue line */
-  .section-nav.mobile-menu nav a {
-    border-bottom: none;
-    display: block;
-    padding: 2px var(--spacing-24, 24px);
-    text-align: center;
-    text-decoration: none;
-    width: 100%;
-  }
-
-  /* Active: full-width blue bottom border, blue text */
+  /* Mobile-menu active: underline on desktop (overrides mobile border-bottom) */
   .section-nav.mobile-menu nav a.is-active {
-    border-bottom: 2px solid #1ba2da;
+    border-bottom: none;
     border-left: none;
-    color: #1ba2da;
-    padding-left: var(--spacing-24, 24px);
-    text-decoration: none;
+    color: var(--section-nav-text);
+    padding-left: var(--spacing-16, 16px);
+    text-decoration: underline;
+    text-decoration-color: var(--section-nav-active);
+    text-decoration-thickness: 2px;
+    text-underline-offset: var(--spacing-5, 5px);
   }
 }
