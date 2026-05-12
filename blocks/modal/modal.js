@@ -179,11 +179,15 @@ async function openModal(trigger, variants = []) {
     content.innerHTML = '';
     if (fragment) {
       [...fragment.childNodes].forEach((node) => content.append(node));
+    } else {
+      content.innerHTML = '<p class="modal-error" role="alert">Unable to load content.</p>';
     }
     const heading = content.querySelector('h1, h2, h3');
     if (heading) {
       if (!heading.id) heading.id = `modal-title-${modalId || 'default'}`;
       dialog.setAttribute('aria-labelledby', heading.id);
+    } else {
+      dialog.setAttribute('aria-label', trigger?.textContent?.trim() || LABEL_OPEN);
     }
     // Links with href="#" inside modal act as close/cancel buttons
     content.querySelectorAll('a[href="#"]').forEach((link) => {
@@ -224,7 +228,7 @@ function registerExitIntent(trigger, variants) {
     if (!modal) return;
     exitAc.abort();
     exitAc = null;
-    openModal(modal.trigger, modal.variants).catch(() => {});
+    openModal(modal.trigger, modal.variants).catch(() => { /* handled in openModal */ });
   }, { signal: exitAc.signal });
 }
 
@@ -339,7 +343,7 @@ export default async function decorate(block) {
     const ac = new AbortController();
     document.addEventListener('modal:open', (e) => {
       if (e.detail?.modalId === modalId) {
-        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => {});
+        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => { /* handled in openModal */ });
       }
     }, { signal: ac.signal });
     block.modalCleanup = () => ac.abort();
@@ -366,7 +370,7 @@ export default async function decorate(block) {
     if (!hasSeenModal(modalId, variants)) {
       const timerId = setTimeout(() => {
         if (!block.isConnected) return;
-        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => {});
+        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => { /* handled in openModal */ });
       }, 500);
       block.modalAutoOpenTimer = timerId;
     }
@@ -381,7 +385,7 @@ export default async function decorate(block) {
   button.setAttribute('aria-haspopup', 'dialog');
   button.dataset.fragmentPath = fragmentPath;
   button.dataset.modalId = modalId;
-  button.addEventListener('click', () => openModal(button, variants).catch(() => {}));
+  button.addEventListener('click', () => openModal(button, variants).catch(() => { /* handled in openModal */ }));
 
   block.append(button);
 }
