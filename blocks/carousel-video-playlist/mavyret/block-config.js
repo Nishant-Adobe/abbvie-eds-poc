@@ -25,9 +25,24 @@ function isItemRow(row) {
 function parseConfig(block) {
   const cfgRows = [...block.children].filter((r) => !isItemRow(r));
   const cellText = (i) => cfgRows[i]?.firstElementChild?.textContent?.trim() ?? '';
+
+  // Detect playMode field — scan for "inline" value
+  let playMode = '';
+  for (let i = 0; i < cfgRows.length; i += 1) {
+    if (cellText(i) === 'inline') { playMode = 'inline'; break; }
+  }
+
+  // Find accountId by scanning for 10+ digit number
+  let accountIdx = -1;
+  for (let i = 0; i < cfgRows.length; i += 1) {
+    if (/^\d{8,}$/.test(cellText(i))) { accountIdx = i; break; }
+  }
+  const playerIdx = accountIdx >= 0 ? accountIdx + 2 : -1;
+
   return {
-    accountId: cellText(3),
-    playerId: cellText(5) || 'default',
+    accountId: accountIdx >= 0 ? cellText(accountIdx) : '',
+    playerId: (playerIdx >= 0 ? cellText(playerIdx) : '') || 'default',
+    playMode,
   };
 }
 
@@ -158,7 +173,7 @@ function openVideoModal(item, accountId, playerId) {
 }
 
 // ── Build grid of clickable cards ──
-function buildGrid(block, items, accountId, playerId) {
+function buildGrid(block, items, accountId, playerId, playMode) {
   const grid = document.createElement('div');
   grid.className = 'cvp-grid';
 
@@ -207,10 +222,23 @@ function buildGrid(block, items, accountId, playerId) {
       obs.observe(card);
     }, 3000);
 
-    // Click opens modal
-    card.addEventListener('click', () => {
-      openVideoModal(item, accountId, playerId);
-    });
+    // Click: modal or inline depending on playMode
+    if (playMode === 'inline') {
+      card.addEventListener('click', () => {
+        const existing = thumbWrap.querySelector('.cvp-poster-video');
+        if (existing) {
+          const player = window.videojs?.getPlayer(existing.id);
+          if (player) {
+            player.play();
+            playIcon.style.display = 'none';
+          }
+        }
+      });
+    } else {
+      card.addEventListener('click', () => {
+        openVideoModal(item, accountId, playerId);
+      });
+    }
 
     grid.append(card);
   });
@@ -225,6 +253,7 @@ async function decorateBlock(block) {
   block.classList.add('mavyret-modal-grid');
 
   const cfg = parseConfig(block);
+  if (cfg.playMode === 'inline') block.classList.add('mavyret-inline');
   const items = parseItems(block);
 
   block.textContent = '';
@@ -237,7 +266,7 @@ async function decorateBlock(block) {
     return;
   }
 
-  buildGrid(block, items, cfg.accountId, cfg.playerId);
+  buildGrid(block, items, cfg.accountId, cfg.playerId, cfg.playMode);
 }
 
 export default async function getBlockConfigs() {
