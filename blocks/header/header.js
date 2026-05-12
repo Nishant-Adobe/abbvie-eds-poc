@@ -79,15 +79,13 @@ function toggleMenu(nav, _navSections, forceExpanded = null) {
     nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
     toggleAllNavSections(false); // Fixed: Pass boolean, not string
     button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
-    const backdrop = document.getElementById('nav-backdrop');
-    backdrop?.setAttribute('aria-hidden', expanded ? 'true' : 'false');
   }
 }
 
 /**
- * Creates a submenu wrapper with a close button.
+ * Creates a submenu wrapper.
  * @param {string} label - The submenu label.
- * @returns {Object} - { submenu, closeBtn }
+ * @returns {Object} - { submenu }
  */
 function createSubmenuWrapper(label) {
   const slug = label.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
@@ -95,19 +93,7 @@ function createSubmenuWrapper(label) {
     className: 'submenu-level-1',
     attributes: { id: `submenu-${slug}`, role: 'menu', 'data-label': label },
   });
-  const closeWrapper = createElement('div', { className: 'close-btn-wrapper' });
-  const closeBtn = createElement('button', {
-    className: 'close-btn',
-    attributes: { type: 'button' },
-    textContent: 'CLOSE',
-  });
-  closeBtn.addEventListener('click', () => {
-    toggleAllNavSections(false);
-    document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', 'true');
-  });
-  closeWrapper.appendChild(closeBtn);
-  submenu.appendChild(closeWrapper);
-  return { submenu, closeBtn };
+  return { submenu };
 }
 
 /**
@@ -658,7 +644,6 @@ function buildMenuItem(block, isNavigation = false) {
     toggleAllNavSections(false);
     li.setAttribute('aria-expanded', !expanded);
     button.setAttribute('aria-expanded', !expanded);
-    document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', expanded);
   });
 
   // Desktop: hover opens submenu
@@ -678,7 +663,6 @@ function buildMenuItem(block, isNavigation = false) {
       toggleAllNavSections(false);
       li.setAttribute('aria-expanded', 'true');
       button.setAttribute('aria-expanded', 'true');
-      document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', 'false');
     };
 
     const closeOnLeave = () => {
@@ -686,7 +670,6 @@ function buildMenuItem(block, isNavigation = false) {
       hoverTimer = setTimeout(() => {
         li.setAttribute('aria-expanded', 'false');
         button.setAttribute('aria-expanded', 'false');
-        document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', 'true');
       }, 100);
     };
 
@@ -878,7 +861,6 @@ function handleKeydown(e) {
   const navSections = document.querySelector('.nav-sections');
   if (!navSections || navSections.getAttribute('aria-expanded') === 'false') return;
   toggleAllNavSections(false);
-  document.getElementById('nav-backdrop')?.setAttribute('aria-hidden', 'true');
 }
 
 // Attach global event listeners
@@ -1055,15 +1037,6 @@ export default async function decorate(block) {
     const li = buildMenuItem(element, true);
     if (li) ul.appendChild(li);
   });
-  const sectionBackBtn = createElement('button', {
-    className: 'back-btn',
-    attributes: { type: 'button' },
-    textContent: 'BACK',
-  });
-  sectionBackBtn.addEventListener('click', () => {
-    toggleAllNavSections(false);
-  });
-  ul.prepend(sectionBackBtn);
   sectionWrapper.appendChild(ul);
   section.appendChild(sectionWrapper);
   nav.appendChild(section);
@@ -1148,13 +1121,6 @@ export default async function decorate(block) {
   // Floating ISI — appended to header block, sits outside nav-wrapper
   const floatingIsi = buildFloatingIsi(header);
   if (floatingIsi) block.append(floatingIsi);
-
-  // build desktop backdrop
-  const backdrop = document.createElement('div');
-  backdrop.id = 'nav-backdrop';
-  backdrop.className = 'nav-backdrop';
-  backdrop.setAttribute('aria-hidden', true);
-  block.append(backdrop);
 
   await renderBlock(block);
 }

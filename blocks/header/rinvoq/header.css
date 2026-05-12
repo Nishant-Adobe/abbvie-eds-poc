@@ -1999,11 +1999,16 @@ header .nav-wrapper {
   background-color: var(--color-nav-dark);
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 header nav {
   color: var(--color-text-on-dark);
   margin: 0;
+}
+
+header:has(.nav-utility ul) {
+  height: auto;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -2154,12 +2159,6 @@ header .nav-utility ul[role="menubar"] > li:not(:nth-child(3)) {
 
 header .nav-utility ul[role="menu"] li:last-of-type {
   border-bottom: 0;
-}
-
-/* Home item — light gray bg (matches desktop utility bar style) */
-
-header .nav-utility ul[role="menubar"] > li.nav-utility-home {
-  background-color: var(--color-nav-utility-bg);
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -2478,6 +2477,7 @@ header nav[aria-expanded='true'] .nav-brand-info > ul a {
     justify-content: center;
     margin: 0 auto;
     width: var(--header-utility-nav-width);
+    position: relative;
   }
 
   /* Dropdown panel — absolute, box-shadow */
@@ -2493,6 +2493,7 @@ header nav[aria-expanded='true'] .nav-brand-info > ul a {
     top: 100%;
     width: 100%;
   }
+
 
   /* Desktop menubar items — horizontal flex, auto width */
   header .nav-utility ul[role="menubar"] > li {
@@ -2615,7 +2616,7 @@ header nav[aria-expanded='true'] .nav-brand-info > ul a {
     height: var(--separator-height-1);
     position: absolute;
     right: 0;
-    width: calc(100% - var(--spacing-32));
+    width: 100%;
   }
 
   header .nav-wrapper nav .nav-brand-info a:hover::after {

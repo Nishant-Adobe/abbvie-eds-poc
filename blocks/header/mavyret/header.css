@@ -1976,67 +1976,129 @@ body:has(.nav-floating-isi-open) {
 /* ──────────────────────────────────────────
    MAVYRET HCP — Header Brand Overrides
    Source: mavyret.com/hcp
-   - Utility bar: white bg, dark text, › separators, right-aligned
-   - Logo row: white bg, full-color logo, brand info right
-   - Nav bar: orange (#c23802) full-width, white text
-   - Submenu: white bg, brand-primary text
-   - Mobile: white bg
-────────────────────────────────────────── */
+   Mobile-first: base = mobile, @media (width >= 1024px) = desktop
+   - Closed mobile: white bg, rust 7px bottom border, green hamburger
+   - Open mobile: rust sections (top), white utility (bottom)
+   - Desktop: utility bar (white, top), logo row (white), rust nav row
+──────────────────────────────────────────── */
 
-/* Main header wrapper — white (logo row) */
+/* ═══════════════════════════════════════════
+   BASE — MOBILE (all viewports, including mobile)
+═══════════════════════════════════════════ */
+
+/* Header wrapper — white bg, rust 7px bottom border (live: border-bottom: 7px solid #c23802) */
 
 header.header-wrapper {
-  background-color: var(--color-background-footer);
+  background-color: var(--background-color);
+  border-bottom: var(--spacing-07) solid var(--color-background-footer);
 }
+
+/* Nav wrapper — white, flex column so utility can be ordered below nav on mobile */
 
 header .nav-wrapper {
   background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
-header nav {
-  color: var(--color-brand-primary);
-}
-
-/* Hamburger — dark bars */
-
-header nav .nav-hamburger button > span {
-  background: var(--color-brand-primary);
-}
-
-header nav .nav-brand {
-  padding: var(--header-logo-row-padding-top) 0 var(--spacing-18);
-  margin-left: var(--header-logo-row-indent);
-}
-
-/* Logo — full color, fixed width */
-
-header nav .nav-brand img {
-  max-width: unset;
-  width: var(--header-logo-width);
+header:has(.nav-utility ul) {
   height: auto;
 }
 
-.header .nav-utility {
-  background-color: inherit;
-  max-width: var(--header-content-max-width);
-  margin: 0 auto;
+/* Nav */
+
+header nav {
+  color: var(--color-brand-primary);
+  margin: 0;
+  padding: 0;
 }
 
-/* Utility bar — white bg, right-aligned, › separators */
-
-.navigation-item-level-1>a {
-  font-size: var(--font-size-16);
+header nav .nav-brand {
+  padding-left: 20px;
 }
 
-/* Live: Barlow Semi Condensed, 0.875rem (14px), weight 500 */
+/* Logo */
+
+header nav .nav-brand img {
+  height: auto;
+  max-width: unset;
+  width: var(--header-logo-width);
+}
+
+/* Nav tools — hidden (Mavyret HCP has no search/auth) */
+
+header nav .nav-tools {
+  display: none;
+}
+
+/* ── Hamburger — green bars (live: background: #76bd22; height: 4px; width: 40px) ── */
+
+header nav .nav-hamburger button > span {
+  background: var(--color-green-flash);
+  height: var(--spacing-04);
+  transform: none;
+  width: var(--spacing-40);
+  transform-origin: 8px 3px;
+}
+
+header nav .nav-hamburger button>span:last-child {
+  transform: translateX(0);
+}
+
+/* ── Hamburger open state — rust tab behind button ── */
+
+header:has(nav[aria-expanded='true']) .nav-hamburger button::before,
+header:has(nav[aria-expanded='true']) .nav-hamburger button::after {
+  background: var(--color-background-footer);
+  content: "";
+  height: var(--header-hamburger-tab-height);
+  position: absolute;
+  right: calc(-1 * var(--spacing-20));
+  top: calc(-1 * var(--spacing-15));
+  width: var(--spacing-80);
+  z-index: var(--z-index-0);
+}
+
+header:has(nav[aria-expanded='true']) .nav-hamburger button::after {
+  background: transparent;
+  border-bottom: var(--separator-height-1) solid var(--color-background-footer);
+  border-right: var(--header-hamburger-triangle-width) solid var(--color-background-footer);
+  border-top: var(--header-hamburger-tab-height) solid transparent;
+  right: var(--header-hamburger-triangle-offset);
+}
+
+/* ── Utility bar — lower-specificity selectors before higher-specificity ones ── */
+
+/* Position utility below nav on mobile via flex order */
+
+header .nav-utility {
+  order: var(--order-2);
+}
+
+header .nav-utility:has(ul) {
+  background-color: transparent;
+}
+
+/* Separator between utility items */
+
+header .nav-utility li + li::before {
+  color: var(--color-brand-primary);
+  content: '›';
+  font-size: var(--font-size-body);
+  opacity: var(--opacity-muted);
+  padding: 0 var(--spacing-04);
+}
+
+/* Utility text (lower spec — must precede the menubar selector below) */
 
 header .nav-utility a,
 header .nav-utility a.button {
+  background: none;
+  border: none;
   color: var(--color-brand-primary);
   font-size: var(--font-size-14);
   font-weight: var(--font-weight-500);
-  background: none;
-  border: none;
   text-decoration: none;
 }
 
@@ -2046,31 +2108,71 @@ header .nav-utility button {
   font-weight: var(--font-weight-500);
 }
 
-header .nav-utility ul[role="menubar"] {
-  justify-content: flex-end;
-}
+/* ── Eyebrow bar — lower spec than utility menubar a, must precede it ── */
 
-header .nav-utility li + li::before {
-  content: '›';
-  color: var(--color-brand-primary);
-  opacity: var(--opacity-muted);
-  font-size: var(--font-size-body);
-  padding: 0 var(--spacing-04);
+header .nav-eyebrow-top {
+  background-color: var(--color-eyebrow-bg);
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-body-small);
+  line-height: var(--header-eyebrow-line-height);
+  padding: var(--spacing-08) var(--spacing-24);
+  text-align: center;
 }
 
 header .nav-eyebrow-top a {
   color: var(--color-text-on-dark);
-  text-decoration: underline;
   font-weight: var(--font-weight-heading);
+  text-decoration: underline;
 }
+
+/* Utility menubar alignment */
+
+header .nav-utility ul[role="menubar"] {
+  justify-content: flex-end;
+}
+
+/* Utility menubar link/button (higher spec — must follow lower-spec above) */
 
 header .nav-utility ul[role="menubar"] > li > a,
 header .nav-utility ul[role="menubar"] > li > button {
-    color: var(--color-black);
-    padding: var(--spacing-08) var(--spacing-04);
-    text-decoration: underline;
-    font-style: normal;
-    font-weight: var(--font-weight-500);
+  color: var(--color-brand-primary);
+  font-style: normal;
+  font-weight: var(--font-weight-500);
+  padding: var(--spacing-08) var(--spacing-04);
+  text-decoration: underline;
+}
+
+/* ── Submenus — white bg, dark navy text ── */
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  background: var(--background-color);
+  color: var(--color-brand-primary);
+}
+
+header nav .nav-item-level-0 ul.navigation-group {
+  padding: 0;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper>ul>li[aria-expanded="false"] .submenu-level-1 {
+  display: none;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper>ul>li[aria-expanded="true"] .submenu-level-1 {
+  display: block;
+}
+
+/* ── Nav item button — tighter padding + white chevron on mobile ── */
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li > button {
+  padding: var(--spacing-12) 0;
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li > button::before {
+  color: var(--color-text-on-dark);
+}
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li:not(:has(.submenu-level-1 .navigation-group)) > button::before {
+  display: none;
 }
 
 header .nav-utility ul[role="menubar"] > li:hover > a,
@@ -2078,143 +2180,216 @@ header .nav-utility ul[role="menubar"] > li:hover > button {
   text-decoration: underline;
 }
 
-/* "Request a Rep" — live site: Barlow Semi Condensed, 18px, weight 600, styled as primary button */
+/* "Request a Rep" — outlined on mobile, filled on desktop (overridden in MQ) */
 
 header .nav-utility a.nav-utility-cta {
-  background-color: var(--color-background-footer);
-  color: var(--color-text-on-dark);
-  padding: var(--spacing-04) var(--spacing-15);
+  background-color: transparent;
+  border: var(--separator-height-1) solid var(--color-brand-primary);
   border-radius: var(--border-radius-base);
-  font-size: var(--font-size-18);
+  color: var(--color-brand-primary);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weight-600);
-  text-decoration: none;
   line-height: var(--header-cta-line-height);
+  padding: var(--spacing-04) var(--spacing-15);
+  text-decoration: none;
 }
 
 header .nav-utility a.nav-utility-cta:hover {
-  opacity: var(--opacity-hover);
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  opacity: var(--opacity-full);
   text-decoration: none;
 }
 
-/* Primary nav — orange bg, white text */
+header nav .nav-sections .default-content-wrapper>ul {
+  height: auto;
+}
+
+/* Nav separator lines — translucent white (lower spec than `:has()` utility li below) */
+
+header nav .nav-sections .default-content-wrapper > ul > li {
+  border: none;
+  padding: 15px 0;
+}
+
+header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(1) {
+  border: none;
+}
+
+header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(2) {
+  margin-bottom: auto;
+}
+
+header nav.second-level-active .nav-brand {
+  display: flex;
+}
+
+/* ── Mobile utility clone — inside nav-sections for hamburger display ── */
+
+header .nav-sections .nav-utility-mobile {
+  display: none;
+}
+
+header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile {
+  background-color: var(--background-color);
+  display: block !important;
+  height: auto;
+  line-height: normal;
+  padding: var(--spacing-15) var(--spacing-35);
+}
+
+header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile nav {
+  flex-direction: column;
+  height: auto;
+  justify-content: flex-start;
+}
+
+header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role="menubar"] {
+  align-items: flex-start;
+  flex-direction: column;
+  height: auto;
+}
+
+header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role="menubar"] > li {
+  border-bottom: var(--separator-height-1) solid var(--color-border-default);
+  height: auto;
+  padding: var(--spacing-10) 0;
+  width: 100%;
+}
+
+/* Hide › separators on mobile (items are stacked vertically) */
+
+header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role="menubar"] > li + li::before {
+  content: none;
+}
+
+/* ── Nav sections — rust/orange bg, white text ── */
 
 header nav .nav-sections {
   background-color: var(--color-background-footer);
   color: var(--color-text-on-dark);
 }
 
-/* Live: Barlow 1.125rem (18px), font-weight 600, no text-transform */
-
-header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
-  color: var(--color-text-on-dark);
-  font-weight: var(--font-weight-600);
-  font-size: var(--font-size-18);
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-/* Nav tools — white */
-
-header nav .nav-tools {
-  color: var(--color-text-on-dark);
-}
-
-header nav .nav-tools .icon-search svg {
-  fill: var(--color-text-on-dark);
-  stroke: var(--color-text-on-dark);
-}
-
-/* Broad nav hover — lower specificity, placed before higher-specificity nav-sections selectors */
-
-header nav .nav-item-level-0 .default-content-wrapper ul li button:hover,
-header nav .nav-item-level-0 .default-content-wrapper ul li a:hover,
-header nav .nav-item-level-0 .default-content-wrapper ul li button.active {
-  font-weight: var(--font-weight-400);
-  font-family: inherit;
-}
-
-/* Submenu — white bg, dark text */
-
-header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
-  background: var(--background-color);
-  color: var(--color-brand-primary);
-}
-
-/* Nav submenu width — scoped to nav-sections only so search panel stays full-width */
-
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
-  width: var(--header-submenu-width);
-  margin-left: 0;
-}
-
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
-  color: var(--color-brand-primary);
-}
-
-header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
-  color: var(--color-text-on-dark);
-  opacity: 1;
-  font-weight: var(--font-weight-600);
-  font-family: inherit;
-}
-
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>button:hover,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:hover,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:focus,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:focus-visible,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:hover,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:focus,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a.nav-item-link:focus-visible {
-  color: var(--color-text-on-dark);
-  opacity: 1;
-  font-weight: var(--font-weight-600);
-  font-family: inherit;
-}
-
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>a:hover::after,
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul>li>button:hover::after {
-    content: "";
-    background: var(--color-white);
-    bottom: 0;
-    box-shadow: var(--header-nav-hover-shadow);
-    height: var(--spacing-02);
-    left: 0;
-    position: absolute;
-    width: 100%;
-}
-
-/* Eyebrow top bar */
-
-header .nav-eyebrow-top {
-  background-color: var(--color-eyebrow-bg);
-  color: var(--color-text-on-dark);
-  text-align: center;
-  font-size: var(--font-size-body-small);
-  padding: var(--spacing-08) var(--spacing-24);
-  line-height: var(--header-eyebrow-line-height);
-}
-
-/* Mobile open — white bg */
+/* Mobile open state */
 
 header nav[aria-expanded='true'] {
   background-color: var(--background-color);
+  min-height: auto;
 }
 
 header nav[aria-expanded='true'] .nav-sections {
   background-color: var(--color-background-footer);
+  color: var(--color-text-on-dark);
+  height: auto;
+  overflow: visible;
+  padding: 0 var(--spacing-20);
+  position: absolute;
+  top: 70px;
 }
 
-/* Nav separator — orange bg */
+/* ── Home icon — flex align + size ── */
 
-header nav .nav-sections .default-content-wrapper > ul > li {
-  border-bottom-color: var(--header-nav-separator);
+header nav .nav-sections .default-content-wrapper > ul > li.nav-home-item > a {
+  align-items: center;
+  color: var(--color-text-on-dark);
+  display: flex;
+  padding: var(--spacing-12) 0;
+  text-decoration: none;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li.nav-home-item > a svg {
+  fill: var(--color-text-on-dark);
+  height: var(--spacing-20);
+  width: var(--spacing-20);
+}
+
+/* Nav section item text — white, semi-bold */
+
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-18);
+  font-weight: var(--font-weight-600);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ── Hover/active — lower specificity before higher specificity ── */
+
+header nav .nav-item-level-0 .default-content-wrapper ul li button:hover,
+header nav .nav-item-level-0 .default-content-wrapper ul li a:hover,
+header nav .nav-item-level-0 .default-content-wrapper ul li button.active {
+  font-family: inherit;
+  font-weight: var(--font-weight-400);
+}
+
+/* Leaf nav item (no submenu — rendered as <a>) */
+
+header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+  color: var(--color-text-on-dark);
+  font-family: inherit;
+  font-weight: var(--font-weight-600);
+  opacity: 1;
+}
+
+/* Nav sections hover/focus — white text at full opacity */
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > button:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:focus,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:focus-visible,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:hover,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:focus,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link:focus-visible {
+  color: var(--color-text-on-dark);
+  font-family: inherit;
+  font-weight: var(--font-weight-600);
+  opacity: 1;
+}
+
+/* Hover underline */
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > a:hover::after,
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after {
+  background: var(--color-text-on-dark);
+  bottom: 0;
+  box-shadow: var(--header-nav-hover-shadow);
+  content: "";
+  height: var(--spacing-02);
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+  margin-left: 0;
+  width: 100%;
+  position: static;
+  height: auto;
 }
 
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li {
   padding: var(--spacing-10);
 }
 
-header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a,
+/* Lower-spec link color before higher-spec hover override */
+
+header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
+  color: var(--color-brand-primary);
+  padding: 0;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Utility clone link/button — bold, no underline, no extra padding */
+
+header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role="menubar"] > li > a,
+header:has(nav[aria-expanded='true']) .nav-sections .nav-utility-mobile ul[role="menubar"] > li > button {
+  font-weight: var(--font-weight-700);
+  padding: 0;
+  text-decoration: none;
+}
+
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
   color: var(--color-brand-primary);
   padding: 0;
@@ -2222,78 +2397,135 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
 
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover,
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover a {
-  background: var(--color-black);
+  background: var(--color-brand-primary);
   color: var(--color-text-on-dark);
 }
 
-/* Desktop */
+/* ══════════════════════════════════════════════════
+   DESKTOP (width >= 1024px)
+══════════════════════════════════════════════════ */
 
 @media (width >= 1024px) {
-  /* 2-row grid: logo row (white) + nav sections row (orange, full-width) */
+  /* Remove mobile border — desktop has no bottom border on header */
+  header.header-wrapper {
+    border-bottom: none;
+  }
+
+  /* Restore nav-wrapper to block (removes mobile flex column) */
+  header .nav-wrapper {
+    display: block;
+  }
+
+  /* Restore utility order — sits above nav in block flow */
+  header .nav-utility {
+    order: var(--order-0);
+  }
+
+  /* "Request a Rep" — rust-filled on desktop */
+  header .nav-utility a.nav-utility-cta {
+    background-color: var(--color-background-footer);
+    border-color: var(--color-background-footer);
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-18);
+    font-weight: var(--font-weight-600);
+    padding: var(--spacing-04) var(--spacing-15);
+  }
+
+  header .nav-utility a.nav-utility-cta:hover {
+    opacity: var(--opacity-hover);
+  }
+
+  /* 2-row nav grid: logo row (white) + sections row (rust, full-width) */
   header .nav-wrapper nav {
     display: grid;
     grid-template:
-      'brand info tools hamburger' auto
-      'sections sections sections sections' auto
-      / auto 1fr auto auto;
+      'brand tools hamburger' auto
+      'sections sections sections' auto
+      / 1fr auto auto;
     height: auto;
+    max-width: unset;
     padding: 0;
     width: 100%;
-    max-width: unset;
   }
 
-  /* Orange bar — nav has padding:0 so sections is already full-width */
+  /* Utility bar width constraint */
+  header .nav-utility:has(ul) {
+    margin: 0 auto;
+    max-width: var(--header-content-max-width);
+    width: calc(100% - var(--spacing-40));
+  }
+
+  /* Logo row padding */
+  header nav .nav-brand {
+    margin: 0 auto;
+    max-width: var(--header-content-max-width);
+    padding: var(--header-logo-row-padding-top) 0 var(--spacing-18);
+    width: calc(100% - var(--spacing-40));
+  }
+
+  /* Orange nav bar — full-width sections row */
   header .nav-wrapper nav .nav-sections {
-    width: 100%;
-    margin-left: 0;
-    padding: 0 var(--spacing-35);
-    display: flex;
     align-items: center;
     background: var(--color-background-footer);
     color: var(--color-text-on-dark);
-    position: relative;
-    z-index: 60;
-    overflow: visible;
-    visibility: visible;
-    opacity: 1;
+    display: flex;
     height: auto;
+    margin-left: 0;
     min-height: auto;
-  }
-
-  /* Compact nav button — identical selector to base, wins by cascade order */
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
-    padding: var(--spacing-10) var(--spacing-00);
-    line-height: var(--header-nav-line-height);
+    opacity: 1;
+    overflow: visible;
+    padding: 0 var(--spacing-35);
+    position: relative;
+    visibility: visible;
+    width: 100%;
+    z-index: var(--z-index-60);
   }
 
   header .nav-wrapper nav .nav-sections .default-content-wrapper {
-    width: 100%;
-    max-width: var(--header-content-max-width);
     margin: 0 auto;
+    max-width: var(--header-content-max-width);
+    width: 100%;
   }
 
   header nav .nav-sections .default-content-wrapper > ul {
-    justify-content: flex-start;
     gap: var(--gap-24);
+    justify-content: flex-start;
   }
+
+  /* Compact nav button sizing */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
+    line-height: var(--header-nav-line-height);
+    padding: var(--spacing-10) 0;
+  }
+
+  /* Submenu desktop layout */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+    min-height: auto;
+  }
+
+  header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
+    width: var(--header-submenu-width);
+    position: absolute;
+  }
+
 
   /* Home icon nav item */
   header nav .nav-sections .default-content-wrapper > ul > li.nav-home-item > a {
-    display: flex;
     align-items: center;
-    padding: var(--spacing-10) var(--spacing-00);
     color: var(--color-text-on-dark);
+    display: flex;
+    padding: var(--spacing-10) 0;
     text-decoration: none;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li.nav-home-item > a svg {
     fill: var(--color-text-on-dark);
-    width: var(--spacing-20);
     height: var(--spacing-20);
+    width: var(--spacing-20);
   }
 
-  /* Active/hovered nav button — white with underline */
+  /* Active/hovered nav button */
   header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button {
     color: var(--color-text-on-dark);
@@ -2305,23 +2537,41 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     background: var(--color-text-on-dark);
   }
 
-  /* nav-tools: hide on desktop if duplicated */
+  /* Chevron for desktop dropdown items only */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li:has(.submenu-level-1 .navigation-group) > button {
+    align-items: center;
+    display: inline-flex;
+    gap: var(--spacing-06);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li:has(.submenu-level-1 .navigation-group) > button::before {
+    background-color: currentcolor;
+    content: "";
+    display: inline-block;
+    flex-shrink: 0;
+    height: var(--spacing-12);
+    mask: var(--icon-svg-chevron-down) no-repeat center / contain;
+    order: var(--order-1);
+    width: var(--spacing-12);
+  }
+
+  /* Nav tools — always hidden on desktop for Mavyret HCP */
   header .nav-wrapper nav .nav-tools {
     display: none;
   }
 
-  /* Submenu desktop styling */
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
-    min-height: auto;
+  /* Mobile utility clone — always hidden on desktop */
+  header .nav-sections .nav-utility-mobile {
+    display: none !important;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-wrapper {
     background: var(--background-color);
     border-radius: 0;
-    padding: var(--spacing-20);
-    margin: 0;
     display: block;
     grid-template-columns: 1fr;
+    margin: 0;
+    padding: var(--spacing-20);
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-left {
@@ -2343,14 +2593,14 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding: 0;
     grid-template-columns: unset;
+    padding: 0;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul li {
-    position: relative;
-    overflow: visible;
     margin-bottom: var(--spacing-04);
+    overflow: visible;
+    position: relative;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-level-2:not(:last-child) {
@@ -2359,11 +2609,11 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link {
     color: var(--color-brand-primary);
+    display: block;
     font-size: var(--font-size-body-small);
     font-weight: var(--font-weight-body);
-    text-decoration: none;
-    display: block;
     line-height: var(--line-height-20);
+    text-decoration: none;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link:hover {
@@ -2371,6 +2621,7 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
     text-decoration: underline;
   }
 
+  /* Scroll behavior */
   header.hide-nav .nav-wrapper {
     background: var(--header-scroll-bg);
   }
@@ -2378,4 +2629,5 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
   header.hide-nav .nav-wrapper:hover {
     background: var(--background-color);
   }
+
 }

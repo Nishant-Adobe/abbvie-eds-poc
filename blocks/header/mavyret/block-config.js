@@ -27,6 +27,15 @@ export default async function getBlockConfigs() {
         // Remove external-link class — not needed in header nav
         block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
 
+        // Clone utility into nav-sections so it appears at the bottom of the mobile overlay
+        const navSections = block.querySelector('.nav-sections');
+        const utility = block.querySelector('.nav-utility');
+        if (navSections && utility) {
+          const utilityClone = utility.cloneNode(true);
+          utilityClone.classList.add('nav-utility-mobile');
+          navSections.appendChild(utilityClone);
+        }
+
         // Desktop hover — open nav section submenu on hover
         const navItems = [...block.querySelectorAll('.nav-sections .default-content-wrapper > ul > li:not(.nav-home-item)')];
         if (!navItems.length) return;
