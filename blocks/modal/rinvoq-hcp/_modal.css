@@ -23,31 +23,31 @@
 
 /* Dialog heading */
 .modal-content h2 {
-  color: var(--color-charcoal);
-  font-family: var(--heading-font-family);
+  color: var(--color-charcoal, #25282a);
+  font-family: var(--heading-font-family, sans-serif);
   font-weight: var(--font-weight-bold, 700);
   font-size: var(--font-size-h3, 1.5rem);
   line-height: 1.3;
-  margin: 0 0 20px;
+  margin: 0 0 var(--spacing-20, 20px);
   text-transform: uppercase;
 }
 
 /* Body text */
 .modal-content p {
   color: var(--text-color, #46484a);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-body, 14px);
+  font-family: var(--body-font-family, sans-serif);
+  font-size: var(--font-size-body, 0.875rem);
   line-height: 1.6;
-  margin: 0 0 12px;
+  margin: 0 0 var(--spacing-12, 12px);
 }
 
 /* Subheadings inside modal content */
 .modal-content h3 {
-  color: var(--color-charcoal);
-  font-family: var(--heading-font-family);
+  color: var(--color-charcoal, #25282a);
+  font-family: var(--heading-font-family, sans-serif);
   font-weight: var(--font-weight-bold, 700);
   font-size: var(--font-size-h4, 1.1rem);
-  margin: 20px 0 8px;
+  margin: var(--spacing-20, 20px) 0 var(--spacing-08, 8px);
 }
 
 /* Bold underline labels (Primary endpoint, etc.) */
@@ -59,18 +59,18 @@
 /* Lists inside modal */
 .modal-content ul,
 .modal-content ol {
-  padding-left: 20px;
-  margin: 8px 0 16px;
-  font-size: var(--font-size-body, 14px);
+  padding-left: var(--spacing-20, 20px);
+  margin: var(--spacing-08, 8px) 0 var(--spacing-16, 16px);
+  font-size: var(--font-size-body, 0.875rem);
   line-height: 1.6;
   color: var(--text-color, #46484a);
 }
 
 /* Compliance code */
 .modal-content p:last-of-type {
-  font-size: var(--font-size-body-xs, 11px);
-  color: var(--color-text-compliance);
-  margin-top: 20px;
+  font-size: var(--font-size-body-xs, 0.6875rem);
+  color: var(--color-text-compliance, #636366);
+  margin-top: var(--spacing-20, 20px);
 }
 
 /* Links styled as buttons — HCP gate modals */
@@ -78,13 +78,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-width: 140px;
+  gap: var(--spacing-08, 8px);
+  min-width: var(--modal-button-min-width, 140px);
   padding: var(--spacing-14, 14px) var(--spacing-36, 36px);
   border-radius: var(--border-radius-button-primary, 100px);
   font-weight: var(--font-weight-bold, 700);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-body, 15px);
+  font-family: var(--body-font-family, sans-serif);
+  font-size: var(--font-size-body, 0.9375rem);
   text-decoration: none;
   margin-right: var(--spacing-16, 16px);
   margin-top: var(--spacing-12, 12px);
@@ -113,11 +113,11 @@
 /* ---- Media variant: wider modal for study details with tabs ---- */
 
 .modal-overlay.modal-media .modal-dialog {
-  max-width: 1000px;
+  max-width: var(--modal-media-max-width, 1000px);
 }
 
 .modal-overlay.modal-media .modal-content {
-  padding: 0 32px 32px;
+  padding: 0 var(--spacing-32, 32px) var(--spacing-32, 32px);
 }
 
 /* Tabs inside media modal — override tab block styles for modal context */
@@ -126,15 +126,15 @@
 }
 
 .modal-overlay.modal-media .modal-content .tabs-list {
-  border-bottom: 2px solid var(--color-border-tabs);
-  margin-bottom: 24px;
+  border-bottom: 2px solid var(--color-border-tabs, #ccc);
+  margin-bottom: var(--spacing-24, 24px);
   gap: 0;
 }
 
 .modal-overlay.modal-media .modal-content .tabs-list button {
-  padding: 12px 24px;
+  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
   font-family: var(--font-family-semibold, var(--body-font-family));
-  font-size: var(--font-size-body, 14px);
+  font-size: var(--font-size-body, 0.875rem);
   color: var(--text-color, #46484a);
   border: none;
   border-bottom: 3px solid transparent;

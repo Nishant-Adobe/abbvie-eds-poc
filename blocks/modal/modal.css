@@ -84,7 +84,7 @@
   cursor: pointer;
   font-size: var(--modal-close-font-size, 22px);
   line-height: 1;
-  color: var(--modal-close-color);
+  color: var(--modal-close-color, #333);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,13 +93,13 @@
 }
 
 .modal-header .modal-close:hover {
-  color: var(--modal-close-hover-color);
+  color: var(--modal-close-hover-color, #000);
 }
 
 .modal-header .modal-close:focus-visible {
   outline: 2px solid currentcolor;
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline-offset: var(--spacing-02, 2px);
+  border-radius: var(--border-radius-focus, 2px);
 }
 
 /* ---- Content — scrollable area ---- */
@@ -157,7 +157,7 @@ body.modal-is-open {
    ================================================================== */
 
 .modal-overlay.modal-small .modal-dialog {
-  max-width: 480px;
+  max-width: var(--modal-small-max-width, 480px);
 }
 
 /* ==================================================================
@@ -175,8 +175,8 @@ body.modal-is-open {
 
 .modal-overlay.modal-media .modal-header .modal-close {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: var(--spacing-08, 8px);
+  right: var(--spacing-08, 8px);
   z-index: 10;
   background: var(--background-color, #fff);
   border-radius: 50%;
@@ -211,12 +211,12 @@ body.modal-is-open {
 
 .modal-overlay.modal-image .modal-header .modal-close {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: var(--spacing-16, 16px);
+  right: var(--spacing-16, 16px);
   background: var(--color-overlay-light, rgb(255 255 255 / 80%));
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: var(--modal-close-size-image, 40px);
+  height: var(--modal-close-size-image, 40px);
 }
 
 /* ==================================================================
@@ -229,7 +229,7 @@ body.modal-is-open {
 }
 
 .modal-overlay.modal-panel .modal-dialog {
-  max-width: 420px;
+  max-width: var(--modal-panel-max-width, 420px);
   height: 100vh;
   max-height: 100vh;
   border-radius: 0;
@@ -241,11 +241,11 @@ body.modal-is-open {
    ================================================================== */
 
 .modal-overlay.modal-exit .modal-dialog {
-  max-width: 600px;
+  max-width: var(--modal-exit-max-width, 600px);
 }
 
 .modal-overlay.modal-exit-small .modal-dialog {
-  max-width: 420px;
+  max-width: var(--modal-exit-small-max-width, 420px);
 }
 
 /* ==================================================================
@@ -271,7 +271,7 @@ body.modal-is-open {
 @media (width >= 601px) {
   .modal-overlay {
     align-items: center;
-    padding: 24px;
+    padding: var(--spacing-24, 24px);
   }
 
   .modal-dialog {

@@ -26,6 +26,10 @@ import { loadFragment } from '../fragment/fragment.js';
 /* Shared overlay (one instance per page)                              */
 /* ------------------------------------------------------------------ */
 
+const LABEL_CLOSE = 'Close modal';
+const LABEL_OPEN = 'Open modal';
+const ICON_CLOSE = '✕';
+
 let overlay = null;
 let lastTrigger = null;
 let activeVariants = [];
@@ -71,8 +75,8 @@ function getOverlay() {
   const closeBtn = document.createElement('button');
   closeBtn.className = 'modal-close';
   closeBtn.type = 'button';
-  closeBtn.setAttribute('aria-label', 'Close modal');
-  closeBtn.textContent = '✕';
+  closeBtn.setAttribute('aria-label', LABEL_CLOSE);
+  closeBtn.textContent = ICON_CLOSE;
   closeBtn.addEventListener('click', closeModal);
 
   header.append(closeBtn);
@@ -164,7 +168,7 @@ async function openModal(trigger, variants = []) {
   const closeBtn = dialog.querySelector('.modal-close');
   if (closeBtn) closeBtn.hidden = variants.includes('force');
 
-  content.innerHTML = '<p class="modal-loading">Loading…</p>';
+  content.innerHTML = '<p class="modal-loading" role="status" aria-live="polite">Loading…</p>';
   dialog.setAttribute('aria-hidden', 'false');
   ov.classList.add('is-open');
   document.body.classList.add('modal-is-open');
@@ -188,7 +192,7 @@ async function openModal(trigger, variants = []) {
       });
     });
   } catch {
-    content.innerHTML = '<p class="modal-error">Unable to load content.</p>';
+    content.innerHTML = '<p class="modal-error" role="alert">Unable to load content.</p>';
   }
 
   // Mark as seen for once/once-session variants
@@ -265,7 +269,7 @@ export default async function decorate(block) {
   if (block.dataset.modalId || block.dataset.fragmentPath) {
     modalId = block.dataset.modalId || '';
     fragmentPath = block.dataset.fragmentPath || '';
-    openLabel = block.dataset.openLabel || 'Open modal';
+    openLabel = block.dataset.openLabel || LABEL_OPEN;
   } else if (rows.length && rows[0]?.children.length >= 2) {
     // Method 2: Key-value format (two cells per row)
     const config = {};
@@ -277,7 +281,7 @@ export default async function decorate(block) {
     });
     modalId = config.modalid || config['modal-id'] || '';
     fragmentPath = config.fragmentpath || config['fragment-path'] || config.path || '';
-    openLabel = config.openlabel || config['open-label'] || 'Open modal';
+    openLabel = config.openlabel || config['open-label'] || LABEL_OPEN;
   } else if (rows.length) {
     // Method 3: UE single-cell format — find fields by content heuristics
     const getText = (i) => rows[i]?.children[0]?.textContent?.trim() || '';
@@ -293,14 +297,14 @@ export default async function decorate(block) {
     if (pathIdx >= 0) {
       fragmentPath = getLink(pathIdx) || getText(pathIdx);
       modalId = pathIdx > 0 ? getText(pathIdx - 1) : '';
-      openLabel = getText(pathIdx + 1) || 'Open modal';
+      openLabel = getText(pathIdx + 1) || LABEL_OPEN;
       // If modalId is empty and there's a row before it, try row before that
       if (!modalId && pathIdx > 1) modalId = getText(pathIdx - 2);
     } else {
       // Fallback: assume order [0]=modalId, [1]=fragmentPath, [2]=openLabel
       modalId = getText(0);
       fragmentPath = getLink(1) || getText(1);
-      openLabel = getText(2) || 'Open modal';
+      openLabel = getText(2) || LABEL_OPEN;
     }
   } else {
     // Method 4: No rows at all — try reading from inner text/links directly
@@ -308,7 +312,7 @@ export default async function decorate(block) {
     const link = block.querySelector('a');
     if (link) {
       fragmentPath = link.getAttribute('href');
-      openLabel = link.textContent?.trim() || 'Open modal';
+      openLabel = link.textContent?.trim() || LABEL_OPEN;
     } else if (allText) {
       fragmentPath = allText;
     }
@@ -372,6 +376,7 @@ export default async function decorate(block) {
   button.className = 'modal-trigger';
   button.type = 'button';
   button.textContent = openLabel;
+  button.setAttribute('aria-haspopup', 'dialog');
   button.dataset.fragmentPath = fragmentPath;
   button.dataset.modalId = modalId;
   button.addEventListener('click', () => openModal(button, variants).catch(() => {}));
