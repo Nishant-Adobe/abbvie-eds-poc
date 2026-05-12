@@ -10,16 +10,19 @@
             "template": {
               "name": "Cta",
               "model": "cta",
-              "link": "/link",
-              "linkText": "Button",
-              "linkAriaLabel": "",
+              "label": "Button",
+              "href": "/link",
+              "ariaLabel": "",
               "ctaTarget": "_self",
-              "iconVariation": "none",
+              "iconType": "none",
               "iconFont": "",
               "iconImage": "",
-              "ariaHidden": false,
-              "iconPosition": "after",
-              "classes": "default-cta",
+              "iconPosition": "i-a",
+              "modalId": "",
+              "anchorId": "",
+              "analyticsInteractionId": "",
+              "ariaHidden": "false",
+              "classes": "abbv-button-primary",
               "language": "lang:none",
               "blockId": "id:"
             }
@@ -35,79 +38,71 @@
         {
           "component": "tab",
           "label": "Overview",
-          "name": "overview"
+          "name": "tab-overview"
         },
         {
           "component": "text",
-          "name": "linkText",
-          "label": "Button Text"
+          "valueType": "string",
+          "name": "label",
+          "label": "Button Text",
+          "value": "Button"
         },
         {
           "component": "aem-content",
-          "name": "link",
+          "name": "href",
           "label": "Target"
         },
         {
           "component": "text",
-          "name": "aria-label",
-          "label": "ARIA Label",
           "valueType": "string",
-          "attribute": "data-aria-label"
+          "name": "ariaLabel",
+          "label": "ARIA Label",
+          "value": ""
         },
         {
           "component": "select",
-          "label": "Click Behavior",
-          "name": "ctaTarget",
-          "value": "_self",
           "valueType": "string",
+          "name": "ctaTarget",
+          "label": "Click Behavior",
+          "value": "_self",
           "options": [
-            {
-              "name": "Same Tab",
-              "value": "_self"
-            },
-            {
-              "name": "New Tab",
-              "value": "_blank"
-            }
+            { "name": "Same Tab", "value": "_self" },
+            { "name": "New Tab", "value": "_blank" },
+            { "name": "Modal", "value": "new-modal" },
+            { "name": "Hidden Panel", "value": "new-hidden-panel" },
+            { "name": "Switch View", "value": "switch-view" },
+            { "name": "Indication Selection", "value": "indicationSelection" }
           ]
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "modalId",
+          "label": "Modal ID",
+          "value": "",
+          "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
+        },
+        {
           "component": "select",
           "valueType": "string",
-          "name": "iconVariation",
-          "value": "none",
+          "name": "iconType",
           "label": "Icon Type",
+          "value": "none",
           "description": "Icon type for the button",
           "options": [
-            {
-              "name": "None",
-              "value": "none"
-            },
-            {
-              "name": "Icon Font",
-              "value": "icon-font"
-            },
-            {
-              "name": "Image",
-              "value": "image"
-            }
+            { "name": "None", "value": "none" },
+            { "name": "Icon Font", "value": "icon-font" },
+            { "name": "Image", "value": "image" }
           ]
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "iconFont",
-          "value": "",
           "label": "Button Font Icon",
+          "value": "",
           "description": "Font icon name for button",
-          "condition": {
-            "===": [
-              {
-                "var": "iconVariation"
-              },
-              "icon-font"
-            ]
-          }
+          "condition": { "===": [{ "var": "iconType" }, "icon-font"] }
         },
         {
           "component": "reference",
@@ -116,95 +111,67 @@
           "label": "Button Image Icon",
           "description": "Image icon for button",
           "multi": false,
-          "condition": {
-            "===": [
-              {
-                "var": "iconVariation"
-              },
-              "image"
-            ]
-          }
+          "condition": { "===": [{ "var": "iconType" }, "image"] }
         },
         {
           "component": "select",
           "valueType": "string",
           "name": "iconPosition",
-          "value": "after",
           "label": "Icon Position",
-          "description": "Select whether the icon is placed before your button text or after your button text",
+          "value": "i-a",
+          "description": "Select whether the icon is placed before or after your button text",
           "options": [
-            {
-              "name": "Before",
-              "value": "before"
-            },
-            {
-              "name": "After",
-              "value": "after"
-            }
+            { "name": "Before (left)", "value": "i-b" },
+            { "name": "After (right)", "value": "i-a" }
           ],
-          "condition": {
-            "in": [
-              {
-                "var": "iconVariation"
-              },
-              [
-                "icon-font",
-                "image"
-              ]
-            ]
-          }
+          "condition": { "in": [{ "var": "iconType" }, ["icon-font", "image"]] }
         },
         {
           "component": "boolean",
-          "label": "Prevent screen readers from announcing this CTA",
+          "valueType": "boolean",
           "name": "ariaHidden",
-          "value": false,
-          "valueType": "boolean"
+          "label": "Prevent screen readers from announcing this CTA",
+          "value": false
         },
-
         {
           "component": "tab",
           "label": "Styles",
-          "name": "styles"
+          "name": "tab-styles"
         },
         {
-          "component": "select",
+          "component": "multiselect",
+          "valueType": "string",
           "name": "classes",
-          "label": "Type",
-          "value": "default-cta",
+          "label": "Variant",
           "options": [
-            {
-              "name": "default",
-              "value": "default-cta"
-            },
-            {
-              "name": "Internal CTA",
-              "value": "internal-cta"
-            },
-            {
-              "name": "External CTA",
-              "value": "external-cta"
-            },
-            {
-              "name": "Back CTA",
-              "value": "back-cta"
-            }
+            { "name": "Primary (default)", "value": "abbv-button-primary" },
+            { "name": "Secondary", "value": "abbv-button-secondary" },
+            { "name": "Tertiary", "value": "abbv-button-tertiary" },
+            { "name": "Plain link", "value": "abbv-button-plain" },
+            { "name": "Toggle (round)", "value": "abbv-switch-round" },
+            { "name": "Toggle (square)", "value": "abbv-switch-square" }
           ]
         },
         {
-          "component": "select",
-          "name": "classes_theme",
-          "label": "Theme",
-          "options": [
-            {
-              "name": "Light",
-              "value": "light-theme"
-            },
-            {
-              "name": "Dark",
-              "value": "dark-theme"
-            }
-          ]
+          "component": "tab",
+          "label": "Common Properties",
+          "name": "tab-common"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "anchorId",
+          "label": "Anchor ID",
+          "value": "",
+          "description": "Optional id attribute for deep-linking to this CTA."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "analyticsInteractionId",
+          "label": "Analytics Interaction ID",
+          "value": "",
+          "description": "Unique ID pushed to GTM dataLayer on click."
         },
         {
           "...": "../../models/_common-properties.json#/common-prop"
