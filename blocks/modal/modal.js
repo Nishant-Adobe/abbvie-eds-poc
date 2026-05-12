@@ -118,11 +118,14 @@ function getOverlay() {
 function setCookie(name, value, days) {
   const d = new Date();
   d.setTime(d.getTime() + days * 86400000);
-  document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=Lax`;
+  const n = encodeURIComponent(name);
+  const v = encodeURIComponent(value);
+  document.cookie = `${n}=${v};expires=${d.toUTCString()};path=/;SameSite=Lax`;
 }
 
 function getCookie(name) {
-  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const enc = encodeURIComponent(name);
+  const escaped = enc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const match = document.cookie.match(new RegExp(`(^| )${escaped}=([^;]+)`));
   return match ? match[2] : null;
 }
@@ -297,7 +300,7 @@ export default async function decorate(block) {
     let pathIdx = -1;
     for (let i = 0; i < rows.length; i += 1) {
       const text = getLink(i) || getText(i);
-      if (text.startsWith('/') || text.startsWith('http')) { pathIdx = i; break; }
+      if (text.startsWith('/') || text.startsWith('https://') || text.startsWith('http://')) { pathIdx = i; break; }
     }
 
     if (pathIdx >= 0) {
