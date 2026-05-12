@@ -1907,7 +1907,6 @@
     }
   }
 
-/* Rinvoq adults slider thumbnails — scoped subset from deliverables/commercial-migrations/cards-grid/rinvoq-slider-cards.html */
 .cards-grid.cards-grid-slider-thumbnails {
   --cg-rinvoq-thumb-white: #fff;
   --cg-rinvoq-thumb-magenta: #90124a;
@@ -1920,17 +1919,14 @@
   --cg-rinvoq-thumb-lh-14: 0.875rem;
   --cg-slider-thumb-scale: 1.2;
 
-  /* Thumb title + subtitle only (~20% smaller than current scaled caption type). */
   --cg-slider-caption-font-mult: 0.8;
 
-  /* Clip caption pull-out + visually-hidden link text so the block does not grow page/section scrollbars. */
   overflow: hidden;
 }
 
 .cards-grid.cards-grid-slider-thumbnails .abbv-content {
   overflow: hidden;
 
-  /* Deliverable sets body to Helvetica/Arial; Skyrizi (and other brands) use Red Hat etc. — reset the subtree. */
   font-family: var(--cg-rinvoq-thumb-helvetica) !important;
 }
 
@@ -2043,7 +2039,6 @@
   max-width: calc(400px * var(--cg-slider-thumb-scale)) !important;
 }
 
-/* Line 1 title (e.g. Legs): rinvoq .font-14px = 14px; use px so theme html rem does not shrink vs static file. */
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .image-text-clickable__txtcontent > p:first-child,
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .image-text-clickable__txtcontent > p:first-child b,
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .image-text-clickable__txtcontent > p:first-child strong {
@@ -2093,7 +2088,6 @@
     font-size: calc(var(--cg-rinvoq-thumb-fs-10) * var(--cg-slider-thumb-scale)) !important;
   }
 
-  /* Line 1 title (e.g. Legs): rinvoq uses 16px from 601px — px so theme root rem does not shrink it vs static HTML. */
   .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .image-text-clickable__txtcontent > p:first-child,
   .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .image-text-clickable__txtcontent > p:first-child b,
   .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .image-text-clickable__txtcontent > p:first-child strong {
@@ -2244,9 +2238,14 @@
   z-index: 2;
 }
 
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.image-text-clickable .image-text-clickable__txtcontent {
+  transform: translateY(calc(5px * var(--cg-slider-thumb-scale)));
+}
+
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults,
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adolescents-thumbnails {
   gap: calc(13px * var(--cg-slider-thumb-scale));
+  padding-bottom: calc(6px * var(--cg-slider-thumb-scale));
 }
 
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails .abbv-image-text-v2 {
@@ -2270,7 +2269,6 @@
   padding-left: calc(10px * var(--cg-slider-thumb-scale));
 }
 
-/* Rinvoq uses -14px overlap; that paints outside the card box in EDS and can introduce a vertical scrollbar — keep flush. */
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2 .abbv-image-text-content-v2 {
   margin-bottom: 0;
   padding-left: calc(5px * var(--cg-slider-thumb-scale));
@@ -2308,10 +2306,17 @@
 
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active > .abbv-image-content-container-v2 {
   border-color: #90124a;
+
+  border-bottom-color: transparent;
+}
+
+.cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.image-text-clickable .abbv-image-text-content-v2 {
+  box-sizing: border-box;
 }
 
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active .abbv-image-text-content-v2 {
-  border-bottom: calc(2.1px * var(--cg-slider-thumb-scale)) solid #90124a;
+  border-bottom-color: #90124a;
+  border-bottom-width: calc(2.3px * var(--cg-slider-thumb-scale));
 }
 
 @media (width >= 601px) and (width <= 984px) {
@@ -2321,6 +2326,7 @@
 
   .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active > .abbv-image-content-container-v2 {
     border-width: calc(2.3px * var(--cg-slider-thumb-scale));
+    border-bottom-color: transparent;
   }
 }
 
