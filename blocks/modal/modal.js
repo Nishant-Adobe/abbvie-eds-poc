@@ -307,6 +307,7 @@ export default async function decorate(block) {
   }
 
   if (!fragmentPath) return;
+  try { fragmentPath = new URL(fragmentPath, window.location.origin).pathname; } catch { /* already a path */ }
 
   // Extract variants from block classes
   const variants = [...block.classList]
@@ -321,7 +322,7 @@ export default async function decorate(block) {
     const ac = new AbortController();
     document.addEventListener('modal:open', (e) => {
       if (e.detail?.modalId === modalId) {
-        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
+        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => {});
       }
     }, { signal: ac.signal });
     block.modalCleanup = () => ac.abort();
@@ -348,7 +349,7 @@ export default async function decorate(block) {
     if (!hasSeenModal(modalId, variants)) {
       const timerId = setTimeout(() => {
         if (!block.isConnected) return;
-        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
+        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => {});
       }, 500);
       block.modalAutoOpenTimer = timerId;
     }
@@ -362,7 +363,9 @@ export default async function decorate(block) {
   button.textContent = openLabel;
   button.dataset.fragmentPath = fragmentPath;
   button.dataset.modalId = modalId;
-  button.addEventListener('click', () => openModal(button, variants));
+  button.addEventListener('click', () => openModal(button, variants).catch(() => {}));
 
   block.append(button);
 }
+
+export { openModal, closeModal };
