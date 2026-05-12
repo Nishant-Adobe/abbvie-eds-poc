@@ -823,7 +823,8 @@ export class FormTypeHandler {
           filterField.append(helpText);
         }
         return filterField;
-      } catch {
+      } catch (error) {
+        console.warn('Find-an-injector createFilter not available:', error);
         // Return null to let the main form builder handle this as a regular select
         return null;
       }
