@@ -222,16 +222,9 @@ function setupGlobalTriggers() {
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-modal-id]');
     if (!trigger) return;
-    const { modalId } = trigger.dataset;
-    const block = document.querySelector(`.modal[data-modal-id="${modalId}"]`);
-    if (!block) return;
-
     e.preventDefault();
-    const variants = [...block.classList]
-      .filter((c) => c !== 'modal' && c !== 'block')
-      .map((c) => c.replace('modal-', ''));
-    const { fragmentPath } = block.dataset;
-    openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
+    const { modalId } = trigger.dataset;
+    document.dispatchEvent(new CustomEvent('modal:open', { detail: { modalId } }));
   });
 }
 
@@ -317,6 +310,14 @@ export default async function decorate(block) {
   // Store data on block for global trigger lookup
   block.dataset.modalId = modalId;
   block.dataset.fragmentPath = fragmentPath;
+
+  if (modalId) {
+    document.addEventListener('modal:open', (e) => {
+      if (e.detail?.modalId === modalId) {
+        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
+      }
+    });
+  }
 
   block.innerHTML = '';
 
