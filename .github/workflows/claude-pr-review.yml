@@ -32,143 +32,52 @@ jobs:
           prompt: |
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
-            The PR branch is already checked out in the current working directory.
-            Use `mcp__github_inline_comment__create_inline_comment` (with `confirmed: true`) for line-specific issues.
-            Use `gh pr comment` for a summary comment at the end.
 
-            You are reviewing this Pull Request for an AEM Edge Delivery Services (EDS)
-            multi-brand project supporting pharmaceutical brands:
-            rinvoq, skyrizi, linzess, venclexta, mavyret, rinvoq-hcp, skyrizi-hcp, abbvie, botox.
+            Step 1 — run exactly one command to get the full diff:
+              gh pr diff ${{ github.event.pull_request.number }}
 
-            ## Project Structure
-            blocks/[name]/[name].js          — core block logic (brand-agnostic)
-            blocks/[name]/[name].css         — core block styles (brand-agnostic)
-            blocks/[name]/_[name].json       — Universal Editor model definition
-            blocks/[name]/[brand]/[name].css — brand CSS override (only place for brand styles)
-            scripts/aem.js                   — EDS core library (never modify directly)
-            scripts/utils.js                 — shared utilities
-            styles/tokens.css                — global design tokens
+            Step 2 — analyse the diff in memory against the rules below. Do NOT read individual files unless a rule check is impossible without full file context.
 
-            ## Available Blocks
-            accordion, anchor-nav, back-to-top, background-video, banner-ad, brand-explorer,
-            breadcrumb, brightcove-video, cards, carousel, chart, columns, cta, dismissible,
-            doctor-locator, embed, fact-card, footer, form, formulary-lookup, fragment, header,
-            hero, hotspot, image-compare, info-tree, linklist, modal, navigation-content,
-            safety-bar, search, send-mail, separator, social-media, tabs, teaser, tooltip,
-            video, video-playlist
+            Step 3 — post ALL inline comments in a single batch using mcp__github_inline_comment__create_inline_comment (confirmed: true). Only comment on lines that are in the diff (+lines). Skip lines with no issues.
+
+            Step 4 — post ONE summary comment using: gh pr comment ${{ github.event.pull_request.number }} --body "..."
 
             ---
 
-            Review the PR diff and post inline comments on the exact lines with issues.
+            EDS MULTI-BRAND RULES (check only what is visible in the diff):
 
-            ### 1. Hard Coding
-            - Hard-coded URLs, domain names, or absolute paths (use relative paths)
-            - Hard-coded hex colors, px values, font names (use CSS custom properties)
-            - Hard-coded brand names, account IDs, player IDs, or API keys in core files
-            - Hard-coded strings that should come from block content or authored config
+            HARD CODING: no hex colors, px values, absolute URLs, brand names, API keys, or account IDs in core block files. Use CSS custom properties and relative paths.
 
-            ### 2. Redundant Code
-            - Logic duplicated across blocks that belongs in scripts/utils.js
-            - CSS rules repeated across files that should be a shared token or utility class
-            - Copy-pasted JS patterns that could be a shared helper function
-            - Unused variables, imports, or dead code paths
+            CSS: all values via --color-*, --spacing-*, --body-font-size-* tokens with fallbacks var(--token, fallback). No inline style= attributes. Mobile-first (base = mobile, @media for desktop). No unjustified !important. Flat specificity.
 
-            ### 3. CSS Best Practices
-            - Raw values not using CSS custom properties (--color-*, --spacing-*, --body-font-size-*)
-            - Inline style= attributes (all styles must live in .css files)
-            - Overly specific selectors (keep specificity flat)
-            - Missing mobile-first responsive rules (base = mobile, media queries for desktop)
-            - Unjustified !important usage
-            - stylelint violations: wrong property order, no-descending-specificity
-            - Missing CSS custom property fallbacks: var(--token, fallback)
+            JS: const/let only (no var). await on all async calls. try/catch around fetch() and JSON.parse(). No console.log. null-check before property access. No innerHTML with unsanitised input.
 
-            ### 4. JavaScript Best Practices
-            - Missing await on async function calls
-            - Missing try/catch around fetch(), external API calls, or JSON.parse()
-            - Event listeners added without corresponding cleanup (removeEventListener)
-            - Use of var instead of const or let
-            - console.log or debug statements left in production code
-            - Unused variables or parameters (prefix unused params with _)
-            - Missing null/undefined checks before accessing properties
+            EDS BLOCK STANDARDS: export default function decorate(block). Query only within block (block.querySelector not document.querySelector). Disconnect IntersectionObserver after use. Handle missing DOM elements.
 
-            ### 5. EDS Block Standards
-            - Every block JS must export: export default function decorate(block)
-            - Block JS must only query within its own element (block.querySelector not document.querySelector)
-            - No document.write() or innerHTML with unsanitised input (XSS risk)
-            - block.replaceChildren() preferred over innerHTML for structural rewrites
-            - IntersectionObserver must be disconnected after triggering
-            - Blocks must handle missing DOM elements defensively
+            MULTI-BRAND ARCHITECTURE: core block CSS brand-agnostic. Brand styles only in blocks/[block]/[brand]/[block].css. No brand names in core files.
 
-            ### 6. Multi-Brand CSS Architecture
-            - Core block CSS must be completely brand-agnostic
-            - Brand styles must ONLY live in blocks/[block]/[brand]/[block].css
-            - Theme styles must ONLY live in blocks/[block]/[brand]/[theme].css
-            - No brand name strings hardcoded in core block files
-            - CSS custom properties must cascade: brand token, global token, hardcoded fallback
-            - Brand override files must not duplicate the entire core stylesheet
+            BLOCK JSON MODEL: every field read in JS must exist in _block.json models array and vice versa.
 
-            ### 7. Design Tokens
-            - Colors must use --color-* tokens, never raw hex values
-            - Spacing must use --spacing-* tokens or CSS calc() based on tokens
-            - Typography must use --body-font-size-*, --heading-font-size-*, --font-weight-*
-            - New CSS custom properties must have a fallback value
-
-            ### 8. Navigation and Header Block Rules
-            - navigation-content types must match values in _navigation-content.json:
-              logo, navigation-item, language-links, search, utility-nav, eyebrow, floating-isi, cta-group
-            - Header layout variants (lite, sticky) must only be set via classes_layout / classes_sticky
-            - No direct manipulation of the header element outside header.js
-
-            ### 9. Block JSON Model
-            - Every field read in JS must have a matching entry in _block.json models array
-            - Every new field in JS must also be in the model and vice versa
-            - filter definitions must reference component IDs that exist in definitions array
-            - Default values in JSON template must match what JS expects when field is empty
-
-            ### 10. Performance
-            - No synchronous fetch in decorate() — all network calls must be async
-            - Above-fold images: loading="eager" and fetchpriority="high"
-            - Below-fold images: loading="lazy"
-            - No render-blocking scripts or stylesheets loaded inside decorate()
-            - Large dependencies must be lazy-loaded via IntersectionObserver
-
-            ### 11. Accessibility
-            - Interactive elements must have accessible labels (aria-label or visible text)
-            - Images must have meaningful alt text
-            - Custom interactive elements must use button or proper role plus keyboard handler
-            - Focus management must be correct when modals or panels open/close
-
-            ### 12. Security
-            - No API keys, tokens, or secrets in any committed file
-            - No eval() or new Function() usage
-            - User-supplied content must be sanitised before DOM insertion
-            - No javascript: protocol in links
+            SECURITY: no API keys or secrets in any file. No eval(). Sanitise user content before DOM insertion.
 
             ---
 
-            ## Output Format
+            SUMMARY FORMAT (post via gh pr comment):
 
-            Post inline comments on the exact diff lines with issues. Each comment must state:
-            - The rule violated
-            - What the problem is
-            - A concrete fix or suggestion
-
-            Then post a summary PR comment using `gh pr comment`:
-
-            ### Claude EDS Code Review Summary
-
-            **Looks good**
-            - list what was done correctly
-
-            **Warnings** (should fix before merge)
-            - list non-blocking issues
+            ### Claude EDS Code Review
 
             **Blockers** (must fix before merge)
-            - list critical issues: security, hard-coded secrets, broken block model, XSS
+            - <issue> — <file>:<line>
 
-            **Blocks reviewed**
-            - list each changed block and whether it passes EDS standards
+            **Warnings** (should fix)
+            - <issue> — <file>:<line>
+
+            **Looks good**
+            - <what passed>
+
+            **Blocks reviewed:** <list each changed block — pass/fail>
 
           claude_args: >-
-            --max-turns 25
-            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(git diff:*),Bash(git log:*),Read,Glob,Grep"
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(git log:*),Read"
+        env:
+          INPUT_MAX_TURNS: "10"
