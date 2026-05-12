@@ -2014,20 +2014,12 @@
     "id": "breadcrumb",
     "fields": [
       {
-        "component": "select",
-        "valueType": "string",
-        "name": "classes",
-        "label": "Variants",
-        "description": "Select a visual variant for the breadcrumb block.",
-        "options": []
-      },
-      {
         "component": "boolean",
         "valueType": "boolean",
         "name": "auto",
         "label": "Auto Generate",
         "value": true,
-        "description": "Auto-generate breadcrumb trail from the URL path. Turn off to use manually authored crumbs."
+        "description": "Auto-generate breadcrumb trail from the URL path. Turn off to use manually authored crumb items."
       },
       {
         "component": "text",
@@ -2035,7 +2027,7 @@
         "name": "homeLabel",
         "label": "Home Label",
         "value": "Home",
-        "description": "Label for the root breadcrumb item."
+        "description": "Label for the root breadcrumb item (auto mode only)."
       },
       {
         "component": "text",
@@ -2052,6 +2044,26 @@
         "label": "Anchor ID",
         "value": "",
         "description": "Provide an ID to enable deep linking to this component."
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Link Label",
+        "value": "",
+        "description": "Display text for this breadcrumb link."
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "href",
+        "label": "Link URL",
+        "description": "Page this crumb links to. Leave empty if this is the current page."
       }
     ]
   },
