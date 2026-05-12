@@ -135,7 +135,9 @@ function hasSeenModal(modalId, variants) {
     return getCookie(`modal-seen-${modalId}`) === '1';
   }
   if (variants.includes('once-session')) {
-    try { return sessionStorage.getItem(`modal-seen-${modalId}`) === '1'; } catch { /* private browsing */ }
+    try {
+      return sessionStorage.getItem(`modal-seen-${modalId}`) === '1';
+    } catch { /* private browsing */ }
   }
   return false;
 }
@@ -153,7 +155,20 @@ function markModalSeen(modalId, variants) {
 /* Open                                                                 */
 /* ------------------------------------------------------------------ */
 
-async function openModal(trigger, variants = []) {
+async function openModal(trigger, variantsOrOptions = []) {
+  if (typeof trigger === 'string') {
+    const path = trigger;
+    const opts = variantsOrOptions || {};
+    const t = { dataset: { fragmentPath: path, modalId: path } };
+    lastTrigger = t;
+    activeVariants = [];
+    if (opts.onConfirm) t.onConfirm = opts.onConfirm;
+    if (opts.modalType) activeVariants.push(opts.modalType);
+    return openModal(t, activeVariants);
+  }
+
+  const variants = Array.isArray(variantsOrOptions)
+    ? variantsOrOptions : [];
   lastTrigger = trigger;
   activeVariants = variants;
 
@@ -200,6 +215,17 @@ async function openModal(trigger, variants = []) {
         closeModal();
       });
     });
+    // Legacy onConfirm callback support (used by linklist block)
+    if (trigger?.onConfirm) {
+      content.querySelectorAll('[data-modal-action="confirm"]')
+        .forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal();
+            trigger.onConfirm();
+          });
+        });
+    }
   } catch {
     content.innerHTML = '<p class="modal-error" role="alert">Unable to load content.</p>';
   }
@@ -300,7 +326,10 @@ export default async function decorate(block) {
     let pathIdx = -1;
     for (let i = 0; i < rows.length; i += 1) {
       const text = getLink(i) || getText(i);
-      if (text.startsWith('/') || text.startsWith('https://') || text.startsWith('http://')) { pathIdx = i; break; }
+      const isPath = text.startsWith('/')
+        || text.startsWith('https://')
+        || text.startsWith('http://');
+      if (isPath) { pathIdx = i; break; }
     }
 
     if (pathIdx >= 0) {
@@ -396,7 +425,9 @@ export default async function decorate(block) {
   button.setAttribute('aria-haspopup', 'dialog');
   button.dataset.fragmentPath = fragmentPath;
   button.dataset.modalId = modalId;
-  button.addEventListener('click', () => openModal(button, variants).catch(() => { /* handled in openModal */ }));
+  button.addEventListener('click', () => {
+    openModal(button, variants).catch(() => { /* handled */ });
+  });
 
   block.append(button);
 }
