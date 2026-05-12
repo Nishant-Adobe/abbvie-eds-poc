@@ -138,8 +138,8 @@ body.modal-is-open {
 .modal-trigger {
   display: inline-block;
   padding: var(--button-primary-padding, 12px 28px);
-  background: var(--button-primary-bg, #222);
-  color: var(--button-primary-color, #fff);
+  background: var(--button-primary-bg, var(--color-text, #222));
+  color: var(--button-primary-color, var(--background-color, #fff));
   border: none;
   border-radius: var(--border-radius-button-primary, 4px);
   font-weight: var(--font-weight-semibold, 600);
@@ -149,7 +149,7 @@ body.modal-is-open {
 }
 
 .modal-trigger:hover {
-  background: var(--button-primary-bg-hover, #000);
+  background: var(--button-primary-bg-hover, var(--color-text, #000));
 }
 
 /* ==================================================================
