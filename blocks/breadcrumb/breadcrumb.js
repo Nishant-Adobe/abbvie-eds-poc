@@ -1,13 +1,7 @@
 /* eslint-disable no-console */
-import { isUniversalEditor } from '../../scripts/utils.js';
 // eslint-disable-next-line import/no-named-as-default
 import IndexUtils from '../../scripts/index-utils.js';
 
-/**
- * Formats a URL segment into a human-readable title.
- * @param {string} segment - URL path segment
- * @returns {string} Formatted title
- */
 function formatSegment(segment) {
   return segment
     .split('-')
@@ -15,166 +9,35 @@ function formatSegment(segment) {
     .join(' ');
 }
 
-/**
- * Fetches redirect data from the API.
- * @async
- * @function getRedirects
- * @returns {Promise<Object>} Returns redirect JSON data
- */
-async function getRedirects() {
-  let apiUrl = '/redirects.json';
-  if (isUniversalEditor()) {
-    // In Universal Editor, we need to use the current path + .resource/ + the index file
-    let currentPath = window.location.pathname;
-    // Strip .html extension if present
-    if (currentPath.endsWith('.html')) {
-      currentPath = currentPath.substring(0, currentPath.length - 5);
-    }
-    apiUrl = `${currentPath}.resource${apiUrl}`;
-  }
-
-  try {
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.error('Error fetching redirects:', error);
-    return null;
-  }
-}
-
-/**
- * Finds the final page object using redirect and index data.
- * - First checks if the path exists in redirects
- * - If found, uses destination path
- * - Then searches in index JSON for matching path
- *
- * @param {string} path - Current page path
- * @param {Array<Object>} redirects - Redirect JSON data
- * @param {Array<Object>} indexData - Index JSON data
- * @returns {Object|null} Matched index object or null if not found
- */
-function getPageData(path, redirects, indexData) {
-  // Step 1: Check if path exists in redirects
-  const redirectMatch = redirects.find((item) => item.source === path);
-
-  // Step 2: Use destination if redirect exists, else use original path
-  const finalPath = redirectMatch ? redirectMatch.destination : null;
-
-  // Step 3: Find matching object in index JSON
-  const pageData = indexData.find((item) => item.path === finalPath);
-
-  return pageData || [];
-}
-
-/**
- * Builds the breadcrumb trail as a <nav> element.
- * Dynamically resolves page titles from the AEM content hierarchy.
- * @param {Object} config - Breadcrumb configuration
- * @param {Object} indexData - query index data
- * @returns {Promise<HTMLElement|null>} The breadcrumb nav element or null
- */
-export async function buildBreadcrumbTrail(config, indexData, redirectData) {
-  const {
-    homePagePath,
-    homeTitle,
-    enableCurrentPage,
-    enableRedirectTitle,
-  } = config;
-
-  const currentPath = window.location.pathname
-    .replace(/^\/content/, '') // remove /content only
-    .replace(/\.html$/, ''); // remove .html
-
-  const segments = currentPath.split('/').filter(Boolean);
-
-  if (segments.length <= 1) {
-    return null;
-  }
-
-  // Determine the start index based on homePagePath
-  let startIndex = 0;
-
-  if (homePagePath) {
-    const cleanHome = homePagePath
-      .replace(/^\/content/, '')
-      .replace(/^\//, '')
-      .replace(/\.html$/, '');
-
-    const homeParts = cleanHome.split('/').filter(Boolean);
-
-    startIndex = Math.max(0, homeParts.length - 1);
-  }
-
-  const nav = document.createElement('nav');
-  nav.className = 'breadcrumb-nav';
-  nav.setAttribute('aria-label', 'Breadcrumb');
-
-  const ol = document.createElement('ol');
-
-  const totalSegments = enableCurrentPage ? segments.length : segments.length - 1;
-
-  for (let i = startIndex; i < totalSegments; i += 1) {
-    const itemPath = `/${segments.slice(0, i + 1).join('/')}`;
-
-    const li = document.createElement('li');
-    let title;
-    const matchedItem = Object.values(indexData).find((item) => item.path === itemPath);
-    const redirectMatchData = getPageData(itemPath, redirectData, indexData);
-    // Use current document title for the last segment
-    const isLast = i === totalSegments - 1;
-    if (isLast && enableCurrentPage) {
-      title = formatSegment(matchedItem?.navtitle || segments[i]);
-      if (enableRedirectTitle) {
-        title = formatSegment(redirectMatchData?.title || matchedItem?.navtitle || segments[i]);
+function appendJsonLd(ol) {
+  const items = [...ol.querySelectorAll('li')];
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((li, idx) => {
+      const a = li.querySelector('a');
+      const entry = {
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: li.textContent.trim(),
+      };
+      if (a) {
+        entry.item = new URL(a.getAttribute('href'), window.location.origin).href;
       }
-      li.textContent = title;
-      li.setAttribute('aria-current', 'page');
-    } else {
-      title = formatSegment(matchedItem?.navtitle || segments[i]);
-      if (enableRedirectTitle) {
-        title = formatSegment(redirectMatchData?.title || matchedItem?.navtitle || segments[i]);
-      }
-      const a = document.createElement('a');
-      a.href = itemPath;
-      a.textContent = title;
-      li.append(a);
-    }
-
-    // Override home title for the first breadcrumb item
-    if (i === startIndex && homeTitle) {
-      const firstChild = li.querySelector('a') || li;
-      firstChild.textContent = homeTitle;
-    }
-
-    ol.append(li);
-  }
-
-  nav.append(ol);
-  return nav;
+      return entry;
+    }),
+  };
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(jsonLd);
+  document.head.append(script);
 }
 
-/**
- * Extracts breadcrumb configuration from the block.
- * Supports both xwalk (data-aue-prop attributes) and document-based content.
- * @param {Element} block - The breadcrumb block element
- * @returns {Object} Configuration object
- */
 function extractConfig(block) {
-  // xwalk: fields have data-aue-prop attributes
   const propElements = block.querySelectorAll('[data-aue-prop]');
   if (propElements.length > 0) {
-    const getField = (name) => {
-      const el = block.querySelector(`[data-aue-prop="${name}"]`);
-      return el || null;
-    };
     const getTextVal = (name, defaultVal = '') => {
-      const el = getField(name);
+      const el = block.querySelector(`[data-aue-prop="${name}"]`);
       return el?.textContent?.trim() || defaultVal;
     };
     const getBoolVal = (name, defaultVal) => {
@@ -183,25 +46,15 @@ function extractConfig(block) {
       if (val === 'false') return false;
       return defaultVal;
     };
-    const getLinkVal = (name) => {
-      const el = getField(name);
-      const a = el?.querySelector('a');
-      return a?.getAttribute('href') || el?.textContent?.trim() || '';
-    };
 
     return {
-      id: getTextVal('id'),
-      customClass: getTextVal('customClass'),
-      homePagePath: getLinkVal('homePagePath'),
-      homeTitle: getTextVal('homeTitle'),
-      enableBreadcrumb: getBoolVal('enableBreadcrumb', true),
-      enableHiddenItems: getBoolVal('enableHiddenItems', false),
-      enableCurrentPage: getBoolVal('enableCurrentPage', true),
-      enableRedirectTitle: getBoolVal('enableRedirectTitle', true),
+      auto: getBoolVal('auto', true),
+      homeLabel: getTextVal('homeLabel', 'Home'),
+      title: getTextVal('title', 'Breadcrumb'),
+      anchorId: getTextVal('anchorId'),
     };
   }
 
-  // Document-based fallback: fields in sequential cells
   const rows = [...block.querySelectorAll(':scope > div')];
   const cells = rows.flatMap((row) => [...row.querySelectorAll(':scope > div')]);
 
@@ -212,53 +65,129 @@ function extractConfig(block) {
     if (val === 'false') return false;
     return defaultVal;
   };
-  const getLink = (idx) => {
-    const a = cells[idx]?.querySelector('a');
-    return a?.getAttribute('href') || getText(idx) || '';
-  };
 
   return {
-    id: getText(0),
-    customClass: getText(1),
-    homePagePath: getLink(2),
-    homeTitle: getText(3),
-    enableBreadcrumb: getBool(4, true),
-    enableHiddenItems: getBool(5, false),
-    enableCurrentPage: getBool(6, true),
-    enableRedirectTitle: getBool(7, true),
+    auto: getBool(0, true),
+    homeLabel: getText(1) || 'Home',
+    title: getText(2) || 'Breadcrumb',
+    anchorId: getText(3),
   };
 }
 
-/**
- * Decorates the breadcrumb block.
- * @param {Element} block - The breadcrumb block element
- */
+function extractManualCrumbs(block) {
+  const rows = [...block.querySelectorAll(':scope > div')];
+  return rows.reduce((crumbs, row) => {
+    const divs = row.querySelectorAll(':scope > div');
+    if (divs.length >= 2) {
+      const label = divs[0]?.textContent?.trim();
+      const href = divs[1]?.querySelector('a')?.getAttribute('href')
+        || divs[1]?.textContent?.trim()
+        || '';
+      if (label) crumbs.push({ label, href });
+    }
+    return crumbs;
+  }, []);
+}
+
+function buildManualNav(config, crumbs) {
+  const currentPath = window.location.pathname
+    .replace(/^\/content/, '')
+    .replace(/\.html$/, '');
+
+  const nav = document.createElement('nav');
+  nav.className = 'breadcrumb-nav';
+  nav.setAttribute('aria-label', config.title);
+
+  const ol = document.createElement('ol');
+  crumbs.forEach((crumb) => {
+    const li = document.createElement('li');
+    const hrefClean = (crumb.href || '').replace(/\.html$/, '');
+    const isActive = hrefClean && (hrefClean === currentPath);
+
+    if (isActive) {
+      li.textContent = crumb.label;
+      li.setAttribute('aria-current', 'page');
+    } else if (crumb.href) {
+      const a = document.createElement('a');
+      a.href = crumb.href;
+      a.textContent = crumb.label;
+      li.append(a);
+    } else {
+      li.textContent = crumb.label;
+    }
+    ol.append(li);
+  });
+
+  nav.append(ol);
+  return nav;
+}
+
+export async function buildBreadcrumbTrail(config, indexData) {
+  const { homeLabel } = config;
+
+  const currentPath = window.location.pathname
+    .replace(/^\/content/, '')
+    .replace(/\.html$/, '');
+
+  const segments = currentPath.split('/').filter(Boolean);
+  if (segments.length <= 1) return null;
+
+  const nav = document.createElement('nav');
+  nav.className = 'breadcrumb-nav';
+  nav.setAttribute('aria-label', config.title);
+
+  const ol = document.createElement('ol');
+
+  for (let i = 0; i < segments.length; i += 1) {
+    const itemPath = `/${segments.slice(0, i + 1).join('/')}`;
+    const li = document.createElement('li');
+    const matchedItem = Object.values(indexData).find((item) => item.path === itemPath);
+    const isLast = i === segments.length - 1;
+
+    const title = formatSegment(matchedItem?.navtitle || segments[i]);
+
+    if (isLast) {
+      li.textContent = title;
+      li.setAttribute('aria-current', 'page');
+    } else {
+      const a = document.createElement('a');
+      a.href = itemPath;
+      a.textContent = title;
+      li.append(a);
+    }
+
+    if (i === 0 && homeLabel) {
+      const firstChild = li.querySelector('a') || li;
+      firstChild.textContent = homeLabel;
+    }
+
+    ol.append(li);
+  }
+
+  nav.append(ol);
+  return nav;
+}
+
 export default async function decorate(block) {
   const config = extractConfig(block);
-  const indexData = await IndexUtils.getIndexData(true);
-  const redirectData = await getRedirects();
-  // Apply optional id and custom class
-  if (config.id) block.id = config.id;
-  if (config.customClass) {
-    block.classList.add(...config.customClass.split(' ').filter(Boolean));
-  }
+  const manualCrumbs = !config.auto ? extractManualCrumbs(block) : [];
 
-  // Clear authored configuration cells
+  if (config.anchorId) block.id = config.anchorId;
   block.textContent = '';
 
-  // If breadcrumb is disabled, hide the block
-  if (!config.enableBreadcrumb) {
-    block.style.display = 'none';
-    return;
+  let breadcrumbNav;
+
+  if (config.auto) {
+    const indexData = await IndexUtils.getIndexData(true);
+    breadcrumbNav = await buildBreadcrumbTrail(config, indexData);
+  } else if (manualCrumbs.length > 0) {
+    breadcrumbNav = buildManualNav(config, manualCrumbs);
   }
 
-  const breadcrumbNav = await buildBreadcrumbTrail(config, indexData, redirectData);
   if (breadcrumbNav) {
-    // Get current page title for mobile dropdown button
     const lastItem = breadcrumbNav.querySelector('ol li:last-child');
     const currentTitle = lastItem?.textContent?.trim() || '';
 
-    // Mobile dropdown toggle button (hidden on tablet+)
     const dropBtn = document.createElement('button');
     dropBtn.className = 'breadcrumb-drop-title';
     dropBtn.setAttribute('aria-label', `${currentTitle}, Breadcrumb`);
@@ -272,5 +201,7 @@ export default async function decorate(block) {
 
     block.append(dropBtn);
     block.append(breadcrumbNav);
+
+    appendJsonLd(breadcrumbNav.querySelector('ol'));
   }
 }
