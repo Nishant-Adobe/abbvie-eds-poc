@@ -343,7 +343,8 @@ export default async function decorate(block) {
     const ac = new AbortController();
     document.addEventListener('modal:open', (e) => {
       if (e.detail?.modalId === modalId) {
-        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => { /* handled in openModal */ });
+        const t = { dataset: { fragmentPath, modalId }, fragmentPath };
+        openModal(t, variants).catch(() => { /* handled */ });
       }
     }, { signal: ac.signal });
     block.modalCleanup = () => ac.abort();
@@ -370,7 +371,8 @@ export default async function decorate(block) {
     if (!hasSeenModal(modalId, variants)) {
       const timerId = setTimeout(() => {
         if (!block.isConnected) return;
-        openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants).catch(() => { /* handled in openModal */ });
+        const t = { dataset: { fragmentPath, modalId }, fragmentPath };
+        openModal(t, variants).catch(() => { /* handled */ });
       }, 500);
       block.modalAutoOpenTimer = timerId;
     }
