@@ -68,7 +68,10 @@ export default function decorate(block) {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-controls', listId);
     toggle.innerHTML = '<span class="section-nav-hamburger" aria-hidden="true"></span>'
+      + '<span class="section-nav-current-label" aria-hidden="true"></span>'
       + '<span class="section-nav-toggle-label">Menu</span>';
+    const currentLabel = toggle.querySelector('.section-nav-current-label');
+    if (currentLabel && links.length) currentLabel.textContent = links[0].textContent;
 
     const list = document.createElement('ul');
     list.id = listId;
@@ -191,6 +194,12 @@ export default function decorate(block) {
         // Highlight only the topmost visible section (document order)
         const topmost = sectionEls.find((el) => activeSections.has(el.id));
         links.forEach((a) => a.classList.toggle('is-active', !!topmost && a.getAttribute('href') === `#${topmost.id}`));
+        // Update mobile current-label to reflect active section
+        const activeLabelEl = block.querySelector('.section-nav-current-label');
+        if (activeLabelEl && topmost) {
+          const activeLink = links.find((a) => a.getAttribute('href') === `#${topmost.id}`);
+          if (activeLink) activeLabelEl.textContent = activeLink.textContent;
+        }
       },
       { rootMargin: `-${offset}px 0px -50% 0px`, threshold: 0 },
     );
