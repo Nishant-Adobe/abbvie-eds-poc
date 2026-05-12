@@ -227,7 +227,17 @@ function buildGridMode(block, cfg, items, accountId, playerId) {
     }
 
     card.append(footer);
-    createTranscriptToggle(item.transcript, footer);
+    if (item.transcript?.textContent?.trim()) {
+      createTranscriptToggle(item.transcript, footer);
+    } else if (item.transcriptHref) {
+      const link = document.createElement('a');
+      link.className = 'cvp-transcript-toggle';
+      link.href = item.transcriptHref;
+      link.textContent = 'View Transcript';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      footer.append(link);
+    }
 
     // Delay poster player init — wait 3s to avoid Lighthouse penalty
     setTimeout(() => {
