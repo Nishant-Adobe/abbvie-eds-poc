@@ -349,7 +349,13 @@ export default async function decorate(block) {
         openModal(t, variants).catch(() => { /* handled */ });
       }
     }, { signal: ac.signal });
-    block.modalCleanup = () => ac.abort();
+    block.modalCleanup = () => {
+      ac.abort();
+      const idx = exitModals.findIndex(
+        (m) => m.trigger?.dataset?.modalId === modalId,
+      );
+      if (idx !== -1) exitModals.splice(idx, 1);
+    };
   }
 
   block.innerHTML = '';
