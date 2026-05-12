@@ -54,6 +54,14 @@
   margin-top: 24px;
 }
 
+/* Button paragraph — centered */
+.modal-dialog .modal-content p:has(a[href]) {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
 /* Button links — both outlined, equal width, with chevron */
 .modal-dialog .modal-content a[href] {
   display: inline-flex;
@@ -67,8 +75,7 @@
   font-family: var(--body-font-family);
   font-size: var(--font-size-body, 15px);
   text-decoration: none;
-  margin-right: 16px;
-  margin-top: 12px;
+  margin: 0;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
   background: transparent;
   color: var(--color-brand-primary, #90124a) !important;
