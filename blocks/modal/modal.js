@@ -118,7 +118,8 @@ function setCookie(name, value, days) {
 }
 
 function getCookie(name) {
-  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = document.cookie.match(new RegExp(`(^| )${escaped}=([^;]+)`));
   return match ? match[2] : null;
 }
 
@@ -210,8 +211,10 @@ function registerExitIntent(trigger, variants) {
     const modal = exitModals.find(
       (m) => !hasSeenModal(m.trigger.dataset.modalId, m.variants),
     );
-    if (modal) openModal(modal.trigger, modal.variants).catch(() => {});
-  }, { once: true });
+    if (!modal) return;
+    exitListenerRegistered = false;
+    openModal(modal.trigger, modal.variants).catch(() => {});
+  });
 }
 
 /* ------------------------------------------------------------------ */
@@ -312,8 +315,9 @@ export default async function decorate(block) {
   } catch { /* already a path */ }
 
   // Extract variants from block classes
+  const edsClasses = new Set(['modal', 'block', 'loaded', 'is-loading']);
   const variants = [...block.classList]
-    .filter((c) => c !== 'modal' && c !== 'block')
+    .filter((c) => !edsClasses.has(c))
     .map((c) => c.replace('modal-', ''));
 
   // Store data on block for global trigger lookup
