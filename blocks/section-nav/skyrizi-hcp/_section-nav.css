@@ -1,0 +1,78 @@
+@import '../section-nav.css';
+@import '../../../styles/skyrizi-hcp/tokens.css';
+
+/* Skyrizi HCP — Section Nav Brand Overrides
+   Normal (non-stuck): floating dark-navy rounded pill overlaid on page content
+   Sticky + stuck:     full-width dark-navy header bar, no border-radius
+   Source:             skyrizihcp.com .risa-section-nav / .abbv-fixed pattern
+*/
+
+/* ── Wrapper: transparent in normal flow, dark bg when stuck ─────────────── */
+
+.section-nav {
+  background-color: transparent;
+  border-bottom: none;
+  overflow-x: visible;
+}
+
+/* ── Inner nav: dark-navy floating pill ──────────────────────────────────── */
+
+.section-nav nav {
+  background-color: var(--color-background-footer, #071d49);
+  border-radius: var(--border-radius-nav, 10px);
+  justify-content: center;
+  padding: 0;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────────── */
+
+.section-nav a {
+  border-bottom: 2px solid transparent;
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-nav, 14px);
+  font-weight: var(--font-weight-heading, 700);
+  letter-spacing: 0.04em;
+  padding: 10px 24px;
+  text-transform: uppercase;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Pipe separators — border-left on adjacent siblings (0,1,3 < hover 0,2,1, so comes first) */
+
+.section-nav nav a + a {
+  border-left: 1px solid rgb(255 255 255 / 30%);
+  padding-left: 24px;
+}
+
+.section-nav a:hover,
+.section-nav a:focus-visible {
+  color: #1ba2da;
+}
+
+.section-nav a.is-active {
+  border-bottom-color: #1ba2da;
+  color: #fff;
+}
+
+/* ── Sticky variant (in-flow, not yet pinned) ────────────────────────────── */
+
+.section-nav.sticky {
+  background-color: transparent;
+  box-shadow: none;
+  overflow-x: visible;
+}
+
+/* ── Sticky + stuck: full-width dark-navy bar ────────────────────────────── */
+
+.section-nav.sticky.is-stuck {
+  background-color: var(--color-background-footer, #071d49);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
+  overflow-x: auto;
+}
+
+.section-nav.sticky.is-stuck nav {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0 var(--spacing-24, 24px);
+}

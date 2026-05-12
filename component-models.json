@@ -49,13 +49,34 @@
         "name": "brand",
         "label": "Brand",
         "options": [
-          { "name": "AbbVie (default)", "value": "" },
-          { "name": "Skyrizi HCP", "value": "skyrizi-hcp" },
-          { "name": "Rinvoq DTC", "value": "rinvoq-dtc" },
-          { "name": "Rinvoq HCP", "value": "rinvoq-hcp" },
-          { "name": "Mavyret", "value": "mavyret" },
-          { "name": "Venclexta", "value": "venclexta" },
-          { "name": "Linzess", "value": "linzess" }
+          {
+            "name": "AbbVie (default)",
+            "value": ""
+          },
+          {
+            "name": "Skyrizi HCP",
+            "value": "skyrizi-hcp"
+          },
+          {
+            "name": "Rinvoq DTC",
+            "value": "rinvoq-dtc"
+          },
+          {
+            "name": "Rinvoq HCP",
+            "value": "rinvoq-hcp"
+          },
+          {
+            "name": "Mavyret",
+            "value": "mavyret"
+          },
+          {
+            "name": "Venclexta",
+            "value": "venclexta"
+          },
+          {
+            "name": "Linzess",
+            "value": "linzess"
+          }
         ]
       },
       {
@@ -176,7 +197,6 @@
         "label": "Brand & Theme",
         "name": "tabBrand"
       },
-
       {
         "component": "text",
         "valueType": "string",
@@ -3220,19 +3240,19 @@
         "value": "",
         "options": [
           {
-            "name": "Default — Equal width columns",
+            "name": "Default \u2014 Equal width columns",
             "value": ""
           },
           {
-            "name": "Offset — Narrow left (1/3) + wide right (2/3)",
+            "name": "Offset \u2014 Narrow left (1/3) + wide right (2/3)",
             "value": "columns-offset"
           },
           {
-            "name": "Flush — No gap between columns",
+            "name": "Flush \u2014 No gap between columns",
             "value": "columns-flush"
           },
           {
-            "name": "Reverse — Swap column order on mobile",
+            "name": "Reverse \u2014 Swap column order on mobile",
             "value": "columns-reverse"
           }
         ]
@@ -4606,11 +4626,11 @@
             "value": "single-column"
           },
           {
-            "name": "Two Columns – stack on mobile",
+            "name": "Two Columns \u2013 stack on mobile",
             "value": "two-columns-stack"
           },
           {
-            "name": "Two columns – do not stack on mobile",
+            "name": "Two columns \u2013 do not stack on mobile",
             "value": "two-columns-nostack"
           }
         ],
@@ -4629,7 +4649,7 @@
         "name": "fontIcon",
         "label": "Icon",
         "value": "",
-        "description": "Icon applied to every link when Variant is Icons. Works for all link sources — the only icon option when using Child Pages.",
+        "description": "Icon applied to every link when Variant is Icons. Works for all link sources \u2014 the only icon option when using Child Pages.",
         "condition": {
           "or": [
             {
@@ -8043,7 +8063,7 @@
         "component": "richtext",
         "name": "collapsedContentCol2",
         "value": "",
-        "label": "Collapsed Content – Column 2 (Split only)",
+        "label": "Collapsed Content \u2013 Column 2 (Split only)",
         "description": "Right column content in collapsed state. Only used with the 'split' variant.",
         "valueType": "string"
       },
@@ -8067,15 +8087,15 @@
         "label": "Variant",
         "options": [
           {
-            "name": "Default – single column, right aligned",
+            "name": "Default \u2013 single column, right aligned",
             "value": ""
           },
           {
-            "name": "Center – single column, collapsed center aligned",
+            "name": "Center \u2013 single column, collapsed center aligned",
             "value": "center"
           },
           {
-            "name": "Split – two-column collapsed, single-column expanded",
+            "name": "Split \u2013 two-column collapsed, single-column expanded",
             "value": "split"
           }
         ]
@@ -8129,6 +8149,66 @@
         "value": "",
         "label": "Target Section ID",
         "description": "The id attribute of the target section element (without the # prefix)."
+      }
+    ]
+  },
+  {
+    "id": "section-nav",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variants",
+        "options": [
+          {
+            "name": "Sticky (pins below header on scroll)",
+            "value": "sticky"
+          },
+          {
+            "name": "Mobile Menu (hamburger on small screens)",
+            "value": "mobile-menu"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID",
+        "description": "Optional ID for this nav block (e.g. section-menu). Used for deep-linking to the nav itself."
+      }
+    ]
+  },
+  {
+    "id": "section-nav-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "value": "",
+        "label": "Link Label",
+        "description": "Text displayed in the navigation for this link."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "href",
+        "value": "",
+        "label": "Target Section ID",
+        "description": "The id of the target section element (e.g. #dosing or dosing)."
       }
     ]
   },
@@ -9040,9 +9120,18 @@
         "label": "Variant",
         "description": "Visual layout variant.",
         "options": [
-          { "name": "Default (Full explorer with filter tabs)", "value": "" },
-          { "name": "Cards (Grid layout)", "value": "cards" },
-          { "name": "Navigation (Link list)", "value": "nav" }
+          {
+            "name": "Default (Full explorer with filter tabs)",
+            "value": ""
+          },
+          {
+            "name": "Cards (Grid layout)",
+            "value": "cards"
+          },
+          {
+            "name": "Navigation (Link list)",
+            "value": "nav"
+          }
         ]
       },
       {
@@ -9672,12 +9761,30 @@
         "name": "classes",
         "label": "Layout",
         "options": [
-          { "name": "Cards Grid (default)", "value": "" },
-          { "name": "Grid", "value": "grid" },
-          { "name": "Featured — patient experiences", "value": "featured" },
-          { "name": "Bottom — playlist below", "value": "bottom" },
-          { "name": "Left Sidebar", "value": "left" },
-          { "name": "Right Sidebar", "value": "right" }
+          {
+            "name": "Cards Grid (default)",
+            "value": ""
+          },
+          {
+            "name": "Grid",
+            "value": "grid"
+          },
+          {
+            "name": "Featured \u2014 patient experiences",
+            "value": "featured"
+          },
+          {
+            "name": "Bottom \u2014 playlist below",
+            "value": "bottom"
+          },
+          {
+            "name": "Left Sidebar",
+            "value": "left"
+          },
+          {
+            "name": "Right Sidebar",
+            "value": "right"
+          }
         ]
       },
       {
