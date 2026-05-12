@@ -224,16 +224,20 @@ function buildGrid(block, items, accountId, playerId, playMode) {
 
     // Click: modal or inline depending on playMode
     if (playMode === 'inline') {
-      card.addEventListener('click', () => {
+      const handleInlinePlay = () => {
         const existing = thumbWrap.querySelector('.cvp-poster-video');
         if (existing) {
+          existing.style.pointerEvents = 'auto';
           const player = window.videojs?.getPlayer(existing.id);
           if (player) {
+            player.controls(true);
             player.play();
             playIcon.style.display = 'none';
+            card.removeEventListener('click', handleInlinePlay);
           }
         }
-      });
+      };
+      card.addEventListener('click', handleInlinePlay);
     } else {
       card.addEventListener('click', () => {
         openVideoModal(item, accountId, playerId);
