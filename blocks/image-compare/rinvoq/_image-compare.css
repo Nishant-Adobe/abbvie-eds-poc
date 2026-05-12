@@ -265,7 +265,8 @@
 
 /* =========================================================
    HIDE TWO-COLUMN LAYOUT ELEMENTS
-   (used by skyrizi-hcp; not shown in rinvoq toggle variant)
+   Rinvoq toggle variant is single-column only; these layout
+   containers are rendered by decorateGallery but unused here.
 ========================================================= */
 
 .image-compare .image-compare-layout {
@@ -305,16 +306,16 @@
    RESPONSIVE
 ========================================================= */
 
-@media (width <= 768px) {
+@media (width >= 769px) {
   .image-compare.gallery {
-    max-width: 100%;
+    max-width: var(--ic-gallery-max-width);
   }
 
   .image-compare .image-compare-thumbnails {
-    gap: var(--spacing-10);
+    gap: var(--spacing-16);
   }
 
   .image-compare .image-compare-thumb {
-    width: var(--ic-thumb-width-mobile);
+    width: var(--ic-thumb-width);
   }
 }

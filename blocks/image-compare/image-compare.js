@@ -186,11 +186,10 @@ function setupGalleryInteraction(block, container, tabSets) {
     const afterWrap = container.querySelector('.image-compare-after');
     const beforeWrap = container.querySelector('.image-compare-before');
     if (afterWrap && afterImg) {
-      afterWrap.innerHTML = '';
-      afterWrap.appendChild(cloneImg(afterImg));
+      afterWrap.replaceChildren(cloneImg(afterImg));
     }
     if (beforeWrap && beforeImg) {
-      beforeWrap.innerHTML = '';
+      beforeWrap.replaceChildren();
       const bImg = cloneImg(beforeImg);
       // style.width is set dynamically because the before-image must match the container's
       // pixel width exactly for the clip reveal to work — a CSS variable alone cannot
@@ -259,7 +258,7 @@ function decorateGallery(block, cells, startPct) {
   const tab1Label = getText(cells[COL.tab1Label]);
   const tab2Label = getText(cells[COL.tab2Label]);
   const heading = getText(cells[COL.heading]);
-  const description = cells[COL.description]?.innerHTML || '';
+  const descriptionEl = cells[COL.description] || null;
 
   const tab1Images = extractTabImages(cells, COL.tab1Img1Before);
   const tab2Images = extractTabImages(cells, COL.tab2Img1Before);
@@ -301,10 +300,10 @@ function decorateGallery(block, cells, startPct) {
       content.appendChild(h);
     }
 
-    if (description) {
+    if (descriptionEl) {
       const desc = document.createElement('div');
       desc.className = 'image-compare-description';
-      desc.replaceChildren(document.createRange().createContextualFragment(description));
+      desc.replaceChildren(...descriptionEl.cloneNode(true).childNodes);
       content.appendChild(desc);
     }
 
@@ -316,7 +315,9 @@ function decorateGallery(block, cells, startPct) {
       cta.textContent = `VIEW ${tab2Label.toUpperCase()} RESULTS`;
       cta.addEventListener('click', (e) => {
         e.preventDefault();
-        const target = document.getElementById(targetId);
+        const escaped = `#${CSS.escape(targetId)}`;
+        const main = block.closest('main');
+        const target = main?.querySelector(escaped) ?? document.getElementById(targetId);
         if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
       content.appendChild(cta);
@@ -375,10 +376,10 @@ function decorateGallery(block, cells, startPct) {
   const slider = buildSliderContainer(afterImg, beforeImg, sliderOpts);
   wrapper.appendChild(slider.container);
 
-  if (description) {
+  if (descriptionEl) {
     const galleryContent = document.createElement('div');
     galleryContent.className = 'image-compare-gallery-content';
-    galleryContent.replaceChildren(document.createRange().createContextualFragment(description));
+    galleryContent.replaceChildren(...descriptionEl.cloneNode(true).childNodes);
     wrapper.appendChild(galleryContent);
   }
 
@@ -410,7 +411,7 @@ function buildCaptionLayout(block, afterImg, beforeImg, opts, startPct) {
   if (opts.captionHtml) {
     const caption = document.createElement('div');
     caption.className = 'image-compare-gallery-content';
-    caption.replaceChildren(document.createRange().createContextualFragment(opts.captionHtml));
+    caption.replaceChildren(...opts.captionHtml.cloneNode(true).childNodes);
     block.appendChild(caption);
   }
 
@@ -492,7 +493,7 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
       mo.disconnect();
     }
   });
-  mo.observe(document.body, { childList: true, subtree: true });
+  mo.observe(container.parentNode ?? document.body, { childList: true });
 
   setPosition(startPct);
 
@@ -560,6 +561,8 @@ function decorateLegacy(block, cells) {
       beforeLabel: cells[3]?.textContent?.trim() || 'BEFORE',
       afterLabel: cells[4]?.textContent?.trim() || 'AFTER',
       patientName: cells[6]?.textContent?.trim() || '',
+      // NOTE: labels default to generic 'BEFORE'/'AFTER'; replace with an authored
+      // content field if brands require custom defaults
     };
     const parts = buildWrapperLayout(block, afterImg, beforeImg, opts, startPct);
     return { ...parts, startPct, hasPrompt: false };
@@ -569,7 +572,7 @@ function decorateLegacy(block, cells) {
     beforeLabel: 'BEFORE',
     afterLabel: 'AFTER',
     prompt: 'CLICK AND DRAG TO SEE RESULTS',
-    captionHtml: cells[3]?.innerHTML || '',
+    captionHtml: cells[3]?.cloneNode(true) || null,
   };
   const parts = buildCaptionLayout(block, afterImg, beforeImg, opts, startPct);
   return { ...parts, startPct, hasPrompt: true };
@@ -639,7 +642,7 @@ function decorateKeyValue(block, rows) {
     beforeLabel: getText(data.beforeLabelPrefix) || 'BEFORE',
     afterLabel: getText(data.afterLabelPrefix) || 'AFTER',
     prompt: getText(data.sliderPrompt) || 'CLICK AND DRAG TO SEE RESULTS',
-    captionHtml: data.description?.innerHTML || '',
+    captionHtml: data.description?.cloneNode(true) || null,
   };
   const parts = buildCaptionLayout(block, afterImg, beforeImg, opts, 0.5);
   return { ...parts, startPct: 0.5, hasPrompt: true };
@@ -667,7 +670,7 @@ function decorateModelFormat(block, cells) {
     beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE',
     afterLabel: getText(cells[COL.afterLabelPrefix]) || 'AFTER',
     prompt: promptText || undefined,
-    captionHtml: cells[COL.description]?.innerHTML || '',
+    captionHtml: cells[COL.description]?.cloneNode(true) || null,
   };
   const parts = buildCaptionLayout(block, afterImg, beforeImg, opts, startPct);
   return { ...parts, startPct, hasPrompt: !!promptText };
