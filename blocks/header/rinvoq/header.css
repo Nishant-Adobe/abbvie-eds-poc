@@ -340,6 +340,82 @@ header nav .nav-tools {
   grid-area: tools;
 }
 
+header nav .nav-search {
+  grid-area: tools;
+  display: flex;
+}
+
+header nav .nav-search .search-toggle {
+  background: transparent;
+  cursor: pointer;
+  margin: 0 0 0 23px;
+  padding: 0;
+}
+
+header nav .nav-search .search-toggle[aria-expanded="false"] .icon-close,
+header nav .nav-search .search-toggle[aria-expanded="true"] .icon-search-white {
+  display: none;
+}
+
+header nav .nav-search .search-toggle[aria-expanded="true"] .icon-close
+header nav .nav-search .search-toggle[aria-expanded="false"] .icon-search-white {
+  display: inline-flex;
+}
+
+/* Close (X) button — no default browser styling */
+
+header nav .nav-search .search-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+header nav .nav-search .search-expanded:not([hidden]) {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+}
+
+@media (width >= 1024px) {
+  header nav .nav-search .search-expanded:not([hidden]) {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-08);
+    position: relative;
+  }
+}
+
+header nav .nav-search .search-inner-wrapper .search-input-label,
+header nav .nav-search .search-inner-wrapper .search-input-alert {
+  display: none;
+}
+
+header nav .nav-search .search-inner-wrapper {
+  box-shadow: 0 3px 5px 0 #999;
+  position: relative;
+}
+
+header nav .nav-search .search-inner-wrapper > span.icon-search{
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+
+header nav .nav-search .search-inner-wrapper input[type="search"] {
+    min-width: 200px;
+    width: 100%;
+    background: rgb(255, 255, 255);
+    padding: 4px 35px 4px 15px;
+    box-sizing: border-box;
+    border: 1px solid #929495;
+    font-size: 14.88px;
+    transition: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
 header nav .nav-sections .icon,
 header nav .nav-tools .icon {
   height: var(--icon-height-20);
@@ -2460,8 +2536,10 @@ header nav[aria-expanded='true'] .nav-brand-info > ul a {
     cursor: default;
     display: inline-block;
     margin-left: var(--spacing-07);
-    margin-right: var(--spacing-18);
+    margin-right: var(--spacing-08);
     text-decoration: none;
+    font-weight: 900;
+    font-size: 22px;
   }
 
   /* stylelint-disable-next-line no-descending-specificity */

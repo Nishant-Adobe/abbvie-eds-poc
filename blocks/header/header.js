@@ -459,48 +459,6 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
 }
 
 /**
- * Builds level-two items for More and Global.
- * @param {Element} selector - The selector element.
- * @returns {Element|null} - The accordion element.
- */
-function buildLevelTwoLanguageLinks(selector) {
-  const menu = selector.querySelector('ul');
-  if (!menu) return null;
-  const items = Array.from(menu.querySelectorAll(':scope > li'));
-  if (!items.length) return null;
-  items[0].classList.add('open');
-  const accordion = createElement('div', { className: 'accordion' });
-
-  items.forEach((item) => {
-    const childUL = item.querySelector('ul');
-    item.classList.add('menu-item');
-    const label = item.querySelector('p')?.textContent.trim() || item.firstChild?.textContent.trim();
-    if (item.querySelector('p')) item.querySelector('p').remove();
-    if (item.firstChild?.nodeType === 3) item.firstChild.remove();
-
-    const textSpan = createElement('span', { className: 'menu-label', textContent: label });
-    item.prepend(textSpan);
-
-    if (childUL) {
-      const wrapper = createElement('div', { className: 'submenu-wrapper' });
-      wrapper.appendChild(childUL);
-      item.appendChild(wrapper);
-      item.classList.add('has-arrow');
-
-      textSpan.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (item.classList.contains('open')) return;
-        items.forEach((i) => i.classList.remove('open'));
-        item.classList.add('open');
-      });
-    }
-  });
-
-  accordion.appendChild(menu);
-  return accordion;
-}
-
-/**
  * Creates a search form.
  * @param {Element} block - The block element.
  * @returns {Element} - The search form element.
@@ -524,6 +482,7 @@ function createSearchForm() {
       maxlength: '100',
       'aria-label': text,
       name: 'q',
+      placeholder: text,
       'aria-describedby': 'search-alert-text',
     },
   });
@@ -1090,29 +1049,61 @@ export default async function decorate(block) {
   const ctaGroup = buildCtaGroup(header);
   if (ctaGroup) toolsUl.appendChild(createElement('li', { className: 'nav-cta-item' })).appendChild(ctaGroup);
 
-  const toolBlocks = header.querySelectorAll('.navigation-content[data-type="language-links"], .navigation-content[data-type="search"]');
-  toolBlocks.forEach((tool) => {
-    const li = buildMenuItem(tool);
-    let expandableMenu;
-    if (tool.classList.contains('search')) {
-      expandableMenu = createSearchForm(tool);
-    } else {
-      expandableMenu = buildLevelTwoLanguageLinks(tool);
-    }
-    if (li) {
-      if (expandableMenu) {
-        li.querySelector('.submenu-level-1').appendChild(expandableMenu);
-      } else {
-        li.querySelector('.submenu-level-1')?.remove();
-        li.querySelector('button')?.setAttribute('aria-haspopup', 'false');
-      }
-      toolsUl.appendChild(li);
-    }
-  });
+  // nav-tools: CTA group only — language-links go to nav-sections, search goes to nav-search
 
-  toolsWrapper.appendChild(toolsUl);
-  tools.appendChild(toolsWrapper);
-  nav.appendChild(tools);
+  if (toolsUl.children.length) {
+    toolsWrapper.appendChild(toolsUl);
+    tools.appendChild(toolsWrapper);
+    nav.appendChild(tools);
+  }
+
+  // Search — icon toggles to X on expand; search icon also appears inside input
+  const searchBlock = header.querySelector('.navigation-content[data-type="search"]');
+  if (searchBlock) {
+    const navSearch = document.createElement('div');
+    navSearch.className = 'section nav-search';
+
+    const searchIconEl = searchBlock.querySelector('p > span');
+
+    // Toggle button: search icon (collapsed) ↔ close icon (expanded)
+    const toggleBtn = createElement('button', {
+      className: 'search-toggle',
+      attributes: { type: 'button', 'aria-label': 'Open search', 'aria-expanded': 'false' },
+    });
+    if (searchIconEl) toggleBtn.appendChild(searchIconEl.cloneNode(true));
+
+    // Inline close (X) icon — no separate SVG file needed
+    const closeIconSpan = document.createElement('span');
+    closeIconSpan.className = 'icon icon-close';
+    closeIconSpan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+    toggleBtn.appendChild(closeIconSpan);
+
+    // Expanded state: search form only (toggle button handles close)
+    const searchExpanded = document.createElement('div');
+    searchExpanded.className = 'search-expanded';
+    searchExpanded.hidden = true;
+
+    const searchForm = createSearchForm();
+
+    // Dark search icon inside the input — fresh SVG with no fill so CSS colours it
+    const inputSearchIcon = document.createElement('span');
+    inputSearchIcon.className = 'icon icon-search';
+    inputSearchIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.9,15.5c2.4-3.2,2.2-7.7-0.7-10.6c-3.1-3.1-8.1-3.1-11.3,0c-3.1,3.2-3.1,8.3,0,11.4c2.9,2.9,7.5,3.1,10.6,0.6c0,0.1,0,0.1,0,0.1l4.2,4.2c0.5,0.4,1.1,0.4,1.5,0c0.4-0.4,0.4-1,0-1.4L16.9,15.5C16.9,15.5,16.9,15.5,16.9,15.5L16.9,15.5z M14.8,6.3c2.3,2.3,2.3,6.1,0,8.5c-2.3,2.3-6.1,2.3-8.5,0C4,12.5,4,8.7,6.3,6.3C8.7,4,12.5,4,14.8,6.3z"/></svg>';
+    searchForm.querySelector('.search-inner-wrapper')?.prepend(inputSearchIcon);
+
+    searchExpanded.append(searchForm);
+
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = !searchExpanded.hidden;
+      searchExpanded.hidden = isExpanded;
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      toggleBtn.setAttribute('aria-label', isExpanded ? 'Open search' : 'Close search');
+      if (!isExpanded) searchExpanded.querySelector('.search-input')?.focus();
+    });
+
+    navSearch.append(searchExpanded, toggleBtn);
+    nav.appendChild(navSearch);
+  }
 
   // hamburger for mobile
   const navSections = nav.querySelector('.nav-sections');
@@ -1122,11 +1113,15 @@ export default async function decorate(block) {
       <span></span><span></span><span></span>
     </button>`;
   hamburger.addEventListener('click', () => {
-    // Close search menu if it's open
-    const searchMenu = nav.querySelector('.menu-search');
-    if (searchMenu?.getAttribute('aria-expanded') === 'true') {
-      searchMenu.setAttribute('aria-expanded', 'false');
-      searchMenu.querySelector('button')?.setAttribute('aria-expanded', 'false');
+    // Collapse search if expanded
+    const searchExpanded = nav.querySelector('.nav-search .search-expanded');
+    if (searchExpanded && !searchExpanded.hidden) {
+      searchExpanded.hidden = true;
+      const searchToggle = nav.querySelector('.nav-search .search-toggle');
+      if (searchToggle) {
+        searchToggle.setAttribute('aria-expanded', 'false');
+        searchToggle.setAttribute('aria-label', 'Open search');
+      }
     }
     toggleMenu(nav, navSections);
   });

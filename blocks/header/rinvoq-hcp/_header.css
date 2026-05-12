@@ -30,6 +30,7 @@ header .nav-wrapper nav {
   grid-template:
     'brand brand' auto
     'hamburger hamburger' auto
+    'search search' auto
     'sections sections' auto
     / 1fr auto;
   height: auto;
@@ -37,6 +38,8 @@ header .nav-wrapper nav {
   padding: var(--spacing-00);
   width: 100%;
 }
+
+
 
 /* Logo row — explicit black so it stays dark when nav is expanded */
 header nav .nav-brand {
@@ -49,11 +52,6 @@ header nav .nav-brand img {
   height: auto;
   max-width: unset;
   width: var(--header-logo-width);
-}
-
-/* Search — hidden on mobile; visible on desktop via grid placement */
-header nav .nav-tools {
-  display: none;
 }
 
 /* Utility bar — not present on RINVOQ HCP */
@@ -99,7 +97,7 @@ header nav .nav-hamburger button::before {
   content: '';
   display: block;
   height: var(--spacing-02);
-  width: 50px;
+  width: var(--spacing-50);
 }
 
 /* MENU label */
@@ -129,11 +127,6 @@ header nav .nav-sections {
   color: var(--color-charcoal);
 }
 
-/* When expanded: fill remaining viewport with gold */
-header nav[aria-expanded='true'] {
-  background-color: var(--color-gold);
-}
-
 /* Brand row stays black when nav is open */
 header nav[aria-expanded='true'] .nav-brand {
   background-color: var(--color-background-footer);
@@ -155,11 +148,11 @@ header nav .nav-sections .default-content-wrapper > ul {
 
 header nav .nav-sections .default-content-wrapper > ul > li {
   border: none;
-  padding: 18px 0;
+  padding: var(--spacing-18) var(--spacing-00);
 }
 
 header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(2) {
-  margin: 0px;
+  margin: 0;
 }
 
 header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(1) {
@@ -180,8 +173,7 @@ header nav .nav-item-level-0 .default-content-wrapper>ul>li>button::after {
   display: inline-block;
   width: 1em;
   height: 1em;
-  background-color: currentColor;
-  -webkit-mask: var(--icon-svg-chevron-down) no-repeat center / contain;
+  background-color: currentcolor;
   mask: var(--icon-svg-chevron-down) no-repeat center / contain;
   vertical-align: middle;
   position: static;
@@ -196,9 +188,11 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
   color: var(--color-charcoal);
   font-weight: var(--font-weight-700);
 }
+
 header nav .nav-item-level-0 .default-content-wrapper>ul>li>a.nav-item-link::after {
   display: none;
 }
+
 /* Chevron — hide for items without submenus */
 header nav .nav-item-level-0 .default-content-wrapper > ul > li:not(:has(.submenu-level-1 .navigation-group)) > button::before {
   display: none;
@@ -231,7 +225,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li[aria-expanded='t
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li[aria-expanded='true'] .submenu-level-1 ul li {
-  padding: 18px 0;
+  padding: var(--spacing-18) var(--spacing-00);
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li[aria-expanded='true'] .submenu-level-1 ul li a {
@@ -262,11 +256,61 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
   text-decoration: underline;
 }
 
+header nav .nav-search .search-inner-wrapper input[type="search"] {
+  border-radius: var(--border-radius-button-primary);
+  font-size: var(--font-size-16);
+  padding: var(--spacing-12) var(--spacing-35) var(--spacing-12) var(--spacing-15);
+  min-width: 300px;
+}
+
+header nav .nav-search .search-inner-wrapper > span.icon-search {
+  position: absolute;
+  right: 1%;
+  top: 30%;
+}
+
+header nav .nav-search .search-toggle {
+  display: none;
+}
+
+/* rinvoq-hcp: search form always visible — override JS-set hidden attribute */
+  header nav[aria-expanded="true"] .nav-search .search-expanded[hidden] {
+    align-items: center;
+    display: block;
+    width: 100%;
+    gap: var(--spacing-08);
+  }
+
+   /* Input wrapper — no shadow (lower specificity; must precede .search-expanded .search-inner-wrapper) */
+  header nav .nav-search .search-inner-wrapper {
+    box-shadow: none;
+  }
+  header nav .nav-search {
+    grid-area: auto;
+    background-color: var(--color-gold);
+    padding: 0 12px;
+    width: 100%;
+    display: block;
+  }
 /* ══════════════════════════════════════════════
    DESKTOP (width >= 1024px)
 ══════════════════════════════════════════════ */
 
 @media (width >= 1024px) {
+  /* Show nav-search in the brand row (overrides mobile hide) */
+  header nav .nav-search {
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    grid-area: tools;
+    background-color: transparent;
+  }
+
+  /* nav-tools has no content on rinvoq-hcp — keep hidden */
+  header nav .nav-tools {
+    display: none;
+  }
+
   /* Hide any nav-tools that may appear inside nav-sections */
   header .nav-sections .nav-tools {
     display: none !important;
@@ -282,7 +326,21 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
     height: auto;
     max-width: unset;
     padding: var(--spacing-00);
+    margin: var(--spacing-00) auto;
+    max-width: var(--header-content-max-width);
     width: 100%;
+}
+
+  .section.nav-sections.nav-item-level-0:before {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    height: 51px;
+    background-color: var(--color-gold);
+    z-index: 0;
+    width: 100vw;
   }
 
   /* Brand row — logo padding */
@@ -291,51 +349,102 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
     padding: var(--spacing-20) var(--spacing-24) var(--spacing-20) var(--spacing-35);
   }
 
-  /* Search pill — white rounded input matching live rinvoqhcp.com */
-  header nav .nav-tools .menu-search {
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-  }
-
   header nav .nav-sections .default-content-wrapper > ul > li {
     border: none;
-    padding: 0 ;
+    padding: var(--spacing-00);
   }
 
-  header nav .nav-tools .menu-search > button {
+  /* Search toggle icon — plum tint on dark brand bar */
+  header nav .nav-search .search-toggle {
     align-items: center;
-    background: var(--background-color);
-    border-radius: var(--border-radius-button-primary);
-    box-shadow: var(--shadow-default);
-    color: var(--color-steel);
     display: flex;
-    font-family: var(--body-font-family);
-    font-size: var(--font-size-16);
-    font-weight: var(--font-weight-400);
-    justify-content: space-between;
-    max-width: var(--header-search-pill-width);
-    min-width: var(--header-search-pill-min-width);
-    padding: var(--spacing-10) var(--spacing-20);
-    width: 100%;
+    padding: var(--spacing-08) var(--spacing-14);
   }
 
-  /* Suppress base underline indicator on search button */
-  header nav .nav-tools .menu-search > button::after {
+  header nav .nav-search .search-toggle .icon-search svg {
+    fill: var(--color-text-on-dark);
+    height: var(--spacing-20);
+    stroke: var(--color-text-on-dark);
+    width: var(--spacing-20);
+  }
+
+  /* Close icon — hidden by default, shown when expanded */
+  header nav .nav-search .search-toggle .icon-close {
     display: none;
   }
 
-  /* Icon — move to right end of pill */
-  header nav .nav-tools .menu-search > button .icon-search {
-    flex-shrink: 0;
-    order: var(--order-1);
+  header nav .nav-search .search-toggle .icon-close svg {
+    fill: var(--color-text-on-dark);
+    height: var(--spacing-20);
+    stroke: var(--color-text-on-dark);
+    width: var(--spacing-20);
   }
 
-  header nav .nav-tools .icon-search svg {
-    fill: var(--color-charcoal);
-    height: var(--spacing-20);
-    stroke: var(--color-charcoal);
-    width: var(--spacing-20);
+  /* Icon swap: expanded state */
+  header nav .nav-search .search-toggle[aria-expanded='true'] .icon-search {
+    display: none;
+  }
+
+  header nav .nav-search .search-toggle[aria-expanded='true'] .icon-close {
+    display: inline-flex;
+  }
+
+  /* Expanded state: input + close button row */
+  header nav .nav-search .search-expanded {
+    padding: var(--spacing-00) var(--spacing-14);
+  }
+
+  header nav .nav-search .search-expanded .search-inner-wrapper {
+    position: relative;
+  }
+
+  /* Search icon inside the input box — positioned at right side on desktop */
+  header nav .nav-search .search-expanded .search-inner-wrapper .icon-search {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    left: 90%;
+    pointer-events: none;
+    position: absolute;
+    top: var(--spacing-00);
+  }
+
+  /* rinvoq-hcp: search form always visible — override JS-set hidden attribute */
+  header nav .nav-search .search-expanded[hidden] {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-08);
+  }
+
+  header nav .nav-search .search-expanded .search-inner-wrapper .icon-search svg {
+    fill: var(--color-steel);
+    height: var(--spacing-16);
+    stroke: var(--color-steel);
+    width: var(--spacing-16);
+  }
+
+  header nav .nav-search .search-expanded .search-input {
+    background: var(--background-color);
+    border: var(--spacing-02) solid var(--color-border-default);
+    border-radius: var(--border-radius-button-primary);
+    box-sizing: border-box;
+    color: var(--text-color);
+    font-family: var(--body-font-family);
+    font-size: var(--font-size-16);
+    padding: var(--spacing-08) var(--spacing-16) var(--spacing-08) var(--spacing-40);
+    width: var(--header-search-pill-min-width);
+  }
+
+  /* Close (X) button — white X on dark bar */
+  header nav .nav-search .search-close {
+    color: var(--color-text-on-dark);
+    font-size: var(--font-size-20);
+    line-height: var(--spacing-20);
+    padding: var(--spacing-04) var(--spacing-08);
+  }
+
+  header nav .nav-search .search-close::before {
+    content: '✕';
   }
 
   /* Hide hamburger on desktop */
@@ -355,14 +464,13 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
     opacity: 1;
     overflow: visible;
     padding: var(--spacing-00) var(--spacing-35);
-    position: relative;
     visibility: visible;
     width: 100%;
     z-index: var(--z-index-60);
   }
 
   header .nav-wrapper nav .nav-sections .default-content-wrapper {
-    margin: 0 auto;
+    margin: var(--spacing-00) auto;
     max-width: var(--header-content-max-width);
     width: 100%;
   }
@@ -433,14 +541,6 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
     background-color: var(--color-gold);
   }
 
-  /* Search submenu — white bg, overrides gold */
-  /* stylelint-disable-next-line no-descending-specificity */
-  header nav .nav-tools .menu-search .submenu-level-1 {
-    background: var(--background-color);
-    border-top: none;
-    color: var(--text-color);
-  }
-
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group {
     background: transparent;
     display: flex;
@@ -470,7 +570,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li:hover {
-    background-color: #ffe673;
+    background-color: var(--color-lemon);
   }
 
   /* Pre-seeded plain li > a links (from language-links block content) */
