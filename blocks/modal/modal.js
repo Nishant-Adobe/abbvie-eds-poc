@@ -307,7 +307,9 @@ export default async function decorate(block) {
   }
 
   if (!fragmentPath) return;
-  try { fragmentPath = new URL(fragmentPath, window.location.origin).pathname; } catch { /* already a path */ }
+  try {
+    fragmentPath = new URL(fragmentPath, window.location.origin).pathname;
+  } catch { /* already a path */ }
 
   // Extract variants from block classes
   const variants = [...block.classList]
