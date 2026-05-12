@@ -16,7 +16,6 @@
     --color-brand-accent: #ffce00;
     --color-brand-accent-teal: #008481;
     --color-brand-accent-blue: #3860be;
-    --color-brand-accent-sky: #2196c8;
 
     /* ---- Color: Text ---- */
     --text-color: #404040;
@@ -27,8 +26,6 @@
     --color-text-black: #071d49;
     /* Live skyrizihcp.com renders footer text in off-white (not pure #fff) */
     --color-text-footer: #e2e4e3;
-    --color-charcoal: #25282a;
-    --color-text-compliance: #6c757d;
 
     /* ---- Color: Background ---- */
     --background-color: #fff;
@@ -50,10 +47,10 @@
     --color-safety-bar-border: #999;
 
     /* ---- Font: Family ---- */
-    --body-font-family: "Red Hat Display", sans-serif;
-    --heading-font-family: "Red Hat Display", sans-serif;
-    --heading-font-family-bold: "Red Hat Display", sans-serif;
-    --icon-font-family: "abbv-iconFont";
+    --body-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
+    --heading-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
+    --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+    --icon-font-family: 'abbv-iconFont';
 
     /* ---- Font: Size ---- */
     --font-size-body: 16px;
@@ -85,23 +82,50 @@
     --line-height-legal: 19.488px;
 
     /* ---- Border: Radius ---- */
-    --border-radius-button-primary: 6px;
+    --border-radius-button-primary: 30px;
+    --border-radius-button-secondary: 30px;
     --border-radius-button-tertiary: 10px;
     --border-radius-nav: 10px;
     --border-radius-safety-bar: 5px;
 
     /* ---- Button: Primary ---- */
-    --button-primary-color: #000;
-    --button-primary-bg: #ffce00;
-    --button-primary-bg-hover: #e0b600;
-    --button-primary-border: #fff;
-    --button-primary-padding: 20px 42px 20px 20px;
+    --button-primary-bg: #071d49;
+    --button-primary-color: #fff;
+    --button-primary-border: transparent;
+    --button-primary-padding: 14px 60px 14px 30px;
+    --button-primary-font-size: 0.875rem;
+    --button-primary-font-weight: 400;
+    --button-primary-hover-bg: #1f448c;
+    --button-primary-hover-color: #fff;
+    --button-primary-hover-border: #1f448c;
+
+    /* ---- Button: Secondary ---- */
+    --button-secondary-bg: transparent;
+    --button-secondary-color: #071d49;
+    --button-secondary-border: #071d49;
+    --button-secondary-padding: 14px 30px;
+    --button-secondary-hover-bg: #1f448c;
+    --button-secondary-hover-color: #fff;
+    --button-secondary-hover-border: #1f448c;
 
     /* ---- Button: Tertiary ---- */
-    --button-tertiary-color: #005272;
     --button-tertiary-bg: transparent;
-    --button-tertiary-border: #555;
-    --button-tertiary-padding: 16px 70px 16px 24px;
+    --button-tertiary-color: #071d49;
+    --button-tertiary-border: #071d49;
+    --button-tertiary-padding: 14px 30px;
+    --button-tertiary-font-size: 18px;
+    --button-tertiary-hover-bg: #071d49;
+    --button-tertiary-hover-color: #fff;
+
+    /* ---- Button: Plain ---- */
+    --button-plain-color: #1ba2da;
+    --button-plain-weight: 700;
+    --button-plain-hover-color: #fff;
+
+    /* ---- Toggle ---- */
+    --toggle-bg-off: #b3b3b3;
+    --toggle-bg-on: #071d49;
+    --toggle-thumb-color: #fff;
 
     /* ---- Link ---- */
     --link-color: #005272;
@@ -117,6 +141,11 @@
     --be-color-text: #21406d;
     --be-color-text-light: #21406d;
     --be-color-bar-bg: #25282a;
+    --be-color-rinvoq: #ffd41d;
+    --be-color-rinvoq-hover: #b8860b;
+    --be-color-skyrizi: #00a8e1;
+    --be-color-skyrizi-hover: #0088b5;
+    --be-color-humira: #931947;
     --be-font-body: "Red Hat Display", sans-serif;
     --be-font-heading: "Red Hat Display", sans-serif;
 
@@ -168,6 +197,28 @@
     /* Formulary: Disclaimer/Notice */
     --formulary-disclaimer-size: 13px;
     --formulary-disclaimer-width: 700px;
+    --formulary-recaptcha-size: 11px;
+
+    /* ---- Spacing: Common ---- */
+    --spacing-8: 8px;
+    --spacing-16: 16px;
+    --spacing-24: 24px;
+
+    /* ---- Clinical Data Panel Block ---- */
+    --cdp-color-text: #21406d;
+    --cdp-color-heading: #21406d;
+    --cdp-color-accent: #1ba2da;
+    --cdp-color-muted: #50535c;
+    --cdp-color-cta: #071d49;
+    --cdp-font-body: var(--body-font-family);
+    --cdp-font-heading: var(--heading-font-family);
+    --cdp-font-size-title: 22px;
+    --cdp-font-size-callout: 26px;
+    --cdp-font-size-body: 14px;
+    --cdp-font-size-small: 12.8px;
+    --cdp-line-height-callout: 30px;
+    --cdp-line-height-body: 18px;
+    --cdp-line-height-default: 16px;
     --formulary-recaptcha-size: 11px;   
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #005272;
@@ -179,6 +230,23 @@
   --color-brand-accent-teal: #008481;
   --color-brand-accent-blue: #3860be;
   --color-brand-accent-navy: #004c97;
+  --color-brand-accent-sky: #00a3df;
+  --color-brand-accent-cyan: #1ba2da;
+
+  /* ---- Color: Tabs ---- */
+  --color-tabs-control-bg: #21406d;
+  --color-tabs-underline: #1ba2da;
+  --color-tabs-text: #191c1d;
+  --tabs-underline-height: 0.23rem;
+
+  /* ---- Font: Tabs ---- */
+  --font-family-tabs-text: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+
+  /* ---- Gradient: Tabs ---- */
+  --gradient-tabs-panel: linear-gradient(90deg, #00a3df 0%, #85bde6 74%, #c3ae93 78%, #f39200 88%);
+
+  /* ---- Font: Tabs ---- */
+  --font-family-tabs-control: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
 
   /* ---- Color: Text ---- */
   --text-color: #404040;
