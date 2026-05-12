@@ -62,6 +62,7 @@ function buildSliderContainer(afterImg, beforeImg, opts = {}) {
   const handle = document.createElement('div');
   handle.className = 'image-compare-handle';
   handle.setAttribute('role', 'slider');
+  handle.setAttribute('aria-label', 'Image comparison slider');
   handle.setAttribute('aria-valuemin', '0');
   handle.setAttribute('aria-valuemax', '100');
   handle.setAttribute('aria-valuenow', String(Math.round((opts.startPct ?? 0.5) * 100)));
@@ -119,6 +120,7 @@ function buildThumbnails(images) {
     const btn = document.createElement('button');
     btn.className = 'image-compare-thumb';
     if (i === 0) btn.classList.add('is-active');
+    btn.setAttribute('aria-label', img.label || img.subLabel || `Image ${i + 1}`);
 
     const thumbImg = cloneImg(sourceImg);
     if (thumbImg) {
@@ -302,8 +304,7 @@ function decorateGallery(block, cells, startPct) {
     if (description) {
       const desc = document.createElement('div');
       desc.className = 'image-compare-description';
-      // XSS-safe: innerHTML sourced from AEM authored content, not user input
-      desc.innerHTML = description;
+      desc.replaceChildren(document.createRange().createContextualFragment(description));
       content.appendChild(desc);
     }
 
@@ -364,7 +365,7 @@ function decorateGallery(block, cells, startPct) {
     return { ...slider, startPct, hasPrompt: false };
   }
 
-  // Rinvoq toggle layout
+  // Toggle/pill-button layout (single-column with tabs)
   const wrapper = document.createElement('div');
   wrapper.className = 'image-compare-wrapper';
 
@@ -377,8 +378,7 @@ function decorateGallery(block, cells, startPct) {
   if (description) {
     const galleryContent = document.createElement('div');
     galleryContent.className = 'image-compare-gallery-content';
-    // XSS-safe: innerHTML sourced from AEM authored content, not user input
-    galleryContent.innerHTML = description;
+    galleryContent.replaceChildren(document.createRange().createContextualFragment(description));
     wrapper.appendChild(galleryContent);
   }
 
@@ -410,9 +410,7 @@ function buildCaptionLayout(block, afterImg, beforeImg, opts, startPct) {
   if (opts.captionHtml) {
     const caption = document.createElement('div');
     caption.className = 'image-compare-gallery-content';
-    // XSS-safe: innerHTML sourced from AEM authored content
-    // via cells[COL.description], not user input
-    caption.innerHTML = opts.captionHtml;
+    caption.replaceChildren(document.createRange().createContextualFragment(opts.captionHtml));
     block.appendChild(caption);
   }
 
@@ -524,6 +522,26 @@ function setupSlider(container, beforeWrap, handle, startPct, hasPrompt) {
     dragging = false;
     container.releasePointerCapture(e.pointerId);
   });
+
+  handle.addEventListener('keydown', (e) => {
+    const cur = parseFloat(
+      container.style.getPropertyValue('--compare-position') || '50%',
+    ) / 100;
+    const step = e.shiftKey ? 0.1 : 0.05;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      setPosition(cur - step);
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      setPosition(cur + step);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setPosition(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setPosition(1);
+    }
+  });
 }
 
 /* --- Legacy format --- */
@@ -539,8 +557,8 @@ function decorateLegacy(block, cells) {
 
   if (hasExtendedFields) {
     const opts = {
-      beforeLabel: cells[3]?.textContent?.trim() || 'BEFORE | WEEK 0',
-      afterLabel: cells[4]?.textContent?.trim() || 'AFTER | WEEK 16',
+      beforeLabel: cells[3]?.textContent?.trim() || 'BEFORE',
+      afterLabel: cells[4]?.textContent?.trim() || 'AFTER',
       patientName: cells[6]?.textContent?.trim() || '',
     };
     const parts = buildWrapperLayout(block, afterImg, beforeImg, opts, startPct);
@@ -609,8 +627,8 @@ function decorateKeyValue(block, rows) {
 
   if (!hasToggle) {
     const opts = {
-      beforeLabel: getText(data.beforeLabelPrefix) || 'BEFORE | WEEK 0',
-      afterLabel: getText(data.afterLabelPrefix) || 'AFTER | WEEK 16',
+      beforeLabel: getText(data.beforeLabelPrefix) || 'BEFORE',
+      afterLabel: getText(data.afterLabelPrefix) || 'AFTER',
       patientName: firstImg?.label || '',
     };
     const parts = buildWrapperLayout(block, afterImg, beforeImg, opts, 0.5);
@@ -663,7 +681,7 @@ function detectFormat(block) {
   const firstCells = [...firstRow.children];
 
   // UE model: single row with many cells (all fields flattened into columns)
-  if (rows.length === 1 && firstCells.length > 10) return 'model';
+  if (rows.length === 1 && firstCells.length >= 10) return 'model';
   // Legacy: few rows, first cell contains an image (before/after pair)
   if (rows.length <= 7 && firstCells[0]?.querySelector('img')) return 'legacy';
   // Key-value: multiple rows with exactly 2 columns (label + value pairs)
@@ -671,13 +689,11 @@ function detectFormat(block) {
     && firstRow.children[0]?.textContent?.trim()) return 'keyvalue';
   // Model-rows: UE renders each field as its own row (single-column layout)
   if (rows.length > 10 && firstCells.length === 1) return 'model-rows';
-  // Fallback for shorter UE model output — require at least 10 cells to avoid false positives
-  if (rows.length === 1 && firstCells.length >= 10) return 'model';
 
   return 'legacy';
 }
 
-export default async function decorate(block) {
+export default function decorate(block) {
   const format = detectFormat(block);
   if (!format) return;
 
