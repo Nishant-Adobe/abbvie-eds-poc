@@ -114,7 +114,7 @@ function getOverlay() {
 function setCookie(name, value, days) {
   const d = new Date();
   d.setTime(d.getTime() + days * 86400000);
-  document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+  document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/;SameSite=Lax`;
 }
 
 function getCookie(name) {
@@ -210,7 +210,7 @@ function registerExitIntent(trigger, variants) {
     const modal = exitModals.find(
       (m) => !hasSeenModal(m.trigger.dataset.modalId, m.variants),
     );
-    if (modal) openModal(modal.trigger, modal.variants);
+    if (modal) openModal(modal.trigger, modal.variants).catch(() => {});
   }, { once: true });
 }
 
@@ -218,14 +218,18 @@ function registerExitIntent(trigger, variants) {
 /* data-modal-id trigger support                                       */
 /* ------------------------------------------------------------------ */
 
+let globalTriggerAc;
+
 function setupGlobalTriggers() {
+  if (globalTriggerAc) globalTriggerAc.abort();
+  globalTriggerAc = new AbortController();
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-modal-id]');
     if (!trigger) return;
     e.preventDefault();
     const { modalId } = trigger.dataset;
     document.dispatchEvent(new CustomEvent('modal:open', { detail: { modalId } }));
-  });
+  }, { signal: globalTriggerAc.signal });
 }
 
 let globalTriggersSetup = false;
