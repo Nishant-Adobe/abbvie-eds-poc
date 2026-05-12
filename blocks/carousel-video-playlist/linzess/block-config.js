@@ -28,17 +28,34 @@ function isItemRow(row) {
 
 function parseConfig(block) {
   const cfgRows = [...block.children].filter((r) => !isItemRow(r));
-  // cfgRows[0]=classes, [1]=heading, [2]=description,
-  // [3]=accountId, [4]=playlistId, [5]=playerId, [6]=maxVisible
+  // UE model order: [0]=classes, [1]=heading, [2]=description,
+  // [3]=maxVisible, [4]=accountId, [5]=playlistId, [6]=playerId
   const cellText = (i) => cfgRows[i]?.firstElementChild?.textContent?.trim() ?? '';
   const cellHtml = (i) => cfgRows[i]?.firstElementChild?.innerHTML?.trim() ?? '';
+
+  // Detect field order: if [3] looks like an account ID (8+ digits) or maxVisible
+  const field3 = cellText(3);
+  const field3IsAccountId = /^\d{8,}$/.test(field3);
+
+  if (field3IsAccountId) {
+    // Legacy order: [3]=accountId, [4]=playlistId, [5]=playerId, [6]=maxVisible
+    return {
+      heading: cellText(1),
+      description: cellHtml(2),
+      accountId: cellText(3),
+      playlistId: cellText(4),
+      playerId: cellText(5) || 'default',
+      maxVisible: parseInt(cellText(6), 10) || 0,
+    };
+  }
+  // UE model order: [3]=maxVisible, [4]=accountId, [5]=playlistId, [6]=playerId
   return {
     heading: cellText(1),
     description: cellHtml(2),
-    accountId: cellText(3),
-    playlistId: cellText(4),
-    playerId: cellText(5) || 'default',
-    maxVisible: parseInt(cellText(6), 10) || 0,
+    maxVisible: parseInt(cellText(3), 10) || 0,
+    accountId: cellText(4),
+    playlistId: cellText(5),
+    playerId: cellText(6) || 'default',
   };
 }
 
