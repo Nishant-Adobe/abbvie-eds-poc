@@ -586,31 +586,6 @@ function buildMavyretSectionCardColumnFromUeRow(wrapper) {
 }
 
 /**
- * Fiesta band + inner tree (mavyret-section-cards.html 517-596).
- * @param {HTMLElement|null} introRichTextOuter
- * @param {HTMLElement[]} cardColumns
- */
-function buildMavyretSectionCardsBackgroundShell(introRichTextOuter, cardColumns) {
-  const wrap = document.createElement('div');
-  wrap.className = 'background-fiesta-gradient';
-  const inner = document.createElement('div');
-  if (introRichTextOuter) {
-    inner.append(introRichTextOuter);
-  }
-  const rowOuter = document.createElement('div');
-  rowOuter.className = 'container parbase';
-  const flexEven = document.createElement('div');
-  flexEven.className = 'abbv-container flex-even section';
-  cardColumns.forEach((col) => {
-    flexEven.append(col);
-  });
-  rowOuter.append(flexEven);
-  inner.append(rowOuter);
-  wrap.append(inner);
-  return wrap;
-}
-
-/**
  * UE column row → mavyret-cta-cards.html column (container > abbv-container > rich-text + cta).
  * Cell order: [0] link, [1] icon, [2] title, [3] body, [4] CTA label, …
  * @param {HTMLElement} wrapper
@@ -1211,10 +1186,15 @@ export default function decorate(block) {
     }
     if (cardCols.length === 0) return;
 
-    const shell = buildMavyretSectionCardsBackgroundShell(introEl, cardCols);
     wrappers.forEach((w) => {
       w.remove();
     });
-    block.append(shell);
+
+    const flexEven = document.createElement('div');
+    flexEven.className = 'abbv-container flex-even section';
+    cardCols.forEach((col) => {
+      flexEven.append(col);
+    });
+    block.append(flexEven);
   }
 }
