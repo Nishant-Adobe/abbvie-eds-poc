@@ -312,7 +312,7 @@ body.modal-is-open {
   --modal-dialog-border: none;
   --modal-dialog-border-radius: 12px;
   --modal-close-size: 40px;
-  --modal-close-font-size: 22px;
+  --modal-close-font-size: var(--font-size-h3, 22px);
 }
 
 /* Close button — green circle with black X */
@@ -321,7 +321,7 @@ body.modal-is-open {
   background: var(--color-green-flash, #76bd22);
   color: var(--color-black, #000) !important;
   border-radius: 50%;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold, 700);
 }
 
 .modal-header .modal-close:hover {
@@ -354,8 +354,8 @@ body.modal-is-open {
 .modal-content h2 {
   color: var(--color-black, #000);
   font-family: var(--body-font-family);
-  font-weight: 400;
-  font-size: 1.75rem;
+  font-weight: var(--font-weight-regular, 400);
+  font-size: var(--font-size-h2, 1.75rem);
   line-height: 1.3;
   margin: 0 0 24px;
   text-align: center;
@@ -363,7 +363,7 @@ body.modal-is-open {
 
 .modal-content h2 strong {
   font-family: var(--heading-font-family-bold, var(--heading-font-family));
-  font-weight: 700;
+  font-weight: var(--font-weight-bold, 700);
 }
 
 /* Body text */
@@ -371,7 +371,7 @@ body.modal-is-open {
 .modal-content p {
   color: var(--color-black, #000);
   font-family: var(--body-font-family);
-  font-size: 14px;
+  font-size: var(--font-size-body, 14px);
   line-height: 1.6;
   margin: 0 0 12px;
 }
@@ -387,7 +387,7 @@ body.modal-is-open {
 .modal-content ol,
 .modal-content ul {
   padding-left: 20px;
-  font-size: 13px;
+  font-size: var(--font-size-body-small, 13px);
   line-height: 1.5;
   color: var(--color-black, #000);
   margin: 4px 0 16px;
@@ -396,7 +396,7 @@ body.modal-is-open {
 /* Compliance code */
 
 .modal-content p:last-of-type {
-  font-size: 11px;
+  font-size: var(--font-size-body-xs, 11px);
   color: var(--color-text-compliance);
   margin-top: 20px;
 }
@@ -409,9 +409,9 @@ body.modal-is-open {
   justify-content: center;
   padding: 8px 16px;
   border-radius: 0;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold, 600);
   font-family: var(--body-font-family);
-  font-size: 18px;
+  font-size: var(--font-size-h4, 18px);
   text-decoration: none;
   margin-right: 12px;
   margin-top: 12px;
@@ -440,7 +440,7 @@ body.modal-is-open {
   padding: 0;
   border: none;
   border-radius: 0;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular, 400);
   font-size: inherit;
   color: var(--color-fiesta, #e65400) !important;
   background: none;

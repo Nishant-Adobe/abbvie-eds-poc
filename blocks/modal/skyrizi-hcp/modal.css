@@ -312,7 +312,7 @@ body.modal-is-open {
   --modal-dialog-border: none;
   --modal-dialog-border-radius: 8px;
   --modal-close-size: 44px;
-  --modal-close-font-size: 22px;
+  --modal-close-font-size: var(--font-size-h3, 22px);
 }
 
 /* Close button — white circle with sky blue X + shadow */
@@ -321,8 +321,8 @@ body.modal-is-open {
   background: var(--background-color, #fff);
   color: var(--color-brand-accent-sky, #2196c8) !important;
   border-radius: 50%;
-  font-weight: 300;
-  font-size: 26px;
+  font-weight: var(--font-weight-light, 300);
+  font-size: var(--font-size-h2, 26px);
   width: 48px;
   height: 48px;
   box-shadow: 0 2px 12px rgb(0 0 0 / 10%);
@@ -347,8 +347,8 @@ body.modal-is-open {
 .modal-content h2 {
   color: var(--color-charcoal, #25282a);
   font-family: var(--heading-font-family);
-  font-weight: 700;
-  font-size: 1.75rem;
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-h2, 1.75rem);
   line-height: 1.2;
   margin: 0 0 24px;
   text-align: center;
@@ -359,7 +359,7 @@ body.modal-is-open {
 .modal-content p {
   color: var(--text-color, #404040);
   font-family: var(--body-font-family);
-  font-size: 15px;
+  font-size: var(--font-size-body, 15px);
   line-height: 1.6;
   margin: 0 0 16px;
   text-align: center;
@@ -368,7 +368,7 @@ body.modal-is-open {
 /* Compliance code */
 
 .modal-content p:last-of-type {
-  font-size: 11px;
+  font-size: var(--font-size-body-xs, 11px);
   color: var(--color-text-compliance);
   margin-top: 20px;
 }
@@ -390,9 +390,9 @@ body.modal-is-open {
   min-width: 160px;
   padding: 16px 48px;
   border-radius: 30px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold, 700);
   font-family: var(--body-font-family);
-  font-size: 15px;
+  font-size: var(--font-size-body, 15px);
   text-decoration: none;
   text-transform: uppercase;
   margin-right: 16px;
@@ -436,7 +436,7 @@ body.modal-is-open {
   padding: 0;
   border: none;
   border-radius: 0;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular, 400);
   font-size: inherit;
   color: var(--color-brand-primary, #005272) !important;
   background: none;
