@@ -880,29 +880,57 @@
 .section-nav {
   --section-nav-bg: var(--background-color);
   --section-nav-border: var(--color-border-default);
-  --section-nav-link-color: var(--color-text-heading);
+  --section-nav-link-color: var(--text-color);
   --section-nav-link-hover: var(--color-brand-primary);
   --section-nav-active-color: var(--color-brand-primary);
   --section-nav-open-bg: var(--color-brand-accent);
   --section-nav-open-text: var(--color-charcoal);
+  --font-size-nav: var(--body-font-size-xs, 1.4rem);
+
+  border-bottom: none;
 }
 
 /* ── Links ───────────────────────────────────────────────────────────── */
 
 .section-nav a {
-  font-family: var(--font-family-semibold);
+  color: var(--section-nav-link-color);
+  font-family: var(--heading-font-family);
   font-size: var(--font-size-nav, 16px);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-heading);
+  position: relative;
+  text-decoration: none;
 }
 
-/* Active text stays charcoal — only the border-bottom signals active */
+/* No color shift on hover */
+
+.section-nav a:hover {
+  color: var(--section-nav-link-color);
+}
+
+/* Focus/focus-visible: plum glow on ::before, inset by horizontal padding so glow excludes left/right padding */
+
+.section-nav a:focus,
+.section-nav a:focus-visible {
+  outline: none;
+}
+
+.section-nav a:focus::before,
+.section-nav a:focus-visible::before {
+  box-shadow: 0 0 5px 5px var(--color-plum);
+  content: '';
+  inset: 0 var(--spacing-12, 12px);
+  pointer-events: none;
+  position: absolute;
+}
+
+/* Active text stays iron — only the border-bottom signals active */
 
 .section-nav a.is-active {
   border-bottom-color: var(--section-nav-active-color);
   color: var(--section-nav-link-color);
 }
 
-/* ── Sticky stuck: suppress default box-shadow ───────────────────────── */
+/* ── Sticky stuck: no shadow on mobile, live-site shadow on desktop ──── */
 
 .section-nav.sticky.is-stuck {
   box-shadow: none;
@@ -922,12 +950,13 @@
   align-items: stretch;
   background: none;
   border: none;
+  border-radius: 0;
   color: var(--section-nav-link-color);
   cursor: pointer;
   display: flex;
-  font-family: var(--font-family-semibold);
+  font-family: var(--heading-font-family);
   font-size: var(--font-size-nav, 16px);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-heading);
   justify-content: space-between;
   margin: 0;
   padding: 0;
@@ -939,7 +968,7 @@
 .section-nav.mobile-menu .section-nav-toggle::before {
   align-self: center;
   content: 'ON THIS PAGE:';
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  padding: var(--spacing-8, 8px) var(--spacing-24, 24px) var(--spacing-12, 12px);
 }
 
 /* ── Gold OPEN / CLOSE button (mobile toggle right side) ─────────────── */
@@ -948,15 +977,15 @@
   align-items: center;
   align-self: stretch;
   background-color: var(--section-nav-open-bg);
+  border-radius: 0;
   color: var(--section-nav-open-text);
   content: 'OPEN';
   display: flex;
   font-family: var(--heading-font-family);
   font-size: var(--font-size-nav, 16px);
-  font-weight: var(--font-weight-heading);
+  font-weight: var(--font-weight-body, 400);
   justify-content: center;
-  min-width: var(--spacing-80, 80px);
-  padding: 0 var(--spacing-16, 16px);
+  padding: 0 var(--spacing-10);
 }
 
 .section-nav.mobile-menu.is-open .section-nav-toggle::after {
@@ -964,6 +993,10 @@
 }
 
 /* ── Dropdown list ───────────────────────────────────────────────────── */
+
+.section-nav.mobile-menu nav ul {
+  border-top: none;
+}
 
 .section-nav.mobile-menu nav ul li {
   border-bottom: none;
@@ -974,29 +1007,37 @@
 }
 
 .section-nav.mobile-menu nav a {
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  padding: var(--spacing-8, 8px) var(--spacing-24, 24px) var(--spacing-12, 12px);
 }
 
-/* Active: plum border-bottom, charcoal text, no left border */
+/* Active: plum underline (text-width only), no left border */
 
 .section-nav.mobile-menu nav a.is-active {
-  border-bottom: 2px solid var(--section-nav-active-color);
+  border-bottom: none;
   border-left: none;
   color: var(--section-nav-link-color);
   padding-left: var(--spacing-24, 24px);
+  text-decoration: underline;
+  text-decoration-color: var(--section-nav-active-color);
+  text-decoration-thickness: 4px;
+  text-underline-offset: var(--spacing-0, 6px);
 }
 
 /* ── Desktop ≥768px ──────────────────────────────────────────────────── */
 
 @media (width >= 768px) {
+  .section-nav.sticky.is-stuck {
+    box-shadow: 0 2px 1em rgb(0 0 0 / 50%);
+  }
+
   /* "ON THIS PAGE:" prefix label in the nav row */
   .section-nav nav::before {
     align-self: center;
     color: var(--section-nav-link-color);
     content: 'ON THIS PAGE:';
-    font-family: var(--font-family-semibold);
+    font-family: var(--heading-font-family);
     font-size: var(--font-size-nav, 16px);
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-heading);
     padding: 0 var(--spacing-16, 16px);
     white-space: nowrap;
   }
@@ -1030,17 +1071,22 @@
   .section-nav.mobile-menu nav a {
     border-bottom: 2px solid transparent;
     display: inline-block;
-    padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+    padding: var(--spacing-12) var(--spacing-12);
     text-align: unset;
     width: auto;
+    font-size: var(--body-font-size-xs);
   }
 
-  /* Active on desktop: plum border-bottom, charcoal text, no left border */
+  /* Active on desktop: plum underline (text-width only), no left border */
   .section-nav.mobile-menu nav a.is-active {
-    border-bottom: 2px solid var(--section-nav-active-color);
+    border-bottom: none;
     border-left: none;
     color: var(--section-nav-link-color);
+    margin: var(--spacing-4, 4px);
     padding-left: var(--spacing-16, 16px);
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: var(--section-nav-active-color);
+    text-decoration-thickness: 2px;
+    text-underline-offset: var(--spacing-20, 20px);
   }
 }

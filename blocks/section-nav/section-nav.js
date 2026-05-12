@@ -146,6 +146,12 @@ export default function decorate(block) {
       const target = document.getElementById(id);
       if (!target) return;
       e.preventDefault();
+      // Set active immediately on click so the last section (which may never
+      // enter the IntersectionObserver zone) also gets the is-active class.
+      links.forEach((l) => l.classList.remove('is-active'));
+      a.classList.add('is-active');
+      const activeLabelEl = block.querySelector('.section-nav-current-label');
+      if (activeLabelEl) activeLabelEl.textContent = a.textContent;
       window.scrollTo({
         top: target.getBoundingClientRect().top + window.scrollY - getOffset(),
         behavior: 'smooth',
