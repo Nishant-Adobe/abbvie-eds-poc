@@ -312,11 +312,13 @@ export default async function decorate(block) {
   block.dataset.fragmentPath = fragmentPath;
 
   if (modalId) {
+    const ac = new AbortController();
     document.addEventListener('modal:open', (e) => {
       if (e.detail?.modalId === modalId) {
         openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
       }
-    });
+    }, { signal: ac.signal });
+    block.modalCleanup = () => ac.abort();
   }
 
   block.innerHTML = '';
@@ -338,9 +340,10 @@ export default async function decorate(block) {
 
   if (isAutoOpen) {
     if (!hasSeenModal(modalId, variants)) {
-      setTimeout(() => {
+      const timerId = setTimeout(() => {
         openModal({ dataset: { fragmentPath, modalId }, fragmentPath }, variants);
       }, 500);
+      block.modalAutoOpenTimer = timerId;
     }
     return;
   }

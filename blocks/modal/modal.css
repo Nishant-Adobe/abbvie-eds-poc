@@ -29,8 +29,8 @@
 /* ---- Overlay ---- */
 
 .modal-overlay {
-  --modal-close-color: var(--color-brand-primary, #333);
-  --modal-close-hover-color: var(--color-brand-primary-dark, #000);
+  --modal-close-color: var(--modal-close-color-default, #333);
+  --modal-close-hover-color: var(--modal-close-hover-color-default, #000);
 
   display: none;
   position: fixed;
@@ -253,7 +253,7 @@ body.modal-is-open {
    ================================================================== */
 
 .modal-overlay.modal-information .modal-dialog {
-  border-left: 4px solid var(--color-brand-accent, var(--color-brand-primary, #333));
+  border-left: 4px solid var(--modal-information-accent-color, #333);
 }
 
 /* ==================================================================
