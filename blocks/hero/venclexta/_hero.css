@@ -268,14 +268,18 @@
   border: 1px solid var(--color-brand-accent);
 }
 
-.hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
+.hero > div:first-child {
+  min-height: unset;
+}
+
+.hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
   position: absolute;
   right: 2rem;
   bottom: 1.6rem;
   z-index: 3;
 }
 
-.hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) p {
+.hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) p {
   margin: 0;
   padding: 0;
   color: var(--color-text-on-dark);
@@ -285,10 +289,6 @@
   font-weight: 700;
   line-height: 1.2;
   text-shadow: 0 1px 2px rgb(0 0 0 / 60%);
-}
-
-.hero > div:first-child {
-  min-height: unset;
 }
 
 @media (width >=744px) {
@@ -313,7 +313,7 @@
     width: calc(100% - 14rem);
   }
 
-  .hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
+  .hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
     right: 7rem;
     bottom: 2rem;
   }
@@ -359,7 +359,7 @@
     width: 100%;
   }
 
-  .hero.full>div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
+  .hero.full > div:not(:first-child, .hero-text-container, .hero-indication):has(> div > p) {
     right: 5.5rem;
     bottom: 2rem;
   }
@@ -429,8 +429,13 @@
   }
 }
 
+/* No-padding hero: remove fixed min-height */
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) {
+  min-height: unset;
+}
+
 /* No-padding hero: text container as full-height flex overlay */
-.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) .hero-text-container {
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) .hero-text-container {
   display: flex;
   align-items: center;
   position: absolute;
@@ -442,41 +447,36 @@
 }
 
 /* No-padding hero: unset absolute positioning on image/picture/img */
-.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child,
-.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child picture,
-.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered)> :where(div):first-child img {
-  position: unset;
-}
-
-/* No-padding hero: remove fixed min-height */
-.hero.no-padding:not(.full):not(.profile):not(.landing):not(.video):not(.compact):not(.split):not(.solid):not(.centered) {
+.hero.no-padding img {
+  border-radius: 0;
   min-height: unset;
 }
 
-/* Full hero: bottom footnote/legal row — centered with right-aligned text */
-.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) p {
-  font-size: 15px;
-  font-weight: 700;
-  max-width: 1180px;
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) > :where(div):first-child,
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) > :where(div):first-child picture,
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) > :where(div):first-child img {
+  position: unset;
 }
 
-.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
+/* Full hero: bottom footnote/legal row — centered with right-aligned text */
+.hero.full > div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
   bottom: 2rem;
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p)>div {
+.hero.full > div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) > div {
   width: 100%;
   max-width: 1180px;
   padding-inline: 20px;
   text-align: right;
 }
 
-.hero.no-padding img {
-  border-radius: 0;
-  min-height: unset;
+.hero.full > div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) p {
+  font-size: 15px;
+  font-weight: 700;
+  max-width: 1180px;
 }
 
 /* Full hero: mobile image caption font size */
@@ -490,4 +490,3 @@
     min-height: 300px;
   }
 }
-
