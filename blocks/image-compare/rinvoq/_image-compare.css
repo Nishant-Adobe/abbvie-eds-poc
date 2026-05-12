@@ -10,10 +10,13 @@
   --image-compare-prompt-max-width: 160px;
   --image-compare-tabs-radius: 5px;
   --image-compare-tab-inner-radius: 3px;
+  --image-compare-thumb-width: 130px;
+  --image-compare-thumb-width-mobile: 100px;
+  --image-compare-thumb-label-bottom: 28px;
 }
 
 .image-compare.gallery {
-  max-width: 765px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -112,7 +115,7 @@
   color: var(--color-brand-primary);
   border: none;
   border-radius: 0;
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weight-button);
   padding: var(--spacing-10) var(--spacing-20);
   cursor: pointer;
@@ -135,7 +138,7 @@
 
 .image-compare .image-compare-thumbnails {
   display: flex;
-  gap: var(--spacing-16);
+  gap: var(--spacing-10);
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: var(--spacing-16) 0;
@@ -147,7 +150,7 @@
 }
 
 .image-compare .image-compare-thumb {
-  width: 130px;
+  width: var(--image-compare-thumb-width-mobile);
   height: auto;
   border: 3px solid transparent;
   border-radius: var(--border-radius-m);
@@ -177,18 +180,18 @@
 
 .image-compare .image-compare-thumb-label {
   display: block;
-  font-size: var(--font-size-body-small);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weight-button);
   color: var(--color-text-on-dark);
   position: absolute;
-  bottom: 28px;
+  bottom: var(--image-compare-thumb-label-bottom);
   left: var(--spacing-08);
   text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
 .image-compare .image-compare-thumb-sublabel {
   display: block;
-  font-size: var(--font-size-body-xs);
+  font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-body);
   color: var(--color-text-on-dark);
   position: absolute;
@@ -247,16 +250,16 @@
   display: none;
 }
 
-@media (width <= 768px) {
+@media (min-width: 769px) {
   .image-compare.gallery {
-    max-width: 100%;
+    max-width: var(--image-compare-gallery-max-width);
   }
 
   .image-compare .image-compare-thumbnails {
-    gap: var(--spacing-10);
+    gap: var(--spacing-16);
   }
 
   .image-compare .image-compare-thumb {
-    width: 100px;
+    width: var(--image-compare-thumb-width);
   }
 }
