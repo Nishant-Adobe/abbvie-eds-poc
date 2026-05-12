@@ -179,6 +179,7 @@ async function openModal(trigger, variants = []) {
     content.innerHTML = '';
     if (fragment) {
       [...fragment.childNodes].forEach((node) => content.append(node));
+      if (modalId) markModalSeen(modalId, variants);
     } else {
       content.innerHTML = '<p class="modal-error" role="alert">Unable to load content.</p>';
     }
@@ -199,9 +200,6 @@ async function openModal(trigger, variants = []) {
   } catch {
     content.innerHTML = '<p class="modal-error" role="alert">Unable to load content.</p>';
   }
-
-  // Mark as seen for once/once-session variants
-  if (modalId) markModalSeen(modalId, variants);
 
   const focusable = getFocusable(dialog);
   if (focusable.length) focusable[0].focus();
