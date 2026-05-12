@@ -3,49 +3,64 @@
 
 /* =========================================================
    IMAGE COMPARE — SKYRIZI HCP GALLERY VARIANT
-   All styling driven by --ic-* tokens from brand tokens.css
+   Pixel-perfect match to skyrizihcp.com before-and-after page
    ========================================================= */
 
-/* Section container override — allow gallery to bleed full width */
+/* Block-scoped design tokens — avoids hardcoded hex values throughout */
+.image-compare {
+  --ic-navy: #071d49;
+  --ic-navy-dark: #051331;
+  --ic-blue: #1398d1;
+  --ic-blue-rule: #1ba2da;
+  --ic-blue-hover: #1f448c;
+  --ic-body-color: #21406d;
+  --ic-gallery-bg: var(--color-skyrizi-gallery-bg, #d1f1fc);
+  --ic-thumbnail-bg: #add8e6;
+  --ic-font-condensed: "Univers LT W01_57 Condensed", "Arial Narrow", sans-serif;
+  --ic-font-bold: "Univers LT W01_67 Bold_1476016", "Arial Narrow", sans-serif;
+  --ic-layout-max-width: 1160px;
+}
+
+/* Section container override — allow gallery to bleed full width.
+   Specificity is raised with main > .section to avoid needing !important. */
 main > .section.image-compare-container {
-  max-width: none !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  margin-bottom: 0 !important;
-  padding: 0 !important;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  padding: 0;
   overflow: visible;
 }
 
 .image-compare.gallery {
   background-color: var(--ic-gallery-bg);
-  padding: var(--ic-gallery-padding);
-  border-top: var(--ic-gallery-border-top);
+  padding: 40px 20px;
   border-radius: 0;
   width: 100%;
   box-sizing: border-box;
-  font-family: var(--ic-font-body);
-  font-size: var(--ic-description-font-size);
-  color: var(--ic-color-text);
+  font-family: var(--ic-font-condensed);
+  font-size: 14px;
+  color: var(--ic-body-color);
   margin-bottom: 0;
 }
 
 .image-compare .image-compare-layout {
   display: flex;
   flex-direction: row;
-  max-width: var(--ic-card-max-width);
+  max-width: var(--ic-layout-max-width);
   margin: 0 auto;
-  padding: var(--ic-card-padding);
-  background: var(--ic-card-bg);
-  border-radius: var(--ic-card-radius);
-  box-shadow: var(--ic-card-shadow);
+  padding: 15px;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
   gap: 0;
 }
 
 .image-compare .image-compare-content {
   flex: 0 0 45%;
   max-width: 45%;
-  padding: var(--ic-content-padding);
-  padding-right: var(--ic-content-padding-right);
+  padding: 20px;
+  padding-right: 64px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -54,9 +69,9 @@ main > .section.image-compare-container {
 .image-compare .image-compare-eyebrow {
   display: block;
   font-family: var(--ic-font-bold);
-  font-size: var(--ic-eyebrow-font-size);
-  font-weight: var(--ic-eyebrow-weight);
-  color: var(--ic-eyebrow-color);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ic-navy);
   text-transform: uppercase;
   line-height: 20px;
   margin-bottom: 16px;
@@ -67,17 +82,17 @@ main > .section.image-compare-container {
   position: relative;
   top: 8px;
   display: block;
-  width: var(--ic-eyebrow-accent-width);
-  height: var(--ic-eyebrow-accent-height);
-  background: var(--ic-eyebrow-accent-color);
+  width: 25px;
+  height: 2px;
+  background: var(--ic-navy);
 }
 
 .image-compare .image-compare-heading {
   font-family: var(--ic-font-bold);
-  font-size: var(--ic-heading-font-size);
-  line-height: var(--ic-heading-line-height);
-  font-weight: var(--ic-heading-font-weight);
-  color: var(--ic-heading-color);
+  font-size: 2.75rem;
+  line-height: 40px;
+  font-weight: 400;
+  color: var(--ic-blue);
   margin: 0 0 16px;
 }
 
@@ -87,15 +102,15 @@ main > .section.image-compare-container {
   margin-top: 20px;
   margin-bottom: 16px;
   width: 100%;
-  height: var(--ic-separator-height);
+  height: 1px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='1'%3E%3Cline x1='0' y1='0.5' x2='3' y2='0.5' stroke='%231ba2da' stroke-width='1'/%3E%3C/svg%3E") repeat-x;
 }
 
 .image-compare .image-compare-description {
-  font-family: var(--ic-font-body);
-  font-size: var(--ic-description-font-size);
-  line-height: var(--ic-description-line-height);
-  color: var(--ic-description-color);
+  font-family: var(--ic-font-condensed);
+  font-size: 0.875rem;
+  line-height: 18px;
+  color: var(--ic-navy);
   letter-spacing: 0;
   margin-bottom: 8px;
 }
@@ -110,14 +125,14 @@ main > .section.image-compare-container {
   align-self: flex-start;
   gap: 10px;
   margin-top: 16px;
-  background: var(--ic-cta-bg);
-  color: var(--ic-cta-color);
-  padding: var(--ic-cta-padding);
-  border-radius: var(--ic-cta-radius);
+  background: var(--ic-navy);
+  color: #fff;
+  padding: 14px 30px;
+  border-radius: 5px;
   font-family: var(--ic-font-bold);
-  font-size: var(--ic-cta-font-size);
-  font-weight: var(--ic-cta-font-weight);
-  line-height: var(--ic-cta-font-size);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 0.875rem;
   text-decoration: none;
   text-transform: uppercase;
   transition: background 0.3s linear;
@@ -130,9 +145,9 @@ main > .section.image-compare-container {
   content: '';
   display: inline-block;
   flex-shrink: 0;
-  width: var(--ic-cta-icon-size);
-  height: var(--ic-cta-icon-size);
-  border: var(--ic-cta-icon-border);
+  width: 22px;
+  height: 22px;
+  border: 2px solid #fff;
   border-radius: 50%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
   background-size: 9px;
@@ -143,7 +158,7 @@ main > .section.image-compare-container {
 }
 
 .image-compare .image-compare-cta:hover {
-  background: var(--ic-cta-hover-bg);
+  background: var(--ic-blue-hover);
 }
 
 .image-compare .image-compare-slider-wrapper {
@@ -158,7 +173,7 @@ main > .section.image-compare-container {
   height: auto;
   aspect-ratio: auto;
   margin-bottom: 0;
-  border-radius: var(--ic-container-radius);
+  border-radius: 0;
   border: none;
   padding: 0;
   background: transparent;
@@ -194,16 +209,16 @@ main > .section.image-compare-container {
 
 .image-compare .image-compare-handle {
   width: 1px;
-  background-color: var(--ic-handle-line-color);
+  background-color: rgb(0 0 0 / 50%);
 }
 
 .image-compare .image-compare-handle::before {
   display: block;
-  width: var(--ic-handle-size);
-  height: var(--ic-handle-size);
-  background-color: var(--ic-handle-color);
-  border: var(--ic-handle-border);
-  box-shadow: var(--ic-handle-shadow);
+  width: 44px;
+  height: 44px;
+  background-color: #fff;
+  border: 1px solid var(--ic-navy);
+  box-shadow: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23071d49'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
   background-size: 20px;
   background-position: center;
@@ -218,51 +233,51 @@ main > .section.image-compare-container {
 .image-compare .image-compare-bottom-bar {
   display: flex;
   justify-content: space-between;
-  background: var(--ic-bottom-bar-bg);
-  color: var(--ic-bottom-bar-color);
-  font-family: var(--ic-font-body);
-  font-size: var(--ic-bottom-bar-font-size);
+  background: var(--ic-navy);
+  color: #fff;
+  font-family: var(--ic-font-condensed);
+  font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
-  padding: var(--ic-bottom-bar-padding);
+  padding: 4px 8px;
   margin-top: 0;
 }
 
 .image-compare .image-compare-patient {
-  background: var(--ic-caption-bg);
-  color: var(--ic-caption-color);
-  font-family: var(--ic-font-body);
-  font-size: var(--ic-caption-font-size);
-  font-weight: var(--ic-caption-font-weight);
-  line-height: var(--ic-caption-line-height);
-  padding: var(--ic-caption-padding);
+  background: var(--ic-navy-dark);
+  color: #fff;
+  font-family: var(--ic-font-condensed);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  padding: 4px 8px;
 }
 
 .image-compare .image-compare-thumbnails {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--ic-thumb-strip-gap);
-  padding: var(--ic-thumb-strip-padding);
-  background: var(--ic-thumb-strip-bg);
+  gap: 12px;
+  padding: 20px 16px;
+  background: var(--ic-thumbnail-bg);
   overflow-x: auto;
   margin: 0 auto;
-  max-width: var(--ic-card-max-width);
+  max-width: var(--ic-layout-max-width);
   border-radius: 0;
 }
 
 .image-compare .image-compare-thumb {
-  width: var(--ic-thumb-width);
-  height: var(--ic-thumb-height);
-  border-radius: var(--ic-thumb-radius);
+  width: 90px;
+  height: 75px;
+  border-radius: 4px;
   border: none;
   padding: 0;
   position: relative;
   flex-shrink: 0;
   overflow: hidden;
   cursor: pointer;
-  background: var(--ic-thumb-bg);
-  box-shadow: var(--ic-thumb-shadow);
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 15%);
 }
 
 .image-compare .image-compare-thumb::after {
@@ -271,9 +286,9 @@ main > .section.image-compare-container {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: var(--ic-thumb-icon-size);
-  height: var(--ic-thumb-icon-size);
-  background: var(--ic-thumb-icon-bg);
+  width: 28px;
+  height: 28px;
+  background: rgb(0 0 0 / 50%);
   border-radius: 50%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
   background-size: 12px;
