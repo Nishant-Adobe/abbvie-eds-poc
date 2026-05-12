@@ -43,7 +43,6 @@
         "name": "pageSubtitle",
         "label": "Page Subtitle"
       },
-      
       {
         "component": "select",
         "valueType": "string",
@@ -177,7 +176,7 @@
         "label": "Brand & Theme",
         "name": "tabBrand"
       },
-      
+
       {
         "component": "text",
         "valueType": "string",
@@ -7658,6 +7657,42 @@
       },
       {
         "component": "select",
+        "name": "classes_textVariant",
+        "label": "Text Variant",
+        "classField": true,
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Footnote",
+            "value": "footnote"
+          },
+          {
+            "name": "Disclaimer",
+            "value": "disclaimer"
+          },
+          {
+            "name": "References",
+            "value": "references"
+          },
+          {
+            "name": "Legal",
+            "value": "legal"
+          },
+          {
+            "name": "Boxed Warning",
+            "value": "boxed-warning"
+          },
+          {
+            "name": "Glossary",
+            "value": "glossary"
+          }
+        ]
+      },
+      {
+        "component": "select",
         "name": "classes_columns",
         "label": "Columns",
         "options": [
@@ -9571,6 +9606,278 @@
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
+    "id": "image-text",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Style",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Reverse (text left, image right)",
+            "value": "image-text-reverse"
+          },
+          {
+            "name": "Swap (responsive image at mobile)",
+            "value": "image-text-swap"
+          },
+          {
+            "name": "Scale (image scales on hover)",
+            "value": "image-text-scale"
+          },
+          {
+            "name": "Stretched Link (entire card clickable)",
+            "value": "image-text-stretched"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_imageSize",
+        "value": "",
+        "label": "Image Size",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (50/50)",
+            "value": ""
+          },
+          {
+            "name": "Large (60% image)",
+            "value": "image-text-image-large"
+          },
+          {
+            "name": "Medium (40% image)",
+            "value": "image-text-image-medium"
+          },
+          {
+            "name": "Small (33% image)",
+            "value": "image-text-image-small"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Mobile Image (swap variant only)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content",
+        "value": "",
+        "label": "Content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLabel",
+        "value": "",
+        "label": "CTA Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaHref",
+        "value": "",
+        "label": "CTA URL"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "ctaTarget",
+        "value": "_self",
+        "label": "CTA Target",
+        "options": [
+          {
+            "name": "Same Tab",
+            "value": "_self"
+          },
+          {
+            "name": "New Tab",
+            "value": "_blank"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "modalId",
+        "value": "",
+        "label": "Modal ID (overrides CTA URL with modal trigger)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "analyticsId",
+        "value": "",
+        "label": "Analytics ID"
+      }
+    ]
+  },
+  {
+    "id": "carousel-video-playlist",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout",
+        "options": [
+          { "name": "Cards Grid (default)", "value": "" },
+          { "name": "Grid", "value": "grid" },
+          { "name": "Featured — patient experiences", "value": "featured" },
+          { "name": "Bottom — playlist below", "value": "bottom" },
+          { "name": "Left Sidebar", "value": "left" },
+          { "name": "Right Sidebar", "value": "right" }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "sectionHeading",
+        "value": "",
+        "label": "Section Heading"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "sectionDescription",
+        "value": "",
+        "label": "Section Description"
+      },
+      {
+        "component": "number",
+        "valueType": "number",
+        "name": "maxVisible",
+        "value": 0,
+        "label": "Max Visible Cards (0 = show all)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "accountId",
+        "value": "",
+        "label": "Brightcove Account ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "playlistId",
+        "value": "",
+        "label": "Brightcove Playlist ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "playerId",
+        "value": "",
+        "label": "Brightcove Player ID"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "enableCaptions",
+        "value": false,
+        "label": "Enable Captions"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      }
+    ]
+  },
+  {
+    "id": "carousel-video-playlist-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "videoId",
+        "value": "",
+        "label": "Brightcove Video ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Video Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "transcriptHref",
+        "value": "",
+        "label": "Transcript URL"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "transcript",
+        "value": "",
+        "label": "Transcript (inline)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "patientName",
+        "value": "",
+        "label": "Patient Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "condition",
+        "value": "",
+        "label": "Condition / Prescribed Info"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "quote",
+        "value": "",
+        "label": "Patient Quote"
       }
     ]
   }
