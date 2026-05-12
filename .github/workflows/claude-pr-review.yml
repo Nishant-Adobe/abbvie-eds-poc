@@ -21,6 +21,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Remove node_modules symlinks (workaround for anthropics/claude-code-action#1205)
+        run: find . -path "*/node_modules/.bin/*" -type l -delete
+
       - name: Run Claude PR Review
         uses: anthropics/claude-code-action@v1
         with:
@@ -29,7 +32,6 @@ jobs:
           prompt: |
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
-
             The PR branch is already checked out in the current working directory.
             Use `mcp__github_inline_comment__create_inline_comment` (with `confirmed: true`) for line-specific issues.
             Use `gh pr comment` for a summary comment at the end.
