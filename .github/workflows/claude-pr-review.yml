@@ -37,7 +37,7 @@ jobs:
               gh pr diff ${{ github.event.pull_request.number }}
 
             Step 2 — analyse the diff in memory against the rules below. Do NOT read individual files unless a rule check is impossible without full file context.
-            Ignore any .css file whose name does NOT start with an underscore (e.g. header.css, hero.css) — these are compiled/generated files, not hand-authored. Only review _*.css files (e.g. _header.css, _hero.css).
+            Ignore .css files matching the pattern blocks/[block]/[brand]/[block].css (e.g. blocks/header/rinvoq/header.css, blocks/header/skyrizi/header.css) — these are compiled/generated. Do not post any comments on these files.
 
             Step 3 — post ALL inline comments in a single batch using mcp__github_inline_comment__create_inline_comment (confirmed: true). Only comment on lines that are in the diff (+lines). Skip lines with no issues.
 
