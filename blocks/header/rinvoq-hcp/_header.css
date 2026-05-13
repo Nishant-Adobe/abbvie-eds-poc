@@ -225,7 +225,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li[aria-expanded='t
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li[aria-expanded='true'] .submenu-level-1 ul li {
-  padding: var(--spacing-18) var(--spacing-00);
+  padding: 0px
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li[aria-expanded='true'] .submenu-level-1 ul li a {
@@ -455,7 +455,9 @@ header nav .nav-search .search-toggle {
     padding: var(--spacing-14) var(--spacing-08);
     height: 100%;
   }
-
+  header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover {
+    font-weight: var(--font-weight-700);
+  }
   /* Active underline — dark on gold */
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after,
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
@@ -551,6 +553,7 @@ header nav .nav-search .search-toggle {
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 li > a:not(.navigation-item-link):hover {
     color: var(--color-charcoal);
     text-decoration: none;
+    font-family: var(--body-font-family);
   }
 
   /* Submenu list — remove default list indentation */

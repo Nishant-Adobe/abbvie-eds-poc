@@ -1963,7 +1963,7 @@ header .nav-wrapper {
 
 header:has(.nav-utility ul) {
   height: auto;
-  background: linear-gradient(180deg,rgba(35,29,29,0.9) 0,rgba(35,29,29,0) 100%);
+  background: var(--header-eyebrow-gradient);
 }
 
 /* Nav text — white */
@@ -1991,6 +1991,7 @@ header .nav-utility a.button {
   background: none;
   border: none;
   text-decoration: none;
+  padding: var(--spacing-08) var(--spacing-10) var(--spacing-08) var(--spacing-12);
 }
 
 /* Utility button — must precede more-specific hamburger button selector */
@@ -2010,10 +2011,6 @@ header .nav-utility ul[role="menubar"] {
 
 header .nav-utility li + li::before {
   display: none
-}
-
-header .nav-utility a, header .nav-utility a.button {
-  padding: 8px 10px 8px 12px
 }
 
 /* Hamburger — white bars on dark header */
@@ -2049,9 +2046,9 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > butto
   color: var(--color-text-on-dark);
   font-weight: var(--font-weight-600);
   font-size: var(--font-size-body-small);
-  text-transform: uppercase;
+  text-transform: capitalize;
   letter-spacing: var(--header-nav-letter-spacing);
-  padding: 0 20px;
+  padding: 0 var(--spacing-20);
   white-space: normal;
 }
 
@@ -2061,63 +2058,98 @@ header nav .nav-tools {
   display: none;
 }
 
+/* Home nav item — show house icon, hide text */
+
+header nav .nav-sections .default-content-wrapper > ul > li.menu-home > a.nav-item-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li.menu-home > a.nav-item-link span {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: var(--spacing-01);
+  overflow: hidden;
+  position: absolute;
+  width: var(--spacing-01);
+  white-space: nowrap;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li.menu-home > a.nav-item-link::before {
+  content: "";
+  display: block;
+  width: var(--spacing-20);
+  height: var(--spacing-20);
+  background-color: var(--color-text-on-dark);
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: var(--icon-svg-home) no-repeat center / contain;
+  mask: var(--icon-svg-home) no-repeat center / contain;
+  flex-shrink: 0;
+}
+
 /* "Check My Symptoms" CTA button — white bg, linzess-purple text, rounded */
 
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link,
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button {
-  background-color: #d9d7f9;
+  background-color: var(--color-brand-primary-lighter);
   color: var(--color-brand-primary);
   border-radius: var(--border-radius-button-primary);
-  padding: 12px 24px 12px 24px;
-  font-weight: var(--font-weight-700);
-  font-size: var(--font-size-body-small);
+  padding: var(--spacing-12) var(--spacing-24);
   text-transform: uppercase;
   letter-spacing: var(--header-nav-letter-spacing);
   text-decoration: none;
-  line-height: 20px;
-  font-weight: 600;
-  font-size: 12px;
-  margin-top: -10px;
+  line-height: var(--line-height-20);
+  font-weight: var(--font-weight-600);
+  font-size: var(--font-size-body-small);
+  margin-top: var(--header-cta-margin-top);
 }
 
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link:hover,
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button:hover {
-  background-color: #fff;
-  color: #422e83;
+  background-color: var(--background-color);
+  color: var(--color-brand-primary);
   opacity: var(--opacity-full);
 }
 
 /* Remove underline hover indicator for CTA button */
 
-header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link::after,
-header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button::after {
-  display: none;
+header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link::after {
+  content: "";
+  display: block;
+  position: static;
+  width: var(--header-chevron-size);
+  height: var(--header-chevron-size);
+  background-color: var(--color-brand-accent);
+  -webkit-mask: var(--icon-svg-chevron-right) no-repeat center / contain;
+  mask: var(--icon-svg-chevron-right) no-repeat center / contain;
+  transition: transform var(--transition-duration, 0.2s) ease;
+  flex-shrink: 0;
 }
 
 /* Submenu — white bg, dark text */
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
-  border-radius: 16px;
-  background-color: #d9d7f9;
+  border-radius: var(--linz-rounded-corner);
+  background-color: var(--color-brand-primary-lighter);
   color: var(--text-color);
-  width: 202px;
-  box-shadow: 0 3px 5px 0 #999;
+  width: var(--header-submenu-width);
+  box-shadow: var(--shadow-submenu);
   margin: 0;
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul {
-  padding: 10px 20px;
+  padding: var(--spacing-10) var(--spacing-20);
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
-  color: #422e83;
-  font-size: 12.8px;
+  color: var(--color-brand-primary);
+  font-size: var(--header-submenu-link-font-size);
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover {
-    color: #422e83;
+    color: var(--color-brand-primary);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: var(--font-weight-700);
 }
 
 /* Mobile open — dark maintained */
@@ -2145,11 +2177,10 @@ header nav .nav-sections .default-content-wrapper > ul > li {
   header .nav-wrapper nav {
     display: flex;
     align-items: center;
-    padding: 0 var(--spacing-35);
-    max-width: 960px;
+    max-width: var(--header-nav-max-width);
     margin: 0 auto;
     height: auto;
-    padding: 20px;
+    padding: var(--spacing-20) 0;
     background-color: transparent;
   }
 
@@ -2157,6 +2188,7 @@ header nav .nav-sections .default-content-wrapper > ul > li {
   header nav .nav-brand {
     flex-shrink: 0;
     padding: 0;
+    margin-right: var(--spacing-50);
   }
 
   /* Sections — flex-fill, align right */
@@ -2207,7 +2239,8 @@ header nav .nav-sections .default-content-wrapper > ul > li {
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button {
     color: var(--color-text-on-dark);
     opacity: var(--opacity-hover);
-    font-weight: 600;
+    font-weight: var(--font-weight-600);
+    font-family: var(--body-font-family);
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
@@ -2227,22 +2260,19 @@ header nav .nav-sections .default-content-wrapper > ul > li {
     content: "";
     display: block;
     position: static;
-    width: 20px;
-    height: 20px;
+    width: var(--header-chevron-size);
+    height: var(--header-chevron-size);
     background-color: var(--color-brand-accent);
+    /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-mask: var(--icon-svg-chevron-down) no-repeat center / contain;
     mask: var(--icon-svg-chevron-down) no-repeat center / contain;
     transition: transform var(--transition-duration, 0.2s) ease;
     flex-shrink: 0;
   }
 
-  /* Keep chevron visible on hover/expanded — override white underline rule */
+  /* Keep chevron accent color on hover/expanded — overrides the general button::after background rule */
   header nav .nav-sections .default-content-wrapper > ul > li > button[aria-haspopup="true"]:hover::after,
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button[aria-haspopup="true"]::after {
-    display: block;
-    position: static;
-    width: 20px;
-    height: 20px;
     background-color: var(--color-brand-accent);
   }
 

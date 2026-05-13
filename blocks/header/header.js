@@ -153,7 +153,6 @@ function parseUl(ul) {
   return children;
 }
 
-// get card data
 async function getSecondCardData(url) {
   if (!url) return false;
 
@@ -219,7 +218,6 @@ async function buildMegaMenu(block) {
     cardContent: megaMenuCardContent,
     link: megaMenuCardCta,
   };
-  // get card data
   const secondaryCardData = await getSecondCardData(megaMenuDashboardCard?.title);
   const dashboardLinks = megaMenuDashboardLinks?.querySelectorAll('li');
   const wrapper = document.createElement('div');
@@ -369,7 +367,6 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
     isMegaMenu.remove();
   }
   const megaMenu = await buildMegaMenu(element);
-  // Modified code to use parsed data
   const data = navigationData;
   // Remove existing navigation group
   level2Container.querySelector('.navigation-group')?.remove();
@@ -655,7 +652,11 @@ function buildMenuItem(block, isNavigation = false) {
           loadPromise = buildLevelTwoNavigations(button, navGroup, block)
             .finally(() => { loadPromise = null; });
         }
-        await loadPromise;
+        try {
+          await loadPromise;
+        } catch {
+          return;
+        }
       }
       if (!isHovering) return; // cursor left during async fetch — don't open
       toggleAllNavSections(false);
