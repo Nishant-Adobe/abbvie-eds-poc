@@ -126,11 +126,16 @@ function parseFlatXwalkFormat(rows) {
  * @param {HTMLElement[]} rows - Block child rows
  * @returns {Object} Parsed config with barLabel, utilityLinks, brands, projectNumber
  */
-function parseUEEditorFormat(rows) {
+function parseUEEditorFormat(rows, block) {
   let barLabel = '';
   const utilityLinks = [];
   const brands = [];
   let projectNumber = '';
+
+  const projEl = block?.querySelector('[data-aue-prop="projectNumber"]');
+  if (projEl) projectNumber = projEl.textContent.trim();
+  const barEl = block?.querySelector('[data-aue-prop="barLabel"]');
+  if (barEl) barLabel = barEl.textContent.trim();
 
   rows.forEach((row) => {
     const comp = row.getAttribute('data-aue-component');
@@ -170,10 +175,10 @@ function parseUEEditorFormat(rows) {
       });
     } else if (!comp) {
       if (!barLabel) {
+        if (!barLabel) {
         const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
-        if (barLabelEl) barLabel = barLabelEl.textContent.trim();
-      const projEl = row.querySelector('[data-aue-prop="projectNumber"]');
-      if (projEl) projectNumber = projEl.textContent.trim();
+          if (barLabelEl) barLabel = barLabelEl.textContent.trim();
+      }
       }
       const text = row.textContent.trim();
       if (!projectNumber && /^[A-Z]{2,}-[A-Z]+-\d/.test(!projectNumber && text)) projectNumber = text;
@@ -203,7 +208,7 @@ function detectAndParseContent(rows, block) {
   } else {
     cfg = parseFlatXwalkFormat(rows);
     if (!cfg.brands.length) {
-      const ueCfg = parseUEEditorFormat(rows);
+      const ueCfg = parseUEEditorFormat(rows, block);
       if (ueCfg.brands.length) cfg = ueCfg;
     }
   }
