@@ -53,7 +53,7 @@ function closeModal() {
   overlay.classList.remove('is-open');
   overlay.className = 'modal-overlay';
   document.body.classList.remove('modal-is-open');
-  if (lastTrigger) lastTrigger.focus();
+  if (lastTrigger?.focus) lastTrigger.focus();
 }
 
 function getOverlay() {
@@ -127,10 +127,11 @@ function getCookie(name) {
   const enc = encodeURIComponent(name);
   const escaped = enc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const match = document.cookie.match(new RegExp(`(^| )${escaped}=([^;]+)`));
-  return match ? match[2] : null;
+  return match ? decodeURIComponent(match[2]) : null;
 }
 
 function hasSeenModal(modalId, variants) {
+  if (!modalId) return false;
   if (variants.includes('once')) {
     return getCookie(`modal-seen-${modalId}`) === '1';
   }
@@ -143,6 +144,7 @@ function hasSeenModal(modalId, variants) {
 }
 
 function markModalSeen(modalId, variants) {
+  if (!modalId) return;
   if (variants.includes('once')) {
     setCookie(`modal-seen-${modalId}`, '1', 365);
   }
@@ -159,7 +161,8 @@ async function openModal(trigger, variantsOrOptions = []) {
   if (typeof trigger === 'string') {
     const path = trigger;
     const opts = variantsOrOptions || {};
-    const t = { dataset: { fragmentPath: path, modalId: path } };
+    const slug = path.split('/').filter(Boolean).pop() || path;
+    const t = { dataset: { fragmentPath: path, modalId: slug } };
     lastTrigger = t;
     activeVariants = [];
     if (opts.onConfirm) t.onConfirm = opts.onConfirm;
@@ -317,7 +320,8 @@ export default async function decorate(block) {
       if (key) config[key] = value;
     });
     modalId = config.modalid || config['modal-id'] || '';
-    fragmentPath = config.fragmentpath || config['fragment-path'] || config.path || '';
+    fragmentPath = config.fragmentpath || config['fragment-path']
+      || config.path || config.link || '';
     openLabel = config.openlabel || config['open-label'] || LABEL_OPEN;
   } else if (rows.length) {
     // Method 3: UE single-cell format — find fields by content heuristics
