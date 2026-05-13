@@ -142,6 +142,8 @@ export default function decorate(block) {
   links.forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href').slice(1);
+      // document.getElementById is intentional: section targets are page siblings,
+      // not block descendants — block-scoped queries cannot reach them.
       const target = document.getElementById(id);
       if (!target) return;
       e.preventDefault();
@@ -187,6 +189,8 @@ export default function decorate(block) {
   }
 
   // Active section tracking via IntersectionObserver
+  // document.getElementById is intentional: section targets are page siblings,
+  // not block descendants — block-scoped queries cannot reach them.
   const sectionEls = links
     .map((a) => document.getElementById(a.getAttribute('href').slice(1)))
     .filter(Boolean);
@@ -226,6 +230,7 @@ export default function decorate(block) {
         teardown.disconnect();
       }
     });
-    teardown.observe(block.parentNode, { childList: true });
+    // Guard against a detached block (rapid UE live-preview cycle / SSR).
+    if (block.parentNode) teardown.observe(block.parentNode, { childList: true });
   }
 }
