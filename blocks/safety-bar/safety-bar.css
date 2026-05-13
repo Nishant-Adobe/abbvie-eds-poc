@@ -54,18 +54,18 @@
   overflow-y: auto;
 }
 
-/* === Toggle button: top-right, + / - === */
+/* === Toggle button: top-right, circle === */
 .safety-bar-toggle {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
-  background: none;
+  background-color: var(--safety-bar-toggle-bg, #fff);
   border: 2px solid var(--safety-bar-toggle-color, currentcolor);
   color: var(--safety-bar-toggle-color, inherit);
   cursor: pointer;
   font-size: 1.8rem;
-  width: 3rem;
-  height: 3rem;
+  width: 1.8rem;
+  height: 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,12 +74,24 @@
   line-height: 1;
 }
 
+/* Expanded: filled blue circle, white × */
+.safety-bar-toggle[aria-expanded='true'] {
+  background-color: var(--safety-bar-toggle-expanded-bg, var(--color-navy-dark, #071d49));
+  border-color: var(--safety-bar-toggle-expanded-bg, var(--color-navy-dark, #071d49));
+  color: var(--safety-bar-toggle-expanded-color, #fff);
+}
+
 .safety-bar-toggle::after {
+  align-self: end;
+  color: var(--color-background-footer, currentcolor);
   content: '+';
 }
 
 .safety-bar-toggle[aria-expanded='true']::after {
+  color: var(--color-text-on-dark, #fff);
   content: '-';
+  display: inline-block;
+  transform: scaleX(2);
 }
 
 /* ============================================================
