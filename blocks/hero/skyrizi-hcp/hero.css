@@ -1735,8 +1735,8 @@ color: inherit;
     --color-safety-bar-border: #999;
 
     /* ---- Font: Family ---- */
-    --body-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
-    --heading-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
+    --body-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
     --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
     --icon-font-family: 'abbv-iconFont';
 
@@ -1836,8 +1836,8 @@ color: inherit;
     --be-color-skyrizi: #00a8e1;
     --be-color-skyrizi-hover: #0088b5;
     --be-color-humira: #931947;
-    --be-font-body: "Red Hat Display", sans-serif;
-    --be-font-heading: "Red Hat Display", sans-serif;
+    --be-font-body: "Univers LT W01_57 Condensed", sans-serif;
+    --be-font-heading: "Univers LT W01_57 Condensed", sans-serif;
 
     /* ---- Formulary Lookup ---- */
     --color-formulary-text: #21406d;
@@ -1967,12 +1967,6 @@ color: inherit;
   --color-safety-bar-bg: #fff;
   --color-safety-bar-border: #999;
 
-  /* ---- Font: Family ---- */
-  --body-font-family: "Red Hat Display", sans-serif;
-  --heading-font-family: "Red Hat Display", sans-serif;
-  --heading-font-family-bold: "Red Hat Display", sans-serif;
-  --icon-font-family: "abbv-iconFont";
-
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
   --font-size-body-small: 14.4px;
@@ -2035,8 +2029,8 @@ color: inherit;
   --be-color-text: #21406d;
   --be-color-text-light: #21406d;
   --be-color-bar-bg: #25282a;
-  --be-font-body: "Red Hat Display", sans-serif;
-  --be-font-heading: "Red Hat Display", sans-serif;
+  --be-font-body: "Univers LT W01_57 Condensed", sans-serif;
+  --be-font-heading: "Univers LT W01_57 Condensed", sans-serif;
 
   /* ---- Clinical Data Panel Block ---- */
   --cdp-color-text: #21406d;
@@ -2116,14 +2110,42 @@ color: inherit;
   --color-skyrizi-thumb-strip: #add8e6;
   --font-skyrizi-condensed: "Univers LT W01_57 Condensed", "Arial Narrow", sans-serif;
   --font-skyrizi-bold: "Univers LT W01_67 Bold_1476016", "Arial Narrow", sans-serif;
+
+  /* ---- Hero: layout ---- */
+  --hero-img-min-height: 500px;
+  --hero-text-top-offset: 155px;
+  --hero-video-min-height: 450px;
+
+  /* ---- Hero: h1 banner (navy box with teal right-border) ---- */
+  --hero-h1-bg: #091d49;
+  --hero-h1-border-right-color: var(--color-skyrizi-blue);
+  --hero-h1-border-right-width: 20px;
+  --hero-h1-padding: 14px 11px 14px 65px;
+  --hero-h1-line-height: 1;
+  --hero-h1-font-size-mobile: 12px;
+  --hero-h1-font-size-tablet: 20px;
+  --hero-h1-width-tablet: 50%;
+
+  /* ---- Hero: h1 strong (large display number) ---- */
+  --hero-h1-strong-font-size-mobile: 22px;
+  --hero-h1-strong-font-size-tablet: 30px;
+
+  /* ---- Hero: h1 em strong (highlight colour) ---- */
+  --hero-h1-em-color: var(--color-background-blue);
 }
 /* ============================================================
    SKYRIZI HCP — Hero Block Overrides (XWalk/UE preview)
    ============================================================ */
-/* Heading + body: Red Hat Display */
+.hero {
+  overflow: hidden;
+}
+.hero h1 em,
+.hero h1 strong {
+  font-family: 'Univers LT W01_67 Bold_1476016', sans-serif;
+}
 .hero h1 {
   color: var(--color-text-heading);
-  font-family: var(--heading-font-family);
+  font-family: 'Univers LT W01_57 Condensed', sans-serif;
 }
 .hero h2,
 .hero h3 {
@@ -2166,11 +2188,78 @@ color: inherit;
   color: var(--color-brand-accent);
 }
 /* Full/video overlay: teal gradient */
-.hero.full::after,
-.hero.video::after {
-  background: var(--gradient-hero-full);
-}
 .hero.full :where(a).button,
 .hero.video :where(a).button {
   color: var(--color-brand-accent);
+}
+.hero img {
+  height: auto;
+  min-height: var(--hero-img-min-height);
+  max-height: fit-content;
+  border-radius: 0;
+}
+.hero > :where(div):has(> div:empty) {
+  display: none;
+}
+/* Override gradient overlay — hidden for full/video on Skyrizi HCP */
+.hero.full::after,
+.hero.video::after {
+  background: var(--gradient-hero-full);
+  display: none;
+}
+.hero .hero-text-container {
+  position: absolute;
+  top: var(--hero-text-top-offset);
+}
+.hero .hero-text-container .cmp-container-x-large h1 {
+  font-size: var(--hero-h1-font-size-mobile);
+  line-height: var(--hero-h1-line-height);
+  color: var(--color-text-on-dark);
+  background: var(--hero-h1-bg);
+  padding: var(--hero-h1-padding);
+  border-right: var(--hero-h1-border-right-width) solid var(--hero-h1-border-right-color);
+}
+.hero .hero-text-container .cmp-container-x-large h1 strong {
+  font-size: var(--hero-h1-strong-font-size-mobile);
+}
+.hero .hero-text-container .cmp-container-x-large h1 em strong {
+  color: var(--hero-h1-em-color);
+  font-style: normal;
+}
+.hero.video .hero-video-bg {
+  display: block;
+}
+.hero.video {
+  min-height: var(--hero-video-min-height);
+}
+.hero.video .hero-video-bg video {
+  height: var(--hero-video-min-height);
+}
+@media (width >= 744px) {
+  .hero img {
+    min-height: auto;
+  }
+
+  .hero.video {
+    min-height: 100vh;
+  }
+
+  .hero.video .hero-video-bg video {
+    height: 100%;
+  }
+
+  .hero .hero-text-container .cmp-container-x-large h1 {
+    font-size: var(--hero-h1-font-size-tablet);
+    line-height: var(--hero-h1-line-height);
+    color: var(--color-text-on-dark);
+    background: var(--hero-h1-bg);
+    width: var(--hero-h1-width-tablet);
+    margin-left: auto;
+    padding: var(--hero-h1-padding);
+    border-right: var(--hero-h1-border-right-width) solid var(--hero-h1-border-right-color);
+  }
+
+  .hero .hero-text-container .cmp-container-x-large h1 strong {
+    font-size: var(--hero-h1-strong-font-size-tablet);
+  }
 }
