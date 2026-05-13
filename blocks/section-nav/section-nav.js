@@ -158,6 +158,9 @@ export default function decorate(block) {
     });
   });
 
+  // Collect observers so the teardown MutationObserver can disconnect them all.
+  const observers = [];
+
   // Sticky: sentinel watches for when block becomes pinned.
   // On is-stuck the block switches to position:fixed (base CSS), so we reserve
   // its height via the sentinel to prevent layout shift.
@@ -180,6 +183,7 @@ export default function decorate(block) {
       { rootMargin: `-${headerHeight}px 0px 0px 0px` },
     );
     stickyObserver.observe(sentinel);
+    observers.push(stickyObserver);
   }
 
   // Active section tracking via IntersectionObserver
@@ -210,5 +214,18 @@ export default function decorate(block) {
       { rootMargin: `-${offset}px 0px -50% 0px`, threshold: 0 },
     );
     sectionEls.forEach((el) => activeObserver.observe(el));
+    observers.push(activeObserver);
+  }
+
+  // Disconnect all IntersectionObservers when the block is removed from the DOM
+  // (handles Universal Editor live-preview teardown and hot-reloads).
+  if (observers.length) {
+    const teardown = new MutationObserver(() => {
+      if (!block.isConnected) {
+        observers.forEach((o) => o.disconnect());
+        teardown.disconnect();
+      }
+    });
+    teardown.observe(block.parentNode, { childList: true });
   }
 }
