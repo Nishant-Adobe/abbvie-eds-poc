@@ -23,6 +23,7 @@
   --color-mulberry: #b15980;
   --color-heather: #d3a0b7;
   --color-gold: #ffd100;
+  --color-gold-dark: #ba9900;
   --color-light-gold: rgba(255, 209, 0, 0.55);
   --color-lemon: #ffe673;
   --color-butter: #fff1b3;
@@ -73,6 +74,8 @@
   --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
   --font-family-semibold: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
   --icon-font-family: 'abbv-iconFont';
+  /* Handwriting accent used in no-padding hero variant — no local font file, loads from CDN/host */
+  --font-family-handwriting: 'Upa Handwriting', serif;
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
@@ -112,7 +115,41 @@
   /* ---- Button: Primary ---- */
   --button-primary-color: #fff;
   --button-primary-bg: #90124a;
+  --button-primary-border: transparent;
   --button-primary-padding: 16px 54px 16px 32px;
+  --button-primary-font-size: 0.875rem;
+  --button-primary-font-weight: 700;
+  --button-primary-hover-bg: #25282a;
+  --button-primary-hover-color: #fff;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: transparent;
+  --button-secondary-color: #90124a;
+  --button-secondary-border: #90124a;
+  --button-secondary-padding: 16px 54px 16px 32px;
+  --border-radius-button-secondary: 100px;
+  --button-secondary-hover-bg: #90124a;
+  --button-secondary-hover-color: #fff;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: transparent;
+  --button-tertiary-color: #46484a;
+  --button-tertiary-border: #c9c9ca;
+  --button-tertiary-padding: 12px 24px;
+  --button-tertiary-font-size: 0.875rem;
+  --border-radius-button-tertiary: 100px;
+  --button-tertiary-hover-bg: #46484a;
+  --button-tertiary-hover-color: #fff;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #90124a;
+  --button-plain-weight: 600;
+  --button-plain-hover-color: #25282a;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #c9c9ca;
+  --toggle-bg-on: #90124a;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #90124a;
@@ -121,6 +158,11 @@
   --be-color-text: #46484a;
   --be-color-text-light: #46484a;
   --be-color-bar-bg: #25282a;
+  --be-color-rinvoq: #ffd41d;
+  --be-color-rinvoq-hover: #b8860b;
+  --be-color-skyrizi: #00a8e1;
+  --be-color-skyrizi-hover: #0088b5;
+  --be-color-humira: #931947;
   --be-font-body: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
   --be-font-heading: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
   --be-font-weight-bold: 600;
@@ -203,4 +245,29 @@
 
   /* ---- Footer ---- */
   --footer-links-max-width: 33.5rem;
+
+  /* ---- Section Nav ---- */
+  --shadow-section-nav-stuck: 0 2px 1em rgb(0 0 0 / 50%);
+  --shadow-focus-plum: 0 0 var(--spacing-05) var(--spacing-05) var(--color-plum);
+  /* ---- Hero: no-padding variant layout ---- */
+  --hero-img-height-mobile: 375px;
+  --hero-no-padding-min-height: 340px;
+  --hero-text-max-width: 1180px;
+  --hero-text-padding: 64px 20px;
+  --hero-text-margin-top: 20px;
+  --hero-img-width-desktop: 1440px;
+
+  /* ---- Hero: no-padding h1 typography ---- */
+  --hero-h1-line-height: 0.9;
+  --hero-h1-font-size-desktop: 40px;
+
+  /* ---- Hero: no-padding em (handwriting accent) typography ---- */
+  --hero-em-font-size-mobile: 58px;
+  --hero-em-font-size-desktop: 100px;
+  --hero-em-line-height: 0.8;
+  --hero-em-letter-spacing: -4px;
+
+  /* ---- Hero: stroke underline decoration ---- */
+  --hero-stroke-height: 22px;
+  --hero-stroke-bottom-offset: -15px;
 }

@@ -1,0 +1,92 @@
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - develop
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  id-token: write
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove node_modules symlinks (workaround for anthropics/claude-code-action#1205)
+        run: find . -path "*/node_modules/.bin/*" -type l -delete
+
+      - name: Run Claude PR Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Step 1 — fetch the diff with ONE command only:
+              gh pr diff ${{ github.event.pull_request.number }}
+
+            Step 2 — review ONLY the diff output from Step 1. Do NOT call Read, Grep, Glob, or any other tool to open files. Every issue you flag must be traceable to a specific + line in the diff. If you cannot see the violation in the diff, do not flag it.
+
+            WHAT TO IGNORE:
+            - Lines starting with space or - (unchanged/removed context) — not your concern
+            - blocks/[block]/[brand]/[block].css files (e.g. blocks/header/rinvoq/header.css) — compiled, skip entirely
+            - Issues that were already present before this PR — if the + line is just moving or copying existing code, skip it
+            - Stylistic preferences, minor nitpicks, or anything subjective
+
+            WHAT TO FLAG:
+            Only violations clearly visible in the + lines that would cause a bug, security issue, or break EDS block standards.
+
+            Step 3 — post ALL inline comments in one batch using mcp__github_inline_comment__create_inline_comment (confirmed: true). Only on + lines. If nothing to flag, skip this step.
+
+            Step 4 — post ONE summary using: gh pr comment ${{ github.event.pull_request.number }} --body "..."
+
+            ---
+
+            EDS MULTI-BRAND RULES (check only what is visible in the diff):
+
+            HARD CODING: no hex colors, px values, absolute URLs, brand names, API keys, or account IDs in core block files. Use CSS custom properties and relative paths.
+
+            CSS: all values via --color-*, --spacing-*, --body-font-size-* tokens with fallbacks var(--token, fallback). No inline style= attributes. Mobile-first (base = mobile, @media for desktop). No unjustified !important. Flat specificity.
+
+            JS: const/let only (no var). await on all async calls. try/catch around fetch() and JSON.parse(). No console.log. null-check before property access. No innerHTML with unsanitised input.
+
+            EDS BLOCK STANDARDS: export default function decorate(block). Query only within block (block.querySelector not document.querySelector). Disconnect IntersectionObserver after use. Handle missing DOM elements.
+
+            MULTI-BRAND ARCHITECTURE: core block CSS brand-agnostic. Brand styles only in blocks/[block]/[brand]/[block].css. No brand names in core files.
+
+            BLOCK JSON MODEL: every field read in JS must exist in _block.json models array and vice versa.
+
+            SECURITY: no API keys or secrets in any file. No eval(). Sanitise user content before DOM insertion.
+
+            ---
+
+            SUMMARY FORMAT (post via gh pr comment):
+
+            ### Claude EDS Code Review
+
+            **Critical** (must fix before merge — security, XSS, broken block model, hard-coded secrets)
+            - <issue> — <file>:<line>
+
+            **High** (should fix before merge — bugs, EDS standard violations, missing null checks)
+            - <issue> — <file>:<line>
+
+            **Looks good**
+            - <what passed>
+
+            **Blocks reviewed:** <list each changed block — pass/fail>
+
+          claude_args: >-
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*)"
+        env:
+          INPUT_MAX_TURNS: "10"
