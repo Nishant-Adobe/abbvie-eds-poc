@@ -63,7 +63,9 @@ export default async function decorate(block) {
   const anchorId = getAnchorId(block);
   const items = extractItems(block);
 
-  block.textContent = '';
+  const rows = [...block.querySelectorAll(':scope > div')];
+  rows.forEach((row) => { row.classList.add('breadcrumb-hidden'); });
+
   if (anchorId) block.id = anchorId;
   if (!items.length) return;
 
