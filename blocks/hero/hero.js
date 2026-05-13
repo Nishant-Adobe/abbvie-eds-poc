@@ -190,25 +190,44 @@ function absorbPressReleases(section, textCell) {
   wrapper.remove();
 }
 
+// WeakMap avoids dangling-underscore ESLint violations and does not prevent GC.
+const multilayerControllers = new WeakMap();
+
 function initMultilayer(imageCell) {
   if (!imageCell) return;
   const layers = [...imageCell.children].filter((el) => el.dataset.buddyState);
   if (!layers.length) return;
   layers.forEach((layer) => layer.classList.add('hero-layer'));
   layers[0].classList.add('is-active');
+
+  // Abort any previous listener registered on this element to prevent accumulation
+  // when two or more multilayer hero blocks exist on the same page.
+  if (multilayerControllers.has(imageCell)) {
+    multilayerControllers.get(imageCell).abort();
+  }
+  const controller = new AbortController();
+  multilayerControllers.set(imageCell, controller);
+
   document.addEventListener('abbv:buddy:stateChange', (e) => {
     const { state } = e.detail || {};
     if (!state) return;
     layers.forEach((layer) => {
       layer.classList.toggle('is-active', layer.dataset.buddyState === state);
     });
-  });
+  }, { signal: controller.signal });
 }
 
 function initVideo(videoRow, imageCell, block) {
   if (!videoRow) return;
   const link = videoRow.firstElementChild?.querySelector('a[href]');
   const videoSrc = link?.href;
+
+  // Guard: if no valid video href is found, remove the empty row and bail out.
+  if (!videoSrc) {
+    videoRow.remove();
+    return;
+  }
+
   const splitedURL = videoSrc.split('/content');
   splitedURL[0] = 'https://publish-p160552-e1944799.adobeaemcloud.com';
   const videoURL = splitedURL.join('/content');
