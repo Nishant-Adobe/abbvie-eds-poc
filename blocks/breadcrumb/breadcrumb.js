@@ -63,13 +63,10 @@ function extractItems(block) {
   if (itemRows.length) {
     return itemRows.reduce((items, row) => {
       const labelEl = row.querySelector('[data-aue-prop="label"]');
-      const hrefEl = row.querySelector('[data-aue-prop="href"]');
-      if (labelEl) {
-        const label = labelEl.textContent?.trim() || '';
-        const a = hrefEl?.querySelector('a');
-        const href = a?.getAttribute('href') || hrefEl?.textContent?.trim() || '';
-        if (label) items.push({ label, href });
-      }
+      const label = labelEl?.textContent?.trim() || '';
+      const a = row.querySelector('a[href]');
+      const href = a?.getAttribute('href') || '';
+      if (label) items.push({ label, href });
       return items;
     }, []);
   }
