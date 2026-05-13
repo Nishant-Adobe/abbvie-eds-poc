@@ -332,7 +332,7 @@ function buildContent(brands, projectNumber) {
     }
 
     const nameLower = brand.name.toLowerCase().replace(/[®™]/g, '');
-    const brandSlugColor = ['rinvoq', 'skyrizi'].find((key) => nameLower.includes(key)) || '';
+    const brandSlugColor = ['rinvoq', 'skyrizi', 'humira', 'venclexta', 'mavyret', 'linzess', 'botox'].find((key) => nameLower.includes(key)) || '';
 
     const separator = document.createElement('hr');
     separator.className = 'brand-explorer-separator';
@@ -418,9 +418,9 @@ function attachEventListeners(block, browseBtn, closeBtn, content, accordions) {
     if (e.key === 'Escape' && block.classList.contains('is-open')) close();
   }, { signal });
 
-  // Mobile accordion
+  const mobileQuery = window.matchMedia('(max-width: 895px)');
   accordions.addEventListener('click', (e) => {
-    if (window.innerWidth >= 896) return;
+    if (!mobileQuery.matches) return;
     const clickedBlade = e.target.closest('.brand-explorer-blade');
     if (!clickedBlade) return;
     e.preventDefault();
