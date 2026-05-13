@@ -30,6 +30,17 @@ const LABEL_CLOSE = 'Close modal';
 const LABEL_OPEN = 'Open modal';
 const ICON_CLOSE = '✕';
 
+function createStatusEl(cls, role, text, ariaLive) {
+  const el = document.createElement('p');
+  el.className = cls;
+  el.setAttribute('role', role);
+  if (ariaLive) el.setAttribute('aria-live', ariaLive);
+  el.textContent = text;
+  return el;
+}
+
+const blockState = new WeakMap();
+
 let overlay = null;
 let lastTrigger = null;
 let activeVariants = [];
@@ -190,7 +201,9 @@ async function openModal(trigger, variantsOrOptions = []) {
   const closeBtn = dialog.querySelector('.modal-close');
   if (closeBtn) closeBtn.hidden = variants.includes('force');
 
-  content.innerHTML = '<p class="modal-loading" role="status" aria-live="polite">Loading…</p>';
+  content.replaceChildren(
+    createStatusEl('modal-loading', 'status', 'Loading…', 'polite'),
+  );
   dialog.setAttribute('aria-hidden', 'false');
   ov.classList.add('is-open');
   document.body.classList.add('modal-is-open');
@@ -202,7 +215,9 @@ async function openModal(trigger, variantsOrOptions = []) {
       [...fragment.childNodes].forEach((node) => content.append(node));
       if (modalId) markModalSeen(modalId, variants);
     } else {
-      content.innerHTML = '<p class="modal-error" role="alert">Unable to load content.</p>';
+      content.replaceChildren(
+        createStatusEl('modal-error', 'alert', 'Unable to load content.'),
+      );
     }
     const heading = content.querySelector('h1, h2, h3');
     if (heading) {
@@ -296,8 +311,9 @@ export default async function decorate(block) {
     globalTriggersSetup = true;
   }
 
-  if (block.modalCleanup) block.modalCleanup();
-  if (block.modalAutoOpenTimer) clearTimeout(block.modalAutoOpenTimer);
+  const prev = blockState.get(block);
+  if (prev?.cleanup) prev.cleanup();
+  if (prev?.timerId) clearTimeout(prev.timerId);
 
   const rows = [...block.querySelectorAll(':scope > div')];
 
@@ -385,13 +401,15 @@ export default async function decorate(block) {
         openModal(t, variants).catch(() => { /* handled */ });
       }
     }, { signal: ac.signal });
-    block.modalCleanup = () => {
-      ac.abort();
-      const idx = exitModals.findIndex(
-        (m) => m.trigger?.dataset?.modalId === modalId,
-      );
-      if (idx !== -1) exitModals.splice(idx, 1);
-    };
+    blockState.set(block, {
+      cleanup: () => {
+        ac.abort();
+        const idx = exitModals.findIndex(
+          (m) => m.trigger?.dataset?.modalId === modalId,
+        );
+        if (idx !== -1) exitModals.splice(idx, 1);
+      },
+    });
   }
 
   block.innerHTML = '';
@@ -418,7 +436,9 @@ export default async function decorate(block) {
         const t = { dataset: { fragmentPath, modalId }, fragmentPath };
         openModal(t, variants).catch(() => { /* handled */ });
       }, 500);
-      block.modalAutoOpenTimer = timerId;
+      const st = blockState.get(block) || {};
+      st.timerId = timerId;
+      blockState.set(block, st);
     }
     return;
   }
