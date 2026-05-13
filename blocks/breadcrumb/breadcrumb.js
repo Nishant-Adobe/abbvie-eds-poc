@@ -35,14 +35,17 @@ function appendJsonLd(ol) {
 function extractConfig(block) {
   const propElements = block.querySelectorAll('[data-aue-prop]');
   if (propElements.length > 0) {
+    const getField = (name) => block.querySelector(`[data-aue-prop="${name}"]`);
     const getTextVal = (name, defaultVal = '') => {
-      const el = block.querySelector(`[data-aue-prop="${name}"]`);
+      const el = getField(name);
       return el?.textContent?.trim() || defaultVal;
     };
     const getBoolVal = (name, defaultVal) => {
-      const val = getTextVal(name, '').toLowerCase();
+      const el = getField(name);
+      if (!el) return defaultVal;
+      const val = el.textContent?.trim().toLowerCase();
       if (val === 'true') return true;
-      if (val === 'false') return false;
+      if (val === 'false' || val === '') return false;
       return defaultVal;
     };
     return {
@@ -57,7 +60,7 @@ function extractConfig(block) {
   const getBool = (idx, defaultVal) => {
     const val = getText(idx).toLowerCase();
     if (val === 'true') return true;
-    if (val === 'false') return false;
+    if (val === 'false' || val === '') return false;
     return defaultVal;
   };
 
