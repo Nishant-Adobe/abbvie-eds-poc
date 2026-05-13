@@ -172,9 +172,11 @@ function parseUEEditorFormat(rows) {
       if (!barLabel) {
         const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
         if (barLabelEl) barLabel = barLabelEl.textContent.trim();
+      const projEl = row.querySelector('[data-aue-prop="projectNumber"]');
+      if (projEl) projectNumber = projEl.textContent.trim();
       }
       const text = row.textContent.trim();
-      if (!projectNumber && /^[A-Z]{2,}-[A-Z]+-\d/.test(text)) projectNumber = text;
+      if (!projectNumber && /^[A-Z]{2,}-[A-Z]+-\d/.test(!projectNumber && text)) projectNumber = text;
     }
   });
 
