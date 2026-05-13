@@ -129,11 +129,10 @@ export default function decorate(block) {
   // --header-height resolves to a rem value (e.g. "7.2rem"); parseInt would give 7, not 72.
   // Multiply by root font-size to get the correct pixel value.
   const getCssPx = (varName) => {
-    const val = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    const rootStyle = getComputedStyle(document.documentElement);
+    const val = rootStyle.getPropertyValue(varName).trim();
     if (!val) return 0;
-    if (val.endsWith('rem')) {
-      return parseFloat(val) * parseFloat(getComputedStyle(document.documentElement).fontSize);
-    }
+    if (val.endsWith('rem')) return parseFloat(val) * parseFloat(rootStyle.fontSize);
     return parseFloat(val) || 0;
   };
 
@@ -167,7 +166,7 @@ export default function decorate(block) {
     sentinel.className = 'section-nav-sentinel';
     block.before(sentinel);
     const headerHeight = getCssPx('--header-height');
-    new IntersectionObserver(
+    const stickyObserver = new IntersectionObserver(
       ([entry]) => {
         const stuck = !entry.isIntersecting;
         if (stuck) {
@@ -179,7 +178,8 @@ export default function decorate(block) {
         }
       },
       { rootMargin: `-${headerHeight}px 0px 0px 0px` },
-    ).observe(sentinel);
+    );
+    stickyObserver.observe(sentinel);
   }
 
   // Active section tracking via IntersectionObserver

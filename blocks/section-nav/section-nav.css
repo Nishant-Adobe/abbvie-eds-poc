@@ -1,6 +1,12 @@
 .section-nav {
-  background-color: var(--section-nav-bg, var(--background-color, #fff));
-  border-bottom: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
+  --section-nav-bg: var(--background-color);
+  --section-nav-border: var(--color-border);
+  --section-nav-link-color: var(--text-color);
+  --section-nav-link-hover: var(--link-color);
+  --section-nav-active-color: var(--link-color);
+
+  background-color: var(--section-nav-bg);
+  border-bottom: var(--border-width-thin) solid var(--section-nav-border);
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -13,18 +19,18 @@
 
 .section-nav.sticky {
   position: sticky;
-  top: var(--header-height, var(--nav-height, 88px));
-  z-index: var(--z-index-anchor-nav, 100);
+  top: var(--header-height);
+  z-index: var(--z-index-anchor-nav);
 }
 
 /* When the sentinel leaves viewport, switch to fixed so the nav persists
    across sections (position:sticky only sticks within its own section height) */
 .section-nav.sticky.is-stuck {
-  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  box-shadow: var(--shadow-nav-stuck);
   left: 0;
   position: fixed;
   right: 0;
-  top: var(--header-height, var(--nav-height, 88px));
+  top: var(--header-height);
 }
 
 /* Zero-height sentinel used to detect sticky state; JS sets height when stuck
@@ -40,37 +46,38 @@
   display: flex;
   gap: 0;
   margin: 0 auto;
-  max-width: var(--section-max-width, var(--section-width, 1200px));
-  padding: 0 var(--spacing-24, 24px);
+  max-width: var(--section-max-width);
+  padding: 0 var(--spacing-24);
 }
 
 /* ── Links ──────────────────────────────────────────────────────────────── */
 
 .section-nav a {
-  border-bottom: 2px solid transparent;
-  color: var(--section-nav-link-color, var(--text-color));
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
-  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+  border-bottom: var(--border-width-default) solid transparent;
+  color: var(--section-nav-link-color);
+  font-size: var(--body-font-size-s);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-12) var(--spacing-16);
   text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: border-color var(--transition-duration-fast) var(--transition-easing-standard),
+    color var(--transition-duration-fast) var(--transition-easing-standard);
   white-space: nowrap;
 }
 
 .section-nav a:hover,
 .section-nav a:focus-visible {
-  color: var(--section-nav-link-hover, var(--link-color));
+  color: var(--section-nav-link-hover);
   outline: none;
 }
 
 .section-nav a:focus-visible {
-  outline: 2px solid var(--color-focus, var(--link-color));
-  outline-offset: -2px;
+  outline: var(--border-width-default) solid var(--color-focus);
+  outline-offset: calc(var(--spacing-02) * -1);
 }
 
 .section-nav a.is-active {
-  border-bottom-color: var(--section-nav-active-color, var(--link-color));
-  color: var(--section-nav-link-hover, var(--link-color));
+  border-bottom-color: var(--section-nav-active-color);
+  color: var(--section-nav-link-hover);
 }
 
 /* ── Mobile Menu variant — base = mobile (toggle visible, list collapsed) ── */
@@ -89,48 +96,48 @@
   align-items: center;
   background: none;
   border: none;
-  color: var(--section-nav-link-color, var(--text-color));
+  color: var(--section-nav-link-color);
   cursor: pointer;
   display: flex;
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
-  gap: var(--spacing-8, 8px);
+  font-size: var(--body-font-size-s);
+  font-weight: var(--font-weight-semibold);
+  gap: var(--spacing-08);
   justify-content: space-between;
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  padding: var(--spacing-12) var(--spacing-24);
   width: 100%;
 }
 
 .section-nav.mobile-menu .section-nav-toggle:focus-visible {
-  outline: 2px solid var(--color-focus, var(--link-color));
-  outline-offset: -2px;
+  outline: var(--border-width-default) solid var(--color-focus);
+  outline-offset: calc(var(--spacing-02) * -1);
 }
 
 /* Hamburger icon (3 bars via box-shadow trick) */
 .section-nav-hamburger {
   background-color: currentcolor;
-  border-radius: 2px;
+  border-radius: var(--spacing-02);
   display: block;
-  height: 2px;
+  height: var(--spacing-02);
   position: relative;
-  transition: background-color 0.2s ease;
-  width: 20px;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard);
+  width: var(--spacing-20);
 }
 
 .section-nav-hamburger::before,
 .section-nav-hamburger::after {
   background-color: currentcolor;
-  border-radius: 2px;
+  border-radius: var(--spacing-02);
   content: '';
   display: block;
-  height: 2px;
+  height: var(--spacing-02);
   left: 0;
   position: absolute;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-duration-fast) var(--transition-easing-standard);
   width: 100%;
 }
 
-.section-nav-hamburger::before { top: -6px; }
-.section-nav-hamburger::after  { top: 6px; }
+.section-nav-hamburger::before { top: calc(var(--spacing-06) * -1); }
+.section-nav-hamburger::after  { top: var(--spacing-06); }
 
 /* Animate to × when menu is open */
 .section-nav.mobile-menu.is-open .section-nav-hamburger {
@@ -138,16 +145,16 @@
 }
 
 .section-nav.mobile-menu.is-open .section-nav-hamburger::before {
-  transform: translateY(6px) rotate(45deg);
+  transform: translateY(var(--spacing-06)) rotate(45deg);
 }
 
 .section-nav.mobile-menu.is-open .section-nav-hamburger::after {
-  transform: translateY(-6px) rotate(-45deg);
+  transform: translateY(calc(var(--spacing-06) * -1)) rotate(-45deg);
 }
 
 /* Collapsible link list — hidden by default on mobile */
 .section-nav.mobile-menu nav ul {
-  border-top: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
+  border-top: var(--border-width-thin) solid var(--section-nav-border);
   display: none;
   flex-direction: column;
   list-style: none;
@@ -162,7 +169,7 @@
 
 .section-nav.mobile-menu nav ul li {
   align-items: center;
-  border-bottom: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
+  border-bottom: var(--border-width-thin) solid var(--section-nav-border);
   display: flex;
 }
 
@@ -173,14 +180,14 @@
 .section-nav.mobile-menu nav a {
   border-bottom: none;
   display: block;
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  padding: var(--spacing-12) var(--spacing-24);
   width: 100%;
 }
 
 .section-nav.mobile-menu nav a.is-active {
   border-bottom: none;
-  border-left: 3px solid var(--section-nav-active-color, var(--link-color));
-  padding-left: calc(var(--spacing-24, 24px) - 3px);
+  border-left: var(--border-width-thick) solid var(--section-nav-active-color);
+  padding-left: calc(var(--spacing-24) - var(--spacing-03));
 }
 
 /* ── Desktop ≥768px: horizontal flex list, toggle hidden ─────────────────── */
@@ -192,7 +199,7 @@
 
   .section-nav.mobile-menu nav {
     flex-direction: row;
-    padding: 0 var(--spacing-24, 24px);
+    padding: 0 var(--spacing-24);
   }
 
   .section-nav.mobile-menu .section-nav-toggle {
@@ -220,15 +227,15 @@
   }
 
   .section-nav.mobile-menu nav a {
-    border-bottom: 2px solid transparent;
+    border-bottom: var(--border-width-default) solid transparent;
     display: inline-block;
-    padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+    padding: var(--spacing-12) var(--spacing-16);
     width: auto;
   }
 
   .section-nav.mobile-menu nav a.is-active {
-    border-bottom-color: var(--section-nav-active-color, var(--link-color));
+    border-bottom-color: var(--section-nav-active-color);
     border-left: none;
-    padding-left: var(--spacing-16, 16px);
+    padding-left: var(--spacing-16);
   }
 }
