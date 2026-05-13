@@ -26,7 +26,7 @@
 }
 
 /* Profile band: purple */
-.hero.profile > :where(div):first-child {
+.hero.profile> :where(div):first-child {
   background-color: var(--color-brand-primary);
 }
 
@@ -68,4 +68,453 @@
 
 .hero.solid :where(a).button {
   color: var(--color-brand-accent);
+}
+
+
+/* ============================================================
+   LINZESS nav-overlap heroes
+   Custom classes:
+   - linzess-behind-nav: header overlays hero
+   - linzess-editorial-hero: left-copy editorial banner
+   - linzess-cta-hero: left-copy CTA banner with curved bottom
+   ============================================================ */
+
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header .nav-wrapper {
+  background: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
+  box-shadow: none;
+}
+
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-brand a,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-sections>.default-content-wrapper>ul>li>button,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-tools>.default-content-wrapper>ul>li>button {
+  color: var(--color-text-on-dark);
+}
+
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button>span {
+  background-color: transparent;
+  color: var(--color-text-on-dark);
+}
+
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button>span {
+  background: var(--color-text-on-dark);
+}
+
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover::after,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus::after,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus-visible::after,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button[aria-expanded='true']::after {
+  background: var(--color-brand-accent);
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  min-height: 52rem;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):has(> div:empty) {
+  display: none;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child {
+  position: relative;
+  inset: 0;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child picture,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child img {
+  position: relative;
+  inset: 0;
+  object-fit: cover;
+  border-radius: 0;
+  max-height: none;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)::after {
+  display: block;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
+    linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(100%, 64rem);
+  margin: 0;
+  padding: calc(var(--nav-height-mobile) + 4rem) 3.5rem 5.6rem;
+  background: transparent;
+  max-width: none;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
+  grid-column: auto;
+  max-width: 34rem;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-eyebrow {
+  display: inline-block;
+  margin-bottom: 2.4rem;
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: 0;
+  line-height: 1.2;
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-body);
+  margin: 0 0 var(--spacing-16);
+  padding: 0;
+  text-transform: capitalize;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)>div:not(.hero-text-container):not(:first-child):has(> div > p) p {
+  margin: 0;
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+  padding-bottom: var(--spacing-40);
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)>div:not(.hero-text-container):not(:first-child):has(> div > p) p::after {
+  display: block;
+  margin-top: var(--spacing-24);
+  content: '';
+  background-image: url(/icons/divider.svg);
+  width: var(--spacing-64);
+  height: 5px;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h2,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h3,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
+  color: var(--color-text-on-dark);
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
+  margin: 0;
+  font-size: var(--font-size-h1-hero);
+  font-weight: var(--font-weight-body);
+  line-height: 90%;
+  margin-bottom: var(--spacing-20);
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
+  font-size: 1.8rem;
+  line-height: 1.35;
+}
+
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-image-caption {
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin-inline: auto;
+  bottom: 20%;
+  z-index: 3;
+  width: 100%;
+  max-width: 1000px;
+  padding: 0;
+  background: none;
+  color: var(--color-text-on-dark);
+  font-family: var(--font-family-legal);
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-style: normal;
+  line-height: 1.2;
+  text-align: right;
+}
+
+.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
+  min-height: 68.4rem;
+}
+
+.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+  padding-bottom: 10.4rem;
+}
+
+.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
+  max-width: 40rem;
+}
+
+.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
+  font-size: var(--font-size-40);
+  line-height: 0.95;
+  max-width: none;
+  width: 100%;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
+  min-height: auto;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -6.4rem;
+  height: 12.8rem;
+  background: var(--background-color);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  content: '';
+  z-index: 2;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
+  width: min(100%, 72rem);
+  padding-bottom: 7.6rem;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
+  max-width: 42rem;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
+  font-size: var(--font-size-40);
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
+  margin-top: 1.6rem;
+  font-size: var(--font-size-legal-large);
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .button-container {
+  padding-bottom: 0;
+  margin-top: 0;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button {
+  min-width: 23.8rem;
+  padding: 1.6rem 2.4rem;
+  border-radius: var(--border-radius-button-primary);
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: none;
+  margin-top: 0;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button::after {
+  display: inline-block;
+  margin-left: 1.4rem;
+  content: '\203A';
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button:hover {
+  background: #f2a94b;
+  color: var(--color-brand-primary);
+}
+
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+  width: 100%;
+  max-width: 1000px;
+  padding: 0;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  min-height: 0;
+}
+
+.hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-body);
+  text-transform: uppercase;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  padding: 0;
+  margin-inline: auto;
+  margin-bottom: var(--spacing-40);
+  display: flex;
+  flex-direction: column;
+  min-height: auto;
+  inset: unset;
+  z-index: 2;
+}
+
+.hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
+  display: block;
+  margin-top: var(--spacing-24);
+  content: '';
+  background-image: url(/icons/divider.svg);
+  width: var(--spacing-64);
+  height: 5px;
+}
+
+@media (width <744px) {
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) picture img {
+    min-height: 420px;
+  }
+
+  .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero),
+  .hero-eyebrow,
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
+    font-size: var(--font-size-body);
+    min-height: auto;
+  }
+
+  .hero:is(.linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    padding: var(--spacing-20);
+    justify-content: center;
+    height: 100%;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
+    bottom: -1.4rem;
+    height: 3.8rem;
+  }
+
+  .hero:is(.linzess-behind-nav-linzess-cta-hero) .button-container {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: fit-content;
+  }
+
+  .hero:is(.linzess-behind-nav-linzess-cta-hero) .button-container a {
+    font-size: var(--font-size-body);
+  }
+}
+
+@media (width >=744px) {
+  .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
+    min-height: auto;
+  }
+
+  .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
+    width: min(100%, 72rem);
+    padding: calc(var(--nav-height) + 6.4rem) 7rem 7rem;
+  }
+
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
+    min-height: auto;
+  }
+
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    width: 100%;
+    padding: calc(var(--nav-height) + 6.2rem) 7rem 7rem;
+  }
+
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
+    max-width: 38rem;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
+    min-height: auto;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
+    width: 100%;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
+    display: none;
+  }
+}
+
+@media (width >=1024px) {
+  .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
+    min-height: 62rem;
+  }
+
+  .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
+    width: min(100%, 92rem);
+    padding: calc(var(--nav-height) + 8.4rem) 5.5rem 7.2rem;
+  }
+
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
+    min-height: auto;
+  }
+
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    width: 90%;
+    padding: calc(var(--nav-height) + 27.8rem) 11.8rem 8rem;
+  }
+
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
+    max-width: none;
+    width: 100%;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
+    min-height: auto;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    min-height: 0;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
+    max-width: 44rem;
+  }
+
+  .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+    font-size: var(--font-size-legal-large);
+    font-weight: var(--font-weight-body);
+    text-transform: uppercase;
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    padding: 0;
+    margin-inline: auto;
+    margin-bottom: var(--spacing-40);
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+    inset: unset;
+    z-index: 2;
+  }
+
+  .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
+    display: block;
+    margin-top: var(--spacing-24);
+    content: '';
+    background-image: url(/icons/divider.svg);
+    width: var(--spacing-64);
+    height: 5px;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
+    display: block;
+  }
 }

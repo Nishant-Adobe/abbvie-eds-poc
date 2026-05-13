@@ -1976,7 +1976,7 @@ color: inherit;
   position: absolute;
   inset: 0;
   content: '';
-  background: linear-gradient(90deg, rgba(196, 62, 0, 0.1) 0%, rgba(196, 62, 0, 0.06) 38%, rgba(196, 62, 0, 0) 60%);
+  background: linear-gradient(90deg, rgb(196 62 0 / 10%) 0%, rgb(196 62 0 / 6%) 38%, rgb(196 62 0 / 0%) 60%);
   pointer-events: none;
   z-index: 1;
 }
@@ -2005,7 +2005,7 @@ color: inherit;
   margin: 0;
   font-family: var(--heading-font-family);
   font-size: clamp(4.4rem, 6vw, 7.2rem);
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
   line-height: 0.98;
   letter-spacing: 0;
   text-transform: none;
@@ -2017,7 +2017,7 @@ color: inherit;
 .hero.mavyret-data-hero h2 strong,
 .hero.mavyret-data-hero p strong {
   font-family: var(--heading-font-family-bold);
-  font-weight: 700;
+  font-weight: var(--font-weight-heading);
 }
 .hero.mavyret-data-hero .hero-text-container p {
   max-width: 48rem;
@@ -2030,13 +2030,13 @@ color: inherit;
   line-height: 1.26;
 }
 .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
-  font-size: 14px;
+  font-size: var(--font-size-body);
   font-family: 'Roboto Bold';
   margin: 0;
   padding-bottom: 0;
 }
 .hero.mavyret-data-hero .hero-text-container p:nth-of-type(3) {
-  font-size: 14px;
+  font-size: var(--font-size-body);
   margin: 0;
   padding: 0;
 }
@@ -2053,15 +2053,15 @@ color: inherit;
   align-items: center;
   gap: 10px;
   min-width: unset;
-  padding: 8px 16px;
+  padding: var(--spacing-8) var(--spacing-16);
   border: 2px solid #636366;
   border-radius: 0;
-  background: #fff;
-  box-shadow: -2px 2px 4px 0 #8ce02a;
+  background: var(--background-color);
+  box-shadow: var(--shadow-green-glow);
   color: #111;
   font-family: var(--heading-font-family-bold);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-heading);
   line-height: 1.2;
   text-transform: none;
 }
@@ -2072,7 +2072,7 @@ color: inherit;
   margin-bottom: 3px;
 }
 .hero.mavyret-data-hero :where(a).button:hover {
-  background: #fff;
+  background: var(--background-color);
   color: #111;
   text-decoration: none;
 }
@@ -2114,7 +2114,7 @@ color: inherit;
   color: inherit;
   font-family: var(--heading-font-family-bold);
   font-size: 1.6rem;
-  font-weight: 700;
+  font-weight: var(--font-weight-heading);
   line-height: 1.2;
 }
 @media (width >=744px) {
@@ -2136,7 +2136,7 @@ color: inherit;
   }
 
   .hero.mavyret-data-hero .hero-text-container p:first-of-type {
-    font-size: 28px;
+    font-size: var(--font-size-28);
   }
 
   .hero.mavyret-data-hero .hero-image-caption {
@@ -2169,16 +2169,16 @@ color: inherit;
   }
 
   .hero.mavyret-data-hero h1 {
-    font-size: 64px;
+    font-size: var(--font-size-64);
   }
 
   .hero.mavyret-data-hero .hero-text-container p:first-of-type {
     max-width: 50rem;
-    font-size: 28px;
+    font-size: var(--font-size-28);
   }
 
   .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
-    font-size: 14px;
+    font-size: var(--font-size-body);
     font-family: 'Roboto Bold';
     margin: 0;
     padding-bottom: 0;
@@ -2201,7 +2201,7 @@ color: inherit;
   }
 }
 .hero.mavyret-data-hero.no-padding .hero-text-container {
-  max-width: 1180px;
+  max-width: var(--cdp-max-width);
 }
 .hero.mavyret-data-hero.no-padding:not(:has(.hero-indication)) {
   justify-content: center;
@@ -2215,19 +2215,19 @@ color: inherit;
   flex-direction: column;
 }
 .hero.mavyret-data-hero.no-padding .hero-indication p:first-child {
-  font-size: 28px;
+  font-size: var(--font-size-28);
   font-weight: 800;
   padding: 0;
 }
 .hero.mavyret-data-hero.no-padding .hero-indication p:last-child {
-  font-size: 28px;
-  font-weight: 400;
+  font-size: var(--font-size-28);
+  font-weight: var(--font-weight-body);
   padding: 0;
-  padding-left: 64px;
+  padding-left: var(--spacing-content-gap);
 }
 .hero.mavyret-data-hero .hero-text-container p:last-child:not(:has(a)) {
-  font-size: 14px;
-  margin-top: 16px;
+  font-size: var(--font-size-body);
+  margin-top: var(--spacing-16);
 }
 .hero.mavyret-data-hero {
   height: 364px;
@@ -2235,7 +2235,7 @@ color: inherit;
 }
 .hero.mavyret-data-hero.hero-home {
   height: auto;
-  min-height: 500px;
+  min-height: var(--spacing-500);
 }
 @media (width <744px) {
   .hero.mavyret-data-hero .hero-indication {
@@ -2246,24 +2246,24 @@ color: inherit;
 
   .hero.mavyret-data-hero.no-padding .hero-indication p:first-child,
   .hero.mavyret-data-hero.no-padding .hero-indication p:nth-child(2) {
-    font-size: 24px;
+    font-size: var(--font-size-24);
   }
 
   .hero.mavyret-data-hero :where(a).button {
     justify-content: space-between;
     width: 100%;
-    padding: 4px 16px;
+    padding: 4px var(--spacing-16);
   }
 
   .hero.mavyret-data-hero .hero-text-container p:first-of-type {
-    font-size: 24px;
+    font-size: var(--font-size-24);
   }
 
   .hero.mavyret-data-hero h1 {
-    font-size: 40px;
+    font-size: var(--font-size-40);
   }
 
   .hero.mavyret-data-hero .hero-text-container {
-    padding: 16px;
+    padding: var(--spacing-16);
   }
 }

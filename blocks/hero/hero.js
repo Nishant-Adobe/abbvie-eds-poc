@@ -241,6 +241,10 @@ export default function decorate(block) {
   if (textCell) {
     textContainer.classList.add('hero-text-container');
     textCell.classList.add('cmp-container-x-large');
+
+    if (Array.from(block.children)[2] && block?.classList?.contains('linzess-behind-nav-linzess-editorial-hero')) {
+      textCell.prepend(Array.from(block.children)[2].querySelector('p'));
+    }
   }
 
   absorbBreadcrumb(textCell, section);
