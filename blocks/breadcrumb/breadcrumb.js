@@ -33,41 +33,29 @@ function appendJsonLd(ol) {
 }
 
 function extractConfig(block) {
-  const propElements = block.querySelectorAll('[data-aue-prop]');
-  if (propElements.length > 0) {
-    const getField = (name) => block.querySelector(`[data-aue-prop="${name}"]`);
-    const getTextVal = (name, defaultVal = '') => {
-      const el = getField(name);
-      return el?.textContent?.trim() || defaultVal;
-    };
-    const getBoolVal = (name, defaultVal) => {
-      const el = getField(name);
-      if (!el) return defaultVal;
-      const val = el.textContent?.trim().toLowerCase();
-      if (val === 'true') return true;
-      if (val === 'false' || val === '') return false;
-      return defaultVal;
-    };
-    return {
-      auto: getBoolVal('auto', true),
-      homeLabel: getTextVal('homeLabel', 'Home'),
-    };
-  }
+  const rows = [...block.querySelectorAll(':scope > div:not([data-aue-resource])')];
 
-  const rows = [...block.querySelectorAll(':scope > div')];
-  const cells = rows.flatMap((row) => [...row.querySelectorAll(':scope > div')]);
-  const getText = (idx) => cells[idx]?.textContent?.trim() || '';
-  const getBool = (idx, defaultVal) => {
-    const val = getText(idx).toLowerCase();
-    if (val === 'true') return true;
-    if (val === 'false' || val === '') return false;
-    return defaultVal;
-  };
+  let autoVal = true;
+  let homeLabel = 'Home';
 
-  return {
-    auto: getBool(0, true),
-    homeLabel: getText(1) || 'Home',
-  };
+  rows.forEach((row) => {
+    const prop = row.querySelector('[data-aue-prop]');
+    if (prop) {
+      const name = prop.getAttribute('data-aue-prop');
+      if (name === 'homeLabel') homeLabel = prop.textContent?.trim() || 'Home';
+      if (name === 'auto') {
+        const val = prop.textContent?.trim().toLowerCase();
+        autoVal = val !== 'false';
+      }
+    } else {
+      const text = row.textContent?.trim().toLowerCase();
+      if (text === 'false' || text === 'true') {
+        autoVal = text !== 'false';
+      }
+    }
+  });
+
+  return { auto: autoVal, homeLabel };
 }
 
 function extractItems(block) {
@@ -96,6 +84,16 @@ function extractItems(block) {
   }, []);
 }
 
+function toPathname(url) {
+  try {
+    return new URL(url, window.location.origin).pathname
+      .replace(/^\/content/, '')
+      .replace(/\.html$/, '');
+  } catch {
+    return (url || '').replace(/\.html$/, '');
+  }
+}
+
 function buildNav(crumbs, ariaLabel) {
   const currentPath = window.location.pathname
     .replace(/^\/content/, '')
@@ -108,8 +106,8 @@ function buildNav(crumbs, ariaLabel) {
   const ol = document.createElement('ol');
   crumbs.forEach(({ label, href }) => {
     const li = document.createElement('li');
-    const hrefClean = (href || '').replace(/\.html$/, '');
-    const isActive = hrefClean && hrefClean === currentPath;
+    const hrefPath = toPathname(href);
+    const isActive = hrefPath && hrefPath === currentPath;
 
     if (isActive) {
       li.textContent = label;
