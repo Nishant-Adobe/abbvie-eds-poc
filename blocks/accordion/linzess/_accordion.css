@@ -5,7 +5,7 @@
 
 .accordion {
     --accordion-linzess-bg-item: var(--linz-purple);
-    --accordion-linzess-bg-item-hover: var(--linz-purple);
+    --accordion-linzess-bg-item-hover: var(--color-brand-primary);
     --accordion-linzess-color-label: var(--linz-white);
     --accordion-linzess-color-body: var(--text-color);
     --accordion-linzess-radius: var(--linz-rounded-corner-sm);
@@ -14,10 +14,6 @@
     --highlight-dark-background-color: transparent;
 
     background: transparent;
-    max-width: 900px;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* Card-per-item — no bottom border, gap between cards */
@@ -32,7 +28,7 @@
 /* Summary row */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: var(--spacing-14, 14px) var(--spacing-20, 20px);
+    padding: var(--spacing-20) var(--spacing-24);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -40,8 +36,6 @@
     background: var(--accordion-linzess-bg-item);
     color: var(--accordion-linzess-color-label);
     cursor: pointer;
-    min-height: 0;
-    overflow: visible;
 }
 
 /* Focus */
@@ -68,9 +62,9 @@
 }
 
 /* Chevron — CSS-driven via summary::after, no icon-font class needed */
-.accordion details.accordion-item > summary::after {
-    content: '' !important;
-    display: block !important;
+.accordion summary::after {
+    content: '';
+    display: block;
     flex-shrink: 0;
     width: var(--spacing-24);
     height: var(--spacing-24);
