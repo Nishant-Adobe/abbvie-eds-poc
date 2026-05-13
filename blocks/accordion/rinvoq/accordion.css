@@ -66,17 +66,17 @@
     gap: var(--gap-10);
 }
 .accordion-icon-font .icon-minus::after {
-    content: "\2212";
+    content: "";
     display: inline-block;
-    
+    font-family: var(--icon-font-family);
     font-size: var(--icon-size-010);
     margin-left: var(--spacing-03);
     color: inherit;
 }
 .accordion-icon-font .icon-plus::after {
-    content: "+";
+    content: "";
         display: inline-block;
-        
+        font-family: var(--icon-font-family);
         font-size: var(--icon-size-010);
         margin-left: var(--spacing-03);
         color: inherit;
@@ -97,8 +97,12 @@
     color: var(--text-color);
 }
 .accordion .accordion-item {
-    border-bottom: var(--accordion-border-01) solid
-        var(--footer-seperator-color);
+    border: var(--border-01, 1px) solid var(--color-border-default, #e3e3e3);
+    border-left: var(--spacing-05, 5px) solid var(--accordion-rinvoq-color-accent);
+    background: var(--background-color);
+    margin-bottom: var(--spacing-16);
+    border-radius: 0;
+    overflow: hidden;
 }
 .accordion .accordion-item-label p {
     color: var(--text-color);
@@ -142,7 +146,7 @@
 }
 .accordion-item-body .external-link::after {
     color: inherit;
-    content: "\2212";
+    content: "";
     display: inline-block;
     font-family: var(--icon-font-family);
     margin-left: var(--spacing-02);
@@ -198,22 +202,22 @@
     display: none;
 }
 .accordion-icon-font .item-icon-plus::after {
-    content: "+";
+    content: "";
     position: absolute;
     top: 37%;
     right: 0;
     font-size: var(--font-size-20);
-    
+    font-family: var(--icon-font-family);
     font-weight: var(--font-weight-800);
     transform: scale(0.75);
 }
 .accordion-icon-font .item-icon-minus::after {
-    content: "\2212";
+    content: "";
     position: absolute;
     top: 37%;
     right: 0;
     font-size: var(--font-size-20);
-    
+    font-family: var(--icon-font-family);
     font-weight: var(--font-weight-800);
     transform: scale(0.75);
 }
@@ -1029,8 +1033,8 @@
 }
 /* Item — white bg, gold left border, gap between items */
 .accordion .accordion-item {
-    border: var(--border-01, 1px) solid var(--color-border-default, #e3e3e3);
-    border-left: var(--spacing-05, 5px) solid var(--accordion-rinvoq-color-accent);
+    border-bottom: var(--border-01) solid var(--color-border-default);
+    border-left: var(--spacing-05) solid var(--accordion-rinvoq-color-accent);
     background: var(--background-color);
     margin-bottom: var(--spacing-16);
     border-radius: 0;
