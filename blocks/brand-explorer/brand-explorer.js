@@ -125,11 +125,16 @@ function parseFlatXwalkFormat(rows) {
  * @param {HTMLElement[]} rows - Block child rows
  * @returns {Object} Parsed config with barLabel, utilityLinks, brands, projectNumber
  */
-function parseUEEditorFormat(rows) {
+function parseUEEditorFormat(rows, block) {
   let barLabel = '';
   const utilityLinks = [];
   const brands = [];
   let projectNumber = '';
+
+  const projEl = block?.querySelector('[data-aue-prop="projectNumber"]');
+  if (projEl) projectNumber = projEl.textContent.trim();
+  const barEl = block?.querySelector('[data-aue-prop="barLabel"]');
+  if (barEl) barLabel = barEl.textContent.trim();
 
   rows.forEach((row) => {
     const comp = row.getAttribute('data-aue-component');
@@ -168,10 +173,10 @@ function parseUEEditorFormat(rows) {
         indications,
       });
     } else if (!comp) {
-      const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
-      if (barLabelEl) barLabel = barLabelEl.textContent.trim();
-      const projEl = row.querySelector('[data-aue-prop="projectNumber"]');
-      if (projEl) projectNumber = projEl.textContent.trim();
+      if (!barLabel) {
+        const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
+        if (barLabelEl) barLabel = barLabelEl.textContent.trim();
+      }
       const text = row.textContent.trim();
       if (!projectNumber && text.startsWith('US-')) projectNumber = text;
     }
@@ -188,7 +193,7 @@ function parseUEEditorFormat(rows) {
  * @param {HTMLElement[]} rows - Block child rows
  * @returns {Object} Config with barLabel, utilityLinks, brands, projectNumber
  */
-function detectAndParseContent(rows) {
+function detectAndParseContent(rows, block) {
   const firstRowCells = rows[0]?.children?.length || 0;
   const isTableFormat = firstRowCells > 1
     || rows[0]?.querySelector('a')
@@ -198,7 +203,7 @@ function detectAndParseContent(rows) {
 
   const cfg = parseFlatXwalkFormat(rows);
   if (!cfg.brands.length) {
-    const ueCfg = parseUEEditorFormat(rows);
+    const ueCfg = parseUEEditorFormat(rows, block);
     if (ueCfg.brands.length) return ueCfg;
   }
   return cfg;
@@ -434,7 +439,7 @@ export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
 
-  const cfg = detectAndParseContent(rows);
+  const cfg = detectAndParseContent(rows, block);
 
   rows.forEach((row) => { row.classList.add('brand-explorer-hidden'); });
 
