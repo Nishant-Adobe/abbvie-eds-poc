@@ -109,4 +109,24 @@ export default function decorate(block) {
 
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
+
+  // Hide the bar when the footer is visible; reveal it when footer scrolls away.
+  // Footer loads async in EDS, so fall back to a MutationObserver if not yet in DOM.
+  const footerObserver = new IntersectionObserver(([entry]) => {
+    stickySection.classList.toggle('is-hidden', entry.isIntersecting);
+  });
+
+  const footer = document.querySelector('footer');
+  if (footer) {
+    footerObserver.observe(footer);
+  } else {
+    const mo = new MutationObserver(() => {
+      const el = document.querySelector('footer');
+      if (el) {
+        mo.disconnect();
+        footerObserver.observe(el);
+      }
+    });
+    mo.observe(document.body, { childList: true });
+  }
 }
