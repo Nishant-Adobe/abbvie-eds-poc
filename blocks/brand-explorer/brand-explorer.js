@@ -418,7 +418,8 @@ function attachEventListeners(block, browseBtn, closeBtn, content, accordions) {
     if (e.key === 'Escape' && block.classList.contains('is-open')) close();
   }, { signal });
 
-  const mobileQuery = window.matchMedia('(max-width: 895px)');
+  const MOBILE_MAX = '(max-width: 895px)';
+  const mobileQuery = window.matchMedia(MOBILE_MAX);
   accordions.addEventListener('click', (e) => {
     if (!mobileQuery.matches) return;
     const clickedBlade = e.target.closest('.brand-explorer-blade');
