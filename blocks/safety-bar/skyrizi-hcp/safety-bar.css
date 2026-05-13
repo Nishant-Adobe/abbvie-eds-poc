@@ -4,6 +4,19 @@
    All variants: bottom sticky, expandable with + / - toggle
    ============================================================ */
 
+/* === Block-scoped token defaults — override in brand _safety-bar.css === */
+
+.safety-bar {
+  --safety-bar-bg: var(--background-color);
+  --safety-bar-border: var(--color-border);
+  --safety-bar-toggle-bg: var(--background-color);
+  --safety-bar-toggle-color: currentcolor;
+  --safety-bar-toggle-expanded-bg: var(--color-navy-dark);
+  --safety-bar-toggle-expanded-color: var(--color-text-on-dark);
+  --safety-bar-max-height-expanded: 60vh;
+  --safety-bar-max-height-expanded-desktop: 50vh;
+}
+
 /* === Fixed section wrapper === */
 
 .safety-bar-section {
@@ -11,9 +24,9 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: var(--z-index-safety-bar, 500);
+  z-index: var(--z-index-safety-bar);
   pointer-events: none;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
 /* Hide the authored in-page safety bar source block at all times.
@@ -31,18 +44,18 @@
 
 .safety-bar {
   pointer-events: all;
-  background-color: var(--safety-bar-bg, #fff);
-  border-top: 3px solid var(--safety-bar-border, #ccc);
+  background-color: var(--safety-bar-bg);
+  border-top: var(--border-width-thick) solid var(--safety-bar-border);
   position: relative;
-  box-shadow: 0 -2px 8px rgb(0 0 0 / 10%);
+  box-shadow: var(--shadow-safety-bar);
 }
 
 /* === Collapsed / abbreviated area === */
 
 .safety-bar-abbreviated {
-  padding: 1.2rem 5rem 1.2rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.5;
+  padding: var(--spacing-12) var(--spacing-50) var(--spacing-12) var(--spacing-24);
+  font-size: var(--body-font-size-xs);
+  line-height: var(--line-height-relaxed);
   position: relative;
   text-align: left;
 }
@@ -50,12 +63,12 @@
 /* === Full ISI / expanded content === */
 
 .safety-bar-full {
-  padding: 1.6rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.6;
+  padding: var(--spacing-16) var(--spacing-24);
+  font-size: var(--body-font-size-xs);
+  line-height: var(--line-height-loose);
   display: none;
   text-align: left;
-  max-height: 60vh;
+  max-height: var(--safety-bar-max-height-expanded);
   overflow-y: auto;
 }
 
@@ -63,15 +76,15 @@
 
 .safety-bar-toggle {
   position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  background-color: var(--safety-bar-toggle-bg, #fff);
-  border: 2px solid var(--safety-bar-toggle-color, currentcolor);
-  color: var(--safety-bar-toggle-color, inherit);
+  top: var(--spacing-12);
+  right: var(--spacing-12);
+  background-color: var(--safety-bar-toggle-bg);
+  border: var(--border-width-default) solid var(--safety-bar-toggle-color);
+  color: var(--safety-bar-toggle-color);
   cursor: pointer;
-  font-size: 1.8rem;
-  width: 1.8rem;
-  height: 1.8rem;
+  font-size: var(--spacing-18);
+  width: var(--spacing-18);
+  height: var(--spacing-18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,22 +93,22 @@
   line-height: 1;
 }
 
-/* Expanded: filled blue circle, white × */
+/* Expanded: filled navy circle, white - */
 
 .safety-bar-toggle[aria-expanded='true'] {
-  background-color: var(--safety-bar-toggle-expanded-bg, var(--color-navy-dark, #071d49));
-  border-color: var(--safety-bar-toggle-expanded-bg, var(--color-navy-dark, #071d49));
-  color: var(--safety-bar-toggle-expanded-color, #fff);
+  background-color: var(--safety-bar-toggle-expanded-bg);
+  border-color: var(--safety-bar-toggle-expanded-bg);
+  color: var(--safety-bar-toggle-expanded-color);
 }
 
 .safety-bar-toggle::after {
   align-self: end;
-  color: var(--color-background-footer, currentcolor);
+  color: var(--color-background-footer);
   content: '+';
 }
 
 .safety-bar-toggle[aria-expanded='true']::after {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark);
   content: '-';
   display: inline-block;
   transform: scaleX(2);
@@ -152,9 +165,9 @@
 .safety-bar.split .safety-bar-abbreviated {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-24, 2.4rem);
+  gap: var(--spacing-24);
   text-align: left;
-  padding-right: 5rem;
+  padding-right: var(--spacing-50);
 }
 
 .safety-bar.split .safety-bar-col1,
@@ -180,20 +193,20 @@
 
 @media (width >= 1024px) {
   .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
+    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
   }
 
   .safety-bar-toggle {
-    right: 1.6rem;
+    right: var(--spacing-16);
   }
 
   .safety-bar-full {
-    padding: 2rem 5.5rem;
-    max-height: 50vh;
+    padding: var(--spacing-20) var(--spacing-55);
+    max-height: var(--safety-bar-max-height-expanded-desktop);
   }
 
   .safety-bar.split .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
+    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
   }
 }
 
@@ -462,6 +475,7 @@
   --z-index-3 : 3;
   --z-index-10: 10;
   --z-index-anchor-nav: 100;
+  --z-index-safety-bar: 500;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -520,6 +534,8 @@
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
   --line-height-tight: 1.25;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
 
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
@@ -527,6 +543,7 @@
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
   --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
