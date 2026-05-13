@@ -26,7 +26,9 @@
 header .nav-eyebrow a, header .nav-eyebrow p {
   font-size: var(--font-size-14);
 }
-
+header .nav-eyebrow a {
+  text-decoration: underline;
+}
 /* Nav wrapper — dark charcoal */
 header .nav-wrapper {
   background-color: transparent;
@@ -35,6 +37,7 @@ header .nav-wrapper {
 
 header:has(.nav-utility ul) {
   height: auto;
+  background: linear-gradient(180deg,rgba(35,29,29,0.9) 0,rgba(35,29,29,0) 100%);
 }
 
 /* Nav text — white */
@@ -74,10 +77,11 @@ header .nav-utility ul[role="menubar"] {
 
 /* Pipe separator — white at 40% opacity */
 header .nav-utility li + li::before {
-  color: var(--color-text-on-dark);
-  opacity: var(--opacity-muted);
-  font-size: var(--font-size-body-small);
-  padding: 0 var(--spacing-08);
+  display: none
+}
+
+header .nav-utility a, header .nav-utility a.button {
+  padding: 8px 10px 8px 12px
 }
 
 /* Hamburger — white bars on dark header */
@@ -95,6 +99,7 @@ header nav .nav-brand img {
   width: var(--header-logo-width);
   height: var(--header-logo-height);
   filter: var(--header-logo-filter);
+  max-width: unset;
 }
 
 /* Primary nav — dark bg, white text */
@@ -106,10 +111,12 @@ header nav .nav-sections {
 /* Nav buttons — white uppercase small bold */
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
   color: var(--color-text-on-dark);
-  font-weight: var(--font-weight-700);
+  font-weight: var(--font-weight-600);
   font-size: var(--font-size-body-small);
   text-transform: uppercase;
   letter-spacing: var(--header-nav-letter-spacing);
+  padding: 0 20px;
+  white-space: normal;
 }
 
 /* Nav tools — hide entirely (Linzess has no search block) */
@@ -120,22 +127,25 @@ header nav .nav-tools {
 /* "Check My Symptoms" CTA button — white bg, linzess-purple text, rounded */
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link,
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button {
-  background-color: var(--color-text-on-dark);
+  background-color: #d9d7f9;
   color: var(--color-brand-primary);
   border-radius: var(--border-radius-button-primary);
-  padding: var(--spacing-08) var(--spacing-20);
+  padding: 12px 24px 12px 24px;
   font-weight: var(--font-weight-700);
   font-size: var(--font-size-body-small);
   text-transform: uppercase;
   letter-spacing: var(--header-nav-letter-spacing);
   text-decoration: none;
-  line-height: var(--header-nav-line-height);
+  line-height: 20px;
+  font-weight: 600;
+  font-size: 12px;
+  margin-top: -10px;
 }
 
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link:hover,
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button:hover {
-  background-color: var(--color-brand-accent);
-  color: var(--color-brand-primary);
+  background-color: #fff;
+  color: #422e83;
   opacity: var(--opacity-full);
 }
 
@@ -147,19 +157,26 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-ch
 
 /* Submenu — white bg, dark text */
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
-  background: var(--background-color);
+  border-radius: 16px;
+  background-color: #d9d7f9;
   color: var(--text-color);
-  width: var(--header-submenu-width);
+  width: 202px;
+  box-shadow: 0 3px 5px 0 #999;
+  margin: 0;
+}
+header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 ul {
+  padding: 10px 20px;
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a {
-  color: var(--color-brand-primary);
-  font-size: var(--font-size-body-small);
+  color: #422e83;
+  font-size: 12.8px;
 }
 
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover {
-  color: var(--color-brand-accent);
-  text-decoration: underline;
+    color: #422e83;
+    text-decoration: none;
+    font-weight: 700;
 }
 
 /* Mobile open — dark maintained */
@@ -177,18 +194,6 @@ header nav .nav-sections .default-content-wrapper > ul > li {
   border-bottom-color: var(--header-nav-separator);
 }
 
-/* Mobile: white chevron on nav buttons */
-@media (width <= 1023px) {
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li > button::before {
-    color: var(--color-text-on-dark);
-  }
-
-  /* CTA full-width in mobile menu */
-  header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms {
-    margin-left: 0;
-  }
-}
-
 /* Desktop */
 @media (width >= 1024px) {
   /* Single-row flex layout — logo left, sections right */
@@ -196,9 +201,10 @@ header nav .nav-sections .default-content-wrapper > ul > li {
     display: flex;
     align-items: center;
     padding: 0 var(--spacing-35);
-    max-width: var(--header-content-max-width);
+    max-width: 960px;
     margin: 0 auto;
-    height: var(--nav-height);
+    height: auto;
+    padding: 20px;
     background-color: transparent;
   }
 
@@ -213,7 +219,7 @@ header nav .nav-sections .default-content-wrapper > ul > li {
     flex: 1 1 auto;
     display: flex;
     align-items: center;
-    margin-left: var(--spacing-35);
+    margin-left: 0;
     padding: 0;
     background: transparent;
     position: relative;
@@ -233,8 +239,9 @@ header nav .nav-sections .default-content-wrapper > ul > li {
   header nav .nav-sections .default-content-wrapper > ul {
     display: flex;
     justify-content: flex-start;
-    gap: var(--gap-32);
+    gap: 0 !important;
     margin: 0;
+    align-items: center;
   }
 
   /* "Check My Symptoms" — pushed to far right via auto left-margin */
@@ -255,11 +262,48 @@ header nav .nav-sections .default-content-wrapper > ul > li {
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button {
     color: var(--color-text-on-dark);
     opacity: var(--opacity-hover);
+    font-weight: 600;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > button:hover::after,
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button::after {
     background: var(--color-text-on-dark);
+  }
+
+  /* Dropdown chevron on buttons with submenus — centered below text */
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-haspopup="true"] {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-04);
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-haspopup="true"]::after {
+    content: "";
+    display: block;
+    position: static;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-brand-accent);
+    -webkit-mask: var(--icon-svg-chevron-down) no-repeat center / contain;
+    mask: var(--icon-svg-chevron-down) no-repeat center / contain;
+    transition: transform var(--transition-duration, 0.2s) ease;
+    flex-shrink: 0;
+  }
+
+  /* Keep chevron visible on hover/expanded — override white underline rule */
+  header nav .nav-sections .default-content-wrapper > ul > li > button[aria-haspopup="true"]:hover::after,
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button[aria-haspopup="true"]::after {
+    display: block;
+    position: static;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-brand-accent);
+  }
+
+  /* Rotate chevron up when submenu is open */
+  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button[aria-haspopup="true"]::after {
+    transform: rotate(180deg);
   }
 
   /* Submenu desktop styling */
@@ -305,6 +349,7 @@ header nav .nav-sections .default-content-wrapper > ul > li {
     overflow: visible;
     margin-bottom: var(--spacing-04);
     padding: var(--spacing-10);
+    text-align: center;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-group .navigation-item-level-2 .navigation-item-link {
