@@ -199,13 +199,24 @@ function detectAndParseContent(rows, block) {
     || rows[0]?.querySelector('a')
     || rows[0]?.querySelector('img, picture');
 
-  if (isTableFormat) return parseTableFormat(rows);
-
-  const cfg = parseFlatXwalkFormat(rows);
-  if (!cfg.brands.length) {
-    const ueCfg = parseUEEditorFormat(rows, block);
-    if (ueCfg.brands.length) return ueCfg;
+  let cfg;
+  if (isTableFormat) {
+    cfg = parseTableFormat(rows);
+  } else {
+    cfg = parseFlatXwalkFormat(rows);
+    if (!cfg.brands.length) {
+      const ueCfg = parseUEEditorFormat(rows, block);
+      if (ueCfg.brands.length) cfg = ueCfg;
+    }
   }
+
+  if (block) {
+    const projEl = block.querySelector('[data-aue-prop="projectNumber"]');
+    if (projEl && projEl.textContent.trim()) cfg.projectNumber = projEl.textContent.trim();
+    const barEl = block.querySelector('[data-aue-prop="barLabel"]');
+    if (barEl && barEl.textContent.trim()) cfg.barLabel = barEl.textContent.trim();
+  }
+
   return cfg;
 }
 
