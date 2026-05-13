@@ -1757,12 +1757,14 @@ color: inherit;
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Barlow Semi Condensed', sans-serif;
-  --heading-font-family: 'Barlow Semi Condensed', sans-serif;
-  --heading-font-family-bold: 'Barlow Semi Condensed', sans-serif;
+  --heading-font-family: 'Barlow Condensed', sans-serif;
+  --heading-font-family-bold: 'Barlow Condensed', sans-serif;
   --icon-font-family: 'abbv-iconFont';
   /* Footer-specific: live mavyret HCP renders footer in Roboto, not Univers */
   --font-family-footer: 'Roboto', sans-serif;
   --font-family-body: 'Barlow Condensed', sans-serif;
+  --font-roboto-bold: 'Roboto Bold', sans-serif;
+  --font-roboto-regular: 'Roboto Regular', sans-serif;
 
   /* ---- Font: Size ---- */
   --font-size-body: 14px;
@@ -2133,17 +2135,19 @@ color: inherit;
   margin-top: var(--hero-data-p-first-margin-top);
   font-size: var(--hero-data-p-first-font-size);
   line-height: var(--hero-data-p-first-line-height);
+  font-family: var(--font-family-body);
 }
 .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
   font-size: var(--font-size-body);
-  font-family: var(--hero-data-font-family-roboto-bold);
+  font-family: var(--font-roboto-bold);
   margin: 0;
   padding-bottom: 0;
 }
 .hero.mavyret-data-hero .hero-text-container p:nth-of-type(3) {
   font-size: var(--font-size-body);
+  font-family: var(--font-roboto-regular);
   margin: 0;
-  padding: 0;
+  padding-bottom: 0;
 }
 .hero.mavyret-data-hero .hero-text-container p sup {
   font-size: var(--hero-data-p-sup-font-size);
@@ -2164,7 +2168,7 @@ color: inherit;
   background: var(--background-color);
   box-shadow: var(--shadow-green-glow);
   color: var(--color-btn-text);
-  font-family: var(--heading-font-family-bold);
+  font-family: var(--body-font-family);
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-heading);
   line-height: var(--hero-data-button-line-height);
@@ -2204,10 +2208,9 @@ color: inherit;
   min-height: var(--hero-data-indication-min-height);
   width: min(100%, var(--hero-data-indication-width));
   padding: var(--hero-data-indication-padding);
-  background: var(--color-indication-bg);
+  background: none;
   color: var(--color-text-on-dark);
   text-align: center;
-  clip-path: var(--hero-data-indication-clip-path);
 }
 /* stylelint-disable-next-line no-descending-specificity */
 .hero.mavyret-data-hero .hero-indication p {
@@ -2219,6 +2222,19 @@ color: inherit;
   font-size: var(--hero-data-indication-p-font-size);
   font-weight: var(--font-weight-heading);
   line-height: var(--hero-data-indication-p-line-height);
+  z-index: 1;
+}
+.hero.mavyret-data-hero.no-padding .hero-indication p:first-child {
+  font-size: var(--font-size-28);
+  font-weight: var(--font-weight-extra-bold);
+  padding: 0 0 6px;
+  text-shadow: -2px -4px 8px rgba(0, 0, 0, .16), 2px 4px 8px rgba(0, 0, 0, .16);
+}
+.hero.mavyret-data-hero.no-padding .hero-indication p:last-child {
+  font-size: var(--font-size-28);
+  font-weight: var(--font-weight-body);
+  padding: 0;
+  padding-left: var(--spacing-content-gap);
 }
 @media (width >=744px) {
   .hero.mavyret-data-hero {
@@ -2227,7 +2243,7 @@ color: inherit;
 
   .hero.mavyret-data-hero .hero-text-container {
     width: min(100%, var(--hero-data-text-width-tablet));
-    padding: var(--hero-data-text-padding-tablet);
+    padding: 20px;
   }
 
   .hero.mavyret-data-hero .cmp-container-x-large {
@@ -2251,11 +2267,43 @@ color: inherit;
     min-height: var(--hero-data-indication-min-height-tablet);
     width: min(100%, var(--hero-data-indication-width-tablet));
     padding: var(--hero-data-indication-padding-tablet);
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
+    text-align: left;
+    padding-block: 19px;
+    padding-left: 10px;
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
   .hero.mavyret-data-hero .hero-indication p {
     font-size: var(--hero-data-indication-p-font-size-tablet);
+  }
+
+  .hero.mavyret-data-hero.no-padding .hero-indication p:last-child {
+    padding-left: 64px;
+  }
+}
+@media (width <1024px) {
+  .hero.mavyret-data-hero.no-padding .hero-indication {
+    background: #5c9541;
+    max-width: 820px;
+    position: absolute;
+    bottom: 75px;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container .button-container {
+    margin-top: 105px;
+  }
+}
+@media (width <744px) {
+  .hero.mavyret-data-hero.no-padding .hero-indication {
+    max-width: 100%;
+    width: 100%;
+    position: absolute;
   }
 }
 @media (width >=1024px) {
@@ -2293,9 +2341,32 @@ color: inherit;
   }
 
   .hero.mavyret-data-hero .hero-indication {
-    min-height: var(--hero-data-indication-min-height-desktop);
-    width: var(--hero-data-indication-width);
-    padding: var(--hero-data-indication-padding-desktop);
+    min-height: var(--hero-data-indication-min-height-tablet);
+    width: min(100%, var(--hero-data-indication-width-tablet));
+    padding: var(--hero-data-indication-padding-tablet);
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
+    text-align: left;
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding: 16px 10px;
+    position: relative;
+  }
+
+  .hero.mavyret-data-hero .hero-indication::after {
+    content: ' ';
+    position: absolute;
+    background: #5c9541;
+    width: 1000px;
+    height: 108px;
+    right: 51%;
+    bottom: 0;
+    border: 0;
+    border-bottom-right-radius: 106px;
+    corner-shape: bevel;
+    transform: skewX(12deg);
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
@@ -2316,18 +2387,6 @@ color: inherit;
 .hero.mavyret-data-hero.no-padding .hero-indication {
   display: flex;
   flex-direction: column;
-  position: relative;
-}
-.hero.mavyret-data-hero.no-padding .hero-indication p:first-child {
-  font-size: var(--font-size-28);
-  font-weight: var(--font-weight-extra-bold);
-  padding: 0;
-}
-.hero.mavyret-data-hero.no-padding .hero-indication p:last-child {
-  font-size: var(--font-size-28);
-  font-weight: var(--font-weight-body);
-  padding: 0;
-  padding-left: var(--spacing-content-gap);
 }
 /* stylelint-disable-next-line no-descending-specificity */
 .hero.mavyret-data-hero .hero-text-container p:last-child:not(:has(a)) {
@@ -2365,6 +2424,10 @@ color: inherit;
   .hero.mavyret-data-hero.no-padding .hero-indication p:first-child,
   .hero.mavyret-data-hero.no-padding .hero-indication p:nth-child(2) {
     font-size: var(--font-size-24);
+  }
+
+  .hero.mavyret-data-hero.no-padding .hero-indication p:nth-child(2) {
+    padding-left: 64px;
   }
 
   .hero.mavyret-data-hero :where(a).button {
