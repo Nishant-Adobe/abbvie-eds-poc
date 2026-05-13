@@ -4,20 +4,9 @@
    All variants: bottom sticky, expandable with + / - toggle
    ============================================================ */
 
-/* === Block-scoped token defaults — override in brand _safety-bar.css === */
-
-.safety-bar {
-  --safety-bar-bg: var(--background-color);
-  --safety-bar-border: var(--color-border);
-  --safety-bar-toggle-bg: var(--background-color);
-  --safety-bar-toggle-color: currentcolor;
-  --safety-bar-toggle-expanded-bg: var(--color-navy-dark);
-  --safety-bar-toggle-expanded-color: var(--color-text-on-dark);
-  --safety-bar-max-height-expanded: 60vh;
-  --safety-bar-max-height-expanded-desktop: 50vh;
-}
 
 /* === Fixed section wrapper === */
+
 
 .safety-bar-section {
   width: 100%;
@@ -29,20 +18,35 @@
   transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
+
 /* Hide the authored in-page safety bar source block at all times.
    JS reads its content and renders the sticky clone separately. */
+
 
 .safety-bar-container {
   display: none;
 }
 
+
 .safety-bar-section.is-hidden {
   transform: translateY(110%);
 }
 
+
 /* === Core block - auto-sizes to content, no fixed height === */
 
+
 .safety-bar {
+  /* Block-scoped token defaults — override in brand _safety-bar.css */
+  --safety-bar-bg: var(--background-color);
+  --safety-bar-border: var(--color-border);
+  --safety-bar-toggle-bg: var(--background-color);
+  --safety-bar-toggle-color: currentcolor;
+  --safety-bar-toggle-expanded-bg: var(--color-navy-dark);
+  --safety-bar-toggle-expanded-color: var(--color-text-on-dark);
+  --safety-bar-max-height-expanded: 60vh;
+  --safety-bar-max-height-expanded-desktop: 50vh;
+
   pointer-events: all;
   background-color: var(--safety-bar-bg);
   border-top: var(--border-width-thick) solid var(--safety-bar-border);
@@ -50,7 +54,9 @@
   box-shadow: var(--shadow-safety-bar);
 }
 
+
 /* === Collapsed / abbreviated area === */
+
 
 .safety-bar-abbreviated {
   padding: var(--spacing-12) var(--spacing-50) var(--spacing-12) var(--spacing-24);
@@ -60,7 +66,9 @@
   text-align: left;
 }
 
+
 /* === Full ISI / expanded content === */
+
 
 .safety-bar-full {
   padding: var(--spacing-16) var(--spacing-24);
@@ -72,7 +80,9 @@
   overflow-y: auto;
 }
 
+
 /* === Toggle button: top-right, circle === */
+
 
 .safety-bar-toggle {
   position: absolute;
@@ -93,7 +103,9 @@
   line-height: 1;
 }
 
+
 /* Expanded: filled navy circle, white - */
+
 
 .safety-bar-toggle[aria-expanded='true'] {
   background-color: var(--safety-bar-toggle-expanded-bg);
@@ -101,11 +113,13 @@
   color: var(--safety-bar-toggle-expanded-color);
 }
 
+
 .safety-bar-toggle::after {
   align-self: end;
   color: var(--color-background-footer);
   content: '+';
 }
+
 
 .safety-bar-toggle[aria-expanded='true']::after {
   color: var(--color-text-on-dark);
@@ -114,9 +128,11 @@
   transform: scaleX(2);
 }
 
+
 /* ============================================================
    Inline ISI - in-page instance shows only full ISI content
    ============================================================ */
+
 
 .safety-bar-inline .safety-bar {
   transform: none;
@@ -124,9 +140,11 @@
   position: static;
 }
 
+
 .safety-bar-inline .safety-bar-toggle {
   display: none;
 }
+
 
 .safety-bar-inline .safety-bar-full {
   display: block;
@@ -134,33 +152,41 @@
   overflow-y: visible;
 }
 
+
 .safety-bar-inline .safety-bar-abbreviated {
   display: none;
 }
+
 
 .safety-bar-inline .safety-bar-abbreviated-col2 {
   display: none;
 }
 
+
 .safety-bar-inline .safety-bar-abbreviated-col2-row {
   display: none;
 }
+
 
 .safety-bar-inline.safety-bar-section {
   position: static;
 }
 
+
 /* ============================================================
    Variant: center - collapsed content is center aligned
    ============================================================ */
+
 
 .safety-bar.center .safety-bar-abbreviated {
   text-align: center;
 }
 
+
 /* ============================================================
    Variant: split - collapsed is two-column grid
    ============================================================ */
+
 
 .safety-bar.split .safety-bar-abbreviated {
   display: grid;
@@ -170,26 +196,32 @@
   padding-right: var(--spacing-50);
 }
 
+
 .safety-bar.split .safety-bar-col1,
 .safety-bar.split .safety-bar-col2 {
   min-width: 0;
 }
 
+
 .safety-bar.is-expanded .safety-bar-full {
   display: block;
 }
+
 
 .safety-bar.is-expanded .safety-bar-abbreviated {
   display: none;
 }
 
+
 .safety-bar.split.is-expanded .safety-bar-abbreviated {
   display: none;
 }
 
+
 /* ============================================================
    Responsive breakpoints
    ============================================================ */
+
 
 @media (width >= 1024px) {
   .safety-bar-abbreviated {
@@ -210,6 +242,7 @@
   }
 }
 
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -222,14 +255,19 @@
  * governing permissions and limitations under the License.
  */
 
+
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
+
 @custom-media --bp-tablet (min-width: 744px);
+
 
 @custom-media --bp-desktop (min-width: 1024px);
 
+
 @custom-media --bp-wide (min-width: 1440px);
+
 
 :root {
 /* -----------------------------------------------------------
@@ -639,6 +677,7 @@
   --cdp-letter-spacing-title: 0.02em;
 }
 
+
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -646,6 +685,7 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
+
 
 @media (--bp-desktop) {
   :root {
@@ -655,6 +695,7 @@
   }
 }
 
+
 /* ============================================================
    LINZESS DTC — Brand Token Overrides
    Source: linzess.com (Platform C)
@@ -662,6 +703,7 @@
    Body Font: Lato
    Legal Font: BasicCommercialLT
    ============================================================ */
+
 
 :root {
   /* ---- Color: Brand Primary ---- */
@@ -851,10 +893,12 @@
   --hero-mobile-min-height: 420px;
 }
 
+
 /* Linzess — Safety Bar Brand Overrides
    Collapsed: white bg, purple top border + rounded corners, purple headings
    Expanded:  white bg, purple uppercase headings, Bebas Neue display font
 */
+
 
 .safety-bar {
   background-color: var(--background-color);
@@ -865,21 +909,25 @@
   font-family: var(--body-font-family);
 }
 
+
 .safety-bar-abbreviated h2,
 .safety-bar-abbreviated h3 {
   color: var(--color-text-heading);
   font-family: var(--heading-font-family);
 }
 
+
 .safety-bar-abbreviated strong,
 .safety-bar-abbreviated b {
   color: var(--color-text-heading);
 }
 
+
 .safety-bar-toggle {
   border-color: var(--color-brand-primary);
   color: var(--color-brand-primary);
 }
+
 
 .safety-bar.is-expanded .safety-bar-full h2,
 .safety-bar.is-expanded .safety-bar-full h3 {
@@ -888,6 +936,7 @@
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
 }
+
 
 .safety-bar.is-expanded .safety-bar-full strong,
 .safety-bar.is-expanded .safety-bar-full b {
