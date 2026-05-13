@@ -1,3 +1,8 @@
+import { getConfigValue } from '../../scripts/config.js';
+import { isUniversalEditor } from '../../scripts/utils.js';
+
+const DEFAULT_AEM_PUBLISH_URL = 'https://publish-p160552-e1944799.adobeaemcloud.com';
+
 function addSectionClasses(block, section) {
   if (!section) return;
   if (section.classList.contains('navy-overlap') && section.classList.contains('hero-container')) {
@@ -217,7 +222,7 @@ function initMultilayer(imageCell) {
   }, { signal: controller.signal });
 }
 
-function initVideo(videoRow, imageCell, block) {
+async function initVideo(videoRow, imageCell, block) {
   if (!videoRow) return;
   const link = videoRow.firstElementChild?.querySelector('a[href]');
   const videoSrc = link?.href;
@@ -228,10 +233,18 @@ function initVideo(videoRow, imageCell, block) {
     return;
   }
 
-  const splitedURL = videoSrc.split('/content');
-  // Ignore Hard-coded environment-specific AEM Cloud publish URL for now
-  splitedURL[0] = 'https://publish-p160552-e1944799.adobeaemcloud.com';
-  const videoURL = splitedURL.join('/content');
+  // In the Universal Editor (authoring environment) use the video src as-is.
+  // Otherwise, resolve the publish URL from config, falling back to the default.
+  let videoURL;
+  const authorMode = isUniversalEditor();
+  if (authorMode) {
+    videoURL = videoSrc;
+  } else {
+    const aemPublishUrl = await getConfigValue('aemPublishUrl') || DEFAULT_AEM_PUBLISH_URL;
+    const splitedURL = videoSrc.split('/content');
+    splitedURL[0] = aemPublishUrl;
+    videoURL = splitedURL.join('/content');
+  }
   videoRow.remove();
 
   const container = document.createElement('div');
@@ -252,7 +265,7 @@ function initVideo(videoRow, imageCell, block) {
   (imageCell || block.querySelector('div')).appendChild(container);
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
   const section = block.closest('.section');
   addSectionClasses(block, section);
 
@@ -296,5 +309,5 @@ export default function decorate(block) {
 
   if (block.classList.contains('landing')) absorbPressReleases(section, textCell);
   if (block.classList.contains('multilayer')) initMultilayer(imageCell);
-  if (block.classList.contains('video')) initVideo(videoRow, imageCell, block);
+  if (block.classList.contains('video')) await initVideo(videoRow, imageCell, block);
 }
