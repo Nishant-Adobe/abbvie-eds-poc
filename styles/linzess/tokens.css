@@ -11,12 +11,13 @@
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #422e83;
-  --color-brand-primary-dark: #422e83;
+  --color-brand-primary-dark: #321f63;
   --color-brand-primary-light: #60579e;
   --color-brand-primary-lighter: #d9d7f9;
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #faa633;
+  --color-brand-accent-hover: #f2a94b;
 
   /* ---- Color: Named Palette (from CSS vars) ---- */
   --linz-dark-purple: #422e83;
@@ -73,6 +74,7 @@
   --font-size-button: 14.4px;
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
+  --font-size-quote: 1.3125rem;
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
@@ -94,12 +96,54 @@
   --border-radius-safety-bar: 16px 16px 0 0;
 
   /* ---- Button: Primary ---- */
-  --button-primary-color: #422e83;
-  --button-primary-bg: #faa633;
-  --button-primary-padding: 16px 32px;
+  --button-primary-color: #fff;
+  --button-primary-bg: #422e83;
+  --button-primary-border: transparent;
+  --button-primary-padding: 16px 59px 16px 24px;
+  --button-primary-font-size: 0.9rem;
+  --button-primary-font-weight: 800;
+  --button-primary-hover-bg: #f4f6fb;
+  --button-primary-hover-color: #422e83;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: #fff;
+  --button-secondary-color: #422e83;
+  --button-secondary-border: transparent;
+  --button-secondary-padding: 16px 59px 16px 24px;
+  --border-radius-button-secondary: 16px;
+  --button-secondary-hover-bg: #d9d7f9;
+  --button-secondary-hover-color: #422e83;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: #d9d7f9;
+  --button-tertiary-color: #422e83;
+  --button-tertiary-border: transparent;
+  --button-tertiary-padding: 12px 42px 12px 24px;
+  --button-tertiary-font-size: 12px;
+  --border-radius-button-tertiary: 16px;
+  --button-tertiary-hover-bg: #fff;
+  --button-tertiary-hover-color: #422e83;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #422e83;
+  --button-plain-weight: 800;
+  --button-plain-hover-color: #222;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #b8b8b8;
+  --toggle-bg-on: #422e83;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #422e83;
+
+  /* ---- Modal ---- */
+  --modal-dialog-max-width: 720px;
+  --modal-dialog-padding: 40px;
+  --modal-dialog-border: 1px solid var(--color-border-default);
+  --modal-dialog-border-radius: 0;
+  --modal-close-size: 28px;
+  --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
   --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
@@ -107,7 +151,46 @@
   /* ---- Gradient ---- */
   --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
   --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
+  --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
+    linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
 
   /* ---- Transition ---- */
   --transition-button: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  /* ---- Hero: Linzess-specific ---- */
+  --hero-behind-nav-min-height: 52rem;
+  --hero-behind-nav-min-height-desktop: 62rem;
+  --hero-text-max-width: 64rem;
+  --hero-text-max-width-tablet: 72rem;
+  --hero-text-max-width-desktop: 92rem;
+  --hero-cmp-max-width: 34rem;
+  --hero-cmp-max-width-tablet: 38rem;
+  --hero-cmp-max-width-cta: 44rem;
+  --hero-eyebrow-margin-bottom: 2.4rem;
+  --hero-eyebrow-font-size: 1.2rem;
+  --hero-eyebrow-line-height: 1.2;
+  --hero-body-font-size: 1.8rem;
+  --hero-body-line-height: 1.35;
+  --hero-caption-max-width: 1000px;
+  --hero-caption-font-size: var(--font-size-legal-large);
+  --hero-caption-text-shadow: 0 0 10px rgb(0 0 0 / 50%);
+  --hero-caption-line-height: 1.2;
+  --hero-divider-height: 5px;
+  --hero-cta-min-height: 68.4rem;
+  --hero-cta-padding-bottom: 10.4rem;
+  --hero-cta-text-max-width: 40rem;
+  --hero-cta-text-max-width-tablet: 42rem;
+  --hero-cta-text-max-width-desktop: 44rem;
+  --hero-cta-curve-bottom: -6.4rem;
+  --hero-cta-curve-height: 12.8rem;
+  --hero-cta-btn-min-width: 23.8rem;
+  --hero-cta-btn-padding: 1.6rem 2.4rem;
+  --hero-cta-btn-font-size: 1.6rem;
+  --hero-cta-btn-line-height: 1.2;
+  --hero-cta-btn-arrow-margin: 1.4rem;
+  --hero-cta-btn-arrow-font-size: 1.8rem;
+  --hero-mobile-curve-bottom: -1.4rem;
+  --hero-mobile-curve-height: 3.8rem;
+  --hero-mobile-min-height: 420px;
 }

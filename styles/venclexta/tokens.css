@@ -36,11 +36,14 @@
   --color-text-on-dark: #fff;
   --color-text-link: #90124a;
   --color-text-legal: #404040;
+  /* Live venclexta.com renders footer link text in off-white (#e8edef) */
+  --color-text-footer-link: var(--color-brand-primary-light);
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
   --color-background-light: #f5f5f5;
-  --color-background-footer: #000;
+  /* Live venclexta.com footer bg is dark teal #003b52, not pure black */
+  --color-background-footer: var(--color-brand-primary-dark);
   --color-background-safety-bar: #f5f5f5;
   --color-background-container: #003b52;
 
@@ -90,15 +93,89 @@
   --line-height-h-xl: 52.8px;
 
   /* ---- Border: Radius ---- */
-  --border-radius-button-primary: 100px;
+  --border-radius-button-primary: 8px;
+  --border-radius-button-secondary: 10px;
+  --border-radius-button-tertiary: 10px;
   --border-radius-card: 10px;
   --border-radius-card-corner: 14px;
 
   /* ---- Button: Primary ---- */
+  --button-primary-bg: #005570;
   --button-primary-color: #fff;
-  --button-primary-bg: #90124a;
-  --button-primary-padding: 16px 54px 16px 32px;
+  --button-primary-border: #005570;
+  --button-primary-padding: 10px 30px 10px 15px;
+  --button-primary-font-size: 18px;
+  --button-primary-font-weight: 400;
+  --button-primary-hover-bg: #003d50;
+  --button-primary-hover-color: #fff;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: #ffce00;
+  --button-secondary-color: #404040;
+  --button-secondary-border: transparent;
+  --button-secondary-padding: 12px 20px;
+  --button-secondary-hover-bg: #e6b900;
+  --button-secondary-hover-color: #404040;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: transparent;
+  --button-tertiary-color: #404040;
+  --button-tertiary-border: #ccc;
+  --button-tertiary-padding: 12px 42px 12px 12px;
+  --button-tertiary-font-size: 18px;
+  --button-tertiary-hover-bg: #005272;
+  --button-tertiary-hover-color: #fff;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #005272;
+  --button-plain-weight: 500;
+  --button-plain-hover-color: #008481;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #ccc;
+  --toggle-bg-on: #005272;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #90124a;
+
+  /* ---- Hero: Venclexta-specific ---- */
+  --hero-full-min-height: 56rem;
+  --hero-full-min-height-tablet: 64rem;
+  --hero-full-min-height-mobile: 58rem;
+  --hero-full-text-max-width: 72rem;
+  --hero-full-text-max-width-tablet: 82rem;
+  --hero-full-text-max-width-desktop: 68rem;
+  --hero-full-text-margin-top: 15rem;
+  --hero-full-text-margin-top-tablet: 19.6rem;
+  --hero-full-content-max-width: 61rem;
+  --hero-full-content-max-width-desktop: 62rem;
+  --hero-full-text-padding: 0 2rem 5.6rem;
+  --hero-full-text-padding-tablet: 0 7rem 6.4rem;
+  --hero-overlay-gradient-full: linear-gradient(90deg,
+      rgb(0 0 0 / 96%) 0%,
+      rgb(0 0 0 / 86%) 22%,
+      rgb(0 0 0 / 58%) 46%,
+      rgb(0 0 0 / 12%) 72%,
+      rgb(0 0 0 / 0%) 100%);
+  --hero-overlay-gradient-full-mobile: linear-gradient(180deg,
+      rgb(0 0 0 / 55%) 0%,
+      rgb(0 0 0 / 45%) 24%,
+      rgb(0 0 0 / 88%) 100%);
+  --hero-no-padding-min-height: 56rem;
+  --hero-indication-bg: rgb(0 0 0 / 45%);
+  --hero-eyebrow-gap: 0.5em;
+  --hero-divider-width: 3px;
+  --hero-caret-width: 0.4rem;
+  --hero-caret-height: 2.6rem;
+  --hero-caption-bottom: 2rem;
+  --hero-h1-font-size: 2rem;
+  --hero-h1-line-height: 1.18;
+  --hero-h1-font-size-large: clamp(2rem, 2.8vw, 2.7rem);
+  --hero-h1-line-height-large: 1.08;
+  --hero-p-font-size: 1.8rem;
+  --hero-p-line-height: 1.28;
+  --hero-p-font-size-mobile: 1.7rem;
+  --hero-p-line-height-mobile: 1.24;
+  --hero-link-decoration-thickness: 0.12rem;
 }

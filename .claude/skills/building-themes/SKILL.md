@@ -12,7 +12,6 @@ This skill guides you through managing the multi-brand and multi-theme system in
 - **building-blocks**: Use when a new block needs to be created as part of a theme or brand implementation
 - **building-brand-blocks**: Use when adding block-level brand/theme CSS overrides alongside a new or existing block
 - **content-driven-development**: Use when brand/theme work is driven by a new content requirement
-- **token-naming**: Mandatory naming formula for all CSS custom properties — reference before authoring any tokens in `_tokens.css` files
 
 ## When to Use This Skill
 
@@ -109,6 +108,24 @@ styles/
             └── *.css (compiled)
 ```
 
+### No Hardcoded Values
+
+> **STRICT RULE — No hardcoded values, ever.**
+> All token values and CSS property values MUST reference a design token via `var(--token-name)`. Raw values (`#fff`, `1rem`, `600px`, `bold`, `16px`, inline font stacks, etc.) are **never** allowed. The only permitted exception is `0` (the unitless zero).
+>
+> **If a token does not exist yet, define it first at the correct level of the multi-brand hierarchy — then reference it:**
+>
+> | Scope | Define the token in |
+> |---|---|
+> | All brands and themes | `styles/tokens.css` — global base scale |
+> | One brand, all themes | `styles/{brand}/_tokens.css` |
+> | All brands, one theme | `styles/themes/{theme}/_tokens.css` |
+> | One brand + one theme | `styles/{brand}/themes/{theme}/_tokens.css` |
+>
+> Token values must themselves reference another token via `var(--...)` — never a raw value. Read the existing token files at execution time to find the right reference. Follow W3C DTCG naming: `--{type}-{semantic}-{variant}` (e.g. `--color-brand-surface`, `--spacing-section-gap`).
+
+This rule applies at every level: global, brand, theme, and brand+theme — both in **token definitions** (what a `--variable` resolves to) and **CSS property values** (what you assign to `background-color`, `padding`, etc.).
+
 ## npm Commands
 
 | Command | What it does |
@@ -150,33 +167,33 @@ This runs `node theme-tools/initiate-brand.js brand {name}` which:
 
 ### 2. Configure brand tokens
 
-Edit `styles/{brand}/_tokens.css` to define brand-specific design tokens:
+Edit `styles/{brand}/_tokens.css` to define brand-specific design tokens. Read `styles/tokens.css` at execution time for the current token names — the structure below is illustrative only; actual token names and values must come from that file. Every value **must** reference another token via `var(--…)` — no raw hex, px, or font-stack literals.
 
 ```css
-/* styles/{brand}/_tokens.css */
+/* styles/{brand}/_tokens.css — illustrative structure; values must reference base tokens */
 :root {
-  /* Brand colors */
-  --background-color: #ffffff;
-  --light-color: #f5f5f5;
-  --dark-color: #333333;
-  --text-color: #111111;
-  --link-color: #0057cc;
-  --link-hover-color: #003d99;
+  /* Override global base tokens — names must match styles/tokens.css exactly */
+  --background-color: var(--color-base-neutral-000);
+  --light-color: var(--color-base-neutral-100);
+  --dark-color: var(--color-base-neutral-800);
+  --text-color: var(--color-base-neutral-900);
+  --link-color: var(--color-brand-primary);
+  --link-hover-color: var(--color-brand-primary-dark);
 
-  /* Brand fonts */
-  --body-font-family: 'Brand Font', sans-serif;
-  --heading-font-family: 'Brand Display', serif;
+  /* Brand fonts — reference font-family tokens, never hardcode stacks */
+  --body-font-family: var(--font-family-brand-sans);
+  --heading-font-family: var(--font-family-brand-display);
 
   /* Nav */
-  --nav-height: 72px;
+  --nav-height: var(--spacing-nav-height);
 
-  /* Custom brand tokens */
-  --brand-primary: #0057cc;
-  --brand-secondary: #ff6600;
+  /* New brand-specific tokens — W3C DTCG naming: --{type}-{semantic}-{variant} */
+  --color-brand-primary: var(--color-scale-blue-600);
+  --color-brand-secondary: var(--color-scale-orange-500);
 }
 ```
 
-All tokens defined in `styles/tokens.css` can be overridden here. Add brand-specific tokens (prefixed `--brand-*` or `--{brand}-*`) for use in block overrides.
+All tokens defined in `styles/tokens.css` can be overridden here. New brand-specific tokens must follow W3C DTCG naming (`--{type}-{semantic}-{variant}`) and must reference an existing base-scale token via `var(--…)`, never a raw value.
 
 ### 3. Add brand fonts (if needed)
 
@@ -197,21 +214,21 @@ Edit `styles/{brand}/_fonts.css`:
 
 ### 4. Override global styles (if needed)
 
-Edit `styles/{brand}/_styles.css`:
+Edit `styles/{brand}/_styles.css`. All property values must reference a token via `var(--…)` — no raw literals or color keywords.
 
 ```css
-/* styles/{brand}/_styles.css */
+/* styles/{brand}/_styles.css — illustrative structure; values must reference tokens */
 @import '../styles.css';
 
 /* Brand-specific typography overrides */
 h1 {
-  letter-spacing: -0.02em;
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 /* Brand-specific section overrides */
 main > .section.hero {
-  background-color: var(--brand-primary);
-  color: white;
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-inverse);
 }
 ```
 
@@ -243,27 +260,27 @@ This runs `node theme-tools/initiate-brand.js theme {name}` which:
 
 ### 2. Configure theme tokens
 
-Themes typically override a subset of tokens. Edit `styles/themes/{theme}/_tokens.css`:
+Themes typically override a subset of tokens. Edit `styles/themes/{theme}/_tokens.css`. Every value **must** reference a base token via `var(--…)` — no raw hex, px, or color keyword literals.
 
 ```css
-/* styles/themes/{theme}/_tokens.css */
+/* styles/themes/{theme}/_tokens.css — illustrative structure; values must reference base tokens */
 :root {
   /* Theme overrides — only what changes from the brand defaults */
-  --background-color: #1a1a2e;
-  --light-color: #16213e;
-  --text-color: #e0e0e0;
-  --link-color: #66b2ff;
-  --link-hover-color: #99ccff;
+  --background-color: var(--color-base-neutral-950);
+  --light-color: var(--color-base-neutral-900);
+  --text-color: var(--color-base-neutral-100);
+  --link-color: var(--color-brand-primary-light);
+  --link-hover-color: var(--color-brand-primary-lighter);
 }
 ```
 
 For a brand-specific theme variant, edit `styles/{brand}/themes/{theme}/_tokens.css`:
 
 ```css
-/* styles/{brand}/themes/{theme}/_tokens.css */
+/* styles/{brand}/themes/{theme}/_tokens.css — illustrative; values must reference base tokens */
 :root {
   /* Overrides for brand + theme combination */
-  --background-color: #e2e220;
+  --background-color: var(--color-base-yellow-100);
 }
 ```
 
@@ -276,24 +293,24 @@ All new tokens must follow the [W3C Design Token Community Group](https://www.w3
 ```
 
 ```css
-/* CORRECT — type prefix first, semantic and portable */
---color-background-default: #1a1a2e;
---color-background-subtle: #16213e;
---color-text-primary: #e0e0e0;
---color-text-link: #66b2ff;
---color-brand-primary: #66b2ff;
---color-brand-surface: #16213e;
+/* CORRECT — type prefix first, semantic and portable; values reference base tokens, never hardcoded */
+--color-background-default: var(--color-scale-neutral-950);
+--color-background-subtle: var(--color-scale-neutral-900);
+--color-text-primary: var(--color-scale-neutral-100);
+--color-text-link: var(--color-scale-blue-400);
+--color-brand-primary: var(--color-scale-blue-400);
+--color-brand-surface: var(--color-scale-neutral-900);
 
 /* WRONG — no type prefix */
---brand-primary: #66b2ff;
---brand-surface: #16213e;
+--brand-primary: var(--color-scale-blue-400);
+--brand-surface: var(--color-scale-neutral-900);
 
 /* WRONG — theme name embedded in the token name */
---bright-background: #fffde7;
---dark-text-color: #e0e0e0;
+--bright-background: var(--color-scale-yellow-050);
+--dark-text-color: var(--color-scale-neutral-100);
 
 /* WRONG — brand name embedded */
---roy-primary: #0057cc;
+--roy-primary: var(--color-scale-blue-600);
 ```
 
 | Type prefix | Used for |
@@ -311,15 +328,15 @@ All new tokens must follow the [W3C Design Token Community Group](https://www.w3
 
 ### 3. Override theme styles (if needed)
 
-Edit `styles/themes/{theme}/_styles.css`:
+Edit `styles/themes/{theme}/_styles.css`. All property values must reference a token via `var(--…)` — no raw literals.
 
 ```css
-/* styles/themes/{theme}/_styles.css */
+/* styles/themes/{theme}/_styles.css — illustrative; values must reference tokens */
 @import '../../styles.css';
 
 /* Theme-specific style overrides */
 main > .section {
-  border-radius: 8px;
+  border-radius: var(--border-radius-section);
 }
 ```
 
@@ -424,6 +441,38 @@ Check for:
 - The scaffold creates `_{block-name}.css` files for all existing blocks
 - For blocks created after the brand was scaffolded, manually create brand override files or run `scaffold:create` for a new block (which reads `brand-config.json`)
 
+## Definition of Done
+
+The brand or theme is not complete until every item below passes. Do not mark the task done or move to the next step if any item is unresolved.
+
+### New Brand
+- [ ] `npm run scaffold:create` → Brand completed without errors
+- [ ] `brand-config.json` updated with new brand name
+- [ ] `styles/{brand}/_tokens.css` configured — **zero hardcoded values**, every value is a `var(--...)` reference
+- [ ] All new token names follow W3C DTCG naming (`--{type}-{semantic}-{variant}`) — no brand/theme name embedded
+- [ ] `styles/{brand}/_fonts.css` has `@font-face` declarations (if custom fonts used)
+- [ ] Font files present in `styles/{brand}/fonts/` (if custom fonts used)
+- [ ] `styles/{brand}/_styles.css` overrides reference tokens only — no raw literals or color keywords
+- [ ] Block `_{block}.css` partials updated for all blocks with brand visual differences
+- [ ] `npm run scaffold:build` ran without errors
+- [ ] Dev server tested with `brand: {brand}` metadata on a page
+- [ ] Brand tokens visible in DevTools `:root`
+- [ ] Brand CSS files loading in Network tab
+- [ ] `npm run lint` passes
+
+### New Theme
+- [ ] `npm run scaffold:create` → Theme completed without errors
+- [ ] `brand-config.json` updated with new theme name
+- [ ] `styles/themes/{theme}/_tokens.css` configured — **zero hardcoded values**, every value is a `var(--...)` reference
+- [ ] All new token names follow W3C DTCG naming — no brand/theme name embedded
+- [ ] `styles/themes/{theme}/_styles.css` overrides reference tokens only (if used)
+- [ ] Brand+theme override files (`styles/{brand}/themes/{theme}/_tokens.css`) configured where needed
+- [ ] Block theme partials updated for all blocks with theme visual differences
+- [ ] `npm run scaffold:build` ran without errors
+- [ ] Dev server tested with the theme active on a page
+- [ ] Theme tokens visible in DevTools `:root`
+- [ ] `npm run lint` passes
+
 ## Reference Files
 
 - `brand-config.json` — registered brands and themes
@@ -433,3 +482,4 @@ Check for:
 - `theme-tools/remove-brand.js` — brand/theme removal logic
 - `theme-tools/generate-css.js` — CSS compilation logic
 - `theme-tools/plopfile.mjs` — interactive scaffold CLI
+
