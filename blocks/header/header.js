@@ -640,7 +640,7 @@ function buildMenuItem(block, isNavigation = false) {
   if (isNavigation) {
     let hoverTimer = null;
     let isHovering = false;
-    let isLoading = false;
+    let loadPromise = null;
 
     const openOnHover = async () => {
       isHovering = true;
@@ -649,10 +649,13 @@ function buildMenuItem(block, isNavigation = false) {
       if (!li.querySelector('.submenu-level-1')) return;
       const navGroup = li.querySelector('.navigation-group');
       const isParsed = navGroup?.children.length > 0;
-      if (!isParsed && !isLoading) {
-        isLoading = true;
-        await buildLevelTwoNavigations(button, navGroup, block);
-        isLoading = false;
+      if (!isParsed) {
+        // Share a single in-flight fetch — concurrent hovers await the same promise
+        if (!loadPromise) {
+          loadPromise = buildLevelTwoNavigations(button, navGroup, block)
+            .finally(() => { loadPromise = null; });
+        }
+        await loadPromise;
       }
       if (!isHovering) return; // cursor left during async fetch — don't open
       toggleAllNavSections(false);
