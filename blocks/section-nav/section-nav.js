@@ -139,6 +139,10 @@ export default function decorate(block) {
   // Smooth scroll offset = header height + this nav's height
   const getOffset = () => getCssPx('--header-height') + block.offsetHeight;
 
+  // Href locked by a click — prevents the IO from clearing active during smooth scroll.
+  // Cleared once the IO confirms the target section is actually in view.
+  let pendingActiveHref = null;
+
   links.forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href').slice(1);
@@ -151,6 +155,7 @@ export default function decorate(block) {
       // enter the IntersectionObserver zone) also gets the is-active class.
       links.forEach((l) => l.classList.remove('is-active'));
       a.classList.add('is-active');
+      pendingActiveHref = a.getAttribute('href');
       const activeLabelEl = block.querySelector('.section-nav-current-label');
       if (activeLabelEl) activeLabelEl.textContent = a.textContent;
       window.scrollTo({
@@ -207,11 +212,16 @@ export default function decorate(block) {
         });
         // Highlight only the topmost visible section (document order)
         const topmost = sectionEls.find((el) => activeSections.has(el.id));
-        links.forEach((a) => a.classList.toggle('is-active', !!topmost && a.getAttribute('href') === `#${topmost.id}`));
+        const topmostHref = topmost ? `#${topmost.id}` : null;
+        // Once the target section is in view, release the click lock
+        if (pendingActiveHref && topmostHref === pendingActiveHref) pendingActiveHref = null;
+        // While scrolling to a clicked target, don't let the IO override it
+        if (pendingActiveHref) return;
+        links.forEach((a) => a.classList.toggle('is-active', !!topmost && a.getAttribute('href') === topmostHref));
         // Update mobile current-label to reflect active section
         const activeLabelEl = block.querySelector('.section-nav-current-label');
         if (activeLabelEl && topmost) {
-          const activeLink = links.find((a) => a.getAttribute('href') === `#${topmost.id}`);
+          const activeLink = links.find((a) => a.getAttribute('href') === topmostHref);
           if (activeLink) activeLabelEl.textContent = activeLink.textContent;
         }
       },

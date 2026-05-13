@@ -879,11 +879,16 @@
   text-decoration: none;
 }
 
-.section-nav a:hover,
+.section-nav a:hover {
+  color: var(--section-nav-text);
+  opacity: 0.85;
+}
+
 .section-nav a:focus-visible {
   color: var(--section-nav-text);
-  outline: none;
   opacity: 0.85;
+  outline: var(--border-width-default) solid var(--section-nav-text);
+  outline-offset: var(--spacing-02);
 }
 
 .section-nav a.is-active {
