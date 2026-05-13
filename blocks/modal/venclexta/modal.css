@@ -35,7 +35,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 60%);
+  background: var(--color-overlay-dark, rgb(0 0 0 / 60%));
   z-index: var(--z-modal, 1000);
   align-items: center;
   justify-content: center;
@@ -213,7 +213,7 @@ body.modal-is-open {
   position: fixed;
   top: 16px;
   right: 16px;
-  background: rgb(255 255 255 / 80%);
+  background: var(--color-overlay-light, rgb(255 255 255 / 80%));
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -298,4 +298,105 @@ body.modal-is-open {
   .modal-dialog {
     animation: none;
   }
+}
+
+/* stylelint-disable no-descending-specificity */
+
+/* Venclexta DTC modal — WoL (Warning on Leave) matching venclexta.com */
+
+.modal-overlay {
+  --modal-close-color: var(--text-color);
+  --modal-close-hover-color: var(--color-charcoal);
+  --modal-dialog-max-width: 680px;
+  --modal-dialog-padding: 40px;
+  --modal-dialog-border: 1px solid var(--color-border-default, #ccc);
+  --modal-dialog-border-radius: 0;
+  --modal-close-size: 36px;
+  --modal-close-font-size: var(--font-size-h2, 28px);
+}
+
+/* Close button — thin X, top right */
+
+.modal-header .modal-close {
+  font-weight: var(--font-weight-light, 300);
+  color: var(--modal-close-color);
+}
+
+/* Dialog heading — teal brand color */
+
+.modal-content h2 {
+  color: var(--color-brand-primary, #005272);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-heading, 700);
+  font-size: var(--font-size-h2, 24px);
+  line-height: 1.3;
+  margin: 0 0 20px;
+}
+
+/* Body text */
+
+.modal-content p {
+  color: var(--text-color, #46484a);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body, 16px);
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+/* "Do you wish to leave this site?" — centered, bold */
+
+.modal-content p:nth-last-of-type(3) {
+  text-align: center;
+  margin-top: 24px;
+  font-weight: var(--font-weight-heading, 700);
+  font-size: var(--font-size-body, 16px);
+}
+
+/* Button paragraph — centered flex */
+
+.modal-dialog .modal-content p:has(a[href]) {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* Compliance code at bottom */
+
+.modal-content p:last-of-type {
+  font-size: var(--font-size-body-small, 12px);
+  color: var(--color-text-compliance);
+  margin-top: 24px;
+}
+
+/* Links styled as equal-width outlined buttons — centered */
+
+.modal-dialog .modal-content a[href] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  padding: 12px 48px;
+  border-radius: 0;
+  font-weight: var(--font-weight-heading, 700);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body, 16px);
+  text-decoration: none;
+  margin: 0;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  background: transparent;
+  color: var(--color-brand-primary, #005272) !important;
+  border: 1px solid var(--color-border-default, #ccc);
+}
+
+.modal-overlay .modal-dialog .modal-content a[href]:hover {
+  background: var(--color-brand-primary-light, #e8edef) !important;
+  border-color: var(--color-brand-primary, #005272);
+  opacity: 1;
+}
+
+.modal-dialog .modal-content a[href]:last-of-type {
+  background: transparent;
+  color: var(--color-brand-primary, #005272) !important;
+  border: 1px solid var(--color-border-default, #ccc);
 }

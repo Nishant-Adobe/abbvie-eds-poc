@@ -35,7 +35,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 60%);
+  background: var(--color-overlay-dark, rgb(0 0 0 / 60%));
   z-index: var(--z-modal, 1000);
   align-items: center;
   justify-content: center;
@@ -213,7 +213,7 @@ body.modal-is-open {
   position: fixed;
   top: 16px;
   right: 16px;
-  background: rgb(255 255 255 / 80%);
+  background: var(--color-overlay-light, rgb(255 255 255 / 80%));
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -298,4 +298,157 @@ body.modal-is-open {
   .modal-dialog {
     animation: none;
   }
+}
+
+/* stylelint-disable no-descending-specificity */
+
+/* Mavyret HCP modal — Univers Condensed, navy/orange palette */
+
+.modal-overlay {
+  --modal-close-color: var(--color-green-flash, #76bd22);
+  --modal-close-hover-color: var(--color-green-flash, #76bd22);
+  --modal-dialog-max-width: 640px;
+  --modal-dialog-padding: 32px;
+  --modal-dialog-border: none;
+  --modal-dialog-border-radius: 12px;
+  --modal-close-size: 40px;
+  --modal-close-font-size: var(--font-size-h3, 22px);
+}
+
+/* Close button — green circle with black X */
+
+.modal-header .modal-close {
+  background: var(--color-green-flash, #76bd22);
+  color: var(--color-black, #000) !important;
+  border-radius: 50%;
+  font-weight: var(--font-weight-bold, 700);
+}
+
+.modal-header .modal-close:hover {
+  opacity: 0.85;
+}
+
+/* Scrollbar — black thumb on green track */
+
+.modal-dialog .modal-content {
+  scrollbar-color: var(--color-black, #000) var(--color-green-flash, #76bd22);
+  scrollbar-width: thin;
+}
+
+.modal-dialog .modal-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.modal-dialog .modal-content::-webkit-scrollbar-track {
+  background: var(--color-green-flash, #76bd22);
+  border-radius: 5px;
+}
+
+.modal-dialog .modal-content::-webkit-scrollbar-thumb {
+  background: var(--color-black, #000);
+  border-radius: 5px;
+}
+
+/* Dialog heading — centered, condensed font, large, black */
+
+.modal-content h2 {
+  color: var(--color-black, #000);
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-regular, 400);
+  font-size: var(--font-size-h2, 1.75rem);
+  line-height: 1.3;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.modal-content h2 strong {
+  font-family: var(--heading-font-family-bold, var(--heading-font-family));
+  font-weight: var(--font-weight-bold, 700);
+}
+
+/* Body text */
+
+.modal-content p {
+  color: var(--color-black, #000);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body, 14px);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+/* Reference section */
+
+.modal-content p strong {
+  font-family: var(--heading-font-family-bold, var(--heading-font-family));
+}
+
+/* Lists (references) */
+
+.modal-content ol,
+.modal-content ul {
+  padding-left: 20px;
+  font-size: var(--font-size-body-small, 13px);
+  line-height: 1.5;
+  color: var(--color-black, #000);
+  margin: 4px 0 16px;
+}
+
+/* Compliance code */
+
+.modal-content p:last-of-type {
+  font-size: var(--font-size-body-xs, 11px);
+  color: var(--color-text-compliance);
+  margin-top: 20px;
+}
+
+/* Links styled as buttons — square, gray border, matching live site exactly */
+
+.modal-dialog .modal-content a[href] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 0;
+  font-weight: var(--font-weight-semibold, 600);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-h4, 18px);
+  text-decoration: none;
+  margin-right: 12px;
+  margin-top: 12px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  background: var(--background-color, #fff);
+  color: var(--color-black, #000) !important;
+  border: 2px solid var(--color-border-dark, #636366);
+}
+
+.modal-dialog .modal-content a[href]:last-of-type {
+  background: var(--background-color, #fff);
+  color: var(--color-black, #000) !important;
+  border: 2px solid var(--color-border-dark, #636366);
+}
+
+.modal-overlay .modal-dialog .modal-content a[href]:hover {
+  background: var(--color-green-flash, #76bd22) !important;
+  color: var(--color-black, #000) !important;
+  border-color: var(--color-green-flash, #76bd22);
+}
+
+/* Information variant — no button styling on links */
+
+.modal-overlay.modal-information .modal-dialog .modal-content a[href] {
+  display: inline;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-weight: var(--font-weight-regular, 400);
+  font-size: inherit;
+  color: var(--color-fiesta, #e65400) !important;
+  background: none;
+  text-decoration: underline;
+  min-width: 0;
+  margin: 0;
+}
+
+.modal-overlay.modal-information .modal-dialog .modal-content a[href]::after {
+  content: none;
 }
