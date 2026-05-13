@@ -59,26 +59,29 @@ function extractConfig(block) {
 }
 
 function extractItems(block) {
-  const rows = [...block.querySelectorAll(':scope > div')];
-  return rows.reduce((items, row) => {
-    const labelEl = row.querySelector('[data-aue-prop="label"]');
-    const hrefEl = row.querySelector('[data-aue-prop="href"]');
-
-    if (labelEl) {
-      const label = labelEl.textContent?.trim() || '';
-      const href = hrefEl?.querySelector('a')?.getAttribute('href')
-        || hrefEl?.textContent?.trim()
-        || '';
-      if (label) items.push({ label, href });
-    } else {
-      const divs = row.querySelectorAll(':scope > div');
-      if (divs.length >= 2) {
-        const label = divs[0]?.textContent?.trim() || '';
-        const href = divs[1]?.querySelector('a')?.getAttribute('href')
-          || divs[1]?.textContent?.trim()
-          || '';
+  const itemRows = [...block.querySelectorAll(':scope > div[data-aue-resource]')];
+  if (itemRows.length) {
+    return itemRows.reduce((items, row) => {
+      const labelEl = row.querySelector('[data-aue-prop="label"]');
+      const hrefEl = row.querySelector('[data-aue-prop="href"]');
+      if (labelEl) {
+        const label = labelEl.textContent?.trim() || '';
+        const a = hrefEl?.querySelector('a');
+        const href = a?.getAttribute('href') || hrefEl?.textContent?.trim() || '';
         if (label) items.push({ label, href });
       }
+      return items;
+    }, []);
+  }
+
+  const rows = [...block.querySelectorAll(':scope > div')];
+  return rows.reduce((items, row) => {
+    const divs = row.querySelectorAll(':scope > div');
+    if (divs.length >= 2) {
+      const label = divs[0]?.textContent?.trim() || '';
+      const a = divs[1]?.querySelector('a');
+      const href = a?.getAttribute('href') || divs[1]?.textContent?.trim() || '';
+      if (label && href) items.push({ label, href });
     }
     return items;
   }, []);
