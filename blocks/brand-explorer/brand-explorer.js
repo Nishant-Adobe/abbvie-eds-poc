@@ -170,8 +170,10 @@ function parseUEEditorFormat(rows) {
     } else if (!comp) {
       const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
       if (barLabelEl) barLabel = barLabelEl.textContent.trim();
+      const projEl = row.querySelector('[data-aue-prop="projectNumber"]');
+      if (projEl) projectNumber = projEl.textContent.trim();
       const text = row.textContent.trim();
-      if (text.startsWith('US-')) projectNumber = text;
+      if (!projectNumber && text.startsWith('US-')) projectNumber = text;
     }
   });
 
