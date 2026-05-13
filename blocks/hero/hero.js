@@ -130,12 +130,15 @@ function promoteImageLink(imageCell) {
 function createIndication(indicationRow) {
   if (!indicationRow) return null;
   const cell = indicationRow.firstElementChild;
-  const content = cell?.innerHTML?.trim();
+  if (!cell || !cell.childNodes.length) {
+    indicationRow.remove();
+    return null;
+  }
   indicationRow.remove();
-  if (!content) return null;
   const banner = document.createElement('div');
   banner.classList.add('hero-indication');
-  banner.innerHTML = content;
+  // Use node-cloning instead of innerHTML to avoid XSS risk from CMS-authored content
+  [...cell.childNodes].forEach((n) => banner.appendChild(n.cloneNode(true)));
   return banner;
 }
 
@@ -242,8 +245,13 @@ export default function decorate(block) {
     textContainer.classList.add('hero-text-container');
     textCell.classList.add('cmp-container-x-large');
 
-    if (Array.from(block.children)[2] && block?.classList?.contains('linzess-behind-nav-linzess-editorial-hero')) {
-      textCell.prepend(Array.from(block.children)[2].querySelector('p'));
+    // Brand-agnostic: any variation ending in 'editorial-hero' moves the third row's
+    // <p> into the text cell (e.g. the Linzess behind-nav editorial-hero layout).
+    const isEditorialHero = [...block.classList].some((c) => c.endsWith('editorial-hero'));
+    if (isEditorialHero) {
+      const thirdRow = Array.from(block.children)[2];
+      const p = thirdRow?.querySelector('p');
+      if (p) textCell.prepend(p);
     }
   }
 
@@ -256,7 +264,9 @@ export default function decorate(block) {
     const caption = indication ? createCaption(captionRow) : null;
     wrapContent(block, textContainer, indication, caption);
     if (captionRow && !indication) injectFloatingContent(block, imageCell, null, captionRow);
-  } else if (block.classList.contains('mavyret-data-hero')) {
+  } else if ([...block.classList].some((c) => c.endsWith('data-hero'))) {
+    // Brand-agnostic: any variation ending in 'data-hero' injects indication and caption
+    // as floating elements (e.g. the Mavyret data-hero layout).
     injectFloatingContent(block, imageCell, indicationRow, captionRow);
   } else {
     injectFloatingContent(block, imageCell, null, captionRow || indicationRow);
