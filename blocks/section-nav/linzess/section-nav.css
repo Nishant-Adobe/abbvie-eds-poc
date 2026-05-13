@@ -904,6 +904,8 @@
    Override to keep the pill at --section-nav-mobile-width, centred. */
 
 .section-nav.sticky.is-stuck {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   box-shadow: var(--shadow-section-nav-stuck);
   left: 50%;
   right: auto;
@@ -1052,6 +1054,12 @@
     right: 0;
     transform: none;
     width: 100%;
+  }
+
+  /* Flatten top corners of pill when stuck — live-site pattern */
+  .section-nav.sticky.is-stuck nav {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
