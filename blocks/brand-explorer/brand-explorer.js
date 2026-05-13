@@ -73,7 +73,7 @@ function parseFlatXwalkFormat(rows) {
   let i = 0;
   while (i < flatValues.length && !flatValues[i].img) {
     const { text, link } = flatValues[i];
-    const isProjectNum = /^(US-|MULT-|[A-Z]{2,}-\d)/.test(text);
+    const isProjectNum = /^[A-Z]{2,}-[A-Z]+-\d/.test(text);
     if (isProjectNum) {
       projectNumber = text;
     } else if (text && !link && !text.startsWith('http') && text !== '#') {
@@ -332,8 +332,7 @@ function buildContent(brands, projectNumber) {
       blade.append(subtitle);
     }
 
-    const nameLower = brand.name.toLowerCase().replace(/[®™]/g, '');
-    const brandSlugColor = ['rinvoq', 'skyrizi', 'humira', 'venclexta', 'mavyret', 'linzess', 'botox'].find((key) => nameLower.includes(key)) || '';
+    const brandSlugColor = brandSlug;
 
     const separator = document.createElement('hr');
     separator.className = 'brand-explorer-separator';
