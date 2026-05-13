@@ -1,6 +1,12 @@
 .section-nav {
-  background-color: var(--section-nav-bg, var(--background-color, #fff));
-  border-bottom: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
+  --section-nav-bg: var(--background-color);
+  --section-nav-border: var(--color-border);
+  --section-nav-link-color: var(--text-color);
+  --section-nav-link-hover: var(--link-color);
+  --section-nav-active-color: var(--link-color);
+
+  background-color: var(--section-nav-bg);
+  border-bottom: var(--border-width-thin) solid var(--section-nav-border);
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -13,19 +19,19 @@
 
 .section-nav.sticky {
   position: sticky;
-  top: var(--header-height, var(--nav-height, 88px));
-  z-index: var(--z-index-anchor-nav, 100);
+  top: var(--header-height);
+  z-index: var(--z-index-anchor-nav);
 }
 
 /* When the sentinel leaves viewport, switch to fixed so the nav persists
    across sections (position:sticky only sticks within its own section height) */
 
 .section-nav.sticky.is-stuck {
-  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  box-shadow: var(--shadow-nav-stuck);
   left: 0;
   position: fixed;
   right: 0;
-  top: var(--header-height, var(--nav-height, 88px));
+  top: var(--header-height);
 }
 
 /* Zero-height sentinel used to detect sticky state; JS sets height when stuck
@@ -42,37 +48,38 @@
   display: flex;
   gap: 0;
   margin: 0 auto;
-  max-width: var(--section-max-width, var(--section-width, 1200px));
-  padding: 0 var(--spacing-24, 24px);
+  max-width: var(--section-max-width);
+  padding: 0 var(--spacing-24);
 }
 
 /* ── Links ──────────────────────────────────────────────────────────────── */
 
 .section-nav a {
-  border-bottom: 2px solid transparent;
-  color: var(--section-nav-link-color, var(--text-color));
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
-  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+  border-bottom: var(--border-width-default) solid transparent;
+  color: var(--section-nav-link-color);
+  font-size: var(--body-font-size-s);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-12) var(--spacing-16);
   text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: border-color var(--transition-duration-fast) var(--transition-easing-standard),
+    color var(--transition-duration-fast) var(--transition-easing-standard);
   white-space: nowrap;
 }
 
 .section-nav a:hover,
 .section-nav a:focus-visible {
-  color: var(--section-nav-link-hover, var(--link-color));
+  color: var(--section-nav-link-hover);
   outline: none;
 }
 
 .section-nav a:focus-visible {
-  outline: 2px solid var(--color-focus, var(--link-color));
-  outline-offset: -2px;
+  outline: var(--border-width-default) solid var(--color-focus);
+  outline-offset: calc(var(--spacing-02) * -1);
 }
 
 .section-nav a.is-active {
-  border-bottom-color: var(--section-nav-active-color, var(--link-color));
-  color: var(--section-nav-link-hover, var(--link-color));
+  border-bottom-color: var(--section-nav-active-color);
+  color: var(--section-nav-link-hover);
 }
 
 /* ── Mobile Menu variant — base = mobile (toggle visible, list collapsed) ── */
@@ -92,50 +99,50 @@
   align-items: center;
   background: none;
   border: none;
-  color: var(--section-nav-link-color, var(--text-color));
+  color: var(--section-nav-link-color);
   cursor: pointer;
   display: flex;
-  font-size: var(--body-font-size-s, 0.875rem);
-  font-weight: 600;
-  gap: var(--spacing-8, 8px);
+  font-size: var(--body-font-size-s);
+  font-weight: var(--font-weight-semibold);
+  gap: var(--spacing-08);
   justify-content: space-between;
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  padding: var(--spacing-12) var(--spacing-24);
   width: 100%;
 }
 
 .section-nav.mobile-menu .section-nav-toggle:focus-visible {
-  outline: 2px solid var(--color-focus, var(--link-color));
-  outline-offset: -2px;
+  outline: var(--border-width-default) solid var(--color-focus);
+  outline-offset: calc(var(--spacing-02) * -1);
 }
 
 /* Hamburger icon (3 bars via box-shadow trick) */
 
 .section-nav-hamburger {
   background-color: currentcolor;
-  border-radius: 2px;
+  border-radius: var(--spacing-02);
   display: block;
-  height: 2px;
+  height: var(--spacing-02);
   position: relative;
-  transition: background-color 0.2s ease;
-  width: 20px;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard);
+  width: var(--spacing-20);
 }
 
 .section-nav-hamburger::before,
 .section-nav-hamburger::after {
   background-color: currentcolor;
-  border-radius: 2px;
+  border-radius: var(--spacing-02);
   content: '';
   display: block;
-  height: 2px;
+  height: var(--spacing-02);
   left: 0;
   position: absolute;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-duration-fast) var(--transition-easing-standard);
   width: 100%;
 }
 
-.section-nav-hamburger::before { top: -6px; }
+.section-nav-hamburger::before { top: calc(var(--spacing-06) * -1); }
 
-.section-nav-hamburger::after  { top: 6px; }
+.section-nav-hamburger::after  { top: var(--spacing-06); }
 
 /* Animate to × when menu is open */
 
@@ -144,17 +151,17 @@
 }
 
 .section-nav.mobile-menu.is-open .section-nav-hamburger::before {
-  transform: translateY(6px) rotate(45deg);
+  transform: translateY(var(--spacing-06)) rotate(45deg);
 }
 
 .section-nav.mobile-menu.is-open .section-nav-hamburger::after {
-  transform: translateY(-6px) rotate(-45deg);
+  transform: translateY(calc(var(--spacing-06) * -1)) rotate(-45deg);
 }
 
 /* Collapsible link list — hidden by default on mobile */
 
 .section-nav.mobile-menu nav ul {
-  border-top: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
+  border-top: var(--border-width-thin) solid var(--section-nav-border);
   display: none;
   flex-direction: column;
   list-style: none;
@@ -169,7 +176,7 @@
 
 .section-nav.mobile-menu nav ul li {
   align-items: center;
-  border-bottom: 1px solid var(--section-nav-border, var(--color-border, #e0e0e0));
+  border-bottom: var(--border-width-thin) solid var(--section-nav-border);
   display: flex;
 }
 
@@ -180,26 +187,26 @@
 .section-nav.mobile-menu nav a {
   border-bottom: none;
   display: block;
-  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  padding: var(--spacing-12) var(--spacing-24);
   width: 100%;
 }
 
 .section-nav.mobile-menu nav a.is-active {
   border-bottom: none;
-  border-left: 3px solid var(--section-nav-active-color, var(--link-color));
-  padding-left: calc(var(--spacing-24, 24px) - 3px);
+  border-left: var(--border-width-thick) solid var(--section-nav-active-color);
+  padding-left: calc(var(--spacing-24) - var(--spacing-03));
 }
 
 /* ── Desktop ≥768px: horizontal flex list, toggle hidden ─────────────────── */
 
-@media (width >= 768px) {
+@media (width >= 744px) {
   .section-nav.mobile-menu {
     overflow-x: auto;
   }
 
   .section-nav.mobile-menu nav {
     flex-direction: row;
-    padding: 0 var(--spacing-24, 24px);
+    padding: 0 var(--spacing-24);
   }
 
   .section-nav.mobile-menu .section-nav-toggle {
@@ -227,16 +234,16 @@
   }
 
   .section-nav.mobile-menu nav a {
-    border-bottom: 2px solid transparent;
+    border-bottom: var(--border-width-default) solid transparent;
     display: inline-block;
-    padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+    padding: var(--spacing-12) var(--spacing-16);
     width: auto;
   }
 
   .section-nav.mobile-menu nav a.is-active {
-    border-bottom-color: var(--section-nav-active-color, var(--link-color));
+    border-bottom-color: var(--section-nav-active-color);
     border-left: none;
-    padding-left: var(--spacing-16, 16px);
+    padding-left: var(--spacing-16);
   }
 }
 
@@ -304,9 +311,17 @@
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-focus: var(--link-color);
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -342,8 +357,6 @@
   --body-font-size-m: 1.8rem;
   --body-font-size-s: 1.6rem;
   --body-font-size-xs: 1.4rem;
-  --font-size-sup: 0.7em;
-  --font-size-code: 0.875em;
   --font-size-10: 1rem;
   --font-size-11: 1.1rem;
   --font-size-12: 1.2rem;
@@ -486,6 +499,11 @@
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
 
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
+
   /* z-index */
   --z-index-negative: -1;
   --z-index-0 : 0;
@@ -493,6 +511,7 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-anchor-nav: 100;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -505,6 +524,7 @@
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -515,8 +535,11 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -553,6 +576,7 @@
   --transition-duration-medium: 0.3s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -601,7 +625,7 @@
 
   /* Form Fonts */
 
-  /* ---- Brand Explorer Block (defaults) ---- */
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --be-color-bg: var(--background-color);
   --be-color-text: var(--text-color);
   --be-color-text-light: #21406d;
@@ -614,6 +638,7 @@
   --be-color-btn-hover: #1c2d49;
   --be-color-btn-no-border: #555;
   --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
   --be-font-body: var(--body-font-family);
   --be-font-size-body: 14px;
   --be-font-size-small: 11px;
@@ -623,7 +648,7 @@
   --be-line-height-body: 16px;
   --be-line-height-small: 14px;
 
-  /* ---- Clinical Data Panel Block (defaults) ---- */
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --cdp-color-text: var(--text-color);
   --cdp-color-heading: var(--text-color);
   --cdp-color-accent: var(--link-color);
@@ -674,7 +699,7 @@
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #422e83;
-  --color-brand-primary-dark: #422e83;
+  --color-brand-primary-dark: #321f63;
   --color-brand-primary-light: #60579e;
   --color-brand-primary-lighter: #d9d7f9;
 
@@ -690,7 +715,6 @@
   --linz-off-white: #f4f6fb;
   --linz-white: #fff;
   --linz-black: #000;
-  --linz-teal: #00857c;
 
   /* ---- Color: Text ---- */
   --text-color: #4d4d4f;
@@ -704,15 +728,9 @@
   --color-background-footer: #422e83;
   --color-background-footer-dark: #151b17;
 
-  /* ---- Color: Accent (gold/lavender) ---- */
-  --color-accent-gold: #c8973f;
-  --color-lavender: #e8e0f0;
-  --color-lavender-light: #f5f0ff;
-
   /* ---- Color: Border ---- */
   --color-border-default: #c2c2c2;
   --color-border-muted: #b8b8b8;
-  --color-border-disabled: #ccc;
 
   /* ---- Color: Overlay ---- */
   --color-overlay-dark: rgba(0, 0, 0, 0.8);
@@ -743,6 +761,7 @@
   --font-size-button: 14.4px;
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
+  --font-size-quote: 1.3125rem;
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
@@ -764,12 +783,54 @@
   --border-radius-safety-bar: 16px 16px 0 0;
 
   /* ---- Button: Primary ---- */
-  --button-primary-color: #422e83;
-  --button-primary-bg: #faa633;
-  --button-primary-padding: 16px 32px;
+  --button-primary-color: #fff;
+  --button-primary-bg: #422e83;
+  --button-primary-border: transparent;
+  --button-primary-padding: 16px 59px 16px 24px;
+  --button-primary-font-size: 0.9rem;
+  --button-primary-font-weight: 800;
+  --button-primary-hover-bg: #f4f6fb;
+  --button-primary-hover-color: #422e83;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: #fff;
+  --button-secondary-color: #422e83;
+  --button-secondary-border: transparent;
+  --button-secondary-padding: 16px 59px 16px 24px;
+  --border-radius-button-secondary: 16px;
+  --button-secondary-hover-bg: #d9d7f9;
+  --button-secondary-hover-color: #422e83;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: #d9d7f9;
+  --button-tertiary-color: #422e83;
+  --button-tertiary-border: transparent;
+  --button-tertiary-padding: 12px 42px 12px 24px;
+  --button-tertiary-font-size: 12px;
+  --border-radius-button-tertiary: 16px;
+  --button-tertiary-hover-bg: #fff;
+  --button-tertiary-hover-color: #422e83;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #422e83;
+  --button-plain-weight: 800;
+  --button-plain-hover-color: #222;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #b8b8b8;
+  --toggle-bg-on: #422e83;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #422e83;
+
+  /* ---- Modal ---- */
+  --modal-dialog-max-width: 720px;
+  --modal-dialog-padding: 40px;
+  --modal-dialog-border: 1px solid var(--color-border-default);
+  --modal-dialog-border-radius: 0;
+  --modal-close-size: 28px;
+  --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
   --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
@@ -784,7 +845,7 @@
 }
 
 /* LINZESS — Section Nav Brand Overrides
-   Desktop:        full-width dark-purple rounded pill, white Lato Bold links, orange active underline
+   Desktop:        content-width dark-purple rounded pill, centered; active = weight 800, no underline
    Mobile (base):  dark-purple pill with "JUMP TO: [current]" + chevron toggle
    Mobile open:    purple toggle bar (top radius) + white dropdown (bottom radius)
    Source:         linzess.com/find-relief section-navigation pattern
@@ -799,13 +860,16 @@
   --section-nav-dropdown-bg: var(--background-color);
   --section-nav-dropdown-text: var(--linz-dark-purple);
   --section-nav-radius: var(--linz-rounded-corner);
+  --section-nav-mobile-width: 70vw;
 
   border-bottom: none;
   border-radius: var(--section-nav-radius);
+  margin: 0 auto;
   overflow: visible;
+  width: var(--section-nav-mobile-width);
 }
 
-/* ── Links ───────────────────────────────────────────────────────────── */
+/* ── Links (mobile base) ─────────────────────────────────────────────── */
 
 .section-nav a {
   color: var(--section-nav-text);
@@ -825,16 +889,21 @@
 .section-nav a.is-active {
   border-bottom: none;
   color: var(--section-nav-text);
-  text-decoration: underline;
-  text-decoration-color: var(--section-nav-active);
-  text-decoration-thickness: var(--border-width-default);
-  text-underline-offset: var(--spacing-04);
+  font-weight: var(--font-weight-extra-bold);
+  text-decoration: none;
 }
 
 /* ── Sticky stuck ────────────────────────────────────────────────────── */
 
+/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
+   Override to keep the pill at --section-nav-mobile-width, centred. */
+
 .section-nav.sticky.is-stuck {
   box-shadow: var(--shadow-section-nav-stuck);
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: var(--section-nav-mobile-width);
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -842,6 +911,13 @@
 .section-nav.mobile-menu .section-nav-hamburger,
 .section-nav.mobile-menu .section-nav-toggle-label {
   display: none;
+}
+
+/* Ensure nav fills block width so toggle + chevron never overflow screen */
+
+.section-nav.mobile-menu nav {
+  box-sizing: border-box;
+  width: 100%;
 }
 
 /* ── Current section label ───────────────────────────────────────────── */
@@ -949,33 +1025,68 @@
   border-bottom: none;
   border-left: none;
   color: var(--section-nav-dropdown-text);
+  font-weight: var(--font-weight-extra-bold);
   padding-left: var(--spacing-24);
-  text-decoration: underline;
-  text-decoration-color: var(--section-nav-active);
-  text-decoration-thickness: var(--border-width-default);
-  text-underline-offset: var(--spacing-04);
+  text-decoration: none;
 }
 
 /* ── Desktop ≥744px ──────────────────────────────────────────────────── */
 
 @media (width >= 744px) {
-  /* Active: orange underline, no border-bottom */
+  /* Outer wrapper: transparent, full-width — pill lives on the nav element */
+  .section-nav {
+    background-color: transparent;
+    border-radius: 0;
+    overflow-x: visible;
+    width: 100%;
+  }
+
+  /* Restore base full-width stuck behaviour (undo mobile transform/width) */
+  .section-nav.sticky.is-stuck {
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+  }
+
+  /* Content-width dark-purple pill, centered via margin: 0 auto from base */
+  .section-nav nav {
+    background-color: var(--section-nav-bg);
+    border-radius: var(--section-nav-radius);
+    max-width: fit-content;
+    padding: 0 var(--spacing-08);
+  }
+
+  /* Links: 600 base weight */
+  .section-nav a {
+    font-weight: var(--font-weight-semibold);
+    opacity: 1;
+  }
+
+  /* Hover: weight 800 (visual zoom via boldness), colour stays white */
+  .section-nav a:hover,
+  .section-nav a:focus-visible {
+    color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
+    opacity: 1;
+  }
+
+  /* Active: weight 800, no underline */
   .section-nav a.is-active {
     border-bottom: none;
-    text-decoration: underline;
-    text-decoration-color: var(--section-nav-active);
-    text-decoration-thickness: var(--border-width-default);
-    text-underline-offset: var(--spacing-04);
+    color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
+    text-decoration: none;
   }
 
   /* ── Mobile-menu: reset mobile-base overrides for desktop layout ── */
 
-  /* Hide toggle — mobile-base display:flex outlasts base desktop display:none */
+  /* Hide toggle */
   .section-nav.mobile-menu .section-nav-toggle {
     display: none;
   }
 
-  /* Horizontal list — mobile-base sets column/100% */
+  /* Horizontal list */
   .section-nav.mobile-menu nav ul {
     background-color: transparent;
     border-radius: 0;
@@ -985,30 +1096,37 @@
     width: auto;
   }
 
-  /* Flex li — mobile-base sets display:block */
+  /* Flex li */
   .section-nav.mobile-menu nav ul li {
     display: flex;
   }
 
-  /* Inline link — mobile-base sets block/full-width/center */
+  /* Inline link — restore desktop padding and reset mobile overrides */
   .section-nav.mobile-menu nav a {
-    border-bottom: var(--border-width-default) solid transparent;
+    border-bottom: none;
     color: var(--section-nav-text);
     display: inline-block;
+    font-weight: var(--font-weight-semibold);
     padding: var(--spacing-12) var(--spacing-24);
     text-align: unset;
     width: auto;
   }
 
-  /* Active on desktop: orange underline */
+  /* Override mobile hover rule (higher specificity bleeds through) */
+  .section-nav.mobile-menu nav a:hover,
+  .section-nav.mobile-menu nav a:focus-visible {
+    color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
+    opacity: 1;
+  }
+
+  /* Active on desktop: weight 800, no underline */
   .section-nav.mobile-menu nav a.is-active {
     border-bottom: none;
     border-left: none;
     color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
     padding-left: var(--spacing-24);
-    text-decoration: underline;
-    text-decoration-color: var(--section-nav-active);
-    text-decoration-thickness: var(--border-width-default);
-    text-underline-offset: var(--spacing-04);
+    text-decoration: none;
   }
 }

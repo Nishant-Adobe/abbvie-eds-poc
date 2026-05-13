@@ -2,7 +2,7 @@
 @import '../../../styles/linzess/tokens.css';
 
 /* LINZESS — Section Nav Brand Overrides
-   Desktop:        full-width dark-purple rounded pill, white Lato Bold links, orange active underline
+   Desktop:        content-width dark-purple rounded pill, centered; active = weight 800, no underline
    Mobile (base):  dark-purple pill with "JUMP TO: [current]" + chevron toggle
    Mobile open:    purple toggle bar (top radius) + white dropdown (bottom radius)
    Source:         linzess.com/find-relief section-navigation pattern
@@ -17,13 +17,16 @@
   --section-nav-dropdown-bg: var(--background-color);
   --section-nav-dropdown-text: var(--linz-dark-purple);
   --section-nav-radius: var(--linz-rounded-corner);
+  --section-nav-mobile-width: 70vw;
 
   border-bottom: none;
   border-radius: var(--section-nav-radius);
+  margin: 0 auto;
   overflow: visible;
+  width: var(--section-nav-mobile-width);
 }
 
-/* ── Links ───────────────────────────────────────────────────────────── */
+/* ── Links (mobile base) ─────────────────────────────────────────────── */
 
 .section-nav a {
   color: var(--section-nav-text);
@@ -43,16 +46,20 @@
 .section-nav a.is-active {
   border-bottom: none;
   color: var(--section-nav-text);
-  text-decoration: underline;
-  text-decoration-color: var(--section-nav-active);
-  text-decoration-thickness: var(--border-width-default);
-  text-underline-offset: var(--spacing-04);
+  font-weight: var(--font-weight-extra-bold);
+  text-decoration: none;
 }
 
 /* ── Sticky stuck ────────────────────────────────────────────────────── */
 
+/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
+   Override to keep the pill at --section-nav-mobile-width, centred. */
 .section-nav.sticky.is-stuck {
   box-shadow: var(--shadow-section-nav-stuck);
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: var(--section-nav-mobile-width);
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -60,6 +67,12 @@
 .section-nav.mobile-menu .section-nav-hamburger,
 .section-nav.mobile-menu .section-nav-toggle-label {
   display: none;
+}
+
+/* Ensure nav fills block width so toggle + chevron never overflow screen */
+.section-nav.mobile-menu nav {
+  box-sizing: border-box;
+  width: 100%;
 }
 
 /* ── Current section label ───────────────────────────────────────────── */
@@ -166,33 +179,68 @@
   border-bottom: none;
   border-left: none;
   color: var(--section-nav-dropdown-text);
+  font-weight: var(--font-weight-extra-bold);
   padding-left: var(--spacing-24);
-  text-decoration: underline;
-  text-decoration-color: var(--section-nav-active);
-  text-decoration-thickness: var(--border-width-default);
-  text-underline-offset: var(--spacing-04);
+  text-decoration: none;
 }
 
 /* ── Desktop ≥744px ──────────────────────────────────────────────────── */
 
 @media (width >= 744px) {
-  /* Active: orange underline, no border-bottom */
+  /* Outer wrapper: transparent, full-width — pill lives on the nav element */
+  .section-nav {
+    background-color: transparent;
+    border-radius: 0;
+    overflow-x: visible;
+    width: 100%;
+  }
+
+  /* Restore base full-width stuck behaviour (undo mobile transform/width) */
+  .section-nav.sticky.is-stuck {
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+  }
+
+  /* Content-width dark-purple pill, centered via margin: 0 auto from base */
+  .section-nav nav {
+    background-color: var(--section-nav-bg);
+    border-radius: var(--section-nav-radius);
+    max-width: fit-content;
+    padding: 0 var(--spacing-08);
+  }
+
+  /* Links: 600 base weight */
+  .section-nav a {
+    font-weight: var(--font-weight-semibold);
+    opacity: 1;
+  }
+
+  /* Hover: weight 800 (visual zoom via boldness), colour stays white */
+  .section-nav a:hover,
+  .section-nav a:focus-visible {
+    color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
+    opacity: 1;
+  }
+
+  /* Active: weight 800, no underline */
   .section-nav a.is-active {
     border-bottom: none;
-    text-decoration: underline;
-    text-decoration-color: var(--section-nav-active);
-    text-decoration-thickness: var(--border-width-default);
-    text-underline-offset: var(--spacing-04);
+    color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
+    text-decoration: none;
   }
 
   /* ── Mobile-menu: reset mobile-base overrides for desktop layout ── */
 
-  /* Hide toggle — mobile-base display:flex outlasts base desktop display:none */
+  /* Hide toggle */
   .section-nav.mobile-menu .section-nav-toggle {
     display: none;
   }
 
-  /* Horizontal list — mobile-base sets column/100% */
+  /* Horizontal list */
   .section-nav.mobile-menu nav ul {
     background-color: transparent;
     border-radius: 0;
@@ -202,30 +250,37 @@
     width: auto;
   }
 
-  /* Flex li — mobile-base sets display:block */
+  /* Flex li */
   .section-nav.mobile-menu nav ul li {
     display: flex;
   }
 
-  /* Inline link — mobile-base sets block/full-width/center */
+  /* Inline link — restore desktop padding and reset mobile overrides */
   .section-nav.mobile-menu nav a {
-    border-bottom: var(--border-width-default) solid transparent;
+    border-bottom: none;
     color: var(--section-nav-text);
     display: inline-block;
+    font-weight: var(--font-weight-semibold);
     padding: var(--spacing-12) var(--spacing-24);
     text-align: unset;
     width: auto;
   }
 
-  /* Active on desktop: orange underline */
+  /* Override mobile hover rule (higher specificity bleeds through) */
+  .section-nav.mobile-menu nav a:hover,
+  .section-nav.mobile-menu nav a:focus-visible {
+    color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
+    opacity: 1;
+  }
+
+  /* Active on desktop: weight 800, no underline */
   .section-nav.mobile-menu nav a.is-active {
     border-bottom: none;
     border-left: none;
     color: var(--section-nav-text);
+    font-weight: var(--font-weight-extra-bold);
     padding-left: var(--spacing-24);
-    text-decoration: underline;
-    text-decoration-color: var(--section-nav-active);
-    text-decoration-thickness: var(--border-width-default);
-    text-underline-offset: var(--spacing-04);
+    text-decoration: none;
   }
 }
