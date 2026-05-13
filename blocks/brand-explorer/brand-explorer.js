@@ -73,7 +73,10 @@ function parseFlatXwalkFormat(rows) {
   let i = 0;
   while (i < flatValues.length && !flatValues[i].img) {
     const { text, link } = flatValues[i];
-    if (text && !link && !text.startsWith('http') && !text.startsWith('US-') && text !== '#') {
+    const isProjectNum = /^[A-Z]{2,}-[A-Z]+-\d/.test(text);
+    if (isProjectNum) {
+      projectNumber = text;
+    } else if (text && !link && !text.startsWith('http') && text !== '#') {
       const nextVal = flatValues[i + 1];
       if (nextVal?.link) {
         utilityLinks.push({
@@ -85,8 +88,6 @@ function parseFlatXwalkFormat(rows) {
       } else if (!barLabel) {
         barLabel = text;
       }
-    } else if (text.startsWith('US-')) {
-      projectNumber = text;
     }
     i += 1;
   }
@@ -168,10 +169,12 @@ function parseUEEditorFormat(rows) {
         indications,
       });
     } else if (!comp) {
-      const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
-      if (barLabelEl) barLabel = barLabelEl.textContent.trim();
+      if (!barLabel) {
+        const barLabelEl = row.querySelector('[data-aue-prop="barLabel"]');
+        if (barLabelEl) barLabel = barLabelEl.textContent.trim();
+      }
       const text = row.textContent.trim();
-      if (text.startsWith('US-')) projectNumber = text;
+      if (!projectNumber && /^[A-Z]{2,}-[A-Z]+-\d/.test(text)) projectNumber = text;
     }
   });
 
@@ -186,19 +189,30 @@ function parseUEEditorFormat(rows) {
  * @param {HTMLElement[]} rows - Block child rows
  * @returns {Object} Config with barLabel, utilityLinks, brands, projectNumber
  */
-function detectAndParseContent(rows) {
+function detectAndParseContent(rows, block) {
   const firstRowCells = rows[0]?.children?.length || 0;
   const isTableFormat = firstRowCells > 1
     || rows[0]?.querySelector('a')
     || rows[0]?.querySelector('img, picture');
 
-  if (isTableFormat) return parseTableFormat(rows);
-
-  const cfg = parseFlatXwalkFormat(rows);
-  if (!cfg.brands.length) {
-    const ueCfg = parseUEEditorFormat(rows);
-    if (ueCfg.brands.length) return ueCfg;
+  let cfg;
+  if (isTableFormat) {
+    cfg = parseTableFormat(rows);
+  } else {
+    cfg = parseFlatXwalkFormat(rows);
+    if (!cfg.brands.length) {
+      const ueCfg = parseUEEditorFormat(rows);
+      if (ueCfg.brands.length) cfg = ueCfg;
+    }
   }
+
+  if (block) {
+    const projEl = block.querySelector('[data-aue-prop="projectNumber"]');
+    if (projEl && projEl.textContent.trim()) cfg.projectNumber = projEl.textContent.trim();
+    const barEl = block.querySelector('[data-aue-prop="barLabel"]');
+    if (barEl && barEl.textContent.trim()) cfg.barLabel = barEl.textContent.trim();
+  }
+
   return cfg;
 }
 
@@ -313,8 +327,7 @@ function buildContent(brands, projectNumber) {
       blade.append(subtitle);
     }
 
-    const nameLower = brand.name.toLowerCase().replace(/[®™]/g, '');
-    const brandSlugColor = ['rinvoq', 'skyrizi'].find((key) => nameLower.includes(key)) || '';
+    const brandSlugColor = brandSlug; // declared at line 305 in this forEach
 
     const separator = document.createElement('hr');
     separator.className = 'brand-explorer-separator';
@@ -400,9 +413,10 @@ function attachEventListeners(block, browseBtn, closeBtn, content, accordions) {
     if (e.key === 'Escape' && block.classList.contains('is-open')) close();
   }, { signal });
 
-  // Mobile accordion
+  const MOBILE_MAX = '(max-width: 895px)';
+  const mobileQuery = window.matchMedia(MOBILE_MAX);
   accordions.addEventListener('click', (e) => {
-    if (window.innerWidth >= 896) return;
+    if (!mobileQuery.matches) return;
     const clickedBlade = e.target.closest('.brand-explorer-blade');
     if (!clickedBlade) return;
     e.preventDefault();
@@ -432,7 +446,7 @@ export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
 
-  const cfg = detectAndParseContent(rows);
+  const cfg = detectAndParseContent(rows, block);
 
   rows.forEach((row) => { row.classList.add('brand-explorer-hidden'); });
 
