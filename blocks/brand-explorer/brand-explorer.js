@@ -73,7 +73,10 @@ function parseFlatXwalkFormat(rows) {
   let i = 0;
   while (i < flatValues.length && !flatValues[i].img) {
     const { text, link } = flatValues[i];
-    if (text && !link && !text.startsWith('http') && !text.startsWith('US-') && text !== '#') {
+    const isProjectNum = /^(US-|MULT-|[A-Z]{2,}-\d)/.test(text);
+    if (isProjectNum) {
+      projectNumber = text;
+    } else if (text && !link && !text.startsWith('http') && text !== '#') {
       const nextVal = flatValues[i + 1];
       if (nextVal?.link) {
         utilityLinks.push({
@@ -85,8 +88,6 @@ function parseFlatXwalkFormat(rows) {
       } else if (!barLabel) {
         barLabel = text;
       }
-    } else if (text.startsWith('US-')) {
-      projectNumber = text;
     }
     i += 1;
   }
