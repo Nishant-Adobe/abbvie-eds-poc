@@ -61,13 +61,13 @@
 }
 
 .hero :where(a).button::after {
-  content: '›';
+  content: var(--hero-button-icon-content);
   position: absolute;
   right: var(--spacing-20);
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.4em;
-  line-height: var(--line-height-body, 1);
+  top: var(--hero-button-icon-top);
+  transform: var(--hero-button-icon-transform);
+  font-size: var(--hero-button-icon-font-size);
+  line-height: var(--line-height-body);
 }
 
 /* Dark variants: same plum pill — button stays on-brand regardless of bg */
@@ -86,27 +86,27 @@
 }
 
 .hero> :where(div):has(> div:empty) {
-  display: none;
+  display: var(--hero-display-hidden);
 }
 
 .hero> :where(div):first-child {
-  min-height: auto;
-  padding: 0;
-  margin: 0;
+  min-height: var(--hero-auto-value);
+  padding: var(--hero-reset-value);
+  margin: var(--hero-reset-value);
 }
 
 .hero::before {
   position: absolute;
-  bottom: 0;
-  content: " ";
-  background: url("/icons/brushstroke.png") no-repeat center center / cover;
+  bottom: var(--hero-reset-value);
+  content: var(--hero-brushstroke-content);
+  background: var(--hero-brushstroke-image) var(--hero-brushstroke-repeat) var(--hero-brushstroke-position) / var(--hero-brushstroke-size);
   height: var(--spacing-40);
-  width: 100%;
-  z-index: 1;
+  width: var(--hero-full-width);
+  z-index: var(--hero-layer-index);
 }
 
 .hero.video::before {
-  bottom: calc(-1 * var(--spacing-16));
+  bottom: var(--hero-video-brushstroke-bottom);
 }
 
 .hero,
@@ -114,39 +114,39 @@
 .hero.video,
 .hero video {
   min-height: var(--hero-min-height-mobile);
-  border-radius: 0;
+  border-radius: var(--hero-border-radius-reset);
 }
 
 .hero.video::after {
-  display: none;
+  display: var(--hero-display-hidden);
 }
 
 .hero.video .hero-text-container .cmp-container-x-large {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: var(--hero-display-grid);
+  grid-template-columns: var(--hero-video-grid-columns);
   grid-auto-rows: var(--hero-grid-rows-mobile);
-  align-items: end;
-  place-content: end start;
+  align-items: var(--hero-video-grid-align-items);
+  place-content: var(--hero-video-grid-place-content);
 }
 
 .hero.video :where(a).button {
   color: var(--color-brand-primary);
   background: var(--background-color);
   padding: var(--hero-video-btn-padding);
-  border: solid 2px var(--color-brand-primary);
+  border: var(--hero-video-btn-border-style) var(--hero-video-btn-border-width) var(--color-brand-primary);
   border-radius: var(--hero-video-btn-border-radius);
   font-size: var(--hero-video-btn-font-size);
-  text-transform: none;
+  text-transform: var(--hero-video-btn-text-transform);
   width: var(--hero-video-btn-width);
-  text-align: left;
+  text-align: var(--hero-video-btn-text-align);
 }
 
 .hero.no-padding> :where(div):first-child {
-  min-height: auto;
+  min-height: var(--hero-auto-value);
 }
 
 .hero.video .hero-text-container {
-  min-height: auto;
+  min-height: var(--hero-auto-value);
 }
 
 @media (width >= 744px) {
@@ -162,8 +162,8 @@
   }
 
   .hero.video .hero-text-container .cmp-container-x-large p.button-container {
-    grid-column: -1/-2;
-    text-align: left;
+    grid-column: var(--hero-video-button-grid-column);
+    text-align: var(--hero-video-btn-text-align);
   }
 }
 

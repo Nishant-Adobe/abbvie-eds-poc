@@ -674,9 +674,9 @@ color: inherit;
   opacity: 1;
 }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.full :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.solid :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
 /* =====================================================
    Hero Dual-CTA Variant — two side-by-side CTAs
    Authoring: use block name "Hero (dual-cta)"
@@ -699,7 +699,7 @@ color: inherit;
    ===================================================== */
 .hero .hero-eyebrow {
   display: block;
-  font-size: var(--font-size-body-small, 11px);
+  font-size: var(--font-size-body-small, 0.6875rem);
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-heading);
   text-transform: uppercase;
@@ -717,7 +717,7 @@ color: inherit;
   background-color: var(--hero-indication-bg);
   color: var(--color-white);
   padding: var(--spacing-16, 1rem) var(--spacing-24, 1.5rem);
-  font-size: var(--font-size-body-small, 13px);
+  font-size: var(--font-size-body-small, 0.8125rem);
   line-height: 1.5;
   text-align: center;
   box-sizing: border-box;
@@ -734,7 +734,7 @@ color: inherit;
   position: absolute;
   bottom: var(--spacing-08, 0.8rem);
   right: var(--spacing-08, 0.8rem);
-  font-size: var(--font-size-body-small, 11px);
+  font-size: var(--font-size-body-small, 0.6875rem);
   color: var(--color-text-on-dark-80);
   font-style: italic;
   pointer-events: none;
@@ -760,7 +760,7 @@ color: inherit;
 .hero.text-light h3,
 .hero.text-light p,
 .hero.text-light .hero-eyebrow {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
 }
 .hero.text-dark h1,
 .hero.text-dark h2,
@@ -829,7 +829,7 @@ color: inherit;
   display: block;
 }
 .hero.full h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   font-size: var(--font-size-h1-hero, var(--font-size-h1, 2.6rem));
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
@@ -916,7 +916,7 @@ color: inherit;
   display: block;
 }
 .hero.compact h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   font-size: var(--font-size-h2, 2rem);
   line-height: var(--line-height-h2, 2.5rem);
 }
@@ -1064,7 +1064,7 @@ color: inherit;
   display: block;
 }
 .hero.centered h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   text-align: center;
 }
 .hero.centered p {
@@ -1160,7 +1160,7 @@ color: inherit;
 .hero.video .hero-text-container {
   display: block;
 }
-.hero.video h1 { color: var(--color-text-on-dark, #fff); }
+.hero.video h1 { color: var(--color-text-on-dark, var(--color-white)); }
 .hero.video p {
   color: var(--color-text-on-dark-90);
 }
@@ -1171,10 +1171,6 @@ color: inherit;
 @media (width < 744px) {
   .hero.video {
     min-height: var(--hero-video-min-height-mobile);
-  }
-
-  .hero.video .hero-video-bg {
-    display: none;
   }
 
   .hero.video > :where(div):nth-child(2) {
@@ -1238,7 +1234,7 @@ color: inherit;
 }
 .hero.solid h1,
 .hero.solid h2 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
 }
 .hero.solid p {
   color: var(--color-text-on-dark-90);
@@ -1330,6 +1326,8 @@ color: inherit;
   --color-charcoal: #25282a;
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-focus: var(--link-color);
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -1511,6 +1509,11 @@ color: inherit;
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
 
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
+
   /* z-index */
   --z-index-negative: -1;
   --z-index-0 : 0;
@@ -1518,6 +1521,7 @@ color: inherit;
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-anchor-nav: 100;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -1530,6 +1534,7 @@ color: inherit;
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -1581,6 +1586,7 @@ color: inherit;
   --transition-duration-medium: 0.3s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -1921,6 +1927,60 @@ color: inherit;
   /* Formulary: Chevron */
   --formulary-chevron-offset: 14px;
   --formulary-chevron-size: 20px;
+
+  /* ---- Font: Size (hero-specific additions) ---- */
+  --font-size-44: 4.4rem;
+  --font-size-56: 5.6rem;
+  --font-size-72: 7.2rem;
+
+  /* ---- Hero: mavyret-data-hero ---- */
+  --hero-data-min-height: 53.2rem;
+  --hero-data-min-height-tablet: 58rem;
+  --hero-data-min-height-desktop: 53.2rem;
+  --hero-data-text-width: 74rem;
+  --hero-data-text-padding: 4rem 3.5rem 4.8rem;
+  --hero-data-text-width-tablet: 82rem;
+  --hero-data-text-padding-tablet: 5.6rem 7rem 6rem;
+  --hero-data-text-padding-desktop: 3.2rem 5.5rem 4rem;
+  --hero-data-cmp-max-width: 49rem;
+  --hero-data-cmp-max-width-tablet: 52rem;
+  --hero-data-h1-line-height: 0.98;
+  --hero-data-h1-letter-spacing: 0;
+  --hero-data-p-max-width: 48rem;
+  --hero-data-p-font-size: 1.7rem;
+  --hero-data-p-line-height: 1.38;
+  --hero-data-p-first-margin-top: 2.4rem;
+  --hero-data-p-first-font-size: 2.2rem;
+  --hero-data-p-first-line-height: 1.26;
+  --hero-data-p-first-max-width-desktop: 50rem;
+  --hero-data-p-sup-font-size: 0.7em;
+  --hero-data-button-gap: 10px;
+  --hero-data-button-border-width: 2px;
+  --hero-data-button-line-height: 1.2;
+  --hero-data-button-after-font-size: 3rem;
+  --hero-data-button-after-margin: 3px;
+  --hero-data-button-mobile-padding-top: 4px;
+  --hero-data-caption-right: 1.6rem;
+  --hero-data-caption-bottom: 1.4rem;
+  --hero-data-caption-right-tablet: 3.2rem;
+  --hero-data-caption-bottom-tablet: 2rem;
+  --hero-data-caption-right-desktop: 2.4rem;
+  --hero-data-caption-font-size: 1.1rem;
+  --hero-data-caption-line-height: 1.2;
+  --hero-data-indication-min-height: 7.4rem;
+  --hero-data-indication-min-height-tablet: 8.4rem;
+  --hero-data-indication-min-height-desktop: 7.2rem;
+  --hero-data-indication-width: 49.2rem;
+  --hero-data-indication-width-tablet: 59rem;
+  --hero-data-indication-padding: 1.2rem 3.2rem 1.2rem 4.8rem;
+  --hero-data-indication-padding-tablet: 1.4rem 4rem 1.4rem 7rem;
+  --hero-data-indication-padding-desktop: 1.1rem 3.2rem 1.1rem 4.8rem;
+  --hero-data-indication-padding-mobile: 1.2rem 3.2rem 1.2rem 2.8rem;
+  --hero-data-indication-clip-path: polygon(0 0, 100% 0, calc(100% - 6.4rem) 100%, 0 100%);
+  --hero-data-indication-p-font-size: 1.6rem;
+  --hero-data-indication-p-font-size-tablet: 1.9rem;
+  --hero-data-indication-p-line-height: 1.2;
+  --hero-data-font-family-roboto-bold: 'Roboto Bold', sans-serif;
 }
 /* ============================================================
    MAVYRET HCP — Hero Block Overrides (XWalk/UE preview)
@@ -1991,7 +2051,7 @@ color: inherit;
   display: flex;
   align-items: stretch;
   overflow: hidden;
-  min-height: 53.2rem;
+  min-height: var(--hero-data-min-height);
 }
 .hero.mavyret-data-hero> :where(div):has(> div:empty) {
   display: none;
@@ -2002,7 +2062,7 @@ color: inherit;
   min-height: 100%;
   margin: 0;
   padding: 0;
-  z-index: 0;
+  z-index: var(--z-index-0);
 }
 .hero.mavyret-data-hero> :where(div):first-child picture,
 .hero.mavyret-data-hero> :where(div):first-child img {
@@ -2023,22 +2083,22 @@ color: inherit;
   content: '';
   background: var(--gradient-hero-orange-tint);
   pointer-events: none;
-  z-index: 1;
+  z-index: var(--z-index-1);
 }
 .hero.mavyret-data-hero .hero-text-container {
   position: relative;
-  z-index: 2;
+  z-index: var(--z-index-2);
   display: block;
   align-self: center;
-  width: min(100%, 74rem);
+  width: min(100%, var(--hero-data-text-width));
   margin: 0;
-  padding: 4rem 3.5rem 4.8rem;
+  padding: var(--hero-data-text-padding);
   background: transparent;
   max-width: none;
 }
 .hero.mavyret-data-hero .cmp-container-x-large {
   grid-column: auto;
-  max-width: 49rem;
+  max-width: var(--hero-data-cmp-max-width);
 }
 .hero.mavyret-data-hero h1,
 .hero.mavyret-data-hero h2,
@@ -2049,14 +2109,14 @@ color: inherit;
 .hero.mavyret-data-hero h1 {
   margin: 0;
   font-family: var(--heading-font-family);
-  font-size: clamp(4.4rem, 6vw, 7.2rem);
+  font-size: clamp(var(--font-size-44), 6vw, var(--font-size-72));
   font-weight: var(--font-weight-body);
-  line-height: 0.98;
-  letter-spacing: 0;
+  line-height: var(--hero-data-h1-line-height);
+  letter-spacing: var(--hero-data-h1-letter-spacing);
   text-transform: none;
 }
 .hero.mavyret-data-hero h1+h1 {
-  margin-top: 1.6rem;
+  margin-top: var(--spacing-16);
 }
 .hero.mavyret-data-hero h1 strong,
 .hero.mavyret-data-hero h2 strong,
@@ -2065,18 +2125,18 @@ color: inherit;
   font-weight: var(--font-weight-heading);
 }
 .hero.mavyret-data-hero .hero-text-container p {
-  max-width: 48rem;
-  font-size: 1.7rem;
-  line-height: 1.38;
+  max-width: var(--hero-data-p-max-width);
+  font-size: var(--hero-data-p-font-size);
+  line-height: var(--hero-data-p-line-height);
 }
 .hero.mavyret-data-hero .hero-text-container p:first-of-type {
-  margin-top: 2.4rem;
-  font-size: 2.2rem;
-  line-height: 1.26;
+  margin-top: var(--hero-data-p-first-margin-top);
+  font-size: var(--hero-data-p-first-font-size);
+  line-height: var(--hero-data-p-first-line-height);
 }
 .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
   font-size: var(--font-size-body);
-  font-family: 'Roboto Bold', sans-serif;
+  font-family: var(--hero-data-font-family-roboto-bold);
   margin: 0;
   padding-bottom: 0;
 }
@@ -2086,7 +2146,7 @@ color: inherit;
   padding: 0;
 }
 .hero.mavyret-data-hero .hero-text-container p sup {
-  font-size: 0.7em;
+  font-size: var(--hero-data-p-sup-font-size);
   line-height: 0;
 }
 .hero.mavyret-data-hero .button-container {
@@ -2096,10 +2156,10 @@ color: inherit;
 .hero.mavyret-data-hero :where(a).button {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--hero-data-button-gap);
   min-width: unset;
   padding: var(--spacing-8) var(--spacing-16);
-  border: 2px solid var(--color-btn-border);
+  border: var(--hero-data-button-border-width) solid var(--color-btn-border);
   border-radius: 0;
   background: var(--background-color);
   box-shadow: var(--shadow-green-glow);
@@ -2107,14 +2167,14 @@ color: inherit;
   font-family: var(--heading-font-family-bold);
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-heading);
-  line-height: 1.2;
+  line-height: var(--hero-data-button-line-height);
   text-transform: none;
 }
 .hero.mavyret-data-hero :where(a).button::after {
   content: '\203A';
-  font-size: 3rem;
+  font-size: var(--hero-data-button-after-font-size);
   line-height: 1;
-  margin-bottom: 3px;
+  margin-bottom: var(--hero-data-button-after-margin);
 }
 .hero.mavyret-data-hero :where(a).button:hover {
   background: var(--background-color);
@@ -2123,31 +2183,31 @@ color: inherit;
 }
 .hero.mavyret-data-hero .hero-image-caption {
   position: absolute;
-  right: 1.6rem;
-  bottom: 1.4rem;
-  z-index: 3;
+  right: var(--hero-data-caption-right);
+  bottom: var(--hero-data-caption-bottom);
+  z-index: var(--z-index-3);
   width: auto;
-  max-width: calc(100% - 3.2rem);
+  max-width: calc(100% - var(--spacing-32));
   padding: 0;
   background: none;
   color: var(--color-text-on-dark);
-  font-size: 1.1rem;
-  line-height: 1.2;
+  font-size: var(--hero-data-caption-font-size);
+  line-height: var(--hero-data-caption-line-height);
   text-align: right;
 }
 .hero.mavyret-data-hero .hero-indication {
   position: absolute;
   inset: auto 0 0;
-  z-index: 3;
+  z-index: var(--z-index-3);
   display: flex;
   align-items: center;
-  min-height: 7.4rem;
-  width: min(100%, 49.2rem);
-  padding: 1.2rem 3.2rem 1.2rem 4.8rem;
+  min-height: var(--hero-data-indication-min-height);
+  width: min(100%, var(--hero-data-indication-width));
+  padding: var(--hero-data-indication-padding);
   background: var(--color-indication-bg);
   color: var(--color-text-on-dark);
   text-align: center;
-  clip-path: polygon(0 0, 100% 0, calc(100% - 6.4rem) 100%, 0 100%);
+  clip-path: var(--hero-data-indication-clip-path);
 }
 /* stylelint-disable-next-line no-descending-specificity */
 .hero.mavyret-data-hero .hero-indication p {
@@ -2156,26 +2216,26 @@ color: inherit;
   max-width: none;
   color: inherit;
   font-family: var(--heading-font-family-bold);
-  font-size: 1.6rem;
+  font-size: var(--hero-data-indication-p-font-size);
   font-weight: var(--font-weight-heading);
-  line-height: 1.2;
+  line-height: var(--hero-data-indication-p-line-height);
 }
 @media (width >=744px) {
   .hero.mavyret-data-hero {
-    min-height: 58rem;
+    min-height: var(--hero-data-min-height-tablet);
   }
 
   .hero.mavyret-data-hero .hero-text-container {
-    width: min(100%, 82rem);
-    padding: 5.6rem 7rem 6rem;
+    width: min(100%, var(--hero-data-text-width-tablet));
+    padding: var(--hero-data-text-padding-tablet);
   }
 
   .hero.mavyret-data-hero .cmp-container-x-large {
-    max-width: 52rem;
+    max-width: var(--hero-data-cmp-max-width-tablet);
   }
 
   .hero.mavyret-data-hero h1 {
-    font-size: clamp(5.6rem, 6.4vw, 8rem);
+    font-size: clamp(var(--font-size-56), 6.4vw, var(--font-size-80));
   }
 
   .hero.mavyret-data-hero .hero-text-container p:first-of-type {
@@ -2183,29 +2243,29 @@ color: inherit;
   }
 
   .hero.mavyret-data-hero .hero-image-caption {
-    right: 3.2rem;
-    bottom: 2rem;
+    right: var(--hero-data-caption-right-tablet);
+    bottom: var(--hero-data-caption-bottom-tablet);
   }
 
   .hero.mavyret-data-hero .hero-indication {
-    min-height: 8.4rem;
-    width: min(100%, 59rem);
-    padding: 1.4rem 4rem 1.4rem 7rem;
+    min-height: var(--hero-data-indication-min-height-tablet);
+    width: min(100%, var(--hero-data-indication-width-tablet));
+    padding: var(--hero-data-indication-padding-tablet);
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
   .hero.mavyret-data-hero .hero-indication p {
-    font-size: 1.9rem;
+    font-size: var(--hero-data-indication-p-font-size-tablet);
   }
 }
 @media (width >=1024px) {
   .hero.mavyret-data-hero {
-    min-height: 53.2rem;
+    min-height: var(--hero-data-min-height-desktop);
   }
 
   .hero.mavyret-data-hero .hero-text-container {
     width: 100%;
-    padding: 3.2rem 5.5rem 4rem;
+    padding: var(--hero-data-text-padding-desktop);
   }
 
   .hero.mavyret-data-hero .cmp-container-x-large {
@@ -2217,30 +2277,30 @@ color: inherit;
   }
 
   .hero.mavyret-data-hero .hero-text-container p:first-of-type {
-    max-width: 50rem;
+    max-width: var(--hero-data-p-first-max-width-desktop);
     font-size: var(--font-size-28);
   }
 
   .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
     font-size: var(--font-size-body);
-    font-family: 'Roboto Bold', sans-serif;
+    font-family: var(--hero-data-font-family-roboto-bold);
     margin: 0;
     padding-bottom: 0;
   }
 
   .hero.mavyret-data-hero .hero-image-caption {
-    right: 2.4rem;
+    right: var(--hero-data-caption-right-desktop);
   }
 
   .hero.mavyret-data-hero .hero-indication {
-    min-height: 7.2rem;
-    width: 49.2rem;
-    padding: 1.1rem 3.2rem 1.1rem 4.8rem;
+    min-height: var(--hero-data-indication-min-height-desktop);
+    width: var(--hero-data-indication-width);
+    padding: var(--hero-data-indication-padding-desktop);
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
   .hero.mavyret-data-hero .hero-indication p {
-    font-size: 1.6rem;
+    font-size: var(--hero-data-indication-p-font-size);
   }
 }
 .hero.mavyret-data-hero.no-padding .hero-text-container {
@@ -2260,7 +2320,7 @@ color: inherit;
 }
 .hero.mavyret-data-hero.no-padding .hero-indication p:first-child {
   font-size: var(--font-size-28);
-  font-weight: 800;
+  font-weight: var(--font-weight-extra-bold);
   padding: 0;
 }
 .hero.mavyret-data-hero.no-padding .hero-indication p:last-child {
@@ -2286,7 +2346,7 @@ color: inherit;
   .hero.mavyret-data-hero .hero-indication {
     clip-path: none;
     text-align: left;
-    padding: 1.2rem 3.2rem 1.2rem 2.8rem;
+    padding: var(--hero-data-indication-padding-mobile);
   }
 
   .hero.mavyret-data-hero .hero-text-container {
@@ -2310,6 +2370,6 @@ color: inherit;
   .hero.mavyret-data-hero :where(a).button {
     justify-content: space-between;
     width: 100%;
-    padding: 4px var(--spacing-16);
+    padding: var(--hero-data-button-mobile-padding-top) var(--spacing-16);
   }
 }
