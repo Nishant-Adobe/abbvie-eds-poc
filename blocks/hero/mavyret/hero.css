@@ -1325,9 +1325,15 @@ color: inherit;
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -1534,8 +1540,11 @@ color: inherit;
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -1620,7 +1629,7 @@ color: inherit;
 
   /* Form Fonts */
 
-  /* ---- Brand Explorer Block (defaults) ---- */
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --be-color-bg: var(--background-color);
   --be-color-text: var(--text-color);
   --be-color-text-light: #21406d;
@@ -1633,6 +1642,7 @@ color: inherit;
   --be-color-btn-hover: #1c2d49;
   --be-color-btn-no-border: #555;
   --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
   --be-font-body: var(--body-font-family);
   --be-font-size-body: 14px;
   --be-font-size-small: 11px;
@@ -1642,7 +1652,7 @@ color: inherit;
   --be-line-height-body: 16px;
   --be-line-height-small: 14px;
 
-  /* ---- Clinical Data Panel Block (defaults) ---- */
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --cdp-color-text: var(--text-color);
   --cdp-color-heading: var(--text-color);
   --cdp-color-accent: var(--link-color);
@@ -1740,9 +1750,9 @@ color: inherit;
   --shadow-card: rgba(0, 0, 0, 0.4) 0 0 18px 0;
 
   /* ---- Font: Family ---- */
-  --body-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
-  --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
-  --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+  --body-font-family: 'Barlow Semi Condensed', sans-serif;
+  --heading-font-family: 'Barlow Semi Condensed', sans-serif;
+  --heading-font-family-bold: 'Barlow Semi Condensed', sans-serif;
   --icon-font-family: 'abbv-iconFont';
   /* Footer-specific: live mavyret HCP renders footer in Roboto, not Univers */
   --font-family-footer: 'Roboto', sans-serif;
@@ -1777,22 +1787,51 @@ color: inherit;
   --line-height-tab: 18px;
 
   /* ---- Border: Radius ---- */
-  --border-radius-button-primary: 30px;
-  --border-radius-button-secondary: 30px;
+  --border-radius-button-primary: 0px;
+  --border-radius-button-secondary: 0px;
   --border-radius-tab: 8px 0 0 8px;
   --border-radius-card: 2px;
 
   /* ---- Button: Primary ---- */
-  --button-primary-color: #fff;
-  --button-primary-bg: #071d49;
-  --button-primary-border: #fff;
-  --button-primary-padding: 14px 30px;
+  --button-primary-color: #000;
+  --button-primary-bg: #fff;
+  --button-primary-border: #636366;
+  --button-primary-padding: 8px 16px;
+  --button-primary-font-size: 1.125rem;
+  --button-primary-font-weight: 600;
+  --button-primary-shadow: -2px 2px 4px 0 #8ce02a;
+  --button-primary-hover-bg: #000;
+  --button-primary-hover-color: #8ce02a;
 
   /* ---- Button: Secondary ---- */
-  --button-secondary-color: #fff;
-  --button-secondary-bg: #071d49;
-  --button-secondary-border: #071d49;
-  --button-secondary-padding: 14px 66px 14px 46px;
+  --button-secondary-color: #000;
+  --button-secondary-bg: #fff;
+  --button-secondary-border: #e65400;
+  --button-secondary-padding: 8px 16px;
+  --button-secondary-shadow: -2px 2px 8px 0 #e65400;
+  --button-secondary-hover-bg: #000;
+  --button-secondary-hover-color: #8ce02a;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-color: #000;
+  --button-tertiary-bg: #fff;
+  --button-tertiary-border: #636366;
+  --button-tertiary-padding: 8px 16px;
+  --button-tertiary-font-size: 1.125rem;
+  --border-radius-button-tertiary: 0px;
+  --button-tertiary-shadow: none;
+  --button-tertiary-hover-bg: #000;
+  --button-tertiary-hover-color: #76bd22;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #000;
+  --button-plain-weight: 600;
+  --button-plain-hover-color: #76bd22;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #ccc;
+  --toggle-bg-on: #071d49;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #071d49;
@@ -2037,7 +2076,7 @@ color: inherit;
 }
 .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
   font-size: var(--font-size-body);
-  font-family: 'Roboto Bold';
+  font-family: 'Roboto Bold', sans-serif;
   margin: 0;
   padding-bottom: 0;
 }
@@ -2098,10 +2137,7 @@ color: inherit;
 }
 .hero.mavyret-data-hero .hero-indication {
   position: absolute;
-  left: 0;
-  right: auto;
-  top: auto;
-  bottom: 0;
+  inset: auto 0 0;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -2113,6 +2149,7 @@ color: inherit;
   text-align: center;
   clip-path: polygon(0 0, 100% 0, calc(100% - 6.4rem) 100%, 0 100%);
 }
+/* stylelint-disable-next-line no-descending-specificity */
 .hero.mavyret-data-hero .hero-indication p {
   width: 100%;
   margin: 0;
@@ -2156,6 +2193,7 @@ color: inherit;
     padding: 1.4rem 4rem 1.4rem 7rem;
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   .hero.mavyret-data-hero .hero-indication p {
     font-size: 1.9rem;
   }
@@ -2185,12 +2223,10 @@ color: inherit;
 
   .hero.mavyret-data-hero .hero-text-container p:nth-of-type(2) {
     font-size: var(--font-size-body);
-    font-family: 'Roboto Bold';
+    font-family: 'Roboto Bold', sans-serif;
     margin: 0;
     padding-bottom: 0;
   }
-
-  .hero.mavyret-data-hero :where(a).button {}
 
   .hero.mavyret-data-hero .hero-image-caption {
     right: 2.4rem;
@@ -2202,6 +2238,7 @@ color: inherit;
     padding: 1.1rem 3.2rem 1.1rem 4.8rem;
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   .hero.mavyret-data-hero .hero-indication p {
     font-size: 1.6rem;
   }
@@ -2231,10 +2268,12 @@ color: inherit;
   padding: 0;
   padding-left: var(--spacing-content-gap);
 }
+/* stylelint-disable-next-line no-descending-specificity */
 .hero.mavyret-data-hero .hero-text-container p:last-child:not(:has(a)) {
   font-size: var(--font-size-body);
   margin-top: var(--spacing-16);
 }
+/* stylelint-disable-next-line no-duplicate-selectors */
 .hero.mavyret-data-hero {
   height: 364px;
   min-height: unset;
@@ -2243,11 +2282,24 @@ color: inherit;
   height: auto;
   min-height: var(--spacing-500);
 }
-@media (width <744px) {
+@media (width < 744px) {
   .hero.mavyret-data-hero .hero-indication {
     clip-path: none;
     text-align: left;
     padding: 1.2rem 3.2rem 1.2rem 2.8rem;
+  }
+
+  .hero.mavyret-data-hero .hero-text-container {
+    padding: var(--spacing-16);
+  }
+
+  .hero.mavyret-data-hero h1 {
+    font-size: var(--font-size-40);
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  .hero.mavyret-data-hero .hero-text-container p:first-of-type {
+    font-size: var(--font-size-24);
   }
 
   .hero.mavyret-data-hero.no-padding .hero-indication p:first-child,
@@ -2259,17 +2311,5 @@ color: inherit;
     justify-content: space-between;
     width: 100%;
     padding: 4px var(--spacing-16);
-  }
-
-  .hero.mavyret-data-hero .hero-text-container p:first-of-type {
-    font-size: var(--font-size-24);
-  }
-
-  .hero.mavyret-data-hero h1 {
-    font-size: var(--font-size-40);
-  }
-
-  .hero.mavyret-data-hero .hero-text-container {
-    padding: var(--spacing-16);
   }
 }

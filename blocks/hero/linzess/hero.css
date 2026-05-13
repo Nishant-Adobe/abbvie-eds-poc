@@ -1325,9 +1325,15 @@ color: inherit;
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -1534,8 +1540,11 @@ color: inherit;
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -1620,7 +1629,7 @@ color: inherit;
 
   /* Form Fonts */
 
-  /* ---- Brand Explorer Block (defaults) ---- */
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --be-color-bg: var(--background-color);
   --be-color-text: var(--text-color);
   --be-color-text-light: #21406d;
@@ -1633,6 +1642,7 @@ color: inherit;
   --be-color-btn-hover: #1c2d49;
   --be-color-btn-no-border: #555;
   --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
   --be-font-body: var(--body-font-family);
   --be-font-size-body: 14px;
   --be-font-size-small: 11px;
@@ -1642,7 +1652,7 @@ color: inherit;
   --be-line-height-body: 16px;
   --be-line-height-small: 14px;
 
-  /* ---- Clinical Data Panel Block (defaults) ---- */
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --cdp-color-text: var(--text-color);
   --cdp-color-heading: var(--text-color);
   --cdp-color-accent: var(--link-color);
@@ -1689,7 +1699,7 @@ color: inherit;
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #422e83;
-  --color-brand-primary-dark: #422e83;
+  --color-brand-primary-dark: #321f63;
   --color-brand-primary-light: #60579e;
   --color-brand-primary-lighter: #d9d7f9;
 
@@ -1752,6 +1762,7 @@ color: inherit;
   --font-size-button: 14.4px;
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
+  --font-size-quote: 1.3125rem;
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
@@ -1773,12 +1784,54 @@ color: inherit;
   --border-radius-safety-bar: 16px 16px 0 0;
 
   /* ---- Button: Primary ---- */
-  --button-primary-color: #422e83;
-  --button-primary-bg: #faa633;
-  --button-primary-padding: 16px 32px;
+  --button-primary-color: #fff;
+  --button-primary-bg: #422e83;
+  --button-primary-border: transparent;
+  --button-primary-padding: 16px 59px 16px 24px;
+  --button-primary-font-size: 0.9rem;
+  --button-primary-font-weight: 800;
+  --button-primary-hover-bg: #f4f6fb;
+  --button-primary-hover-color: #422e83;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: #fff;
+  --button-secondary-color: #422e83;
+  --button-secondary-border: transparent;
+  --button-secondary-padding: 16px 59px 16px 24px;
+  --border-radius-button-secondary: 16px;
+  --button-secondary-hover-bg: #d9d7f9;
+  --button-secondary-hover-color: #422e83;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: #d9d7f9;
+  --button-tertiary-color: #422e83;
+  --button-tertiary-border: transparent;
+  --button-tertiary-padding: 12px 42px 12px 24px;
+  --button-tertiary-font-size: 12px;
+  --border-radius-button-tertiary: 16px;
+  --button-tertiary-hover-bg: #fff;
+  --button-tertiary-hover-color: #422e83;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #422e83;
+  --button-plain-weight: 800;
+  --button-plain-hover-color: #222;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #b8b8b8;
+  --toggle-bg-on: #422e83;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #422e83;
+
+  /* ---- Modal ---- */
+  --modal-dialog-max-width: 720px;
+  --modal-dialog-padding: 40px;
+  --modal-dialog-border: 1px solid var(--color-border-default);
+  --modal-dialog-border-radius: 0;
+  --modal-close-size: 28px;
+  --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
   --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
@@ -1850,7 +1903,7 @@ color: inherit;
   font-family: var(--body-font-family);
 }
 /* Profile band: purple */
-.hero.profile> :where(div):first-child {
+.hero.profile > :where(div):first-child {
   background-color: var(--color-brand-primary);
 }
 /* Profile text panel: white text on purple band */
@@ -1877,7 +1930,7 @@ color: inherit;
 .hero.landing::after,
 .hero.full::after,
 .hero.video::after {
-  background: var(--gradient-hero-overlay, linear-gradient(to bottom, rgb(0 0 0 / 80%) 0%, rgb(0 0 0 / 0%) 60%));
+  background: var(--gradient-hero-overlay);
 }
 /* Solid background: purple */
 .hero.solid {
@@ -1897,38 +1950,39 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   background: var(--gradient-hero-nav-wrapper);
   box-shadow: none;
 }
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-brand a,
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-sections>.default-content-wrapper>ul>li>button,
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-tools>.default-content-wrapper>ul>li>button {
-  color: var(--color-text-on-dark);
-}
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button,
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button>span {
+/* Nav hamburger: transparent bg + white text (lower specificity — must come first) */
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button {
   background-color: transparent;
   color: var(--color-text-on-dark);
 }
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button>span {
+/* Nav text: white on dark overlay */
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-brand a,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-sections > .default-content-wrapper > ul > li > button,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-tools > .default-content-wrapper > ul > li > button {
+  color: var(--color-text-on-dark);
+}
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button > span {
   background: var(--color-text-on-dark);
 }
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:hover::after,
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus::after,
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button:focus-visible::after,
-body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper>ul>li>button[aria-expanded='true']::after {
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:focus::after,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:focus-visible::after,
+body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
   background: var(--color-brand-accent);
 }
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: stretch;
+  justify-content: center;
   overflow: hidden;
   min-height: var(--hero-behind-nav-min-height);
-  flex-direction: column;
-  justify-content: center;
 }
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):has(> div:empty) {
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):has(> div:empty) {
   display: none;
 }
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child {
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child {
   position: relative;
   inset: 0;
   min-height: 100%;
@@ -1936,12 +1990,12 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   padding: 0;
   z-index: 0;
 }
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child picture,
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child img {
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child picture,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child img {
   width: 100%;
   height: 100%;
 }
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)> :where(div):first-child img {
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child img {
   position: relative;
   inset: 0;
   object-fit: cover;
@@ -1956,6 +2010,45 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   background: var(--gradient-hero-overlay-dual);
   z-index: 1;
   pointer-events: none;
+}
+/* h1/h2/h3/p: white text on dark overlay — comes before more specific p rules */
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h2,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h3,
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
+  color: var(--color-text-on-dark);
+}
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
+  margin: 0 0 var(--spacing-20);
+  font-size: var(--font-size-h1-hero);
+  font-weight: var(--font-weight-body);
+  line-height: 90%;
+}
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
+  font-size: var(--hero-body-font-size);
+  line-height: var(--hero-body-line-height);
+}
+/* stylelint-disable-next-line no-descending-specificity */
+/* stylelint-disable-next-line selector-not-notation */
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container):not(:first-child):has(> div > p) p {
+  margin: 0;
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: var(--hero-eyebrow-font-size);
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: 0;
+  line-height: var(--hero-eyebrow-line-height);
+  text-transform: uppercase;
+  padding-bottom: var(--spacing-40);
+}
+/* stylelint-disable-next-line selector-not-notation */
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container):not(:first-child):has(> div > p) p::after {
+  display: block;
+  margin-top: var(--spacing-24);
+  content: '';
+  background-image: url("/icons/divider.svg");
+  width: var(--spacing-64);
+  height: var(--hero-divider-height);
 }
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
   position: relative;
@@ -1973,73 +2066,34 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-eyebrow {
   display: inline-block;
-  margin-bottom: var(--hero-eyebrow-margin-bottom);
+  padding: 0;
+  margin: 0 0 var(--spacing-16);
   color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
-  font-size: var(--hero-eyebrow-font-size);
-  font-weight: var(--font-weight-extra-bold);
-  letter-spacing: 0;
-  line-height: var(--hero-eyebrow-line-height);
   font-size: var(--font-size-legal-large);
   font-weight: var(--font-weight-body);
-  margin: 0 0 var(--spacing-16);
-  padding: 0;
-  text-transform: capitalize;
-}
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)>div:not(.hero-text-container):not(:first-child):has(> div > p) p {
-  margin: 0;
-  color: var(--color-text-on-dark);
-  font-family: var(--body-font-family);
-  font-size: var(--hero-eyebrow-font-size);
-  font-weight: var(--font-weight-extra-bold);
   letter-spacing: 0;
   line-height: var(--hero-eyebrow-line-height);
-  text-transform: uppercase;
-  padding-bottom: var(--spacing-40);
-}
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)>div:not(.hero-text-container):not(:first-child):has(> div > p) p::after {
-  display: block;
-  margin-top: var(--spacing-24);
-  content: '';
-  background-image: url(/icons/divider.svg);
-  width: var(--spacing-64);
-  height: var(--hero-divider-height);
-}
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1,
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h2,
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h3,
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
-  color: var(--color-text-on-dark);
-}
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
-  margin: 0;
-  font-size: var(--font-size-h1-hero);
-  font-weight: var(--font-weight-body);
-  line-height: 90%;
-  margin-bottom: var(--spacing-20);
-}
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
-  font-size: var(--hero-body-font-size);
-  line-height: var(--hero-body-line-height);
+  text-transform: capitalize;
 }
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-image-caption {
   position: absolute;
   right: 0;
   left: 0;
-  margin-inline: auto;
   bottom: 20%;
   z-index: 3;
   width: 100%;
   max-width: var(--hero-caption-max-width);
+  margin-inline: auto;
   padding: 0;
   background: none;
   color: var(--color-text-on-dark);
   font-family: var(--font-family-legal);
   font-size: var(--hero-caption-font-size);
-  text-shadow: var(--hero-caption-text-shadow);
   font-style: normal;
   line-height: var(--hero-caption-line-height);
   text-align: right;
+  text-shadow: var(--hero-caption-text-shadow);
 }
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
   min-height: var(--hero-cta-min-height);
@@ -2064,11 +2118,19 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   left: -5%;
   right: -5%;
   bottom: var(--hero-cta-curve-bottom);
+  z-index: 2;
   height: var(--hero-cta-curve-height);
   background: var(--background-color);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   content: '';
-  z-index: 2;
+}
+/* stylelint-disable-next-line no-descending-specificity */
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
+  margin-top: 1.6rem;
+  font-size: var(--font-size-legal-large);
+}
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
+  font-size: var(--font-size-40);
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
   width: min(100%, 72rem);
@@ -2076,13 +2138,6 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
   max-width: var(--hero-cta-text-max-width-tablet);
-}
-.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
-  font-size: var(--font-size-40);
-}
-.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
-  margin-top: 1.6rem;
-  font-size: var(--font-size-legal-large);
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .button-container {
   padding-bottom: 0;
@@ -2114,40 +2169,40 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   color: var(--color-brand-primary);
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
-  width: 100%;
-  max-width: var(--hero-caption-max-width);
-  padding: 0;
-  margin-inline: auto;
+  position: absolute;
   display: flex;
   align-items: center;
-  position: absolute;
-  min-height: 0;
-}
-.hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
-  font-size: var(--font-size-legal-large);
-  font-weight: var(--font-weight-body);
-  text-transform: uppercase;
-  position: relative;
   width: 100%;
   max-width: var(--hero-caption-max-width);
+  min-height: 0;
+  padding: 0;
+  margin-inline: auto;
+}
+.hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  inset: unset;
+  width: 100%;
+  max-width: var(--hero-caption-max-width);
+  min-height: auto;
   padding: 0;
   margin-inline: auto;
   margin-bottom: var(--spacing-40);
-  display: flex;
-  flex-direction: column;
-  min-height: auto;
-  inset: unset;
-  z-index: 2;
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-body);
+  text-transform: uppercase;
 }
 .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
   display: block;
   margin-top: var(--spacing-24);
   content: '';
-  background-image: url(/icons/divider.svg);
+  background-image: url("/icons/divider.svg");
   width: var(--spacing-64);
   height: var(--hero-divider-height);
 }
-@media (width <744px) {
+@media (width < 744px) {
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) picture img {
     min-height: var(--hero-mobile-min-height);
   }
@@ -2175,22 +2230,22 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     bottom: 0;
     left: 0;
     right: 0;
-    margin-inline: auto;
     width: fit-content;
+    margin-inline: auto;
   }
 
   .hero:is(.linzess-behind-nav-linzess-cta-hero) .button-container a {
     font-size: var(--font-size-body);
   }
 }
-@media (width >=744px) {
+@media (width >= 744px) {
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
     min-height: auto;
   }
 
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
-  width: min(100%, var(--hero-text-max-width-tablet));
-  padding: calc(var(--nav-height) + 6.4rem) 7rem 7rem;
+    width: min(100%, var(--hero-text-max-width-tablet));
+    padding: calc(var(--nav-height) + 6.4rem) 7rem 7rem;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
@@ -2218,7 +2273,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     display: none;
   }
 }
-@media (width >=1024px) {
+@media (width >= 1024px) {
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
     min-height: var(--hero-behind-nav-min-height-desktop);
   }
@@ -2247,14 +2302,14 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
-    width: 100%;
-    max-width: var(--hero-caption-max-width);
-    padding: 0;
-    margin-inline: auto;
+    position: absolute;
     display: flex;
     align-items: center;
-    position: absolute;
+    width: 100%;
+    max-width: var(--hero-caption-max-width);
     min-height: 0;
+    padding: 0;
+    margin-inline: auto;
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
@@ -2262,27 +2317,27 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
-    font-size: var(--font-size-legal-large);
-    font-weight: var(--font-weight-body);
-    text-transform: uppercase;
     position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    inset: unset;
     width: 100%;
     max-width: var(--hero-caption-max-width);
+    min-height: auto;
     padding: 0;
     margin-inline: auto;
     margin-bottom: var(--spacing-40);
-    display: flex;
-    flex-direction: column;
-    min-height: auto;
-    inset: unset;
-    z-index: 2;
+    font-size: var(--font-size-legal-large);
+    font-weight: var(--font-weight-body);
+    text-transform: uppercase;
   }
 
   .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
     display: block;
     margin-top: var(--spacing-24);
     content: '';
-    background-image: url(/icons/divider.svg);
+    background-image: url("/icons/divider.svg");
     width: var(--spacing-64);
     height: var(--hero-divider-height);
   }
