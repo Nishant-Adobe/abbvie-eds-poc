@@ -202,7 +202,7 @@ function initMultilayer(imageCell) {
   });
 }
 
-function initVideo(videoRow, imageCell) {
+function initVideo(videoRow, imageCell, block) {
   if (!videoRow) return;
   const link = videoRow.firstElementChild?.querySelector('a[href]');
   const videoSrc = link?.href;
@@ -224,7 +224,7 @@ function initVideo(videoRow, imageCell) {
   source.type = /\.webm(\?.*)?$/i.test(videoSrc) ? 'video/webm' : 'video/mp4';
   video.appendChild(source);
   container.appendChild(video);
-  (imageCell || document.querySelector('.hero > div')).appendChild(container);
+  (imageCell || block.querySelector('div')).appendChild(container);
 }
 
 export default function decorate(block) {
@@ -264,5 +264,5 @@ export default function decorate(block) {
 
   if (block.classList.contains('landing')) absorbPressReleases(section, textCell);
   if (block.classList.contains('multilayer')) initMultilayer(imageCell);
-  if (block.classList.contains('video')) initVideo(videoRow, imageCell);
+  if (block.classList.contains('video')) initVideo(videoRow, imageCell, block);
 }

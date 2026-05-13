@@ -112,7 +112,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   display: flex;
   align-items: stretch;
   overflow: hidden;
-  min-height: 52rem;
+  min-height: var(--hero-behind-nav-min-height);
   flex-direction: column;
   justify-content: center;
 }
@@ -160,7 +160,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   position: relative;
   z-index: 2;
   display: block;
-  width: min(100%, 64rem);
+  width: min(100%, var(--hero-text-max-width));
   margin: 0;
   padding: calc(var(--nav-height-mobile) + 4rem) 3.5rem 5.6rem;
   background: transparent;
@@ -169,18 +169,18 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
   grid-column: auto;
-  max-width: 34rem;
+  max-width: var(--hero-cmp-max-width);
 }
 
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-eyebrow {
   display: inline-block;
-  margin-bottom: 2.4rem;
+  margin-bottom: var(--hero-eyebrow-margin-bottom);
   color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
-  font-size: 1.2rem;
+  font-size: var(--hero-eyebrow-font-size);
   font-weight: var(--font-weight-extra-bold);
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: var(--hero-eyebrow-line-height);
   font-size: var(--font-size-legal-large);
   font-weight: var(--font-weight-body);
   margin: 0 0 var(--spacing-16);
@@ -192,10 +192,10 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   margin: 0;
   color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
-  font-size: 1.2rem;
+  font-size: var(--hero-eyebrow-font-size);
   font-weight: var(--font-weight-extra-bold);
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: var(--hero-eyebrow-line-height);
   text-transform: uppercase;
   padding-bottom: var(--spacing-40);
 }
@@ -206,7 +206,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   content: '';
   background-image: url(/icons/divider.svg);
   width: var(--spacing-64);
-  height: 5px;
+  height: var(--hero-divider-height);
 }
 
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1,
@@ -225,8 +225,8 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
-  font-size: 1.8rem;
-  line-height: 1.35;
+  font-size: var(--hero-body-font-size);
+  line-height: var(--hero-body-line-height);
 }
 
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-image-caption {
@@ -237,28 +237,28 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   bottom: 20%;
   z-index: 3;
   width: 100%;
-  max-width: 1000px;
+  max-width: var(--hero-caption-max-width);
   padding: 0;
   background: none;
   color: var(--color-text-on-dark);
   font-family: var(--font-family-legal);
-  font-size: 16px;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-size: var(--hero-caption-font-size);
+  text-shadow: var(--hero-caption-text-shadow);
   font-style: normal;
-  line-height: 1.2;
+  line-height: var(--hero-caption-line-height);
   text-align: right;
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-  min-height: 68.4rem;
+  min-height: var(--hero-cta-min-height);
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
-  padding-bottom: 10.4rem;
+  padding-bottom: var(--hero-cta-padding-bottom);
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
-  max-width: 40rem;
+  max-width: var(--hero-cta-text-max-width);
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
@@ -276,8 +276,8 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   position: absolute;
   left: -5%;
   right: -5%;
-  bottom: -6.4rem;
-  height: 12.8rem;
+  bottom: var(--hero-cta-curve-bottom);
+  height: var(--hero-cta-curve-height);
   background: var(--background-color);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   content: '';
@@ -290,7 +290,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
-  max-width: 42rem;
+  max-width: var(--hero-cta-text-max-width-tablet);
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
@@ -308,36 +308,36 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button {
-  min-width: 23.8rem;
-  padding: 1.6rem 2.4rem;
+  min-width: var(--hero-cta-btn-min-width);
+  padding: var(--hero-cta-btn-padding);
   border-radius: var(--border-radius-button-primary);
   background: var(--color-brand-accent);
   color: var(--color-brand-primary);
   font-family: var(--body-font-family);
-  font-size: 1.6rem;
+  font-size: var(--hero-cta-btn-font-size);
   font-weight: var(--font-weight-extra-bold);
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: var(--hero-cta-btn-line-height);
   text-transform: none;
   margin-top: 0;
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button::after {
   display: inline-block;
-  margin-left: 1.4rem;
+  margin-left: var(--hero-cta-btn-arrow-margin);
   content: '\203A';
-  font-size: 1.8rem;
+  font-size: var(--hero-cta-btn-arrow-font-size);
   line-height: 1;
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button:hover {
-  background: #f2a94b;
+  background: var(--color-brand-accent-hover);
   color: var(--color-brand-primary);
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
   width: 100%;
-  max-width: 1000px;
+  max-width: var(--hero-caption-max-width);
   padding: 0;
   margin-inline: auto;
   display: flex;
@@ -352,7 +352,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   text-transform: uppercase;
   position: relative;
   width: 100%;
-  max-width: 1000px;
+  max-width: var(--hero-caption-max-width);
   padding: 0;
   margin-inline: auto;
   margin-bottom: var(--spacing-40);
@@ -369,12 +369,12 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   content: '';
   background-image: url(/icons/divider.svg);
   width: var(--spacing-64);
-  height: 5px;
+  height: var(--hero-divider-height);
 }
 
 @media (width <744px) {
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) picture img {
-    min-height: 420px;
+    min-height: var(--hero-mobile-min-height);
   }
 
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero),
@@ -391,13 +391,13 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
-    bottom: -1.4rem;
-    height: 3.8rem;
+    bottom: var(--hero-mobile-curve-bottom);
+    height: var(--hero-mobile-curve-height);
   }
 
   .hero:is(.linzess-behind-nav-linzess-cta-hero) .button-container {
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     left: 0;
     right: 0;
     margin-inline: auto;
@@ -415,8 +415,8 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
-    width: min(100%, 72rem);
-    padding: calc(var(--nav-height) + 6.4rem) 7rem 7rem;
+  width: min(100%, var(--hero-text-max-width-tablet));
+  padding: calc(var(--nav-height) + 6.4rem) 7rem 7rem;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
@@ -429,7 +429,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
-    max-width: 38rem;
+    max-width: var(--hero-cmp-max-width-tablet);
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
@@ -447,11 +447,11 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
 @media (width >=1024px) {
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
-    min-height: 62rem;
+    min-height: var(--hero-behind-nav-min-height-desktop);
   }
 
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
-    width: min(100%, 92rem);
+    width: min(100%, var(--hero-text-max-width-desktop));
     padding: calc(var(--nav-height) + 8.4rem) 5.5rem 7.2rem;
   }
 
@@ -475,7 +475,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--hero-caption-max-width);
     padding: 0;
     margin-inline: auto;
     display: flex;
@@ -485,7 +485,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
-    max-width: 44rem;
+    max-width: var(--hero-cmp-max-width-cta);
   }
 
   .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
@@ -494,7 +494,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     text-transform: uppercase;
     position: relative;
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--hero-caption-max-width);
     padding: 0;
     margin-inline: auto;
     margin-bottom: var(--spacing-40);
@@ -511,7 +511,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     content: '';
     background-image: url(/icons/divider.svg);
     width: var(--spacing-64);
-    height: 5px;
+    height: var(--hero-divider-height);
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {

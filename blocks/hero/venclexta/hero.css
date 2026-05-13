@@ -3,7 +3,7 @@
   max-width: none;
   width: 100%;
   background: transparent;
-  margin:0;
+  margin: var(--spacing-00);
 }
 /* AbbVie Hero — White overlap panel on hero image */
 .hero-container .hero-wrapper {
@@ -535,7 +535,7 @@ padding: var(--spacing-00);
   color: var(--color-white);
 }
 .landing .hero-breadcrumbs :where(ol li)[aria-current] {
-  color: rgb(255 255 255 / 60%);
+  color: var(--color-text-on-dark-60);
 }
 /* ---- Tablet (>=744px) ---- */
 @media (width >= 744px) {
@@ -646,7 +646,7 @@ color: inherit;
   font-family: var(--heading-font-family-bold);
   font-size: clamp(4rem, 10vw, 10rem);
   color: var(--color-brand-accent, var(--color-brand-primary));
-  line-height: 0.9;
+  line-height: var(--hero-stat-line-height, 0.9);
   margin-bottom: var(--spacing-16);
 }
 /* =====================================================
@@ -661,8 +661,8 @@ color: inherit;
 .hero.multilayer .hero-layer {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  transition: opacity 0.6s ease;
+  opacity: var(--hero-layer-opacity-hidden);
+  transition: var(--hero-layer-transition);
   pointer-events: none;
 }
 .hero.multilayer .hero-layer.is-active {
@@ -714,8 +714,8 @@ color: inherit;
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: rgb(0 0 0 / 70%);
-  color: #fff;
+  background-color: var(--hero-indication-bg);
+  color: var(--color-white);
   padding: var(--spacing-16, 1rem) var(--spacing-24, 1.5rem);
   font-size: var(--font-size-body-small, 13px);
   line-height: 1.5;
@@ -735,7 +735,7 @@ color: inherit;
   bottom: var(--spacing-08, 0.8rem);
   right: var(--spacing-08, 0.8rem);
   font-size: var(--font-size-body-small, 11px);
-  color: rgb(255 255 255 / 80%);
+  color: var(--color-text-on-dark-80);
   font-style: italic;
   pointer-events: none;
 }
@@ -775,7 +775,7 @@ color: inherit;
    ===================================================== */
 .hero.full {
   position: relative;
-  min-height: 700px;
+  min-height: var(--hero-full-min-height);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -812,8 +812,8 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgb(0 0 0 / 60%) 0%, transparent 60%);
-  z-index: 1;
+  background: var(--hero-overlay-gradient-full);
+  z-index: 2;
   pointer-events: none;
 }
 .hero.full > :where(div):nth-child(2) {
@@ -823,7 +823,7 @@ color: inherit;
   border-radius: 0;
   margin: 0;
   padding: var(--spacing-80, 8rem) var(--spacing-55, 5.5rem);
-  max-width: 55%;
+  max-width: var(--hero-content-max-width-full);
 }
 .hero.full .hero-text-container {
   display: block;
@@ -834,14 +834,14 @@ color: inherit;
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
 .hero.full p {
-  color: rgb(255 255 255 / 90%);
+  color: var(--color-text-on-dark-90);
 }
 .hero.full .hero-eyebrow {
-  color: rgb(255 255 255 / 80%);
+  color: var(--color-text-on-dark-80);
 }
 @media (width < 744px) {
   .hero.full {
-    min-height: 400px;
+    min-height: var(--hero-full-min-height-mobile);
   }
 
   .hero.full > :where(div):nth-child(2) {
@@ -851,11 +851,11 @@ color: inherit;
 }
 @media (width >= 1024px) {
   .hero.full {
-    min-height: 800px;
+    min-height: var(--hero-full-min-height-desktop);
   }
 
   .hero.full > :where(div):nth-child(2) {
-    max-width: 50%;
+    max-width: var(--hero-content-max-width-full-desktop);
   }
 }
 /* =====================================================
@@ -864,7 +864,7 @@ color: inherit;
    ===================================================== */
 .hero.compact {
   position: relative;
-  min-height: 280px;
+  min-height: var(--hero-compact-min-height);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -899,7 +899,7 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgb(0 0 0 / 55%) 0%, transparent 65%);
+  background: var(--hero-overlay-gradient-compact);
   z-index: 1;
   pointer-events: none;
 }
@@ -910,7 +910,7 @@ color: inherit;
   border-radius: 0;
   margin: 0;
   padding: var(--spacing-40, 4rem) var(--spacing-55, 5.5rem);
-  max-width: 70%;
+  max-width: var(--hero-content-max-width-compact);
 }
 .hero.compact .hero-text-container {
   display: block;
@@ -921,14 +921,14 @@ color: inherit;
   line-height: var(--line-height-h2, 2.5rem);
 }
 .hero.compact p {
-  color: rgb(255 255 255 / 90%);
+  color: var(--color-text-on-dark-90);
 }
 .hero.compact .hero-eyebrow {
-  color: rgb(255 255 255 / 80%);
+  color: var(--color-text-on-dark-80);
 }
 @media (width < 744px) {
   .hero.compact {
-    min-height: 200px;
+    min-height: var(--hero-compact-min-height-mobile);
   }
 
   .hero.compact > :where(div):nth-child(2) {
@@ -938,7 +938,7 @@ color: inherit;
 }
 @media (width >= 744px) {
   .hero.compact {
-    min-height: 340px;
+    min-height: var(--hero-compact-min-height-tablet);
   }
 
   .hero.compact h1 {
@@ -953,7 +953,7 @@ color: inherit;
 .hero.split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 500px;
+  min-height: var(--hero-split-min-height);
   align-items: center;
   overflow: hidden;
 }
@@ -973,7 +973,7 @@ color: inherit;
 .hero.split img {
   max-width: 100%;
   height: auto;
-  max-height: 450px;
+  max-height: var(--hero-split-img-max-height);
   object-fit: contain;
   border-radius: 0;
   position: static;
@@ -1010,7 +1010,7 @@ color: inherit;
    ===================================================== */
 .hero.centered {
   position: relative;
-  min-height: 600px;
+  min-height: var(--hero-centered-min-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1046,7 +1046,7 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 45%);
+  background: var(--hero-overlay-gradient-centered);
   z-index: 1;
   pointer-events: none;
 }
@@ -1057,7 +1057,7 @@ color: inherit;
   border-radius: 0;
   margin: 0 auto;
   padding: var(--spacing-56, 5.6rem) var(--spacing-55, 5.5rem);
-  max-width: 800px;
+  max-width: var(--hero-content-max-width-centered);
   text-align: center;
 }
 .hero.centered .hero-text-container {
@@ -1068,13 +1068,13 @@ color: inherit;
   text-align: center;
 }
 .hero.centered p {
-  color: rgb(255 255 255 / 90%);
+  color: var(--color-text-on-dark-90);
   text-align: center;
 }
-.hero.centered .hero-eyebrow { color: rgb(255 255 255 / 80%); }
+.hero.centered .hero-eyebrow { color: var(--color-text-on-dark-80); }
 @media (width < 744px) {
   .hero.centered {
-    min-height: 400px;
+    min-height: var(--hero-centered-min-height-mobile);
   }
 
   .hero.centered > :where(div):nth-child(2) {
@@ -1091,7 +1091,7 @@ color: inherit;
    ===================================================== */
 .hero.video {
   position: relative;
-  min-height: 700px;
+  min-height: var(--hero-video-min-height);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -1144,7 +1144,7 @@ color: inherit;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgb(0 0 0 / 60%) 0%, transparent 60%);
+  background: var(--hero-overlay-gradient-full);
   z-index: 2;
   pointer-events: none;
 }
@@ -1155,22 +1155,22 @@ color: inherit;
   border-radius: 0;
   margin: 0;
   padding: var(--spacing-80, 8rem) var(--spacing-55, 5.5rem);
-  max-width: 55%;
+  max-width: var(--hero-content-max-width-full);
 }
 .hero.video .hero-text-container {
   display: block;
 }
 .hero.video h1 { color: var(--color-text-on-dark, #fff); }
 .hero.video p {
-  color: rgb(255 255 255 / 90%);
+  color: var(--color-text-on-dark-90);
 }
 .hero.video .hero-eyebrow {
-  color: rgb(255 255 255 / 80%);
+  color: var(--color-text-on-dark-80);
 }
 /* Mobile: hide video, show fallback poster image only */
 @media (width < 744px) {
   .hero.video {
-    min-height: 400px;
+    min-height: var(--hero-video-min-height-mobile);
   }
 
   .hero.video .hero-video-bg {
@@ -1178,17 +1178,17 @@ color: inherit;
   }
 
   .hero.video > :where(div):nth-child(2) {
-    max-width: 90%;
+    max-width: var(--hero-content-max-width-mobile);
     padding: var(--spacing-32, 3.2rem) var(--spacing-20, 2rem);
   }
 }
 @media (width >= 1024px) {
   .hero.video {
-    min-height: 800px;
+    min-height: var(--hero-video-min-height-desktop);
   }
 
   .hero.video > :where(div):nth-child(2) {
-    max-width: 50%;
+    max-width: var(--hero-content-max-width-full-desktop);
   }
 }
 /* =====================================================
@@ -1198,10 +1198,10 @@ color: inherit;
    ===================================================== */
 .hero.solid {
   position: relative;
-  min-height: 450px;
+  min-height: var(--hero-solid-min-height);
   display: flex;
   align-items: center;
-  background-color: var(--hero-solid-bg, var(--color-brand-primary, #25282a));
+  background-color: var(--hero-solid-bg, var(--color-brand-primary, var(--hero-solid-bg-fallback)));
 }
 .hero.solid > :where(div):first-child {
   position: relative;
@@ -1218,7 +1218,7 @@ color: inherit;
   display: block;
 }
 .hero.solid img {
-  max-height: 400px;
+  max-height: var(--hero-solid-img-max-height);
   width: auto;
   max-width: 100%;
   object-fit: contain;
@@ -1231,7 +1231,7 @@ color: inherit;
   border-radius: 0;
   margin: 0;
   padding: var(--spacing-56, 5.6rem) var(--spacing-55, 5.5rem);
-  max-width: 60%;
+  max-width: var(--hero-content-max-width-solid);
 }
 .hero.solid .hero-text-container {
   display: block;
@@ -1241,14 +1241,14 @@ color: inherit;
   color: var(--color-text-on-dark, #fff);
 }
 .hero.solid p {
-  color: rgb(255 255 255 / 90%);
+  color: var(--color-text-on-dark-90);
 }
 .hero.solid .hero-eyebrow {
-  color: rgb(255 255 255 / 80%);
+  color: var(--color-text-on-dark-80);
 }
 @media (width < 744px) {
   .hero.solid {
-    min-height: 300px;
+    min-height: var(--hero-solid-min-height-mobile);
     flex-direction: column;
   }
 
@@ -1263,7 +1263,7 @@ color: inherit;
 }
 @media (width >= 1024px) {
   .hero.solid {
-    min-height: 500px;
+    min-height: var(--hero-solid-min-height-desktop);
   }
 }
 /*
@@ -1782,6 +1782,46 @@ color: inherit;
 
   /* ---- Link ---- */
   --link-color: #90124a;
+
+  /* ---- Hero: Venclexta-specific ---- */
+  --hero-full-min-height: 56rem;
+  --hero-full-min-height-tablet: 64rem;
+  --hero-full-min-height-mobile: 58rem;
+  --hero-full-text-max-width: 72rem;
+  --hero-full-text-max-width-tablet: 82rem;
+  --hero-full-text-max-width-desktop: 68rem;
+  --hero-full-text-margin-top: 15rem;
+  --hero-full-text-margin-top-tablet: 19.6rem;
+  --hero-full-content-max-width: 61rem;
+  --hero-full-content-max-width-desktop: 62rem;
+  --hero-full-text-padding: 0 2rem 5.6rem;
+  --hero-full-text-padding-tablet: 0 7rem 6.4rem;
+  --hero-overlay-gradient-full: linear-gradient(90deg,
+      rgb(0 0 0 / 96%) 0%,
+      rgb(0 0 0 / 86%) 22%,
+      rgb(0 0 0 / 58%) 46%,
+      rgb(0 0 0 / 12%) 72%,
+      rgb(0 0 0 / 0%) 100%);
+  --hero-overlay-gradient-full-mobile: linear-gradient(180deg,
+      rgb(0 0 0 / 55%) 0%,
+      rgb(0 0 0 / 45%) 24%,
+      rgb(0 0 0 / 88%) 100%);
+  --hero-no-padding-min-height: 56rem;
+  --hero-indication-bg: rgb(0 0 0 / 45%);
+  --hero-eyebrow-gap: 0.5em;
+  --hero-divider-width: 3px;
+  --hero-caret-width: 0.4rem;
+  --hero-caret-height: 2.6rem;
+  --hero-caption-bottom: 2rem;
+  --hero-h1-font-size: 2rem;
+  --hero-h1-line-height: 1.18;
+  --hero-h1-font-size-large: clamp(2rem, 2.8vw, 2.7rem);
+  --hero-h1-line-height-large: 1.08;
+  --hero-p-font-size: 1.8rem;
+  --hero-p-line-height: 1.28;
+  --hero-p-font-size-mobile: 1.7rem;
+  --hero-p-line-height-mobile: 1.24;
+  --hero-link-decoration-thickness: 0.12rem;
 }
 /* ============================================================
    VENCLEXTA DTC — Hero Block Overrides (XWalk/UE preview)
@@ -1861,13 +1901,13 @@ color: inherit;
 .hero .hero-eyebrow {
   display: flex;
   align-items: center;
-  gap: 0.5em;
+  gap: var(--hero-eyebrow-gap);
   color: var(--color-text-on-dark);
 }
 .hero .hero-eyebrow::before {
   content: '';
   display: inline-block;
-  width: 3px;
+  width: var(--hero-divider-width);
   height: 1em;
   background-color: var(--color-brand-accent);
   flex-shrink: 0;
@@ -1923,17 +1963,11 @@ color: inherit;
    - bottom-right actor portrayal credit
    ============================================================ */
 .hero.full {
-  min-height: 56rem;
+  min-height: var(--hero-full-min-height);
   align-items: stretch;
 }
 .hero.full::after {
-  background:
-    linear-gradient(90deg,
-      rgb(0 0 0 / 96%) 0%,
-      rgb(0 0 0 / 86%) 22%,
-      rgb(0 0 0 / 58%) 46%,
-      rgb(0 0 0 / 12%) 72%,
-      rgb(0 0 0 / 0%) 100%);
+  background: var(--hero-overlay-gradient-full);
 }
 .hero.full> :where(div):has(> div:empty) {
   display: none;
@@ -1943,13 +1977,13 @@ color: inherit;
   z-index: 2;
   display: block;
   align-self: center;
-  width: min(100%, 72rem);
-  margin: 15rem 0 0;
-  padding: 0 2rem 5.6rem;
+  width: min(100%, var(--hero-full-text-max-width));
+  margin: var(--hero-full-text-margin-top) 0 0;
+  padding: var(--hero-full-text-padding);
 }
 .hero.full .cmp-container-x-large,
 .hero.no-padding .cmp-container-x-large {
-  max-width: 61rem;
+  max-width: var(--hero-full-content-max-width);
 }
 .hero.full h1,
 .hero.no-padding h1 {
@@ -1969,19 +2003,19 @@ color: inherit;
   font-style: normal;
 }
 .hero.full p {
-  max-width: 62rem;
+  max-width: var(--hero-full-content-max-width-desktop);
   color: var(--color-text-on-dark);
-  font-size: 2rem;
-  line-height: 1.18;
+  font-size: var(--hero-h1-font-size);
+  line-height: var(--hero-h1-line-height);
 }
 .hero.full p strong {
-  font-size: clamp(2rem, 2.8vw, 2.7rem);
-  line-height: 1.08;
+  font-size: var(--hero-h1-font-size-large);
+  line-height: var(--hero-h1-line-height-large);
 }
 .hero.full p a {
   color: var(--color-brand-accent);
   text-decoration: underline;
-  text-decoration-thickness: 0.12rem;
+  text-decoration-thickness: var(--hero-link-decoration-thickness);
   text-underline-offset: 0.14em;
   font-size: inherit;
 }
@@ -1989,8 +2023,8 @@ color: inherit;
 .hero.full p:nth-last-child(2),
 .hero.full p:nth-last-child(3),
 .hero.full p:nth-last-child(4) {
-  font-size: 1.8rem;
-  line-height: 1.28;
+  font-size: var(--hero-p-font-size);
+  line-height: var(--hero-p-line-height);
 }
 .hero.full .hero-indication {
   position: relative;
@@ -2005,8 +2039,8 @@ color: inherit;
 }
 .hero.full .hero-indication::before {
   content: '';
-  width: 0.4rem;
-  height: 2.6rem;
+  width: var(--hero-caret-width);
+  height: var(--hero-caret-height);
   background-color: var(--color-brand-accent);
   flex-shrink: 0;
   position: absolute;
@@ -2033,7 +2067,7 @@ color: inherit;
   line-height: 1.28;
   font-style: normal;
   text-align: center;
-  background: rgb(0 0 0 / 45%);
+  background: var(--hero-indication-bg);
   border: 1px solid var(--color-brand-accent);
 }
 .hero>div:first-child {
@@ -2041,13 +2075,13 @@ color: inherit;
 }
 @media (width >=744px) {
   .hero.full {
-    min-height: 64rem;
+    min-height: var(--hero-full-min-height-tablet);
   }
 
   .hero.full .hero-text-container {
-    width: min(100%, 82rem);
-    margin-top: 19.6rem;
-    padding: 0 7rem 6.4rem;
+    width: min(100%, var(--hero-full-text-max-width-tablet));
+    margin-top: var(--hero-full-text-margin-top-tablet);
+    padding: var(--hero-full-text-padding-tablet);
   }
 }
 @media (width >=1024px) {
@@ -2063,7 +2097,7 @@ color: inherit;
 
   .hero.full .cmp-container-x-large,
   .hero.no-padding .cmp-container-x-large {
-    max-width: 68rem;
+    max-width: var(--hero-full-text-max-width-desktop);
   }
 
   .hero.full p strong {
@@ -2077,16 +2111,12 @@ color: inherit;
 }
 @media (width < 744px) {
   .hero.full {
-    min-height: 58rem;
+    min-height: var(--hero-full-min-height-mobile);
     align-items: flex-end;
   }
 
   .hero.full::after {
-    background:
-      linear-gradient(180deg,
-        rgb(0 0 0 / 55%) 0%,
-        rgb(0 0 0 / 45%) 24%,
-        rgb(0 0 0 / 88%) 100%);
+    background: var(--hero-overlay-gradient-full-mobile);
   }
 
   .hero.full .hero-indication p {
@@ -2118,8 +2148,8 @@ color: inherit;
 
   .hero.full p,
   .hero.full p strong {
-    font-size: 1.7rem;
-    line-height: 1.24;
+    font-size: var(--hero-p-font-size-mobile);
+    line-height: var(--hero-p-line-height-mobile);
   }
 }
 /* ============================================================
@@ -2161,7 +2191,7 @@ color: inherit;
 }
 /* Full hero: bottom footnote/legal row — centered with right-aligned text */
 .hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
-  bottom: 2rem;
+  bottom: var(--hero-caption-bottom);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -2182,7 +2212,7 @@ color: inherit;
 @media (width < 744px) {
   .hero.full .hero-image-caption {
     font-size: var(--font-size-h3);
-    line-height: 1.34;
+    line-height: var(--hero-h1-line-height, 1.34);
     margin-inline: 0;
   }
 
