@@ -8366,57 +8366,303 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Before Image",
-        "name": "before"
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading",
+        "description": "Main heading displayed in the left content panel (gallery variant)."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "description",
+        "value": "",
+        "label": "Description",
+        "description": "Body text shown in the left content panel."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "sliderPrompt",
+        "value": "CLICK AND DRAG TO SEE RESULTS",
+        "label": "Slider Prompt",
+        "description": "Overlay prompt shown on the slider (used when 'prompt' variant is active)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "beforeLabelPrefix",
+        "value": "BEFORE",
+        "label": "Before Label",
+        "description": "Label displayed on the before (left) side of the slider."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "afterLabelPrefix",
+        "value": "AFTER",
+        "label": "After Label",
+        "description": "Label displayed on the after (right) side of the slider."
+      },
+      {
+        "component": "tab",
+        "label": "Fallback Images",
+        "name": "fallbackImages"
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "beforeImage",
-        "label": "Before Image",
-        "multi": false
+        "label": "Before Image (Fallback)",
+        "multi": false,
+        "description": "Used when no Tab 1 images are authored."
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "beforeImageAlt",
+        "name": "beforeAlt",
         "value": "",
         "label": "Before Image Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "beforeLabel",
-        "value": "Before",
-        "label": "Before Label",
-        "description": "Caption shown over the before image."
-      },
-      {
-        "component": "tab",
-        "label": "After Image",
-        "name": "after"
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "afterImage",
-        "label": "After Image",
+        "label": "After Image (Fallback)",
+        "multi": false,
+        "description": "Used when no Tab 1 images are authored."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "afterAlt",
+        "value": "",
+        "label": "After Image Alt Text"
+      },
+      {
+        "component": "tab",
+        "label": "Tab 1",
+        "name": "tab1"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab1Label",
+        "value": "",
+        "label": "Tab 1 Label",
+        "description": "Label for the first tab / eyebrow text in gallery variant."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab1Img1Before",
+        "label": "Tab 1 – Image 1 Before",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab1Img1After",
+        "label": "Tab 1 – Image 1 After",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab1Img1Thumb",
+        "label": "Tab 1 – Image 1 Thumbnail",
+        "multi": false,
+        "description": "Optional thumbnail shown in the thumbnail strip."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab1Img1Label",
+        "value": "",
+        "label": "Tab 1 – Image 1 Label",
+        "description": "Patient name or caption shown below the slider and on the thumbnail."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab1Img1SubLabel",
+        "value": "",
+        "label": "Tab 1 – Image 1 Sub-label",
+        "description": "Secondary caption shown on the thumbnail."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab1Img2Before",
+        "label": "Tab 1 – Image 2 Before",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab1Img2After",
+        "label": "Tab 1 – Image 2 After",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab1Img2Thumb",
+        "label": "Tab 1 – Image 2 Thumbnail",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "afterImageAlt",
+        "name": "tab1Img2Label",
         "value": "",
-        "label": "After Image Alt Text"
+        "label": "Tab 1 – Image 2 Label"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "afterLabel",
-        "value": "After",
-        "label": "After Label",
-        "description": "Caption shown over the after image."
+        "name": "tab1Img2SubLabel",
+        "value": "",
+        "label": "Tab 1 – Image 2 Sub-label"
+      },
+      {
+        "component": "tab",
+        "label": "Tab 2",
+        "name": "tab2"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab2Label",
+        "value": "",
+        "label": "Tab 2 Label",
+        "description": "Label for the second tab. Also generates the CTA link from Tab 1 panel."
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab2Img1Before",
+        "label": "Tab 2 – Image 1 Before",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab2Img1After",
+        "label": "Tab 2 – Image 1 After",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab2Img1Thumb",
+        "label": "Tab 2 – Image 1 Thumbnail",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab2Img1Label",
+        "value": "",
+        "label": "Tab 2 – Image 1 Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab2Img1SubLabel",
+        "value": "",
+        "label": "Tab 2 – Image 1 Sub-label"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab2Img2Before",
+        "label": "Tab 2 – Image 2 Before",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab2Img2After",
+        "label": "Tab 2 – Image 2 After",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "tab2Img2Thumb",
+        "label": "Tab 2 – Image 2 Thumbnail",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab2Img2Label",
+        "value": "",
+        "label": "Tab 2 – Image 2 Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tab2Img2SubLabel",
+        "value": "",
+        "label": "Tab 2 – Image 2 Sub-label"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "initialPosition",
+        "value": "50",
+        "label": "Initial Slider Position (%)",
+        "description": "Starting position of the slider handle as a percentage (0–100). Default: 50."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID",
+        "description": "Deep-link anchor for this block. Also used as the scroll target for CTA links from other image-compare blocks."
+      },
+      {
+        "component": "tab",
+        "label": "Styles",
+        "name": "styles"
+      },
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variant",
+        "description": "Select one or more visual variants.",
+        "options": [
+          {
+            "name": "Gallery (two-column: content left, slider right)",
+            "value": "gallery"
+          },
+          {
+            "name": "Reversed (image left, content right)",
+            "value": "reversed"
+          },
+          {
+            "name": "Toggle (pill-button tabs)",
+            "value": "toggle"
+          },
+          {
+            "name": "Prompt (show click-and-drag overlay)",
+            "value": "prompt"
+          }
+        ]
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
