@@ -674,9 +674,9 @@ color: inherit;
   opacity: 1;
 }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.full :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
+.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.solid :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
+.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
 /* =====================================================
    Hero Dual-CTA Variant — two side-by-side CTAs
    Authoring: use block name "Hero (dual-cta)"
@@ -699,7 +699,7 @@ color: inherit;
    ===================================================== */
 .hero .hero-eyebrow {
   display: block;
-  font-size: var(--font-size-body-small, 0.6875rem);
+  font-size: var(--font-size-body-small, 11px);
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-heading);
   text-transform: uppercase;
@@ -717,7 +717,7 @@ color: inherit;
   background-color: var(--hero-indication-bg);
   color: var(--color-white);
   padding: var(--spacing-16, 1rem) var(--spacing-24, 1.5rem);
-  font-size: var(--font-size-body-small, 0.8125rem);
+  font-size: var(--font-size-body-small, 13px);
   line-height: 1.5;
   text-align: center;
   box-sizing: border-box;
@@ -734,7 +734,7 @@ color: inherit;
   position: absolute;
   bottom: var(--spacing-08, 0.8rem);
   right: var(--spacing-08, 0.8rem);
-  font-size: var(--font-size-body-small, 0.6875rem);
+  font-size: var(--font-size-body-small, 11px);
   color: var(--color-text-on-dark-80);
   font-style: italic;
   pointer-events: none;
@@ -760,7 +760,7 @@ color: inherit;
 .hero.text-light h3,
 .hero.text-light p,
 .hero.text-light .hero-eyebrow {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
 }
 .hero.text-dark h1,
 .hero.text-dark h2,
@@ -829,7 +829,7 @@ color: inherit;
   display: block;
 }
 .hero.full h1 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
   font-size: var(--font-size-h1-hero, var(--font-size-h1, 2.6rem));
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
@@ -916,7 +916,7 @@ color: inherit;
   display: block;
 }
 .hero.compact h1 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
   font-size: var(--font-size-h2, 2rem);
   line-height: var(--line-height-h2, 2.5rem);
 }
@@ -1064,7 +1064,7 @@ color: inherit;
   display: block;
 }
 .hero.centered h1 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
   text-align: center;
 }
 .hero.centered p {
@@ -1160,7 +1160,7 @@ color: inherit;
 .hero.video .hero-text-container {
   display: block;
 }
-.hero.video h1 { color: var(--color-text-on-dark, var(--color-white)); }
+.hero.video h1 { color: var(--color-text-on-dark, #fff); }
 .hero.video p {
   color: var(--color-text-on-dark-90);
 }
@@ -1171,6 +1171,10 @@ color: inherit;
 @media (width < 744px) {
   .hero.video {
     min-height: var(--hero-video-min-height-mobile);
+  }
+
+  .hero.video .hero-video-bg {
+    display: none;
   }
 
   .hero.video > :where(div):nth-child(2) {
@@ -1234,7 +1238,7 @@ color: inherit;
 }
 .hero.solid h1,
 .hero.solid h2 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
 }
 .hero.solid p {
   color: var(--color-text-on-dark-90);
@@ -1326,8 +1330,6 @@ color: inherit;
   --color-charcoal: #25282a;
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
-  --color-border: #e0e0e0;
-  --color-focus: var(--link-color);
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -1509,11 +1511,6 @@ color: inherit;
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
 
-  /* Border Width */
-  --border-width-thin: 1px;
-  --border-width-default: 2px;
-  --border-width-thick: 3px;
-
   /* z-index */
   --z-index-negative: -1;
   --z-index-0 : 0;
@@ -1521,7 +1518,6 @@ color: inherit;
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
-  --z-index-anchor-nav: 100;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -1534,7 +1530,6 @@ color: inherit;
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
-  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -1586,7 +1581,6 @@ color: inherit;
   --transition-duration-medium: 0.3s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
-  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -1696,11 +1690,9 @@ color: inherit;
   }
 }
 /* ============================================================
-   RINVOQ DTC — Brand Token Overrides
-   Source: rinvoq.com/atopic-dermatitis (Platform C)
-   Font: Neue Haas Grotesk (headings) / Helvetica Neue LT W05 (body)
-   Note: DTC uses different fonts from HCP (Graphik); both share the
-         same color palette.
+   RINVOQ HCP — Brand Token Overrides
+   Source: rinvoqhcp.com/dermatology (Platform C)
+   Font: Graphik family
    ============================================================ */
 :root {
   /* ---- Color: Brand Primary ---- */
@@ -1710,26 +1702,33 @@ color: inherit;
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #ffd100;
+  --color-brand-accent-light: #ffe673;
   --color-brand-accent-butter: #fff1b3;
   --color-brand-accent-lemon: #ffe673;
 
-  /* ---- Color: Named Palette ---- */
+  /* ---- Color: Named Palette (from CSS vars) ---- */
   --color-plum: #90124a;
   --color-mulberry: #b15980;
   --color-heather: #d3a0b7;
   --color-gold: #ffd100;
+  --color-gold-dark: #ba9900;
+  --color-light-gold: rgba(255, 209, 0, 0.55);
+  --color-lemon: #ffe673;
+  --color-butter: #fff1b3;
   --color-charcoal: #25282a;
   --color-iron: #46484a;
   --color-steel: #87898a;
-  --color-pewter: #929495;
   --color-silver: #c9c9ca;
+  --color-whisper: #ececec;
+  --color-ash: #e3e3e3;
   --color-glacier: #f5f5f5;
-  --color-navy: #194560;
+  --color-footer-bg: #17181b;
 
   /* ---- Color: Text ---- */
   --text-color: #46484a;
   --color-text-heading: #25282a;
   --color-text-on-dark: #fff;
+  --color-text-muted: #696969;
   --color-text-link: #90124a;
 
   /* ---- Color: Background ---- */
@@ -1738,28 +1737,53 @@ color: inherit;
   --color-background-footer: #17181b;
   --color-background-safety-bar: #f5f5f5;
 
+  /* ---- Color: Accordion ---- */
+  --color-accordion-text: #25282a;
+  --color-accordion-accent: #c8373e;
+  --color-accordion-separator: #46484a;
+  --color-accordion-tab-inactive: #767688;
+
   /* ---- Color: Border ---- */
   --color-border-default: #c9c9ca;
   --color-border-safety: #ffd100;
 
+  /* ---- Color: Status ---- */
+  --color-success: #068c5a;
+  --color-error: #d62a24;
+
+  /* ---- Color: Shadow ---- */
+  --shadow-table: 0 4px 5px 0 rgba(0, 0, 0, 0.1);
+  --shadow-default: 0 4px 19px 0 rgba(0, 0, 0, 0.07);
+
   /* ---- Font: Family ---- */
-  --body-font-family: 'Helvetica Neue LT W05_55 Roman', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family: 'Neue Haas Grotesk Disp W0595Bl', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family-bold: 'Neue Haas Grotesk Disp W0595Bl', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-medium: 'Neue Haas Grotesk Disp W0565Md', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-semibold: 'Neue Haas Grotesk Disp W0575Bd', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --heading-font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --heading-font-family-bold: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --font-family-semibold: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
   --icon-font-family: 'abbv-iconFont';
+  /* Handwriting accent used in no-padding hero variant — no local font file, loads from CDN/host */
+  --font-family-handwriting: 'Upa Handwriting', serif;
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
+  --font-size-body-small: 12px;
+  --font-size-body-xs: 11.2px;
+  --font-size-legal: 12.992px;
+  --font-size-nav: 16px;
+  --font-size-footer: 16px;
   --font-size-h1: 26px;
   --font-size-h2: 20px;
   --font-size-h3: 14px;
+  --font-size-h4: 14px;
   --font-size-h-xl: 35.2px;
+  --font-size-h-featured: 22px;
   --font-size-button: 16px;
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
   --font-weight-heading: 600;
   --font-weight-button: 700;
 
@@ -1768,44 +1792,46 @@ color: inherit;
   --line-height-h1: 27.625px;
   --line-height-h2: 25px;
   --line-height-h3: 16.8px;
+  --line-height-h-xl: 52.8px;
+  --line-height-h-featured: 27.5px;
+  --line-height-link: 19.2px;
 
   /* ---- Border: Radius ---- */
-  --border-radius-button-primary: 5px;
-  --border-radius-button-secondary: 5px;
-  --border-radius-button-tertiary: 3px;
+  --border-radius-button-primary: 100px;
+  --border-radius-card: 0px;
 
   /* ---- Button: Primary ---- */
-  --button-primary-bg: #fff;
-  --button-primary-color: #90124a;
-  --button-primary-border: #90124a;
-  --button-primary-padding: 7px 42px 7px 10px;
-  --button-primary-font-size: 15px;
-  --button-primary-font-weight: 400;
-  --button-primary-hover-bg: #90124a;
+  --button-primary-color: #fff;
+  --button-primary-bg: #90124a;
+  --button-primary-border: transparent;
+  --button-primary-padding: 16px 54px 16px 32px;
+  --button-primary-font-size: 0.875rem;
+  --button-primary-font-weight: 700;
+  --button-primary-hover-bg: #25282a;
   --button-primary-hover-color: #fff;
 
   /* ---- Button: Secondary ---- */
-  --button-secondary-bg: #90124a;
-  --button-secondary-color: #fff;
+  --button-secondary-bg: transparent;
+  --button-secondary-color: #90124a;
   --button-secondary-border: #90124a;
-  --button-secondary-padding: 7px 42px 7px 10px;
-  --border-radius-button-secondary: 5px;
-  --button-secondary-hover-bg: #fff;
-  --button-secondary-hover-color: #90124a;
+  --button-secondary-padding: 16px 54px 16px 32px;
+  --border-radius-button-secondary: 100px;
+  --button-secondary-hover-bg: #90124a;
+  --button-secondary-hover-color: #fff;
 
   /* ---- Button: Tertiary ---- */
   --button-tertiary-bg: transparent;
-  --button-tertiary-color: #25282a;
-  --button-tertiary-border: transparent;
-  --button-tertiary-padding: 17px 0 17px 40px;
-  --button-tertiary-font-size: 16px;
-  --border-radius-button-tertiary: 3px;
-  --button-tertiary-hover-bg: transparent;
-  --button-tertiary-hover-color: #90124a;
+  --button-tertiary-color: #46484a;
+  --button-tertiary-border: #c9c9ca;
+  --button-tertiary-padding: 12px 24px;
+  --button-tertiary-font-size: 0.875rem;
+  --border-radius-button-tertiary: 100px;
+  --button-tertiary-hover-bg: #46484a;
+  --button-tertiary-hover-color: #fff;
 
   /* ---- Button: Plain ---- */
   --button-plain-color: #90124a;
-  --button-plain-weight: 400;
+  --button-plain-weight: 600;
   --button-plain-hover-color: #25282a;
 
   /* ---- Toggle ---- */
@@ -1816,46 +1842,122 @@ color: inherit;
   /* ---- Link ---- */
   --link-color: #90124a;
 
-  /* ---- Hero: Rinvoq-specific ---- */
-  --hero-multilayer-transition: opacity 0.8s ease-in-out;
-  --hero-video-btn-border-radius: 5px;
-  --hero-video-btn-font-size: 15px;
-  --hero-video-btn-width: 250px;
-  --hero-video-btn-padding: 7px 39px 7px 10px;
-  --hero-button-icon-content: '›';
-  --hero-button-icon-top: 50%;
-  --hero-button-icon-transform: translateY(-50%);
-  --hero-button-icon-font-size: 1.4em;
-  --hero-reset-value: 0;
-  --hero-auto-value: auto;
-  --hero-full-width: 100%;
-  --hero-layer-index: 1;
-  --hero-display-grid: grid;
-  --hero-display-hidden: none;
-  --hero-border-radius-reset: 0;
-  --hero-brushstroke-content: " ";
-  --hero-brushstroke-image: url("/icons/brushstroke.png");
-  --hero-brushstroke-repeat: no-repeat;
-  --hero-brushstroke-position: center center;
-  --hero-brushstroke-size: cover;
-  --hero-video-brushstroke-bottom: calc(-1 * var(--spacing-16));
-  --hero-video-grid-columns: 1fr 1fr;
-  --hero-video-grid-align-items: end;
-  --hero-video-grid-place-content: end start;
-  --hero-video-btn-border-style: solid;
-  --hero-video-btn-border-width: 2px;
-  --hero-video-btn-text-transform: none;
-  --hero-video-btn-text-align: left;
-  --hero-video-button-grid-column: -1/-2;
-  --hero-min-height-mobile: 260px;
-  --hero-min-height-tablet: 290px;
-  --hero-min-height-desktop: 430px;
-  --hero-grid-rows-mobile: 235px;
-  --hero-grid-rows-tablet: 256px;
-  --hero-grid-rows-desktop: 360px;
+  /* ---- Brand Explorer Block ---- */
+  --be-color-text: #46484a;
+  --be-color-text-light: #46484a;
+  --be-color-bar-bg: #25282a;
+  --be-color-rinvoq: #ffd41d;
+  --be-color-rinvoq-hover: #b8860b;
+  --be-color-skyrizi: #00a8e1;
+  --be-color-skyrizi-hover: #0088b5;
+  --be-color-humira: #931947;
+  --be-font-body: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --be-font-heading: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --be-font-weight-bold: 600;
+  /* ---- Formulary Lookup ---- */
+  --color-formulary-submit-bg: #820043;
+  --color-formulary-submit-hover: rgb(100 0 52);
+  --color-formulary-accent: #daaa00;
+  --color-formulary-highlight: rgb(255 243 200);
+  --color-formulary-filter-clear: #820043;
+  --color-formulary-link: #820043;
+
+  /* Formulary: Layout */
+  --formulary-form-width: 520px;
+  --formulary-input-width: 520px;
+
+  /* Formulary: Heading */
+  --formulary-heading-size: 24px;
+  --formulary-heading-weight: 700;
+  --formulary-heading-spacing: 32px;
+  --formulary-heading-line-height: 1.3;
+  --formulary-heading-accent-height: 8px;
+  --formulary-heading-accent-offset: -14px;
+
+  /* Formulary: Input/Select */
+  --formulary-input-height: 56px;
+  --formulary-input-radius: 10px;
+  --formulary-input-size: 18px;
+  --formulary-input-padding: 18px 16px;
+  --formulary-input-spacing: 24px;
+
+  /* Formulary: Label (floating) */
+  --formulary-label-size: 12px;
+  --formulary-label-weight: 400;
+  --formulary-label-offset-left: 16px;
+
+  /* Formulary: Submit */
+  --formulary-submit-size: 18px;
+  --formulary-submit-weight: 700;
+  --formulary-submit-radius: 100px;
+  --formulary-submit-height: 56px;
+  --formulary-submit-padding: 14px 60px 14px 32px;
+  --formulary-submit-spacing: 24px;
+  --formulary-submit-icon-offset: 24px;
+
+  /* Formulary: Card */
+  --formulary-card-radius: 10px;
+  --formulary-card-shadow: rgb(0 0 0 / 15%) 0 2px 12px 0;
+  --formulary-card-padding: 48px 40px 40px;
+
+  /* Formulary: Header */
+  --formulary-header-spacing: 48px;
+  --formulary-header-gap: 16px;
+  --formulary-icon-size: 56px;
+
+  /* Formulary: Filter */
+  --formulary-filter-radius: 10px;
+  --formulary-filter-spacing: 24px;
+  --formulary-filter-chevron-size: 24px;
+
+  /* Formulary: Indications */
+  --formulary-indication-spacing: 24px;
+  --formulary-radio-size: 18px;
+
+  /* Formulary: Results */
+  --formulary-results-radius: 8px;
+  --formulary-results-shadow: rgb(0 0 0 / 10%) 0 2px 8px 0;
+
+  /* Formulary: Disclaimer/Notice */
+  --formulary-disclaimer-size: 14px;
+  --formulary-recaptcha-size: 12px;
+
+  /* Formulary: ZIP Input */
+  --formulary-zip-weight: 700;
+  --formulary-zip-margin-top: 8px;
+
+  /* Formulary: Floating Label Detail */
+  --formulary-label-left: 12px;
+  --formulary-label-line-height: 16px;
+  --formulary-chevron-bg-size: 14px;
+
+  /* ---- Footer ---- */
+  --footer-links-max-width: 33.5rem;
+
+  /* ---- Hero: no-padding variant layout ---- */
+  --hero-img-height-mobile: 375px;
+  --hero-no-padding-min-height: 340px;
+  --hero-text-max-width: 1180px;
+  --hero-text-padding: 64px 20px;
+  --hero-text-margin-top: 20px;
+  --hero-img-width-desktop: 1440px;
+
+  /* ---- Hero: no-padding h1 typography ---- */
+  --hero-h1-line-height: 0.9;
+  --hero-h1-font-size-desktop: 40px;
+
+  /* ---- Hero: no-padding em (handwriting accent) typography ---- */
+  --hero-em-font-size-mobile: 58px;
+  --hero-em-font-size-desktop: 100px;
+  --hero-em-line-height: 0.8;
+  --hero-em-letter-spacing: -4px;
+
+  /* ---- Hero: stroke underline decoration ---- */
+  --hero-stroke-height: 22px;
+  --hero-stroke-bottom-offset: -15px;
 }
 /* ============================================================
-   RINVOQ DTC — Hero Block Overrides (XWalk/UE preview)
+   RINVOQ HCP — Hero Block Overrides (XWalk/UE preview)
    ============================================================ */
 /* Heading + body: Graphik */
 .hero h1 {
@@ -1870,7 +1972,7 @@ color: inherit;
   font-family: var(--body-font-family);
 }
 /* Profile band: charcoal */
-.hero.profile> :where(div):first-child {
+.hero.profile > :where(div):first-child {
   background-color: var(--color-charcoal);
 }
 /* Profile text panel: white text on dark band */
@@ -1884,127 +1986,115 @@ color: inherit;
 .hero.profile .hero-breadcrumbs :where(li a) {
   color: var(--color-text-on-dark);
 }
-/* Multilayer transition: slower cross-fade for patient state switching */
-.hero.multilayer .hero-layer {
-  transition: var(--hero-multilayer-transition);
-}
 /* Stat numbers: gold accent */
 .hero.stat-overlay .hero-stat-number {
   color: var(--color-brand-accent);
 }
-/* CTA button: plum filled pill with right arrow */
+/* CTA: plum on light bg, gold on dark bg */
 .hero :where(a).button {
-  position: relative;
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-color);
-  border-color: var(--button-primary-bg);
-  border-radius: var(--border-radius-button-primary);
-  padding: var(--button-primary-padding);
-  font-size: var(--font-size-button);
-  font-weight: var(--font-weight-button);
+  color: var(--color-text-link);
 }
-.hero :where(a).button::after {
-  content: var(--hero-button-icon-content);
-  position: absolute;
-  right: var(--spacing-20);
-  top: var(--hero-button-icon-top);
-  transform: var(--hero-button-icon-transform);
-  font-size: var(--hero-button-icon-font-size);
-  line-height: var(--line-height-body);
-}
-/* Dark variants: same plum pill — button stays on-brand regardless of bg */
 .hero.landing :where(a).button,
 .hero.full :where(a).button,
-.hero.video :where(a).button,
-.hero.solid :where(a).button {
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-color);
-  border-color: var(--button-primary-bg);
+.hero.video :where(a).button {
+  color: var(--color-brand-accent);
 }
 /* Solid background: charcoal */
 .hero.solid {
   background-color: var(--color-charcoal);
 }
-.hero> :where(div):has(> div:empty) {
-  display: var(--hero-display-hidden);
+.hero.solid :where(a).button {
+  color: var(--color-brand-accent);
 }
-.hero> :where(div):first-child {
-  min-height: var(--hero-auto-value);
-  padding: var(--hero-reset-value);
-  margin: var(--hero-reset-value);
+.hero img {
+  max-height: none;
+  border-radius: 0;
+  object-fit: cover;
+  width: auto;
+  height: var(--hero-img-height-mobile);
+  display: block;
 }
-.hero::before {
+.hero > :where(div):has(> div:empty) {
+  display: none;
+}
+.hero.no-padding > :where(div):first-child {
+  min-height: var(--hero-no-padding-min-height);
+}
+.hero.no-padding .hero-text-container {
   position: absolute;
-  bottom: var(--hero-reset-value);
-  content: var(--hero-brushstroke-content);
-  background: var(--hero-brushstroke-image) var(--hero-brushstroke-repeat) var(--hero-brushstroke-position) / var(--hero-brushstroke-size);
-  height: var(--spacing-40);
-  width: var(--hero-full-width);
-  z-index: var(--hero-layer-index);
+  width: 100%;
+  max-width: var(--hero-text-max-width);
+  display: block;
+  margin-top: var(--hero-text-margin-top);
+  bottom: 0;
+  top: 0;
+  padding: var(--hero-text-padding);
 }
-.hero.video::before {
-  bottom: var(--hero-video-brushstroke-bottom);
+.hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--hero-h1-line-height);
+  font-family: var(--heading-font-family);
+  font-style: normal;
+  margin-bottom: 0;
+  color: var(--color-text-heading);
+  position: relative;
+  width: fit-content;
 }
-.hero,
-.hero img,
-.hero.video,
-.hero video {
-  min-height: var(--hero-min-height-mobile);
-  border-radius: var(--hero-border-radius-reset);
+.hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+  font-size: var(--hero-em-font-size-mobile);
+  font-family: var(--font-family-handwriting);
+  font-style: normal;
+  display: inline;
+  margin: 0;
+  color: var(--color-brand-accent);
+  font-weight: var(--font-weight-300);
+  letter-spacing: var(--hero-em-letter-spacing);
+  line-height: var(--hero-em-line-height);
+  text-shadow: 0 2px 0 var(--color-gold-dark);
 }
-.hero.video::after {
-  display: var(--hero-display-hidden);
-}
-.hero.video .hero-text-container .cmp-container-x-large {
-  display: var(--hero-display-grid);
-  grid-template-columns: var(--hero-video-grid-columns);
-  grid-auto-rows: var(--hero-grid-rows-mobile);
-  align-items: var(--hero-video-grid-align-items);
-  place-content: var(--hero-video-grid-place-content);
-}
-.hero.video :where(a).button {
-  color: var(--color-brand-primary);
-  background: var(--background-color);
-  padding: var(--hero-video-btn-padding);
-  border: var(--hero-video-btn-border-style) var(--hero-video-btn-border-width) var(--color-brand-primary);
-  border-radius: var(--hero-video-btn-border-radius);
-  font-size: var(--hero-video-btn-font-size);
-  text-transform: var(--hero-video-btn-text-transform);
-  width: var(--hero-video-btn-width);
-  text-align: var(--hero-video-btn-text-align);
-}
-.hero.no-padding> :where(div):first-child {
-  min-height: var(--hero-auto-value);
-}
-.hero.video .hero-text-container {
-  min-height: var(--hero-auto-value);
-}
-@media (width >= 744px) {
-  .hero,
-  .hero img,
-  .hero.video,
-  .hero video {
-    min-height: var(--hero-min-height-tablet);
-  }
-
-  .hero.video .hero-text-container .cmp-container-x-large {
-    grid-auto-rows: var(--hero-grid-rows-tablet);
-  }
-
-  .hero.video .hero-text-container .cmp-container-x-large p.button-container {
-    grid-column: var(--hero-video-button-grid-column);
-    text-align: var(--hero-video-btn-text-align);
-  }
+.hero.no-padding .hero-text-container .cmp-container-x-large h1:has(em) + h1::after {
+  position: absolute;
+  z-index: var(--z-index-1);
+  bottom: var(--hero-stroke-bottom-offset);
+  left: 0;
+  display: block;
+  width: 100%;
+  height: var(--hero-stroke-height);
+  background-image: url('/icons/stroke.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  content: '';
 }
 @media (width >= 1024px) {
-  .hero,
-  .hero img,
-  .hero.video,
-  .hero video {
-    min-height: var(--hero-min-height-desktop);
+  .hero.no-padding > :where(div):first-child {
+    min-height: var(--hero-no-padding-min-height);
   }
 
-  .hero.video .hero-text-container .cmp-container-x-large {
-    grid-auto-rows: var(--hero-grid-rows-desktop);
+  .hero img {
+    max-height: none;
+    border-radius: 0;
+    width: var(--hero-img-width-desktop);
+    object-fit: cover;
+    margin-inline: auto;
+    height: auto;
+  }
+
+  .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+    font-size: var(--hero-h1-font-size-desktop);
+  }
+
+  .hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+    font-size: var(--hero-em-font-size-desktop);
+    line-height: var(--hero-h1-line-height);
+  }
+
+  .hero.no-padding .hero-text-container {
+    position: absolute;
+    width: 100%;
+    max-width: var(--hero-text-max-width);
+    display: flex;
+    margin-inline: auto;
+    padding: var(--hero-text-padding);
   }
 }

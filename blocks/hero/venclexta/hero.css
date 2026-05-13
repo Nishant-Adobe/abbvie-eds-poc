@@ -674,9 +674,9 @@ color: inherit;
   opacity: 1;
 }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.full :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
+.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.solid :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
+.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
 /* =====================================================
    Hero Dual-CTA Variant — two side-by-side CTAs
    Authoring: use block name "Hero (dual-cta)"
@@ -699,7 +699,7 @@ color: inherit;
    ===================================================== */
 .hero .hero-eyebrow {
   display: block;
-  font-size: var(--font-size-body-small, 0.6875rem);
+  font-size: var(--font-size-body-small, 11px);
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-heading);
   text-transform: uppercase;
@@ -717,7 +717,7 @@ color: inherit;
   background-color: var(--hero-indication-bg);
   color: var(--color-white);
   padding: var(--spacing-16, 1rem) var(--spacing-24, 1.5rem);
-  font-size: var(--font-size-body-small, 0.8125rem);
+  font-size: var(--font-size-body-small, 13px);
   line-height: 1.5;
   text-align: center;
   box-sizing: border-box;
@@ -734,7 +734,7 @@ color: inherit;
   position: absolute;
   bottom: var(--spacing-08, 0.8rem);
   right: var(--spacing-08, 0.8rem);
-  font-size: var(--font-size-body-small, 0.6875rem);
+  font-size: var(--font-size-body-small, 11px);
   color: var(--color-text-on-dark-80);
   font-style: italic;
   pointer-events: none;
@@ -760,7 +760,7 @@ color: inherit;
 .hero.text-light h3,
 .hero.text-light p,
 .hero.text-light .hero-eyebrow {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
 }
 .hero.text-dark h1,
 .hero.text-dark h2,
@@ -829,7 +829,7 @@ color: inherit;
   display: block;
 }
 .hero.full h1 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
   font-size: var(--font-size-h1-hero, var(--font-size-h1, 2.6rem));
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
@@ -916,7 +916,7 @@ color: inherit;
   display: block;
 }
 .hero.compact h1 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
   font-size: var(--font-size-h2, 2rem);
   line-height: var(--line-height-h2, 2.5rem);
 }
@@ -1064,7 +1064,7 @@ color: inherit;
   display: block;
 }
 .hero.centered h1 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
   text-align: center;
 }
 .hero.centered p {
@@ -1160,7 +1160,7 @@ color: inherit;
 .hero.video .hero-text-container {
   display: block;
 }
-.hero.video h1 { color: var(--color-text-on-dark, var(--color-white)); }
+.hero.video h1 { color: var(--color-text-on-dark, #fff); }
 .hero.video p {
   color: var(--color-text-on-dark-90);
 }
@@ -1171,6 +1171,10 @@ color: inherit;
 @media (width < 744px) {
   .hero.video {
     min-height: var(--hero-video-min-height-mobile);
+  }
+
+  .hero.video .hero-video-bg {
+    display: none;
   }
 
   .hero.video > :where(div):nth-child(2) {
@@ -1234,7 +1238,7 @@ color: inherit;
 }
 .hero.solid h1,
 .hero.solid h2 {
-  color: var(--color-text-on-dark, var(--color-white));
+  color: var(--color-text-on-dark, #fff);
 }
 .hero.solid p {
   color: var(--color-text-on-dark-90);
@@ -1326,8 +1330,6 @@ color: inherit;
   --color-charcoal: #25282a;
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
-  --color-border: #e0e0e0;
-  --color-focus: var(--link-color);
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -1509,11 +1511,6 @@ color: inherit;
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
 
-  /* Border Width */
-  --border-width-thin: 1px;
-  --border-width-default: 2px;
-  --border-width-thick: 3px;
-
   /* z-index */
   --z-index-negative: -1;
   --z-index-0 : 0;
@@ -1521,7 +1518,6 @@ color: inherit;
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
-  --z-index-anchor-nav: 100;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -1534,7 +1530,6 @@ color: inherit;
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
-  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -1586,7 +1581,6 @@ color: inherit;
   --transition-duration-medium: 0.3s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
-  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -1696,65 +1690,79 @@ color: inherit;
   }
 }
 /* ============================================================
-   RINVOQ DTC — Brand Token Overrides
-   Source: rinvoq.com/atopic-dermatitis (Platform C)
-   Font: Neue Haas Grotesk (headings) / Helvetica Neue LT W05 (body)
-   Note: DTC uses different fonts from HCP (Graphik); both share the
-         same color palette.
+   VENCLEXTA DTC — Brand Token Overrides
+   Source: venclexta.com/aml (Platform C)
+   Framework Font: Graphik family
+   Brand Font: Red Hat Display (brand-specific elements)
    ============================================================ */
 :root {
   /* ---- Color: Brand Primary ---- */
-  --color-brand-primary: #90124a;
-  --color-brand-primary-dark: #25282a;
-  --color-brand-primary-light: #b15980;
+  --color-brand-primary: #005272;
+  --color-brand-primary-dark: #003b52;
+  --color-brand-primary-light: #e8edef;
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #ffd100;
-  --color-brand-accent-butter: #fff1b3;
-  --color-brand-accent-lemon: #ffe673;
+  --color-brand-accent-teal: #005272;
 
-  /* ---- Color: Named Palette ---- */
+  /* ---- Color: Named Palette (shared AbbVie framework) ---- */
   --color-plum: #90124a;
-  --color-mulberry: #b15980;
-  --color-heather: #d3a0b7;
   --color-gold: #ffd100;
   --color-charcoal: #25282a;
   --color-iron: #46484a;
-  --color-steel: #87898a;
-  --color-pewter: #929495;
-  --color-silver: #c9c9ca;
   --color-glacier: #f5f5f5;
-  --color-navy: #194560;
+
+  /* ---- Color: Venclexta-specific ---- */
+  --color-venclexta-teal: #005272;
+  --color-venclexta-teal-dark: #003b52;
+  --color-venclexta-navy: #071d49;
 
   /* ---- Color: Text ---- */
   --text-color: #46484a;
   --color-text-heading: #25282a;
+  --color-text-heading-brand: #005272;
   --color-text-on-dark: #fff;
   --color-text-link: #90124a;
+  --color-text-legal: #404040;
+  /* Live venclexta.com renders footer link text in off-white (#e8edef) */
+  --color-text-footer-link: var(--color-brand-primary-light);
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
   --color-background-light: #f5f5f5;
-  --color-background-footer: #17181b;
+  /* Live venclexta.com footer bg is dark teal #003b52, not pure black */
+  --color-background-footer: var(--color-brand-primary-dark);
   --color-background-safety-bar: #f5f5f5;
+  --color-background-container: #003b52;
 
   /* ---- Color: Border ---- */
-  --color-border-default: #c9c9ca;
+  --color-border-brand: #005272;
   --color-border-safety: #ffd100;
+  --color-border-default: #ccc;
+
+  /* ---- Color: Shadow ---- */
+  --shadow-card: rgb(85, 85, 85) 0px 3px 10px 1px;
+  --shadow-table: 0 4px 5px 0 rgba(0, 0, 0, 0.1);
+  --shadow-default: 0 4px 19px 0 rgba(0, 0, 0, 0.07);
 
   /* ---- Font: Family ---- */
-  --body-font-family: 'Helvetica Neue LT W05_55 Roman', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family: 'Neue Haas Grotesk Disp W0595Bl', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family-bold: 'Neue Haas Grotesk Disp W0595Bl', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-medium: 'Neue Haas Grotesk Disp W0565Md', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-semibold: 'Neue Haas Grotesk Disp W0575Bd', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --heading-font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --heading-font-family-bold: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --font-family-brand: 'Red Hat Display', sans-serif;
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
+  --font-size-body-small: 11px;
+  --font-size-nav: 16px;
+  --font-size-footer: 16px;
   --font-size-h1: 26px;
   --font-size-h2: 20px;
   --font-size-h3: 14px;
+  --font-size-h4-brand: 16px;
+  --font-size-h5-brand: 17.6px;
   --font-size-h-xl: 35.2px;
   --font-size-button: 16px;
 
@@ -1762,116 +1770,136 @@ color: inherit;
   --font-weight-body: 400;
   --font-weight-heading: 600;
   --font-weight-button: 700;
+  --font-weight-brand-heading: 700;
 
   /* ---- Font: Line Height ---- */
   --line-height-body: 24px;
   --line-height-h1: 27.625px;
   --line-height-h2: 25px;
   --line-height-h3: 16.8px;
+  --line-height-h5-brand: 22px;
+  --line-height-h-xl: 52.8px;
 
   /* ---- Border: Radius ---- */
-  --border-radius-button-primary: 5px;
-  --border-radius-button-secondary: 5px;
-  --border-radius-button-tertiary: 3px;
+  --border-radius-button-primary: 8px;
+  --border-radius-button-secondary: 10px;
+  --border-radius-button-tertiary: 10px;
+  --border-radius-card: 10px;
+  --border-radius-card-corner: 14px;
 
   /* ---- Button: Primary ---- */
-  --button-primary-bg: #fff;
-  --button-primary-color: #90124a;
-  --button-primary-border: #90124a;
-  --button-primary-padding: 7px 42px 7px 10px;
-  --button-primary-font-size: 15px;
+  --button-primary-bg: #005570;
+  --button-primary-color: #fff;
+  --button-primary-border: #005570;
+  --button-primary-padding: 10px 30px 10px 15px;
+  --button-primary-font-size: 18px;
   --button-primary-font-weight: 400;
-  --button-primary-hover-bg: #90124a;
+  --button-primary-hover-bg: #003d50;
   --button-primary-hover-color: #fff;
 
   /* ---- Button: Secondary ---- */
-  --button-secondary-bg: #90124a;
-  --button-secondary-color: #fff;
-  --button-secondary-border: #90124a;
-  --button-secondary-padding: 7px 42px 7px 10px;
-  --border-radius-button-secondary: 5px;
-  --button-secondary-hover-bg: #fff;
-  --button-secondary-hover-color: #90124a;
+  --button-secondary-bg: #ffce00;
+  --button-secondary-color: #404040;
+  --button-secondary-border: transparent;
+  --button-secondary-padding: 12px 20px;
+  --button-secondary-hover-bg: #e6b900;
+  --button-secondary-hover-color: #404040;
 
   /* ---- Button: Tertiary ---- */
   --button-tertiary-bg: transparent;
-  --button-tertiary-color: #25282a;
-  --button-tertiary-border: transparent;
-  --button-tertiary-padding: 17px 0 17px 40px;
-  --button-tertiary-font-size: 16px;
-  --border-radius-button-tertiary: 3px;
-  --button-tertiary-hover-bg: transparent;
-  --button-tertiary-hover-color: #90124a;
+  --button-tertiary-color: #404040;
+  --button-tertiary-border: #ccc;
+  --button-tertiary-padding: 12px 42px 12px 12px;
+  --button-tertiary-font-size: 18px;
+  --button-tertiary-hover-bg: #005272;
+  --button-tertiary-hover-color: #fff;
 
   /* ---- Button: Plain ---- */
-  --button-plain-color: #90124a;
-  --button-plain-weight: 400;
-  --button-plain-hover-color: #25282a;
+  --button-plain-color: #005272;
+  --button-plain-weight: 500;
+  --button-plain-hover-color: #008481;
 
   /* ---- Toggle ---- */
-  --toggle-bg-off: #c9c9ca;
-  --toggle-bg-on: #90124a;
+  --toggle-bg-off: #ccc;
+  --toggle-bg-on: #005272;
   --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #90124a;
 
-  /* ---- Hero: Rinvoq-specific ---- */
-  --hero-multilayer-transition: opacity 0.8s ease-in-out;
-  --hero-video-btn-border-radius: 5px;
-  --hero-video-btn-font-size: 15px;
-  --hero-video-btn-width: 250px;
-  --hero-video-btn-padding: 7px 39px 7px 10px;
-  --hero-button-icon-content: '›';
-  --hero-button-icon-top: 50%;
-  --hero-button-icon-transform: translateY(-50%);
-  --hero-button-icon-font-size: 1.4em;
-  --hero-reset-value: 0;
-  --hero-auto-value: auto;
-  --hero-full-width: 100%;
-  --hero-layer-index: 1;
-  --hero-display-grid: grid;
-  --hero-display-hidden: none;
-  --hero-border-radius-reset: 0;
-  --hero-brushstroke-content: " ";
-  --hero-brushstroke-image: url("/icons/brushstroke.png");
-  --hero-brushstroke-repeat: no-repeat;
-  --hero-brushstroke-position: center center;
-  --hero-brushstroke-size: cover;
-  --hero-video-brushstroke-bottom: calc(-1 * var(--spacing-16));
-  --hero-video-grid-columns: 1fr 1fr;
-  --hero-video-grid-align-items: end;
-  --hero-video-grid-place-content: end start;
-  --hero-video-btn-border-style: solid;
-  --hero-video-btn-border-width: 2px;
-  --hero-video-btn-text-transform: none;
-  --hero-video-btn-text-align: left;
-  --hero-video-button-grid-column: -1/-2;
-  --hero-min-height-mobile: 260px;
-  --hero-min-height-tablet: 290px;
-  --hero-min-height-desktop: 430px;
-  --hero-grid-rows-mobile: 235px;
-  --hero-grid-rows-tablet: 256px;
-  --hero-grid-rows-desktop: 360px;
+  /* ---- Hero: Venclexta-specific ---- */
+  --hero-full-min-height: 56rem;
+  --hero-full-min-height-tablet: 64rem;
+  --hero-full-min-height-mobile: 58rem;
+  --hero-full-text-max-width: 72rem;
+  --hero-full-text-max-width-tablet: 82rem;
+  --hero-full-text-max-width-desktop: 68rem;
+  --hero-full-text-margin-top: 15rem;
+  --hero-full-text-margin-top-tablet: 19.6rem;
+  --hero-full-content-max-width: 61rem;
+  --hero-full-content-max-width-desktop: 62rem;
+  --hero-full-text-padding: 0 2rem 5.6rem;
+  --hero-full-text-padding-tablet: 0 7rem 6.4rem;
+  --hero-overlay-gradient-full: linear-gradient(90deg,
+      rgb(0 0 0 / 96%) 0%,
+      rgb(0 0 0 / 86%) 22%,
+      rgb(0 0 0 / 58%) 46%,
+      rgb(0 0 0 / 12%) 72%,
+      rgb(0 0 0 / 0%) 100%);
+  --hero-overlay-gradient-full-mobile: linear-gradient(180deg,
+      rgb(0 0 0 / 55%) 0%,
+      rgb(0 0 0 / 45%) 24%,
+      rgb(0 0 0 / 88%) 100%);
+  --hero-no-padding-min-height: 56rem;
+  --hero-indication-bg: rgb(0 0 0 / 45%);
+  --hero-eyebrow-gap: 0.5em;
+  --hero-divider-width: 3px;
+  --hero-caret-width: 0.4rem;
+  --hero-caret-height: 2.6rem;
+  --hero-caption-bottom: 2rem;
+  --hero-h1-font-size: 2rem;
+  --hero-h1-line-height: 1.18;
+  --hero-h1-font-size-large: clamp(2rem, 2.8vw, 2.7rem);
+  --hero-h1-line-height-large: 1.08;
+  --hero-p-font-size: 1.8rem;
+  --hero-p-line-height: 1.28;
+  --hero-p-font-size-mobile: 1.7rem;
+  --hero-p-line-height-mobile: 1.24;
+  --hero-link-decoration-thickness: 0.12rem;
 }
 /* ============================================================
-   RINVOQ DTC — Hero Block Overrides (XWalk/UE preview)
+   VENCLEXTA DTC — Hero Block Overrides (XWalk/UE preview)
    ============================================================ */
-/* Heading + body: Graphik */
+/* Heading: Red Hat Display brand font, teal */
+.hero {
+  overflow: hidden;
+  font-family: var(--font-family-brand);
+}
+.hero .hero-image-caption {
+  width: 100%;
+  max-width: var(--cdp-max-width);
+  display: block;
+  text-align: end;
+  margin: 0 auto;
+  font-size: var(--font-size-14);
+  left: 0;
+  right: 0;
+  font-style: normal;
+}
+.hero> :where(div):has(> div:empty) {
+  display: none;
+}
 .hero h1 {
-  color: var(--color-text-heading);
-  font-family: var(--heading-font-family);
+  color: var(--color-text-heading-brand);
+  font-family: var(--font-family-brand);
 }
 .hero h2,
 .hero h3 {
-  font-family: var(--heading-font-family);
+  font-family: var(--font-family-brand);
 }
-.hero p {
-  font-family: var(--body-font-family);
-}
-/* Profile band: charcoal */
+/* Profile band: dark teal container bg */
 .hero.profile> :where(div):first-child {
-  background-color: var(--color-charcoal);
+  background-color: var(--color-background-container);
 }
 /* Profile text panel: white text on dark band */
 .hero.profile h1,
@@ -1884,127 +1912,361 @@ color: inherit;
 .hero.profile .hero-breadcrumbs :where(li a) {
   color: var(--color-text-on-dark);
 }
-/* Multilayer transition: slower cross-fade for patient state switching */
-.hero.multilayer .hero-layer {
-  transition: var(--hero-multilayer-transition);
-}
-/* Stat numbers: gold accent */
-.hero.stat-overlay .hero-stat-number {
-  color: var(--color-brand-accent);
-}
-/* CTA button: plum filled pill with right arrow */
+/* CTA: plum link color */
 .hero :where(a).button {
-  position: relative;
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-color);
-  border-color: var(--button-primary-bg);
-  border-radius: var(--border-radius-button-primary);
-  padding: var(--button-primary-padding);
-  font-size: var(--font-size-button);
-  font-weight: var(--font-weight-button);
+  color: var(--link-color);
 }
-.hero :where(a).button::after {
-  content: var(--hero-button-icon-content);
-  position: absolute;
-  right: var(--spacing-20);
-  top: var(--hero-button-icon-top);
-  transform: var(--hero-button-icon-transform);
-  font-size: var(--hero-button-icon-font-size);
-  line-height: var(--line-height-body);
+/* Full/video/landing: white text on dark overlay */
+.hero.full h1,
+.hero.full h2,
+.hero.full h3,
+.hero.full p,
+.hero.video h1,
+.hero.video h2,
+.hero.video h3,
+.hero.video p,
+.hero.landing h1,
+.hero.landing h2,
+.hero.landing h3,
+.hero.landing p {
+  color: var(--color-text-on-dark);
 }
-/* Dark variants: same plum pill — button stays on-brand regardless of bg */
+/* Two-colour heading: italic span → gold accent */
+.hero.full h1 em,
+.hero.full h2 em,
+.hero.video h1 em,
+.hero.video h2 em,
+.hero.landing h1 em,
+.hero.landing h2 em {
+  color: var(--color-brand-accent);
+  font-style: normal;
+}
+/* Eyebrow pipe decoration */
+.hero .hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--hero-eyebrow-gap);
+  color: var(--color-text-on-dark);
+}
+.hero .hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: var(--hero-divider-width);
+  height: 1em;
+  background-color: var(--color-brand-accent);
+  flex-shrink: 0;
+}
+/* Landing/full/video CTA: white on dark overlay */
 .hero.landing :where(a).button,
 .hero.full :where(a).button,
-.hero.video :where(a).button,
-.hero.solid :where(a).button {
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-color);
-  border-color: var(--button-primary-bg);
-}
-/* Solid background: charcoal */
-.hero.solid {
-  background-color: var(--color-charcoal);
-}
-.hero> :where(div):has(> div:empty) {
-  display: var(--hero-display-hidden);
-}
-.hero> :where(div):first-child {
-  min-height: var(--hero-auto-value);
-  padding: var(--hero-reset-value);
-  margin: var(--hero-reset-value);
-}
-.hero::before {
-  position: absolute;
-  bottom: var(--hero-reset-value);
-  content: var(--hero-brushstroke-content);
-  background: var(--hero-brushstroke-image) var(--hero-brushstroke-repeat) var(--hero-brushstroke-position) / var(--hero-brushstroke-size);
-  height: var(--spacing-40);
-  width: var(--hero-full-width);
-  z-index: var(--hero-layer-index);
-}
-.hero.video::before {
-  bottom: var(--hero-video-brushstroke-bottom);
-}
-.hero,
-.hero img,
-.hero.video,
-.hero video {
-  min-height: var(--hero-min-height-mobile);
-  border-radius: var(--hero-border-radius-reset);
-}
-.hero.video::after {
-  display: var(--hero-display-hidden);
-}
-.hero.video .hero-text-container .cmp-container-x-large {
-  display: var(--hero-display-grid);
-  grid-template-columns: var(--hero-video-grid-columns);
-  grid-auto-rows: var(--hero-grid-rows-mobile);
-  align-items: var(--hero-video-grid-align-items);
-  place-content: var(--hero-video-grid-place-content);
-}
 .hero.video :where(a).button {
-  color: var(--color-brand-primary);
-  background: var(--background-color);
-  padding: var(--hero-video-btn-padding);
-  border: var(--hero-video-btn-border-style) var(--hero-video-btn-border-width) var(--color-brand-primary);
-  border-radius: var(--hero-video-btn-border-radius);
-  font-size: var(--hero-video-btn-font-size);
-  text-transform: var(--hero-video-btn-text-transform);
-  width: var(--hero-video-btn-width);
-  text-align: var(--hero-video-btn-text-align);
+  color: var(--color-text-on-dark);
 }
-.hero.no-padding> :where(div):first-child {
-  min-height: var(--hero-auto-value);
+/* Landing gradient: dark teal left-to-right */
+.hero.landing::after {
+  background: linear-gradient(
+    to right,
+    var(--color-background-container) 0%,
+    color-mix(in srgb, var(--color-brand-primary-dark) 30%, transparent) 100%
+  );
 }
-.hero.video .hero-text-container {
-  min-height: var(--hero-auto-value);
+/* Full/video overlay: teal gradient */
+.hero.full::after,
+.hero.video::after {
+  background: linear-gradient(
+    to right,
+    var(--color-background-container) 0%,
+    color-mix(in srgb, var(--color-brand-primary-dark) 25%, transparent) 60%,
+    transparent 100%
+  );
 }
-@media (width >= 744px) {
-  .hero,
-  .hero img,
-  .hero.video,
-  .hero video {
-    min-height: var(--hero-min-height-tablet);
+/* Solid background: light gray */
+.hero.solid {
+  background-color: var(--color-background-light);
+}
+.hero.solid h1,
+.hero.solid h2,
+.hero.solid h3 {
+  color: var(--color-text-heading-brand);
+}
+.hero.solid p {
+  color: var(--text-color);
+}
+.hero.solid .hero-eyebrow {
+  color: var(--color-text-heading-brand);
+}
+.hero.solid :where(a).button {
+  color: var(--link-color);
+}
+/* ============================================================
+   VENCLEXTA full hero override
+   Matches the AML reference composition:
+   - dark left overlay
+   - positioned text column
+   - top legal caption box
+   - bottom-right actor portrayal credit
+   ============================================================ */
+.hero.full {
+  min-height: var(--hero-full-min-height);
+  align-items: stretch;
+}
+.hero.full::after {
+  background: var(--hero-overlay-gradient-full);
+}
+.hero.full> :where(div):has(> div:empty) {
+  display: none;
+}
+.hero.full .hero-text-container {
+  position: relative;
+  z-index: 2;
+  display: block;
+  align-self: center;
+  width: min(100%, var(--hero-full-text-max-width));
+  margin: var(--hero-full-text-margin-top) 0 0;
+  padding: var(--hero-full-text-padding);
+}
+.hero.full .cmp-container-x-large,
+.hero.no-padding .cmp-container-x-large {
+  max-width: var(--hero-full-content-max-width);
+}
+.hero.full h1,
+.hero.no-padding h1 {
+  margin: 0;
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-40);
+  font-weight: var(--font-weight-700);
+  line-height: var(--line-height-44);
+  letter-spacing: -0.03em;
+}
+.hero.full h1+h1 {
+  margin-top: 0.2rem;
+  margin-bottom: 2.4rem;
+}
+.hero.full h1 em {
+  color: var(--color-brand-accent);
+  font-style: normal;
+}
+.hero.full p {
+  max-width: var(--hero-full-content-max-width-desktop);
+  color: var(--color-text-on-dark);
+  font-size: var(--hero-h1-font-size);
+  line-height: var(--hero-h1-line-height);
+}
+.hero.full p strong {
+  font-size: var(--hero-h1-font-size-large);
+  line-height: var(--hero-h1-line-height-large);
+}
+.hero.full p a {
+  color: var(--color-brand-accent);
+  text-decoration: underline;
+  text-decoration-thickness: var(--hero-link-decoration-thickness);
+  text-underline-offset: 0.14em;
+  font-size: inherit;
+}
+.hero.full p:last-child,
+.hero.full p:nth-last-child(2),
+.hero.full p:nth-last-child(3),
+.hero.full p:nth-last-child(4) {
+  font-size: var(--hero-p-font-size);
+  line-height: var(--hero-p-line-height);
+}
+.hero.full .hero-indication {
+  position: relative;
+  display: flex;
+  inset: unset;
+  z-index: var(--z-index-3);
+  align-items: center;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+  margin: var(--spacing-30) 0 var(--spacing-15);
+}
+.hero.full .hero-indication::before {
+  content: '';
+  width: var(--hero-caret-width);
+  height: var(--hero-caret-height);
+  background-color: var(--color-brand-accent);
+  flex-shrink: 0;
+  position: absolute;
+}
+.hero.full .hero-indication p {
+  margin: 0;
+  padding-left: var(--spacing-15);
+  font-size: var(--font-size-h5-brand);
+  font-weight: var(--font-weight-body);
+  line-height: 1.2;
+  color: var(--color-text-on-dark);
+  padding-bottom: 0;
+}
+.hero.full .hero-image-caption {
+  position: relative;
+  display: block;
+  padding: var(--spacing-18) var(--spacing-10);
+  margin: var(--spacing-15);
+  margin-left: 0;
+  inset: unset;
+  z-index: var(--z-index-2);
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-h5-brand);
+  line-height: 1.28;
+  font-style: normal;
+  text-align: center;
+  background: var(--hero-indication-bg);
+  border: 1px solid var(--color-brand-accent);
+}
+.hero>div:first-child {
+  min-height: unset;
+}
+@media (width >=744px) {
+  .hero.full {
+    min-height: var(--hero-full-min-height-tablet);
   }
 
-  .hero.video .hero-text-container .cmp-container-x-large {
-    grid-auto-rows: var(--hero-grid-rows-tablet);
-  }
-
-  .hero.video .hero-text-container .cmp-container-x-large p.button-container {
-    grid-column: var(--hero-video-button-grid-column);
-    text-align: var(--hero-video-btn-text-align);
+  .hero.full .hero-text-container {
+    width: min(100%, var(--hero-full-text-max-width-tablet));
+    margin-top: var(--hero-full-text-margin-top-tablet);
+    padding: var(--hero-full-text-padding-tablet);
   }
 }
-@media (width >= 1024px) {
-  .hero,
-  .hero img,
-  .hero.video,
-  .hero video {
-    min-height: var(--hero-min-height-desktop);
+@media (width >=1024px) {
+  .hero.full {
+    min-height: unset;
   }
 
-  .hero.video .hero-text-container .cmp-container-x-large {
-    grid-auto-rows: var(--hero-grid-rows-desktop);
+  .hero.full .hero-text-container {
+    width: 100%;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .hero.full .cmp-container-x-large,
+  .hero.no-padding .cmp-container-x-large {
+    max-width: var(--hero-full-text-max-width-desktop);
+  }
+
+  .hero.full p strong {
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h2);
+  }
+
+  .hero.full .hero-image-caption {
+    width: 100%;
+  }
+}
+@media (width < 744px) {
+  .hero.full {
+    min-height: var(--hero-full-min-height-mobile);
+    align-items: flex-end;
+  }
+
+  .hero.full::after {
+    background: var(--hero-overlay-gradient-full-mobile);
+  }
+
+  .hero.full .hero-indication p {
+    font-size: var(--font-size-h3);
+  }
+
+
+  .hero.full .hero-text-container {
+    width: 100%;
+    margin-top: var(--spacing-20);
+    padding: 0;
+    padding-bottom: 1rem;
+  }
+
+  .hero.full .cmp-container-x-large,
+  .hero.no-padding .cmp-container-x-large {
+    max-width: 100%;
+  }
+
+  .hero.full h1 {
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+  }
+
+  .hero.no-padding h1 {
+    font-size: var(--font-size-33);
+    line-height: 1.09;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  .hero.full p,
+  .hero.full p strong {
+    font-size: var(--hero-p-font-size-mobile);
+    line-height: var(--hero-p-line-height-mobile);
+  }
+}
+/* ============================================================
+   VENCLEXTA — Custom hero overrides
+   These rules take cascade priority over all base rules above.
+   ============================================================ */
+/* Full hero: constrain content stack to 1180px max width */
+.hero.full>.hero-content-stack {
+  max-width: var(--cdp-max-width);
+  width: 100%;
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-30);
+  margin: 0 auto;
+  z-index: 3;
+}
+/* No-padding hero: remove fixed min-height */
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) {
+  min-height: unset;
+}
+/* No-padding hero: text container as full-height flex overlay */
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) .hero-text-container {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  height: 100%;
+  padding: var(--spacing-20);
+  max-width: var(--cdp-max-width);
+  width: 100%;
+  min-height: auto;
+}
+/* No-padding hero: unset absolute positioning on image/picture/img */
+.hero.no-padding img {
+  border-radius: 0;
+  min-height: unset;
+}
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered)> :where(div):first-child,
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered)> :where(div):first-child picture,
+.hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered)> :where(div):first-child img {
+  position: unset;
+  min-height: var(--spacing-300);
+}
+/* Full hero: bottom footnote/legal row — centered with right-aligned text */
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
+  bottom: var(--hero-caption-bottom);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p)>div {
+  width: 100%;
+  max-width: var(--cdp-max-width);
+  padding-inline: var(--spacing-20);
+  text-align: right;
+}
+.hero.full > div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) p {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-brand-heading);
+  max-width: var(--cdp-max-width);
+}
+/* Full hero: mobile image caption font size */
+@media (width < 744px) {
+  .hero.full .hero-image-caption {
+    font-size: var(--font-size-h3);
+    line-height: var(--hero-h1-line-height, 1.34);
+    margin-inline: 0;
+  }
+
+  .hero.no-padding.text-left {
+    min-height: var(--spacing-300);
+  }
+
+  .hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) .hero-text-container {
+    align-items: flex-start;
   }
 }
