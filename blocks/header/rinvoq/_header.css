@@ -705,7 +705,21 @@ header nav[aria-expanded='true'] .nav-brand-info > ul a {
   header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
     margin: 0;
     padding: var(--spacing-15);
-    width: var(--header-submenu-width);
+    width: 100%;
+  }
+
+  /* Mega menu: show all columns simultaneously when any nav section is expanded */
+  header nav .nav-sections:has(.default-content-wrapper > ul > li[aria-expanded='true'])
+    .default-content-wrapper > ul > li .submenu-level-1 {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scaleY(1);
+    visibility: visible;
+  }
+
+  header nav .nav-sections:has(.default-content-wrapper > ul > li[aria-expanded='true'])
+    .default-content-wrapper > ul > li .submenu-level-1 > * {
+    opacity: 1;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-wrapper {
@@ -756,6 +770,19 @@ header nav[aria-expanded='true'] .nav-brand-info > ul a {
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .navigation-item-link:hover {
     text-decoration: underline;
+  }
+
+  /* Mega menu open: full-width dark background covering logo area and column gaps */
+  header .nav-wrapper:has(nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'])::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: var(--header-mega-menu-bg-height);
+    background: var(--color-nav-dark);
+    z-index: var(--z-index-10);
+    pointer-events: none;
   }
 
   /* Scroll: semi-transparent dark bg */
