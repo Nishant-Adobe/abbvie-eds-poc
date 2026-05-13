@@ -82,6 +82,9 @@ function readBlockConfig(block) {
   const values = configRows.map((r) => r.firstElementChild?.textContent?.trim() || '');
 
   const layouts = ['cards', 'bottom', 'top', 'left', 'right'];
+
+  // UE/xwalk: layout comes from block classes, not row content
+  const classLayout = layouts.find((l) => block.classList.contains(l));
   const firstVal = values[0] || '';
   const firstIsNumber = /^\d{5,}$/.test(firstVal);
 
@@ -89,7 +92,7 @@ function readBlockConfig(block) {
   // Use pattern-based detection
   if (firstIsNumber) {
     const numbers = values.filter((v) => /^\d{5,}$/.test(v));
-    const layout = values.find((v) => layouts.includes(v)) || 'cards';
+    const layout = values.find((v) => layouts.includes(v)) || classLayout || 'cards';
     const enableCaptions = values.includes('true');
     const playerId = values.find(
       (v) => v && !layouts.includes(v) && v !== 'true' && v !== 'false' && !/^\d{5,}$/.test(v),
@@ -115,7 +118,7 @@ function readBlockConfig(block) {
   const isOldFormat = /^\d{8,}$/.test(accountIdOldPos);
 
   return {
-    playlistLayout: layouts.includes(firstVal) ? firstVal : 'cards',
+    playlistLayout: layouts.includes(firstVal) ? firstVal : (classLayout || 'cards'),
     sectionHeading: isOldFormat ? '' : (values[1] || ''),
     sectionDescription: isOldFormat ? '' : (values[2] || ''),
     accountId: isOldFormat ? accountIdOldPos : accountIdNewPos,
