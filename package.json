@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Starter project for EDS Multi-Brand and Theme Tools",
   "scripts": {
+    "build:json": "node scripts/build-json.js",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"blocks/**/*.css\" \"styles/*.css\"",
     "lint": "npm run lint:js && npm run lint:css",
@@ -17,6 +18,7 @@
     "scaffold:create:log": "plop component --plopfile theme-tools/plopfile.mjs --verbose",
     "scaffold:start": "NODE_OPTIONS='--max-old-space-size=4096' npx gulp createBrandCSS && npx gulp default",
     "scaffold:build": "NODE_OPTIONS='--max-old-space-size=4096' npx gulp createBrandCSS",
+    "scaffold:build:block": "node theme-tools/build-scoped.js",
     "scaffold:build:log": "NODE_OPTIONS='--max-old-space-size=4096' node theme-tools/generate-css.js --verbose",
     "scaffold:remove": "plop remove --plopfile theme-tools/plopfile.mjs",
     "scaffold:remove:log": "plop remove --plopfile theme-tools/plopfile.mjs --verbose",
