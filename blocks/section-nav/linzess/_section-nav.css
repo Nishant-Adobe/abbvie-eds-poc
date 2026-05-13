@@ -1,0 +1,231 @@
+@import '../section-nav.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* LINZESS — Section Nav Brand Overrides
+   Desktop:        full-width dark-purple rounded pill, white Lato Bold links, orange active underline
+   Mobile (base):  dark-purple pill with "JUMP TO: [current]" + chevron toggle
+   Mobile open:    purple toggle bar (top radius) + white dropdown (bottom radius)
+   Source:         linzess.com/find-relief section-navigation pattern
+*/
+
+/* ── Block-scoped tokens ─────────────────────────────────────────────── */
+
+.section-nav {
+  --section-nav-bg: var(--linz-dark-purple);
+  --section-nav-text: var(--color-text-on-dark, #fff);
+  --section-nav-active: var(--linz-orange);
+  --section-nav-dropdown-bg: var(--background-color, #fff);
+  --section-nav-dropdown-text: var(--linz-dark-purple);
+  --section-nav-radius: var(--linz-rounded-corner, 16px);
+
+  border-bottom: none;
+  border-radius: var(--section-nav-radius);
+  overflow: visible;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────── */
+
+.section-nav a {
+  color: var(--section-nav-text);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-nav, 14.4px);
+  font-weight: var(--font-weight-bold, 700);
+  text-decoration: none;
+}
+
+.section-nav a:hover,
+.section-nav a:focus-visible {
+  color: var(--section-nav-text);
+  outline: none;
+  opacity: 0.85;
+}
+
+.section-nav a.is-active {
+  border-bottom: none;
+  color: var(--section-nav-text);
+  text-decoration: underline;
+  text-decoration-color: var(--section-nav-active);
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--spacing-04, 4px);
+}
+
+/* ── Sticky stuck ────────────────────────────────────────────────────── */
+
+.section-nav.sticky.is-stuck {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 25%);
+}
+
+/* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
+
+.section-nav.mobile-menu .section-nav-hamburger,
+.section-nav.mobile-menu .section-nav-toggle-label {
+  display: none;
+}
+
+/* ── Current section label ───────────────────────────────────────────── */
+
+.section-nav.mobile-menu .section-nav-current-label {
+  display: block;
+  flex: 1;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Toggle button ───────────────────────────────────────────────────── */
+
+.section-nav.mobile-menu .section-nav-toggle {
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: var(--section-nav-radius);
+  color: var(--section-nav-text);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-nav, 14.4px);
+  font-weight: var(--font-weight-bold, 700);
+  justify-content: flex-start;
+  margin: 0;
+  padding: var(--spacing-12, 12px) var(--spacing-16, 16px) var(--spacing-12, 12px) var(--spacing-24, 24px);
+  width: 100%;
+}
+
+/* When open, toggle loses bottom radius (dropdown continues below) */
+.section-nav.mobile-menu.is-open .section-nav-toggle {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ── "JUMP TO: " static prefix ───────────────────────────────────────── */
+
+.section-nav.mobile-menu .section-nav-toggle::before {
+  content: 'JUMP TO:\00a0';
+  flex-shrink: 0;
+}
+
+/* ── Chevron icon ────────────────────────────────────────────────────── */
+
+.section-nav.mobile-menu .section-nav-toggle::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  height: var(--spacing-24, 24px);
+  margin-left: auto;
+  width: var(--spacing-24, 24px);
+}
+
+.section-nav.mobile-menu.is-open .section-nav-toggle::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z'/%3E%3C/svg%3E");
+}
+
+/* ── Dropdown list ───────────────────────────────────────────────────── */
+
+.section-nav.mobile-menu nav ul {
+  background-color: var(--section-nav-dropdown-bg);
+  border-bottom-left-radius: var(--section-nav-radius);
+  border-bottom-right-radius: var(--section-nav-radius);
+  border-top: none;
+  overflow: hidden;
+  padding: var(--spacing-08, 8px) 0;
+}
+
+.section-nav.mobile-menu nav ul li {
+  border-bottom: none;
+  display: block;
+}
+
+.section-nav.mobile-menu nav ul li + li::before {
+  display: none;
+}
+
+.section-nav.mobile-menu nav a {
+  border-bottom: none;
+  color: var(--section-nav-dropdown-text);
+  display: block;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-nav, 14.4px);
+  font-weight: var(--font-weight-bold, 700);
+  padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+  text-align: center;
+  text-decoration: none;
+  width: 100%;
+}
+
+.section-nav.mobile-menu nav a:hover,
+.section-nav.mobile-menu nav a:focus-visible {
+  color: var(--section-nav-dropdown-text);
+  opacity: 0.8;
+}
+
+.section-nav.mobile-menu nav a.is-active {
+  border-bottom: none;
+  border-left: none;
+  color: var(--section-nav-dropdown-text);
+  padding-left: var(--spacing-24, 24px);
+  text-decoration: underline;
+  text-decoration-color: var(--section-nav-active);
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--spacing-04, 4px);
+}
+
+/* ── Desktop ≥768px ──────────────────────────────────────────────────── */
+
+@media (width >= 768px) {
+  /* Active: orange underline, no border-bottom */
+  .section-nav a.is-active {
+    border-bottom: none;
+    text-decoration: underline;
+    text-decoration-color: var(--section-nav-active);
+    text-decoration-thickness: 2px;
+    text-underline-offset: var(--spacing-04, 4px);
+  }
+
+  /* ── Mobile-menu: reset mobile-base overrides for desktop layout ── */
+
+  /* Hide toggle — mobile-base display:flex outlasts base desktop display:none */
+  .section-nav.mobile-menu .section-nav-toggle {
+    display: none;
+  }
+
+  /* Horizontal list — mobile-base sets column/100% */
+  .section-nav.mobile-menu nav ul {
+    background-color: transparent;
+    border-radius: 0;
+    flex-direction: row;
+    overflow: visible;
+    padding: 0;
+    width: auto;
+  }
+
+  /* Flex li — mobile-base sets display:block */
+  .section-nav.mobile-menu nav ul li {
+    display: flex;
+  }
+
+  /* Inline link — mobile-base sets block/full-width/center */
+  .section-nav.mobile-menu nav a {
+    border-bottom: 2px solid transparent;
+    color: var(--section-nav-text);
+    display: inline-block;
+    padding: var(--spacing-12, 12px) var(--spacing-24, 24px);
+    text-align: unset;
+    width: auto;
+  }
+
+  /* Active on desktop: orange underline */
+  .section-nav.mobile-menu nav a.is-active {
+    border-bottom: none;
+    border-left: none;
+    color: var(--section-nav-text);
+    padding-left: var(--spacing-24, 24px);
+    text-decoration: underline;
+    text-decoration-color: var(--section-nav-active);
+    text-decoration-thickness: 2px;
+    text-underline-offset: var(--spacing-04, 4px);
+  }
+}
