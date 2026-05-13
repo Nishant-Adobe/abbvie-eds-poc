@@ -49,11 +49,7 @@
 
 /* Landing gradient: dark teal left-to-right fade */
 .hero.landing::after {
-  background: linear-gradient(
-    to right,
-    var(--color-background-footer) 0%,
-    rgb(0 59 82 / 30%) 100%
-  );
+  background: var(--gradient-hero-landing);
 }
 
 /* Solid background: brand primary teal */
@@ -68,12 +64,7 @@
 /* Full/video overlay: teal gradient */
 .hero.full::after,
 .hero.video::after {
-  background: linear-gradient(
-    to right,
-    var(--color-background-footer) 0%,
-    rgb(0 82 114 / 25%) 60%,
-    transparent 100%
-  );
+  background: var(--gradient-hero-full);
 }
 
 .hero.full :where(a).button,

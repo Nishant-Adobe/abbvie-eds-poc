@@ -80,7 +80,7 @@
    ============================================================ */
 
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header .nav-wrapper {
-  background: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
+  background: var(--gradient-hero-nav-wrapper);
   box-shadow: none;
 }
 
@@ -149,9 +149,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
-    linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
+  background: var(--gradient-hero-overlay-dual);
   z-index: 1;
   pointer-events: none;
 }

@@ -121,7 +121,7 @@
   position: absolute;
   inset: 0;
   content: '';
-  background: linear-gradient(90deg, rgb(196 62 0 / 10%) 0%, rgb(196 62 0 / 6%) 38%, rgb(196 62 0 / 0%) 60%);
+  background: var(--gradient-hero-orange-tint);
   pointer-events: none;
   z-index: 1;
 }
@@ -212,11 +212,11 @@
   gap: 10px;
   min-width: unset;
   padding: var(--spacing-8) var(--spacing-16);
-  border: 2px solid #636366;
+  border: 2px solid var(--color-btn-border);
   border-radius: 0;
   background: var(--background-color);
   box-shadow: var(--shadow-green-glow);
-  color: #111;
+  color: var(--color-btn-text);
   font-family: var(--heading-font-family-bold);
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-heading);
@@ -233,7 +233,7 @@
 
 .hero.mavyret-data-hero :where(a).button:hover {
   background: var(--background-color);
-  color: #111;
+  color: var(--color-btn-text);
   text-decoration: none;
 }
 
@@ -264,7 +264,7 @@
   min-height: 7.4rem;
   width: min(100%, 49.2rem);
   padding: 1.2rem 3.2rem 1.2rem 4.8rem;
-  background: #6ca342;
+  background: var(--color-indication-bg);
   color: var(--color-text-on-dark);
   text-align: center;
   clip-path: polygon(0 0, 100% 0, calc(100% - 6.4rem) 100%, 0 100%);
