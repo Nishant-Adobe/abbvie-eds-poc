@@ -67,6 +67,7 @@
   --color-orange-dark: #cf451c;
   --color-orange-light: #f7634f;
   --color-green-primary: #338700;
+  --color-gray-900: #25282a;
 
   /* Alerts */
   --error-color: #cf451c;
@@ -367,23 +368,24 @@
   --hero-indication-bg: rgb(0 0 0 / 70%);
 
   /* ---- Hero: Variant min-heights (mobile base) ---- */
-  --hero-full-min-height: 700px;
-  --hero-full-min-height-mobile: 400px;
-  --hero-full-min-height-desktop: 800px;
-  --hero-compact-min-height: 280px;
-  --hero-compact-min-height-mobile: 200px;
-  --hero-compact-min-height-tablet: 340px;
-  --hero-centered-min-height: 600px;
-  --hero-centered-min-height-mobile: 400px;
-  --hero-video-min-height: 700px;
-  --hero-video-min-height-mobile: 400px;
-  --hero-video-min-height-desktop: 800px;
-  --hero-solid-min-height: 450px;
-  --hero-solid-min-height-mobile: 300px;
-  --hero-solid-min-height-desktop: 500px;
-  --hero-solid-img-max-height: 400px;
-  --hero-split-min-height: 500px;
-  --hero-split-img-max-height: 450px;
+  /* All values in rem (1rem = 10px at 62.5% html font-size) for WCAG 1.4.4 compliance */
+  --hero-full-min-height: 70rem;
+  --hero-full-min-height-mobile: 40rem;
+  --hero-full-min-height-desktop: 80rem;
+  --hero-compact-min-height: 28rem;
+  --hero-compact-min-height-mobile: 20rem;
+  --hero-compact-min-height-tablet: 34rem;
+  --hero-centered-min-height: 60rem;
+  --hero-centered-min-height-mobile: 40rem;
+  --hero-video-min-height: 70rem;
+  --hero-video-min-height-mobile: 40rem;
+  --hero-video-min-height-desktop: 80rem;
+  --hero-solid-min-height: 45rem;
+  --hero-solid-min-height-mobile: 30rem;
+  --hero-solid-min-height-desktop: 50rem;
+  --hero-solid-img-max-height: 40rem;
+  --hero-split-min-height: 50rem;
+  --hero-split-img-max-height: 45rem;
 
   /* ---- Hero: Content max-widths ---- */
   --hero-content-max-width-full: 55%;
@@ -399,7 +401,7 @@
   --hero-layer-opacity-visible: 1;
 
   /* ---- Hero: Solid fallback bg ---- */
-  --hero-solid-bg-fallback: #25282a;
+  --hero-solid-bg-fallback: var(--color-gray-900, #25282a);
 
   /* Line Clamp */
 

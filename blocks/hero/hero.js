@@ -1,8 +1,6 @@
 import { getConfigValue } from '../../scripts/config.js';
 import { isUniversalEditor } from '../../scripts/utils.js';
 
-const DEFAULT_AEM_PUBLISH_URL = 'https://publish-p160552-e1944799.adobeaemcloud.com';
-
 function addSectionClasses(block, section) {
   if (!section) return;
   if (section.classList.contains('navy-overlap') && section.classList.contains('hero-container')) {
@@ -234,13 +232,19 @@ async function initVideo(videoRow, imageCell, block) {
   }
 
   // In the Universal Editor (authoring environment) use the video src as-is.
-  // Otherwise, resolve the publish URL from config, falling back to the default.
+  // Otherwise, resolve the publish URL from project config. If no config value
+  // is present we cannot safely construct an absolute URL — skip video creation
+  // rather than silently pointing at a wrong or decommissioned host.
   let videoURL;
   const authorMode = isUniversalEditor();
   if (authorMode) {
     videoURL = videoSrc;
   } else {
-    const aemPublishUrl = await getConfigValue('aemPublishUrl') || DEFAULT_AEM_PUBLISH_URL;
+    const aemPublishUrl = await getConfigValue('aemPublishUrl');
+    if (!aemPublishUrl) {
+      videoRow.remove();
+      return;
+    }
     const splitedURL = videoSrc.split('/content');
     splitedURL[0] = aemPublishUrl;
     videoURL = splitedURL.join('/content');
