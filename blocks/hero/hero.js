@@ -209,8 +209,11 @@ function initVideo(videoRow, imageCell, block) {
   if (!videoRow) return;
   const link = videoRow.firstElementChild?.querySelector('a[href]');
   const videoSrc = link?.href;
+  const splitedURL = videoSrc.split('/content');
+  splitedURL[0] = 'https://publish-p160552-e1944799.adobeaemcloud.com';
+  const videoURL = splitedURL.join('/content');
   videoRow.remove();
-  if (!videoSrc || !window.matchMedia('(min-width: 744px)').matches) return;
+  if (!videoURL || !window.matchMedia('(min-width: 744px)').matches) return;
 
   const container = document.createElement('div');
   container.classList.add('hero-video-bg');
@@ -223,8 +226,8 @@ function initVideo(videoRow, imageCell, block) {
   video.setAttribute('preload', 'none');
 
   const source = document.createElement('source');
-  source.src = videoSrc;
-  source.type = /\.webm(\?.*)?$/i.test(videoSrc) ? 'video/webm' : 'video/mp4';
+  source.src = videoURL;
+  source.type = /\.webm(\?.*)?$/i.test(videoURL) ? 'video/webm' : 'video/mp4';
   video.appendChild(source);
   container.appendChild(video);
   (imageCell || block.querySelector('div')).appendChild(container);
