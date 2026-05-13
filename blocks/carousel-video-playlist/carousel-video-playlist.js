@@ -444,7 +444,7 @@ export async function decorateBlock(block) {
             thumbnail: video.thumbnail || video.poster || '',
             title: video.name || '',
             description: video.description || '',
-            transcriptHref: '',
+            transcriptHref: video.longDescription || video.long_description || '',
           }));
 
           activeTitle.textContent = items[0].title;
@@ -460,6 +460,12 @@ export async function decorateBlock(block) {
               bcPlayer.playlist.currentItem(idx);
               activeTitle.textContent = items[idx].title;
               activeDesc.textContent = items[idx].description;
+              if (items[idx].transcriptHref) {
+                transcriptLink.href = items[idx].transcriptHref;
+                transcriptLink.hidden = false;
+              } else {
+                transcriptLink.hidden = true;
+              }
             });
           });
 
