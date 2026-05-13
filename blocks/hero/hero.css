@@ -758,10 +758,10 @@ color: inherit;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.full :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.solid :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
 
 /* =====================================================
    Hero Dual-CTA Variant — two side-by-side CTAs
@@ -939,7 +939,7 @@ color: inherit;
 }
 
 .hero.full h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   font-size: var(--font-size-h1-hero, var(--font-size-h1, 2.6rem));
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
@@ -1039,7 +1039,7 @@ color: inherit;
 }
 
 .hero.compact h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   font-size: var(--font-size-h2, 2rem);
   line-height: var(--line-height-h2, 2.5rem);
 }
@@ -1208,7 +1208,7 @@ color: inherit;
 }
 
 .hero.centered h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   text-align: center;
 }
 
@@ -1318,7 +1318,7 @@ color: inherit;
   display: block;
 }
 
-.hero.video h1 { color: var(--color-text-on-dark, #fff); }
+.hero.video h1 { color: var(--color-text-on-dark, var(--color-white)); }
 
 .hero.video p {
   color: var(--color-text-on-dark-90);
@@ -1332,10 +1332,6 @@ color: inherit;
 @media (width < 744px) {
   .hero.video {
     min-height: var(--hero-video-min-height-mobile);
-  }
-
-  .hero.video .hero-video-bg {
-    display: none;
   }
 
   .hero.video > :where(div):nth-child(2) {
@@ -1409,7 +1405,7 @@ color: inherit;
 
 .hero.solid h1,
 .hero.solid h2 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
 }
 
 .hero.solid p {

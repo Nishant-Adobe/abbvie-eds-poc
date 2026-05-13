@@ -229,6 +229,7 @@ function initVideo(videoRow, imageCell, block) {
   }
 
   const splitedURL = videoSrc.split('/content');
+  // Ignore Hard-coded environment-specific AEM Cloud publish URL for now
   splitedURL[0] = 'https://publish-p160552-e1944799.adobeaemcloud.com';
   const videoURL = splitedURL.join('/content');
   videoRow.remove();
@@ -241,7 +242,7 @@ function initVideo(videoRow, imageCell, block) {
   video.setAttribute('muted', '');
   video.setAttribute('loop', '');
   video.setAttribute('playsinline', '');
-  video.setAttribute('preload', 'true');
+  video.setAttribute('preload', 'auto');
 
   const source = document.createElement('source');
   source.src = videoURL;
