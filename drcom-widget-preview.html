@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>drcom-widget Block — All Brands Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; }
+
+  .page-header {
+    background: #071d49;
+    color: white;
+    padding: 24px 32px;
+    text-align: center;
+  }
+  .page-header h1 { font-size: 1.6rem; margin-bottom: 6px; }
+  .page-header p { font-size: 0.9rem; opacity: 0.75; }
+
+  .brand-section {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 24px;
+  }
+
+  .brand-label {
+    display: inline-block;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .brand-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .brand-url {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 20px;
+  }
+
+  .widget-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.1);
+  }
+
+  .widget-card-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #555;
+  }
+
+  .widget-card-header code {
+    background: #f5f5f5;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #c0392b;
+  }
+
+  .widget-body {
+    padding: 32px 24px;
+  }
+
+  /* ===================== */
+  /* ABBVIE BRAND STYLES   */
+  /* ===================== */
+  .abbvie-widget {
+    --primary: #071d49;
+    --accent: #5a1af4;
+    --btn-bg: #071d49;
+    --btn-text: white;
+    --input-border: #c5cdd9;
+    --label-color: #333;
+  }
+
+  /* ===================== */
+  /* BOTOX BRAND STYLES    */
+  /* ===================== */
+  .botox-widget {
+    --primary: #6b2fa0;
+    --accent: #6b2fa0;
+    --btn-bg: #6b2fa0;
+    --btn-text: white;
+    --input-border: #c5cdd9;
+    --label-color: #333;
+  }
+
+  /* ===================== */
+  /* RINVOQ BRAND STYLES   */
+  /* ===================== */
+  .rinvoq-widget {
+    --primary: #5c0a17;
+    --accent: #a50034;
+    --btn-bg: #a50034;
+    --btn-text: white;
+    --input-border: #c5cdd9;
+    --label-color: #333;
+  }
+
+  /* Common widget styles */
+  .drcom-widget-container {
+    max-width: 600px;
+  }
+
+  .drcom-widget-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 24px;
+  }
+
+  .drcom-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--label-color, #333);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 10px 14px;
+    border: 1px solid var(--input-border, #ccc);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #333;
+    background: white;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .btn-search {
+    padding: 12px 32px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .btn-search:hover {
+    opacity: 0.9;
+  }
+
+  .terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: #555;
+  }
+
+  .terms-row input[type="checkbox"] {
+    margin-top: 2px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .terms-row a {
+    color: var(--accent);
+  }
+
+  .widget-note {
+    font-size: 0.75rem;
+    color: #777;
+    margin-top: 16px;
+    line-height: 1.5;
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+  }
+
+  /* Loading placeholder state */
+  .drcom-widget-placeholder {
+    background: #f4f4f4;
+    border-radius: 4px;
+    min-height: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.85rem;
+  }
+
+  .drcom-widget-placeholder::before {
+    content: '';
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e0e0e0;
+    border-top-color: var(--accent, #0057cc);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 12px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Results area */
+  .results-preview {
+    margin-top: 24px;
+    padding: 16px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+  }
+
+  .results-preview h4 {
+    font-size: 0.85rem;
+    color: #999;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Authoring model display */
+  .authoring-model {
+    background: #1e1e2e;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 24px;
+  }
+
+  .authoring-model h5 {
+    color: #a6adc8;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .authoring-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .authoring-table td {
+    padding: 4px 8px;
+    color: #cdd6f4;
+    border: 1px solid #313244;
+  }
+
+  .authoring-table td:first-child {
+    background: #313244;
+    color: #a6e3a1;
+    font-weight: 700;
+    width: 140px;
+  }
+
+  .divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, #ccc, transparent);
+    margin: 40px 0;
+  }
+
+  .info-box {
+    background: #e8f4ff;
+    border: 1px solid #b8d9f8;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #1a4d7e;
+    margin-bottom: 32px;
+  }
+
+  .info-box strong { color: #0d3460; }
+  .info-box code {
+    background: #cde3f7;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>drcom-widget Block — Brand Showcase</h1>
+  <p>Doctor.com Directory Widget · 3 Brand Implementations: <strong>abbvie</strong> · <strong>botox</strong> · <strong>rinvoq</strong></p>
+</div>
+
+<div class="brand-section">
+  <div class="info-box">
+    <strong>What is the drcom-widget?</strong><br>
+    The <code>drcom-widget</code> block lazy-loads the <strong>Doctor.com (Dr.com) directory widget</strong> — a third-party <code>&lt;directory-widget&gt;</code> custom element that renders a physician/specialist finder form. It loads the external script from <code>https://widget.doctor.com/directory/app.js</code> only when the block enters the viewport (IntersectionObserver). Each brand configures it with a unique <code>partner-id</code> provided by Doctor.com.
+    <br><br>
+    <strong>Authoring fields:</strong> <code>partner-id</code> (required), <code>heading</code> (optional), <code>api-env</code> (prod/test)
+  </div>
+
+  <!-- =================== ABBVIE =================== -->
+  <div>
+    <span class="brand-label" style="background:#071d49;">AbbVie Corporate</span>
+    <div class="brand-title">AbbVie — Find a Healthcare Provider</div>
+    <div class="brand-url">abbvie.com/find-a-provider · Brand: <code>abbvie</code></div>
+  </div>
+
+  <div class="widget-card">
+    <div class="widget-card-header">
+      <code>drcom-widget</code>
+      <span>brand: abbvie · partner-id: [abbvie-partner-id] · api-env: prod</span>
+    </div>
+    <div class="widget-body abbvie-widget">
+      <div class="drcom-widget-container">
+        <h2 class="drcom-widget-heading">Find a Healthcare Provider</h2>
+        <div class="drcom-form">
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label>Location (ZIP Code or City)</label>
+              <input type="text" placeholder="Enter ZIP code or city name">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Distance</label>
+              <select>
+                <option>5 Miles</option>
+                <option selected>10 Miles</option>
+                <option>25 Miles</option>
+                <option>50 Miles</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Specialty</label>
+            <select>
+              <option>Select Specialty</option>
+              <option>Internal Medicine</option>
+              <option>Rheumatology</option>
+              <option>Oncology</option>
+              <option>Gastroenterology</option>
+            </select>
+          </div>
+          <div class="terms-row">
+            <input type="checkbox" id="terms-abbvie">
+            <label for="terms-abbvie">By checking this box, you acknowledge that you have read and agree to the <a href="#">Terms and Conditions</a> for this directory.</label>
+          </div>
+          <div class="form-actions">
+            <button class="btn-search">Search</button>
+          </div>
+        </div>
+        <p class="widget-note"><strong>Please note:</strong> Although we update our directory regularly, this list may not have current provider information. This list is compiled by AbbVie. The results shown may not be inclusive of all physicians who may have experience with AbbVie therapies in your area.</p>
+      </div>
+      <div class="results-preview">
+        <h4>⟶ Doctor.com <code>&lt;directory-widget&gt;</code> renders results here after search</h4>
+      </div>
+    </div>
+    <div class="authoring-model">
+      <h5>Authoring Content Model (SharePoint / Google Docs)</h5>
+      <table class="authoring-table">
+        <tr><td>drcom-widget</td><td></td></tr>
+        <tr><td>heading</td><td>Find a Healthcare Provider</td></tr>
+        <tr><td>partner-id</td><td>abbvie-partner-123</td></tr>
+        <tr><td>api-env</td><td>prod</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- =================== BOTOX =================== -->
+  <div>
+    <span class="brand-label" style="background:#6b2fa0;">BOTOX®</span>
+    <div class="brand-title">BOTOX® — Find a BOTOX® Specialist</div>
+    <div class="brand-url">botox.com/find-a-botox-specialist · Brand: <code>botox</code></div>
+  </div>
+
+  <div class="widget-card">
+    <div class="widget-card-header">
+      <code>drcom-widget</code>
+      <span>brand: botox · partner-id: [botox-partner-id] · api-env: prod</span>
+    </div>
+    <div class="widget-body botox-widget">
+      <div class="drcom-widget-container">
+        <h2 class="drcom-widget-heading">Find a BOTOX® Specialist</h2>
+        <div class="drcom-form">
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label>Location (ZIP Code or City)</label>
+              <input type="text" placeholder="Enter ZIP code or city name">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Distance</label>
+              <select>
+                <option>5 Miles</option>
+                <option selected>10 Miles</option>
+                <option>25 Miles</option>
+                <option>50 Miles</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Condition</label>
+            <select>
+              <option>Select Condition</option>
+              <option>Cervical Dystonia</option>
+              <option>Chronic Migraine</option>
+              <option>Overactive Bladder</option>
+              <option>Upper Limb Spasticity</option>
+              <option>Blepharospasm</option>
+            </select>
+          </div>
+          <div class="terms-row">
+            <input type="checkbox" id="terms-botox">
+            <label for="terms-botox">By checking this box, you acknowledge that you have read and agree to the <a href="#">Terms and Conditions</a> for this directory.</label>
+          </div>
+          <div class="form-actions">
+            <button class="btn-search">Search</button>
+          </div>
+        </div>
+        <p class="widget-note"><strong>Please note:</strong> Although we update our directory regularly, this list may not have current provider information. This list is compiled by AbbVie and includes physicians known to have experience with BOTOX® in the past 5 years. See <a href="#" style="color:var(--accent);">Terms and Conditions</a> for additional details.</p>
+      </div>
+      <div class="results-preview">
+        <h4>⟶ Doctor.com <code>&lt;directory-widget&gt;</code> renders results here after search</h4>
+      </div>
+    </div>
+    <div class="authoring-model">
+      <h5>Authoring Content Model (SharePoint / Google Docs)</h5>
+      <table class="authoring-table">
+        <tr><td>drcom-widget</td><td></td></tr>
+        <tr><td>heading</td><td>Find a BOTOX® Specialist</td></tr>
+        <tr><td>partner-id</td><td>botox-partner-456</td></tr>
+        <tr><td>api-env</td><td>prod</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- =================== RINVOQ =================== -->
+  <div>
+    <span class="brand-label" style="background:#a50034;">RINVOQ®</span>
+    <div class="brand-title">RINVOQ® — Find a Doctor</div>
+    <div class="brand-url">rinvoq.com/find-a-doctor · Brand: <code>rinvoq</code></div>
+  </div>
+
+  <div class="widget-card">
+    <div class="widget-card-header">
+      <code>drcom-widget</code>
+      <span>brand: rinvoq · partner-id: [rinvoq-partner-id] · api-env: prod</span>
+    </div>
+    <div class="widget-body rinvoq-widget">
+      <div class="drcom-widget-container">
+        <h2 class="drcom-widget-heading">Find a Doctor</h2>
+        <div class="drcom-form">
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label>Location (ZIP Code or City)</label>
+              <input type="text" placeholder="Enter ZIP code or city name">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Distance</label>
+              <select>
+                <option>5 Miles</option>
+                <option selected>10 Miles</option>
+                <option>25 Miles</option>
+                <option>50 Miles</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Condition</label>
+            <select>
+              <option>Select Condition</option>
+              <option>Moderate to Severe Eczema (Atopic Dermatitis)</option>
+              <option>Rheumatoid Arthritis</option>
+              <option>Psoriatic Arthritis</option>
+              <option>Ankylosing Spondylitis</option>
+              <option>Ulcerative Colitis</option>
+              <option>Crohn's Disease</option>
+            </select>
+          </div>
+          <div class="terms-row">
+            <input type="checkbox" id="terms-rinvoq">
+            <label for="terms-rinvoq">By checking this box, you acknowledge that you have read and agree to the <a href="#">Terms and Conditions</a> for this directory.</label>
+          </div>
+          <div class="form-actions">
+            <button class="btn-search">Search</button>
+          </div>
+        </div>
+        <p class="widget-note"><strong>Please note:</strong> Although we update our directory regularly, this list may not have current provider information. This list is compiled by AbbVie and includes physicians known to have experience with RINVOQ®. The results shown may not be inclusive of all physicians in your area.</p>
+      </div>
+      <div class="results-preview">
+        <h4>⟶ Doctor.com <code>&lt;directory-widget&gt;</code> renders results here after search</h4>
+      </div>
+    </div>
+    <div class="authoring-model">
+      <h5>Authoring Content Model (SharePoint / Google Docs)</h5>
+      <table class="authoring-table">
+        <tr><td>drcom-widget</td><td></td></tr>
+        <tr><td>heading</td><td>Find a Doctor</td></tr>
+        <tr><td>partner-id</td><td>rinvoq-partner-789</td></tr>
+        <tr><td>api-env</td><td>prod</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Technical summary -->
+  <div class="divider"></div>
+
+  <div class="info-box" style="background:#f0f9eb;border-color:#b7e1a1;color:#1a4d1a;">
+    <strong>📁 Block Location:</strong> <code>blocks/drcom-widget/</code><br><br>
+    <strong>Brand CSS overrides:</strong>
+    <code>blocks/drcom-widget/abbvie/drcom-widget.css</code> ·
+    <code>blocks/drcom-widget/botox/drcom-widget.css</code> ·
+    <code>blocks/drcom-widget/rinvoq/drcom-widget.css</code><br><br>
+    <strong>Script loading:</strong> External Dr.com widget loaded from <code>https://widget.doctor.com/directory/app.js</code> via IntersectionObserver (lazy load, 200px rootMargin)<br><br>
+    <strong>Custom element:</strong> <code>&lt;directory-widget widget.partner="[partner-id]"&gt;</code> — rendered by Dr.com's own script<br><br>
+    <strong>UE Component model:</strong> <code>blocks/drcom-widget/_drcom-widget.json</code> — fields: heading, partner-id, api-env
+  </div>
+</div>
+
+</body>
+</html>

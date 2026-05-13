@@ -1,33 +1,93 @@
-.drcom-widget-heading {
-  margin-bottom: var(--spacing-16, 16px);
+/* =============================================================================
+   drcom-widget — Base styles
+   ============================================================================= */
+
+.drcom-widget {
+  container-type: inline-size;
+  width: 100%;
 }
 
-.drcom-widget-placeholder {
-  background: var(--light-color, #f4f4f4);
+/* Heading above the widget */
+.drcom-widget .drcom-widget-heading {
+  font-size: var(--heading-font-size-m, 1.5rem);
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--color-heading, var(--text-color, #121212));
+  margin-block-end: 1rem;
+}
+
+/* Widget custom element wrapper */
+.drcom-widget directory-widget {
+  display: block;
+  width: 100%;
+  min-height: 480px; /* prevent CLS while widget initialises */
+}
+
+/* =============================================================================
+   Loading placeholder / spinner
+   ============================================================================= */
+
+.drcom-widget .drcom-widget-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 480px;
+  background-color: var(--color-background-alt, #f5f5f5);
   border-radius: 4px;
-  min-height: 200px;
-  position: relative;
 }
 
-.drcom-widget-placeholder[aria-busy='true']::after {
-  animation: drcom-spin 0.8s linear infinite;
-  border: 3px solid var(--light-color, #e0e0e0);
-  border-top-color: var(--link-color, #0057cc);
-  border-radius: 50%;
+/* Spinner using a pseudo-element — no extra markup required */
+.drcom-widget .drcom-widget-loading::after {
   content: '';
-  height: 32px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 32px;
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid var(--color-border, #ccc);
+  border-top-color: var(--color-brand-primary, #071d49);
+  animation: drcom-spin 0.8s linear infinite;
 }
 
 @keyframes drcom-spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-directory-widget {
-  display: block;
-  width: 100%;
+/* =============================================================================
+   Error state (missing partner-id)
+   ============================================================================= */
+
+.drcom-widget .drcom-widget-error {
+  padding: 1rem 1.25rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  color: #664d03;
+  font-size: var(--body-font-size-s, 0.875rem);
+  font-weight: 500;
+}
+
+/* =============================================================================
+   Responsive — container queries
+   ============================================================================= */
+
+/* Narrow container (< 480px) */
+@container (max-width: 479px) {
+  .drcom-widget .drcom-widget-heading {
+    font-size: var(--heading-font-size-s, 1.25rem);
+  }
+
+  .drcom-widget directory-widget,
+  .drcom-widget .drcom-widget-loading {
+    min-height: 560px; /* taller on mobile as widget stacks vertically */
+  }
+}
+
+/* Wide container (≥ 1024px) */
+@container (min-width: 1024px) {
+  .drcom-widget directory-widget,
+  .drcom-widget .drcom-widget-loading {
+    min-height: 420px;
+  }
 }
