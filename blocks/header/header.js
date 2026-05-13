@@ -577,11 +577,26 @@ function buildMenuItem(block, isNavigation = false) {
   button.appendChild(text);
   const { submenu } = createSubmenuWrapper(label);
   if (isLinkLanguageBlock) {
-    const isLinkLanguage = block.querySelector('ul');
-    if (isLinkLanguage) {
-      isLinkLanguage.classList.add('navigation-group');
+    const uls = [...block.querySelectorAll('ul')];
+    if (uls.length > 1 && isNavigation) {
+      const megaWrapper = createElement('div', { className: 'mega-menu-wrapper' });
+      const megaLeft = createElement('div', { className: 'mega-menu-left' });
+      const megaCard = createElement('div', { className: 'mega-menu-card' });
+      const firstUlClone = uls[0].cloneNode(true);
+      firstUlClone.classList.add('navigation-group');
+      megaLeft.appendChild(firstUlClone);
+      [...block.querySelectorAll('pre, ul')].forEach((el) => {
+        if (el === uls[0]) return;
+        const clone = el.cloneNode(true);
+        if (clone.tagName === 'UL') clone.classList.add('navigation-group');
+        megaCard.appendChild(clone);
+      });
+      megaWrapper.append(megaLeft, megaCard);
+      submenu.appendChild(megaWrapper);
+    } else if (uls.length === 1) {
+      uls[0].classList.add('navigation-group');
       if (isNavigation) {
-        submenu.appendChild(isLinkLanguage.cloneNode(true));
+        submenu.appendChild(uls[0].cloneNode(true));
       }
     }
   }
@@ -938,14 +953,87 @@ export default async function decorate(block) {
             textContent: link.textContent.trim(),
           });
           const dropMenu = createElement('ul', { attributes: { role: 'menu' } });
-          nextChild.querySelectorAll('li').forEach((subLi) => {
-            const subLink = subLi.querySelector('a');
-            if (!subLink) return;
-            const sli = createElement('li', { attributes: { role: 'none' } });
-            subLink.setAttribute('role', 'menuitem');
-            sli.appendChild(subLink.cloneNode(true));
-            dropMenu.appendChild(sli);
-          });
+          const topLevelLis = [...nextChild.querySelectorAll(':scope > li')];
+          const hasFlyout = topLevelLis.some((tli) => tli.querySelector(':scope > ul'));
+
+          if (hasFlyout) {
+            // Two-column flyout: category list on left, sub-items revealed on hover at right
+            dropMenu.classList.add('utility-flyout-menu');
+            const colLeft = createElement('li', { className: 'utility-col-left', attributes: { role: 'none' } });
+            const colRight = createElement('li', { className: 'utility-col-right', attributes: { role: 'none' } });
+            const catList = createElement('ul', { className: 'utility-category-list' });
+
+            topLevelLis.forEach((topLi, catIdx) => {
+              const catA = topLi.querySelector(':scope > p > a, :scope > a');
+              const subUl = topLi.querySelector(':scope > ul');
+              const catItem = createElement('li', { className: 'utility-category-item', attributes: { role: 'none' } });
+              catItem.dataset.idx = String(catIdx);
+              const catBtn = createElement('button', {
+                attributes: { type: 'button', role: 'menuitem' },
+                textContent: catA ? catA.textContent.trim() : '',
+              });
+              catItem.appendChild(catBtn);
+              catList.appendChild(catItem);
+
+              if (subUl) {
+                const subPanel = createElement('ul', { className: 'utility-sub-list', attributes: { role: 'none' } });
+                subPanel.dataset.idx = String(catIdx);
+                subPanel.setAttribute('hidden', '');
+                subUl.querySelectorAll(':scope > li').forEach((subLi) => {
+                  const subLink = subLi.querySelector('a');
+                  if (!subLink) return;
+                  const sli = createElement('li', { attributes: { role: 'none' } });
+                  sli.appendChild(subLink.cloneNode(true));
+                  subPanel.appendChild(sli);
+                });
+                colRight.appendChild(subPanel);
+              }
+            });
+
+            let flyoutHideTimer;
+            catList.querySelectorAll('.utility-category-item').forEach((catItem) => {
+              catItem.addEventListener('mouseenter', () => {
+                clearTimeout(flyoutHideTimer);
+                const activeIdx = catItem.dataset.idx;
+                catList.querySelectorAll('.utility-category-item').forEach((ci) => ci.classList.toggle('active', ci === catItem));
+                const menuRect = dropMenu.getBoundingClientRect();
+                const itemRect = catItem.getBoundingClientRect();
+                colRight.style.top = `${itemRect.top - menuRect.top}px`;
+                colRight.querySelectorAll('.utility-sub-list').forEach((sl) => {
+                  if (sl.dataset.idx === activeIdx) sl.removeAttribute('hidden');
+                  else sl.setAttribute('hidden', '');
+                });
+              });
+              catItem.addEventListener('mouseleave', () => {
+                flyoutHideTimer = setTimeout(() => {
+                  catItem.classList.remove('active');
+                  const subPanel = colRight.querySelector(`.utility-sub-list[data-idx="${catItem.dataset.idx}"]`);
+                  if (subPanel) subPanel.setAttribute('hidden', '');
+                }, 150);
+              });
+            });
+            colRight.addEventListener('mouseenter', () => clearTimeout(flyoutHideTimer));
+            colRight.addEventListener('mouseleave', () => {
+              flyoutHideTimer = setTimeout(() => {
+                catList.querySelectorAll('.utility-category-item').forEach((ci) => ci.classList.remove('active'));
+                colRight.querySelectorAll('.utility-sub-list').forEach((sl) => sl.setAttribute('hidden', ''));
+              }, 150);
+            });
+
+            colLeft.appendChild(catList);
+            dropMenu.append(colLeft, colRight);
+          } else {
+            // Simple single-level dropdown
+            topLevelLis.forEach((subLi) => {
+              const subLink = subLi.querySelector('a');
+              if (!subLink) return;
+              const sli = createElement('li', { attributes: { role: 'none' } });
+              subLink.setAttribute('role', 'menuitem');
+              sli.appendChild(subLink.cloneNode(true));
+              dropMenu.appendChild(sli);
+            });
+          }
+
           btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const expanded = btn.getAttribute('aria-expanded') === 'true';

@@ -2059,12 +2059,13 @@ header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .su
   color: var(--color-brand-primary);
   width: 100%;
   display: block;
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: var(--font-weight-700);
+  font-size: var(--font-size-16);
 }
 
 header nav .nav-sections.nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 a:hover {
-  background-color: #baecff;
+  background-color: var(--color-nav-submenu-hover-bg);
+  font-family: var(--body-font-family);
 }
 
 /* Nav direct link */
@@ -2105,7 +2106,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
   header .nav-wrapper {
     position: relative;
     padding: var(--spacing-20) 0 0;
-    max-width: 1220px;
+    max-width: var(--header-wrapper-max-width);
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
@@ -2290,6 +2291,132 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     color: var(--color-text-black);
   }
 
+  /* ── Utility flyout: two-column SELECT YOUR SPECIALTY ── */
+  header .nav-utility button[aria-expanded="true"] + ul[role="menu"].utility-flyout-menu {
+    display: block;
+    padding: 0;
+    min-width: var(--header-utility-dropdown-min-width);
+    position: absolute;
+  }
+
+  /* Override global nav-utility li rules (display:flex; height:100%) for flyout columns */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header .nav-utility .utility-flyout-menu li.utility-col-left {
+    display: block;
+    height: auto;
+    align-items: unset;
+    flex: unset;
+    list-style: none;
+    padding: 0;
+  }
+
+  /* Right panel — separate floating box to the right of the left panel */
+  /* stylelint-disable-next-line no-descending-specificity */
+  header .nav-utility .utility-flyout-menu li.utility-col-right {
+    display: none;
+    position: absolute;
+    left: 95%;
+    top: 0;
+    list-style: none;
+    padding: 0;
+    background: var(--background-color);
+    border: var(--header-utility-dropdown-border-width) solid var(--header-utility-dropdown-border-color);
+    border-radius: var(--header-utility-dropdown-radius);
+    min-width: var(--header-utility-dropdown-min-width);
+    box-shadow: var(--header-flyout-box-shadow);
+    z-index: var(--z-index-10);
+  }
+
+  /* Show right panel when a sub-list is visible */
+  header .nav-utility .utility-flyout-menu li.utility-col-right:has(.utility-sub-list:not([hidden])) {
+    display: block;
+  }
+
+  header .nav-utility .utility-category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Override global nav-utility li rules for category items */
+  header .nav-utility .utility-flyout-menu .utility-category-item {
+    display: block;
+    height: auto;
+    align-items: unset;
+    border-bottom: var(--separator-height-1) solid var(--header-utility-dropdown-divider);
+  }
+
+  header .nav-utility .utility-flyout-menu .utility-category-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Scoped inside .utility-flyout-menu to beat ul[role="menubar"] li > button (0,2,4) */
+  header .nav-utility .utility-flyout-menu .utility-category-item > button {
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: var(--body-font-family);
+    font-size: var(--font-size-nav);
+    font-weight: var(--font-weight-heading);
+    text-transform: uppercase;
+    letter-spacing: var(--header-utility-letter-spacing);
+    color: var(--color-text-black);
+    padding: var(--header-utility-dropdown-item-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: var(--line-height-20);
+    white-space: nowrap;
+  }
+
+  header .nav-utility .utility-flyout-menu .utility-category-item > button::after {
+    content: '›';
+    display: inline;
+    width: auto;
+    height: auto;
+    border: none;
+    font-size: var(--font-size-20);
+    font-weight: var(--font-weight-400);
+    line-height: 1;
+  }
+
+  header .nav-utility .utility-flyout-menu .utility-category-item.active > button,
+  header .nav-utility .utility-flyout-menu .utility-category-item > button:hover {
+    background: var(--color-brand-primary-light);
+    color: var(--color-text-black);
+  }
+
+  header .nav-utility .utility-sub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header .nav-utility .utility-sub-list li {
+    border-bottom: var(--separator-height-1) solid var(--header-utility-dropdown-divider);
+    padding: 0;
+    margin: 0;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header .nav-utility .utility-sub-list li:last-child {
+    border-bottom: none;
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header .nav-utility .utility-sub-list a {
+    padding: var(--header-utility-dropdown-item-padding);
+    line-height: var(--line-height-20);
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  header .nav-utility .utility-flyout-menu .utility-sub-list a::after {
+    content: none;
+  }
+
   /* Indication text wrapper — right, fills remaining space */
   header .nav-utility .nav-indication {
     flex: 1;
@@ -2313,7 +2440,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     align-items: center;
     background: transparent;
     position: relative;
-    z-index: var(--z-index-60);
+    z-index: 9;
     overflow: visible;
     visibility: visible;
     opacity: var(--opacity-full);
@@ -2344,6 +2471,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
   }
 
   /* Nav buttons/links — white, 16px, no vertical padding (matches live site) */
+  /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > button,
   header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-link {
     color: var(--color-text-on-dark);
@@ -2359,7 +2487,9 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
   }
 
   /* Hover/active — dimmed */
+  /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-sections .default-content-wrapper > ul > li > button:hover,
+  /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > button {
     color: var(--color-text-on-dark);
     opacity: var(--opacity-hover);
@@ -2438,6 +2568,11 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     min-height: auto;
   }
 
+  /* Wider panel when two-column mega layout is present */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1:has(.mega-menu-wrapper) {
+    width: var(--header-submenu-width-mega);
+  }
+
   /* Nav submenu panel — blue border, rounded corners, top caret */
   header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li .submenu-level-1 {
     border: var(--header-utility-dropdown-border-width) solid var(--header-utility-dropdown-border-color);
@@ -2481,18 +2616,50 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     border-radius: 0;
     padding: 0;
     margin: 0;
-    display: block;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: var(--header-submenu-width-mega);
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-left {
     display: block;
     grid-column: auto;
     margin: 0;
+    flex: 1;
   }
 
-  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card {
+  /* Hide complex CMS-fetched mega-menu cards; simple nav-group cards are visible */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card.mega-card-primary,
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card.mega-card-secondary {
     display: none;
+  }
+
+  /* Two-column right panel — section header + linked list */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card:not(.mega-card-primary, .mega-card-secondary) {
+    display: block;
+    flex: 1;
+    border-left: var(--separator-height-1) solid var(--header-utility-dropdown-divider);
+  }
+
+  /* Section header from <pre><code> authoring */
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card pre {
+    margin: 0;
+    white-space: normal;
+    background: var(--color-background-page);
+    border-radius: 0;
+    padding: var(--spacing-05);
+  }
+
+  header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .mega-menu-card pre > code {
+    font-family: var(--body-font-family);
+    font-size: var(--font-size-nav);
+    font-weight: var(--font-weight-heading);
+    text-transform: uppercase;
+    letter-spacing: var(--header-utility-letter-spacing);
+    color: var(--color-text-on-dark);
+    background: transparent;
+    padding: 0;
   }
 
   header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 .close-btn {
@@ -2623,6 +2790,7 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
   header.hide-nav .nav-utility ul[role="menubar"] li > button[aria-haspopup="true"]::after {
     background-color: var(--text-color);
   }
+
   header nav .nav-search .search-toggle[aria-expanded="false"] span.icon-close {
     display: none;
   }
