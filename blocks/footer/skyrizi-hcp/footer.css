@@ -1,4 +1,5 @@
-/** TODO  - Fix ESlint Issue */
+/* stylelint-disable no-descending-specificity, selector-not-notation, no-duplicate-selectors, media-feature-range-notation, declaration-block-no-redundant-longhand-properties */
+
 /* ============================================================
    Footer Block — Base styles
    Live-matching flat horizontal layout (matches all 6 AbbVie brand sites):
@@ -9,7 +10,9 @@
      --color-background-footer, --color-text-on-dark,
      --body-font-family, --font-size-footer
    ============================================================ */
+
 /* ── Block-scoped tokens (W3C DTCG: --footer-{type}-{semantic}-{variant}) ── */
+
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
   --footer-color-text: var(--color-text-on-dark, #fff);
@@ -26,11 +29,15 @@
   --footer-spacing-legal-gap: var(--spacing-60);
   --footer-spacing-bottom-gap: var(--spacing-12);
   --footer-logo-height: var(--spacing-22);
+  --footer-content-max-width: 1200px;
 }
+
 /* ── Container: flat, full-bleed ─────────────────────────────── */
+
 .footer-wrapper {
   margin-top: 0;
 }
+
 .footer {
   background-color: var(--footer-color-bg);
   color: var(--footer-color-text);
@@ -41,22 +48,32 @@
   border-top-left-radius: 0;
   max-width: none;
   margin: 0;
-  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
+  padding-block: var(--footer-spacing-padding-y);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
   position: relative;
   box-sizing: border-box;
 }
+
 .footer p {
   margin: 0;
 }
+
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
+
 /* Auto-hide any empty column (depends on what's authored) */
+
 .footer .footer-column:empty {
   display: none;
 }
+
 /* ── Link rows ──────────────────────────────────────────────── */
+
 .footer .footer-columns {
   display: flex;
   flex-direction: column;
@@ -64,27 +81,35 @@
   margin: 0;
   padding: 0;
 }
+
 .footer .footer-column {
   width: 100%;
   margin: 0;
   text-align: center;
 }
+
 /* Primary column may hold both link rows (when 2 ULs authored in section 1) — stack them */
+
 .footer .footer-links-primary {
   display: flex;
   flex-direction: column;
   gap: var(--footer-spacing-row-gap);
 }
+
 /* Reset legacy "first p as label" styling */
+
 .footer .footer-column p:first-child {
   text-transform: none;
   margin-bottom: 0;
 }
+
 .footer .footer-links-tertiary p:last-child {
   margin-top: 0;
   text-align: center;
 }
+
 /* UL row — flex layout, gap-separated */
+
 .footer .footer-links-primary ul,
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
@@ -102,6 +127,7 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
+
 .footer .footer-links-primary li,
 .footer .footer-links-secondary li,
 .footer .footer-links-tertiary li,
@@ -111,7 +137,9 @@
   margin: 0;
   padding: 0;
 }
+
 /* Link styling — high specificity to override legacy heading-style rules */
+
 .footer .footer-links-primary li a,
 .footer .footer-links-secondary li a,
 .footer .footer-links-tertiary li a {
@@ -124,6 +152,7 @@
   text-decoration: none;
   white-space: nowrap;
 }
+
 .footer .footer-links-primary li a:hover,
 .footer .footer-links-secondary li a:hover,
 .footer .footer-links-tertiary li a:hover {
@@ -131,7 +160,9 @@
   font-weight: var(--footer-font-weight);
   text-decoration: underline;
 }
+
 /* P-based authoring fallback (pipe-separated text) */
+
 .footer .footer-links-secondary p,
 .footer .footer-links-tertiary p {
   margin: 0;
@@ -143,7 +174,9 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
+
 /* External link icon */
+
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -156,7 +189,9 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
+
 /* ── Footer bottom: legal text + number + logo ──────────────── */
+
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -165,6 +200,7 @@
   padding: 0;
   margin-top: var(--footer-spacing-legal-gap);
 }
+
 .footer .footer-bottom p {
   margin: 0;
   text-align: center;
@@ -174,7 +210,9 @@
   line-height: var(--footer-line-height);
   text-transform: none;
 }
+
 /* Anchors inside footer-bottom paragraphs inherit text styling */
+
 .footer .footer-bottom p a {
   color: var(--footer-color-link);
   font-family: inherit;
@@ -183,67 +221,84 @@
   line-height: inherit;
   text-decoration: underline;
 }
+
 .footer .footer-bottom p a:hover {
   text-decoration: none;
 }
-/* Strip button-pill styling when legal text is authored as a button (legacy) */
-.footer .footer-bottom a.button,
-.footer .footer-bottom .button-container a {
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  color: var(--footer-color-link) !important;
-  font-size: var(--footer-font-size) !important;
-  font-weight: var(--footer-font-weight) !important;
-  text-decoration: underline !important;
-  text-transform: none !important;
-  display: inline !important;
-  white-space: normal !important;
-  line-height: var(--footer-line-height) !important;
+
+/* Strip button-pill styling when legal text is authored as a button (legacy).
+   Selector specificity (0,4,1) beats global a.button rules in styles/styles.css
+   without needing !important. */
+
+.footer-wrapper .footer .footer-bottom a.button,
+.footer-wrapper .footer .footer-bottom .button-container a {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--footer-color-link);
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
+  text-decoration: underline;
+  text-transform: none;
+  display: inline;
+  white-space: normal;
+  line-height: var(--footer-line-height);
 }
-.footer .footer-bottom a.button:hover,
-.footer .footer-bottom .button-container a:hover {
-  text-decoration: none !important;
+
+.footer-wrapper .footer .footer-bottom a.button:hover,
+.footer-wrapper .footer .footer-bottom .button-container a:hover {
+  text-decoration: none;
 }
+
 /* Legal number — small text. Detected by .legal-number class OR by being
    the 2nd-to-last child (paragraph immediately before the logo picture) */
+
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
   font-size: var(--footer-font-size-small);
 }
+
 /* Logo — centered mobile, right-aligned desktop, white via filter (raster) or fill (SVG) */
+
 .footer .footer-bottom p:has(picture),
 .footer .footer-bottom p:has(img) {
   margin: var(--footer-spacing-bottom-gap) 0 0;
   text-align: center;
 }
+
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
   height: var(--footer-logo-height);
   width: auto;
   mix-blend-mode: screen;
 }
+
 .footer .footer-bottom svg {
   height: var(--footer-logo-height);
   width: auto;
   fill: var(--footer-color-text);
 }
+
 /* Legacy ul fallback inside footer-bottom */
+
 .footer .footer-bottom ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
 }
+
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
   color: var(--footer-color-text);
   font-size: var(--footer-font-size);
   text-decoration: none;
 }
+
 /* ── Desktop ≥601px (matches live media query) ──────────────── */
+
 @media (min-width: 601px) {
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
@@ -284,6 +339,7 @@
     margin: 0;
   }
 }
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -295,11 +351,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
+
 @custom-media --bp-tablet (min-width: 744px);
+
 @custom-media --bp-desktop (min-width: 1024px);
+
 @custom-media --bp-wide (min-width: 1440px);
+
 :root {
 /* -----------------------------------------------------------
    PX → REM Conversion Helper
@@ -343,9 +404,17 @@
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-focus: var(--link-color);
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -484,8 +553,11 @@
   --spacing-110: 11rem;
   --spacing-120: 12rem;
   --spacing-124: 12.4rem;
+  --spacing-155: 15.5rem;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
+  --spacing-200: 20rem;
+  --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
   --spacing-320: 32rem;
@@ -520,6 +592,11 @@
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
 
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
+
   /* z-index */
   --z-index-negative: -1;
   --z-index-0 : 0;
@@ -527,6 +604,7 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-anchor-nav: 100;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -539,6 +617,7 @@
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -549,8 +628,11 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -587,6 +669,7 @@
   --transition-duration-medium: 0.3s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -635,7 +718,7 @@
 
   /* Form Fonts */
 
-  /* ---- Brand Explorer Block (defaults) ---- */
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --be-color-bg: var(--background-color);
   --be-color-text: var(--text-color);
   --be-color-text-light: #21406d;
@@ -648,6 +731,7 @@
   --be-color-btn-hover: #1c2d49;
   --be-color-btn-no-border: #555;
   --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
   --be-font-body: var(--body-font-family);
   --be-font-size-body: 14px;
   --be-font-size-small: 11px;
@@ -657,7 +741,7 @@
   --be-line-height-body: 16px;
   --be-line-height-small: 14px;
 
-  /* ---- Clinical Data Panel Block (defaults) ---- */
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --cdp-color-text: var(--text-color);
   --cdp-color-heading: var(--text-color);
   --cdp-color-accent: var(--link-color);
@@ -680,6 +764,7 @@
   --cdp-max-width: 1180px;
   --cdp-letter-spacing-title: 0.02em;
 }
+
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -687,6 +772,7 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
+
 @media (--bp-desktop) {
   :root {
     --border-top-radius: 8rem;
@@ -694,11 +780,13 @@
     --hero-tall-image-container-height: 60.8rem;
   }
 }
+
 /* ============================================================
    SKYRIZI HCP — Brand Token Overrides
    Source: skyrizihcp.com/dermatology (Platform C)
-   Font: Red Hat Display
+   Font: Univers LT W01_57 Condensed
    ============================================================ */
+
 :root {
     /* ---- Color: Brand Primary ---- */
     --color-brand-primary: #005272;
@@ -717,6 +805,8 @@
     --color-text-muted: #696969;
     --color-text-legal: #555;
     --color-text-black: #071d49;
+    /* Live skyrizihcp.com renders footer text in off-white (not pure #fff) */
+    --color-text-footer: #e2e4e3;
 
     /* ---- Color: Background ---- */
     --background-color: #fff;
@@ -724,6 +814,11 @@
     --color-background-tint: #e8edef;
     --color-background-footer: #071d49;
     --color-background-blue: #d3f3ff;
+
+    /* ---- Color: Nav ---- */
+    --color-nav-active: #1ba2da;
+    --color-nav-separator: rgb(255 255 255 / 30%);
+    --color-nav-dropdown-bg: #ccc;
 
     /* ---- Color: Border ---- */
     --color-border-default: #ccc;
@@ -738,10 +833,10 @@
     --color-safety-bar-border: #999;
 
     /* ---- Font: Family ---- */
-    --body-font-family: "Red Hat Display", sans-serif;
-    --heading-font-family: "Red Hat Display", sans-serif;
-    --heading-font-family-bold: "Red Hat Display", sans-serif;
-    --icon-font-family: "abbv-iconFont";
+    --body-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
+    --heading-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
+    --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+    --icon-font-family: 'abbv-iconFont';
 
     /* ---- Font: Size ---- */
     --font-size-body: 16px;
@@ -750,6 +845,7 @@
     --font-size-legal: 12.992px;
     --font-size-nav: 14px;
     --font-size-footer: 14px;
+    --letter-spacing-nav: 0.04em;
     --font-size-h1: 32px;
     --font-size-h1-hero: 25px;
     --font-size-h2: 24px;
@@ -773,22 +869,50 @@
     --line-height-legal: 19.488px;
 
     /* ---- Border: Radius ---- */
-    --border-radius-button-primary: 6px;
+    --border-radius-button-primary: 30px;
+    --border-radius-button-secondary: 30px;
     --border-radius-button-tertiary: 10px;
     --border-radius-nav: 10px;
     --border-radius-safety-bar: 5px;
 
     /* ---- Button: Primary ---- */
-    --button-primary-color: #000;
-    --button-primary-bg: #ffce00;
-    --button-primary-border: #fff;
-    --button-primary-padding: 20px 42px 20px 20px;
+    --button-primary-bg: #071d49;
+    --button-primary-color: #fff;
+    --button-primary-border: transparent;
+    --button-primary-padding: 14px 60px 14px 30px;
+    --button-primary-font-size: 0.875rem;
+    --button-primary-font-weight: 400;
+    --button-primary-hover-bg: #1f448c;
+    --button-primary-hover-color: #fff;
+    --button-primary-hover-border: #1f448c;
+
+    /* ---- Button: Secondary ---- */
+    --button-secondary-bg: transparent;
+    --button-secondary-color: #071d49;
+    --button-secondary-border: #071d49;
+    --button-secondary-padding: 14px 30px;
+    --button-secondary-hover-bg: #1f448c;
+    --button-secondary-hover-color: #fff;
+    --button-secondary-hover-border: #1f448c;
 
     /* ---- Button: Tertiary ---- */
-    --button-tertiary-color: #005272;
     --button-tertiary-bg: transparent;
-    --button-tertiary-border: #555;
-    --button-tertiary-padding: 16px 70px 16px 24px;
+    --button-tertiary-color: #071d49;
+    --button-tertiary-border: #071d49;
+    --button-tertiary-padding: 14px 30px;
+    --button-tertiary-font-size: 18px;
+    --button-tertiary-hover-bg: #071d49;
+    --button-tertiary-hover-color: #fff;
+
+    /* ---- Button: Plain ---- */
+    --button-plain-color: #1ba2da;
+    --button-plain-weight: 700;
+    --button-plain-hover-color: #fff;
+
+    /* ---- Toggle ---- */
+    --toggle-bg-off: #b3b3b3;
+    --toggle-bg-on: #071d49;
+    --toggle-thumb-color: #fff;
 
     /* ---- Link ---- */
     --link-color: #005272;
@@ -804,8 +928,13 @@
     --be-color-text: #21406d;
     --be-color-text-light: #21406d;
     --be-color-bar-bg: #25282a;
-    --be-font-body: "Red Hat Display", sans-serif;
-    --be-font-heading: "Red Hat Display", sans-serif;
+    --be-color-rinvoq: #ffd41d;
+    --be-color-rinvoq-hover: #b8860b;
+    --be-color-skyrizi: #00a8e1;
+    --be-color-skyrizi-hover: #0088b5;
+    --be-color-humira: #931947;
+    --be-font-body: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    --be-font-heading: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
 
     /* ---- Formulary Lookup ---- */
     --color-formulary-text: #21406d;
@@ -855,6 +984,28 @@
     /* Formulary: Disclaimer/Notice */
     --formulary-disclaimer-size: 13px;
     --formulary-disclaimer-width: 700px;
+    --formulary-recaptcha-size: 11px;
+
+    /* ---- Spacing: Common ---- */
+    --spacing-8: 8px;
+    --spacing-16: 16px;
+    --spacing-24: 24px;
+
+    /* ---- Clinical Data Panel Block ---- */
+    --cdp-color-text: #21406d;
+    --cdp-color-heading: #21406d;
+    --cdp-color-accent: #1ba2da;
+    --cdp-color-muted: #50535c;
+    --cdp-color-cta: #071d49;
+    --cdp-font-body: var(--body-font-family);
+    --cdp-font-heading: var(--heading-font-family);
+    --cdp-font-size-title: 22px;
+    --cdp-font-size-callout: 26px;
+    --cdp-font-size-body: 14px;
+    --cdp-font-size-small: 12.8px;
+    --cdp-line-height-callout: 30px;
+    --cdp-line-height-body: 18px;
+    --cdp-line-height-default: 16px;
     --formulary-recaptcha-size: 11px;   
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #005272;
@@ -865,6 +1016,24 @@
   --color-brand-accent: #ffce00;
   --color-brand-accent-teal: #008481;
   --color-brand-accent-blue: #3860be;
+  --color-brand-accent-navy: #004c97;
+  --color-brand-accent-sky: #00a3df;
+  --color-brand-accent-cyan: #1ba2da;
+
+  /* ---- Color: Tabs ---- */
+  --color-tabs-control-bg: #21406d;
+  --color-tabs-underline: #1ba2da;
+  --color-tabs-text: #191c1d;
+  --tabs-underline-height: 0.23rem;
+
+  /* ---- Font: Tabs ---- */
+  --font-family-tabs-text: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+
+  /* ---- Gradient: Tabs ---- */
+  --gradient-tabs-panel: linear-gradient(90deg, #00a3df 0%, #85bde6 74%, #c3ae93 78%, #f39200 88%);
+
+  /* ---- Font: Tabs ---- */
+  --font-family-tabs-control: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
 
   /* ---- Color: Text ---- */
   --text-color: #404040;
@@ -873,13 +1042,15 @@
   --color-text-muted: #696969;
   --color-text-legal: #555;
   --color-text-black: #071d49;
+  /* Live skyrizihcp.com renders footer text in off-white (not pure #fff) */
+  --color-text-footer: #e2e4e3;
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
   --color-background-light: #f8f8f8;
   --color-background-tint: #e8edef;
   --color-background-footer: #071d49;
-  --color-background-blue:#d3f3ff;
+  --color-background-blue: #d3f3ff;
 
   /* ---- Color: Border ---- */
   --color-border-default: #ccc;
@@ -894,9 +1065,9 @@
   --color-safety-bar-border: #999;
 
   /* ---- Font: Family ---- */
-  --body-font-family: 'Red Hat Display', sans-serif;
-  --heading-font-family: 'Red Hat Display', sans-serif;
-  --heading-font-family-bold: 'Red Hat Display', sans-serif;
+  --body-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
@@ -957,6 +1128,13 @@
   --spacing-16: 16px;
   --spacing-24: 24px;
 
+  /* ---- Brand Explorer Block ---- */
+  --be-color-text: #21406d;
+  --be-color-text-light: #21406d;
+  --be-color-bar-bg: #25282a;
+  --be-font-body: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  --be-font-heading: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+
   /* ---- Clinical Data Panel Block ---- */
   --cdp-color-text: #21406d;
   --cdp-color-heading: #21406d;
@@ -972,6 +1150,7 @@
   --cdp-line-height-callout: 30px;
   --cdp-line-height-body: 18px;
   --cdp-line-height-default: 16px;
+
   /* ---- Formulary Lookup ---- */
   --color-formulary-text: #21406d;
   --color-formulary-heading: #21406d;
@@ -1021,32 +1200,43 @@
   --formulary-disclaimer-size: 13px;
   --formulary-disclaimer-width: 700px;
   --formulary-recaptcha-size: 11px;
+
+  /* ---- Skyrizi HCP: Image Compare ---- */
+  --color-skyrizi-navy: #071d49;
+  --color-skyrizi-navy-dark: #051331;
+  --color-skyrizi-blue: #1398d1;
+  --color-skyrizi-blue-rule: #1ba2da;
+  --color-skyrizi-blue-hover: #1f448c;
+  --color-skyrizi-body-color: #21406d;
+  --color-skyrizi-gallery-bg: #d1f1fc;
+  --color-skyrizi-accent-border: #f7941d;
+  --color-skyrizi-thumb-strip: #add8e6;
+  --font-skyrizi-condensed: "Univers LT W01_57 Condensed", "Arial Narrow", sans-serif;
+  --font-skyrizi-bold: "Univers LT W01_67 Bold_1476016", "Arial Narrow", sans-serif;
+
+  /* ---- Section Nav ---- */
+  --shadow-section-nav-stuck: 0 2px 12px rgb(0 0 0 / 30%);
 }
+
 /* ============================================================
    SKYRIZI HCP — Footer brand overrides
    Live: www.skyrizihcp.com/dermatology
    Background, font-family, font-size all flow through brand tokens
    in styles/skyrizi-hcp/tokens.css. Only brand-specific tweaks live here.
    ============================================================ */
-/* stylelint-disable */
-/* Live SkyRizi HCP uses slightly off-white #e2e4e3 (lighter than pure white)
-   instead of the default --color-text-on-dark: #fff */
+
+/* Live SkyRizi HCP uses off-white footer text (--color-text-footer)
+   instead of the default --color-text-on-dark: #fff.
+   Centering (1200px max-width via padding-inline max()) is inherited from base. */
+
 .footer-wrapper {
-  --footer-color-text: #e2e4e3;
-  --footer-content-max-width: 1200px;
-}
-/* Centered max-width: bg stays edge-to-edge, content (already center-aligned
-   from base CSS) is constrained to a centered max-width via padding-inline max() */
-.footer {
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
+  --footer-color-text: var(--color-text-footer);
 }
 
 /* ── Mobile-first defaults ──────────────────────────────────── */
 
 /* 1. Tighter gap between stacked link items on mobile */
+
 .footer .footer-links-primary ul,
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
@@ -1054,12 +1244,14 @@
 }
 
 /* 2. Tighter gap between footer-bottom content blocks on mobile */
+
 .footer .footer-bottom {
   gap: var(--spacing-01);
 }
 
 /* 3. Center AbbVie logo on mobile — text-align won't work on display:block
    children, so flex+justify-content is used instead */
+
 .footer .footer-bottom > p:has(picture),
 .footer .footer-bottom > p:has(img) {
   display: flex;
@@ -1068,11 +1260,13 @@
 }
 
 /* Indication code (e.g. US-SKZD-260038) — 40px top gap matches live site */
+
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
   margin-top: var(--spacing-40);
 }
 
 /* ── Desktop (≥ 601px): reset mobile-only overrides ────────── */
+
 @media (width >= 601px) {
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
