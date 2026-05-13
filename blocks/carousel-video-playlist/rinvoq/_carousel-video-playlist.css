@@ -3,8 +3,9 @@
 /* stylelint-disable no-descending-specificity */
 
 /* Rinvoq DTC — Patient Stories variant
-   Layout: video (75%) + meta panel (25%) on top, thumbnail strip below
-   Use with playlistLayout = "bottom" */
+   Layout: video (75%) + meta panel (25%) on top,
+   3-column card grid below showing ALL videos.
+   Use with Layout = "Cards Grid (default)" */
 
 .carousel-video-playlist {
   --cvp-color-text: var(--text-color, #25282a);
@@ -17,11 +18,9 @@
   --cvp-font-size-desc: var(--font-size-body, 0.9375rem);
   --cvp-line-height-desc: 1.6;
   --cvp-font-size-transcript: var(--font-size-body, 0.9375rem);
-  --cvp-thumb-width: var(--spacing-200, 200px);
-  --cvp-thumb-height: var(--spacing-120, 120px);
-  --cvp-nav-size: var(--spacing-36, 36px);
   --cvp-font-family-body: var(--body-font-family, 'Graphik', sans-serif);
   --cvp-font-family-heading: var(--heading-font-family, 'Graphik Bold', sans-serif);
+  --cvp-spacing-cards-gap: var(--spacing-16, 16px);
 
   font-family: var(--cvp-font-family-body);
   max-width: var(--content-max-width, 940px);
@@ -29,20 +28,20 @@
 }
 
 /* Player area: flex row — video left, meta right */
-.carousel-video-playlist.cvp-layout-bottom .cvp-player-area {
+.carousel-video-playlist .cvp-player-area {
   display: flex;
   flex-direction: row;
   gap: var(--spacing-24, 24px);
-  margin-bottom: var(--spacing-24, 24px);
+  margin-bottom: var(--spacing-32, 32px);
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-video-container {
+.carousel-video-playlist .cvp-video-container {
   flex: 3;
   min-width: 0;
 }
 
 /* Meta panel: title + description + transcript stacked on right */
-.carousel-video-playlist.cvp-layout-bottom .cvp-active-title {
+.carousel-video-playlist .cvp-active-title {
   font-family: var(--cvp-font-family-heading);
   font-size: var(--cvp-font-size-title);
   font-weight: var(--cvp-font-weight-title);
@@ -51,7 +50,7 @@
   margin: 0 0 var(--spacing-12, 12px);
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-active-desc {
+.carousel-video-playlist .cvp-active-desc {
   font-family: var(--cvp-font-family-body);
   font-size: var(--cvp-font-size-desc);
   line-height: var(--cvp-line-height-desc);
@@ -59,7 +58,7 @@
   margin: 0 0 var(--spacing-16, 16px);
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-link {
+.carousel-video-playlist .cvp-transcript-link {
   font-family: var(--cvp-font-family-heading);
   font-weight: var(--font-weight-bold, 700);
   font-size: var(--cvp-font-size-transcript);
@@ -69,21 +68,19 @@
   padding: 0;
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-transcript-link::after {
+.carousel-video-playlist .cvp-transcript-link::after {
   content: ' \203A';
   font-size: 1.2em;
 }
 
-/* Thumbnail strip: horizontal cards with play overlay */
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item {
-  border-radius: var(--spacing-08, 8px);
-  overflow: hidden;
+/* Cards grid: 3 columns, show all */
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--cvp-spacing-cards-gap);
 }
 
-.carousel-video-playlist.cvp-layout-bottom .cvp-playlist-item.is-active {
-  border-color: var(--cvp-color-active);
-}
-
+/* Card thumbnails: play icon always visible */
 .carousel-video-playlist .cvp-playlist-play-icon {
   opacity: 1;
   background: var(--color-overlay-dark, rgb(0 0 0 / 30%));
@@ -97,37 +94,33 @@
   background-size: var(--spacing-16, 16px);
 }
 
-/* Nav arrows: plum brand color */
-.carousel-video-playlist .cvp-playlist-nav {
-  border-color: var(--cvp-color-active);
-}
-
-.carousel-video-playlist .cvp-playlist-prev::after,
-.carousel-video-playlist .cvp-playlist-next::after {
-  border-color: var(--cvp-color-active);
-}
-
-.carousel-video-playlist .cvp-playlist-nav:hover {
-  background: var(--cvp-color-active);
-}
-
-.carousel-video-playlist .cvp-playlist-nav:hover::after {
-  border-color: var(--color-text-on-dark, #fff);
-}
-
-/* Playlist item title below thumbnail */
-.carousel-video-playlist .cvp-playlist-item-title {
+/* Card overlay title */
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-overlay-title {
   font-family: var(--cvp-font-family-body);
-  font-weight: var(--font-weight-regular, 400);
-  color: var(--cvp-color-text);
+  font-weight: var(--font-weight-bold, 700);
+}
+
+/* Active card border */
+.carousel-video-playlist .cvp-playlist-item.is-active {
+  border-color: var(--cvp-color-active);
 }
 
 /* ── Mobile: stack video and meta vertically ── */
 
 @media (width < 768px) {
-  .carousel-video-playlist.cvp-layout-bottom .cvp-player-area {
+  .carousel-video-playlist .cvp-player-area {
     flex-direction: column;
     gap: var(--spacing-16, 16px);
+  }
+
+  .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width < 480px) {
+  .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+    grid-template-columns: 1fr;
   }
 }
 
