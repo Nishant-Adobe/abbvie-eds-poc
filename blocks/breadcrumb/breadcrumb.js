@@ -1,3 +1,13 @@
+// eslint-disable-next-line import/no-named-as-default
+import IndexUtils from '../../scripts/index-utils.js';
+
+function formatSegment(segment) {
+  return segment
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 function appendJsonLd(ol) {
   const items = [...ol.querySelectorAll('li')];
   const jsonLd = {
@@ -20,6 +30,41 @@ function appendJsonLd(ol) {
   script.type = 'application/ld+json';
   script.textContent = JSON.stringify(jsonLd);
   document.head.append(script);
+}
+
+function extractConfig(block) {
+  const propElements = block.querySelectorAll('[data-aue-prop]');
+  if (propElements.length > 0) {
+    const getTextVal = (name, defaultVal = '') => {
+      const el = block.querySelector(`[data-aue-prop="${name}"]`);
+      return el?.textContent?.trim() || defaultVal;
+    };
+    const getBoolVal = (name, defaultVal) => {
+      const val = getTextVal(name, '').toLowerCase();
+      if (val === 'true') return true;
+      if (val === 'false') return false;
+      return defaultVal;
+    };
+    return {
+      auto: getBoolVal('auto', true),
+      homeLabel: getTextVal('homeLabel', 'Home'),
+    };
+  }
+
+  const rows = [...block.querySelectorAll(':scope > div')];
+  const cells = rows.flatMap((row) => [...row.querySelectorAll(':scope > div')]);
+  const getText = (idx) => cells[idx]?.textContent?.trim() || '';
+  const getBool = (idx, defaultVal) => {
+    const val = getText(idx).toLowerCase();
+    if (val === 'true') return true;
+    if (val === 'false') return false;
+    return defaultVal;
+  };
+
+  return {
+    auto: getBool(0, true),
+    homeLabel: getText(1) || 'Home',
+  };
 }
 
 function extractItems(block) {
@@ -48,37 +93,17 @@ function extractItems(block) {
   }, []);
 }
 
-function getAriaLabel(block) {
-  const titleEl = block.querySelector('[data-aue-prop="title"]');
-  return titleEl?.textContent?.trim() || 'Breadcrumb';
-}
-
-function getAnchorId(block) {
-  const el = block.querySelector('[data-aue-prop="anchorId"]');
-  return el?.textContent?.trim() || '';
-}
-
-export default async function decorate(block) {
-  const ariaLabel = getAriaLabel(block);
-  const anchorId = getAnchorId(block);
-  const items = extractItems(block);
-
-  const rows = [...block.querySelectorAll(':scope > div')];
-  rows.forEach((row) => { row.classList.add('breadcrumb-hidden'); });
-
-  if (anchorId) block.id = anchorId;
-  if (!items.length) return;
-
+function buildNav(crumbs, ariaLabel) {
   const currentPath = window.location.pathname
     .replace(/^\/content/, '')
     .replace(/\.html$/, '');
 
   const nav = document.createElement('nav');
   nav.className = 'breadcrumb-nav';
-  nav.setAttribute('aria-label', ariaLabel);
+  nav.setAttribute('aria-label', ariaLabel || 'Breadcrumb');
 
   const ol = document.createElement('ol');
-  items.forEach(({ label, href }) => {
+  crumbs.forEach(({ label, href }) => {
     const li = document.createElement('li');
     const hrefClean = (href || '').replace(/\.html$/, '');
     const isActive = hrefClean && hrefClean === currentPath;
@@ -98,6 +123,46 @@ export default async function decorate(block) {
   });
 
   nav.append(ol);
+  return nav;
+}
+
+async function buildAutoTrail(homeLabel) {
+  const currentPath = window.location.pathname
+    .replace(/^\/content/, '')
+    .replace(/\.html$/, '');
+
+  const segments = currentPath.split('/').filter(Boolean);
+  if (segments.length <= 1) return [];
+
+  const indexData = await IndexUtils.getIndexData(true);
+
+  return segments.map((seg, i) => {
+    const itemPath = `/${segments.slice(0, i + 1).join('/')}`;
+    const matchedItem = Object.values(indexData).find((item) => item.path === itemPath);
+    let label = formatSegment(matchedItem?.navtitle || seg);
+    if (i === 0 && homeLabel) label = homeLabel;
+    return { label, href: itemPath };
+  });
+}
+
+export default async function decorate(block) {
+  const config = extractConfig(block);
+  const items = extractItems(block);
+
+  // Hide authored rows — preserve UE instrumentation
+  const rows = [...block.querySelectorAll(':scope > div')];
+  rows.forEach((row) => { row.classList.add('breadcrumb-hidden'); });
+
+  let crumbs;
+  if (config.auto) {
+    crumbs = await buildAutoTrail(config.homeLabel);
+  } else {
+    crumbs = items;
+  }
+
+  if (!crumbs.length) return;
+
+  const nav = buildNav(crumbs, 'Breadcrumb');
   block.append(nav);
-  appendJsonLd(ol);
+  appendJsonLd(nav.querySelector('ol'));
 }

@@ -46,20 +46,20 @@
       "id": "breadcrumb",
       "fields": [
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "title",
-          "label": "Accessible Title",
-          "value": "Breadcrumb",
-          "description": "Accessible label for the nav element (aria-label)."
+          "component": "boolean",
+          "valueType": "boolean",
+          "name": "auto",
+          "label": "Auto Generate",
+          "value": true,
+          "description": "Auto-generate breadcrumb from URL path. Turn off to use manually authored crumb items."
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "anchorId",
-          "label": "Anchor ID",
-          "value": "",
-          "description": "Provide an ID to enable deep linking to this component."
+          "name": "homeLabel",
+          "label": "Home Label",
+          "value": "Home",
+          "description": "Label for the root breadcrumb item (auto mode only)."
         }
       ]
     },
