@@ -2030,71 +2030,60 @@
       }
     ]
   },
-  {
+   {
     "id": "breadcrumb",
+    "fields": [
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "auto",
+        "label": "Auto Generate",
+        "value": true,
+        "description": "Auto-generate breadcrumb trail from the URL path. Turn off to use manually authored crumb items."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "homeLabel",
+        "label": "Home Label",
+        "value": "Home",
+        "description": "Label for the root breadcrumb item (auto mode only)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Accessible Title",
+        "value": "Breadcrumb",
+        "description": "Accessible label for the nav element (aria-label)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "label": "Anchor ID",
+        "value": "",
+        "description": "Provide an ID to enable deep linking to this component."
+      }
+    ]
+  },
+  {
+    "id": "breadcrumb-item",
     "fields": [
       {
         "component": "text",
         "valueType": "string",
-        "name": "id",
-        "label": "Id",
+        "name": "label",
+        "label": "Link Label",
         "value": "",
-        "description": "Provide an ID to enable deep linking to this component instance and for anchor navigation."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "customClass",
-        "label": "Custom Class",
-        "value": "",
-        "description": "Provide a CSS class to apply custom styling to this component."
+        "description": "Display text for this breadcrumb link."
       },
       {
         "component": "aem-content",
         "valueType": "string",
-        "name": "homePagePath",
-        "label": "Home Page Path",
-        "description": "Sets an explicit root (home) page for the breadcrumb. When provided, the breadcrumb begins from this path."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "homeTitle",
-        "label": "Home Title",
-        "value": "",
-        "description": "Overrides the display label for the home breadcrumb item. If blank, the page title is used."
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "enableBreadcrumb",
-        "label": "Enable Breadcrumb",
-        "value": true,
-        "description": "Toggles rendering of the breadcrumb trail. Uncheck to hide the component output while retaining configuration."
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "enableHiddenItems",
-        "label": "Enable Hidden Items",
-        "value": false,
-        "description": "When enabled, includes pages marked as hidden in navigation within the breadcrumb trail."
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "enableCurrentPage",
-        "label": "Enable Current Page",
-        "value": true,
-        "description": "Controls whether the current page appears as the last item in the breadcrumb."
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "enableRedirectTitle",
-        "label": "Enable Redirect Title",
-        "value": true,
-        "description": "Uses the redirect target page title if the page redirects; otherwise uses the page's own title."
+        "name": "href",
+        "label": "Link URL",
+        "description": "Page this crumb links to. Leave empty if this is the current page."
       }
     ]
   },
