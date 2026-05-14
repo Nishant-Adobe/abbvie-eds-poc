@@ -104,7 +104,7 @@ function parseItems(block) {
         title: get(1),
         transcriptHref: get(2),
         transcript: cells[3] ?? null,
-        description: get(4),
+        description: cells[7] ?? null,
       };
     })
     .filter(({ videoId }) => videoId);
@@ -135,9 +135,13 @@ function buildCard(item, accountId, playerId) {
   const content = document.createElement('div');
   content.className = 'cvp-card-content';
 
-  const desc = document.createElement('p');
+  const desc = document.createElement('div');
   desc.className = 'cvp-card-desc';
-  if (item.description) desc.textContent = item.description;
+  if (item.description?.innerHTML) {
+    desc.innerHTML = item.description.innerHTML;
+  } else if (item.description?.textContent?.trim()) {
+    desc.textContent = item.description.textContent.trim();
+  }
   content.append(desc);
 
   const hasTranscript = item.transcript
