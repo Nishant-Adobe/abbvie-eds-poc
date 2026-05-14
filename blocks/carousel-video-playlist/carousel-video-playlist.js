@@ -73,7 +73,10 @@ function buildThumbnailCard(item, index, isActive, isCardsLayout) {
 }
 
 function isItemRow(row) {
-  return row.children.length >= 2 && row.querySelector('picture');
+  if (row.children.length < 2) return false;
+  if (row.querySelector('picture')) return true;
+  const firstText = row.firstElementChild?.textContent?.trim() || '';
+  return /^\d{8,}$/.test(firstText);
 }
 
 function readBlockConfig(block) {
@@ -376,6 +379,8 @@ function assembleLayout(block, playlistArea, playerArea, playlistLayout, isCards
 }
 
 export async function decorateBlock(block) {
+  if (window.self !== window.top) return;
+
   const cfg = readBlockConfig(block);
   const {
     accountId, playlistId, enableCaptions, playlistLayout,
