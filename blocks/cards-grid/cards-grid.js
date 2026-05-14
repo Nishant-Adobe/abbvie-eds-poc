@@ -588,7 +588,7 @@ function buildMavyretCtaCardsColumnFromUeRow(wrapper) {
   const containerParbase = document.createElement('div');
   containerParbase.className = 'container parbase';
   const abbvInner = document.createElement('div');
-  abbvInner.className = 'abbv-container ';
+  abbvInner.className = 'abbv-container';
   const richTextOuter = document.createElement('div');
   richTextOuter.className = 'rich-text';
   const abbvRt = document.createElement('div');
