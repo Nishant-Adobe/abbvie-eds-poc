@@ -1,15 +1,19 @@
 .tooltip {
   position: relative;
   display: inline-block;
+  --tooltip-bg: var(--color-brand-primary, #21406d);
+  --tooltip-color: var(--color-text-on-dark, #fff);
+  --tooltip-focus-ring: var(--color-fiesta, #e65400);
 }
 
 .tooltip-trigger {
   border-bottom: 1px dashed currentcolor;
+  border-bottom-color: var(--color-brand-primary, #21406d);
   cursor: help;
 }
 
 .tooltip-trigger:focus-visible {
-  outline: 2px solid var(--tooltip-focus-ring, #005fcc);
+  outline: 2px solid var(--tooltip-focus-ring, #e65400);
   outline-offset: 2px;
   border-radius: 2px;
 }
@@ -19,7 +23,7 @@
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: var(--tooltip-bg, #222);
+  background: var(--tooltip-bg, #21406d);
   color: var(--tooltip-color, #fff);
   border-radius: 4px;
   font-size: var(--body-font-size-xs, 0.75rem);
@@ -41,7 +45,7 @@
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: var(--tooltip-bg, #222);
+  border-top-color: var(--tooltip-bg, #21406d);
 }
 
 .tooltip.bottom .tooltip-panel {
@@ -53,7 +57,7 @@
   top: auto;
   bottom: 100%;
   border-top-color: transparent;
-  border-bottom-color: var(--tooltip-bg, #222);
+  border-bottom-color: var(--tooltip-bg, #21406d);
 }
 
 .tooltip.left .tooltip-panel {
@@ -73,10 +77,12 @@ abbr.has-tooltip {
   position: relative;
   cursor: help;
   text-decoration: underline dotted;
+  text-decoration-color: var(--color-brand-primary, #21406d);
+  --tooltip-focus-ring: var(--color-fiesta, #e65400);
 }
 
 abbr.has-tooltip:focus-visible {
-  outline: 2px solid var(--tooltip-focus-ring, #005fcc);
+  outline: 2px solid var(--tooltip-focus-ring, #e65400);
   outline-offset: 2px;
   border-radius: 2px;
 }

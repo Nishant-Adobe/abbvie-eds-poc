@@ -1,11 +1,21 @@
 .tooltip {
   position: relative;
   display: inline-block;
+  --tooltip-bg: var(--color-rinvoq-charcoal, #25282a);
+  --tooltip-color: var(--color-text-on-dark, #fff);
+  --tooltip-focus-ring: var(--color-brand-primary, #90124a);
 }
 
 .tooltip-trigger {
   border-bottom: 1px dashed currentcolor;
+  border-bottom-color: var(--color-brand-primary, #90124a);
   cursor: help;
+}
+
+.tooltip-trigger:focus-visible {
+  outline: 2px solid var(--tooltip-focus-ring, #90124a);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .tooltip-panel {
@@ -13,7 +23,7 @@
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: var(--tooltip-bg, #222);
+  background: var(--tooltip-bg, #25282a);
   color: var(--tooltip-color, #fff);
   border-radius: 4px;
   font-size: var(--body-font-size-xs, 0.75rem);
@@ -35,7 +45,7 @@
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: var(--tooltip-bg, #222);
+  border-top-color: var(--tooltip-bg, #25282a);
 }
 
 .tooltip.bottom .tooltip-panel {
@@ -47,7 +57,7 @@
   top: auto;
   bottom: 100%;
   border-top-color: transparent;
-  border-bottom-color: var(--tooltip-bg, #222);
+  border-bottom-color: var(--tooltip-bg, #25282a);
 }
 
 .tooltip.left .tooltip-panel {
@@ -67,13 +77,20 @@ abbr.has-tooltip {
   position: relative;
   cursor: help;
   text-decoration: underline dotted;
+  text-decoration-color: var(--color-brand-primary, #90124a);
+  --tooltip-focus-ring: var(--color-brand-primary, #90124a);
+}
+
+abbr.has-tooltip:focus-visible {
+  outline: 2px solid var(--tooltip-focus-ring, #90124a);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .tooltip.is-visible .tooltip-panel,
 abbr.has-tooltip:hover .tooltip-panel,
-abbr.has-tooltip:focus .tooltip-panel {
+abbr.has-tooltip:focus .tooltip-panel,
+abbr.has-tooltip.is-visible .tooltip-panel {
   opacity: 1;
   pointer-events: auto;
 }
-
-/* Rinvoq tooltip overrides */

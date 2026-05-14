@@ -1,3 +1,17 @@
 @import '../tooltip.css';
 
 /* Rinvoq tooltip overrides */
+.tooltip {
+  --tooltip-bg: var(--color-rinvoq-charcoal, #25282a);
+  --tooltip-color: var(--color-text-on-dark, #fff);
+  --tooltip-focus-ring: var(--color-brand-primary, #90124a);
+}
+
+.tooltip-trigger {
+  border-bottom-color: var(--color-brand-primary, #90124a);
+}
+
+abbr.has-tooltip {
+  --tooltip-focus-ring: var(--color-brand-primary, #90124a);
+  text-decoration-color: var(--color-brand-primary, #90124a);
+}
