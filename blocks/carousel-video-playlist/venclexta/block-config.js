@@ -172,6 +172,7 @@ function buildCard(item, accountId, playerId) {
   vid.setAttribute('data-embed', 'default');
   vid.setAttribute('data-video-id', item.videoId);
   vid.setAttribute('preload', 'metadata');
+  vid.setAttribute('controls', '');
   vid.className = 'video-js cvp-poster-video';
   playerWrap.prepend(vid);
   loadBrightcoveScript(accountId, playerId).then(() => {
