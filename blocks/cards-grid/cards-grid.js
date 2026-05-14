@@ -964,14 +964,14 @@ function wireRinvoqSliderThumbnailSelection(block) {
   }, true);
 }
 
-function ensureRinvoqStatLineStrongTags(p) {
+function ensureRinvoqStatLineStrongTags(p, titlePattern = null) {
   if (!p || /<strong\b|<b\b/i.test(p.innerHTML)) return;
   const parts = p.innerHTML.split(/(<br\s*\/?>)/i);
   for (let i = 0; i < parts.length; i += 2) {
     const chunk = parts[i];
     if (chunk && chunk.trim()) {
       const plain = chunk.replace(/<[^>]+>/g, '').trim();
-      const isTitle = /^MEASURE UP\s*\d/i.test(plain);
+      const isTitle = titlePattern ? titlePattern.test(plain) : false;
       const isStat = /^\d+%\*/.test(plain) || /^\d+%\s*\(/.test(plain);
       if (isTitle || isStat) {
         parts[i] = `<strong>${chunk.trim()}</strong>`;
@@ -1004,14 +1004,14 @@ function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
         p.classList.add('section-padding-right');
       }
       fixEncodedSupInParagraph(p);
-      ensureRinvoqStatLineStrongTags(p);
+      ensureRinvoqStatLineStrongTags(p, /^MEASURE UP\s*\d/i);
       abbvRt.append(p);
     });
   } else {
     abbvRt.innerHTML = wrapper.innerHTML.trim();
     abbvRt.querySelectorAll('p').forEach((p) => {
       fixEncodedSupInParagraph(p);
-      ensureRinvoqStatLineStrongTags(p);
+      ensureRinvoqStatLineStrongTags(p, /^MEASURE UP\s*\d/i);
     });
   }
 
