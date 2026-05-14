@@ -1,0 +1,38 @@
+@import '../find-provider.css';
+
+/* Mavyret find-provider overrides */
+.find-provider {
+  --find-provider-color-btn-bg: var(--color-indication-bg);
+  --find-provider-color-btn-bg-hover: var(--color-green-primary);
+  --find-provider-color-btn-text: var(--color-text-on-dark);
+  --find-provider-color-border: var(--color-border-default);
+}
+
+/* Full-width submit button */
+.find-provider .find-provider-actions {
+  flex-direction: column;
+}
+
+.find-provider .find-provider-submit {
+  inline-size: 100%;
+  background-color: var(--find-provider-color-btn-bg);
+  color: var(--find-provider-color-btn-text);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--body-font-size-m);
+  padding-block: var(--spacing-16);
+  border: none;
+  border-radius: var(--find-provider-radius-input);
+  text-align: center;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.find-provider .find-provider-submit:hover,
+.find-provider .find-provider-submit:focus-visible {
+  background-color: var(--find-provider-color-btn-bg-hover);
+}
+
+/* Geo button matches input border style */
+.find-provider .find-provider-geo-btn {
+  border-color: var(--color-border-default);
+  color: var(--text-color);
+}

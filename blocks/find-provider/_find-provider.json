@@ -1,0 +1,165 @@
+{
+  "definitions": [
+    {
+      "title": "Find Provider",
+      "id": "find-provider",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Find Provider",
+              "model": "find-provider",
+              "blockId": "id:",
+              "classes": ""
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "find-provider",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Labels",
+          "name": "labels"
+        },
+        {
+          "component": "select",
+          "name": "classes",
+          "label": "Variant",
+          "description": "Select the search mode. Default: name/ZIP search. Location: auto-detects user location. Map: shows a map alongside results. Support: support-group finder.",
+          "options": [
+            { "name": "Default", "value": "" },
+            { "name": "Location-based search", "value": "find-provider-location" },
+            { "name": "Map view", "value": "find-provider-map" },
+            { "name": "Support group finder", "value": "find-provider-support" }
+          ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "search-label",
+          "value": "Find a Provider",
+          "label": "Search Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "search-placeholder",
+          "value": "Enter name or ZIP code",
+          "label": "Search Placeholder"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "radius-label",
+          "value": "Search radius",
+          "label": "Radius Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "specialty-label",
+          "value": "Specialty",
+          "label": "Specialty Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "submit-label",
+          "value": "Search",
+          "label": "Submit Button Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "geo-button-label",
+          "value": "Use my location",
+          "label": "Geo Button Label",
+          "description": "Label for the 'Use my location' button shown in the location variant."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "clear-label",
+          "value": "Clear",
+          "label": "Clear Button Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "terms-label",
+          "value": "",
+          "label": "Terms Label",
+          "description": "Heading above the Terms & Conditions checkbox (e.g. 'Terms & Conditions')."
+        },
+        {
+          "component": "richtext",
+          "name": "terms-text",
+          "value": "",
+          "label": "Terms Text",
+          "description": "Checkbox label text. May include a hyperlink to the full T&C page."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "no-results",
+          "value": "No providers found.",
+          "label": "No Results Message"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "error",
+          "value": "An error occurred. Please try again.",
+          "label": "Error Message"
+        },
+        {
+          "component": "tab",
+          "label": "Configuration",
+          "name": "config"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "api-endpoint",
+          "value": "",
+          "label": "API Endpoint",
+          "description": "Provider search API URL."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "indication",
+          "value": "",
+          "label": "Indication",
+          "description": "Brand/indication filter sent to the API."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "exit-modal-id",
+          "value": "",
+          "label": "Exit Modal ID",
+          "description": "ID of the modal to open when a provider card is clicked (exit-like UX)."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "anchor-id",
+          "value": "",
+          "label": "Anchor ID",
+          "description": "Sets the id attribute on the block for in-page anchor links."
+        },
+        {
+          "...": "../../models/_common-properties.json#/common-prop"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
