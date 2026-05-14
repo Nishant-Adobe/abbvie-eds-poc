@@ -71,7 +71,12 @@ function decorateLine3(card) {
   if (!lineDiv) return;
   const raw = lineDiv.innerHTML;
   if (raw.includes('&lt;sup')) {
-    lineDiv.innerHTML = raw.replace(/&lt;sup&gt;([\s\S]*?)&lt;\/sup&gt;/gi, '<sup>$1</sup>');
+    // Decode Platform-C HTML-encoded sup tags. Strip any markup from the captured
+    // text so only plain text enters the <sup> element, preventing injection.
+    lineDiv.innerHTML = raw.replace(
+      /&lt;sup&gt;([\s\S]*?)&lt;\/sup&gt;/gi,
+      (_, text) => `<sup>${text.replace(/<[^>]+>/g, '')}</sup>`,
+    );
   }
   const span = document.createElement('span');
   span.className = LINE3_CLASS;
@@ -968,7 +973,9 @@ function ensureRinvoqStatLineStrongTags(p) {
       }
     }
   }
-  p.innerHTML = parts.join('');
+  const temp = document.createElement('div');
+  temp.innerHTML = parts.join('');
+  p.replaceChildren(...temp.childNodes);
 }
 
 function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
@@ -1183,14 +1190,14 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
   if (titleP) {
     const h = document.createElement('p');
     h.className = headingClass;
-    h.style.textAlign = 'center';
+    h.classList.add('text-align-center');
     h.textContent = titleP.textContent?.trim() || '';
     bodyStretch.append(h);
   }
 
   if (bodyP) {
     const bp = document.createElement('p');
-    bp.style.textAlign = 'center';
+    bp.classList.add('text-align-center');
     bp.innerHTML = bodyP.innerHTML;
     fixLinzessEncodedBoldInParagraph(bp);
     fixEncodedSupInParagraph(bp);
