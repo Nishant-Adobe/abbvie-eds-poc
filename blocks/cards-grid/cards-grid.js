@@ -1460,8 +1460,9 @@ export default function decorate(block) {
     if (wrappers.length === 0) return;
 
     let cardStart = 0;
+    let introEl = null;
     if (wrappers.length > 0 && !isMavyretSectionCardUeRow(wrappers[0])) {
-      buildMavyretSectionIntroFromWrapper(wrappers[0]);
+      introEl = buildMavyretSectionIntroFromWrapper(wrappers[0]);
       cardStart = 1;
     }
 
@@ -1476,6 +1477,8 @@ export default function decorate(block) {
     wrappers.forEach((w) => {
       w.remove();
     });
+
+    if (introEl) block.append(introEl);
 
     const flexEven = document.createElement('div');
     flexEven.className = 'abbv-container flex-even section';
