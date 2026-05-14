@@ -3,12 +3,12 @@ const COL = {
   heading: 0,
   description: 1,
   sliderPrompt: 2,
-  beforeLabel: 3,
-  afterLabel: 4,
+  beforeLabelPrefix: 3,
+  afterLabelPrefix: 4,
   beforeImage: 5,
-  beforeImageAlt: 6,
+  beforeAlt: 6,
   afterImage: 7,
-  afterImageAlt: 8,
+  afterAlt: 8,
   tab1Label: 9,
   tab1Img1Before: 10,
   tab1Img1After: 11,
@@ -41,10 +41,6 @@ function getImg(cell) {
 
 function getText(cell) {
   return cell?.textContent?.trim() || '';
-}
-
-function getDataText(data, ...keys) {
-  return getText(keys.map((key) => data[key]).find(Boolean));
 }
 
 function cloneImg(img) {
@@ -259,8 +255,8 @@ function decorateGallery(block, cells, startPct) {
   const hasPrompt = block.classList.contains('prompt');
   const isTwoColumnLayout = !hasToggle;
 
-  const beforeLabel = getText(cells[COL.beforeLabel]) || 'BEFORE';
-  const afterLabel = getText(cells[COL.afterLabel]) || 'AFTER';
+  const beforeLabel = getText(cells[COL.beforeLabelPrefix]) || 'BEFORE';
+  const afterLabel = getText(cells[COL.afterLabelPrefix]) || 'AFTER';
   const promptText = hasPrompt
     ? (getText(cells[COL.sliderPrompt]) || 'CLICK AND DRAG TO SEE RESULTS')
     : '';
@@ -644,8 +640,8 @@ function decorateKeyValue(block, rows) {
 
   if (!hasToggle) {
     const opts = {
-      beforeLabel: getDataText(data, 'beforeLabel', 'beforeLabelPrefix') || 'BEFORE',
-      afterLabel: getDataText(data, 'afterLabel', 'afterLabelPrefix') || 'AFTER',
+      beforeLabel: getText(data.beforeLabelPrefix) || 'BEFORE',
+      afterLabel: getText(data.afterLabelPrefix) || 'AFTER',
       patientName: firstImg?.label || '',
     };
     const parts = buildWrapperLayout(block, afterImg, beforeImg, opts, 0.5);
@@ -653,8 +649,8 @@ function decorateKeyValue(block, rows) {
   }
 
   const opts = {
-    beforeLabel: getDataText(data, 'beforeLabel', 'beforeLabelPrefix') || 'BEFORE',
-    afterLabel: getDataText(data, 'afterLabel', 'afterLabelPrefix') || 'AFTER',
+    beforeLabel: getText(data.beforeLabelPrefix) || 'BEFORE',
+    afterLabel: getText(data.afterLabelPrefix) || 'AFTER',
     prompt: getText(data.sliderPrompt) || 'CLICK AND DRAG TO SEE RESULTS',
     captionHtml: data.description?.cloneNode(true) || null,
   };
@@ -681,8 +677,8 @@ function decorateModelFormat(block, cells) {
   [...block.children].forEach((row) => row.remove());
 
   const opts = {
-    beforeLabel: getText(cells[COL.beforeLabel]) || 'BEFORE',
-    afterLabel: getText(cells[COL.afterLabel]) || 'AFTER',
+    beforeLabel: getText(cells[COL.beforeLabelPrefix]) || 'BEFORE',
+    afterLabel: getText(cells[COL.afterLabelPrefix]) || 'AFTER',
     prompt: promptText || undefined,
     captionHtml: cells[COL.description]?.cloneNode(true) || null,
   };
