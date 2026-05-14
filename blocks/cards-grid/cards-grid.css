@@ -24,6 +24,12 @@
     background: var(--cards-grid-section-bg);
   }
   
+  /* stylelint-disable no-descending-specificity --
+     This file contains CSS for multiple brand-variant blocks (cta-card, image-text,
+     linzess, rinvoq, mavyret, venclexta, slider-thumbnails). Each variant targets a
+     distinct DOM tree; selectors that appear to conflict across variants never match
+     the same element at runtime. Ordering violations below are false positives. */
+
   .cards-grid.cards-grid-cta-card {
     display: flex;
     flex-wrap: wrap;
@@ -1594,7 +1600,7 @@
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out {
-    background: white;
+    background: var(--cards-grid-cta-item-bg);
     border: solid 4px var(--cards-grid-venclexta-highlight);
     border-radius: 10px;
     color: var(--cards-grid-venclexta-text);
@@ -2190,7 +2196,7 @@
 }
 
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active > .abbv-image-content-container-v2 {
-  border-color: #90124a;
+  border-color: var(--cg-rinvoq-thumb-magenta);
   border-bottom-color: transparent;
 }
 
@@ -2199,7 +2205,7 @@
 }
 
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.border-thumbnails-active .abbv-image-text-content-v2 {
-  border-bottom-color: #90124a;
+  border-bottom-color: var(--cg-rinvoq-thumb-magenta);
   border-bottom-width: calc(2.3px * var(--cg-slider-thumb-scale));
 }
 
@@ -2217,3 +2223,4 @@
 .cards-grid.cards-grid-slider-thumbnails .slider-thumbnails.adults .abbv-image-text-v2.image-text-clickable {
   cursor: pointer;
 }
+/* stylelint-enable no-descending-specificity */
