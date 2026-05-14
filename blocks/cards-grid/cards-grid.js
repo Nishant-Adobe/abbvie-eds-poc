@@ -142,7 +142,7 @@ function createWrapperATag(wrapper) {
 }
 
 function isInUniversalEditor() {
-  return window.self !== window.top;
+  return !!window.hlx?.uePreview;
 }
 
 const IMAGE_TEXT_IMG_CLASSES = [
@@ -167,7 +167,11 @@ function fixEncodedSupInParagraph(p) {
   if (!p) return;
   let html = p.innerHTML;
   if (html.includes('&lt;sup')) {
-    html = html.replace(/&lt;sup&gt;([\s\S]*?)&lt;\/sup&gt;/gi, '<sup>$1</sup>');
+    // Strip any markup from captured text to prevent injection via authored content.
+    html = html.replace(
+      /&lt;sup&gt;([\s\S]*?)&lt;\/sup&gt;/gi,
+      (_, text) => `<sup>${text.replace(/<[^>]+>/g, '')}</sup>`,
+    );
     p.innerHTML = html;
   }
 }
