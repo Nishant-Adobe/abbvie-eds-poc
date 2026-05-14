@@ -189,7 +189,10 @@ function resolveLinzessCtaHref(linkCell) {
   if (!linkCell) return '#';
   const a = linkCell.querySelector('a[href]');
   const fromA = a?.getAttribute('href');
-  if (fromA) return fromA;
+  if (fromA) {
+    if (/^javascript:/i.test(fromA)) return '#';
+    return fromA;
+  }
   const raw = linkCell.textContent?.trim() || '';
   if (!raw) return '#';
   if (/^https?:\/\//i.test(raw)) return raw;
@@ -197,7 +200,7 @@ function resolveLinzessCtaHref(linkCell) {
   if (/^tel:/i.test(raw)) return raw;
   const smsDigits = raw.match(/^sms:?\s*(\d+)$/i);
   if (smsDigits) return `sms:${smsDigits[1]}`;
-  return raw;
+  return '#';
 }
 
 const LINZESS_FLEX_ITEM_CLASSES = [
@@ -1345,7 +1348,7 @@ export default function decorate(block) {
     });
 
     block.append(row);
-  } else if (block.classList.contains('cards-grid-linzess-icon-image-card')) {
+  } else if (block.classList.contains('cards-grid-linzess-icon-image-card') || block.classList.contains('cards-grid-icon-image-card')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1365,7 +1368,7 @@ export default function decorate(block) {
     flexboxV2.append(flexContainer);
     demoWrap.append(flexboxV2);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-linzess-article-cards')) {
+  } else if (block.classList.contains('cards-grid-linzess-article-cards') || block.classList.contains('cards-grid-article-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1385,7 +1388,7 @@ export default function decorate(block) {
     flexboxV2.append(flexContainer);
     demoWrap.append(flexboxV2);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-rinvoq-common-cards')) {
+  } else if (block.classList.contains('cards-grid-rinvoq-common-cards') || block.classList.contains('cards-grid-flex-row-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1424,7 +1427,7 @@ export default function decorate(block) {
     flexItem.append(flexboxV2);
     outer.append(flexItem);
     block.append(outer);
-  } else if (block.classList.contains('cards-grid-mavyret-common-cards')) {
+  } else if (block.classList.contains('cards-grid-mavyret-common-cards') || block.classList.contains('cards-grid-icon-flex-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1440,7 +1443,7 @@ export default function decorate(block) {
     demoWrap.className = 'demo-wrap';
     demoWrap.append(outer);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-mavyret-cta-cards')) {
+  } else if (block.classList.contains('cards-grid-mavyret-cta-cards') || block.classList.contains('cards-grid-cta-cards-stacked')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1456,7 +1459,7 @@ export default function decorate(block) {
     demoWrap.className = 'demo-wrap';
     demoWrap.append(outer);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-mavyret-section-cards')) {
+  } else if (block.classList.contains('cards-grid-mavyret-section-cards') || block.classList.contains('cards-grid-section-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1487,7 +1490,7 @@ export default function decorate(block) {
       flexEven.append(col);
     });
     block.append(flexEven);
-  } else if (block.classList.contains('cards-grid-venclexta-callout-cards')) {
+  } else if (block.classList.contains('cards-grid-venclexta-callout-cards') || block.classList.contains('cards-grid-callout-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 

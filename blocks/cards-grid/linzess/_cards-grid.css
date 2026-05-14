@@ -14,7 +14,7 @@
 
 
 :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) {
-  font-family: Lato, sans-serif;
+  font-family: var(--body-font-family);
   color: var(--linz-grey);
 }
 
@@ -25,7 +25,7 @@
 
 :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) h2,
 :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .heading-2 {
-  font-family: Lato, sans-serif;
+  font-family: var(--body-font-family);
   font-weight: 700;
   font-style: normal;
   font-size: var(--linz-heading2-font-size);
@@ -193,13 +193,13 @@
 
 /* linzess-global: icon cards + flexbox cards */
 :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .icon-image-card img {
-  width: 105px;
+  width: 96px;
   margin-top: -50px;
 }
 
-@media (width <= 985px) {
+@media (width >= 986px) {
   :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .icon-image-card img {
-    width: 96px;
+    width: 105px;
   }
 }
 
@@ -233,10 +233,14 @@
   }
 }
 
-@media (width <= 985px) {
+:is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .flexbox-column-mobile {
+  flex-direction: column;
+  gap: var(--spacing-60);
+}
+
+@media (width >= 986px) {
   :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .flexbox-column-mobile {
-    flex-direction: column;
-    gap: 60px;
+    flex-direction: row;
   }
 }
 
@@ -257,8 +261,17 @@
   border-radius: var(--linz-rounded-corner);
   font-weight: 800;
   font-size: 14.4px; /* 0.9rem @ 16px */
-  padding: 16px 56px 16px 32px;
+  padding: var(--spacing-16) var(--spacing-40) var(--spacing-16) var(--spacing-24);
   text-decoration: none;
+}
+
+@media (width >= 986px) {
+  :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-primary,
+  :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-secondary,
+  :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-tertiary {
+    padding: var(--spacing-16) var(--spacing-56) var(--spacing-16) var(--spacing-32);
+    width: auto;
+  }
 }
 
 :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-primary.i-b::before,
@@ -291,14 +304,6 @@
   text-decoration: none;
 }
 
-@media (width <= 985px) {
-  :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-primary,
-  :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-secondary,
-  :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-tertiary {
-    padding: 16px 40px 16px 24px;
-    width: auto;
-  }
-}
 
 :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-primary,
 :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-button-primary:visited {

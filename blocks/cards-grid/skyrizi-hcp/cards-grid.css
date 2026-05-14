@@ -6,11 +6,11 @@
 .cards-grid .demo-wrap {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 24px 16px 80px;
+  padding: var(--spacing-24) var(--spacing-16) var(--spacing-80);
 }
 
 .cards-grid .i-a::after {
-  margin-left: 10px;
+  margin-left: var(--spacing-10);
 }
 
 /*
@@ -965,7 +965,7 @@
   border-radius: 8px;
   color: var(--cards-grid-cta-item-color);
   text-decoration: none;
-  font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  font-family: var(--body-font-family);
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item p a::before {
@@ -985,7 +985,7 @@
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
-  font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  font-family: var(--body-font-family);
   font-weight: 700;
   font-size: 2.375rem;
 }
@@ -1001,7 +1001,7 @@
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item-line-2 {
-  font-family: "Univers Bold", "Univers Regular", Arial, sans-serif;
+  font-family: var(--heading-font-family-bold);
   font-weight: 600;
 }
 
@@ -1011,7 +1011,7 @@
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item-line-4 {
-  font-family: "Univers Bold", "Univers Regular", Arial, sans-serif;
+  font-family: var(--heading-font-family-bold);
   font-weight: 700;
 }
 
@@ -1023,15 +1023,13 @@
   margin: 24px 32px 24px 36px;
 }
 
-@media only screen and (width >= 896px) {
-  .cards-grid.cards-grid-cta-card .card-grid-item:hover {
-    transform: scale(1.15);
-  }
+.cards-grid.cards-grid-cta-card .card-grid-item:hover {
+  transform: scale(1.05);
 }
 
-@media only screen and (width <= 896px) {
+@media only screen and (width >= 897px) {
   .cards-grid.cards-grid-cta-card .card-grid-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.15);
   }
 }
 
@@ -1097,7 +1095,9 @@
 .cards-grid.cards-grid-image-text .abbv-col {
   float: left;
   box-sizing: border-box;
-  margin-left: 2%;
+  margin-top: 20px;
+  margin-left: 0;
+  width: 100%;
 }
 
 .cards-grid.cards-grid-image-text .abbv-col-4 {
@@ -1108,11 +1108,11 @@
   margin-left: 0;
 }
 
-@media (width <= 600px) {
+@media (width >= 601px) {
   .cards-grid.cards-grid-image-text .abbv-col {
-    margin-top: 20px;
-    margin-left: 0;
-    width: 100%;
+    margin-top: 0;
+    margin-left: 2%;
+    width: 32%;
   }
 }
 
@@ -1177,12 +1177,12 @@
 }
 
 .cards-grid.cards-grid-image-text .fwn {
-  font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  font-family: var(--body-font-family);
 }
 
 .cards-grid.cards-grid-image-text .fwb,
 .cards-grid.cards-grid-image-text .h1 {
-  font-family: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+  font-family: var(--heading-font-family-bold);
 }
 
 .cards-grid.cards-grid-image-text .h1 {
@@ -1233,9 +1233,35 @@
 
 .cards-grid.cards-grid-image-text .access-enroll-container .abbv-row {
   display: flex;
+  flex-direction: column;
 }
 
-@media only screen and (width >= 992px) {
+.cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 .image-text .abbv-image-text-img {
+  width: 70px;
+  max-width: 70px;
+  height: auto;
+}
+
+.cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 .rich-text .abbv-rich-text {
+  width: 270px;
+}
+
+.cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 .container {
+  margin: 0 auto 12px;
+}
+
+@media only screen and (width >= 993px) {
+  .cards-grid.cards-grid-image-text .access-enroll-container .abbv-row {
+    flex-direction: row;
+  }
+
   .cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 {
     position: relative;
     display: block;
@@ -1255,33 +1281,6 @@
 
   .cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 img {
     height: 90px;
-  }
-}
-
-@media only screen and (width <= 992px) {
-  .cards-grid.cards-grid-image-text .access-enroll-container .abbv-row {
-    flex-direction: column;
-  }
-
-  .cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 {
-    display: flex;
-    align-items: center;
-    margin: 0 auto;
-    text-align: left;
-  }
-
-  .cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 .image-text .abbv-image-text-img {
-    width: 70px;
-    max-width: 70px;
-    height: auto;
-  }
-
-  .cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 .rich-text .abbv-rich-text {
-    width: 270px;
-  }
-
-  .cards-grid.cards-grid-image-text .access-enroll-container .abbv-col-4 .container {
-    margin: 0 auto 12px;
   }
 }
 

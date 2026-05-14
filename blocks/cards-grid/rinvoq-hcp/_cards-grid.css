@@ -14,8 +14,8 @@
 
 .cards-grid.cards-grid-rinvoq-common-cards .abbv-flex-container-v2.flexbox--break-row-column {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
+  flex-flow: column wrap;
+  gap: var(--spacing-24);
   justify-content: center;
   align-items: flex-start;
 }
@@ -31,7 +31,7 @@
 }
 
 .cards-grid.cards-grid-rinvoq-common-cards .section-padding-right {
-  padding-right: 48px;
+  padding-right: 0;
 }
 
 .cards-grid.cards-grid-rinvoq-common-cards .rich-text .abbv-rich-text-common strong,
@@ -40,13 +40,13 @@
   font-weight: 700;
 }
 
-@media (width <= 985px) {
+@media (width >= 986px) {
   .cards-grid.cards-grid-rinvoq-common-cards .abbv-flex-container-v2.flexbox--break-row-column {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .cards-grid.cards-grid-rinvoq-common-cards .section-padding-right {
-    padding-right: 0;
+    padding-right: var(--spacing-48);
   }
 }
 

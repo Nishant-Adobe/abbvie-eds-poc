@@ -5,9 +5,9 @@
 
 .cards-grid {
   --cards-grid-cta-item-bg: var(--background-color, #fff);
-  --cards-grid-venclexta-text: #3f3f3f;
+  --cards-grid-venclexta-text: var(--color-text-callout, #3f3f3f);
   --cards-grid-venclexta-accent: var(--color-venclexta-teal, #005272);
-  --cards-grid-venclexta-highlight: #ffce00;
+  --cards-grid-venclexta-highlight: var(--button-secondary-bg, #ffce00);
   --cards-grid-venclexta-border: var(--color-border-default, #ccc);
   --cards-grid-venclexta-heading-color: var(--color-text-legal, #404040);
 }
@@ -21,7 +21,7 @@
 
 .cards-grid.cards-grid-venclexta-callout-cards {
   color: var(--cards-grid-venclexta-text);
-  font-family: "Red Hat Display", Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-brand);
   max-width: 100%;
   width: 100%;
 }
@@ -120,7 +120,7 @@
 }
 
 .cards-grid.cards-grid-venclexta-callout-cards .material-font-ctas {
-  font-family: "Red Hat Display", Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-brand);
 }
 
 .cards-grid.cards-grid-venclexta-callout-cards .abbv-button-tertiary,
@@ -149,7 +149,7 @@
 .cards-grid.cards-grid-venclexta-callout-cards .abbv-button-secondary,
 .cards-grid.cards-grid-venclexta-callout-cards .abbv-button-plain,
 .cards-grid.cards-grid-venclexta-callout-cards .abbv-button-yellow {
-  font-size: 1.6rem;
+  font-size: var(--font-size-16);
 }
 
 .cards-grid.cards-grid-venclexta-callout-cards .abbv-button-primary.i-a::after,
@@ -195,10 +195,11 @@
   margin: 0;
 }
 
+/* Mobile base: column layout */
 .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
   align-items: stretch;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   gap: 15px;
   justify-content: center;
   width: 100%;
@@ -207,14 +208,15 @@
 .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
   align-items: stretch;
   display: flex;
-  flex: 1 1 0;
+  flex: 1 1 auto;
   flex-direction: column;
   justify-content: flex-start;
   margin: 0;
-  max-width: none;
+  max-width: 100%;
   min-height: 0;
   min-width: 0;
   padding: 0;
+  width: 100%;
 }
 
 .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item > .flexbox.parbase {
@@ -235,7 +237,7 @@
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0;
-  padding: 46px 17px 42px;
+  padding: 46px 9px 42px;
   width: 100%;
 }
 
@@ -283,18 +285,18 @@
   .abbv-flex-container
   .abbv-button-tertiary:visited {
   box-sizing: border-box;
-  font-size: 15px;
+  font-size: var(--font-size-14);
   line-height: 1.35;
   margin-bottom: 0;
   min-width: 0;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 11px;
+  padding-right: 11px;
   width: 100%;
 }
 
 .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item h3,
 .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .h3 {
-  font-size: 24px;
+  font-size: var(--font-size-18);
   font-weight: 700;
   height: auto;
   line-height: 1.2;
@@ -308,7 +310,7 @@
 }
 
 .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container .abbv-icon-call_made {
-  padding-left: 33px;
+  padding-left: 25px;
   text-align: left;
 }
 
@@ -316,59 +318,72 @@
   right: 25px;
 }
 
-@media (width <= 1346px) {
+/* Tablet: 2-per-row */
+@media (width >= 628px) {
   .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
-    padding: 15px;
-  }
-
-  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card {
-    padding: 46px 9px 42px;
-  }
-
-  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container .abbv-button-tertiary {
-    padding-left: 11px;
-    padding-right: 11px;
-  }
-
-  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container .abbv-icon-call_made {
-    padding-left: 25px;
-  }
-}
-
-@media (width <= 1029px) {
-  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container .abbv-button-tertiary {
-    font-size: 14px;
-  }
-}
-
-@media (width <= 927px) {
-  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
-    flex-wrap: wrap;
+    flex-flow: row wrap;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
     flex: 1 1 calc(50% - 8px);
     max-width: calc(50% - 8px);
-  }
-}
-
-@media (width <= 627px) {
-  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
-    flex-flow: column nowrap;
-  }
-
-  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
-    flex: 1 1 auto;
-    max-width: 100%;
-    width: 100%;
+    width: auto;
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item h3,
   .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .h3 {
-    font-size: 18px;
-    font-weight: 700;
-    height: auto;
-    line-height: 1.2;
+    font-size: var(--font-size-24);
+  }
+}
+
+/* Desktop: nowrap row */
+@media (width >= 928px) {
+  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
+    flex-flow: row nowrap;
+  }
+
+  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox > .abbv-flex-item {
+    flex: 1 1 0;
+    max-width: none;
+    width: auto;
+  }
+}
+
+/* Wide: larger font for button, wider padding */
+@media (width >= 1030px) {
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card
+    .abbv-flex-item
+    .abbv-flex-container
+    .abbv-button-tertiary {
+    font-size: var(--font-size-16);
+  }
+}
+
+@media (width >= 1347px) {
+  .cards-grid.cards-grid-venclexta-callout-cards .learn-more-callouts-flexbox.abbv-flex-container {
+    padding: 0;
+  }
+
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .learn-more-callouts-flexbox
+    > .abbv-flex-item
+    > .flexbox.parbase
+    > .abbv-flex-container.venxcleta-yellow-border-card {
+    padding: 46px 17px 42px;
+  }
+
+  .cards-grid.cards-grid-venclexta-callout-cards
+    .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card
+    .abbv-flex-item
+    .abbv-flex-container
+    .abbv-button-tertiary {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .cards-grid.cards-grid-venclexta-callout-cards .venclexta-gray-yellow-border-call-out.venxcleta-yellow-border-card .abbv-flex-item .abbv-flex-container .abbv-icon-call_made {
+    padding-left: 33px;
   }
 }
 
