@@ -32,7 +32,7 @@ function appendJsonLd(ol) {
 function extractConfig(block) {
   const rows = [...block.querySelectorAll(':scope > div:not([data-aue-resource])')];
 
-  let autoVal = true;
+  let autoVal = false;
   let homeLabel = 'Home';
 
   rows.forEach((row) => {
