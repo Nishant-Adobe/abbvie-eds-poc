@@ -42,7 +42,7 @@ function extractConfig(block) {
       if (name === 'homeLabel') homeLabel = prop.textContent?.trim() || 'Home';
       if (name === 'auto') {
         const val = prop.textContent?.trim().toLowerCase();
-        autoVal = val !== 'false';
+        autoVal = val === 'true';
       }
     } else {
       const text = row.textContent?.trim().toLowerCase();
@@ -131,7 +131,13 @@ async function buildAutoTrail(homeLabel) {
   const segments = currentPath.split('/').filter(Boolean);
   if (segments.length <= 1) return [];
 
-  const indexData = await IndexUtils.getIndexData(true);
+  let indexData;
+  try {
+    indexData = await IndexUtils.getIndexData(true);
+  } catch {
+    return [];
+  }
+  if (!indexData) return [];
 
   return segments.map((seg, i) => {
     const itemPath = `/${segments.slice(0, i + 1).join('/')}`;
