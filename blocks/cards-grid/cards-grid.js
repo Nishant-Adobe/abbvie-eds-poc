@@ -180,6 +180,7 @@ function fixLinzessEncodedBoldInParagraph(p) {
   if (!p) return;
   let html = p.innerHTML;
   if (!html.includes('&lt;')) return;
+  // Source is trusted authored CMS content; only literal &lt;b&gt; entities are decoded.
   html = html.replace(/&lt;b&gt;/gi, '<b>').replace(/&lt;\/b&gt;/gi, '</b>');
   p.innerHTML = html;
 }

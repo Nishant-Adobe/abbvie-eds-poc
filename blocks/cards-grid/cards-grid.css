@@ -18,6 +18,8 @@
     --cards-grid-venclexta-border: #ccc;
     --cards-grid-venclexta-heading-color: #404040;
     --cards-grid-rinvoq-accent: #90124a;
+    --cards-grid-neutral-light: #fff;
+    --cards-grid-neutral-dark: #000;
   }
 
   .cards-grid .cards-grid-section {
@@ -91,7 +93,7 @@
     margin-left: 24px;
     background-color: var(--cards-grid-cta-link-hover-bg);
     border-radius: 50%;
-    color: #fff;
+    color: var(--cards-grid-neutral-light);
     font-size: 1.5rem;
     vertical-align: top;
   }
@@ -529,7 +531,7 @@
   }
   
   :is(.cards-grid.cards-grid-linzess-icon-image-card, .cards-grid.cards-grid-linzess-article-cards) .abbv-image-text-v2 .abbv-image-text-content-v2 {
-    position: unset !important;
+    position: unset !important; /* resets absolute positioning injected by the platform image-text v2 component */
     margin: 20px;
     width: 25%;
     background: rgb(204 204 204 / 80%);
@@ -1072,7 +1074,7 @@
     border: 2px solid var(--cards-grid-mavyret-border);
     border-radius: 0;
     box-shadow: -2px 2px 4px 0 var(--cards-grid-mavyret-glow);
-    color: #000;
+    color: var(--cards-grid-neutral-dark);
     cursor: pointer;
     display: inline-block;
     padding: 8px 16px;
@@ -1085,7 +1087,7 @@
   .cards-grid.cards-grid-mavyret-cta-cards .cta.parbase a.abbv-button-tertiary:any-link:hover,
   .cards-grid.cards-grid-mavyret-cta-cards .cta.parbase a.abbv-button-secondary:hover,
   .cards-grid.cards-grid-mavyret-cta-cards .cta.parbase a.abbv-button-secondary:any-link:hover {
-    background-color: #000;
+    background-color: var(--cards-grid-neutral-dark);
     color: var(--cards-grid-mavyret-accent);
   }
 
@@ -1121,7 +1123,7 @@
     background: transparent;
     border: none;
     box-shadow: none;
-    color: #000;
+    color: var(--cards-grid-neutral-dark);
     padding: 8px 16px;
     text-decoration: underline;
   }
@@ -1251,7 +1253,7 @@
     margin-bottom: 24px;
     position: relative;
     vertical-align: middle;
-    width: fit-content !important;
+    width: fit-content !important; /* prevents 100% width from breaking pseudo-element underline decoration */
   }
 
   .cards-grid.cards-grid-mavyret-section-cards .green-underline::after,
@@ -1330,7 +1332,7 @@
   }
 
   .cards-grid.cards-grid-mavyret-section-cards .cta--card p {
-    color: #000;
+    color: var(--cards-grid-neutral-dark);
   }
 
   .cards-grid.cards-grid-mavyret-section-cards .abbv-button-primary,
@@ -1349,7 +1351,7 @@
     background: var(--cards-grid-cta-item-bg);
     box-shadow: 0 -2px 30px 7px var(--cards-grid-mavyret-glow);
     box-sizing: border-box;
-    color: #000;
+    color: var(--cards-grid-neutral-dark);
     display: block;
     padding: 8px 24px;
     text-align: center;
@@ -1360,7 +1362,7 @@
   .cards-grid.cards-grid-mavyret-section-cards .cta--card .abbv-button-primary:hover,
   .cards-grid.cards-grid-mavyret-section-cards .cta--card .abbv-button-secondary:hover,
   .cards-grid.cards-grid-mavyret-section-cards .cta--card .abbv-button-tertiary:hover {
-    background-color: #000;
+    background-color: var(--cards-grid-neutral-dark);
     color: var(--cards-grid-mavyret-accent);
   }
 
@@ -1421,7 +1423,7 @@
 
   @media (width <= 600px) {
     .cards-grid.cards-grid-mavyret-section-cards .hide-sm-max {
-      display: none !important;
+      display: none !important; /* responsive utility — must override any display state */
     }
 
     .cards-grid.cards-grid-mavyret-section-cards .section:not(.newpar) {
@@ -1529,11 +1531,11 @@
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .pl-0 {
-    padding-left: 0 !important;
+    padding-left: 0 !important; /* layout utility — must override component padding */
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .pr-0 {
-    padding-right: 0 !important;
+    padding-right: 0 !important; /* layout utility — must override component padding */
   }
 
   .cards-grid.cards-grid-venclexta-callout-cards .leukemia-flex-wrap.flex-row {
@@ -1886,6 +1888,8 @@
   font-size: calc(var(--cg-rinvoq-thumb-fs-0875) * var(--cg-slider-thumb-scale)) !important;
 }
 
+/* Vendored AEM clientlib utility helpers for the slider-thumbnails component.
+   !important is intentional: these helpers override component-injected inline styles. */
 .cards-grid.cards-grid-slider-thumbnails .m-auto {
   margin: auto !important;
 }
