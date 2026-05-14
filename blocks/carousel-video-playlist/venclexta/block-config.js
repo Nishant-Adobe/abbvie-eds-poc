@@ -152,42 +152,37 @@ function buildCard(item, accountId, playerId) {
 
   card.append(content);
 
-  setTimeout(() => {
-    const obs = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      obs.disconnect();
-      playerCount += 1;
-      const id = `venclexta-cvp-${playerCount}`;
-      const vid = document.createElement('video-js');
-      vid.id = id;
-      vid.setAttribute('data-account', accountId);
-      vid.setAttribute('data-player', playerId);
-      vid.setAttribute('data-embed', 'default');
-      vid.setAttribute('data-video-id', item.videoId);
-      vid.setAttribute('preload', 'none');
-      vid.className = 'video-js cvp-poster-video';
-      playerWrap.prepend(vid);
-      loadBrightcoveScript(accountId, playerId).then(() => {
-        if (typeof window.bc === 'function') window.bc(vid);
-        const p = window.videojs?.getPlayer(id);
-        if (p) {
-          p.ready(function onReady() {
-            const mi = this.mediainfo;
-            if (mi?.description && !desc.textContent) {
-              desc.textContent = mi.description;
-            }
-            if (mi?.longDescription) {
-              link.style.display = '';
-              link.addEventListener('click', () => {
-                window.open(mi.longDescription, '_blank');
-              }, { once: true });
-            }
-          });
+  playerCount += 1;
+  const id = `venclexta-cvp-${playerCount}`;
+  const vid = document.createElement('video-js');
+  vid.id = id;
+  vid.setAttribute('data-account', accountId);
+  vid.setAttribute('data-player', playerId);
+  vid.setAttribute('data-embed', 'default');
+  vid.setAttribute('data-video-id', item.videoId);
+  vid.setAttribute('preload', 'none');
+  vid.className = 'video-js cvp-poster-video';
+  playerWrap.prepend(vid);
+  loadBrightcoveScript(accountId, playerId).then(() => {
+    if (typeof window.bc === 'function') window.bc(vid);
+    const poll = () => {
+      const p = window.videojs?.getPlayer(id);
+      if (!p) { requestAnimationFrame(poll); return; }
+      p.ready(function onReady() {
+        const mi = this.mediainfo;
+        if (mi?.description && !desc.textContent) {
+          desc.textContent = mi.description;
+        }
+        if (mi?.longDescription) {
+          link.style.display = '';
+          link.addEventListener('click', () => {
+            window.open(mi.longDescription, '_blank');
+          }, { once: true });
         }
       });
-    }, { rootMargin: '200px' });
-    obs.observe(card);
-  }, 1000);
+    };
+    poll();
+  });
 
   playBtn.addEventListener('click', () => {
     playBtn.hidden = true;
