@@ -1,7 +1,7 @@
 @import '../carousel-video-playlist.css';
 
 /* Venclexta DTC — CLL Stories variant
-   2-column grid of individual video cards with description + transcript
+   2-column grid of individual video cards with description + transcript modal
    Matches venclexta.com/previously-untreated-cll/why-venclexta/cll-stories */
 
 .carousel-video-playlist {
@@ -108,9 +108,81 @@
   display: none;
 }
 
+/* ── Transcript Modal ── */
+
+.cvp-transcript-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.cvp-transcript-modal-overlay.is-open {
+  display: flex;
+}
+
+.cvp-transcript-modal-dialog {
+  background: var(--background-color, #fff);
+  max-width: 700px;
+  width: 90%;
+  max-height: 80vh;
+  border-radius: 0;
+  overflow-y: auto;
+  padding: var(--spacing-32, 32px);
+  position: relative;
+}
+
+.cvp-transcript-modal-close {
+  position: absolute;
+  top: var(--spacing-16, 16px);
+  right: var(--spacing-16, 16px);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--cvp-font-family);
+  font-size: var(--font-size-body, 1rem);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--cvp-color-active);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-08, 8px);
+}
+
+.cvp-transcript-modal-close::after {
+  content: '\2715';
+  display: inline-block;
+  width: var(--spacing-20, 20px);
+  height: var(--spacing-20, 20px);
+  border: 1px solid var(--cvp-color-active);
+  border-radius: 50%;
+  text-align: center;
+  line-height: var(--spacing-18, 18px);
+  font-size: var(--font-size-body-small, 0.75rem);
+}
+
+.cvp-transcript-modal-body {
+  font-family: var(--cvp-font-family);
+  font-size: var(--font-size-body, 1rem);
+  line-height: 1.6;
+  color: var(--cvp-color-text);
+}
+
+.cvp-transcript-modal-body p {
+  margin: 0 0 var(--spacing-16, 16px);
+}
+
 /* ── Mobile: single column ── */
 @media (width < 768px) {
   .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
     grid-template-columns: 1fr;
+  }
+
+  .cvp-transcript-modal-dialog {
+    width: 95%;
+    max-height: 90vh;
+    padding: var(--spacing-24, 24px);
   }
 }
