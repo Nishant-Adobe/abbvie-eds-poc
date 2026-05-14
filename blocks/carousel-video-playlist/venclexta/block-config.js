@@ -123,6 +123,13 @@ function buildCard(item, accountId, playerId) {
   playBtn.setAttribute('aria-label', `Play ${item.title}`);
   playerWrap.append(playBtn);
 
+  if (item.title) {
+    const titleEl = document.createElement('div');
+    titleEl.className = 'cvp-card-title-overlay';
+    titleEl.textContent = item.title;
+    playerWrap.append(titleEl);
+  }
+
   card.append(playerWrap);
 
   const content = document.createElement('div');
@@ -183,9 +190,6 @@ function buildCard(item, accountId, playerId) {
               titleEl.className = 'cvp-card-title-overlay';
               titleEl.textContent = mi.name;
               playerWrap.append(titleEl);
-            }
-            if (mi?.description && !desc.textContent) {
-              desc.textContent = mi.description;
             }
             if (mi?.longDescription) {
               link.style.display = '';
