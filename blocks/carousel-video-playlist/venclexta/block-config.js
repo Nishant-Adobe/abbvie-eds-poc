@@ -123,41 +123,32 @@ function buildCard(item, accountId, playerId) {
   playBtn.setAttribute('aria-label', `Play ${item.title}`);
   playerWrap.append(playBtn);
 
-  if (item.title) {
-    const titleOverlay = document.createElement('div');
-    titleOverlay.className = 'cvp-card-title-overlay';
-    titleOverlay.textContent = item.title;
-    playerWrap.append(titleOverlay);
-  }
-
   card.append(playerWrap);
 
   const content = document.createElement('div');
   content.className = 'cvp-card-content';
 
-  if (item.description) {
-    const desc = document.createElement('p');
-    desc.className = 'cvp-card-desc';
-    desc.textContent = item.description;
-    content.append(desc);
-  }
+  const desc = document.createElement('p');
+  desc.className = 'cvp-card-desc';
+  if (item.description) desc.textContent = item.description;
+  content.append(desc);
 
   const hasTranscript = item.transcript
     ?.textContent?.trim();
-  if (hasTranscript || item.transcriptHref) {
-    const link = document.createElement('button');
-    link.type = 'button';
-    link.className = 'cvp-transcript-link';
-    link.textContent = 'View Transcript';
-    link.addEventListener('click', () => {
-      if (hasTranscript) {
-        openTranscript(item.transcript);
-      } else if (item.transcriptHref) {
-        window.open(item.transcriptHref, '_blank');
-      }
-    });
-    content.append(link);
-  }
+  const link = document.createElement('button');
+  link.type = 'button';
+  link.className = 'cvp-transcript-link';
+  link.textContent = 'View Transcript';
+  link.style.display = (hasTranscript || item.transcriptHref)
+    ? '' : 'none';
+  link.addEventListener('click', () => {
+    if (hasTranscript) {
+      openTranscript(item.transcript);
+    } else if (item.transcriptHref) {
+      window.open(item.transcriptHref, '_blank');
+    }
+  });
+  content.append(link);
 
   card.append(content);
 
@@ -178,6 +169,21 @@ function buildCard(item, accountId, playerId) {
       playerWrap.prepend(vid);
       loadBrightcoveScript(accountId, playerId).then(() => {
         if (typeof window.bc === 'function') window.bc(vid);
+        const p = window.videojs?.getPlayer(id);
+        if (p) {
+          p.ready(function onReady() {
+            const mi = this.mediainfo;
+            if (mi?.description && !desc.textContent) {
+              desc.textContent = mi.description;
+            }
+            if (mi?.longDescription) {
+              link.style.display = '';
+              link.addEventListener('click', () => {
+                window.open(mi.longDescription, '_blank');
+              }, { once: true });
+            }
+          });
+        }
       });
     }, { rootMargin: '200px' });
     obs.observe(card);
