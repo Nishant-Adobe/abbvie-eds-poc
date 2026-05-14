@@ -740,6 +740,9 @@ export default function decorate(block) {
   const blockWrapper = block.parentElement;
   moveInstrumentation(block, blockWrapper);
 
+  const blockWrapper = block.parentElement;
+  moveInstrumentation(block, blockWrapper);
+
   let result;
 
   if (format === 'xwalk') {
