@@ -664,6 +664,16 @@ function venclextaCalloutModalDataId(titleText) {
   return `linkTo${base.charAt(0).toUpperCase()}${base.slice(1)}`;
 }
 
+/** Plain `Cancer|Care` (no tags) → Cancer<em>Care</em> (author uses `|` in UE). */
+function venclextaCalloutPipeTitleToEmHtml(inner) {
+  const trimmed = inner.trim();
+  if (/^[^<]+\|[^<]+$/.test(trimmed)) {
+    const [left, right] = trimmed.split('|').map((s) => s.trim());
+    return `${left}<em>${right}</em>`;
+  }
+  return trimmed;
+}
+
 function venclextaCalloutHeadingInnerHtml(titleCell) {
   if (!titleCell) return '';
   const ps = [...titleCell.querySelectorAll(':scope > p')].filter((p) => p.textContent.trim());
@@ -676,16 +686,6 @@ function venclextaCalloutHeadingInnerHtml(titleCell) {
     return venclextaCalloutPipeTitleToEmHtml(raw);
   }
   return ps.map((p) => p.innerHTML.trim()).join('<br />');
-}
-
-/** Plain `Cancer|Care` (no tags) → Cancer<em>Care</em> (author uses `|` in UE). */
-function venclextaCalloutPipeTitleToEmHtml(inner) {
-  const trimmed = inner.trim();
-  if (/^[^<]+\|[^<]+$/.test(trimmed)) {
-    const [left, right] = trimmed.split('|').map((s) => s.trim());
-    return `${left}<em>${right}</em>`;
-  }
-  return trimmed;
 }
 
 function normalizeVenclextaTelHref(href) {
@@ -710,7 +710,7 @@ function buildVenclextaCalloutCardColumnFromUeRow(wrapper) {
     || phoneHref.replace(/^tel:/i, '');
 
   const websiteFromUe = cells[0]?.querySelector('a[href]') || websiteCell?.querySelector('a[href]');
-  let websiteLabel = (websiteCell?.textContent || '').trim() || 'Website';
+  const websiteLabel = (websiteCell?.textContent || '').trim() || 'Website';
 
   const colItem = document.createElement('div');
   colItem.className = 'abbv-flex-item d-flex flex-col-xl-4 flex-justify_center';
@@ -815,7 +815,7 @@ function isRinvoqSliderThumbnailUeRow(wrapper) {
 function rinvoqSliderThumbnailAdultsPercentageClass(subtitleText) {
   const m = (subtitleText || '').match(/(\d+)\s*%/);
   if (!m) return 'adults-percentage-75';
-  const n = Number(m[1], 10);
+  const n = parseInt(m[1], 10);
   if (Number.isNaN(n)) return 'adults-percentage-75';
   if (n >= 90) return 'adults-percentage-90';
   if (n >= 75) return 'adults-percentage-75';
@@ -850,9 +850,10 @@ function clonePictureFromRinvoqSliderThumbnailUeCell(mediaCell) {
 function extractRinvoqSliderThumbnailLinkFromUeCells(cells) {
   for (let i = 0; i < cells.length; i += 1) {
     const a = cells[i]?.querySelector('a[href]');
-    if (!a) continue;
-    const href = (a.getAttribute('href') || '').trim();
-    if (href) return { href, anchor: a };
+    if (a) {
+      const href = (a.getAttribute('href') || '').trim();
+      if (href) return { href, anchor: a };
+    }
   }
   return { href: RINVOQ_SLIDER_THUMB_DEFAULT_HASH, anchor: null };
 }
