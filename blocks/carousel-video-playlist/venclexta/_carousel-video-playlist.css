@@ -1,3 +1,116 @@
 @import '../carousel-video-playlist.css';
 
-/* venclexta carousel-video-playlist overrides */
+/* Venclexta DTC — CLL Stories variant
+   2-column grid of individual video cards with description + transcript
+   Matches venclexta.com/previously-untreated-cll/why-venclexta/cll-stories */
+
+.carousel-video-playlist {
+  --cvp-color-text: var(--text-color, #404040);
+  --cvp-color-active: var(--color-brand-primary, #005272);
+  --cvp-color-bg: var(--background-color, #fff);
+  --cvp-font-family: var(--body-font-family, sans-serif);
+  --cvp-font-size-desc: var(--font-size-body, 1rem);
+  --cvp-font-size-transcript: var(--font-size-body, 1rem);
+  --cvp-spacing-cards-gap: var(--spacing-24, 24px);
+
+  font-family: var(--cvp-font-family);
+  max-width: var(--content-max-width, 1100px);
+  margin: 0 auto;
+}
+
+/* Cards layout: 2-column grid */
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--cvp-spacing-cards-gap);
+}
+
+/* Each card: video poster + description below */
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  background: var(--cvp-color-bg);
+  opacity: 1;
+  flex-direction: column;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item:not(.is-active) {
+  opacity: 1;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item:hover {
+  border-color: transparent;
+}
+
+/* Thumbnail fills width, aspect ratio 16:9 */
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-thumb {
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+/* Play icon — always visible, white circle with play triangle */
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-play-icon {
+  opacity: 1;
+  background: transparent;
+}
+
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-play-icon::after {
+  width: var(--spacing-56, 56px);
+  height: var(--spacing-56, 56px);
+  border: 2px solid rgb(255 255 255 / 80%);
+  border-radius: 50%;
+  background-color: rgb(0 0 0 / 30%);
+  background-size: var(--spacing-20, 20px);
+}
+
+/* Overlay title — white text at bottom of poster */
+.carousel-video-playlist.cvp-layout-cards .cvp-playlist-overlay-title {
+  font-family: var(--cvp-font-family);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-body, 1rem);
+  color: var(--color-text-on-dark, #fff);
+  text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
+}
+
+/* Description below the card */
+.carousel-video-playlist .cvp-active-desc {
+  font-family: var(--cvp-font-family);
+  font-size: var(--cvp-font-size-desc);
+  line-height: 1.5;
+  color: var(--cvp-color-text);
+  margin: var(--spacing-12, 12px) 0;
+}
+
+/* Transcript link — teal, medium weight, no underline */
+.carousel-video-playlist .cvp-transcript-link {
+  font-family: var(--cvp-font-family);
+  font-size: var(--cvp-font-size-transcript);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--cvp-color-active);
+  text-decoration: none;
+  text-align: left;
+  padding: 0;
+}
+
+.carousel-video-playlist .cvp-transcript-link:hover {
+  text-decoration: underline;
+}
+
+.carousel-video-playlist .cvp-transcript-link::after {
+  content: ' \203A';
+  font-size: 1.2em;
+}
+
+/* Hide player area (title/desc above cards) — not needed for this layout */
+.carousel-video-playlist .cvp-active-title:empty,
+.carousel-video-playlist .cvp-active-desc:empty {
+  display: none;
+}
+
+/* ── Mobile: single column ── */
+@media (width < 768px) {
+  .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+    grid-template-columns: 1fr;
+  }
+}
