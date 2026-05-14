@@ -104,7 +104,7 @@ function parseItems(block) {
         title: get(1),
         transcriptHref: get(2),
         transcript: cells[3] ?? null,
-        description: get(4) || get(1),
+        description: get(4),
       };
     })
     .filter(({ videoId }) => videoId);
