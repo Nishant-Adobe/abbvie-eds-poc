@@ -544,13 +544,13 @@
   height: 100%;
 }
 
-/* Hide Brightcove default UI */
-.cvp-venclexta-card .vjs-dock-text,
-.cvp-venclexta-card .vjs-dock-title,
-.cvp-venclexta-card .vjs-dock-description,
-.cvp-venclexta-card .vjs-big-play-button {
-  display: none !important;
-}
+
+
+
+
+
+
+
 
 /* Play button — gold circle matching venclexta.com */
 .cvp-venclexta-card .cvp-play-btn {
@@ -721,4 +721,30 @@
   background: var(--color-background-light, #f5f5f5);
   border-radius: 4px;
   overflow: hidden;
+}
+
+/* Hide BC big play button only */
+.cvp-venclexta-card .vjs-big-play-button {
+  display: none !important;
+}
+/* Style BC dock title */
+.cvp-venclexta-card .vjs-dock-text {
+  background: linear-gradient(transparent, rgb(0 50 70 / 85%)) !important;
+  padding: 16px 20px !important;
+  bottom: 0 !important;
+}
+.cvp-venclexta-card .vjs-dock-title {
+  font-family: var(--heading-font-family, sans-serif) !important;
+  font-weight: 700 !important;
+  font-size: 1.25rem !important;
+  color: #fff !important;
+  text-transform: uppercase !important;
+}
+.cvp-venclexta-card .vjs-dock-description {
+  display: none !important;
+}
+
+/* Hide duplicate authored title below poster */
+.cvp-venclexta-card .cvp-card-title-overlay {
+  display: none;
 }
