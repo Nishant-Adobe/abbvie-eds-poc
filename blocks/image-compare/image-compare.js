@@ -1,5 +1,3 @@
-import { moveInstrumentation } from '../../scripts/scripts.js';
-
 /* Model field order â†’ column indices (tabs/classes excluded from column output) */
 const COL = {
   heading: 0,
