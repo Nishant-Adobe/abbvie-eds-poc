@@ -123,13 +123,6 @@ function buildCard(item, accountId, playerId) {
   playBtn.setAttribute('aria-label', `Play ${item.title}`);
   playerWrap.append(playBtn);
 
-  if (item.title) {
-    const titleEl = document.createElement('div');
-    titleEl.className = 'cvp-card-title-overlay';
-    titleEl.textContent = item.title;
-    playerWrap.append(titleEl);
-  }
-
   card.append(playerWrap);
 
   const content = document.createElement('div');
@@ -185,12 +178,6 @@ function buildCard(item, accountId, playerId) {
           if (!p) { requestAnimationFrame(poll); return; }
           p.ready(function onReady() {
             const mi = this.mediainfo;
-            if (mi?.name && !playerWrap.querySelector('.cvp-card-title-overlay')) {
-              const titleEl = document.createElement('div');
-              titleEl.className = 'cvp-card-title-overlay';
-              titleEl.textContent = mi.name;
-              playerWrap.append(titleEl);
-            }
             if (mi?.longDescription) {
               link.style.display = '';
               link.addEventListener('click', () => {
