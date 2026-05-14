@@ -186,10 +186,10 @@ function buildCard(item, accountId, playerId) {
 
   playBtn.addEventListener('click', () => {
     playBtn.hidden = true;
-    const vid = playerWrap.querySelector('video-js');
-    if (!vid) return;
+    const videoEl = playerWrap.querySelector('video-js');
+    if (!videoEl) return;
     const poll = () => {
-      const p = window.videojs?.getPlayer(vid.id);
+      const p = window.videojs?.getPlayer(videoEl.id);
       if (p) p.ready(() => p.play());
       else requestAnimationFrame(poll);
     };
