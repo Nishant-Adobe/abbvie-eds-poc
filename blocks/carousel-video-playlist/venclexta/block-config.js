@@ -1,5 +1,3 @@
-import { decorateBlock } from '../carousel-video-playlist.js';
-
 let transcriptModal = null;
 
 function getTranscriptModal() {
