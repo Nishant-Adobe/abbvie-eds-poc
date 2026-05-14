@@ -178,6 +178,12 @@ function buildCard(item, accountId, playerId) {
           if (!p) { requestAnimationFrame(poll); return; }
           p.ready(function onReady() {
             const mi = this.mediainfo;
+            if (mi?.name && !playerWrap.querySelector('.cvp-card-title-overlay')) {
+              const titleEl = document.createElement('div');
+              titleEl.className = 'cvp-card-title-overlay';
+              titleEl.textContent = mi.name;
+              playerWrap.append(titleEl);
+            }
             if (mi?.description && !desc.textContent) {
               desc.textContent = mi.description;
             }
