@@ -35,12 +35,35 @@ const COL = {
   anchorId: 32,
 };
 
+const COL_NAMES = Object.keys(COL);
+const PROP_ALIASES = {
+  beforeLabel: 'beforeLabelPrefix',
+  afterLabel: 'afterLabelPrefix',
+  beforeImageAlt: 'beforeAlt',
+  afterImageAlt: 'afterAlt',
+};
+
 function getImg(cell) {
   return cell?.querySelector('img');
 }
 
 function getText(cell) {
   return cell?.textContent?.trim() || '';
+}
+
+function buildXwalkCells(block) {
+  const propMap = {};
+  [...block.children].forEach((row) => {
+    const cell = row.children[0];
+    if (!cell) return;
+    const el = cell.querySelector('[data-aue-prop]') || cell;
+    const prop = el.getAttribute('data-aue-prop');
+    if (prop) {
+      const canonical = PROP_ALIASES[prop] || prop;
+      propMap[canonical] = cell;
+    }
+  });
+  return COL_NAMES.map((name) => propMap[name] || null);
 }
 
 function cloneImg(img) {
@@ -693,6 +716,8 @@ function detectFormat(block) {
   const firstRow = rows[0];
   const firstCells = [...firstRow.children];
 
+  // Xwalk UE: rows contain elements with data-aue-prop attributes
+  if (firstCells[0]?.querySelector('[data-aue-prop]')) return 'xwalk';
   // UE model: single row with many cells (all fields flattened into columns)
   if (rows.length === 1 && firstCells.length >= 10) return 'model';
   // Legacy: few rows, first cell contains an image (before/after pair)
@@ -712,7 +737,10 @@ export default function decorate(block) {
 
   let result;
 
-  if (format === 'legacy') {
+  if (format === 'xwalk') {
+    const cells = buildXwalkCells(block);
+    result = decorateModelFormat(block, cells);
+  } else if (format === 'legacy') {
     const cells = [...block.children[0].children];
     result = decorateLegacy(block, cells);
   } else if (format === 'keyvalue') {
