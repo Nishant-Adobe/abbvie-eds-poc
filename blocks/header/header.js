@@ -690,6 +690,18 @@ function buildMenuItem(block, isNavigation = false) {
 
     li.addEventListener('mouseenter', openOnHover);
     li.addEventListener('mouseleave', closeOnLeave);
+    // When cursor moves from submenu back to the button area, li.mouseenter does NOT
+    // re-fire (cursor never left li). This catches that return movement to cancel the
+    // close timer and re-open if the timer already fired and closed the dropdown.
+    button.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimer);
+      if (!isDesktop.matches) return;
+      isHovering = true;
+      if (li.getAttribute('aria-expanded') !== 'true') {
+        li.setAttribute('aria-expanded', 'true');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    });
     submenu.addEventListener('mouseenter', () => clearTimeout(hoverTimer));
     submenu.addEventListener('mouseleave', closeOnLeave);
   }
