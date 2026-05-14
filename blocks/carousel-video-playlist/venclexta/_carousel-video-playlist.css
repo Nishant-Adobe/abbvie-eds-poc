@@ -1,111 +1,129 @@
 @import '../carousel-video-playlist.css';
 
-/* Venclexta DTC — CLL Stories variant
-   2-column grid of individual video cards with description + transcript modal
+/* Venclexta DTC — CLL Stories: 2-col individual video cards
    Matches venclexta.com/previously-untreated-cll/why-venclexta/cll-stories */
 
-.carousel-video-playlist {
-  --cvp-color-text: var(--text-color, #404040);
-  --cvp-color-active: var(--color-brand-primary, #005272);
-  --cvp-color-bg: var(--background-color, #fff);
-  --cvp-font-family: var(--body-font-family, sans-serif);
-  --cvp-font-size-desc: var(--font-size-body, 1rem);
-  --cvp-font-size-transcript: var(--font-size-body, 1rem);
-  --cvp-spacing-cards-gap: var(--spacing-24, 24px);
-
-  font-family: var(--cvp-font-family);
+.carousel-video-playlist.cvp-venclexta-stories {
   max-width: var(--content-max-width, 1100px);
   margin: 0 auto;
+  font-family: var(--body-font-family, sans-serif);
 }
 
-/* Cards layout: 2-column grid */
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+/* 2-column grid */
+.cvp-venclexta-stories .cvp-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--cvp-spacing-cards-gap);
+  gap: var(--spacing-32, 32px);
 }
 
-/* Each card: video poster + description below */
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item {
-  width: 100%;
-  border: none;
-  border-radius: 0;
-  background: var(--cvp-color-bg);
-  opacity: 1;
+/* Card */
+.cvp-venclexta-card {
+  display: flex;
   flex-direction: column;
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item:not(.is-active) {
-  opacity: 1;
-}
-
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-item:hover {
-  border-color: transparent;
-}
-
-/* Thumbnail fills width, aspect ratio 16:9 */
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-thumb {
-  height: auto;
+/* Player wrap — 16:9 with poster */
+.cvp-venclexta-card .cvp-player-wrap {
+  position: relative;
   aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-brand-primary-dark, #003b52);
 }
 
-/* Play icon — always visible, white circle with play triangle */
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-play-icon {
-  opacity: 1;
-  background: transparent;
+.cvp-venclexta-card .cvp-player-wrap video-js,
+.cvp-venclexta-card .cvp-player-wrap .video-js {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-play-icon::after {
-  width: var(--spacing-56, 56px);
-  height: var(--spacing-56, 56px);
-  border: 2px solid rgb(255 255 255 / 80%);
+/* Hide Brightcove default UI */
+.cvp-venclexta-card .vjs-dock-text,
+.cvp-venclexta-card .vjs-dock-title,
+.cvp-venclexta-card .vjs-dock-description,
+.cvp-venclexta-card .vjs-big-play-button {
+  display: none !important;
+}
+
+/* Play button — gold circle matching venclexta.com */
+.cvp-venclexta-card .cvp-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background-color: rgb(0 0 0 / 30%);
-  background-size: var(--spacing-20, 20px);
+  border: none;
+  background:
+    var(--color-brand-accent, #ffd100)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23003b52'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
+    center / 28px no-repeat;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 0.2s;
 }
 
-/* Overlay title — white text at bottom of poster */
-.carousel-video-playlist.cvp-layout-cards .cvp-playlist-overlay-title {
-  font-family: var(--cvp-font-family);
+.cvp-venclexta-card .cvp-play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.cvp-venclexta-card .cvp-play-btn[hidden] {
+  display: none;
+}
+
+/* Title overlay at bottom of poster */
+.cvp-venclexta-card .cvp-card-title-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-16, 16px) var(--spacing-20, 20px);
+  background: linear-gradient(transparent, rgb(0 0 0 / 70%));
+  color: var(--color-text-on-dark, #fff);
+  font-family: var(--heading-font-family, sans-serif);
   font-weight: var(--font-weight-bold, 700);
   font-size: var(--font-size-body, 1rem);
-  color: var(--color-text-on-dark, #fff);
-  text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
+  text-transform: uppercase;
+  line-height: 1.2;
+  z-index: 1;
+  pointer-events: none;
 }
 
-/* Description below the card */
-.carousel-video-playlist .cvp-active-desc {
-  font-family: var(--cvp-font-family);
-  font-size: var(--cvp-font-size-desc);
+/* Card content — description + transcript link */
+.cvp-venclexta-card .cvp-card-content {
+  padding: var(--spacing-16, 16px) 0;
+}
+
+.cvp-venclexta-card .cvp-card-desc {
+  font-family: var(--body-font-family, sans-serif);
+  font-size: var(--font-size-body, 1rem);
   line-height: 1.5;
-  color: var(--cvp-color-text);
-  margin: var(--spacing-12, 12px) 0;
+  color: var(--text-color, #404040);
+  margin: 0 0 var(--spacing-12, 12px);
 }
 
-/* Transcript link — teal, medium weight, no underline */
-.carousel-video-playlist .cvp-transcript-link {
-  font-family: var(--cvp-font-family);
-  font-size: var(--cvp-font-size-transcript);
+/* Transcript link — teal, medium weight */
+.cvp-venclexta-card .cvp-transcript-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--body-font-family, sans-serif);
+  font-size: var(--font-size-body, 1rem);
   font-weight: var(--font-weight-medium, 500);
-  color: var(--cvp-color-active);
+  color: var(--color-brand-primary, #005272);
   text-decoration: none;
-  text-align: left;
   padding: 0;
 }
 
-.carousel-video-playlist .cvp-transcript-link:hover {
-  text-decoration: underline;
-}
-
-.carousel-video-playlist .cvp-transcript-link::after {
+.cvp-venclexta-card .cvp-transcript-link::after {
   content: ' \203A';
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 
-/* Hide player area (title/desc above cards) — not needed for this layout */
-.carousel-video-playlist .cvp-active-title:empty,
-.carousel-video-playlist .cvp-active-desc:empty {
-  display: none;
+.cvp-venclexta-card .cvp-transcript-link:hover {
+  text-decoration: underline;
 }
 
 /* ── Transcript Modal ── */
@@ -129,7 +147,6 @@
   max-width: 700px;
   width: 90%;
   max-height: 80vh;
-  border-radius: 0;
   overflow-y: auto;
   padding: var(--spacing-32, 32px);
   position: relative;
@@ -142,10 +159,10 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-family: var(--cvp-font-family);
+  font-family: var(--body-font-family, sans-serif);
   font-size: var(--font-size-body, 1rem);
   font-weight: var(--font-weight-medium, 500);
-  color: var(--cvp-color-active);
+  color: var(--color-brand-primary, #005272);
   display: flex;
   align-items: center;
   gap: var(--spacing-08, 8px);
@@ -153,30 +170,31 @@
 
 .cvp-transcript-modal-close::after {
   content: '\2715';
-  display: inline-block;
-  width: var(--spacing-20, 20px);
-  height: var(--spacing-20, 20px);
-  border: 1px solid var(--cvp-color-active);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24, 24px);
+  height: var(--spacing-24, 24px);
+  border: 1px solid var(--color-brand-primary, #005272);
   border-radius: 50%;
-  text-align: center;
-  line-height: var(--spacing-18, 18px);
   font-size: var(--font-size-body-small, 0.75rem);
 }
 
 .cvp-transcript-modal-body {
-  font-family: var(--cvp-font-family);
+  font-family: var(--body-font-family, sans-serif);
   font-size: var(--font-size-body, 1rem);
   line-height: 1.6;
-  color: var(--cvp-color-text);
+  color: var(--text-color, #404040);
+  margin-top: var(--spacing-32, 32px);
 }
 
 .cvp-transcript-modal-body p {
   margin: 0 0 var(--spacing-16, 16px);
 }
 
-/* ── Mobile: single column ── */
+/* ── Mobile ── */
 @media (width < 768px) {
-  .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
+  .cvp-venclexta-stories .cvp-grid {
     grid-template-columns: 1fr;
   }
 

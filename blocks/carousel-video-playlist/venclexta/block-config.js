@@ -1,4 +1,20 @@
+const bcScripts = {};
+let playerCount = 0;
 let transcriptModal = null;
+
+function loadBrightcoveScript(account, player) {
+  const key = `${account}/${player}_default`;
+  if (!bcScripts[key]) {
+    bcScripts[key] = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = `https://players.brightcove.net/${key}/index.min.js`;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.append(s);
+    });
+  }
+  return bcScripts[key];
+}
 
 function getTranscriptModal() {
   if (transcriptModal) return transcriptModal;
@@ -10,7 +26,6 @@ function getTranscriptModal() {
   dialog.className = 'cvp-transcript-modal-dialog';
   dialog.setAttribute('role', 'dialog');
   dialog.setAttribute('aria-modal', 'true');
-  dialog.setAttribute('aria-label', 'Video Transcript');
 
   const closeBtn = document.createElement('button');
   closeBtn.type = 'button';
@@ -34,29 +49,153 @@ function getTranscriptModal() {
     if (e.target === overlay) close();
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
-      close();
-    }
+    if (e.key === 'Escape'
+      && overlay.classList.contains('is-open')) close();
   });
 
   transcriptModal = { overlay, body };
   return transcriptModal;
 }
 
-function openTranscriptModal(content) {
+function openTranscript(content) {
   const modal = getTranscriptModal();
   modal.body.innerHTML = '';
   if (typeof content === 'string') {
     modal.body.innerHTML = content;
   } else if (content?.innerHTML) {
     modal.body.innerHTML = content.innerHTML;
-  } else if (content?.childNodes) {
-    [...content.childNodes].forEach((n) => {
-      modal.body.append(n.cloneNode(true));
-    });
   }
   modal.overlay.classList.add('is-open');
   document.body.classList.add('cvp-modal-is-open');
+}
+
+function isItemRow(row) {
+  if (row.children.length < 2) return false;
+  if (row.querySelector('picture')) return true;
+  const first = row.firstElementChild?.textContent?.trim();
+  return /^\d{8,}$/.test(first);
+}
+
+function readConfig(block) {
+  const rows = [...block.children];
+  const cfgRows = rows.filter((r) => !isItemRow(r));
+  const val = (i) => {
+    const t = cfgRows[i]?.firstElementChild?.textContent?.trim();
+    return t || '';
+  };
+  const layouts = ['cards', 'bottom', 'top', 'left', 'right'];
+  const first = val(0);
+  const cl = layouts.find((l) => block.classList.contains(l));
+  return {
+    layout: layouts.includes(first) ? first : (cl || 'cards'),
+    accountId: val(3) || val(1) || '',
+    playerId: val(5) || val(3) || 'default',
+  };
+}
+
+function parseItems(block) {
+  return [...block.children]
+    .filter(isItemRow)
+    .map((row) => {
+      const cells = [...row.children];
+      const get = (i) => cells[i]?.textContent?.trim() ?? '';
+      return {
+        videoId: get(0),
+        title: get(1),
+        transcriptHref: get(2),
+        transcript: cells[3] ?? null,
+        description: get(4) || get(1),
+      };
+    })
+    .filter(({ videoId }) => videoId);
+}
+
+function buildCard(item, accountId, playerId) {
+  const card = document.createElement('div');
+  card.className = 'cvp-venclexta-card';
+
+  const playerWrap = document.createElement('div');
+  playerWrap.className = 'cvp-player-wrap';
+
+  const playBtn = document.createElement('button');
+  playBtn.type = 'button';
+  playBtn.className = 'cvp-play-btn';
+  playBtn.setAttribute('aria-label', `Play ${item.title}`);
+  playerWrap.append(playBtn);
+
+  if (item.title) {
+    const titleOverlay = document.createElement('div');
+    titleOverlay.className = 'cvp-card-title-overlay';
+    titleOverlay.textContent = item.title;
+    playerWrap.append(titleOverlay);
+  }
+
+  card.append(playerWrap);
+
+  const content = document.createElement('div');
+  content.className = 'cvp-card-content';
+
+  if (item.description) {
+    const desc = document.createElement('p');
+    desc.className = 'cvp-card-desc';
+    desc.textContent = item.description;
+    content.append(desc);
+  }
+
+  const hasTranscript = item.transcript
+    ?.textContent?.trim();
+  if (hasTranscript || item.transcriptHref) {
+    const link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'cvp-transcript-link';
+    link.textContent = 'View Transcript';
+    link.addEventListener('click', () => {
+      if (hasTranscript) {
+        openTranscript(item.transcript);
+      } else if (item.transcriptHref) {
+        window.open(item.transcriptHref, '_blank');
+      }
+    });
+    content.append(link);
+  }
+
+  card.append(content);
+
+  setTimeout(() => {
+    const obs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      playerCount += 1;
+      const id = `venclexta-cvp-${playerCount}`;
+      const vid = document.createElement('video-js');
+      vid.id = id;
+      vid.setAttribute('data-account', accountId);
+      vid.setAttribute('data-player', playerId);
+      vid.setAttribute('data-embed', 'default');
+      vid.setAttribute('data-video-id', item.videoId);
+      vid.setAttribute('preload', 'none');
+      vid.className = 'video-js cvp-poster-video';
+      playerWrap.prepend(vid);
+      loadBrightcoveScript(accountId, playerId).then(() => {
+        if (typeof window.bc === 'function') window.bc(vid);
+      });
+    }, { rootMargin: '200px' });
+    obs.observe(card);
+  }, 1000);
+
+  playBtn.addEventListener('click', () => {
+    playBtn.hidden = true;
+    const vid = playerWrap.querySelector('video-js');
+    if (!vid) return;
+    const poll = () => {
+      const p = window.videojs?.getPlayer(vid.id);
+      if (p) p.ready(() => p.play());
+      else requestAnimationFrame(poll);
+    };
+    loadBrightcoveScript(accountId, playerId).then(poll);
+  });
+
+  return card;
 }
 
 export default async function getBlockConfigs() {
@@ -64,37 +203,32 @@ export default async function getBlockConfigs() {
     flags: {},
     variations: [],
     decorations: {
-      afterDecorate: async (block) => {
+      decorate: async (block) => {
         if (window.self !== window.top) return;
-        const items = block.querySelectorAll(
-          '.cvp-playlist-item',
-        );
-        const rows = [...block.querySelectorAll(':scope > div')]
-          .filter((r) => r.children.length >= 2);
 
-        items.forEach((item, idx) => {
-          const row = rows[idx];
-          if (!row) return;
+        const cfg = readConfig(block);
+        const items = parseItems(block);
+        const { accountId, playerId } = cfg;
 
-          const cells = [...row.children];
-          const transcriptCell = cells[3];
-          const transcriptText = transcriptCell
-            ?.textContent?.trim();
+        block.textContent = '';
+        block.classList.add('cvp-venclexta-stories');
 
-          if (!transcriptText) return;
+        if (!items.length || !accountId) {
+          const msg = document.createElement('p');
+          msg.className = 'cvp-placeholder';
+          msg.textContent = 'No videos configured.';
+          block.append(msg);
+          return;
+        }
 
-          const link = document.createElement('button');
-          link.type = 'button';
-          link.className = 'cvp-transcript-link';
-          link.textContent = 'View Transcript';
+        const grid = document.createElement('div');
+        grid.className = 'cvp-grid';
 
-          link.addEventListener('click', (e) => {
-            e.stopPropagation();
-            openTranscriptModal(transcriptCell);
-          });
-
-          item.append(link);
+        items.forEach((item) => {
+          grid.append(buildCard(item, accountId, playerId));
         });
+
+        block.append(grid);
       },
     },
   };
