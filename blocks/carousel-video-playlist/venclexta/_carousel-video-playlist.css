@@ -22,7 +22,7 @@
   grid-column: auto !important;
 }
 
-/* Card — light gray background like original */
+/* Card */
 .cvp-venclexta-card {
   display: flex;
   flex-direction: column;
@@ -47,9 +47,29 @@
   height: 100%;
 }
 
-/* Hide Brightcove big play button (we use our own) */
+/* Brightcove big play button — transparent gold, 88px circle (matches original) */
 .cvp-venclexta-card .vjs-big-play-button {
-  display: none !important;
+  width: 88px !important;
+  height: 88px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  background-color: rgb(255 206 0 / 70%) !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  line-height: 88px !important;
+}
+
+.cvp-venclexta-card .vjs-big-play-button .vjs-icon-placeholder::before {
+  font-size: 40px !important;
+  color: #fff !important;
+}
+
+/* Hover: dark blue background */
+.cvp-venclexta-card .video-js:hover .vjs-big-play-button,
+.cvp-venclexta-card .vjs-big-play-button:focus {
+  background-color: rgb(8 8 140) !important;
 }
 
 /* Style Brightcove dock title to match venclexta.com */
@@ -71,51 +91,6 @@
   display: none !important;
 }
 
-/* Play button — gold circle matching venclexta.com */
-.cvp-venclexta-card .cvp-play-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: none;
-  background:
-    var(--color-brand-accent, #ffd100)
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23003b52'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
-    center / 28px no-repeat;
-  cursor: pointer;
-  z-index: 2;
-  transition: transform 0.2s;
-}
-
-.cvp-venclexta-card .cvp-play-btn:hover {
-  transform: translate(-50%, -50%) scale(1.08);
-}
-
-.cvp-venclexta-card .cvp-play-btn[hidden] {
-  display: none;
-}
-
-/* Title overlay at bottom of poster */
-.cvp-venclexta-card .cvp-card-title-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: var(--spacing-16, 16px) var(--spacing-20, 20px);
-  background: linear-gradient(transparent, rgb(0 0 0 / 70%));
-  color: var(--color-text-on-dark, #fff);
-  font-family: var(--heading-font-family, sans-serif);
-  font-weight: var(--font-weight-bold, 700);
-  font-size: var(--font-size-body, 1rem);
-  text-transform: uppercase;
-  line-height: 1.2;
-  z-index: 1;
-  pointer-events: none;
-}
-
 /* Card content — description + transcript link */
 .cvp-venclexta-card .cvp-card-content {
   padding: var(--spacing-16, 16px) 0;
@@ -129,7 +104,7 @@
   margin: 0 0 var(--spacing-12, 12px);
 }
 
-/* Transcript link — teal, medium weight */
+/* Transcript link — teal, medium weight, matches original */
 .cvp-venclexta-card .cvp-transcript-link {
   background: none;
   border: none;
@@ -140,6 +115,7 @@
   color: var(--color-brand-primary, #005272);
   text-decoration: none;
   padding: 0;
+  display: inline-block;
 }
 
 .cvp-venclexta-card .cvp-transcript-link::after {

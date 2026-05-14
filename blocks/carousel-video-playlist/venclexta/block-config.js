@@ -117,12 +117,6 @@ function buildCard(item, accountId, playerId) {
   const playerWrap = document.createElement('div');
   playerWrap.className = 'cvp-player-wrap';
 
-  const playBtn = document.createElement('button');
-  playBtn.type = 'button';
-  playBtn.className = 'cvp-play-btn';
-  playBtn.setAttribute('aria-label', `Play ${item.title}`);
-  playerWrap.append(playBtn);
-
   card.append(playerWrap);
 
   const content = document.createElement('div');
@@ -182,18 +176,6 @@ function buildCard(item, accountId, playerId) {
       });
     };
     poll();
-  });
-
-  playBtn.addEventListener('click', () => {
-    playBtn.hidden = true;
-    const videoEl = playerWrap.querySelector('video-js');
-    if (!videoEl) return;
-    const poll = () => {
-      const p = window.videojs?.getPlayer(videoEl.id);
-      if (p) p.ready(() => p.play());
-      else requestAnimationFrame(poll);
-    };
-    loadBrightcoveScript(accountId, playerId).then(poll);
   });
 
   return card;
