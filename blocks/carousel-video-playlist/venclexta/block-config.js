@@ -123,13 +123,6 @@ function buildCard(item, accountId, playerId) {
   playBtn.setAttribute('aria-label', `Play ${item.title}`);
   playerWrap.append(playBtn);
 
-  if (item.title) {
-    const titleOverlay = document.createElement('div');
-    titleOverlay.className = 'cvp-card-title-overlay';
-    titleOverlay.textContent = item.title;
-    playerWrap.append(titleOverlay);
-  }
-
   card.append(playerWrap);
 
   const content = document.createElement('div');
@@ -167,7 +160,7 @@ function buildCard(item, accountId, playerId) {
   vid.setAttribute('data-player', playerId);
   vid.setAttribute('data-embed', 'default');
   vid.setAttribute('data-video-id', item.videoId);
-  vid.setAttribute('preload', 'none');
+  vid.setAttribute('preload', 'metadata');
   vid.className = 'video-js cvp-poster-video';
   playerWrap.prepend(vid);
   loadBrightcoveScript(accountId, playerId).then(() => {
