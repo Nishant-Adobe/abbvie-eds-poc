@@ -51,6 +51,13 @@ function getText(cell) {
   return cell?.textContent?.trim() || '';
 }
 
+const IMAGE_FIELDS = new Set([
+  'beforeImage', 'afterImage',
+  'tab1Img1Before', 'tab1Img1After', 'tab1Img1Thumb',
+  'tab1Img2Before', 'tab1Img2After', 'tab1Img2Thumb',
+  'tab2Img1Before', 'tab2Img1After', 'tab2Img1Thumb',
+  'tab2Img2Before', 'tab2Img2After', 'tab2Img2Thumb',
+]);
 function buildXwalkCells(block) {
   const propMap = {};
   [...block.children].forEach((row) => {
@@ -64,6 +71,22 @@ function buildXwalkCells(block) {
     }
   });
   return COL_NAMES.map((name) => propMap[name] || null);
+}
+function buildModelRowCells(block) {
+  const rows = [...block.children].map((row) => row.children[0]);
+  const cells = new Array(COL_NAMES.length).fill(null);
+  let rowIdx = 0;
+  for (let colIdx = 0; colIdx < COL_NAMES.length && rowIdx < rows.length; colIdx += 1) {
+    const name = COL_NAMES[colIdx];
+    const expectsImage = IMAGE_FIELDS.has(name);
+    const row = rows[rowIdx];
+    const hasImage = !!row?.querySelector('img');
+    if (expectsImage === hasImage) {
+      cells[colIdx] = row;
+      rowIdx += 1;
+    }
+  }
+  return cells;
 }
 
 function cloneImg(img) {
@@ -747,7 +770,7 @@ export default function decorate(block) {
     const rows = [...block.children];
     result = decorateKeyValue(block, rows);
   } else if (format === 'model-rows') {
-    const cells = [...block.children].map((row) => row.children[0]);
+    const cells = buildModelRowCells(block);
     result = decorateModelFormat(block, cells);
   } else {
     const cells = [...block.children[0].children];
