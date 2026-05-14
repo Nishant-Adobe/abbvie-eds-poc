@@ -1,3 +1,5 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 /* Model field order â†’ column indices (tabs/classes excluded from column output) */
 const COL = {
   heading: 0,
@@ -734,6 +736,9 @@ function detectFormat(block) {
 export default function decorate(block) {
   const format = detectFormat(block);
   if (!format) return;
+
+  const blockWrapper = block.parentElement;
+  moveInstrumentation(block, blockWrapper);
 
   let result;
 
