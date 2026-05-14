@@ -123,6 +123,13 @@ function buildCard(item, accountId, playerId) {
   playBtn.setAttribute('aria-label', `Play ${item.title}`);
   playerWrap.append(playBtn);
 
+  if (item.title) {
+    const titleOverlay = document.createElement('div');
+    titleOverlay.className = 'cvp-card-title-overlay';
+    titleOverlay.innerHTML = item.title.replace(/:\s*/g, ':<br>');
+    playerWrap.append(titleOverlay);
+  }
+
   card.append(playerWrap);
 
   const content = document.createElement('div');
