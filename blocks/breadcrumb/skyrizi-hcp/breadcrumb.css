@@ -129,7 +129,6 @@
 
 .breadcrumb-nav li a.flex-active {
   font-weight: var(--font-weight-700);
-  pointer-events: none;
 }
 
 /* =====================================================
@@ -208,7 +207,7 @@
 }
 
 .breadcrumb .breadcrumb-nav ol {
-  flex-direction: row;
+  flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
   margin: 0;
@@ -235,6 +234,7 @@
   color: var(--breadcrumb-color-text);
   font-weight: var(--font-weight-medium);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .breadcrumb-nav li a:hover {
