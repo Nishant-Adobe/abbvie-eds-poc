@@ -2,16 +2,46 @@ import { renderBlock } from '../../scripts/multi-theme.js';
 
 let blockCounter = 0;
 
+// Must match the field order in _find-provider.json (excluding tab, classes, and common-prop)
+const FIELD_ORDER = [
+  'search-label',
+  'search-placeholder',
+  'radius-label',
+  'specialty-label',
+  'submit-label',
+  'geo-button-label',
+  'clear-label',
+  'terms-label',
+  'terms-text',
+  'no-results',
+  'error',
+  'api-endpoint',
+  'indication',
+  'exit-modal-id',
+  'anchor-id',
+];
+
 const RICHTEXT_KEYS = new Set(['terms-text']);
+
+// UE renders each field as a single-column row; Google Doc authoring uses key | value rows
+function isUEMode(block) {
+  const firstRow = block.children[0];
+  return firstRow ? firstRow.children.length === 1 : false;
+}
 
 function readConfig(block) {
   const config = {};
-  [...block.children].forEach((row) => {
+  const rows = [...block.children];
+  const ue = isUEMode(block);
+
+  rows.forEach((row, i) => {
     const cells = [...row.children];
-    if (cells.length < 2) return;
-    const key = cells[0].textContent.trim().toLowerCase().replace(/\s+/g, '-');
-    config[key] = RICHTEXT_KEYS.has(key) ? cells[1].innerHTML.trim() : cells[1].textContent.trim();
+    const key = ue ? FIELD_ORDER[i] : cells[0]?.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+    const cell = ue ? cells[0] : cells[1];
+    if (!key || !cell) return;
+    config[key] = RICHTEXT_KEYS.has(key) ? cell.innerHTML.trim() : cell.textContent.trim();
   });
+
   return config;
 }
 
@@ -90,7 +120,7 @@ function buildForm(config, blockId, isLocation) {
     specialtySelect.className = 'find-provider-specialty-select';
     const defaultOpt = document.createElement('option');
     defaultOpt.value = '';
-    defaultOpt.textContent = 'All Specialties';
+    defaultOpt.textContent = '';
     specialtySelect.append(defaultOpt);
     form.append(buildFieldGroup(config['specialty-label'], specialtySelect));
   }
@@ -134,7 +164,7 @@ function buildForm(config, blockId, isLocation) {
   const submitBtn = document.createElement('button');
   submitBtn.type = 'submit';
   submitBtn.className = 'find-provider-submit button primary';
-  submitBtn.textContent = config['submit-label'] || '';
+  submitBtn.textContent = config['submit-label'];
   actions.append(submitBtn);
 
   if (config['clear-label']) {
@@ -247,10 +277,10 @@ export async function decorateBlock(block) {
 
   async function doSearch(query) {
     if (!config['api-endpoint']) {
-      status.textContent = config.error || 'Search is not configured.';
+      status.textContent = config.error;
       return;
     }
-    status.textContent = 'Searching…';
+    status.textContent = '';
     results.innerHTML = '';
 
     try {
@@ -267,11 +297,10 @@ export async function decorateBlock(block) {
       const providers = data.results || data.providers || (Array.isArray(data) ? data : []);
 
       if (!providers.length) {
-        status.textContent = config['no-results'] || 'No providers found.';
+        status.textContent = config['no-results'];
         return;
       }
 
-      status.textContent = '';
       providers.forEach((p) => results.append(buildResultCard(p, config)));
 
       if (isMap) {
@@ -279,7 +308,7 @@ export async function decorateBlock(block) {
         updateMapMarkers(providers, 0);
       }
     } catch {
-      status.textContent = config.error || 'An error occurred. Please try again.';
+      status.textContent = config.error;
     }
   }
 
@@ -287,7 +316,7 @@ export async function decorateBlock(block) {
     e.preventDefault();
     const termsCheckbox = form.querySelector('.find-provider-terms-checkbox');
     if (termsCheckbox && !termsCheckbox.checked) {
-      status.textContent = config['terms-error'] || 'Please accept the terms and conditions to continue.';
+      status.textContent = config['terms-error'];
       return;
     }
     doSearch(searchInput?.value.trim() || '');
@@ -313,7 +342,7 @@ export async function decorateBlock(block) {
         },
         () => {
           geoBtn.disabled = false;
-          status.textContent = config['geo-error'] || 'Location access denied. Please enter a ZIP code.';
+          status.textContent = config['geo-error'];
         },
         { timeout: 8000 },
       );
