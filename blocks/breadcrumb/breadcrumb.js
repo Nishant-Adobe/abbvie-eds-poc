@@ -109,17 +109,16 @@ function buildNav(crumbs, ariaLabel) {
     const hrefPath = toPathname(href);
     const isActive = hrefPath && hrefPath === currentPath;
 
-    if (isActive) {
-      li.textContent = label;
-      li.setAttribute('aria-current', 'page');
-    } else if (href) {
+    if (href) {
       const a = document.createElement('a');
       a.href = href;
       a.textContent = label;
+      if (isActive) a.classList.add('flex-active');
       li.append(a);
     } else {
       li.textContent = label;
     }
+    if (isActive) li.setAttribute('aria-current', 'page');
     ol.append(li);
   });
 

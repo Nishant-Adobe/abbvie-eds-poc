@@ -59,6 +59,14 @@
   text-decoration: none;
 }
 
+/* Active link — bold + cyan underline (matches original flex-active pattern) */
+.breadcrumb-nav li a.flex-active {
+  font-weight: var(--font-weight-heading);
+  color: var(--breadcrumb-color-text);
+  border-bottom: var(--breadcrumb-active-border-width) solid var(--breadcrumb-color-active-border);
+  line-height: 1;
+}
+
 .breadcrumb-nav ol li[aria-current] {
   font-weight: var(--font-weight-heading);
   color: var(--breadcrumb-color-text);
