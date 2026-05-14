@@ -9,12 +9,17 @@
   font-family: var(--body-font-family, sans-serif);
 }
 
-/* 2-column grid — !important to override base carousel grid rules */
+/* 2-column grid — override section 8-col grid and base carousel rules */
 .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr) !important;
   gap: var(--spacing-32, 32px) !important;
   overflow: visible !important;
+}
+
+/* Reset section grid-column on cards so they follow the 2-col grid */
+.carousel-video-playlist.cvp-venclexta-stories .cvp-grid > div {
+  grid-column: auto !important;
 }
 
 /* Card */
