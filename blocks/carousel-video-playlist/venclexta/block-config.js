@@ -168,25 +168,28 @@ function buildCard(item, accountId, playerId) {
   vid.setAttribute('controls', '');
   vid.className = 'video-js cvp-poster-video';
   playerWrap.prepend(vid);
-  loadBrightcoveScript(accountId, playerId).then(() => {
+  card._initPlayer = () => loadBrightcoveScript(accountId, playerId).then(() => {
     if (typeof window.bc === 'function') window.bc(vid);
-    const poll = () => {
-      const p = window.videojs?.getPlayer(id);
-      if (!p) { requestAnimationFrame(poll); return; }
-      p.ready(function onReady() {
-        const mi = this.mediainfo;
-        if (mi?.description && !desc.textContent) {
-          desc.textContent = mi.description;
-        }
-        if (mi?.longDescription) {
-          link.style.display = '';
-          link.addEventListener('click', () => {
-            window.open(mi.longDescription, '_blank');
-          }, { once: true });
-        }
-      });
-    };
-    poll();
+    return new Promise((resolve) => {
+      const poll = () => {
+        const p = window.videojs?.getPlayer(id);
+        if (!p) { requestAnimationFrame(poll); return; }
+        p.ready(function onReady() {
+          const mi = this.mediainfo;
+          if (mi?.description && !desc.textContent) {
+            desc.textContent = mi.description;
+          }
+          if (mi?.longDescription) {
+            link.style.display = '';
+            link.addEventListener('click', () => {
+              window.open(mi.longDescription, '_blank');
+            }, { once: true });
+          }
+          resolve();
+        });
+      };
+      poll();
+    });
   });
 
   playBtn.addEventListener('click', () => {
@@ -230,11 +233,21 @@ export default async function getBlockConfigs() {
         const grid = document.createElement('div');
         grid.className = 'cvp-grid';
 
-        items.forEach((item) => {
-          grid.append(buildCard(item, accountId, playerId));
+        const cards = items.map((item) => {
+          const card = buildCard(item, accountId, playerId);
+          grid.append(card);
+          return card;
         });
 
         block.append(grid);
+
+        // Initialize BC players sequentially so dock loads for all
+        for (const card of cards) {
+          if (card._initPlayer) {
+            // eslint-disable-next-line no-await-in-loop
+            await card._initPlayer();
+          }
+        }
       },
     },
   };
