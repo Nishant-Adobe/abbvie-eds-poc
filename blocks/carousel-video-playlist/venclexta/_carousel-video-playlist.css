@@ -9,11 +9,12 @@
   font-family: var(--body-font-family, sans-serif);
 }
 
-/* 2-column grid */
-.cvp-venclexta-stories .cvp-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-32, 32px);
+/* 2-column grid — !important to override base carousel grid rules */
+.carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: var(--spacing-32, 32px) !important;
+  overflow: visible !important;
 }
 
 /* Card */
@@ -194,8 +195,8 @@
 
 /* ── Mobile ── */
 @media (width < 768px) {
-  .cvp-venclexta-stories .cvp-grid {
-    grid-template-columns: 1fr;
+  .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
+    grid-template-columns: 1fr !important;
   }
 
   .cvp-transcript-modal-dialog {

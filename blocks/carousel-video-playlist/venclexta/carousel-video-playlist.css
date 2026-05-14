@@ -515,10 +515,11 @@
 }
 
 /* 2-column grid */
-.cvp-venclexta-stories .cvp-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--spacing-32, 32px);
+.carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: var(--spacing-32, 32px) !important;
+  overflow: visible !important;
 }
 
 /* Card */
@@ -699,7 +700,7 @@
 
 /* ── Mobile ── */
 @media (width < 768px) {
-  .cvp-venclexta-stories .cvp-grid {
+  .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
     grid-template-columns: 1fr;
   }
 
