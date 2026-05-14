@@ -2,10 +2,7 @@
 import IndexUtils from '../../scripts/index-utils.js';
 
 function formatSegment(segment) {
-  return segment
-    .split('-')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+  return segment.split('-').join(' ');
 }
 
 function appendJsonLd(ol) {
