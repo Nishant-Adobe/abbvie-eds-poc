@@ -45,16 +45,6 @@ function readConfig(block) {
   return config;
 }
 
-function buildFieldGroup(labelText, input, groupClass = '') {
-  const group = document.createElement('div');
-  group.className = `find-provider-field-group${groupClass ? ` ${groupClass}` : ''}`;
-  const label = document.createElement('label');
-  label.htmlFor = input.id;
-  label.className = 'find-provider-label';
-  label.textContent = labelText;
-  group.append(label, input);
-  return group;
-}
 
 function buildForm(config, blockId, isLocation) {
   const form = document.createElement('form');
@@ -99,32 +89,6 @@ function buildForm(config, blockId, isLocation) {
   searchGroup.append(searchRow);
   form.append(searchGroup);
 
-  if (config['radius-label']) {
-    const radiusSelect = document.createElement('select');
-    radiusSelect.id = `${blockId}-radius`;
-    radiusSelect.name = 'radius';
-    radiusSelect.className = 'find-provider-radius-select';
-    [5, 10, 25, 50, 100].forEach((miles) => {
-      const opt = document.createElement('option');
-      opt.value = miles;
-      opt.textContent = `${miles} mi`;
-      radiusSelect.append(opt);
-    });
-    form.append(buildFieldGroup(config['radius-label'], radiusSelect));
-  }
-
-  if (config['specialty-label']) {
-    const specialtySelect = document.createElement('select');
-    specialtySelect.id = `${blockId}-specialty`;
-    specialtySelect.name = 'specialty';
-    specialtySelect.className = 'find-provider-specialty-select';
-    const defaultOpt = document.createElement('option');
-    defaultOpt.value = '';
-    defaultOpt.textContent = '';
-    specialtySelect.append(defaultOpt);
-    form.append(buildFieldGroup(config['specialty-label'], specialtySelect));
-  }
-
   // Terms & Conditions checkbox
   if (config['terms-label'] || config['terms-text']) {
     const termsGroup = document.createElement('div');
@@ -161,11 +125,13 @@ function buildForm(config, blockId, isLocation) {
   const actions = document.createElement('div');
   actions.className = 'find-provider-actions';
 
-  const submitBtn = document.createElement('button');
-  submitBtn.type = 'submit';
-  submitBtn.className = 'find-provider-submit button primary';
-  submitBtn.textContent = config['submit-label'];
-  actions.append(submitBtn);
+  if (config['submit-label']) {
+    const submitBtn = document.createElement('button');
+    submitBtn.type = 'submit';
+    submitBtn.className = 'find-provider-submit button primary';
+    submitBtn.textContent = config['submit-label'];
+    actions.append(submitBtn);
+  }
 
   if (config['clear-label']) {
     const clearBtn = document.createElement('button');
@@ -286,10 +252,6 @@ export async function decorateBlock(block) {
     try {
       const params = new URLSearchParams({ q: query });
       if (config.indication) params.set('indication', config.indication);
-      const radiusSelect = form.querySelector('.find-provider-radius-select');
-      if (radiusSelect) params.set('radius', radiusSelect.value);
-      const specialtySelect = form.querySelector('.find-provider-specialty-select');
-      if (specialtySelect?.value) params.set('specialty', specialtySelect.value);
 
       const resp = await fetch(`${config['api-endpoint']}?${params}`);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
