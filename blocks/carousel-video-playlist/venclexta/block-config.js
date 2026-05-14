@@ -65,6 +65,7 @@ export default async function getBlockConfigs() {
     variations: [],
     decorations: {
       afterDecorate: async (block) => {
+        if (window.self !== window.top) return;
         const items = block.querySelectorAll(
           '.cvp-playlist-item',
         );
