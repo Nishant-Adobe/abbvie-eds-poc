@@ -717,7 +717,7 @@ function detectFormat(block) {
   const firstCells = [...firstRow.children];
 
   // Xwalk UE: rows contain elements with data-aue-prop attributes
-  if (firstCells[0]?.querySelector('[data-aue-prop]')) return 'xwalk';
+  if (rows.some((r) => r.children[0]?.querySelector('[data-aue-prop]'))) return 'xwalk';
   // UE model: single row with many cells (all fields flattened into columns)
   if (rows.length === 1 && firstCells.length >= 10) return 'model';
   // Legacy: few rows, first cell contains an image (before/after pair)
