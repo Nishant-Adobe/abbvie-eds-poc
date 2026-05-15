@@ -82,10 +82,19 @@ abbr.has-tooltip {
   transform: none;
 }
 
+.tooltip-panel.flip-left::after {
+  left: var(--tooltip-arrow-size);
+}
+
 .tooltip-panel.flip-right {
   left: auto;
   right: 0;
   transform: none;
+}
+
+.tooltip-panel.flip-right::after {
+  left: auto;
+  right: var(--tooltip-arrow-size);
 }
 
 /* Viewport auto-flip: bottom overflow */
