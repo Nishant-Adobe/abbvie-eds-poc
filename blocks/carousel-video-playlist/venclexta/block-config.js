@@ -270,10 +270,14 @@ export default async function getBlockConfigs() {
         block.append(grid);
 
         // Initialize BC players sequentially so metadata loads for all
-        await cards.reduce(
-          (chain, card) => chain.then(() => card.initPlayer().catch(() => {})),
-          Promise.resolve(),
-        );
+        try {
+          await cards.reduce(
+            (chain, card) => chain.then(() => card.initPlayer()),
+            Promise.resolve(),
+          );
+        } catch {
+          // Brightcove script failed; cards are rendered but without players
+        }
       },
     },
   };
