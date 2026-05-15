@@ -916,6 +916,20 @@
 
   /* ---- Hero: h1 em strong (highlight colour) ---- */
   --hero-h1-em-color: var(--color-background-blue);
+
+  /* ---- Breadcrumb (tab-nav variant) ---- */
+  --breadcrumb-font-size: 12px;
+  --breadcrumb-font-size-tablet: 10px;
+  --breadcrumb-height: 38px;
+  --breadcrumb-max-width: 1160px;
+  --breadcrumb-max-width-tablet: 1035px;
+  --breadcrumb-border-radius: 3px;
+  --breadcrumb-item-padding: 4px 0;
+  --breadcrumb-item-margin: 0 10px;
+  --breadcrumb-active-border-width: 2px;
+  --breadcrumb-color-text: var(--color-text-black);
+  --breadcrumb-color-active-border: var(--color-brand-accent-cyan);
+  --breadcrumb-color-bg: var(--background-color);
 }
 
 /* stylelint-disable selector-class-pattern, no-descending-specificity */
@@ -985,7 +999,6 @@
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
-  position: relative;
   font-family: var(--body-font-family);
   font-weight: 700;
   font-size: 2.375rem;
@@ -999,10 +1012,10 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-  position: absolute;
-  right: 0;
-  top: var(--spacing-04);
-  display: block;
+  display: inline-block;
+  margin-left: var(--spacing-24);
+  margin-top: var(--spacing-04);
+  vertical-align: top;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--cards-grid-cta-link-hover-bg);
