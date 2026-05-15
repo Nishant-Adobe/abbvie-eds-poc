@@ -110,7 +110,7 @@ function parseItems(block) {
     .filter(({ videoId }) => videoId);
 }
 
-function buildCard(item, accountId, playerId) {
+function buildCard(item, accountId, playerId, single) {
   const card = document.createElement('div');
   card.className = 'cvp-venclexta-card';
 
@@ -127,6 +127,13 @@ function buildCard(item, accountId, playerId) {
 
   const content = document.createElement('div');
   content.className = 'cvp-card-content';
+
+  if (single && item.title) {
+    const heading = document.createElement('h3');
+    heading.className = 'cvp-card-heading';
+    heading.textContent = item.title;
+    content.append(heading);
+  }
 
   const desc = document.createElement('div');
   desc.className = 'cvp-card-desc';
@@ -231,11 +238,12 @@ export default async function getBlockConfigs() {
           return;
         }
 
+        const single = items.length === 1;
         const grid = document.createElement('div');
-        grid.className = items.length === 1 ? 'cvp-grid cvp-single' : 'cvp-grid';
+        grid.className = single ? 'cvp-grid cvp-single' : 'cvp-grid';
 
         const cards = items.map((item) => {
-          const card = buildCard(item, accountId, playerId);
+          const card = buildCard(item, accountId, playerId, single);
           grid.append(card);
           return card;
         });
