@@ -591,8 +591,8 @@
 }
 
 .cards-grid.cards-grid-slider-thumbnails {
-  --cg-rinvoq-thumb-white: #fff;
-  --cg-rinvoq-thumb-magenta: #90124a;
+  --cg-rinvoq-thumb-white: var(--color-white, #fff);
+  --cg-rinvoq-thumb-magenta: var(--color-rinvoq-primary, #90124a);
   --cg-rinvoq-thumb-helvetica: arial, "helvetica neue", helvetica, sans-serif;
   --cg-rinvoq-thumb-haas: arial, "helvetica neue", helvetica, sans-serif;
   --cg-rinvoq-thumb-fs-0875: 0.875rem;
@@ -608,13 +608,13 @@
 
 .cards-grid.cards-grid-slider-thumbnails .abbv-content {
   overflow: hidden;
-  font-family: var(--cg-rinvoq-thumb-helvetica) !important;
+  font-family: var(--cg-rinvoq-thumb-helvetica) !important; /* Platform C slider sets font-family via inline style attribute; !important is the only override */
 }
 
 .cards-grid.cards-grid-slider-thumbnails .abbv-content h3,
 .cards-grid.cards-grid-slider-thumbnails .abbv-content p.h3,
 .cards-grid.cards-grid-slider-thumbnails .abbv-content .h3:not(b) {
-  font-family: var(--cg-rinvoq-thumb-haas) !important;
+  font-family: var(--cg-rinvoq-thumb-haas) !important; /* Platform C slider sets font-family via inline style attribute; !important is the only override */
   line-height: 1.2em;
   font-weight: normal;
 }
@@ -622,7 +622,7 @@
 /* Thumb title uses <b class="h3 …"> — do not set font-weight: normal here (matches rinvoq-slider-cards + static bold fix). */
 
 .cards-grid.cards-grid-slider-thumbnails .abbv-content b.h3 {
-  font-family: var(--cg-rinvoq-thumb-haas) !important;
+  font-family: var(--cg-rinvoq-thumb-haas) !important; /* Platform C slider sets font-family via inline style attribute; !important is the only override */
   line-height: 1.2em;
 }
 
