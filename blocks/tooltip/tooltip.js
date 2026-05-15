@@ -1,5 +1,8 @@
 const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
 
+const registry = new Set();
+let globalListenerAttached = false;
+
 function createTooltipPanel(content, id) {
   const panel = document.createElement('span');
   panel.className = 'tooltip-panel';
@@ -29,16 +32,19 @@ function resetFlip(trigger, panel) {
 }
 
 function closeAllTooltips(except) {
-  document.querySelectorAll('.tooltip.is-visible').forEach((t) => {
-    if (t !== except) {
-      t.classList.remove('is-visible');
-      t.querySelector('.tooltip-trigger')?.setAttribute('aria-expanded', 'false');
-    }
+  registry.forEach((entry) => {
+    if (entry.el === except) return;
+    entry.el.classList.remove('is-visible');
+    entry.trigger?.setAttribute('aria-expanded', 'false');
   });
-  document.querySelectorAll('abbr.has-tooltip.is-visible').forEach((a) => {
-    if (a !== except) {
-      a.classList.remove('is-visible');
-      a.setAttribute('aria-expanded', 'false');
+}
+
+function attachGlobalListener() {
+  if (globalListenerAttached) return;
+  globalListenerAttached = true;
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.tooltip, .has-tooltip')) {
+      closeAllTooltips();
     }
   });
 }
@@ -54,6 +60,8 @@ export function wireInlineTooltips(scope = document) {
     abbr.classList.add('has-tooltip');
     abbr.setAttribute('tabindex', '0');
     abbr.append(panel);
+
+    registry.add({ el: abbr, trigger: abbr });
 
     function show() {
       closeAllTooltips(abbr);
@@ -89,13 +97,7 @@ export function wireInlineTooltips(scope = document) {
     });
   });
 
-  if (scope.querySelector('.tooltip, abbr.has-tooltip')) {
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.tooltip, .has-tooltip')) {
-        closeAllTooltips();
-      }
-    }, { once: false });
-  }
+  attachGlobalListener();
 }
 
 export default function decorate(block) {
@@ -118,6 +120,8 @@ export default function decorate(block) {
   const panel = createTooltipPanel(definition, id);
 
   block.replaceChildren(trigger, panel);
+
+  registry.add({ el: block, trigger });
 
   function show() {
     closeAllTooltips(block);
@@ -151,4 +155,6 @@ export default function decorate(block) {
       else show();
     }
   });
+
+  attachGlobalListener();
 }
