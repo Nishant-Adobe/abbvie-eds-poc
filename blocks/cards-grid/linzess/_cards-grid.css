@@ -3,6 +3,10 @@
 
 /* stylelint-disable selector-class-pattern, no-descending-specificity */
 
+.cards-grid {
+  --cards-grid-img-text-overlay-bg: rgb(204 204 204 / 80%);
+}
+
 .cards-grid.cards-grid-icon-image-card *,
 .cards-grid.cards-grid-icon-image-card *::before,
 .cards-grid.cards-grid-icon-image-card *::after,
@@ -150,7 +154,7 @@
   position: unset !important; /* resets absolute positioning injected by the platform image-text v2 component */
   margin: 20px;
   width: 25%;
-  background: rgb(204 204 204 / 80%);
+  background: var(--cards-grid-img-text-overlay-bg);
 }
 
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .abbv-image-text-v2 .abbv-image-text-display-v2 {

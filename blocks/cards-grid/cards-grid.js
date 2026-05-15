@@ -68,18 +68,44 @@ function decorateLine2(card) {
   unwrapDirectParagraph(span);
 }
 
+function decodePlatformCSupTags(container) {
+  // Platform-C encodes <sup> as &lt;sup&gt; in HTML source; the browser creates
+  // text nodes with literal angle-bracket characters. Walk those text nodes and
+  // replace each encoded <sup>…</sup> span with a real DOM element so that the
+  // sup content is set via textContent (no HTML re-parsing / injection risk).
+  const textNodes = [];
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+  let n = walker.nextNode();
+  while (n) {
+    textNodes.push(n);
+    n = walker.nextNode();
+  }
+  textNodes.forEach((textNode) => {
+    const val = textNode.nodeValue || '';
+    if (!val.includes('<sup')) return;
+    const parts = val.split(/(<sup>[\s\S]*?<\/sup>)/gi);
+    if (parts.length <= 1) return;
+    const frag = document.createDocumentFragment();
+    parts.forEach((part) => {
+      const m = /^<sup>([\s\S]*?)<\/sup>$/i.exec(part);
+      if (m) {
+        const sup = document.createElement('sup');
+        sup.textContent = m[1].replace(/<[^>]+>/g, '');
+        frag.append(sup);
+      } else {
+        frag.append(document.createTextNode(part));
+      }
+    });
+    textNode.replaceWith(frag);
+  });
+}
+
 function decorateLine3(card) {
   if (!card) return;
   const lineDiv = [...card.children].find((el) => el.tagName === 'DIV');
   if (!lineDiv) return;
-  const raw = lineDiv.innerHTML;
-  if (raw.includes('&lt;sup')) {
-    // Decode Platform-C HTML-encoded sup tags. Strip any markup from the captured
-    // text so only plain text enters the <sup> element, preventing injection.
-    lineDiv.innerHTML = raw.replace(
-      /&lt;sup&gt;([\s\S]*?)&lt;\/sup&gt;/gi,
-      (_, text) => `<sup>${text.replace(/<[^>]+>/g, '')}</sup>`,
-    );
+  if (lineDiv.innerHTML.includes('&lt;sup')) {
+    decodePlatformCSupTags(lineDiv);
   }
   const span = document.createElement('span');
   span.className = LINE3_CLASS;

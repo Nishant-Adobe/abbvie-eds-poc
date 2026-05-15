@@ -1,6 +1,6 @@
 .cards-grid {
-  --cards-grid-neutral-light: var(--background-color, #fff);
-  --cards-grid-neutral-dark: var(--color-black, #000);
+  --cards-grid-neutral-light: var(--background-color);
+  --cards-grid-neutral-dark: var(--color-black);
 }
 
 .cards-grid .demo-wrap {
@@ -617,6 +617,10 @@
   /* ---- Transition ---- */
   --transition-button: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
+  /* ---- Cards Grid Block ---- */
+  --linz-heading2-font-size: var(--font-size-h2);
+  --linz-body-font-size: var(--font-size-body);
+
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
   --hero-behind-nav-min-height-desktop: 62rem;
@@ -655,6 +659,10 @@
 }
 
 /* stylelint-disable selector-class-pattern, no-descending-specificity */
+
+.cards-grid {
+  --cards-grid-img-text-overlay-bg: rgb(204 204 204 / 80%);
+}
 
 .cards-grid.cards-grid-icon-image-card *,
 .cards-grid.cards-grid-icon-image-card *::before,
@@ -803,7 +811,7 @@
   position: unset !important; /* resets absolute positioning injected by the platform image-text v2 component */
   margin: 20px;
   width: 25%;
-  background: rgb(204 204 204 / 80%);
+  background: var(--cards-grid-img-text-overlay-bg);
 }
 
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .abbv-image-text-v2 .abbv-image-text-display-v2 {

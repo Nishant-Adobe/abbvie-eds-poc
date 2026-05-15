@@ -127,7 +127,7 @@ function buildLinzessArticleCardColumn(wrapper) {
     const rawHtml = titleP.innerHTML?.trim() || '';
     const hasBoldTag = /<b\b|<strong\b/i.test(rawHtml) || rawHtml.includes('&lt;b');
     if (hasBoldTag) {
-      tp.innerHTML = titleP.innerHTML;
+      titleP.cloneNode(true).childNodes.forEach((node) => tp.append(node));
     } else {
       const b = document.createElement('b');
       b.textContent = titleP.textContent?.trim() || '';
@@ -142,7 +142,7 @@ function buildLinzessArticleCardColumn(wrapper) {
     bodyDiv.querySelectorAll(':scope > p').forEach((srcP) => {
       const bp = document.createElement('p');
       bp.className = srcP.className;
-      bp.innerHTML = srcP.innerHTML;
+      srcP.cloneNode(true).childNodes.forEach((node) => bp.append(node));
       fixLinzessEncodedBoldInParagraph(bp);
       fixEncodedSupInParagraph(bp);
       bodyStretch.append(bp);
