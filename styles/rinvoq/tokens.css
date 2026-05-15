@@ -1,31 +1,87 @@
 @import '../tokens.css';
 
-/* Brand-specific token overrides */
+/* ============================================================
+   RINVOQ — Brand Token Overrides
+   Shared RINVOQ brand identity (plum / Graphik)
+   Audience-specific variants: see rinvoq-hcp/ and rinvoq-dtc/
+   ============================================================ */
 
 :root {
-  /* ---- Nav dimensions ---- */
-  --nav-height: 32px;
+  /* ---- Color: Brand Primary ---- */
+  --color-brand-primary: #90124a;
+  --color-brand-primary-dark: #6d0e38;
+  --color-brand-primary-light: #b15980;
 
-  /* ---- Nav colors ---- */
-  --color-nav-dark: #25282a;
-  --color-nav-eyebrow: #8c1749;
-  --color-nav-active: #ffd100;
-  --color-nav-separator: rgb(255 255 255 / 20%);
-  --color-nav-bg-scroll: rgb(0 0 0 / 85%);
+  /* ---- Color: Brand Accent ---- */
+  --color-brand-accent: #ffd100;
+
+  /* ---- Color: Rinvoq-specific ---- */
+  --color-rinvoq-primary: #90124a;
+  --color-rinvoq-charcoal: #25282a;
+  --color-rinvoq-gold: #ffd100;
+  --color-rinvoq-gallery-bg: #666869;
+  --color-rinvoq-prompt-bg: rgb(51 51 51 / 85%);
+  --color-rinvoq-handle-circle: #25282a;
+
+  /* ---- Color: Text ---- */
+  --text-color: #46484a;
+  --color-text-heading: #25282a;
   --color-text-on-dark: #fff;
-  --color-plum: #8c1749;
-  --color-nav-utility: #90124a;
+  --color-text-link: #90124a;
 
-  /* ---- Nav utility bar ---- */
-  --color-nav-utility-bg: #f3f3f3;
-  --color-nav-utility-text: #90124a;
-  --color-nav-utility-hover: #ffd100;
-  --color-nav-utility-link: #90124a;
-  --font-size-utility: 11px;
+  /* ---- Color: Background ---- */
+  --background-color: #fff;
+  --color-background-light: #f5f5f5;
 
-  /* ---- Typography ---- */
-  --font-size-legal: 12.992px;
-  --font-family-bold: 'Helvetica Neue LT W05_75 Bold', 'Helvetica Neue', helvetica, arial, sans-serif;
+  /* ---- Font: Family ---- */
+  --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --heading-font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --heading-font-family-bold: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --icon-font-family: 'abbv-iconFont';
+
+  /* ---- Border: Radius ---- */
+  --border-radius-button-primary: 100px;
+
+  /* ---- z-index extensions ---- */
+  --z-index-4: 4;
+  --z-index-5: 5;
+
+  /* ---- Button: Primary ---- */
+  --button-primary-color: #fff;
+  --button-primary-bg: #90124a;
+  --button-primary-border: transparent;
+  --button-primary-padding: 16px 54px 16px 32px;
+  --button-primary-font-size: 0.875rem;
+  --button-primary-font-weight: 700;
+  --button-primary-hover-bg: #25282a;
+  --button-primary-hover-color: #fff;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: transparent;
+  --button-secondary-color: #90124a;
+  --button-secondary-border: #90124a;
+  --button-secondary-padding: 16px 54px 16px 32px;
+  --border-radius-button-secondary: 100px;
+  --button-secondary-hover-bg: #90124a;
+  --button-secondary-hover-color: #fff;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: transparent;
+  --button-tertiary-color: #46484a;
+  --button-tertiary-border: #c9c9ca;
+  --button-tertiary-padding: 12px 24px;
+  --button-tertiary-font-size: 0.875rem;
+  --border-radius-button-tertiary: 100px;
+  --button-tertiary-hover-bg: #46484a;
+  --button-tertiary-hover-color: #fff;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #90124a;
+  --button-plain-weight: 600;
+  --button-plain-hover-color: #25282a;
+
+  /* ---- Link ---- */
+  --link-color: #90124a;
 
   /* ---- Header block ---- */
   --header-logo-width: 18.5rem;

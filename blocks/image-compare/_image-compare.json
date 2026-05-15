@@ -22,42 +22,86 @@
       "id": "image-compare",
       "fields": [
         {
-          "component": "tab",
-          "label": "Settings",
-          "name": "tab-settings"
-        },
-        {
-          "component": "select",
-          "valueType": "string",
-          "name": "classes_type",
-          "label": "Slider Type",
-          "options": [
-            { "name": "Horizontal (default)", "value": "" },
-            { "name": "Vertical", "value": "vertical" },
-            { "name": "Progressive (opacity fade)", "value": "progressive" }
-          ]
-        },
-        {
           "component": "multiselect",
           "valueType": "string",
           "name": "classes",
-          "label": "Options",
+          "label": "Variant",
+          "description": "Block mode and visual options.",
           "options": [
-            { "name": "Hide labels on mobile", "value": "hide-labels-mobile" }
+            {
+              "name": "Simple Slider (default)",
+              "value": ""
+            },
+            {
+              "name": "Gallery (tabs + thumbnails)",
+              "value": "gallery"
+            },
+            {
+              "name": "Toggle Buttons",
+              "value": "toggle"
+            },
+            {
+              "name": "Show Drag Prompt",
+              "value": "prompt"
+            },
+            {
+              "name": "Reversed (slider left, content right)",
+              "value": "reversed"
+            },
+            {
+              "name": "Vertical",
+              "value": "vertical"
+            },
+            {
+              "name": "Hidden on Mobile",
+              "value": "mobile-hidden"
+            }
           ]
+        },
+        {
+          "component": "tab",
+          "label": "Content",
+          "name": "content"
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "sliderStart",
-          "label": "Slider Start Position (%)",
-          "value": "50",
-          "description": "Initial divider position. Enter a number 0–100. Default is 50."
+          "name": "heading",
+          "value": "",
+          "label": "Heading"
+        },
+        {
+          "component": "richtext",
+          "valueType": "string",
+          "name": "description",
+          "value": "",
+          "label": "Description"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "sliderPrompt",
+          "value": "CLICK AND DRAG TO SEE RESULTS",
+          "label": "Slider Prompt"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "beforeLabelPrefix",
+          "value": "BEFORE",
+          "label": "Before Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "afterLabelPrefix",
+          "value": "AFTER",
+          "label": "After Label"
         },
         {
           "component": "tab",
-          "label": "Before Image",
-          "name": "tab-before"
+          "label": "Simple Mode",
+          "name": "simpleMode"
         },
         {
           "component": "reference",
@@ -65,60 +109,14 @@
           "name": "beforeImage",
           "label": "Before Image",
           "multi": false,
-          "description": "Must be the same dimensions as the After image."
+          "value": ""
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "beforeImageAlt",
+          "name": "beforeAlt",
           "value": "",
           "label": "Before Image Alt Text"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "beforeImageWidth",
-          "value": "",
-          "label": "Before Image Width (px)",
-          "description": "Explicit width reduces Cumulative Layout Shift."
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "beforeImageHeight",
-          "value": "",
-          "label": "Before Image Height (px)"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "beforeLabel",
-          "value": "Before",
-          "label": "Before Label",
-          "description": "Short caption shown over the before image. Also used as the left label in progressive mode."
-        },
-        {
-          "component": "select",
-          "valueType": "string",
-          "name": "beforeLabelPosition",
-          "label": "Before Label Position",
-          "value": "bottom-left",
-          "options": [
-            { "name": "Top Left", "value": "top-left" },
-            { "name": "Top Centre", "value": "top-center" },
-            { "name": "Top Right", "value": "top-right" },
-            { "name": "Middle Left", "value": "middle-left" },
-            { "name": "Middle Centre", "value": "middle-center" },
-            { "name": "Middle Right", "value": "middle-right" },
-            { "name": "Bottom Left (default)", "value": "bottom-left" },
-            { "name": "Bottom Centre", "value": "bottom-center" },
-            { "name": "Bottom Right", "value": "bottom-right" }
-          ]
-        },
-        {
-          "component": "tab",
-          "label": "After Image",
-          "name": "tab-after"
         },
         {
           "component": "reference",
@@ -126,78 +124,363 @@
           "name": "afterImage",
           "label": "After Image",
           "multi": false,
-          "description": "Must be the same dimensions as the Before image."
+          "value": ""
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "afterImageAlt",
+          "name": "afterAlt",
           "value": "",
           "label": "After Image Alt Text"
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "afterImageWidth",
-          "value": "",
-          "label": "After Image Width (px)"
+          "component": "tab",
+          "label": "Tab 1 Images",
+          "name": "tab1Config"
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "afterImageHeight",
+          "name": "tab1Label",
           "value": "",
-          "label": "After Image Height (px)"
+          "label": "Tab 1 Label"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab1Img1Before",
+          "label": "Tab 1 - Image 1 Before",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab1Img1After",
+          "label": "Tab 1 - Image 1 After",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab1Img1Thumb",
+          "label": "Tab 1 - Image 1 Thumbnail",
+          "multi": false,
+          "value": ""
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "afterLabel",
-          "value": "After",
-          "label": "After Label",
-          "description": "Short caption shown over the after image. Also used as the right label in progressive mode."
+          "name": "tab1Img1Label",
+          "value": "",
+          "label": "Tab 1 - Image 1 Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab1Img1SubLabel",
+          "value": "",
+          "label": "Tab 1 - Image 1 Sub-Label"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab1Img2Before",
+          "label": "Tab 1 - Image 2 Before",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab1Img2After",
+          "label": "Tab 1 - Image 2 After",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab1Img2Thumb",
+          "label": "Tab 1 - Image 2 Thumbnail",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab1Img2Label",
+          "value": "",
+          "label": "Tab 1 - Image 2 Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab1Img2SubLabel",
+          "value": "",
+          "label": "Tab 1 - Image 2 Sub-Label"
+        },
+        {
+          "component": "tab",
+          "label": "Tab 2 Images",
+          "name": "tab2Config"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab2Label",
+          "value": "",
+          "label": "Tab 2 Label"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab2Img1Before",
+          "label": "Tab 2 - Image 1 Before",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab2Img1After",
+          "label": "Tab 2 - Image 1 After",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab2Img1Thumb",
+          "label": "Tab 2 - Image 1 Thumbnail",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab2Img1Label",
+          "value": "",
+          "label": "Tab 2 - Image 1 Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab2Img1SubLabel",
+          "value": "",
+          "label": "Tab 2 - Image 1 Sub-Label"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab2Img2Before",
+          "label": "Tab 2 - Image 2 Before",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab2Img2After",
+          "label": "Tab 2 - Image 2 After",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "tab2Img2Thumb",
+          "label": "Tab 2 - Image 2 Thumbnail",
+          "multi": false,
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab2Img2Label",
+          "value": "",
+          "label": "Tab 2 - Image 2 Label"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tab2Img2SubLabel",
+          "value": "",
+          "label": "Tab 2 - Image 2 Sub-Label"
+        },
+        {
+          "component": "tab",
+          "label": "Configuration",
+          "name": "config"
         },
         {
           "component": "select",
           "valueType": "string",
-          "name": "afterLabelPosition",
-          "label": "After Label Position",
-          "value": "bottom-right",
+          "name": "initialPosition",
+          "label": "Initial Position",
+          "description": "Where the slider starts.",
           "options": [
-            { "name": "Top Left", "value": "top-left" },
-            { "name": "Top Centre", "value": "top-center" },
-            { "name": "Top Right", "value": "top-right" },
-            { "name": "Middle Left", "value": "middle-left" },
-            { "name": "Middle Centre", "value": "middle-center" },
-            { "name": "Middle Right", "value": "middle-right" },
-            { "name": "Bottom Left", "value": "bottom-left" },
-            { "name": "Bottom Centre", "value": "bottom-center" },
-            { "name": "Bottom Right (default)", "value": "bottom-right" }
+            {
+              "name": "25%",
+              "value": "25"
+            },
+            {
+              "name": "50% (default)",
+              "value": "50"
+            },
+            {
+              "name": "75%",
+              "value": "75"
+            }
           ]
-        },
-        {
-          "component": "tab",
-          "label": "Analytics",
-          "name": "tab-analytics"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "analyticsInteractionId",
-          "label": "Analytics Interaction ID",
-          "value": "",
-          "description": "Unique ID pushed to GTM dataLayer when the slider is used."
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "anchorId",
-          "label": "Anchor ID",
           "value": "",
-          "description": "Optional id attribute for deep-linking to this component."
+          "label": "Anchor ID"
         },
         {
-          "...": "../../models/_common-properties.json#/common-prop"
+          "component": "tab",
+          "label": "Common Properties",
+          "name": "commonProperties"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "blockId",
+          "valueFormat": "regexp",
+          "label": "ID",
+          "description": "Unique identifier for this block",
+          "validation": {
+            "regExp": "^id:\\S*$",
+            "customErrorMsg": "ID must start with 'id:' and contain no spaces"
+          }
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "classes_commonCustomClass",
+          "label": "Custom Class",
+          "description": "Custom CSS class to apply to this block"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "language",
+          "label": "Language",
+          "options": [
+            {
+              "name": "None",
+              "value": "lang:none"
+            },
+            {
+              "name": "Bulgarian",
+              "value": "lang:bg"
+            },
+            {
+              "name": "Chinese",
+              "value": "lang:zh"
+            },
+            {
+              "name": "Chinese (Taiwan)",
+              "value": "lang:zh-TW"
+            },
+            {
+              "name": "Czech",
+              "value": "lang:cs"
+            },
+            {
+              "name": "Danish",
+              "value": "lang:da"
+            },
+            {
+              "name": "Dutch",
+              "value": "lang:nl"
+            },
+            {
+              "name": "English",
+              "value": "lang:en"
+            },
+            {
+              "name": "Finnish",
+              "value": "lang:fi"
+            },
+            {
+              "name": "French",
+              "value": "lang:fr"
+            },
+            {
+              "name": "German",
+              "value": "lang:de"
+            },
+            {
+              "name": "Greek",
+              "value": "lang:el"
+            },
+            {
+              "name": "Hebrew",
+              "value": "lang:he"
+            },
+            {
+              "name": "Hungarian",
+              "value": "lang:hu"
+            },
+            {
+              "name": "Italian",
+              "value": "lang:it"
+            },
+            {
+              "name": "Japanese",
+              "value": "lang:ja"
+            },
+            {
+              "name": "Korean",
+              "value": "lang:ko"
+            },
+            {
+              "name": "Norwegian",
+              "value": "lang:no"
+            },
+            {
+              "name": "Polish",
+              "value": "lang:pl"
+            },
+            {
+              "name": "Portuguese",
+              "value": "lang:pt"
+            },
+            {
+              "name": "Russian",
+              "value": "lang:ru"
+            },
+            {
+              "name": "Slovak",
+              "value": "lang:sk"
+            },
+            {
+              "name": "Slovenian",
+              "value": "lang:sl"
+            },
+            {
+              "name": "Spanish",
+              "value": "lang:es"
+            },
+            {
+              "name": "Swedish",
+              "value": "lang:sv"
+            },
+            {
+              "name": "Turkish",
+              "value": "lang:tr"
+            },
+            {
+              "name": "Ukrainian",
+              "value": "lang:uk"
+            }
+          ]
         }
       ]
     }
