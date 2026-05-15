@@ -1,3 +1,5 @@
+const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+
 function createTooltipPanel(content, id) {
   const panel = document.createElement('span');
   panel.className = 'tooltip-panel';
@@ -5,6 +7,45 @@ function createTooltipPanel(content, id) {
   panel.setAttribute('role', 'tooltip');
   panel.innerHTML = content;
   return panel;
+}
+
+function autoFlip(trigger, panel) {
+  const rect = panel.getBoundingClientRect();
+  const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
+  if (rect.top < 0) {
+    container.classList.add('bottom');
+  }
+  if (rect.left < 0) {
+    panel.style.left = '0';
+    panel.style.transform = 'none';
+  } else if (rect.right > window.innerWidth) {
+    panel.style.left = 'auto';
+    panel.style.right = '0';
+    panel.style.transform = 'none';
+  }
+}
+
+function resetFlip(trigger, panel) {
+  const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
+  container.classList.remove('bottom');
+  panel.style.removeProperty('left');
+  panel.style.removeProperty('right');
+  panel.style.removeProperty('transform');
+}
+
+function closeAllTooltips(except) {
+  document.querySelectorAll('.tooltip.is-visible').forEach((t) => {
+    if (t !== except) {
+      t.classList.remove('is-visible');
+      t.querySelector('.tooltip-trigger')?.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.querySelectorAll('abbr.has-tooltip.is-visible').forEach((a) => {
+    if (a !== except) {
+      a.classList.remove('is-visible');
+      a.setAttribute('aria-expanded', 'false');
+    }
+  });
 }
 
 export function wireInlineTooltips(scope = document) {
@@ -19,28 +60,36 @@ export function wireInlineTooltips(scope = document) {
     abbr.setAttribute('tabindex', '0');
     abbr.append(panel);
 
-    abbr.addEventListener('mouseenter', () => {
+    function show() {
+      closeAllTooltips(abbr);
       abbr.setAttribute('aria-expanded', 'true');
-    });
-    abbr.addEventListener('mouseleave', () => {
+      abbr.classList.add('is-visible');
+      autoFlip(abbr, panel);
+    }
+
+    function hide() {
       abbr.setAttribute('aria-expanded', 'false');
-    });
-    abbr.addEventListener('focus', () => {
-      abbr.setAttribute('aria-expanded', 'true');
-    });
-    abbr.addEventListener('blur', () => {
-      abbr.setAttribute('aria-expanded', 'false');
+      abbr.classList.remove('is-visible');
+      resetFlip(abbr, panel);
+    }
+
+    if (!isTouchDevice()) {
+      abbr.addEventListener('mouseenter', show);
+      abbr.addEventListener('mouseleave', hide);
+    }
+    abbr.addEventListener('focus', show);
+    abbr.addEventListener('blur', hide);
+    abbr.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (abbr.classList.contains('is-visible')) hide();
+      else show();
     });
     abbr.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        abbr.setAttribute('aria-expanded', 'false');
-        abbr.classList.remove('is-visible');
-      }
+      if (e.key === 'Escape') hide();
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        const expanded = abbr.getAttribute('aria-expanded') === 'true';
-        abbr.setAttribute('aria-expanded', String(!expanded));
-        abbr.classList.toggle('is-visible', !expanded);
+        if (abbr.classList.contains('is-visible')) hide();
+        else show();
       }
     });
   });
@@ -68,32 +117,41 @@ export default function decorate(block) {
   block.replaceChildren(trigger, panel);
 
   function show() {
+    closeAllTooltips(block);
     block.classList.add('is-visible');
     trigger.setAttribute('aria-expanded', 'true');
+    autoFlip(trigger, panel);
   }
 
   function hide() {
     block.classList.remove('is-visible');
     trigger.setAttribute('aria-expanded', 'false');
+    resetFlip(trigger, panel);
   }
 
-  trigger.addEventListener('mouseenter', show);
-  trigger.addEventListener('mouseleave', hide);
+  if (!isTouchDevice()) {
+    trigger.addEventListener('mouseenter', show);
+    trigger.addEventListener('mouseleave', hide);
+  }
   trigger.addEventListener('focus', show);
   trigger.addEventListener('blur', hide);
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (block.classList.contains('is-visible')) hide();
+    else show();
+  });
   trigger.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      hide();
-    }
+    if (e.key === 'Escape') hide();
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      if (block.classList.contains('is-visible')) {
-        hide();
-      } else {
-        show();
-      }
+      if (block.classList.contains('is-visible')) hide();
+      else show();
     }
   });
-
-  wireInlineTooltips();
 }
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.tooltip, .has-tooltip')) {
+    closeAllTooltips();
+  }
+});

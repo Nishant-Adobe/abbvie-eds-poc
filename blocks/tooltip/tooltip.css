@@ -73,6 +73,7 @@
   pointer-events: none;
 }
 
+/* Position: bottom */
 .tooltip.bottom .tooltip-panel {
   bottom: auto;
   top: calc(100% + var(--tooltip-offset));
@@ -85,6 +86,7 @@
   border-bottom-color: var(--tooltip-bg);
 }
 
+/* Position: left */
 .tooltip.left .tooltip-panel {
   inset: 50% calc(100% + var(--tooltip-offset)) auto auto;
   transform: translateY(-50%);
@@ -98,6 +100,7 @@
   transform: translateY(calc(-1 * var(--tooltip-arrow-size)));
 }
 
+/* Position: right */
 .tooltip.right .tooltip-panel {
   bottom: auto;
   left: calc(100% + var(--tooltip-offset));
@@ -114,6 +117,12 @@
   transform: translateY(calc(-1 * var(--tooltip-arrow-size)));
 }
 
+/* Size: large */
+.tooltip.large .tooltip-panel {
+  width: var(--tooltip-panel-width-large, calc(400 * var(--px-to-rem, 0.1rem)));
+}
+
+/* Inline tooltips (abbr) */
 abbr.has-tooltip {
   position: relative;
   cursor: help;
@@ -137,6 +146,7 @@ abbr.has-tooltip:focus-visible {
   border-radius: var(--spacing-02, 0.2rem);
 }
 
+/* Visibility states */
 .tooltip.is-visible .tooltip-panel,
 abbr.has-tooltip:hover .tooltip-panel,
 abbr.has-tooltip:focus .tooltip-panel,
@@ -145,4 +155,19 @@ abbr.has-tooltip.is-visible .tooltip-panel {
   visibility: visible;
   pointer-events: auto;
   transition-delay: var(--transition-duration-fast, 0.2s);
+}
+
+/* Touch devices: disable hover, rely on tap */
+@media (hover: none) {
+  abbr.has-tooltip:hover .tooltip-panel {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  abbr.has-tooltip.is-visible .tooltip-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 }
