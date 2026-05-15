@@ -26,6 +26,9 @@ function appendJsonLd(ol) {
   const script = document.createElement('script');
   script.type = 'application/ld+json';
   script.textContent = JSON.stringify(jsonLd);
+  document.head.querySelectorAll('script[type="application/ld+json"]').forEach((s) => {
+    try { if (JSON.parse(s.textContent)?.['@type'] === 'BreadcrumbList') s.remove(); } catch { /* ignore */ }
+  });
   document.head.append(script);
 }
 
