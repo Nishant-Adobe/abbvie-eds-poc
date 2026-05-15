@@ -1,4 +1,4 @@
-import { loadScript } from '../../scripts/aem.js';
+import { loadScript } from '../../../scripts/aem.js';
 
 const bcScripts = {};
 let playerCount = 0;
