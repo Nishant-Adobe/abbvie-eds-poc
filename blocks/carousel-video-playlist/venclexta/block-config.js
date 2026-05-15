@@ -3,6 +3,9 @@ let playerCount = 0;
 let transcriptModal = null;
 
 function loadBrightcoveScript(account, player) {
+  if (!/^\d+$/.test(account) || !/^[a-zA-Z0-9_-]+$/.test(player)) {
+    return Promise.reject(new Error('Invalid Brightcove account or player ID'));
+  }
   const key = `${account}/${player}_default`;
   if (!bcScripts[key]) {
     bcScripts[key] = new Promise((resolve, reject) => {
