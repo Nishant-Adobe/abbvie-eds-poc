@@ -295,15 +295,17 @@ export default async function getBlockConfigs() {
 
         if (isEditor) return;
 
-        // Initialize BC players sequentially so metadata loads for all
-        try {
-          await cards.reduce(
-            (chain, card) => chain.then(() => card.initPlayer()),
-            Promise.resolve(),
-          );
-        } catch {
-          // Brightcove script failed; cards are rendered but without players
-        }
+        // Lazy-init BC players when cards enter the viewport
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const card = entry.target;
+            observer.unobserve(card);
+            if (card.initPlayer) card.initPlayer().catch(() => {});
+          });
+        }, { rootMargin: '200px' });
+
+        cards.forEach((card) => observer.observe(card));
       },
     },
   };
