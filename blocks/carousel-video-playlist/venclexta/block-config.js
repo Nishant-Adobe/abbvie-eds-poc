@@ -154,7 +154,7 @@ function buildCard(item, cfg, single) {
   link.className = 'cvp-transcript-link';
   link.textContent = 'View Transcript';
   link.classList.toggle('is-hidden', !(hasTranscript || item.transcriptHref));
-  if (item.transcriptHref) {
+  if (item.transcriptHref && /^https?:\/\//i.test(item.transcriptHref)) {
     link.dataset.transcriptUrl = item.transcriptHref;
   }
   link.addEventListener('click', () => {
@@ -241,7 +241,7 @@ function buildCard(item, cfg, single) {
       playRetries -= 1;
       if (playRetries > 0) requestAnimationFrame(startPlay);
     };
-    loadBrightcoveScript(accountId, playerId).then(startPlay);
+    loadBrightcoveScript(accountId, playerId).then(startPlay).catch(() => {});
   });
 
   return card;
