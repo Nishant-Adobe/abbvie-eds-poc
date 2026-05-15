@@ -52,9 +52,17 @@ function buildImageTextColumn(wrapper, columnIndex) {
       const im = picture.querySelector('img');
       if (im) {
         im.className = imgClass;
+        if (!im.getAttribute('width') || !im.getAttribute('height')) {
+          im.setAttribute('width', '70');
+          im.setAttribute('height', '70');
+        }
       }
     } else if (loneImg) {
       loneImg.className = imgClass;
+      if (!loneImg.getAttribute('width') || !loneImg.getAttribute('height')) {
+        loneImg.setAttribute('width', '70');
+        loneImg.setAttribute('height', '70');
+      }
       imgWrap.append(loneImg);
     }
   }

@@ -25,7 +25,7 @@ function ensureMavyretSubheadAfterIcon(iconP) {
   const sub = document.createElement('p');
   sub.className = 'subhead';
   const sourceEl = scopedPs.length >= 1 ? scopedPs[0] : next;
-  sourceEl.cloneNode(true).childNodes.forEach((n) => sub.append(n));
+  [...sourceEl.cloneNode(true).childNodes].forEach((n) => sub.append(n));
   next.replaceWith(sub);
 }
 
@@ -85,7 +85,7 @@ function normalizeMavyretFromTableCellRows(abbvRt) {
           const sub = document.createElement('p');
           sub.className = 'subhead';
           if (scopedPs.length >= 1) {
-            scopedPs[0].cloneNode(true).childNodes.forEach((n) => sub.append(n));
+            [...scopedPs[0].cloneNode(true).childNodes].forEach((n) => sub.append(n));
           } else {
             sub.textContent = plain;
           }
@@ -162,7 +162,7 @@ function buildMavyretFlexIconColumn(wrapper) {
 
   const existingRt = wrapper.querySelector(':scope > .abbv-rich-text');
   if (existingRt) {
-    existingRt.cloneNode(true).childNodes.forEach((n) => abbvRt.append(n));
+    [...existingRt.cloneNode(true).childNodes].forEach((n) => abbvRt.append(n));
   } else {
     while (wrapper.firstChild) {
       abbvRt.append(wrapper.firstChild);
@@ -227,10 +227,29 @@ function finalizeMavyretCtaAnchorFromUe(a) {
   }
 }
 
-function mavyretSectionCardBodyInnerHtml(inner) {
-  const t = (inner || '').trim();
-  if (!t) return '';
-  return t.replace(/\s*\|\s*1\s*$/i, '<sup>1</sup>');
+function applyMavyretBodySup(p) {
+  if (!p) return;
+  const walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  let n = walker.nextNode();
+  while (n) { textNodes.push(n); n = walker.nextNode(); }
+  for (let i = textNodes.length - 1; i >= 0; i -= 1) {
+    const textNode = textNodes[i];
+    const val = textNode.nodeValue || '';
+    const match = /^([\s\S]*?)\s*\|\s*1\s*$/i.exec(val);
+    if (match) {
+      const sup = document.createElement('sup');
+      sup.textContent = '1';
+      const [, before] = match;
+      if (before) {
+        textNode.nodeValue = before;
+        textNode.parentNode.insertBefore(sup, textNode.nextSibling);
+      } else {
+        textNode.replaceWith(sup);
+      }
+      break;
+    }
+  }
 }
 
 function isMavyretSectionCardUeRow(wrapper) {
@@ -248,7 +267,7 @@ function buildMavyretSectionIntroFromWrapper(wrapper) {
     'abbv-rich-text section-narrow color-white text-center section-break-bottom '
     + 'abbv-rich-text-common'
   );
-  wrapper.cloneNode(true).childNodes.forEach((n) => abbvRt.append(n));
+  [...wrapper.cloneNode(true).childNodes].forEach((n) => abbvRt.append(n));
   abbvRt.querySelectorAll('p').forEach((p) => {
     fixEncodedSupInParagraph(p);
   });
@@ -283,7 +302,7 @@ function buildMavyretSectionCardColumnFromUeRow(wrapper) {
     if (bodyPs.length > 0) {
       bodyPs.forEach((srcP) => {
         const p = srcP.cloneNode(true);
-        p.innerHTML = mavyretSectionCardBodyInnerHtml(p.innerHTML);
+        applyMavyretBodySup(p);
         fixEncodedSupInParagraph(p);
         abbvRt.append(p);
       });
@@ -295,8 +314,8 @@ function buildMavyretSectionCardColumnFromUeRow(wrapper) {
         });
       } else {
         const p = document.createElement('p');
-        const raw = bodyCell.innerHTML.trim() || (bodyCell.textContent || '').trim();
-        p.innerHTML = mavyretSectionCardBodyInnerHtml(raw);
+        [...bodyCell.cloneNode(true).childNodes].forEach((node) => p.append(node));
+        applyMavyretBodySup(p);
         abbvRt.append(p);
       }
     }

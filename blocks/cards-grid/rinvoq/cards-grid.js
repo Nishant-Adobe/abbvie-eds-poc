@@ -160,21 +160,38 @@ function wireRinvoqSliderThumbnailSelection(block) {
 
 function ensureRinvoqStatLineStrongTags(p, titlePattern = null) {
   if (!p || /<strong\b|<b\b/i.test(p.innerHTML)) return;
-  const parts = p.innerHTML.split(/(<br\s*\/?>)/i);
-  for (let i = 0; i < parts.length; i += 2) {
-    const chunk = parts[i];
-    if (chunk && chunk.trim()) {
-      const plain = chunk.replace(/<[^>]+>/g, '').trim();
-      const isTitle = titlePattern ? titlePattern.test(plain) : false;
-      const isStat = /^\d+%\*/.test(plain) || /^\d+%\s*\(/.test(plain);
-      if (isTitle || isStat) {
-        parts[i] = `<strong>${chunk.trim()}</strong>`;
-      }
+
+  // Split p's child nodes into runs at each <br> — no innerHTML writes.
+  const runs = [];
+  let run = [];
+  [...p.childNodes].forEach((node) => {
+    if (node.nodeName === 'BR') {
+      runs.push(run);
+      run = [];
+    } else {
+      run.push(node);
     }
-  }
-  const temp = document.createElement('div');
-  temp.innerHTML = parts.join('');
-  p.replaceChildren(...temp.childNodes);
+  });
+  runs.push(run);
+
+  const frag = document.createDocumentFragment();
+  runs.forEach((nodes, idx) => {
+    if (idx > 0) frag.append(document.createElement('br'));
+    if (nodes.length === 0) return;
+    // plain is used only for pattern matching, not for rendering
+    const plain = nodes.map((n) => n.textContent || '').join('').trim();
+    if (!plain) return;
+    const isTitle = titlePattern ? titlePattern.test(plain) : false;
+    const isStat = /^\d+%\*/.test(plain) || /^\d+%\s*\(/.test(plain);
+    if (isTitle || isStat) {
+      const s = document.createElement('strong');
+      nodes.forEach((n) => s.append(n.cloneNode(true)));
+      frag.append(s);
+    } else {
+      nodes.forEach((n) => frag.append(n.cloneNode(true)));
+    }
+  });
+  p.replaceChildren(frag);
 }
 
 function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
@@ -202,7 +219,7 @@ function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
       abbvRt.append(p);
     });
   } else {
-    wrapper.cloneNode(true).childNodes.forEach((n) => abbvRt.append(n));
+    [...wrapper.cloneNode(true).childNodes].forEach((n) => abbvRt.append(n));
     abbvRt.querySelectorAll('p').forEach((p) => {
       fixEncodedSupInParagraph(p);
       ensureRinvoqStatLineStrongTags(p, /^MEASURE UP\s*\d/i);

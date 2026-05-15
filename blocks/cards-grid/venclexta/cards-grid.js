@@ -24,7 +24,7 @@ function appendVenclextaPipeSplitContent(container, sourceEl) {
     em.textContent = right;
     container.append(em);
   } else {
-    sourceEl.cloneNode(true).childNodes.forEach((n) => container.append(n));
+    [...sourceEl.cloneNode(true).childNodes].forEach((n) => container.append(n));
   }
 }
 
@@ -38,7 +38,7 @@ function populateVenclextaCalloutHeading(h3, titleCell) {
   } else {
     ps.forEach((p, i) => {
       if (i > 0) h3.append(document.createElement('br'));
-      p.cloneNode(true).childNodes.forEach((n) => h3.append(n));
+      [...p.cloneNode(true).childNodes].forEach((n) => h3.append(n));
     });
   }
 }
