@@ -1,3 +1,5 @@
+import { isUniversalEditor } from '../../../scripts/utils.js';
+
 export default async function getBlockConfigs() {
   return {
     flags: {},
@@ -34,6 +36,22 @@ export default async function getBlockConfigs() {
         const p = document.createElement('p');
         p.textContent = btn.textContent.trim();
         brandInfo.appendChild(p);
+
+        // Skip DOM cloning in UE author mode and guard against double-execution.
+        if (isUniversalEditor() || block.querySelector('.mobile-utility-clone')) return;
+
+        // Clone utility links 2–N (skip AML dropdown at index 0) to the bottom of
+        // the open nav — visible only on mobile when nav is expanded.
+        const utilityItems = [...block.querySelectorAll('.nav-utility ul[role="menubar"] > li')].slice(1);
+        const navList = block.querySelector('.nav-sections .default-content-wrapper > ul');
+        if (utilityItems.length && navList) {
+          const wrapper = document.createElement('li');
+          wrapper.classList.add('mobile-utility-clone');
+          const ul = document.createElement('ul');
+          utilityItems.forEach((item) => ul.append(item.cloneNode(true)));
+          wrapper.append(ul);
+          navList.append(wrapper);
+        }
       },
     },
   };
