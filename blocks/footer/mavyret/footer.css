@@ -1,5 +1,4 @@
-/* stylelint-disable no-descending-specificity, selector-not-notation, no-duplicate-selectors, media-feature-range-notation, declaration-block-no-redundant-longhand-properties */
-
+/** TODO  - Fix ESlint Issue */
 /* ============================================================
    Footer Block — Base styles
    Live-matching flat horizontal layout (matches all 6 AbbVie brand sites):
@@ -10,9 +9,7 @@
      --color-background-footer, --color-text-on-dark,
      --body-font-family, --font-size-footer
    ============================================================ */
-
 /* ── Block-scoped tokens (W3C DTCG: --footer-{type}-{semantic}-{variant}) ── */
-
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
   --footer-color-text: var(--color-text-on-dark, #fff);
@@ -29,15 +26,11 @@
   --footer-spacing-legal-gap: var(--spacing-60);
   --footer-spacing-bottom-gap: var(--spacing-12);
   --footer-logo-height: var(--spacing-22);
-  --footer-content-max-width: 1200px;
 }
-
 /* ── Container: flat, full-bleed ─────────────────────────────── */
-
 .footer-wrapper {
   margin-top: 0;
 }
-
 .footer {
   background-color: var(--footer-color-bg);
   color: var(--footer-color-text);
@@ -48,32 +41,22 @@
   border-top-left-radius: 0;
   max-width: none;
   margin: 0;
-  padding-block: var(--footer-spacing-padding-y);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
+  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
   position: relative;
   box-sizing: border-box;
 }
-
 .footer p {
   margin: 0;
 }
-
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
-
 /* Auto-hide any empty column (depends on what's authored) */
-
 .footer .footer-column:empty {
   display: none;
 }
-
 /* ── Link rows ──────────────────────────────────────────────── */
-
 .footer .footer-columns {
   display: flex;
   flex-direction: column;
@@ -81,35 +64,27 @@
   margin: 0;
   padding: 0;
 }
-
 .footer .footer-column {
   width: 100%;
   margin: 0;
   text-align: center;
 }
-
 /* Primary column may hold both link rows (when 2 ULs authored in section 1) — stack them */
-
 .footer .footer-links-primary {
   display: flex;
   flex-direction: column;
   gap: var(--footer-spacing-row-gap);
 }
-
 /* Reset legacy "first p as label" styling */
-
 .footer .footer-column p:first-child {
   text-transform: none;
   margin-bottom: 0;
 }
-
 .footer .footer-links-tertiary p:last-child {
   margin-top: 0;
   text-align: center;
 }
-
 /* UL row — flex layout, gap-separated */
-
 .footer .footer-links-primary ul,
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
@@ -127,7 +102,6 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
-
 .footer .footer-links-primary li,
 .footer .footer-links-secondary li,
 .footer .footer-links-tertiary li,
@@ -137,9 +111,7 @@
   margin: 0;
   padding: 0;
 }
-
 /* Link styling — high specificity to override legacy heading-style rules */
-
 .footer .footer-links-primary li a,
 .footer .footer-links-secondary li a,
 .footer .footer-links-tertiary li a {
@@ -152,7 +124,6 @@
   text-decoration: none;
   white-space: nowrap;
 }
-
 .footer .footer-links-primary li a:hover,
 .footer .footer-links-secondary li a:hover,
 .footer .footer-links-tertiary li a:hover {
@@ -160,9 +131,7 @@
   font-weight: var(--footer-font-weight);
   text-decoration: underline;
 }
-
 /* P-based authoring fallback (pipe-separated text) */
-
 .footer .footer-links-secondary p,
 .footer .footer-links-tertiary p {
   margin: 0;
@@ -174,9 +143,7 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
-
 /* External link icon */
-
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -189,9 +156,7 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
-
 /* ── Footer bottom: legal text + number + logo ──────────────── */
-
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -200,7 +165,6 @@
   padding: 0;
   margin-top: var(--footer-spacing-legal-gap);
 }
-
 .footer .footer-bottom p {
   margin: 0;
   text-align: center;
@@ -210,9 +174,7 @@
   line-height: var(--footer-line-height);
   text-transform: none;
 }
-
 /* Anchors inside footer-bottom paragraphs inherit text styling */
-
 .footer .footer-bottom p a {
   color: var(--footer-color-link);
   font-family: inherit;
@@ -221,84 +183,67 @@
   line-height: inherit;
   text-decoration: underline;
 }
-
 .footer .footer-bottom p a:hover {
   text-decoration: none;
 }
-
-/* Strip button-pill styling when legal text is authored as a button (legacy).
-   Selector specificity (0,4,1) beats global a.button rules in styles/styles.css
-   without needing !important. */
-
-.footer-wrapper .footer .footer-bottom a.button,
-.footer-wrapper .footer .footer-bottom .button-container a {
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  color: var(--footer-color-link);
-  font-size: var(--footer-font-size);
-  font-weight: var(--footer-font-weight);
-  text-decoration: underline;
-  text-transform: none;
-  display: inline;
-  white-space: normal;
-  line-height: var(--footer-line-height);
+/* Strip button-pill styling when legal text is authored as a button (legacy) */
+.footer .footer-bottom a.button,
+.footer .footer-bottom .button-container a {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--footer-color-link) !important;
+  font-size: var(--footer-font-size) !important;
+  font-weight: var(--footer-font-weight) !important;
+  text-decoration: underline !important;
+  text-transform: none !important;
+  display: inline !important;
+  white-space: normal !important;
+  line-height: var(--footer-line-height) !important;
 }
-
-.footer-wrapper .footer .footer-bottom a.button:hover,
-.footer-wrapper .footer .footer-bottom .button-container a:hover {
-  text-decoration: none;
+.footer .footer-bottom a.button:hover,
+.footer .footer-bottom .button-container a:hover {
+  text-decoration: none !important;
 }
-
 /* Legal number — small text. Detected by .legal-number class OR by being
    the 2nd-to-last child (paragraph immediately before the logo picture) */
-
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
   font-size: var(--footer-font-size-small);
 }
-
 /* Logo — centered mobile, right-aligned desktop, white via filter (raster) or fill (SVG) */
-
 .footer .footer-bottom p:has(picture),
 .footer .footer-bottom p:has(img) {
   margin: var(--footer-spacing-bottom-gap) 0 0;
   text-align: center;
 }
-
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
   height: var(--footer-logo-height);
   width: auto;
   mix-blend-mode: screen;
 }
-
 .footer .footer-bottom svg {
   height: var(--footer-logo-height);
   width: auto;
   fill: var(--footer-color-text);
 }
-
 /* Legacy ul fallback inside footer-bottom */
-
 .footer .footer-bottom ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
 }
-
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
   color: var(--footer-color-text);
   font-size: var(--footer-font-size);
   text-decoration: none;
 }
-
 /* ── Desktop ≥601px (matches live media query) ──────────────── */
-
 @media (min-width: 601px) {
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
@@ -339,7 +284,6 @@
     margin: 0;
   }
 }
-
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -351,16 +295,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
-
 @custom-media --bp-tablet (min-width: 744px);
-
 @custom-media --bp-desktop (min-width: 1024px);
-
 @custom-media --bp-wide (min-width: 1440px);
-
 :root {
 /* -----------------------------------------------------------
    PX → REM Conversion Helper
@@ -545,11 +484,8 @@
   --spacing-110: 11rem;
   --spacing-120: 12rem;
   --spacing-124: 12.4rem;
-  --spacing-155: 15.5rem;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
-  --spacing-200: 20rem;
-  --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
   --spacing-320: 32rem;
@@ -614,7 +550,6 @@
   --font-weight-700: 700;
   --font-weight-800: 800;
   --font-weight-regular: 400;
-  --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
   /* Gap */
@@ -745,7 +680,6 @@
   --cdp-max-width: 1180px;
   --cdp-letter-spacing-title: 0.02em;
 }
-
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -753,7 +687,6 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
-
 @media (--bp-desktop) {
   :root {
     --border-top-radius: 8rem;
@@ -761,13 +694,11 @@
     --hero-tall-image-container-height: 60.8rem;
   }
 }
-
 /* ============================================================
    MAVYRET HCP — Brand Token Overrides
    Source: mavyret.com/hcp (Platform C)
    Font: Univers LT W01 Condensed
    ============================================================ */
-
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #21406d;
@@ -804,7 +735,6 @@
   --background-color: #fff;
   --color-background-light: #f3f3f3;
   --color-background-light-blue: #d1f1fc;
-  --color-background-dark: #1a1a1a;
   --color-background-footer: #c23802;
   --color-background-footer-end: #992200;
   --color-background-safety-bar: #0c2556;
@@ -815,10 +745,6 @@
   --color-border-dark: #63636366;
   --color-border-orange: #e65400;
 
-  /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgb(0 0 0 / 70%);
-  --color-overlay-card: rgb(0 0 0 / 60%);
-
   /* ---- Color: Shadow ---- */
   --shadow-green-glow: rgb(140, 224, 42) -2px 2px 4px 0;
   --shadow-card: rgba(0, 0, 0, 0.4) 0 0 18px 0;
@@ -828,8 +754,6 @@
   --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
   --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
   --icon-font-family: 'abbv-iconFont';
-  /* Footer-specific: live mavyret HCP renders footer in Roboto, not Univers */
-  --font-family-footer: 'Roboto', sans-serif;
 
   /* ---- Font: Size ---- */
   --font-size-body: 14px;
@@ -965,7 +889,6 @@
   --formulary-chevron-offset: 14px;
   --formulary-chevron-size: 20px;
 }
-
 /* ============================================================
    MAVYRET HCP — Footer brand overrides
    Live: www.mavyret.com/hcp
@@ -974,13 +897,13 @@
    - Two horizontal link rows separated by a 1px white border
    - Legal text full-width; legal-number bottom-LEFT, logo bottom-RIGHT
    ============================================================ */
-
+/* stylelint-disable */
 /* Brand token overrides */
-
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
   --footer-color-text: var(--color-text-on-dark);
   --footer-color-link: var(--color-text-on-dark);
+  --footer-content-max-width: 1200px;
 
   /* Live: .abbv-footer { background: linear-gradient(180deg, #c23802 0, #920 100%) } */
   --footer-bg-gradient: linear-gradient(
@@ -990,34 +913,29 @@
   );
 
   /* Live: body { font-family: "Roboto"; font-size: 1rem; line-height: 1.45 } */
-  --footer-font-family: var(--font-family-footer);
+  --footer-font-family: 'Roboto', sans-serif;
   --footer-font-size: var(--font-size-16);
   --footer-line-height: var(--line-height-24);
 }
-
-/* Container — gradient bg full width, padding-block override.
-   Centering (max-width + padding-inline max()) is inherited from base. */
-
+/* Container — gradient bg full width, content centered with max-width via padding-inline trick */
 .footer {
   background: var(--footer-bg-gradient);
   padding-block: var(--spacing-32);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
 }
-
 /* ── Link rows: left-aligned ─────────────────────────────────── */
-
 .footer .footer-column {
   text-align: left;
 }
-
 /* Mobile: two ULs side-by-side, each taking equal half-width */
-
 .footer .footer-links-primary {
   gap: 0;
   flex-direction: row;
 }
-
 /* Mobile: each UL stacks vertically; flex:1 + min-width:0 forces equal width so text wraps */
-
 .footer .footer-links-primary ul {
   flex: 1;
   min-width: 0;
@@ -1027,17 +945,13 @@
   gap: var(--spacing-12);
   margin-right: var(--spacing-16);
 }
-
 /* Underline all link text; allow wrapping on mobile */
-
 .footer .footer-links-primary li a {
   text-decoration: underline;
   white-space: normal;
   overflow-wrap: break-word;
 }
-
 /* ── Footer bottom: stacked on mobile ────────────────────────── */
-
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -1045,14 +959,11 @@
   margin-top: var(--spacing-32);
   padding: 0;
 }
-
 .footer .footer-bottom p {
   text-align: left;
   margin: 0;
 }
-
 /* Mobile: logo last row, left-aligned */
-
 .footer .footer-bottom > p:has(picture),
 .footer .footer-bottom > p:has(img) {
   order: 999;
@@ -1060,38 +971,29 @@
   padding-top: 0;
   align-self: center;
 }
-
 /* Mobile: reset padding-top — flex gap handles spacing */
-
 .footer .footer-bottom > p:has(br):not(:has(picture), :has(img)) {
   padding-top: 0;
 }
-
 /* Override base small-font rule — mavyret HCP keeps legal-number at regular size */
-
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img)) {
   font-size: var(--footer-font-size);
 }
-
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture), :has(img), :has(br)) {
   padding-top: 0;
 }
-
 /* Logo — DA delivers a white-bg JPG; invert + screen blend to render as white logo on orange */
-
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
   mix-blend-mode: screen;
 }
-
 .footer .footer-bottom svg {
   fill: var(--color-text-on-dark);
 }
 
 /* ── Desktop (≥ 601px): grid layout, horizontal links ────────── */
-
 @media (width >= 601px) {
   /* Restore vertical stacking of link rows */
   .footer .footer-links-primary {

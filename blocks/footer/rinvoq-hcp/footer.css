@@ -1,5 +1,4 @@
-/* stylelint-disable no-descending-specificity, selector-not-notation, no-duplicate-selectors, media-feature-range-notation, declaration-block-no-redundant-longhand-properties */
-
+/** TODO  - Fix ESlint Issue */
 /* ============================================================
    Footer Block — Base styles
    Live-matching flat horizontal layout (matches all 6 AbbVie brand sites):
@@ -10,9 +9,7 @@
      --color-background-footer, --color-text-on-dark,
      --body-font-family, --font-size-footer
    ============================================================ */
-
 /* ── Block-scoped tokens (W3C DTCG: --footer-{type}-{semantic}-{variant}) ── */
-
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
   --footer-color-text: var(--color-text-on-dark, #fff);
@@ -29,15 +26,11 @@
   --footer-spacing-legal-gap: var(--spacing-60);
   --footer-spacing-bottom-gap: var(--spacing-12);
   --footer-logo-height: var(--spacing-22);
-  --footer-content-max-width: 1200px;
 }
-
 /* ── Container: flat, full-bleed ─────────────────────────────── */
-
 .footer-wrapper {
   margin-top: 0;
 }
-
 .footer {
   background-color: var(--footer-color-bg);
   color: var(--footer-color-text);
@@ -48,32 +41,22 @@
   border-top-left-radius: 0;
   max-width: none;
   margin: 0;
-  padding-block: var(--footer-spacing-padding-y);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
+  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
   position: relative;
   box-sizing: border-box;
 }
-
 .footer p {
   margin: 0;
 }
-
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
-
 /* Auto-hide any empty column (depends on what's authored) */
-
 .footer .footer-column:empty {
   display: none;
 }
-
 /* ── Link rows ──────────────────────────────────────────────── */
-
 .footer .footer-columns {
   display: flex;
   flex-direction: column;
@@ -81,35 +64,27 @@
   margin: 0;
   padding: 0;
 }
-
 .footer .footer-column {
   width: 100%;
   margin: 0;
   text-align: center;
 }
-
 /* Primary column may hold both link rows (when 2 ULs authored in section 1) — stack them */
-
 .footer .footer-links-primary {
   display: flex;
   flex-direction: column;
   gap: var(--footer-spacing-row-gap);
 }
-
 /* Reset legacy "first p as label" styling */
-
 .footer .footer-column p:first-child {
   text-transform: none;
   margin-bottom: 0;
 }
-
 .footer .footer-links-tertiary p:last-child {
   margin-top: 0;
   text-align: center;
 }
-
 /* UL row — flex layout, gap-separated */
-
 .footer .footer-links-primary ul,
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
@@ -127,7 +102,6 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
-
 .footer .footer-links-primary li,
 .footer .footer-links-secondary li,
 .footer .footer-links-tertiary li,
@@ -137,9 +111,7 @@
   margin: 0;
   padding: 0;
 }
-
 /* Link styling — high specificity to override legacy heading-style rules */
-
 .footer .footer-links-primary li a,
 .footer .footer-links-secondary li a,
 .footer .footer-links-tertiary li a {
@@ -152,7 +124,6 @@
   text-decoration: none;
   white-space: nowrap;
 }
-
 .footer .footer-links-primary li a:hover,
 .footer .footer-links-secondary li a:hover,
 .footer .footer-links-tertiary li a:hover {
@@ -160,9 +131,7 @@
   font-weight: var(--footer-font-weight);
   text-decoration: underline;
 }
-
 /* P-based authoring fallback (pipe-separated text) */
-
 .footer .footer-links-secondary p,
 .footer .footer-links-tertiary p {
   margin: 0;
@@ -174,9 +143,7 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
-
 /* External link icon */
-
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -189,9 +156,7 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
-
 /* ── Footer bottom: legal text + number + logo ──────────────── */
-
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -200,7 +165,6 @@
   padding: 0;
   margin-top: var(--footer-spacing-legal-gap);
 }
-
 .footer .footer-bottom p {
   margin: 0;
   text-align: center;
@@ -210,9 +174,7 @@
   line-height: var(--footer-line-height);
   text-transform: none;
 }
-
 /* Anchors inside footer-bottom paragraphs inherit text styling */
-
 .footer .footer-bottom p a {
   color: var(--footer-color-link);
   font-family: inherit;
@@ -221,84 +183,67 @@
   line-height: inherit;
   text-decoration: underline;
 }
-
 .footer .footer-bottom p a:hover {
   text-decoration: none;
 }
-
-/* Strip button-pill styling when legal text is authored as a button (legacy).
-   Selector specificity (0,4,1) beats global a.button rules in styles/styles.css
-   without needing !important. */
-
-.footer-wrapper .footer .footer-bottom a.button,
-.footer-wrapper .footer .footer-bottom .button-container a {
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  color: var(--footer-color-link);
-  font-size: var(--footer-font-size);
-  font-weight: var(--footer-font-weight);
-  text-decoration: underline;
-  text-transform: none;
-  display: inline;
-  white-space: normal;
-  line-height: var(--footer-line-height);
+/* Strip button-pill styling when legal text is authored as a button (legacy) */
+.footer .footer-bottom a.button,
+.footer .footer-bottom .button-container a {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: var(--footer-color-link) !important;
+  font-size: var(--footer-font-size) !important;
+  font-weight: var(--footer-font-weight) !important;
+  text-decoration: underline !important;
+  text-transform: none !important;
+  display: inline !important;
+  white-space: normal !important;
+  line-height: var(--footer-line-height) !important;
 }
-
-.footer-wrapper .footer .footer-bottom a.button:hover,
-.footer-wrapper .footer .footer-bottom .button-container a:hover {
-  text-decoration: none;
+.footer .footer-bottom a.button:hover,
+.footer .footer-bottom .button-container a:hover {
+  text-decoration: none !important;
 }
-
 /* Legal number — small text. Detected by .legal-number class OR by being
    the 2nd-to-last child (paragraph immediately before the logo picture) */
-
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
   font-size: var(--footer-font-size-small);
 }
-
 /* Logo — centered mobile, right-aligned desktop, white via filter (raster) or fill (SVG) */
-
 .footer .footer-bottom p:has(picture),
 .footer .footer-bottom p:has(img) {
   margin: var(--footer-spacing-bottom-gap) 0 0;
   text-align: center;
 }
-
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
   height: var(--footer-logo-height);
   width: auto;
   mix-blend-mode: screen;
 }
-
 .footer .footer-bottom svg {
   height: var(--footer-logo-height);
   width: auto;
   fill: var(--footer-color-text);
 }
-
 /* Legacy ul fallback inside footer-bottom */
-
 .footer .footer-bottom ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
 }
-
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
   color: var(--footer-color-text);
   font-size: var(--footer-font-size);
   text-decoration: none;
 }
-
 /* ── Desktop ≥601px (matches live media query) ──────────────── */
-
 @media (min-width: 601px) {
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
@@ -339,7 +284,6 @@
     margin: 0;
   }
 }
-
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -351,16 +295,11 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
-
 @custom-media --bp-tablet (min-width: 744px);
-
 @custom-media --bp-desktop (min-width: 1024px);
-
 @custom-media --bp-wide (min-width: 1440px);
-
 :root {
 /* -----------------------------------------------------------
    PX → REM Conversion Helper
@@ -545,11 +484,8 @@
   --spacing-110: 11rem;
   --spacing-120: 12rem;
   --spacing-124: 12.4rem;
-  --spacing-155: 15.5rem;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
-  --spacing-200: 20rem;
-  --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
   --spacing-320: 32rem;
@@ -614,7 +550,6 @@
   --font-weight-700: 700;
   --font-weight-800: 800;
   --font-weight-regular: 400;
-  --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
   /* Gap */
@@ -745,7 +680,6 @@
   --cdp-max-width: 1180px;
   --cdp-letter-spacing-title: 0.02em;
 }
-
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -753,7 +687,6 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
-
 @media (--bp-desktop) {
   :root {
     --border-top-radius: 8rem;
@@ -761,13 +694,11 @@
     --hero-tall-image-container-height: 60.8rem;
   }
 }
-
 /* ============================================================
    RINVOQ HCP — Brand Token Overrides
    Source: rinvoqhcp.com/dermatology (Platform C)
    Font: Graphik family
    ============================================================ */
-
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #90124a;
@@ -809,12 +740,6 @@
   --color-background-light: #f5f5f5;
   --color-background-footer: #17181b;
   --color-background-safety-bar: #f5f5f5;
-
-  /* ---- Color: Accordion ---- */
-  --color-accordion-text: #25282a;
-  --color-accordion-accent: #c8373e;
-  --color-accordion-separator: #46484a;
-  --color-accordion-tab-inactive: #767688;
 
   /* ---- Color: Border ---- */
   --color-border-default: #c9c9ca;
@@ -962,11 +887,7 @@
   --formulary-label-left: 12px;
   --formulary-label-line-height: 16px;
   --formulary-chevron-bg-size: 14px;
-
-  /* ---- Footer ---- */
-  --footer-links-max-width: 33.5rem;
 }
-
 /* ============================================================
    RINVOQ HCP — Footer brand overrides
    Live: www.rinvoqhcp.com/dermatology
@@ -975,9 +896,8 @@
    - 48px gap between legal text and legal-number/logo row
    - Border-top separator between link rows
    ============================================================ */
-
+/* stylelint-disable */
 /* Brand token overrides */
-
 .footer-wrapper {
   /* Live: .abbv-footer ul.abbv-footer-horizontal li a { color: var(--silver); } */
   --footer-color-text: var(--color-silver);
@@ -987,19 +907,21 @@
 
   /* Live: font-family: "Graphik Semibold", "Helvetica Neue", arial, helvetica, sans-serif */
   --footer-font-family: var(--font-family-semibold);
-}
 
+  --footer-content-max-width: 1200px;
+}
 /* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
    add bottom padding so logo/legal-number don't touch the footer's bottom edge.
-   Centering (max-width + padding-inline max()) is inherited from base. */
-
+   bg stays edge-to-edge, content is constrained to a centered max-width via padding-inline max() */
 .footer {
   padding-block: 0 var(--spacing-20);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
 }
-
 /* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0;
    mobile row-wrap centers links within --footer-links-max-width */
-
 .footer .footer-links-primary ul {
   padding: var(--spacing-24) 0;
   margin: var(--spacing-04) 0 0;
@@ -1009,34 +931,25 @@
   margin-inline: auto;
   column-gap: var(--spacing-16);
 }
-
 /* Reset the column's flex gap — UL padding handles vertical spacing */
-
 .footer .footer-links-primary {
   gap: 0;
 }
-
 /* Border separator on second UL (matches live `abbv-footer-border-top`) */
-
 .footer .footer-links-primary ul + ul {
   border-top: var(--separator-height-1) solid var(--color-steel);
 }
-
 /* Footer bottom: grid layout — smaller font, legal/logo in two-column row */
-
 .footer .footer-bottom {
   /* Live: .abbv-legal-text { font-size: 0.75rem } = 12px */
   --footer-font-size: var(--footer-font-size-small);
-
   display: grid;
   grid-template-columns: 1fr auto;
   row-gap: var(--spacing-24);
   align-items: center;
   margin-top: 0;
 }
-
 /* Indication code left + logo right in same row via grid */
-
 .footer .footer-bottom > p:has(picture),
 .footer .footer-bottom > p:has(img) {
   grid-column: 2;
@@ -1048,7 +961,6 @@
 }
 
 /* Compact line-height on first legal paragraph (matches live 1.2rem) */
-
 .footer .footer-bottom > p:first-of-type {
   line-height: var(--spacing-12);
 }
@@ -1065,7 +977,6 @@
 }
 
 /* ── Desktop (≥ 768px): reset mobile-only overrides ────────── */
-
 @media (width >= 768px) {
   /* Remove 335px mobile constraint; base CSS handles row-wrap for links */
   .footer .footer-links-primary ul {
