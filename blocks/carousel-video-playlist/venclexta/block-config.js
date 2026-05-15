@@ -43,21 +43,24 @@ function getTranscriptModal() {
   overlay.append(dialog);
   document.body.append(overlay);
 
+  const ac = new AbortController();
+  const { signal } = ac;
+
   const close = () => {
     overlay.classList.remove('is-open');
     document.body.classList.remove('cvp-modal-is-open');
   };
 
-  closeBtn.addEventListener('click', close);
+  closeBtn.addEventListener('click', close, { signal });
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) close();
-  });
+  }, { signal });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape'
       && overlay.classList.contains('is-open')) close();
-  });
+  }, { signal });
 
-  transcriptModal = { overlay, body };
+  transcriptModal = { overlay, body, abort: () => ac.abort() };
   return transcriptModal;
 }
 
