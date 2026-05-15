@@ -198,9 +198,15 @@ function buildCard(item, cfg, single) {
     return loadBrightcoveScript(accountId, playerId).then(() => {
       if (typeof window.bc === 'function') window.bc(vid);
       return new Promise((resolve) => {
+        let retries = 300;
         const poll = () => {
           const p = window.videojs?.getPlayer(id);
-          if (!p) { requestAnimationFrame(poll); return; }
+          if (!p) {
+            retries -= 1;
+            if (retries <= 0) { resolve(); return; }
+            requestAnimationFrame(poll);
+            return;
+          }
           p.ready(function onReady() {
             const mi = this.mediainfo;
             if (mi?.longDescription
@@ -224,10 +230,12 @@ function buildCard(item, cfg, single) {
     playBtn.hidden = true;
     const videoEl = playerWrap.querySelector('video-js');
     if (!videoEl) return;
+    let playRetries = 300;
     const startPlay = () => {
       const p = window.videojs?.getPlayer(videoEl.id);
-      if (p) p.ready(() => p.play());
-      else requestAnimationFrame(startPlay);
+      if (p) { p.ready(() => p.play()); return; }
+      playRetries -= 1;
+      if (playRetries > 0) requestAnimationFrame(startPlay);
     };
     loadBrightcoveScript(accountId, playerId).then(startPlay);
   });
