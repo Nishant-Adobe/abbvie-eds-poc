@@ -1,6 +1,7 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
 const SAFE_HREF_RE = /^(https?:\/\/|\/|#|tel:|sms:|mailto:)/i;
+
 const LINE1_CLASS = 'card-grid-item-line-1';
 const LINE2_CLASS = 'card-grid-item-line-2';
 const LINE3_CLASS = 'card-grid-item-line-3';
