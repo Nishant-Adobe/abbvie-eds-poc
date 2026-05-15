@@ -497,6 +497,15 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  const brand = getMetadata('brand')?.trim();
+  const tooltipCSS = loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.css`);
+  const brandTooltipCSS = brand
+    ? loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/${brand}/tooltip.css`).catch(() => {})
+    : Promise.resolve();
+  await Promise.all([tooltipCSS, brandTooltipCSS]);
+  const { wireInlineTooltips } = await import(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.js`);
+  wireInlineTooltips(main);
 }
 
 /**

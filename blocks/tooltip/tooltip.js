@@ -7,9 +7,9 @@ function createTooltipPanel(content, id) {
   return panel;
 }
 
-function wireInlineTooltips() {
-  document.querySelectorAll('abbr[title]').forEach((abbr, i) => {
-    const id = `inline-tooltip-${i}`;
+export function wireInlineTooltips(scope = document) {
+  scope.querySelectorAll('abbr[title]:not(.has-tooltip)').forEach((abbr, i) => {
+    const id = `inline-tooltip-${Date.now()}-${i}`;
     const panel = createTooltipPanel(abbr.title, id);
     abbr.removeAttribute('title');
     abbr.setAttribute('aria-describedby', id);
