@@ -1,7 +1,5 @@
-.tooltip {
-  position: relative;
-  display: inline;
-
+.tooltip,
+abbr.has-tooltip {
   --tooltip-bg: var(--color-brand-primary, var(--color-charcoal, #25282a));
   --tooltip-color: var(--color-text-on-dark, #fff);
   --tooltip-focus-ring: var(--color-brand-primary, var(--link-color, #035fe6));
@@ -14,6 +12,11 @@
   --tooltip-z-index: var(--z-index-10, 10);
   --tooltip-trigger-border-color: currentcolor;
   --tooltip-trigger-border-style: dotted;
+}
+
+.tooltip {
+  position: relative;
+  display: inline;
 }
 
 .tooltip-trigger {
@@ -73,6 +76,18 @@
   pointer-events: none;
 }
 
+/* Viewport auto-flip: edge overflow */
+.tooltip-panel.flip-left {
+  left: 0;
+  transform: none;
+}
+
+.tooltip-panel.flip-right {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
 /* Position: bottom */
 .tooltip.bottom .tooltip-panel {
   bottom: auto;
@@ -127,17 +142,6 @@ abbr.has-tooltip {
   position: relative;
   cursor: help;
   text-decoration: underline var(--tooltip-trigger-border-style);
-
-  --tooltip-bg: var(--color-brand-primary, var(--color-charcoal, #25282a));
-  --tooltip-color: var(--color-text-on-dark, #fff);
-  --tooltip-focus-ring: var(--color-brand-primary, var(--link-color, #035fe6));
-  --tooltip-arrow-size: var(--spacing-10, 1rem);
-  --tooltip-offset: var(--spacing-10, 1rem);
-  --tooltip-border-radius: var(--border-radius-m, 0.8rem);
-  --tooltip-shadow: var(--elevation-card, 0 0.8rem 2rem rgb(7 29 73 / 10%));
-  --tooltip-panel-width: auto;
-  --tooltip-min-width: var(--spacing-100, 10rem);
-  --tooltip-z-index: var(--z-index-10, 10);
 }
 
 abbr.has-tooltip:focus-visible {

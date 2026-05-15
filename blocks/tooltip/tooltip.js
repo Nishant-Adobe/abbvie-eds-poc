@@ -16,21 +16,16 @@ function autoFlip(trigger, panel) {
     container.classList.add('bottom');
   }
   if (rect.left < 0) {
-    panel.style.left = '0';
-    panel.style.transform = 'none';
+    panel.classList.add('flip-left');
   } else if (rect.right > window.innerWidth) {
-    panel.style.left = 'auto';
-    panel.style.right = '0';
-    panel.style.transform = 'none';
+    panel.classList.add('flip-right');
   }
 }
 
 function resetFlip(trigger, panel) {
   const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
   container.classList.remove('bottom');
-  panel.style.removeProperty('left');
-  panel.style.removeProperty('right');
-  panel.style.removeProperty('transform');
+  panel.classList.remove('flip-left', 'flip-right');
 }
 
 function closeAllTooltips(except) {
@@ -93,6 +88,14 @@ export function wireInlineTooltips(scope = document) {
       }
     });
   });
+
+  if (scope.querySelector('.tooltip, abbr.has-tooltip')) {
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.tooltip, .has-tooltip')) {
+        closeAllTooltips();
+      }
+    }, { once: false });
+  }
 }
 
 export default function decorate(block) {
@@ -149,9 +152,3 @@ export default function decorate(block) {
     }
   });
 }
-
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.tooltip, .has-tooltip')) {
-    closeAllTooltips();
-  }
-});
