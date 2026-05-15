@@ -29,6 +29,7 @@ function appendJsonLd(ol) {
   document.head.querySelectorAll('script[type="application/ld+json"]').forEach((s) => {
     try { if (JSON.parse(s.textContent)?.['@type'] === 'BreadcrumbList') s.remove(); } catch { /* ignore */ }
   });
+  // JSON-LD must be injected into <head> — intentional global side-effect
   document.head.append(script);
 }
 
