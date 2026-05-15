@@ -1348,7 +1348,7 @@ export default function decorate(block) {
     });
 
     block.append(row);
-  } else if (block.classList.contains('cards-grid-linzess-icon-image-card') || block.classList.contains('cards-grid-icon-image-card')) {
+  } else if (block.classList.contains('cards-grid-icon-image-card')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1368,7 +1368,7 @@ export default function decorate(block) {
     flexboxV2.append(flexContainer);
     demoWrap.append(flexboxV2);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-linzess-article-cards') || block.classList.contains('cards-grid-article-cards')) {
+  } else if (block.classList.contains('cards-grid-article-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1388,7 +1388,7 @@ export default function decorate(block) {
     flexboxV2.append(flexContainer);
     demoWrap.append(flexboxV2);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-rinvoq-common-cards') || block.classList.contains('cards-grid-flex-row-cards')) {
+  } else if (block.classList.contains('cards-grid-flex-row-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1427,7 +1427,7 @@ export default function decorate(block) {
     flexItem.append(flexboxV2);
     outer.append(flexItem);
     block.append(outer);
-  } else if (block.classList.contains('cards-grid-mavyret-common-cards') || block.classList.contains('cards-grid-icon-flex-cards')) {
+  } else if (block.classList.contains('cards-grid-icon-flex-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1443,7 +1443,7 @@ export default function decorate(block) {
     demoWrap.className = 'demo-wrap';
     demoWrap.append(outer);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-mavyret-cta-cards') || block.classList.contains('cards-grid-cta-cards-stacked')) {
+  } else if (block.classList.contains('cards-grid-cta-cards-stacked')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1459,7 +1459,7 @@ export default function decorate(block) {
     demoWrap.className = 'demo-wrap';
     demoWrap.append(outer);
     block.append(demoWrap);
-  } else if (block.classList.contains('cards-grid-mavyret-section-cards') || block.classList.contains('cards-grid-section-cards')) {
+  } else if (block.classList.contains('cards-grid-section-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
@@ -1490,7 +1490,7 @@ export default function decorate(block) {
       flexEven.append(col);
     });
     block.append(flexEven);
-  } else if (block.classList.contains('cards-grid-venclexta-callout-cards') || block.classList.contains('cards-grid-callout-cards')) {
+  } else if (block.classList.contains('cards-grid-callout-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return;
 
