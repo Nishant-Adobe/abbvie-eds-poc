@@ -49,13 +49,34 @@
         "name": "brand",
         "label": "Brand",
         "options": [
-          { "name": "AbbVie (default)", "value": "" },
-          { "name": "Skyrizi HCP", "value": "skyrizi-hcp" },
-          { "name": "Rinvoq DTC", "value": "rinvoq-dtc" },
-          { "name": "Rinvoq HCP", "value": "rinvoq-hcp" },
-          { "name": "Mavyret", "value": "mavyret" },
-          { "name": "Venclexta", "value": "venclexta" },
-          { "name": "Linzess", "value": "linzess" }
+          {
+            "name": "AbbVie (default)",
+            "value": ""
+          },
+          {
+            "name": "Skyrizi HCP",
+            "value": "skyrizi-hcp"
+          },
+          {
+            "name": "Rinvoq DTC",
+            "value": "rinvoq-dtc"
+          },
+          {
+            "name": "Rinvoq HCP",
+            "value": "rinvoq-hcp"
+          },
+          {
+            "name": "Mavyret",
+            "value": "mavyret"
+          },
+          {
+            "name": "Venclexta",
+            "value": "venclexta"
+          },
+          {
+            "name": "Linzess",
+            "value": "linzess"
+          }
         ]
       },
       {
@@ -176,7 +197,6 @@
         "label": "Brand & Theme",
         "name": "tabBrand"
       },
-
       {
         "component": "text",
         "valueType": "string",
@@ -2528,10 +2548,7 @@
             {
               "var": "accountId"
             },
-            [
-              "2157889325001",
-              "public"
-            ]
+            ["2157889325001", "public"]
           ]
         }
       },
@@ -2547,10 +2564,7 @@
             {
               "var": "playerType"
             },
-            [
-              "single",
-              "3d-video"
-            ]
+            ["single", "3d-video"]
           ]
         }
       },
@@ -3226,19 +3240,19 @@
         "value": "",
         "options": [
           {
-            "name": "Default — Equal width columns",
+            "name": "Default \u2014 Equal width columns",
             "value": ""
           },
           {
-            "name": "Offset — Narrow left (1/3) + wide right (2/3)",
+            "name": "Offset \u2014 Narrow left (1/3) + wide right (2/3)",
             "value": "columns-offset"
           },
           {
-            "name": "Flush — No gap between columns",
+            "name": "Flush \u2014 No gap between columns",
             "value": "columns-flush"
           },
           {
-            "name": "Reverse — Swap column order on mobile",
+            "name": "Reverse \u2014 Swap column order on mobile",
             "value": "columns-reverse"
           }
         ]
@@ -3285,31 +3299,33 @@
       {
         "component": "tab",
         "label": "Overview",
-        "name": "overview"
+        "name": "tab-overview"
       },
       {
         "component": "text",
-        "name": "linkText",
-        "label": "Button Text"
+        "valueType": "string",
+        "name": "label",
+        "label": "Button Text",
+        "value": "Button"
       },
       {
         "component": "aem-content",
-        "name": "link",
+        "name": "href",
         "label": "Target"
       },
       {
         "component": "text",
-        "name": "aria-label",
-        "label": "ARIA Label",
         "valueType": "string",
-        "attribute": "data-aria-label"
+        "name": "ariaLabel",
+        "label": "ARIA Label",
+        "value": ""
       },
       {
         "component": "select",
-        "label": "Click Behavior",
-        "name": "ctaTarget",
-        "value": "_self",
         "valueType": "string",
+        "name": "ctaTarget",
+        "label": "Click Behavior",
+        "value": "_self",
         "options": [
           {
             "name": "Same Tab",
@@ -3318,15 +3334,39 @@
           {
             "name": "New Tab",
             "value": "_blank"
+          },
+          {
+            "name": "Modal",
+            "value": "new-modal"
+          },
+          {
+            "name": "Hidden Panel",
+            "value": "new-hidden-panel"
+          },
+          {
+            "name": "Switch View",
+            "value": "switch-view"
+          },
+          {
+            "name": "Indication Selection",
+            "value": "indicationSelection"
           }
         ]
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "modalId",
+        "label": "Modal ID",
+        "value": "",
+        "description": "When set, renders a <button> with data-modal-id instead of an <a> link."
+      },
+      {
         "component": "select",
         "valueType": "string",
-        "name": "iconVariation",
-        "value": "none",
+        "name": "iconType",
         "label": "Icon Type",
+        "value": "none",
         "description": "Icon type for the button",
         "options": [
           {
@@ -3347,13 +3387,13 @@
         "component": "text",
         "valueType": "string",
         "name": "iconFont",
-        "value": "",
         "label": "Button Font Icon",
+        "value": "",
         "description": "Font icon name for button",
         "condition": {
           "===": [
             {
-              "var": "iconVariation"
+              "var": "iconType"
             },
             "icon-font"
           ]
@@ -3369,7 +3409,7 @@
         "condition": {
           "===": [
             {
-              "var": "iconVariation"
+              "var": "iconType"
             },
             "image"
           ]
@@ -3379,79 +3419,69 @@
         "component": "select",
         "valueType": "string",
         "name": "iconPosition",
-        "value": "after",
         "label": "Icon Position",
-        "description": "Select whether the icon is placed before your button text or after your button text",
+        "value": "i-a",
+        "description": "Select whether the icon is placed before or after your button text",
         "options": [
           {
-            "name": "Before",
-            "value": "before"
+            "name": "Before (left)",
+            "value": "i-b"
           },
           {
-            "name": "After",
-            "value": "after"
+            "name": "After (right)",
+            "value": "i-a"
           }
         ],
         "condition": {
           "in": [
             {
-              "var": "iconVariation"
+              "var": "iconType"
             },
-            [
-              "icon-font",
-              "image"
-            ]
+            ["icon-font", "image"]
           ]
         }
       },
       {
         "component": "boolean",
-        "label": "Prevent screen readers from announcing this CTA",
+        "valueType": "boolean",
         "name": "ariaHidden",
-        "value": false,
-        "valueType": "boolean"
+        "label": "Prevent screen readers from announcing this CTA",
+        "value": false
       },
       {
         "component": "tab",
         "label": "Styles",
-        "name": "styles"
+        "name": "tab-styles"
       },
       {
-        "component": "select",
+        "component": "multiselect",
+        "valueType": "string",
         "name": "classes",
-        "label": "Type",
-        "value": "default-cta",
+        "label": "Variant",
         "options": [
           {
-            "name": "default",
-            "value": "default-cta"
+            "name": "Primary (default)",
+            "value": "abbv-button-primary"
           },
           {
-            "name": "Internal CTA",
-            "value": "internal-cta"
+            "name": "Secondary",
+            "value": "abbv-button-secondary"
           },
           {
-            "name": "External CTA",
-            "value": "external-cta"
+            "name": "Tertiary",
+            "value": "abbv-button-tertiary"
           },
           {
-            "name": "Back CTA",
-            "value": "back-cta"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "classes_theme",
-        "label": "Theme",
-        "options": [
-          {
-            "name": "Light",
-            "value": "light-theme"
+            "name": "Plain link",
+            "value": "abbv-button-plain"
           },
           {
-            "name": "Dark",
-            "value": "dark-theme"
+            "name": "Toggle (round)",
+            "value": "abbv-switch-round"
+          },
+          {
+            "name": "Toggle (square)",
+            "value": "abbv-switch-square"
           }
         ]
       },
@@ -4264,36 +4294,116 @@
         "label": "Style",
         "valueType": "string",
         "options": [
-          {
-            "name": "Profile",
-            "value": "profile"
-          },
-          {
-            "name": "Landing",
-            "value": "landing"
-          }
+          { "name": "Profile", "value": "profile" },
+          { "name": "Landing", "value": "landing" },
+          { "name": "Full Height", "value": "full" },
+          { "name": "Compact", "value": "compact" },
+          { "name": "Split Layout", "value": "split" },
+          { "name": "Centered", "value": "centered" },
+          { "name": "Video Background", "value": "video" },
+          { "name": "Solid Background", "value": "solid" },
+          { "name": "Stat Overlay", "value": "stat-overlay" },
+          { "name": "Multilayer", "value": "multilayer" },
+          { "name": "Dual CTA", "value": "dual-cta" },
+          { "name": "Height Tall", "value": "height-tall" },
+          { "name": "Light Font", "value": "light-font" },
+          { "name": "No Padding", "value": "no-padding" }
         ]
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Image",
+        "label": "Background Image",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "imageAlt",
-        "label": "Alt",
+        "label": "Image Alt",
         "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Mobile Image (optional — different crop for < 744px)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eyebrow",
+        "label": "Eyebrow Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "indication",
+        "value": "",
+        "label": "Indication Text (optional — renders as dark box at top of hero, e.g. ISI header)",
+        "valueType": "string"
       },
       {
         "component": "richtext",
         "name": "text",
         "value": "",
-        "label": "Text",
+        "label": "Heading & Body Text",
         "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "layers",
+        "value": "",
+        "label": "Layers (Multilayer variant — one image ref per layer; add data-buddy-state via custom class)",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "video",
+        "label": "Background Video (Video variant — select a DAM video asset, e.g. .mp4)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageCaption",
+        "label": "Image Caption (e.g. Actor portrayal.) — appears bottom-right over the image",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_textAlign",
+        "label": "Text Alignment",
+        "value": "",
+        "options": [
+          { "name": "Default", "value": "" },
+          { "name": "Left", "value": "text-left" },
+          { "name": "Center", "value": "text-center" },
+          { "name": "Right", "value": "text-right" }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes_textColor",
+        "label": "Text Color Override",
+        "value": "",
+        "options": [
+          { "name": "Default", "value": "" },
+          { "name": "Light (White)", "value": "text-light" },
+          { "name": "Dark", "value": "text-dark" }
+        ]
       },
       {
         "component": "text",
@@ -4596,11 +4706,11 @@
             "value": "single-column"
           },
           {
-            "name": "Two Columns – stack on mobile",
+            "name": "Two Columns \u2013 stack on mobile",
             "value": "two-columns-stack"
           },
           {
-            "name": "Two columns – do not stack on mobile",
+            "name": "Two columns \u2013 do not stack on mobile",
             "value": "two-columns-nostack"
           }
         ],
@@ -4619,7 +4729,7 @@
         "name": "fontIcon",
         "label": "Icon",
         "value": "",
-        "description": "Icon applied to every link when Variant is Icons. Works for all link sources — the only icon option when using Child Pages.",
+        "description": "Icon applied to every link when Variant is Icons. Works for all link sources \u2014 the only icon option when using Child Pages.",
         "condition": {
           "or": [
             {
@@ -4910,9 +5020,7 @@
         "label": "Image Icon",
         "value": "",
         "multi": false,
-        "accepts": [
-          "image/*"
-        ],
+        "accepts": ["image/*"],
         "condition": {
           "===": [
             {
@@ -4943,10 +5051,7 @@
             {
               "var": "iconType"
             },
-            [
-              "font",
-              "image"
-            ]
+            ["font", "image"]
           ]
         }
       },
@@ -4962,10 +5067,7 @@
             {
               "var": "iconType"
             },
-            [
-              "font",
-              "image"
-            ]
+            ["font", "image"]
           ]
         }
       },
@@ -5153,14 +5255,47 @@
     "id": "modal",
     "fields": [
       {
-        "component": "aem-content",
-        "name": "link",
-        "label": "Link"
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variant",
+        "options": [
+          { "name": "Standard (default)", "value": "" },
+          { "name": "Panel — slide-in from right", "value": "panel" },
+          { "name": "Exit — triggered on mouse leave", "value": "exit" },
+          { "name": "Exit Small", "value": "exit-small" },
+          { "name": "Small — narrow dialog", "value": "small" },
+          { "name": "Media — wide, no padding", "value": "media" },
+          { "name": "Image — lightbox", "value": "image" },
+          { "name": "Information — accent border", "value": "information" },
+          { "name": "Show Once (cookie)", "value": "once" },
+          { "name": "Show Once (session)", "value": "once-session" },
+          { "name": "Force Open — no dismiss", "value": "force" }
+        ]
       },
       {
         "component": "text",
-        "name": "linkText",
-        "label": "Text"
+        "valueType": "string",
+        "name": "modalId",
+        "label": "Modal ID",
+        "description": "Unique slug — triggers reference this via data-modal-id attribute",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fragmentPath",
+        "label": "Fragment Path",
+        "description": "Path to the fragment that contains modal content, e.g. /linzess/fragments/external-link-warning",
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "openLabel",
+        "label": "Trigger Button Label",
+        "description": "Label for the trigger button (not used for exit/once/force variants)",
+        "value": "Open modal"
       }
     ]
   },
@@ -5207,10 +5342,7 @@
             {
               "var": "classes"
             },
-            [
-              "",
-              "language-links"
-            ]
+            ["", "language-links"]
           ]
         }
       },
@@ -5223,9 +5355,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5239,9 +5369,7 @@
             {
               "var": "classes"
             },
-            [
-              "logo"
-            ]
+            ["logo"]
           ]
         }
       },
@@ -5255,9 +5383,7 @@
             {
               "var": "classes"
             },
-            [
-              "logo"
-            ]
+            ["logo"]
           ]
         }
       },
@@ -5270,9 +5396,7 @@
             {
               "var": "classes"
             },
-            [
-              "language-links"
-            ]
+            ["language-links"]
           ]
         }
       },
@@ -5286,9 +5410,7 @@
             {
               "var": "classes"
             },
-            [
-              "search"
-            ]
+            ["search"]
           ]
         }
       },
@@ -5301,9 +5423,7 @@
             {
               "var": "classes"
             },
-            [
-              "search"
-            ]
+            ["search"]
           ]
         }
       },
@@ -5316,9 +5436,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5331,9 +5449,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5346,9 +5462,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5361,9 +5475,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5376,9 +5488,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5391,9 +5501,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5406,9 +5514,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5421,9 +5527,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5436,9 +5540,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5451,9 +5553,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         }
       },
@@ -5467,9 +5567,7 @@
             {
               "var": "classes"
             },
-            [
-              ""
-            ]
+            [""]
           ]
         },
         "options": [
@@ -6210,9 +6308,7 @@
             {
               "var": "quoteVariant"
             },
-            [
-              "basic"
-            ]
+            ["basic"]
           ]
         }
       },
@@ -6228,9 +6324,7 @@
             {
               "var": "quoteVariant"
             },
-            [
-              "basic"
-            ]
+            ["basic"]
           ]
         }
       },
@@ -6246,9 +6340,7 @@
             {
               "var": "quoteVariant"
             },
-            [
-              "basic"
-            ]
+            ["basic"]
           ]
         }
       },
@@ -6264,9 +6356,7 @@
             {
               "var": "quoteVariant"
             },
-            [
-              "basic"
-            ]
+            ["basic"]
           ]
         }
       },
@@ -6281,9 +6371,7 @@
             {
               "var": "quoteVariant"
             },
-            [
-              "content-fragment"
-            ]
+            ["content-fragment"]
           ]
         }
       },
@@ -7235,64 +7323,6 @@
     ]
   },
   {
-    "id": "tabs-item",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "title",
-        "value": "",
-        "label": "Tab Title"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "content_heading",
-        "value": "",
-        "label": "Heading"
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "content_headingType",
-        "value": "",
-        "label": "Heading Type",
-        "options": [
-          {
-            "name": "H3",
-            "value": "h3"
-          },
-          {
-            "name": "H4",
-            "value": "h4"
-          },
-          {
-            "name": "H5",
-            "value": "h5"
-          },
-          {
-            "name": "H6",
-            "value": "h6"
-          }
-        ]
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "content_image",
-        "label": "Image",
-        "multi": false
-      },
-      {
-        "component": "richtext",
-        "name": "content_richtext",
-        "value": "",
-        "label": "Content",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "tag-utility-nav",
     "fields": [
       {
@@ -7619,6 +7649,42 @@
           {
             "name": "Dark",
             "value": "theme-dark"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_textVariant",
+        "label": "Text Variant",
+        "classField": true,
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Footnote",
+            "value": "footnote"
+          },
+          {
+            "name": "Disclaimer",
+            "value": "disclaimer"
+          },
+          {
+            "name": "References",
+            "value": "references"
+          },
+          {
+            "name": "Legal",
+            "value": "legal"
+          },
+          {
+            "name": "Boxed Warning",
+            "value": "boxed-warning"
+          },
+          {
+            "name": "Glossary",
+            "value": "glossary"
           }
         ]
       },
@@ -8077,7 +8143,7 @@
         "component": "richtext",
         "name": "collapsedContentCol2",
         "value": "",
-        "label": "Collapsed Content – Column 2 (Split only)",
+        "label": "Collapsed Content \u2013 Column 2 (Split only)",
         "description": "Right column content in collapsed state. Only used with the 'split' variant.",
         "valueType": "string"
       },
@@ -8101,15 +8167,15 @@
         "label": "Variant",
         "options": [
           {
-            "name": "Default – single column, right aligned",
+            "name": "Default \u2013 single column, right aligned",
             "value": ""
           },
           {
-            "name": "Center – single column, collapsed center aligned",
+            "name": "Center \u2013 single column, collapsed center aligned",
             "value": "center"
           },
           {
-            "name": "Split – two-column collapsed, single-column expanded",
+            "name": "Split \u2013 two-column collapsed, single-column expanded",
             "value": "split"
           }
         ]
@@ -8163,6 +8229,66 @@
         "value": "",
         "label": "Target Section ID",
         "description": "The id attribute of the target section element (without the # prefix)."
+      }
+    ]
+  },
+  {
+    "id": "section-nav",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variants",
+        "options": [
+          {
+            "name": "Sticky (pins below header on scroll)",
+            "value": "sticky"
+          },
+          {
+            "name": "Mobile Menu (hamburger on small screens)",
+            "value": "mobile-menu"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID",
+        "description": "Optional ID for this nav block (e.g. section-menu). Used for deep-linking to the nav itself."
+      }
+    ]
+  },
+  {
+    "id": "section-nav-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "value": "",
+        "label": "Link Label",
+        "description": "Text displayed in the navigation for this link."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "href",
+        "value": "",
+        "label": "Target Section ID",
+        "description": "The id of the target section element (e.g. #dosing or dosing)."
       }
     ]
   },
@@ -9074,9 +9200,7 @@
         "label": "Variant",
         "description": "Visual layout variant.",
         "options": [
-          { "name": "Default (Full explorer with filter tabs)", "value": "" },
-          { "name": "Cards (Grid layout)", "value": "cards" },
-          { "name": "Navigation (Link list)", "value": "nav" }
+          { "name": "Default (Full explorer with filter tabs)", "value": "" }
         ]
       },
       {
@@ -9094,6 +9218,14 @@
         "value": "Explore AbbVie",
         "label": "Bar Label",
         "description": "Text shown on the fixed bottom bar trigger button."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "projectNumber",
+        "value": "",
+        "label": "Project Number",
+        "description": "Regulatory project number displayed at the bottom of the panel (e.g., US-MULT-250253)."
       },
       {
         "component": "tab",
@@ -9541,6 +9673,20 @@
     ]
   },
   {
+    "id": "tab-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabTitle",
+        "value": "",
+        "label": "Tab Name",
+        "required": true,
+        "description": "Name shown on the tab button. Must match a Tab Panel's Tab Name (case-insensitive)."
+      }
+    ]
+  },
+  {
     "id": "image-text",
     "fields": [
       {
@@ -9692,12 +9838,30 @@
         "name": "classes",
         "label": "Layout",
         "options": [
-          { "name": "Cards Grid (default)", "value": "" },
-          { "name": "Grid", "value": "grid" },
-          { "name": "Featured — patient experiences", "value": "featured" },
-          { "name": "Bottom — playlist below", "value": "bottom" },
-          { "name": "Left Sidebar", "value": "left" },
-          { "name": "Right Sidebar", "value": "right" }
+          {
+            "name": "Cards Grid (default)",
+            "value": ""
+          },
+          {
+            "name": "Grid",
+            "value": "grid"
+          },
+          {
+            "name": "Featured \u2014 patient experiences",
+            "value": "featured"
+          },
+          {
+            "name": "Bottom \u2014 playlist below",
+            "value": "bottom"
+          },
+          {
+            "name": "Left Sidebar",
+            "value": "left"
+          },
+          {
+            "name": "Right Sidebar",
+            "value": "right"
+          }
         ]
       },
       {

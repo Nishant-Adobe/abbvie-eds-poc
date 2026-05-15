@@ -4,74 +4,97 @@
    All variants: bottom sticky, expandable with + / - toggle
    ============================================================ */
 
+
 /* === Fixed section wrapper === */
+
 
 .safety-bar-section {
   width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: var(--z-index-safety-bar, 500);
+  z-index: var(--z-index-safety-bar);
   pointer-events: none;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
 }
+
 
 /* Hide the authored in-page safety bar source block at all times.
    JS reads its content and renders the sticky clone separately. */
 
+
 .safety-bar-container {
-  display: none !important;
+  display: none;
 }
+
 
 .safety-bar-section.is-hidden {
   transform: translateY(110%);
 }
 
+
 /* === Core block - auto-sizes to content, no fixed height === */
 
+
 .safety-bar {
+  /* Block-scoped token defaults — override in brand _safety-bar.css */
+  --safety-bar-bg: var(--background-color);
+  --safety-bar-border: var(--color-border);
+  --safety-bar-toggle-bg: var(--background-color);
+  --safety-bar-toggle-color: currentcolor;
+  --safety-bar-toggle-expanded-bg: var(--color-navy-dark);
+  --safety-bar-toggle-expanded-color: var(--color-text-on-dark);
+  --safety-bar-max-height-expanded: 60vh;
+  --safety-bar-max-height-expanded-desktop: 50vh;
+
   pointer-events: all;
-  background-color: var(--safety-bar-bg, #fff);
-  border-top: 3px solid var(--safety-bar-border, #ccc);
+  background-color: var(--safety-bar-bg);
+  border-top: var(--border-width-thick) solid var(--safety-bar-border);
   position: relative;
-  box-shadow: 0 -2px 8px rgb(0 0 0 / 10%);
+  box-shadow: var(--shadow-safety-bar);
 }
+
 
 /* === Collapsed / abbreviated area === */
 
+
 .safety-bar-abbreviated {
-  padding: 1.2rem 5rem 1.2rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.5;
+  padding: var(--spacing-12) var(--spacing-50) var(--spacing-12) var(--spacing-24);
+  font-size: var(--body-font-size-xs);
+  line-height: var(--line-height-relaxed);
   position: relative;
   text-align: left;
 }
 
+
 /* === Full ISI / expanded content === */
 
+
 .safety-bar-full {
-  padding: 1.6rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.6;
+  padding: var(--spacing-16) var(--spacing-24);
+  font-size: var(--body-font-size-xs);
+  line-height: var(--line-height-loose);
   display: none;
   text-align: left;
-  max-height: 60vh;
+  max-height: var(--safety-bar-max-height-expanded);
   overflow-y: auto;
 }
 
-/* === Toggle button: top-right, + / - === */
+
+/* === Toggle button: top-right, circle === */
+
 
 .safety-bar-toggle {
   position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  background: none;
-  border: 2px solid var(--safety-bar-toggle-color, currentcolor);
-  color: var(--safety-bar-toggle-color, inherit);
+  top: var(--spacing-12);
+  right: var(--spacing-12);
+  background-color: var(--safety-bar-toggle-bg);
+  border: var(--border-width-default) solid var(--safety-bar-toggle-color);
+  color: var(--safety-bar-toggle-color);
   cursor: pointer;
-  font-size: 1.8rem;
-  width: 3rem;
-  height: 3rem;
+  font-size: var(--spacing-18);
+  width: var(--spacing-18);
+  height: var(--spacing-18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,17 +103,36 @@
   line-height: 1;
 }
 
+
+/* Expanded: filled navy circle, white - */
+
+
+.safety-bar-toggle[aria-expanded='true'] {
+  background-color: var(--safety-bar-toggle-expanded-bg);
+  border-color: var(--safety-bar-toggle-expanded-bg);
+  color: var(--safety-bar-toggle-expanded-color);
+}
+
+
 .safety-bar-toggle::after {
+  align-self: end;
+  color: var(--color-background-footer);
   content: '+';
 }
 
+
 .safety-bar-toggle[aria-expanded='true']::after {
+  color: var(--color-text-on-dark);
   content: '-';
+  display: inline-block;
+  transform: scaleX(2);
 }
+
 
 /* ============================================================
    Inline ISI - in-page instance shows only full ISI content
    ============================================================ */
+
 
 .safety-bar-inline .safety-bar {
   transform: none;
@@ -98,9 +140,11 @@
   position: static;
 }
 
+
 .safety-bar-inline .safety-bar-toggle {
   display: none;
 }
+
 
 .safety-bar-inline .safety-bar-full {
   display: block;
@@ -108,81 +152,96 @@
   overflow-y: visible;
 }
 
+
 .safety-bar-inline .safety-bar-abbreviated {
   display: none;
 }
+
 
 .safety-bar-inline .safety-bar-abbreviated-col2 {
   display: none;
 }
 
+
 .safety-bar-inline .safety-bar-abbreviated-col2-row {
   display: none;
 }
+
 
 .safety-bar-inline.safety-bar-section {
   position: static;
 }
 
+
 /* ============================================================
    Variant: center - collapsed content is center aligned
    ============================================================ */
+
 
 .safety-bar.center .safety-bar-abbreviated {
   text-align: center;
 }
 
+
 /* ============================================================
    Variant: split - collapsed is two-column grid
    ============================================================ */
 
+
 .safety-bar.split .safety-bar-abbreviated {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-24, 2.4rem);
+  gap: var(--spacing-24);
   text-align: left;
-  padding-right: 5rem;
+  padding-right: var(--spacing-50);
 }
+
 
 .safety-bar.split .safety-bar-col1,
 .safety-bar.split .safety-bar-col2 {
   min-width: 0;
 }
 
+
 .safety-bar.is-expanded .safety-bar-full {
   display: block;
 }
+
 
 .safety-bar.is-expanded .safety-bar-abbreviated {
   display: none;
 }
 
+
 .safety-bar.split.is-expanded .safety-bar-abbreviated {
   display: none;
 }
+
 
 /* ============================================================
    Responsive breakpoints
    ============================================================ */
 
+
 @media (width >= 1024px) {
   .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
+    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
   }
 
   .safety-bar-toggle {
-    right: 1.6rem;
+    right: var(--spacing-16);
   }
 
   .safety-bar-full {
-    padding: 2rem 5.5rem;
-    max-height: 50vh;
+    padding: var(--spacing-20) var(--spacing-55);
+    max-height: var(--safety-bar-max-height-expanded-desktop);
   }
 
   .safety-bar.split .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
+    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
   }
 }
+
 
 /*
  * Copyright 2020 Adobe. All rights reserved.
@@ -196,14 +255,19 @@
  * governing permissions and limitations under the License.
  */
 
+
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
+
 @custom-media --bp-tablet (min-width: 744px);
+
 
 @custom-media --bp-desktop (min-width: 1024px);
 
+
 @custom-media --bp-wide (min-width: 1440px);
+
 
 :root {
 /* -----------------------------------------------------------
@@ -248,9 +312,17 @@
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-focus: var(--link-color);
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -428,6 +500,11 @@
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
 
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
+
   /* z-index */
   --z-index-negative: -1;
   --z-index-0 : 0;
@@ -435,6 +512,8 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-anchor-nav: 100;
+  --z-index-safety-bar: 500;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -447,6 +526,7 @@
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -457,9 +537,11 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -490,12 +572,16 @@
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
   --line-height-tight: 1.25;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
 
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -544,7 +630,7 @@
 
   /* Form Fonts */
 
-  /* ---- Brand Explorer Block (defaults) ---- */
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --be-color-bg: var(--background-color);
   --be-color-text: var(--text-color);
   --be-color-text-light: #21406d;
@@ -557,6 +643,7 @@
   --be-color-btn-hover: #1c2d49;
   --be-color-btn-no-border: #555;
   --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
   --be-font-body: var(--body-font-family);
   --be-font-size-body: 14px;
   --be-font-size-small: 11px;
@@ -566,7 +653,7 @@
   --be-line-height-body: 16px;
   --be-line-height-small: 14px;
 
-  /* ---- Clinical Data Panel Block (defaults) ---- */
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --cdp-color-text: var(--text-color);
   --cdp-color-heading: var(--text-color);
   --cdp-color-accent: var(--link-color);
@@ -590,6 +677,7 @@
   --cdp-letter-spacing-title: 0.02em;
 }
 
+
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -597,6 +685,7 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
+
 
 @media (--bp-desktop) {
   :root {
@@ -606,11 +695,13 @@
   }
 }
 
+
 /* ============================================================
    MAVYRET HCP — Brand Token Overrides
    Source: mavyret.com/hcp (Platform C)
    Font: Univers LT W01 Condensed
    ============================================================ */
+
 
 :root {
   /* ---- Color: Brand Primary ---- */
@@ -648,7 +739,6 @@
   --background-color: #fff;
   --color-background-light: #f3f3f3;
   --color-background-light-blue: #d1f1fc;
-  --color-background-dark: #1a1a1a;
   --color-background-footer: #c23802;
   --color-background-footer-end: #992200;
   --color-background-safety-bar: #0c2556;
@@ -658,22 +748,24 @@
   --color-border-default: #ccc;
   --color-border-dark: #63636366;
   --color-border-orange: #e65400;
+  --color-btn-border: #636366;
+  --color-btn-text: #111111;
 
-  /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgb(0 0 0 / 70%);
-  --color-overlay-card: rgb(0 0 0 / 60%);
+  /* ---- Color: Indication ---- */
+  --color-indication-bg: #6ca342;
 
   /* ---- Color: Shadow ---- */
   --shadow-green-glow: rgb(140, 224, 42) -2px 2px 4px 0;
   --shadow-card: rgba(0, 0, 0, 0.4) 0 0 18px 0;
 
   /* ---- Font: Family ---- */
-  --body-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
-  --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
-  --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+  --body-font-family: 'Barlow Semi Condensed', sans-serif;
+  --heading-font-family: 'Barlow Semi Condensed', sans-serif;
+  --heading-font-family-bold: 'Barlow Semi Condensed', sans-serif;
   --icon-font-family: 'abbv-iconFont';
   /* Footer-specific: live mavyret HCP renders footer in Roboto, not Univers */
   --font-family-footer: 'Roboto', sans-serif;
+  --font-family-body: 'Barlow Condensed', sans-serif;
 
   /* ---- Font: Size ---- */
   --font-size-body: 14px;
@@ -704,28 +796,58 @@
   --line-height-tab: 18px;
 
   /* ---- Border: Radius ---- */
-  --border-radius-button-primary: 30px;
-  --border-radius-button-secondary: 30px;
+  --border-radius-button-primary: 0px;
+  --border-radius-button-secondary: 0px;
   --border-radius-tab: 8px 0 0 8px;
   --border-radius-card: 2px;
 
   /* ---- Button: Primary ---- */
-  --button-primary-color: #fff;
-  --button-primary-bg: #071d49;
-  --button-primary-border: #fff;
-  --button-primary-padding: 14px 30px;
+  --button-primary-color: #000;
+  --button-primary-bg: #fff;
+  --button-primary-border: #636366;
+  --button-primary-padding: 8px 16px;
+  --button-primary-font-size: 1.125rem;
+  --button-primary-font-weight: 600;
+  --button-primary-shadow: -2px 2px 4px 0 #8ce02a;
+  --button-primary-hover-bg: #000;
+  --button-primary-hover-color: #8ce02a;
 
   /* ---- Button: Secondary ---- */
-  --button-secondary-color: #fff;
-  --button-secondary-bg: #071d49;
-  --button-secondary-border: #071d49;
-  --button-secondary-padding: 14px 66px 14px 46px;
+  --button-secondary-color: #000;
+  --button-secondary-bg: #fff;
+  --button-secondary-border: #e65400;
+  --button-secondary-padding: 8px 16px;
+  --button-secondary-shadow: -2px 2px 8px 0 #e65400;
+  --button-secondary-hover-bg: #000;
+  --button-secondary-hover-color: #8ce02a;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-color: #000;
+  --button-tertiary-bg: #fff;
+  --button-tertiary-border: #636366;
+  --button-tertiary-padding: 8px 16px;
+  --button-tertiary-font-size: 1.125rem;
+  --border-radius-button-tertiary: 0px;
+  --button-tertiary-shadow: none;
+  --button-tertiary-hover-bg: #000;
+  --button-tertiary-hover-color: #76bd22;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #000;
+  --button-plain-weight: 600;
+  --button-plain-hover-color: #76bd22;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #ccc;
+  --toggle-bg-on: #071d49;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #071d49;
 
   /* ---- Gradient ---- */
   --gradient-hero: radial-gradient(at 50% 100%, rgb(81, 98, 142) 0, rgba(7, 29, 73, 0.9) 65%);
+  --gradient-hero-orange-tint: linear-gradient(90deg, rgb(196 62 0 / 10%) 0%, rgb(196 62 0 / 6%) 38%, rgb(196 62 0 / 0%) 60%);
   --gradient-section-light: linear-gradient(#f2fcff 0, #e7f9ff);
 
   /* ---- Spacing: Common ---- */
@@ -808,12 +930,68 @@
   /* Formulary: Chevron */
   --formulary-chevron-offset: 14px;
   --formulary-chevron-size: 20px;
+
+  /* ---- Font: Size (hero-specific additions) ---- */
+  --font-size-44: 4.4rem;
+  --font-size-56: 5.6rem;
+  --font-size-72: 7.2rem;
+
+  /* ---- Hero: mavyret-data-hero ---- */
+  --hero-data-min-height: 53.2rem;
+  --hero-data-min-height-tablet: 58rem;
+  --hero-data-min-height-desktop: 53.2rem;
+  --hero-data-text-width: 74rem;
+  --hero-data-text-padding: 4rem 3.5rem 4.8rem;
+  --hero-data-text-width-tablet: 82rem;
+  --hero-data-text-padding-tablet: 5.6rem 7rem 6rem;
+  --hero-data-text-padding-desktop: 3.2rem 5.5rem 4rem;
+  --hero-data-cmp-max-width: 49rem;
+  --hero-data-cmp-max-width-tablet: 52rem;
+  --hero-data-h1-line-height: 0.98;
+  --hero-data-h1-letter-spacing: 0;
+  --hero-data-p-max-width: 48rem;
+  --hero-data-p-font-size: 1.7rem;
+  --hero-data-p-line-height: 1.38;
+  --hero-data-p-first-margin-top: 2.4rem;
+  --hero-data-p-first-font-size: 2.2rem;
+  --hero-data-p-first-line-height: 1.26;
+  --hero-data-p-first-max-width-desktop: 50rem;
+  --hero-data-p-sup-font-size: 0.7em;
+  --hero-data-button-gap: 10px;
+  --hero-data-button-border-width: 2px;
+  --hero-data-button-line-height: 1.2;
+  --hero-data-button-after-font-size: 3rem;
+  --hero-data-button-after-margin: 3px;
+  --hero-data-button-mobile-padding-top: 4px;
+  --hero-data-caption-right: 1.6rem;
+  --hero-data-caption-bottom: 1.4rem;
+  --hero-data-caption-right-tablet: 3.2rem;
+  --hero-data-caption-bottom-tablet: 2rem;
+  --hero-data-caption-right-desktop: 2.4rem;
+  --hero-data-caption-font-size: 1.1rem;
+  --hero-data-caption-line-height: 1.2;
+  --hero-data-indication-min-height: 7.4rem;
+  --hero-data-indication-min-height-tablet: 8.4rem;
+  --hero-data-indication-min-height-desktop: 7.2rem;
+  --hero-data-indication-width: 49.2rem;
+  --hero-data-indication-width-tablet: 59rem;
+  --hero-data-indication-padding: 1.2rem 3.2rem 1.2rem 4.8rem;
+  --hero-data-indication-padding-tablet: 1.4rem 4rem 1.4rem 7rem;
+  --hero-data-indication-padding-desktop: 1.1rem 3.2rem 1.1rem 4.8rem;
+  --hero-data-indication-padding-mobile: 1.2rem 3.2rem 1.2rem 2.8rem;
+  --hero-data-indication-clip-path: polygon(0 0, 100% 0, calc(100% - 6.4rem) 100%, 0 100%);
+  --hero-data-indication-p-font-size: 1.6rem;
+  --hero-data-indication-p-font-size-tablet: 1.9rem;
+  --hero-data-indication-p-line-height: 1.2;
+  --hero-data-font-family-roboto-bold: 'Roboto Bold', sans-serif;
 }
+
 
 /* Mavyret — Safety Bar Brand Overrides
    Collapsed: white bg, orange (fiesta) top border, green filled toggle
    Expanded:  white bg, green flash headings, green scrollbar
 */
+
 
 .safety-bar {
   background-color: var(--background-color);
@@ -822,11 +1000,13 @@
   font-family: var(--body-font-family);
 }
 
+
 .safety-bar-toggle {
   background-color: var(--color-green-flash);
   border-color: var(--color-green-flash);
   color: var(--color-brand-primary-dark);
 }
+
 
 .safety-bar.is-expanded .safety-bar-full h2,
 .safety-bar.is-expanded .safety-bar-full h3 {
@@ -836,14 +1016,17 @@
   text-transform: uppercase;
 }
 
+
 .safety-bar.is-expanded .safety-bar-full::-webkit-scrollbar {
   width: 8px;
 }
+
 
 .safety-bar.is-expanded .safety-bar-full::-webkit-scrollbar-thumb {
   background-color: var(--color-green-flash);
   border-radius: 4px;
 }
+
 
 .safety-bar.is-expanded .safety-bar-full::-webkit-scrollbar-track {
   background-color: var(--color-background-light);

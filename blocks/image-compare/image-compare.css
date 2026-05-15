@@ -1,333 +1,369 @@
-/* ── Component-level design tokens ───────────────────────────────────────────
-   All --ic-* vars default to design system tokens.
-   Override per brand in blocks/image-compare/{brand}/_image-compare.css
-   ─────────────────────────────────────────────────────────────────────────── */
+/* =========================================================
+   IMAGE COMPARE - CORE ENGINE
+========================================================= */
 
-   .ic-container {
-    /* state */
-    --ic-pos: 50%;
-    --ic-opacity: 1;
-  
-    /* handle line */
-    --ic-handle-line: var(--color-white);
-    --ic-handle-line-width: var(--spacing-03);       /* 3px  */
-  
-    /* handle circle */
-    --ic-handle-bg: var(--color-white);
-    --ic-handle-size: var(--spacing-44);             /* 44px */
-    --ic-handle-shadow: 0 var(--spacing-02) var(--spacing-08) rgb(0 0 0 / 30%);
-  
-    /* handle icon */
-    --ic-handle-icon-color: var(--text-color);
-    --ic-handle-icon-size: var(--spacing-10);        /* 1rem */
-    --ic-handle-icon-spacing: var(--spacing-02);     /* letter-spacing 2px */
-  
-    /* focus ring */
-    --ic-focus-color: var(--link-color);
-    --ic-focus-width: var(--spacing-03);             /* 3px  */
-    --ic-focus-offset: var(--spacing-02);            /* 2px  */
-  
-    /* overlay labels */
-    --ic-label-bg: var(--overlay-navy-medium);
-    --ic-label-color: var(--color-white);
-    --ic-label-size: var(--font-size-13);            /* 1.3rem */
-    --ic-label-weight: 600;
-    --ic-label-padding-v: var(--spacing-03);         /* 3px  */
-    --ic-label-padding-h: var(--spacing-10);         /* 10px */
-    --ic-label-radius: var(--border-radius-s);       /* 0.2rem */
-    --ic-label-line-height: 1.4;
-    --ic-label-offset: var(--spacing-12);            /* 12px — edge inset */
-  
-    /* progressive range */
-    --ic-range-bg: var(--overlay-navy-light);
-    --ic-range-track-bg: rgb(255 255 255 / 40%);
-    --ic-range-track-height: var(--spacing-04);      /* 4px  */
-    --ic-range-track-radius: var(--border-radius-s); /* 0.2rem */
-    --ic-range-thumb-size: var(--spacing-20);        /* 20px */
-    --ic-range-thumb-shadow: 0 var(--spacing-01) var(--spacing-04) rgb(0 0 0 / 30%);
-    --ic-range-gap: var(--spacing-08);               /* 8px  */
-    --ic-range-padding-v: var(--spacing-06);         /* 6px  */
-    --ic-range-padding-h: var(--spacing-12);         /* 12px */
-    --ic-range-radius: var(--spacing-20);            /* 20px pill */
-    --ic-range-bottom: var(--spacing-20);            /* 20px from bottom */
-    --ic-range-focus-offset: var(--spacing-04);      /* 4px  */
-  
-    position: relative;
-    overflow: hidden;
-    user-select: none;
-    line-height: 0;
+.image-compare-container {
+  --compare-position: 50%;
+  --ic-container-bg: var(--color-gray-light, #d9d9d9);
+  --image-compare-thumb-bg: transparent;
+
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+  cursor: col-resize;
+  aspect-ratio: auto;
+  background: var(--ic-container-bg);
+}
+
+/* =========================================
+   IMAGE LAYERS
+========================================= */
+
+.image-compare-after,
+.image-compare-before {
+  height: 100%;
+}
+
+.image-compare-after {
+  display: block;
+  line-height: 0;
+}
+
+.image-compare-after img,
+.image-compare-before img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.image-compare-before {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  width: var(--compare-position);
+}
+
+.image-compare-before img {
+  object-position: left;
+
+  /* max-width set to none here; JS sets exact pixel width for the clip reveal */
+  max-width: none;
+}
+
+/* =========================================
+   HANDLE
+========================================= */
+
+.image-compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--compare-position);
+  transform: translateX(-50%);
+  width: var(--spacing-04, 4px);
+  background-color: var(--image-compare-handle-color, #fff);
+  cursor: col-resize;
+  touch-action: none;
+  z-index: var(--z-index-2, 2);
+}
+
+.image-compare-handle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--spacing-52, 52px);
+  height: var(--spacing-52, 52px);
+  background-color: var(--image-compare-handle-color, #fff);
+  border-radius: 50%;
+  box-shadow: 0 var(--spacing-02, 2px) var(--spacing-12, 12px) rgb(0 0 0 / 30%);
+
+  /* fill='%23333' (#333) is hardcoded in this data URI — CSS vars cannot reach inside SVG
+     data URIs. To tint the icon per brand, override via -webkit-mask-image / mask-image +
+     background-color on this pseudo-element in brand CSS, or swap to a standalone .svg file.
+     Tracked as a known multi-brand limitation (warning, not blocker). */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath d='M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: var(--spacing-26, 26px);
+}
+
+.image-compare-handle:focus-visible::before {
+  outline: var(--spacing-02, 2px) solid var(--color-focus, #0057cc);
+  outline-offset: var(--spacing-02, 2px);
+}
+
+/* =========================================
+   LABELS
+========================================= */
+
+.image-compare-label {
+  position: absolute;
+  bottom: var(--spacing-14, 14px);
+  background: var(--image-compare-label-bg, rgb(0 0 0 / 60%));
+  color: var(--color-white, #fff);
+  font-size: var(--font-size-11, 11px);
+  font-weight: var(--font-weight-800, 800);
+  letter-spacing: 0;
+  text-transform: uppercase;
+  padding: var(--spacing-06, 6px) var(--spacing-10, 10px);
+  border-radius: 0;
+  z-index: var(--z-index-1, 1);
+}
+
+.image-compare-label-before {
+  left: var(--spacing-14, 14px);
+}
+
+.image-compare-label-after {
+  right: var(--spacing-14, 14px);
+}
+
+/* =========================================
+   VERTICAL VARIANT
+========================================= */
+
+.image-compare.vertical .image-compare-container {
+  cursor: row-resize;
+}
+
+.image-compare.vertical .image-compare-before {
+  width: 100%;
+  height: var(--compare-position);
+  inset: 0 0 auto;
+}
+
+.image-compare.vertical .image-compare-before img {
+  object-position: top;
+}
+
+.image-compare.vertical .image-compare-handle {
+  inset: var(--compare-position) 0 auto;
+  width: 100%;
+  height: var(--spacing-04, 4px);
+  transform: translateY(-50%);
+}
+
+.image-compare.vertical .image-compare-label-before {
+  left: var(--spacing-14, 14px);
+  top: var(--spacing-14, 14px);
+  bottom: auto;
+}
+
+.image-compare.vertical .image-compare-label-after {
+  right: var(--spacing-14, 14px);
+  bottom: var(--spacing-14, 14px);
+}
+
+/* =========================================
+   PROMPT
+========================================= */
+
+.image-compare-prompt {
+  position: absolute;
+  top: var(--spacing-12, 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--image-compare-prompt-bg, rgb(0 0 0 / 70%));
+  color: var(--color-white, #fff);
+  font-size: var(--font-size-12, 12px);
+  font-weight: var(--font-weight-700, 700);
+  padding: var(--spacing-06, 6px) var(--spacing-14, 14px);
+  border-radius: var(--border-radius-base, 4px);
+  pointer-events: none;
+  z-index: var(--z-index-3, 3);
+  white-space: nowrap;
+  transition: opacity var(--transition-duration-medium, 400ms);
+}
+
+.image-compare-prompt.is-hidden {
+  opacity: 0;
+}
+
+/* =========================================
+   WRAPPER
+========================================= */
+
+.image-compare-wrapper {
+  max-width: var(--content-max-width, 1280px);
+  margin: 0 auto;
+}
+
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+.image-compare-heading {
+  font-size: var(--font-size-20, 2rem);
+  font-weight: var(--font-weight-700, 700);
+  margin-bottom: var(--spacing-08, 8px);
+}
+
+.image-compare-description {
+  font-size: var(--font-size-10, 1rem);
+  margin-bottom: var(--spacing-16, 16px);
+}
+
+/* =========================================
+   TABS
+   Mobile default: stacked column.
+   At ≥600px: single row (overridden in media query below).
+========================================= */
+
+.image-compare-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-08, 8px);
+  margin-bottom: var(--spacing-16, 16px);
+}
+
+.image-compare-tab {
+  background: var(--image-compare-tab-bg, #f5f5f5);
+  border: var(--separator-height-1, 2px) solid var(--image-compare-tab-border, #ccc);
+  border-radius: var(--border-radius-base, 4px);
+  color: inherit;
+  cursor: pointer;
+  font-size: var(--font-size-14, 0.875rem);
+  font-weight: var(--font-weight-600, 600);
+  padding: var(--spacing-08, 8px) var(--spacing-16, 16px);
+  transition:
+    background var(--transition-duration-fast, 200ms),
+    border-color var(--transition-duration-fast, 200ms);
+}
+
+.image-compare-tab.is-active {
+  background: var(--image-compare-tab-active-bg, #333);
+  border-color: var(--image-compare-tab-active-bg, #333);
+  color: var(--color-white, #fff);
+}
+
+.image-compare-tab:focus-visible {
+  outline: var(--spacing-02, 2px) solid var(--color-focus, #0057cc);
+  outline-offset: var(--spacing-02, 2px);
+}
+
+/* =========================================
+   TOGGLE VARIANT
+========================================= */
+
+.image-compare-tabs-toggle {
+  flex-direction: row;
+  gap: 0;
+}
+
+.image-compare-tabs-toggle .image-compare-tab {
+  flex: 1;
+  text-align: center;
+  border-radius: 0;
+}
+
+.image-compare-tabs-toggle .image-compare-tab:first-child {
+  border-radius: 999px 0 0 999px;
+}
+
+.image-compare-tabs-toggle .image-compare-tab:last-child {
+  border-radius: 0 999px 999px 0;
+}
+
+/* =========================================
+   GALLERY CONTENT
+========================================= */
+
+.image-compare-gallery-content {
+  margin-bottom: var(--spacing-16, 16px);
+}
+
+.image-compare.gallery .image-compare-container {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* =========================================
+   THUMBNAILS
+   Mobile default: 64px wide thumbnails.
+   At ≥600px: 74px (overridden in media query below).
+========================================= */
+
+.image-compare-thumbnails {
+  display: flex;
+  gap: var(--spacing-18, 18px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: var(--spacing-24, 24px);
+  background: var(--image-compare-thumb-bg);
+}
+
+.image-compare-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: var(--spacing-64, 64px);
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  scroll-snap-align: start;
+}
+
+.image-compare-thumb.is-active {
+  outline: var(--spacing-03, 3px) solid var(--image-compare-thumb-active-border, currentColor);
+}
+
+.image-compare-thumb:focus-visible {
+  outline: var(--spacing-02, 2px) solid var(--color-focus, #0057cc);
+  outline-offset: var(--spacing-02, 2px);
+}
+
+.image-compare-thumb-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.image-compare-thumb-label,
+.image-compare-thumb-sublabel {
+  display: none;
+}
+
+/* =========================================
+   MOBILE-HIDDEN VARIANT
+   Hidden on small screens, visible at ≥900px.
+========================================= */
+
+.image-compare.mobile-hidden {
+  display: none;
+}
+
+/* =========================================
+   RESPONSIVE — mobile-first (min-width)
+========================================= */
+
+@media (width >= 600px) {
+  .image-compare-tabs {
+    flex-direction: row;
   }
-  
-  /* ── After image (base layer — always full size) ─────────────────────────── */
-  
-  .ic-after {
+
+  .image-compare-thumb {
+    width: var(--spacing-74, 74px);
+  }
+}
+
+@media (width >= 900px) {
+  .image-compare.mobile-hidden {
     display: block;
-    position: relative;
   }
-  
-  .ic-after img,
-  .ic-after picture {
-    display: block;
-    width: 100%;
-    height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-compare-prompt,
+  .image-compare-tab,
+  .image-compare-thumb {
+    transition: none;
   }
-  
-  /* ── Before image — vertical clip ────────────────────────────────────────── */
-  
-  .ic-container[data-type="vertical"] .ic-before {
-    position: absolute;
-    inset: 0;
-    height: var(--ic-pos);
-    overflow: hidden;
-  }
-  
-  .ic-container[data-type="vertical"] .ic-before img,
-  .ic-container[data-type="vertical"] .ic-before picture {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
-  }
-  
-  /* ── Before image — progressive (opacity fade) ───────────────────────────── */
-  
-  .ic-container[data-type="progressive"] .ic-before {
-    position: absolute;
-    inset: 0;
-    opacity: var(--ic-opacity);
-    transition: opacity 0.05s linear;
-  }
-  
-  .ic-container[data-type="progressive"] .ic-before img,
-  .ic-container[data-type="progressive"] .ic-before picture {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* ── Before image — horizontal clip (default) ────────────────────────────── */
-  
-  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-before {
-    position: absolute;
-    inset: 0;
-    width: var(--ic-pos);
-    overflow: hidden;
-  }
-  
-  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-before img,
-  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-before picture {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
-  }
-  
-  /* ── Handle circle — shared ──────────────────────────────────────────────── */
-  
-  .ic-handle::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: var(--ic-handle-size);
-    height: var(--ic-handle-size);
-    background: var(--ic-handle-bg);
-    border-radius: 50%;
-    box-shadow: var(--ic-handle-shadow);
-  }
-  
-  /* Chevron arrows inside the handle circle */
-  .ic-handle::after {
-    content: '‹ ›';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: var(--ic-handle-icon-size);
-    color: var(--ic-handle-icon-color);
-    letter-spacing: var(--ic-handle-icon-spacing);
-    line-height: 1;
-    pointer-events: none;
-  }
-  
-  .ic-handle:focus-visible {
-    outline: var(--ic-focus-width) solid var(--ic-focus-color);
-    outline-offset: var(--ic-focus-offset);
-  }
-  
-  /* ── Drag handle — vertical ──────────────────────────────────────────────── */
-  
-  .ic-container[data-type="vertical"] {
-    cursor: row-resize;
-  }
-  
-  .ic-container[data-type="vertical"] .ic-handle {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: var(--ic-pos);
-    transform: translateY(-50%);
-    height: var(--ic-handle-line-width);
-    background: var(--ic-handle-line);
-    cursor: row-resize;
-  }
-  
-  .ic-container[data-type="vertical"] .ic-handle::after {
-    content: '‹ ›';
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
-  
-  /* ── Drag handle — horizontal ─────────────────────────────────────────────── */
-  
-  .ic-container:not([data-type="vertical"], [data-type="progressive"]) {
-    cursor: col-resize;
-  }
-  
-  .ic-container:not([data-type="vertical"], [data-type="progressive"]) .ic-handle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: var(--ic-pos);
-    transform: translateX(-50%);
-    width: var(--ic-handle-line-width);
-    background: var(--ic-handle-line);
-    cursor: col-resize;
-  }
-  
-  /* ── Labels ──────────────────────────────────────────────────────────────── */
-  
-  .ic-label {
-    position: absolute;
-    background: var(--ic-label-bg);
-    color: var(--ic-label-color);
-    font-size: var(--ic-label-size);
-    font-weight: var(--ic-label-weight);
-    padding: var(--ic-label-padding-v) var(--ic-label-padding-h);
-    border-radius: var(--ic-label-radius);
-    pointer-events: none;
-    line-height: var(--ic-label-line-height);
-    white-space: nowrap;
-  }
-  
-  /* 9 position variants */
-  .ic-label.top-left {
-    top: var(--ic-label-offset);
-    left: var(--ic-label-offset);
-  }
-  
-  .ic-label.top-center {
-    top: var(--ic-label-offset);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .ic-label.top-right {
-    top: var(--ic-label-offset);
-    right: var(--ic-label-offset);
-  }
-  
-  .ic-label.middle-left {
-    top: 50%;
-    left: var(--ic-label-offset);
-    transform: translateY(-50%);
-  }
-  
-  .ic-label.middle-center {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .ic-label.middle-right {
-    top: 50%;
-    right: var(--ic-label-offset);
-    transform: translateY(-50%);
-  }
-  
-  .ic-label.bottom-left {
-    bottom: var(--ic-label-offset);
-    left: var(--ic-label-offset);
-  }
-  
-  .ic-label.bottom-center {
-    bottom: var(--ic-label-offset);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .ic-label.bottom-right {
-    bottom: var(--ic-label-offset);
-    right: var(--ic-label-offset);
-  }
-  
-  /* ── Progressive range slider ────────────────────────────────────────────── */
-  
-  .ic-range-wrap {
-    position: absolute;
-    bottom: var(--ic-range-bottom);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: var(--ic-range-gap);
-    background: var(--ic-range-bg);
-    padding: var(--ic-range-padding-v) var(--ic-range-padding-h);
-    border-radius: var(--ic-range-radius);
-    width: clamp(var(--spacing-200, 20rem), 60%, var(--spacing-480, 48rem));
-  }
-  
-  .ic-range-label {
-    color: var(--ic-label-color);
-    font-size: var(--ic-label-size);
-    font-weight: var(--ic-label-weight);
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  
-  .ic-range {
-    flex: 1;
-    appearance: none;
-    height: var(--ic-range-track-height);
-    background: var(--ic-range-track-bg);
-    border-radius: var(--ic-range-track-radius);
-    cursor: pointer;
-    outline: none;
-  }
-  
-  .ic-range::-webkit-slider-thumb {
-    appearance: none;
-    width: var(--ic-range-thumb-size);
-    height: var(--ic-range-thumb-size);
-    border-radius: 50%;
-    background: var(--ic-handle-bg);
-    box-shadow: var(--ic-range-thumb-shadow);
-    cursor: grab;
-  }
-  
-  .ic-range::-moz-range-thumb {
-    width: var(--ic-range-thumb-size);
-    height: var(--ic-range-thumb-size);
-    border: none;
-    border-radius: 50%;
-    background: var(--ic-handle-bg);
-    box-shadow: var(--ic-range-thumb-shadow);
-    cursor: grab;
-  }
-  
-  .ic-range:focus-visible {
-    outline: var(--ic-focus-width) solid var(--ic-focus-color);
-    outline-offset: var(--ic-range-focus-offset);
-  }
-  
-  /* ── Hide labels on mobile ───────────────────────────────────────────────── */
-  
-  @media (width <= 600px) {
-    .image-compare.hide-labels-mobile .ic-label {
-      display: none;
-    }
-  }
-  
+}

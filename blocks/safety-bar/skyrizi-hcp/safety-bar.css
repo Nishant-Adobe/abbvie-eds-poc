@@ -4,74 +4,97 @@
    All variants: bottom sticky, expandable with + / - toggle
    ============================================================ */
 
+
 /* === Fixed section wrapper === */
+
 
 .safety-bar-section {
   width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: var(--z-index-safety-bar, 500);
+  z-index: var(--z-index-safety-bar);
   pointer-events: none;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
 }
+
 
 /* Hide the authored in-page safety bar source block at all times.
    JS reads its content and renders the sticky clone separately. */
 
+
 .safety-bar-container {
-  display: none !important;
+  display: none;
 }
+
 
 .safety-bar-section.is-hidden {
   transform: translateY(110%);
 }
 
+
 /* === Core block - auto-sizes to content, no fixed height === */
 
+
 .safety-bar {
+  /* Block-scoped token defaults — override in brand _safety-bar.css */
+  --safety-bar-bg: var(--background-color);
+  --safety-bar-border: var(--color-border);
+  --safety-bar-toggle-bg: var(--background-color);
+  --safety-bar-toggle-color: currentcolor;
+  --safety-bar-toggle-expanded-bg: var(--color-navy-dark);
+  --safety-bar-toggle-expanded-color: var(--color-text-on-dark);
+  --safety-bar-max-height-expanded: 60vh;
+  --safety-bar-max-height-expanded-desktop: 50vh;
+
   pointer-events: all;
-  background-color: var(--safety-bar-bg, #fff);
-  border-top: 3px solid var(--safety-bar-border, #ccc);
+  background-color: var(--safety-bar-bg);
+  border-top: var(--border-width-thick) solid var(--safety-bar-border);
   position: relative;
-  box-shadow: 0 -2px 8px rgb(0 0 0 / 10%);
+  box-shadow: var(--shadow-safety-bar);
 }
+
 
 /* === Collapsed / abbreviated area === */
 
+
 .safety-bar-abbreviated {
-  padding: 1.2rem 5rem 1.2rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.5;
+  padding: var(--spacing-12) var(--spacing-50) var(--spacing-12) var(--spacing-24);
+  font-size: var(--body-font-size-xs);
+  line-height: var(--line-height-relaxed);
   position: relative;
   text-align: left;
 }
 
+
 /* === Full ISI / expanded content === */
 
+
 .safety-bar-full {
-  padding: 1.6rem 2.4rem;
-  font-size: var(--body-font-size-xs, 1.4rem);
-  line-height: 1.6;
+  padding: var(--spacing-16) var(--spacing-24);
+  font-size: var(--body-font-size-xs);
+  line-height: var(--line-height-loose);
   display: none;
   text-align: left;
-  max-height: 60vh;
+  max-height: var(--safety-bar-max-height-expanded);
   overflow-y: auto;
 }
 
-/* === Toggle button: top-right, + / - === */
+
+/* === Toggle button: top-right, circle === */
+
 
 .safety-bar-toggle {
   position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  background: none;
-  border: 2px solid var(--safety-bar-toggle-color, currentcolor);
-  color: var(--safety-bar-toggle-color, inherit);
+  top: var(--spacing-12);
+  right: var(--spacing-12);
+  background-color: var(--safety-bar-toggle-bg);
+  border: var(--border-width-default) solid var(--safety-bar-toggle-color);
+  color: var(--safety-bar-toggle-color);
   cursor: pointer;
-  font-size: 1.8rem;
-  width: 3rem;
-  height: 3rem;
+  font-size: var(--spacing-18);
+  width: var(--spacing-18);
+  height: var(--spacing-18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,17 +103,36 @@
   line-height: 1;
 }
 
+
+/* Expanded: filled navy circle, white - */
+
+
+.safety-bar-toggle[aria-expanded='true'] {
+  background-color: var(--safety-bar-toggle-expanded-bg);
+  border-color: var(--safety-bar-toggle-expanded-bg);
+  color: var(--safety-bar-toggle-expanded-color);
+}
+
+
 .safety-bar-toggle::after {
+  align-self: end;
+  color: var(--color-background-footer);
   content: '+';
 }
 
+
 .safety-bar-toggle[aria-expanded='true']::after {
+  color: var(--color-text-on-dark);
   content: '-';
+  display: inline-block;
+  transform: scaleX(2);
 }
+
 
 /* ============================================================
    Inline ISI - in-page instance shows only full ISI content
    ============================================================ */
+
 
 .safety-bar-inline .safety-bar {
   transform: none;
@@ -98,9 +140,11 @@
   position: static;
 }
 
+
 .safety-bar-inline .safety-bar-toggle {
   display: none;
 }
+
 
 .safety-bar-inline .safety-bar-full {
   display: block;
@@ -108,81 +152,96 @@
   overflow-y: visible;
 }
 
+
 .safety-bar-inline .safety-bar-abbreviated {
   display: none;
 }
+
 
 .safety-bar-inline .safety-bar-abbreviated-col2 {
   display: none;
 }
 
+
 .safety-bar-inline .safety-bar-abbreviated-col2-row {
   display: none;
 }
+
 
 .safety-bar-inline.safety-bar-section {
   position: static;
 }
 
+
 /* ============================================================
    Variant: center - collapsed content is center aligned
    ============================================================ */
+
 
 .safety-bar.center .safety-bar-abbreviated {
   text-align: center;
 }
 
+
 /* ============================================================
    Variant: split - collapsed is two-column grid
    ============================================================ */
 
+
 .safety-bar.split .safety-bar-abbreviated {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-24, 2.4rem);
+  gap: var(--spacing-24);
   text-align: left;
-  padding-right: 5rem;
+  padding-right: var(--spacing-50);
 }
+
 
 .safety-bar.split .safety-bar-col1,
 .safety-bar.split .safety-bar-col2 {
   min-width: 0;
 }
 
+
 .safety-bar.is-expanded .safety-bar-full {
   display: block;
 }
+
 
 .safety-bar.is-expanded .safety-bar-abbreviated {
   display: none;
 }
 
+
 .safety-bar.split.is-expanded .safety-bar-abbreviated {
   display: none;
 }
+
 
 /* ============================================================
    Responsive breakpoints
    ============================================================ */
 
+
 @media (width >= 1024px) {
   .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
+    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
   }
 
   .safety-bar-toggle {
-    right: 1.6rem;
+    right: var(--spacing-16);
   }
 
   .safety-bar-full {
-    padding: 2rem 5.5rem;
-    max-height: 50vh;
+    padding: var(--spacing-20) var(--spacing-55);
+    max-height: var(--safety-bar-max-height-expanded-desktop);
   }
 
   .safety-bar.split .safety-bar-abbreviated {
-    padding: 1.6rem 6rem 1.6rem 5.5rem;
+    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
   }
 }
+
 
 /*
  * Copyright 2020 Adobe. All rights reserved.
@@ -196,14 +255,19 @@
  * governing permissions and limitations under the License.
  */
 
+
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
+
 @custom-media --bp-tablet (min-width: 744px);
+
 
 @custom-media --bp-desktop (min-width: 1024px);
 
+
 @custom-media --bp-wide (min-width: 1440px);
+
 
 :root {
 /* -----------------------------------------------------------
@@ -248,9 +312,17 @@
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-focus: var(--link-color);
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -428,6 +500,11 @@
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
 
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
+
   /* z-index */
   --z-index-negative: -1;
   --z-index-0 : 0;
@@ -435,6 +512,8 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-anchor-nav: 100;
+  --z-index-safety-bar: 500;
 
   /* Flex/Grid order */
   --order-first: -1;
@@ -447,6 +526,7 @@
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -457,9 +537,11 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -490,12 +572,16 @@
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
   --line-height-tight: 1.25;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
 
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -544,7 +630,7 @@
 
   /* Form Fonts */
 
-  /* ---- Brand Explorer Block (defaults) ---- */
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --be-color-bg: var(--background-color);
   --be-color-text: var(--text-color);
   --be-color-text-light: #21406d;
@@ -557,6 +643,7 @@
   --be-color-btn-hover: #1c2d49;
   --be-color-btn-no-border: #555;
   --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
   --be-font-body: var(--body-font-family);
   --be-font-size-body: 14px;
   --be-font-size-small: 11px;
@@ -566,7 +653,7 @@
   --be-line-height-body: 16px;
   --be-line-height-small: 14px;
 
-  /* ---- Clinical Data Panel Block (defaults) ---- */
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --cdp-color-text: var(--text-color);
   --cdp-color-heading: var(--text-color);
   --cdp-color-accent: var(--link-color);
@@ -590,6 +677,7 @@
   --cdp-letter-spacing-title: 0.02em;
 }
 
+
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -597,6 +685,7 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
+
 
 @media (--bp-desktop) {
   :root {
@@ -606,11 +695,13 @@
   }
 }
 
+
 /* ============================================================
    SKYRIZI HCP — Brand Token Overrides
    Source: skyrizihcp.com/dermatology (Platform C)
-   Font: Red Hat Display
+   Font: Univers LT W01_57 Condensed
    ============================================================ */
+
 
 :root {
     /* ---- Color: Brand Primary ---- */
@@ -640,6 +731,11 @@
     --color-background-footer: #071d49;
     --color-background-blue: #d3f3ff;
 
+    /* ---- Color: Nav ---- */
+    --color-nav-active: #1ba2da;
+    --color-nav-separator: rgb(255 255 255 / 30%);
+    --color-nav-dropdown-bg: #ccc;
+
     /* ---- Color: Border ---- */
     --color-border-default: #ccc;
     --color-border-muted: #b3b3b3;
@@ -653,10 +749,10 @@
     --color-safety-bar-border: #999;
 
     /* ---- Font: Family ---- */
-    --body-font-family: "Red Hat Display", sans-serif;
-    --heading-font-family: "Red Hat Display", sans-serif;
-    --heading-font-family-bold: "Red Hat Display", sans-serif;
-    --icon-font-family: "abbv-iconFont";
+    --body-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+    --icon-font-family: 'abbv-iconFont';
 
     /* ---- Font: Size ---- */
     --font-size-body: 16px;
@@ -665,6 +761,7 @@
     --font-size-legal: 12.992px;
     --font-size-nav: 14px;
     --font-size-footer: 14px;
+    --letter-spacing-nav: 0.04em;
     --font-size-h1: 32px;
     --font-size-h1-hero: 25px;
     --font-size-h2: 24px;
@@ -688,28 +785,58 @@
     --line-height-legal: 19.488px;
 
     /* ---- Border: Radius ---- */
-    --border-radius-button-primary: 6px;
+    --border-radius-button-primary: 30px;
+    --border-radius-button-secondary: 30px;
     --border-radius-button-tertiary: 10px;
     --border-radius-nav: 10px;
     --border-radius-safety-bar: 5px;
 
     /* ---- Button: Primary ---- */
-    --button-primary-color: #000;
-    --button-primary-bg: #ffce00;
-    --button-primary-border: #fff;
-    --button-primary-padding: 20px 42px 20px 20px;
+    --button-primary-bg: #071d49;
+    --button-primary-color: #fff;
+    --button-primary-border: transparent;
+    --button-primary-padding: 14px 60px 14px 30px;
+    --button-primary-font-size: 0.875rem;
+    --button-primary-font-weight: 400;
+    --button-primary-hover-bg: #1f448c;
+    --button-primary-hover-color: #fff;
+    --button-primary-hover-border: #1f448c;
+
+    /* ---- Button: Secondary ---- */
+    --button-secondary-bg: transparent;
+    --button-secondary-color: #071d49;
+    --button-secondary-border: #071d49;
+    --button-secondary-padding: 14px 30px;
+    --button-secondary-hover-bg: #1f448c;
+    --button-secondary-hover-color: #fff;
+    --button-secondary-hover-border: #1f448c;
 
     /* ---- Button: Tertiary ---- */
-    --button-tertiary-color: #005272;
     --button-tertiary-bg: transparent;
-    --button-tertiary-border: #555;
-    --button-tertiary-padding: 16px 70px 16px 24px;
+    --button-tertiary-color: #071d49;
+    --button-tertiary-border: #071d49;
+    --button-tertiary-padding: 14px 30px;
+    --button-tertiary-font-size: 18px;
+    --button-tertiary-hover-bg: #071d49;
+    --button-tertiary-hover-color: #fff;
+
+    /* ---- Button: Plain ---- */
+    --button-plain-color: #1ba2da;
+    --button-plain-weight: 700;
+    --button-plain-hover-color: #fff;
+
+    /* ---- Toggle ---- */
+    --toggle-bg-off: #b3b3b3;
+    --toggle-bg-on: #071d49;
+    --toggle-thumb-color: #fff;
 
     /* ---- Link ---- */
     --link-color: #005272;
 
     /* ---- Gradient ---- */
-    --gradient-fade: linear-gradient(
+    --gradient-hero-landing: linear-gradient(to right, var(--color-background-footer) 0%, rgb(0 59 82 / 30%) 100%);
+  --gradient-hero-full: linear-gradient(to right, var(--color-background-footer) 0%, rgb(0 82 114 / 25%) 60%, transparent 100%);
+  --gradient-fade: linear-gradient(
         to top,
         rgba(255, 255, 255, 0) 0px,
         rgb(243, 243, 243) 100%
@@ -719,8 +846,13 @@
     --be-color-text: #21406d;
     --be-color-text-light: #21406d;
     --be-color-bar-bg: #25282a;
-    --be-font-body: "Red Hat Display", sans-serif;
-    --be-font-heading: "Red Hat Display", sans-serif;
+    --be-color-rinvoq: #ffd41d;
+    --be-color-rinvoq-hover: #b8860b;
+    --be-color-skyrizi: #00a8e1;
+    --be-color-skyrizi-hover: #0088b5;
+    --be-color-humira: #931947;
+    --be-font-body: "Univers LT W01_57 Condensed", sans-serif;
+    --be-font-heading: "Univers LT W01_57 Condensed", sans-serif;
 
     /* ---- Formulary Lookup ---- */
     --color-formulary-text: #21406d;
@@ -770,6 +902,28 @@
     /* Formulary: Disclaimer/Notice */
     --formulary-disclaimer-size: 13px;
     --formulary-disclaimer-width: 700px;
+    --formulary-recaptcha-size: 11px;
+
+    /* ---- Spacing: Common ---- */
+    --spacing-8: 8px;
+    --spacing-16: 16px;
+    --spacing-24: 24px;
+
+    /* ---- Clinical Data Panel Block ---- */
+    --cdp-color-text: #21406d;
+    --cdp-color-heading: #21406d;
+    --cdp-color-accent: #1ba2da;
+    --cdp-color-muted: #50535c;
+    --cdp-color-cta: #071d49;
+    --cdp-font-body: var(--body-font-family);
+    --cdp-font-heading: var(--heading-font-family);
+    --cdp-font-size-title: 22px;
+    --cdp-font-size-callout: 26px;
+    --cdp-font-size-body: 14px;
+    --cdp-font-size-small: 12.8px;
+    --cdp-line-height-callout: 30px;
+    --cdp-line-height-body: 18px;
+    --cdp-line-height-default: 16px;
     --formulary-recaptcha-size: 11px;   
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #005272;
@@ -781,6 +935,23 @@
   --color-brand-accent-teal: #008481;
   --color-brand-accent-blue: #3860be;
   --color-brand-accent-navy: #004c97;
+  --color-brand-accent-sky: #00a3df;
+  --color-brand-accent-cyan: #1ba2da;
+
+  /* ---- Color: Tabs ---- */
+  --color-tabs-control-bg: #21406d;
+  --color-tabs-underline: #1ba2da;
+  --color-tabs-text: #191c1d;
+  --tabs-underline-height: 0.23rem;
+
+  /* ---- Font: Tabs ---- */
+  --font-family-tabs-text: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
+
+  /* ---- Gradient: Tabs ---- */
+  --gradient-tabs-panel: linear-gradient(90deg, #00a3df 0%, #85bde6 74%, #c3ae93 78%, #f39200 88%);
+
+  /* ---- Font: Tabs ---- */
+  --font-family-tabs-control: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
 
   /* ---- Color: Text ---- */
   --text-color: #404040;
@@ -789,14 +960,15 @@
   --color-text-muted: #696969;
   --color-text-legal: #555;
   --color-text-black: #071d49;
-  --color-icon-arrow: #1c2d49;
+  /* Live skyrizihcp.com renders footer text in off-white (not pure #fff) */
+  --color-text-footer: #e2e4e3;
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
   --color-background-light: #f8f8f8;
   --color-background-tint: #e8edef;
   --color-background-footer: #071d49;
-  --color-background-blue:#d3f3ff;
+  --color-background-blue: #d3f3ff;
 
   /* ---- Color: Border ---- */
   --color-border-default: #ccc;
@@ -811,9 +983,9 @@
   --color-safety-bar-border: #999;
 
   /* ---- Font: Family ---- */
-  --body-font-family: 'Red Hat Display', sans-serif;
-  --heading-font-family: 'Red Hat Display', sans-serif;
-  --heading-font-family-bold: 'Red Hat Display', sans-serif;
+  --body-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
@@ -874,6 +1046,13 @@
   --spacing-16: 16px;
   --spacing-24: 24px;
 
+  /* ---- Brand Explorer Block ---- */
+  --be-color-text: #21406d;
+  --be-color-text-light: #21406d;
+  --be-color-bar-bg: #25282a;
+  --be-font-body: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+  --be-font-heading: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+
   /* ---- Clinical Data Panel Block ---- */
   --cdp-color-text: #21406d;
   --cdp-color-heading: #21406d;
@@ -889,6 +1068,7 @@
   --cdp-line-height-callout: 30px;
   --cdp-line-height-body: 18px;
   --cdp-line-height-default: 16px;
+
   /* ---- Formulary Lookup ---- */
   --color-formulary-text: #21406d;
   --color-formulary-heading: #21406d;
@@ -938,19 +1118,61 @@
   --formulary-disclaimer-size: 13px;
   --formulary-disclaimer-width: 700px;
   --formulary-recaptcha-size: 11px;
+
+  /* ---- Skyrizi HCP: Image Compare ---- */
+  --color-skyrizi-navy: #071d49;
+  --color-skyrizi-navy-dark: #051331;
+  --color-skyrizi-blue: #1398d1;
+  --color-skyrizi-blue-rule: #1ba2da;
+  --color-skyrizi-blue-hover: #1f448c;
+  --color-skyrizi-body-color: #21406d;
+  --color-skyrizi-gallery-bg: #d1f1fc;
+  --color-skyrizi-accent-border: #f7941d;
+  --color-skyrizi-thumb-strip: #add8e6;
+  --font-skyrizi-condensed: "Univers LT W01_57 Condensed", "Arial Narrow", sans-serif;
+  --font-skyrizi-bold: "Univers LT W01_67 Bold_1476016", "Arial Narrow", sans-serif;
+
+  /* ---- Section Nav ---- */
+  --shadow-section-nav-stuck: 0 2px 12px rgb(0 0 0 / 30%);
+  /* ---- Hero: layout ---- */
+  --hero-img-min-height: 500px;
+  --hero-text-top-offset: 155px;
+  --hero-video-min-height: 450px;
+
+  /* ---- Hero: h1 banner (navy box with teal right-border) ---- */
+  --hero-h1-bg: #091d49;
+  --hero-h1-border-right-color: var(--color-skyrizi-blue);
+  --hero-h1-border-right-width: 20px;
+  --hero-h1-padding: 14px 11px 14px 65px;
+  --hero-h1-line-height: 1;
+  --hero-h1-font-size-mobile: 12px;
+  --hero-h1-font-size-tablet: 20px;
+  --hero-h1-width-tablet: 50%;
+
+  /* ---- Hero: h1 strong (large display number) ---- */
+  --hero-h1-strong-font-size-mobile: 22px;
+  --hero-h1-strong-font-size-tablet: 30px;
+
+  /* ---- Hero: h1 em strong (highlight colour) ---- */
+  --hero-h1-em-color: var(--color-background-blue);
 }
+
 
 /* Skyrizi HCP — Safety Bar Brand Overrides
    Collapsed: dark navy bg (footer color), white text + toggle
    Expanded:  light teal-grey bg, brand primary text
 */
 
+
 .safety-bar {
   background-color: var(--color-background-footer);
   border-top-color: var(--color-background-footer);
   color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
+  margin: 0 auto;
+  max-width: var(--content-max-width);
 }
+
 
 .safety-bar-abbreviated strong,
 .safety-bar-abbreviated b {
@@ -958,15 +1180,18 @@
   font-weight: var(--font-weight-heading);
 }
 
+
 .safety-bar-toggle {
   border-color: var(--color-text-on-dark);
   color: var(--color-text-on-dark);
 }
 
+
 .safety-bar.is-expanded {
   background-color: var(--color-background-tint);
   color: var(--color-text-heading);
 }
+
 
 .safety-bar.is-expanded .safety-bar-full h2,
 .safety-bar.is-expanded .safety-bar-full h3 {
@@ -975,7 +1200,8 @@
   font-weight: var(--font-weight-heading);
 }
 
+
 .safety-bar.is-expanded .safety-bar-toggle {
   border-color: var(--color-brand-primary);
-  color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
 }
