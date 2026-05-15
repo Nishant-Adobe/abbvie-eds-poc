@@ -502,7 +502,7 @@ async function loadLazy(doc) {
     const brand = getMetadata('brand')?.trim();
     Promise.all([
       loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.css`),
-      brand ? loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/${brand}/tooltip.css`).catch(() => {}) : Promise.resolve(),
+      brand && /^[\w-]+$/.test(brand) ? loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/${brand}/tooltip.css`).catch(() => {}) : Promise.resolve(),
     ]).then(() => import(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.js`))
       .then(({ wireInlineTooltips }) => wireInlineTooltips(main))
       .catch(() => {});

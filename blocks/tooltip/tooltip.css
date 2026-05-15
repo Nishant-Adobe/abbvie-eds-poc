@@ -1,7 +1,7 @@
 .tooltip,
 abbr.has-tooltip {
   --tooltip-bg: var(--color-brand-primary, var(--color-charcoal));
-  --tooltip-color: var(--color-text-on-dark, var(--color-white, #fff));
+  --tooltip-color: var(--color-text-on-dark, var(--color-white));
   --tooltip-focus-ring: var(--color-brand-primary, var(--link-color));
   --tooltip-arrow-size: var(--spacing-10, 1rem);
   --tooltip-offset: var(--spacing-10, 1rem);
@@ -88,7 +88,20 @@ abbr.has-tooltip {
   transform: none;
 }
 
-/* Position: bottom */
+/* Viewport auto-flip: bottom overflow */
+.tooltip.flip-bottom .tooltip-panel {
+  bottom: auto;
+  top: calc(100% + var(--tooltip-offset));
+}
+
+.tooltip.flip-bottom .tooltip-panel::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--tooltip-bg);
+}
+
+/* Position: bottom (authored variant) */
 .tooltip.bottom .tooltip-panel {
   bottom: auto;
   top: calc(100% + var(--tooltip-offset));
@@ -176,13 +189,13 @@ abbr.has-tooltip.is-visible .tooltip-panel {
   }
 }
 
-/* Inline tooltip: bottom auto-flip */
-abbr.has-tooltip.bottom .tooltip-panel {
+/* Inline tooltip: auto-flip bottom */
+abbr.has-tooltip.flip-bottom .tooltip-panel {
   bottom: auto;
   top: calc(100% + var(--tooltip-offset));
 }
 
-abbr.has-tooltip.bottom .tooltip-panel::after {
+abbr.has-tooltip.flip-bottom .tooltip-panel::after {
   top: auto;
   bottom: 100%;
   border-top-color: transparent;

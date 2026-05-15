@@ -16,7 +16,7 @@ function autoFlip(trigger, panel) {
   const rect = panel.getBoundingClientRect();
   const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
   if (rect.top < 0) {
-    container.classList.add('bottom');
+    container.classList.add('flip-bottom');
   }
   if (rect.left < 0) {
     panel.classList.add('flip-left');
@@ -27,7 +27,7 @@ function autoFlip(trigger, panel) {
 
 function resetFlip(trigger, panel) {
   const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
-  container.classList.remove('bottom');
+  container.classList.remove('flip-bottom');
   panel.classList.remove('flip-left', 'flip-right');
 }
 
