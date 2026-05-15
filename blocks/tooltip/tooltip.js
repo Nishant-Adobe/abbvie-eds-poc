@@ -107,7 +107,6 @@ export function wireInlineTooltips(scope = document) {
     const panel = createTooltipPanel(abbr.title, id);
     abbr.removeAttribute('title');
     abbr.setAttribute('aria-describedby', id);
-    abbr.setAttribute('aria-haspopup', 'true');
     abbr.setAttribute('aria-expanded', 'false');
     abbr.classList.add('has-tooltip');
     abbr.setAttribute('tabindex', '0');
