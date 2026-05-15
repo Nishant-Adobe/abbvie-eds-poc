@@ -1,6 +1,6 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
-const LINE1_CLASS = 'card-grid-item-line-1 abbv-icon-keyboard_arrow_right i-a';
+const LINE1_CLASS = 'card-grid-item-line-1';
 const LINE2_CLASS = 'card-grid-item-line-2';
 const LINE3_CLASS = 'card-grid-item-line-3';
 const LINE4_CLASS = 'card-grid-item-line-4';

@@ -15,27 +15,32 @@ function venclextaCalloutModalDataId(titleText) {
   return `linkTo${base.charAt(0).toUpperCase()}${base.slice(1)}`;
 }
 
-function venclextaCalloutPipeTitleToEmHtml(inner) {
-  const trimmed = inner.trim();
-  if (/^[^<]+\|[^<]+$/.test(trimmed)) {
-    const [left, right] = trimmed.split('|').map((s) => s.trim());
-    return `${left}<em>${right}</em>`;
+function appendVenclextaPipeSplitContent(container, sourceEl) {
+  const text = (sourceEl.textContent || '').trim();
+  if (/^[^|<>]+\|[^|<>]+$/.test(text)) {
+    const [left, right] = text.split('|').map((s) => s.trim());
+    container.append(document.createTextNode(left));
+    const em = document.createElement('em');
+    em.textContent = right;
+    container.append(em);
+  } else {
+    sourceEl.cloneNode(true).childNodes.forEach((n) => container.append(n));
   }
-  return trimmed;
 }
 
-function venclextaCalloutHeadingInnerHtml(titleCell) {
-  if (!titleCell) return '';
+function populateVenclextaCalloutHeading(h3, titleCell) {
+  if (!titleCell) return;
   const ps = [...titleCell.querySelectorAll(':scope > p')].filter((p) => p.textContent.trim());
   if (ps.length === 0) {
-    const raw = titleCell.innerHTML.trim();
-    return venclextaCalloutPipeTitleToEmHtml(raw);
+    appendVenclextaPipeSplitContent(h3, titleCell);
+  } else if (ps.length === 1) {
+    appendVenclextaPipeSplitContent(h3, ps[0]);
+  } else {
+    ps.forEach((p, i) => {
+      if (i > 0) h3.append(document.createElement('br'));
+      p.cloneNode(true).childNodes.forEach((n) => h3.append(n));
+    });
   }
-  if (ps.length === 1) {
-    const raw = ps[0].innerHTML.trim();
-    return venclextaCalloutPipeTitleToEmHtml(raw);
-  }
-  return ps.map((p) => p.innerHTML.trim()).join('<br />');
 }
 
 function normalizeVenclextaTelHref(href) {
@@ -81,7 +86,7 @@ function buildVenclextaCalloutCardColumnFromUeRow(wrapper) {
   const abbvRt = document.createElement('div');
   abbvRt.className = 'abbv-rich-text abbv-rich-text-common';
   const h3 = document.createElement('h3');
-  h3.innerHTML = venclextaCalloutHeadingInnerHtml(titleCell);
+  populateVenclextaCalloutHeading(h3, titleCell);
   abbvRt.append(h3);
   richTextOuter.append(abbvRt);
   titleItem.append(richTextOuter);
