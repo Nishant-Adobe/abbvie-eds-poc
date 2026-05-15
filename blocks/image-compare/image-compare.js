@@ -75,16 +75,14 @@ function buildXwalkCells(block) {
 function buildModelRowCells(block) {
   const rows = [...block.children].map((row) => row.children[0]);
   const cells = new Array(COL_NAMES.length).fill(null);
-  let rowIdx = 0;
-  for (let colIdx = 0; colIdx < COL_NAMES.length && rowIdx < rows.length; colIdx += 1) {
-    const name = COL_NAMES[colIdx];
-    const expectsImage = IMAGE_FIELDS.has(name);
+  for (let colIdx = 0, rowIdx = 0; colIdx < COL_NAMES.length && rowIdx < rows.length; colIdx += 1) {
+    const expectsImage = IMAGE_FIELDS.has(COL_NAMES[colIdx]);
     const row = rows[rowIdx];
     const hasImage = !!row?.querySelector('img');
     if (expectsImage === hasImage) {
       cells[colIdx] = row;
-      rowIdx += 1;
     }
+    rowIdx += 1;
   }
   return cells;
 }
