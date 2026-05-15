@@ -211,13 +211,15 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
     if (picture) {
       imgContainer.append(picture);
       const im = picture.querySelector('img');
-      if (im) {
+      if (im && (!im.getAttribute('width') || !im.getAttribute('height'))) {
         im.setAttribute('width', '105');
         im.setAttribute('height', '105');
       }
     } else if (loneImg) {
-      loneImg.setAttribute('width', '105');
-      loneImg.setAttribute('height', '105');
+      if (!loneImg.getAttribute('width') || !loneImg.getAttribute('height')) {
+        loneImg.setAttribute('width', '105');
+        loneImg.setAttribute('height', '105');
+      }
       imgContainer.append(loneImg);
     }
   }
@@ -242,7 +244,7 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
   if (bodyP) {
     const bp = document.createElement('p');
     bp.classList.add('text-align-center');
-    bp.innerHTML = bodyP.innerHTML;
+    bodyP.cloneNode(true).childNodes.forEach((node) => bp.append(node));
     fixLinzessEncodedBoldInParagraph(bp);
     fixEncodedSupInParagraph(bp);
     bodyStretch.append(bp);

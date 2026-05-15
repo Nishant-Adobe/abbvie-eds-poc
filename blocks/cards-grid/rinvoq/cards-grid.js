@@ -161,20 +161,24 @@ function wireRinvoqSliderThumbnailSelection(block) {
 function ensureRinvoqStatLineStrongTags(p, titlePattern = null) {
   if (!p || /<strong\b|<b\b/i.test(p.innerHTML)) return;
   const parts = p.innerHTML.split(/(<br\s*\/?>)/i);
-  for (let i = 0; i < parts.length; i += 2) {
-    const chunk = parts[i];
-    if (chunk && chunk.trim()) {
-      const plain = chunk.replace(/<[^>]+>/g, '').trim();
+  const frag = document.createDocumentFragment();
+  parts.forEach((part, idx) => {
+    if (idx % 2 === 1) {
+      frag.append(document.createElement('br'));
+    } else if (part.trim()) {
+      const plain = part.replace(/<[^>]+>/g, '').trim();
       const isTitle = titlePattern ? titlePattern.test(plain) : false;
       const isStat = /^\d+%\*/.test(plain) || /^\d+%\s*\(/.test(plain);
       if (isTitle || isStat) {
-        parts[i] = `<strong>${chunk.trim()}</strong>`;
+        const s = document.createElement('strong');
+        s.textContent = plain;
+        frag.append(s);
+      } else {
+        frag.append(document.createTextNode(plain));
       }
     }
-  }
-  const temp = document.createElement('div');
-  temp.innerHTML = parts.join('');
-  p.replaceChildren(...temp.childNodes);
+  });
+  p.replaceChildren(frag);
 }
 
 function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
