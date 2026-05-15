@@ -26,6 +26,7 @@ function getTranscriptModal() {
   dialog.className = 'cvp-transcript-modal-dialog';
   dialog.setAttribute('role', 'dialog');
   dialog.setAttribute('aria-modal', 'true');
+  dialog.setAttribute('aria-label', 'Transcript');
 
   const closeBtn = document.createElement('button');
   closeBtn.type = 'button';
@@ -90,7 +91,7 @@ function readConfig(block) {
     layout: layouts.includes(first) ? first : (cl || 'cards'),
     accountId: val(3) || val(1) || '',
     playerId: val(5) || 'default',
-    piUrl: val(7) || 'https://www.rxabbvie.com/pdf/venclexta.pdf',
+    piUrl: val(7) || '',
   };
 }
 
@@ -153,11 +154,14 @@ function buildCard(item, cfg, single) {
   link.className = 'cvp-transcript-link';
   link.textContent = 'View Transcript';
   link.classList.toggle('is-hidden', !(hasTranscript || item.transcriptHref));
+  if (item.transcriptHref) {
+    link.dataset.transcriptUrl = item.transcriptHref;
+  }
   link.addEventListener('click', () => {
     if (hasTranscript) {
       openTranscript(item.transcript);
-    } else if (item.transcriptHref) {
-      window.open(item.transcriptHref, '_blank', 'noopener,noreferrer');
+    } else if (link.dataset.transcriptUrl) {
+      window.open(link.dataset.transcriptUrl, '_blank', 'noopener,noreferrer');
     }
   });
 
@@ -166,13 +170,15 @@ function buildCard(item, cfg, single) {
     linksRow.className = 'cvp-links-row';
     linksRow.append(link);
 
-    const piLink = document.createElement('a');
-    piLink.className = 'cvp-transcript-link cvp-pi-link';
-    piLink.textContent = 'View Full Prescribing Information';
-    piLink.href = piUrl;
-    piLink.target = '_blank';
-    piLink.rel = 'noopener noreferrer';
-    linksRow.append(piLink);
+    if (/^https?:\/\//i.test(piUrl)) {
+      const piLink = document.createElement('a');
+      piLink.className = 'cvp-transcript-link cvp-pi-link';
+      piLink.textContent = 'View Full Prescribing Information';
+      piLink.href = piUrl;
+      piLink.target = '_blank';
+      piLink.rel = 'noopener noreferrer';
+      linksRow.append(piLink);
+    }
 
     content.append(linksRow);
   } else {
@@ -211,11 +217,9 @@ function buildCard(item, cfg, single) {
             const mi = this.mediainfo;
             if (mi?.longDescription
               && /^https?:\/\//.test(mi.longDescription)
-              && !hasTranscript && !item.transcriptHref) {
+              && !hasTranscript && !link.dataset.transcriptUrl) {
+              link.dataset.transcriptUrl = mi.longDescription;
               link.classList.remove('is-hidden');
-              link.addEventListener('click', () => {
-                window.open(mi.longDescription, '_blank', 'noopener,noreferrer');
-              }, { once: true });
             }
             resolve();
           });
