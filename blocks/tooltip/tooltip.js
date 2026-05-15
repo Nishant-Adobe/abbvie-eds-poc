@@ -22,14 +22,9 @@ function autoFlip(trigger, panel) {
   resetFlip(trigger, panel);
   const rect = panel.getBoundingClientRect();
   const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
-  if (rect.top < 0) {
-    container.classList.add('flip-bottom');
-  }
-  if (rect.left < 0) {
-    panel.classList.add('flip-left');
-  } else if (rect.right > window.innerWidth) {
-    panel.classList.add('flip-right');
-  }
+  if (rect.top < 0) container.classList.add('flip-bottom');
+  if (rect.left < 0) panel.classList.add('flip-left');
+  else if (rect.right > window.innerWidth) panel.classList.add('flip-right');
 }
 
 function removeFromRegistry(el) {
@@ -54,26 +49,34 @@ function attachGlobalListener() {
   if (listenerController) return;
   listenerController = new AbortController();
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('.tooltip, .has-tooltip')) {
-      closeAllTooltips();
-    }
+    if (!e.target.closest('.tooltip, .has-tooltip')) closeAllTooltips();
   }, { signal: listenerController.signal });
 }
 
-function bindTooltipEvents(el, triggerEl, panel, show, hide) {
+function createShowHide(el, triggerEl, panel) {
+  function show() {
+    closeAllTooltips(el);
+    el.classList.add('is-visible');
+    triggerEl.setAttribute('aria-expanded', 'true');
+    autoFlip(triggerEl, panel);
+  }
+
+  function hide() {
+    el.classList.remove('is-visible');
+    triggerEl.setAttribute('aria-expanded', 'false');
+    resetFlip(triggerEl, panel);
+    if (!el.isConnected) removeFromRegistry(el);
+  }
+
+  return { show, hide };
+}
+
+function bindEvents(el, triggerEl, show, hide) {
   let pointerActivated = false;
 
   triggerEl.addEventListener('pointerdown', () => { pointerActivated = true; });
-
-  triggerEl.addEventListener('focus', () => {
-    if (!pointerActivated) show();
-  });
-
-  triggerEl.addEventListener('blur', () => {
-    pointerActivated = false;
-    hide();
-  });
-
+  triggerEl.addEventListener('focus', () => { if (!pointerActivated) show(); });
+  triggerEl.addEventListener('blur', () => { pointerActivated = false; hide(); });
   triggerEl.addEventListener('click', (e) => {
     e.preventDefault();
     if (pointerActivated) {
@@ -111,22 +114,8 @@ export function wireInlineTooltips(scope = document) {
     abbr.append(panel);
 
     registry.add({ el: abbr, trigger: abbr });
-
-    function show() {
-      closeAllTooltips(abbr);
-      abbr.setAttribute('aria-expanded', 'true');
-      abbr.classList.add('is-visible');
-      autoFlip(abbr, panel);
-    }
-
-    function hide() {
-      abbr.setAttribute('aria-expanded', 'false');
-      abbr.classList.remove('is-visible');
-      resetFlip(abbr, panel);
-      if (!abbr.isConnected) removeFromRegistry(abbr);
-    }
-
-    bindTooltipEvents(abbr, abbr, panel, show, hide);
+    const { show, hide } = createShowHide(abbr, abbr, panel);
+    bindEvents(abbr, abbr, show, hide);
   });
 
   attachGlobalListener();
@@ -135,10 +124,8 @@ export function wireInlineTooltips(scope = document) {
 export default function decorate(block) {
   const rows = [...block.children];
   const [termRow, defRow] = rows;
-
   const term = termRow?.textContent.trim();
   const definition = defRow?.innerHTML || '';
-
   const id = `tooltip-${Math.random().toString(36).slice(2, 6)}`;
 
   const trigger = document.createElement('span');
@@ -150,26 +137,11 @@ export default function decorate(block) {
   trigger.textContent = term;
 
   const panel = createTooltipPanel(definition, id);
-
   block.replaceChildren(trigger, panel);
 
   registry.add({ el: block, trigger });
-
-  function show() {
-    closeAllTooltips(block);
-    block.classList.add('is-visible');
-    trigger.setAttribute('aria-expanded', 'true');
-    autoFlip(trigger, panel);
-  }
-
-  function hide() {
-    block.classList.remove('is-visible');
-    trigger.setAttribute('aria-expanded', 'false');
-    resetFlip(trigger, panel);
-    if (!block.isConnected) removeFromRegistry(block);
-  }
-
-  bindTooltipEvents(block, trigger, panel, show, hide);
+  const { show, hide } = createShowHide(block, trigger, panel);
+  bindEvents(block, trigger, show, hide);
 
   attachGlobalListener();
 }

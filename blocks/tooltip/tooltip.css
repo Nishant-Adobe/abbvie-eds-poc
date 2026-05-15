@@ -1,3 +1,4 @@
+/* Token definitions */
 .tooltip,
 abbr.has-tooltip {
   --tooltip-bg: var(--color-brand-primary, #222);
@@ -15,11 +16,13 @@ abbr.has-tooltip {
   --tooltip-trigger-border-style: dotted;
 }
 
+/* Block wrapper */
 .tooltip {
   position: relative;
   display: inline;
 }
 
+/* Trigger */
 .tooltip-trigger {
   border-bottom: var(--border-width-thin, 1px) var(--tooltip-trigger-border-style) var(--tooltip-trigger-border-color);
   cursor: help;
@@ -33,6 +36,7 @@ abbr.has-tooltip {
   border-radius: var(--spacing-02, 0.2rem);
 }
 
+/* Panel */
 .tooltip-panel {
   position: absolute;
   bottom: calc(100% + var(--tooltip-offset));
@@ -66,6 +70,7 @@ abbr.has-tooltip {
   margin: 0 var(--spacing-05, 0.5rem);
 }
 
+/* Arrow */
 .tooltip-panel::after {
   content: '';
   position: absolute;
@@ -78,7 +83,7 @@ abbr.has-tooltip {
   pointer-events: none;
 }
 
-/* Viewport auto-flip: edge overflow */
+/* Auto-flip: horizontal */
 .tooltip-panel.flip-left {
   left: 0;
   transform: none;
@@ -99,26 +104,15 @@ abbr.has-tooltip {
   right: var(--tooltip-arrow-size);
 }
 
-/* Viewport auto-flip: bottom overflow */
+/* Position: bottom (authored + auto-flip share rules) */
+.tooltip.bottom .tooltip-panel,
 .tooltip.flip-bottom .tooltip-panel {
   bottom: auto;
   top: calc(100% + var(--tooltip-offset));
 }
 
+.tooltip.bottom .tooltip-panel::after,
 .tooltip.flip-bottom .tooltip-panel::after {
-  top: auto;
-  bottom: 100%;
-  border-top-color: transparent;
-  border-bottom-color: var(--tooltip-bg, #222);
-}
-
-/* Position: bottom (authored variant) */
-.tooltip.bottom .tooltip-panel {
-  bottom: auto;
-  top: calc(100% + var(--tooltip-offset));
-}
-
-.tooltip.bottom .tooltip-panel::after {
   top: auto;
   bottom: 100%;
   border-top-color: transparent;
@@ -174,7 +168,7 @@ abbr.has-tooltip:focus-visible {
   border-radius: var(--spacing-02, 0.2rem);
 }
 
-/* Visibility states */
+/* Visibility */
 .tooltip.is-visible .tooltip-panel,
 abbr.has-tooltip:hover .tooltip-panel,
 abbr.has-tooltip:focus .tooltip-panel,
@@ -185,7 +179,7 @@ abbr.has-tooltip.is-visible .tooltip-panel {
   transition-delay: var(--transition-duration-fast, 0.2s);
 }
 
-/* Touch devices: disable hover, rely on tap */
+/* Touch: tap-only */
 @media (hover: none) {
   abbr.has-tooltip:hover .tooltip-panel {
     opacity: 0;
@@ -200,7 +194,7 @@ abbr.has-tooltip.is-visible .tooltip-panel {
   }
 }
 
-/* Inline tooltip: auto-flip bottom */
+/* Inline auto-flip bottom */
 abbr.has-tooltip.flip-bottom .tooltip-panel {
   bottom: auto;
   top: calc(100% + var(--tooltip-offset));
