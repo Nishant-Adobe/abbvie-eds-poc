@@ -50,10 +50,12 @@ function extractConfig(block) {
       }
       row.dataset.bcConfig = '';
     } else {
-      const text = row.textContent?.trim().toLowerCase();
-      if (text === 'false' || text === 'true') {
-        autoVal = text !== 'false';
-        row.dataset.bcConfig = '';
+      const divs = row.querySelectorAll(':scope > div');
+      if (divs.length >= 2) {
+        const key = divs[0]?.textContent?.trim().toLowerCase();
+        const val = divs[1]?.textContent?.trim().toLowerCase();
+        if (key === 'auto') { autoVal = val === 'true'; row.dataset.bcConfig = ''; }
+        if (key === 'homelabel') { homeLabel = divs[1]?.textContent?.trim() || 'Home'; row.dataset.bcConfig = ''; }
       }
     }
   });
