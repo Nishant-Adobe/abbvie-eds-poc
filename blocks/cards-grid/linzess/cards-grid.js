@@ -61,8 +61,9 @@ function resolveLinzessArticleCta(ctaDiv) {
   if (!ctaDiv) return { href: '#', label: 'Read the article' };
   const a = ctaDiv.querySelector('a[href]');
   if (a) {
+    const rawHref = a.getAttribute('href') || '';
     return {
-      href: a.getAttribute('href') || '#',
+      href: /^javascript:/i.test(rawHref) ? '#' : (rawHref || '#'),
       label: (a.textContent || '').trim() || 'Read the article',
     };
   }

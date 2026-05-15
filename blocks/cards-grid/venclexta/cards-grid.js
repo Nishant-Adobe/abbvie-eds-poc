@@ -105,7 +105,8 @@ function buildVenclextaCalloutCardColumnFromUeRow(wrapper) {
   websiteCtaWrap.className = 'cta parbase';
   const websiteA = document.createElement('a');
   if (websiteFromUe) {
-    websiteA.href = websiteFromUe.getAttribute('href') || '#';
+    const rawWebsiteHref = websiteFromUe.getAttribute('href') || '#';
+    websiteA.href = /^javascript:/i.test(rawWebsiteHref) ? '#' : rawWebsiteHref;
     const tgt = websiteFromUe.getAttribute('target');
     if (tgt) websiteA.target = tgt;
     websiteA.textContent = (websiteFromUe.textContent || '').trim() || websiteLabel;

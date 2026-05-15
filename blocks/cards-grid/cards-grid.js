@@ -1,5 +1,7 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
+const SAFE_HREF_RE = /^(https?:\/\/|\/|#|tel:|sms:|mailto:)/i;
+
 const LINE1_CLASS = 'card-grid-item-line-1';
 const LINE2_CLASS = 'card-grid-item-line-2';
 const LINE3_CLASS = 'card-grid-item-line-3';
@@ -121,8 +123,8 @@ function createWrapperATag(wrapper) {
   const sourceLink = wrapper.querySelector('a[href]');
 
   if (sourceLink) {
-    const rawHref = sourceLink.getAttribute('href') || '#';
-    card.href = /^javascript:/i.test(rawHref) ? '#' : rawHref;
+    const rawHref = sourceLink.getAttribute('href') || '';
+    card.href = SAFE_HREF_RE.test(rawHref) ? rawHref : '#';
     card.target = sourceLink.getAttribute('target') || '_self';
   }
 

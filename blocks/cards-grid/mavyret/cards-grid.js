@@ -260,7 +260,7 @@ function buildMavyretSectionCardColumnFromUeRow(wrapper) {
   const cells = [...wrapper.querySelectorAll(':scope > div')];
   const linkEl = cells[0]?.querySelector('a[href]') || wrapper.querySelector('a[href]');
   let href = (linkEl?.getAttribute('href') || '').trim();
-  if (!href) href = '#';
+  if (!href || /^javascript:/i.test(href)) href = '#';
 
   const ctaP = cells[3]?.querySelector(':scope > p');
   let ctaLabel = (ctaP?.textContent || cells[3]?.textContent || '').trim();
@@ -326,7 +326,7 @@ function buildMavyretCtaCardsColumnFromUeRow(wrapper) {
   const cells = [...wrapper.querySelectorAll(':scope > div')];
   const linkEl = cells[0]?.querySelector('a[href]') || wrapper.querySelector('a[href]');
   let href = (linkEl?.getAttribute('href') || '').trim();
-  if (!href) href = '#';
+  if (!href || /^javascript:/i.test(href)) href = '#';
 
   const iconCell = cells.find((c, idx) => idx > 0 && c.querySelector('picture, img')) || cells[1];
   const titleText = (cells[2]?.textContent || '').trim();
