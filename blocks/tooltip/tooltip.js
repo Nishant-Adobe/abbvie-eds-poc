@@ -1,7 +1,7 @@
 const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
 
 const registry = new Set();
-let globalListenerAttached = false;
+let listenerController = null;
 
 function createTooltipPanel(content, id) {
   const panel = document.createElement('span');
@@ -31,6 +31,16 @@ function resetFlip(trigger, panel) {
   panel.classList.remove('flip-left', 'flip-right');
 }
 
+function removeFromRegistry(el) {
+  registry.forEach((entry) => {
+    if (entry.el === el) registry.delete(entry);
+  });
+  if (registry.size === 0 && listenerController) {
+    listenerController.abort();
+    listenerController = null;
+  }
+}
+
 function closeAllTooltips(except) {
   registry.forEach((entry) => {
     if (entry.el === except) return;
@@ -40,13 +50,13 @@ function closeAllTooltips(except) {
 }
 
 function attachGlobalListener() {
-  if (globalListenerAttached) return;
-  globalListenerAttached = true;
+  if (listenerController) return;
+  listenerController = new AbortController();
   document.addEventListener('click', (e) => {
     if (!e.target.closest('.tooltip, .has-tooltip')) {
       closeAllTooltips();
     }
-  });
+  }, { signal: listenerController.signal });
 }
 
 export function wireInlineTooltips(scope = document) {
@@ -73,6 +83,7 @@ export function wireInlineTooltips(scope = document) {
       abbr.setAttribute('aria-expanded', 'false');
       abbr.classList.remove('is-visible');
       resetFlip(abbr, panel);
+      if (!abbr.isConnected) removeFromRegistry(abbr);
     }
 
     if (!isTouchDevice()) {
@@ -133,6 +144,7 @@ export default function decorate(block) {
     block.classList.remove('is-visible');
     trigger.setAttribute('aria-expanded', 'false');
     resetFlip(trigger, panel);
+    if (!block.isConnected) removeFromRegistry(block);
   }
 
   if (!isTouchDevice()) {
