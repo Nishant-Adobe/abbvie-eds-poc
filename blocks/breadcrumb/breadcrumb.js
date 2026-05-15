@@ -48,10 +48,12 @@ function extractConfig(block) {
         const val = prop.textContent?.trim().toLowerCase();
         autoVal = val === 'true';
       }
+      row.dataset.bcConfig = '';
     } else {
       const text = row.textContent?.trim().toLowerCase();
       if (text === 'false' || text === 'true') {
         autoVal = text !== 'false';
+        row.dataset.bcConfig = '';
       }
     }
   });
@@ -72,7 +74,7 @@ function extractItems(block) {
     }, []);
   }
 
-  const rows = [...block.querySelectorAll(':scope > div')];
+  const rows = [...block.querySelectorAll(':scope > div:not([data-bc-config])')];
   return rows.reduce((items, row) => {
     const divs = row.querySelectorAll(':scope > div');
     if (divs.length >= 2) {
