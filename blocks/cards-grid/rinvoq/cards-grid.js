@@ -202,7 +202,7 @@ function buildRinvoqCommonRichTextColumn(wrapper, columnIndex) {
       abbvRt.append(p);
     });
   } else {
-    abbvRt.innerHTML = wrapper.innerHTML.trim();
+    wrapper.cloneNode(true).childNodes.forEach((n) => abbvRt.append(n));
     abbvRt.querySelectorAll('p').forEach((p) => {
       fixEncodedSupInParagraph(p);
       ensureRinvoqStatLineStrongTags(p, /^MEASURE UP\s*\d/i);

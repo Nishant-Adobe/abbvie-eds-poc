@@ -4,7 +4,7 @@ function fixLinzessEncodedBoldInParagraph(p) {
   if (!p) return;
   let html = p.innerHTML;
   if (!html.includes('&lt;')) return;
-  html = html.replace(/&lt;b&gt;/gi, '<b>').replace(/&lt;\/b&gt;/gi, '</b>');
+  html = html.replace(/&lt;b&gt;([\s\S]*?)&lt;\/b&gt;/gi, (_, inner) => `<b>${inner.replace(/<[^>]+>/g, '')}</b>`);
   p.innerHTML = html;
 }
 

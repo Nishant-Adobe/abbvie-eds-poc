@@ -19,23 +19,13 @@ function ensureMavyretSubheadAfterIcon(iconP) {
   if (next.tagName !== 'DIV') return;
 
   const scopedPs = [...next.querySelectorAll(':scope > p')];
-  let body = '';
-  if (scopedPs.length >= 1) {
-    body = (scopedPs[0].innerHTML || '').trim();
-  }
-  if (!body) {
-    body = (next.innerHTML || '').trim();
-  }
   const plain = (next.textContent || '').trim();
-  if (!body && !plain) return;
+  if (!plain) return;
 
   const sub = document.createElement('p');
   sub.className = 'subhead';
-  if (body) {
-    sub.innerHTML = body;
-  } else {
-    sub.textContent = plain;
-  }
+  const sourceEl = scopedPs.length >= 1 ? scopedPs[0] : next;
+  sourceEl.cloneNode(true).childNodes.forEach((n) => sub.append(n));
   next.replaceWith(sub);
 }
 
@@ -95,22 +85,18 @@ function normalizeMavyretFromTableCellRows(abbvRt) {
           const sub = document.createElement('p');
           sub.className = 'subhead';
           if (scopedPs.length >= 1) {
-            sub.innerHTML = scopedPs[0].innerHTML.trim();
+            scopedPs[0].cloneNode(true).childNodes.forEach((n) => sub.append(n));
           } else {
             sub.textContent = plain;
           }
           built.push(sub);
           for (let j = 1; j < scopedPs.length; j += 1) {
-            const p = document.createElement('p');
-            p.innerHTML = scopedPs[j].innerHTML;
-            built.push(p);
+            built.push(scopedPs[j].cloneNode(true));
           }
           titleDone = true;
         } else {
           scopedPs.forEach((srcP) => {
-            const p = document.createElement('p');
-            p.innerHTML = srcP.innerHTML;
-            built.push(p);
+            built.push(srcP.cloneNode(true));
           });
           if (scopedPs.length === 0 && plain) {
             const p = document.createElement('p');
@@ -176,7 +162,7 @@ function buildMavyretFlexIconColumn(wrapper) {
 
   const existingRt = wrapper.querySelector(':scope > .abbv-rich-text');
   if (existingRt) {
-    abbvRt.innerHTML = existingRt.innerHTML;
+    existingRt.cloneNode(true).childNodes.forEach((n) => abbvRt.append(n));
   } else {
     while (wrapper.firstChild) {
       abbvRt.append(wrapper.firstChild);
@@ -262,7 +248,7 @@ function buildMavyretSectionIntroFromWrapper(wrapper) {
     'abbv-rich-text section-narrow color-white text-center section-break-bottom '
     + 'abbv-rich-text-common'
   );
-  abbvRt.innerHTML = wrapper.innerHTML.trim();
+  wrapper.cloneNode(true).childNodes.forEach((n) => abbvRt.append(n));
   abbvRt.querySelectorAll('p').forEach((p) => {
     fixEncodedSupInParagraph(p);
   });
