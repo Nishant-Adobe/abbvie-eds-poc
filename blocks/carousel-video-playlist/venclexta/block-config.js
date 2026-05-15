@@ -139,8 +139,8 @@ function buildCard(item, cfg, single) {
 
   const desc = document.createElement('div');
   desc.className = 'cvp-card-desc';
-  if (item.description?.innerHTML) {
-    desc.innerHTML = item.description.innerHTML;
+  if (item.description?.nodeType) {
+    desc.append(item.description.cloneNode(true));
   } else if (item.description?.textContent?.trim()) {
     desc.textContent = item.description.textContent.trim();
   }
@@ -158,7 +158,7 @@ function buildCard(item, cfg, single) {
     if (hasTranscript) {
       openTranscript(item.transcript);
     } else if (item.transcriptHref) {
-      window.open(item.transcriptHref, '_blank');
+      window.open(item.transcriptHref, '_blank', 'noopener,noreferrer');
     }
   });
 
@@ -204,10 +204,12 @@ function buildCard(item, cfg, single) {
           if (!p) { requestAnimationFrame(poll); return; }
           p.ready(function onReady() {
             const mi = this.mediainfo;
-            if (mi?.longDescription) {
+            if (mi?.longDescription
+              && /^https?:\/\//.test(mi.longDescription)
+              && !hasTranscript && !item.transcriptHref) {
               link.style.display = '';
               link.addEventListener('click', () => {
-                window.open(mi.longDescription, '_blank');
+                window.open(mi.longDescription, '_blank', 'noopener,noreferrer');
               }, { once: true });
             }
             resolve();
@@ -240,8 +242,7 @@ export default async function getBlockConfigs() {
     variations: [],
     decorations: {
       decorate: async (block) => {
-        if (window.self !== window.top) return;
-
+        const isEditor = window.self !== window.top;
         const cfg = readConfig(block);
         const items = parseItems(block);
         const { accountId } = cfg;
@@ -268,6 +269,8 @@ export default async function getBlockConfigs() {
         });
 
         block.append(grid);
+
+        if (isEditor) return;
 
         // Initialize BC players sequentially so metadata loads for all
         try {
