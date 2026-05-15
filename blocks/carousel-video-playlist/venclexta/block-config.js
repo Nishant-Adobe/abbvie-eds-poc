@@ -15,8 +15,18 @@ function loadBrightcoveScript(account, player) {
   return bcScripts[key];
 }
 
-function getTranscriptModal() {
-  if (transcriptModal) return transcriptModal;
+function getTranscriptModal(block) {
+  if (transcriptModal) {
+    if (block && !block.contains(transcriptModal.overlay)) {
+      transcriptModal.destroy();
+      transcriptModal = null;
+    } else {
+      return transcriptModal;
+    }
+  }
+
+  const ac = new AbortController();
+  const { signal } = ac;
 
   const overlay = document.createElement('div');
   overlay.className = 'cvp-transcript-modal-overlay';
@@ -37,31 +47,30 @@ function getTranscriptModal() {
 
   dialog.append(closeBtn, body);
   overlay.append(dialog);
-  document.body.append(overlay);
-
-  const ac = new AbortController();
-  const { signal } = ac;
+  block.append(overlay);
 
   const close = () => {
     overlay.classList.remove('is-open');
-    document.body.classList.remove('cvp-modal-is-open');
   };
 
   closeBtn.addEventListener('click', close, { signal });
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) close();
   }, { signal });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape'
-      && overlay.classList.contains('is-open')) close();
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
   }, { signal });
 
-  transcriptModal = { overlay, body };
+  transcriptModal = {
+    overlay,
+    body,
+    destroy: () => { ac.abort(); overlay.remove(); },
+  };
   return transcriptModal;
 }
 
-function openTranscript(content) {
-  const modal = getTranscriptModal();
+function openTranscript(content, block) {
+  const modal = getTranscriptModal(block);
   modal.body.innerHTML = '';
   if (content?.nodeType) {
     modal.body.append(content.cloneNode(true));
@@ -69,7 +78,6 @@ function openTranscript(content) {
     modal.body.textContent = content;
   }
   modal.overlay.classList.add('is-open');
-  document.body.classList.add('cvp-modal-is-open');
 }
 
 function isItemRow(row) {
@@ -114,7 +122,7 @@ function parseItems(block) {
     .filter(({ videoId }) => videoId);
 }
 
-function buildCard(item, cfg, single) {
+function buildCard(item, cfg, single, block) {
   const { accountId, playerId, piUrl } = cfg;
   const card = document.createElement('div');
   card.className = 'cvp-venclexta-card';
@@ -161,7 +169,7 @@ function buildCard(item, cfg, single) {
   }
   link.addEventListener('click', () => {
     if (hasTranscript) {
-      openTranscript(item.transcript);
+      openTranscript(item.transcript, block);
     } else if (link.dataset.transcriptUrl) {
       window.open(link.dataset.transcriptUrl, '_blank', 'noopener,noreferrer');
     }
@@ -278,7 +286,7 @@ export default async function getBlockConfigs() {
         grid.className = single ? 'cvp-grid cvp-single' : 'cvp-grid';
 
         const cards = items.map((item) => {
-          const card = buildCard(item, cfg, single);
+          const card = buildCard(item, cfg, single, block);
           grid.append(card);
           return card;
         });
