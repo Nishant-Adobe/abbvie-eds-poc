@@ -232,7 +232,7 @@ export default async function getBlockConfigs() {
         }
 
         const grid = document.createElement('div');
-        grid.className = 'cvp-grid';
+        grid.className = items.length === 1 ? 'cvp-grid cvp-single' : 'cvp-grid';
 
         const cards = items.map((item) => {
           const card = buildCard(item, accountId, playerId);
