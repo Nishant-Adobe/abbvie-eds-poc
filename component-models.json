@@ -8792,12 +8792,66 @@
         "name": "overview"
       },
       {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Side Image",
+        "multi": false,
+        "description": "Optional image displayed beside the question (e.g. Quick Poll badge)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading",
+        "description": "Optional heading above the question."
+      },
+      {
         "component": "text",
         "valueType": "string",
         "name": "question",
         "value": "",
         "label": "Question",
         "description": "The question or prompt shown to the visitor."
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "settings"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cookieName",
+        "value": "",
+        "label": "Cookie Name",
+        "description": "Unique name for the browser cookie that persists the user's answer. No spaces or special characters."
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "showReset",
+        "value": false,
+        "label": "Show Reset Button",
+        "description": "When enabled, a reset button lets the user clear their answer and choose again."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "resetLabel",
+        "value": "Start over",
+        "label": "Reset Button Label",
+        "condition": {
+          "===": [{ "var": "showReset" }, true]
+        }
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
