@@ -41,7 +41,9 @@ function closeAllTooltips(except) {
   registry.forEach((entry) => {
     if (entry.el === except) return;
     entry.el.classList.remove('is-visible');
-    entry.trigger?.setAttribute('aria-expanded', 'false');
+    if (entry.trigger?.getAttribute('role') === 'button') {
+      entry.trigger.setAttribute('aria-expanded', 'false');
+    }
   });
 }
 
@@ -54,16 +56,18 @@ function attachGlobalListener() {
 }
 
 function createShowHide(el, triggerEl, panel) {
+  const hasExpandedState = triggerEl.getAttribute('role') === 'button';
+
   function show() {
     closeAllTooltips(el);
     el.classList.add('is-visible');
-    triggerEl.setAttribute('aria-expanded', 'true');
+    if (hasExpandedState) triggerEl.setAttribute('aria-expanded', 'true');
     autoFlip(triggerEl, panel);
   }
 
   function hide() {
     el.classList.remove('is-visible');
-    triggerEl.setAttribute('aria-expanded', 'false');
+    if (hasExpandedState) triggerEl.setAttribute('aria-expanded', 'false');
     resetFlip(triggerEl, panel);
     if (!el.isConnected) removeFromRegistry(el);
   }
@@ -107,7 +111,6 @@ export function wireInlineTooltips(scope = document) {
     const panel = createTooltipPanel(abbr.title, id);
     abbr.removeAttribute('title');
     abbr.setAttribute('aria-describedby', id);
-    abbr.setAttribute('aria-expanded', 'false');
     abbr.classList.add('has-tooltip');
     abbr.setAttribute('tabindex', '0');
     abbr.append(panel);
