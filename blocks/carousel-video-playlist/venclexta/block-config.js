@@ -171,7 +171,7 @@ function buildCard(item, cfg, single) {
     piLink.textContent = 'View Full Prescribing Information';
     piLink.href = piUrl;
     piLink.target = '_blank';
-    piLink.rel = 'noopener';
+    piLink.rel = 'noopener noreferrer';
     linksRow.append(piLink);
 
     content.append(linksRow);
