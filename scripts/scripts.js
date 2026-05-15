@@ -505,7 +505,8 @@ async function loadLazy(doc) {
       brand && /^[\w-]+$/.test(brand) ? loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/${brand}/tooltip.css`).catch(() => {}) : Promise.resolve(),
     ]).then(() => import(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.js`))
       .then(({ wireInlineTooltips }) => wireInlineTooltips(main))
-      .catch(() => {});
+      // eslint-disable-next-line no-console
+      .catch((err) => console.warn('[tooltip] lazy-load failed', err));
   }
 }
 

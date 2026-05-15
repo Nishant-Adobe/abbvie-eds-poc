@@ -59,6 +59,44 @@ function attachGlobalListener() {
   }, { signal: listenerController.signal });
 }
 
+function bindTooltipEvents(el, triggerEl, panel, show, hide) {
+  let pointerActivated = false;
+
+  triggerEl.addEventListener('pointerdown', () => { pointerActivated = true; });
+
+  triggerEl.addEventListener('focus', () => {
+    if (!pointerActivated) show();
+  });
+
+  triggerEl.addEventListener('blur', () => {
+    pointerActivated = false;
+    hide();
+  });
+
+  triggerEl.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (pointerActivated) {
+      if (el.classList.contains('is-visible')) hide();
+      else show();
+    }
+    pointerActivated = false;
+  });
+
+  if (!isTouchDevice()) {
+    triggerEl.addEventListener('mouseenter', show);
+    triggerEl.addEventListener('mouseleave', hide);
+  }
+
+  triggerEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (el.classList.contains('is-visible')) hide();
+      else show();
+    }
+  });
+}
+
 export function wireInlineTooltips(scope = document) {
   scope.querySelectorAll('abbr[title]:not(.has-tooltip)').forEach((abbr, i) => {
     const id = `inline-tooltip-${Date.now()}-${i}`;
@@ -87,25 +125,7 @@ export function wireInlineTooltips(scope = document) {
       if (!abbr.isConnected) removeFromRegistry(abbr);
     }
 
-    if (!isTouchDevice()) {
-      abbr.addEventListener('mouseenter', show);
-      abbr.addEventListener('mouseleave', hide);
-    }
-    abbr.addEventListener('focus', show);
-    abbr.addEventListener('blur', hide);
-    abbr.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (abbr.classList.contains('is-visible')) hide();
-      else show();
-    });
-    abbr.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') hide();
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (abbr.classList.contains('is-visible')) hide();
-        else show();
-      }
-    });
+    bindTooltipEvents(abbr, abbr, panel, show, hide);
   });
 
   attachGlobalListener();
@@ -148,25 +168,7 @@ export default function decorate(block) {
     if (!block.isConnected) removeFromRegistry(block);
   }
 
-  if (!isTouchDevice()) {
-    trigger.addEventListener('mouseenter', show);
-    trigger.addEventListener('mouseleave', hide);
-  }
-  trigger.addEventListener('focus', show);
-  trigger.addEventListener('blur', hide);
-  trigger.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (block.classList.contains('is-visible')) hide();
-    else show();
-  });
-  trigger.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') hide();
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      if (block.classList.contains('is-visible')) hide();
-      else show();
-    }
-  });
+  bindTooltipEvents(block, trigger, panel, show, hide);
 
   attachGlobalListener();
 }
