@@ -121,7 +121,8 @@ function createWrapperATag(wrapper) {
   const sourceLink = wrapper.querySelector('a[href]');
 
   if (sourceLink) {
-    card.href = sourceLink.getAttribute('href') || '#';
+    const rawHref = sourceLink.getAttribute('href') || '#';
+    card.href = /^javascript:/i.test(rawHref) ? '#' : rawHref;
     card.target = sourceLink.getAttribute('target') || '_self';
   }
 
