@@ -73,10 +73,7 @@ function buildThumbnailCard(item, index, isActive, isCardsLayout) {
 }
 
 function isItemRow(row) {
-  if (row.children.length < 2) return false;
-  if (row.querySelector('picture')) return true;
-  const firstText = row.firstElementChild?.textContent?.trim() || '';
-  return /^\d{8,}$/.test(firstText);
+  return row.children.length >= 2 && row.querySelector('picture');
 }
 
 function readBlockConfig(block) {

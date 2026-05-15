@@ -512,20 +512,20 @@
 
 /* Grid — mobile-first: 1-col base, 2-col on desktop */
 .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 32px !important;
-  overflow: visible !important;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  overflow: visible;
 }
 
 @media (width >= 768px) {
   .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .carousel-video-playlist.cvp-venclexta-stories .cvp-grid > div {
-  grid-column: auto !important;
+  grid-column: auto;
 }
 
 /* Card — no border */
@@ -567,8 +567,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 88px;
-  height: 88px;
+  width: var(--size-play-button, 88px);
+  height: var(--size-play-button, 88px);
   border-radius: 50%;
   border: none;
   background:
@@ -642,7 +642,7 @@
 
 /* Single video — full width */
 .carousel-video-playlist.cvp-venclexta-stories .cvp-grid.cvp-single {
-  grid-template-columns: 1fr !important;
+  grid-template-columns: 1fr;
 }
 
 .cvp-grid.cvp-single .cvp-venclexta-card .cvp-card-content {
