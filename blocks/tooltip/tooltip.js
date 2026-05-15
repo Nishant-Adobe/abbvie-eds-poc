@@ -56,7 +56,6 @@ export function wireInlineTooltips(scope = document) {
     abbr.removeAttribute('title');
     abbr.setAttribute('aria-describedby', id);
     abbr.setAttribute('aria-expanded', 'false');
-    abbr.setAttribute('role', 'button');
     abbr.classList.add('has-tooltip');
     abbr.setAttribute('tabindex', '0');
     abbr.append(panel);
