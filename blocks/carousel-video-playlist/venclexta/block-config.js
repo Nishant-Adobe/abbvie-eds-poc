@@ -1,3 +1,5 @@
+import { loadScript } from '../../scripts/aem.js';
+
 const bcScripts = {};
 let playerCount = 0;
 let transcriptModal = null;
@@ -8,13 +10,7 @@ function loadBrightcoveScript(account, player) {
   }
   const key = `${account}/${player}_default`;
   if (!bcScripts[key]) {
-    bcScripts[key] = new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = `https://players.brightcove.net/${key}/index.min.js`;
-      s.onload = resolve;
-      s.onerror = reject;
-      document.head.append(s);
-    });
+    bcScripts[key] = loadScript(`https://players.brightcove.net/${key}/index.min.js`);
   }
   return bcScripts[key];
 }
@@ -60,7 +56,7 @@ function getTranscriptModal() {
       && overlay.classList.contains('is-open')) close();
   }, { signal });
 
-  transcriptModal = { overlay, body, abort: () => ac.abort() };
+  transcriptModal = { overlay, body };
   return transcriptModal;
 }
 
@@ -247,7 +243,9 @@ function buildCard(item, cfg, single) {
       playRetries -= 1;
       if (playRetries > 0) requestAnimationFrame(startPlay);
     };
-    loadBrightcoveScript(accountId, playerId).then(startPlay).catch(() => {});
+    loadBrightcoveScript(accountId, playerId).then(startPlay).catch(() => {
+      playBtn.hidden = false;
+    });
   });
 
   return card;
