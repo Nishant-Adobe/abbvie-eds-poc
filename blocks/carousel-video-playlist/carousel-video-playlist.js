@@ -379,8 +379,6 @@ function assembleLayout(block, playlistArea, playerArea, playlistLayout, isCards
 }
 
 export async function decorateBlock(block) {
-  if (window.self !== window.top) return;
-
   const cfg = readBlockConfig(block);
   const {
     accountId, playlistId, enableCaptions, playlistLayout,

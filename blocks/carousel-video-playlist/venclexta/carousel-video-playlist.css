@@ -510,12 +510,18 @@
   font-family: var(--body-font-family, sans-serif);
 }
 
-/* 2-column grid */
+/* Grid — mobile-first: 1-col base, 2-col on desktop */
 .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
   display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-columns: 1fr !important;
   gap: 32px !important;
   overflow: visible !important;
+}
+
+@media (min-width: 768px) {
+  .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
 .carousel-video-playlist.cvp-venclexta-stories .cvp-grid > div {
@@ -566,7 +572,7 @@
   border-radius: 50%;
   border: none;
   background:
-    rgb(255 206 0 / 70%)
+    var(--color-play-button-bg, rgb(255 206 0 / 70%))
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E")
     center / 32px no-repeat;
   cursor: pointer;
@@ -576,7 +582,7 @@
 
 .cvp-venclexta-card .cvp-play-btn:hover,
 .cvp-venclexta-card .cvp-play-btn:focus {
-  background-color: rgb(8 8 140);
+  background-color: var(--color-play-button-hover, rgb(8 8 140));
 }
 
 .cvp-venclexta-card .cvp-play-btn[hidden] {
@@ -736,10 +742,6 @@
 
 /* ── Mobile ── */
 @media (width < 768px) {
-  .carousel-video-playlist.cvp-venclexta-stories .cvp-grid {
-    grid-template-columns: 1fr;
-  }
-
   .cvp-transcript-modal-dialog {
     width: 95%;
     max-height: 90vh;

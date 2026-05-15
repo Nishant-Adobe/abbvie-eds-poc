@@ -60,10 +60,10 @@ function getTranscriptModal() {
 function openTranscript(content) {
   const modal = getTranscriptModal();
   modal.body.innerHTML = '';
-  if (typeof content === 'string') {
-    modal.body.innerHTML = content;
-  } else if (content?.innerHTML) {
-    modal.body.innerHTML = content.innerHTML;
+  if (content?.nodeType) {
+    modal.body.append(content.cloneNode(true));
+  } else if (typeof content === 'string') {
+    modal.body.textContent = content;
   }
   modal.overlay.classList.add('is-open');
   document.body.classList.add('cvp-modal-is-open');
@@ -89,7 +89,8 @@ function readConfig(block) {
   return {
     layout: layouts.includes(first) ? first : (cl || 'cards'),
     accountId: val(3) || val(1) || '',
-    playerId: val(5) || val(3) || 'default',
+    playerId: val(5) || 'default',
+    piUrl: val(7) || 'https://www.rxabbvie.com/pdf/venclexta.pdf',
   };
 }
 
@@ -110,7 +111,8 @@ function parseItems(block) {
     .filter(({ videoId }) => videoId);
 }
 
-function buildCard(item, accountId, playerId, single) {
+function buildCard(item, cfg, single) {
+  const { accountId, playerId, piUrl } = cfg;
   const card = document.createElement('div');
   card.className = 'cvp-venclexta-card';
 
@@ -168,7 +170,7 @@ function buildCard(item, accountId, playerId, single) {
     const piLink = document.createElement('a');
     piLink.className = 'cvp-transcript-link cvp-pi-link';
     piLink.textContent = 'View Full Prescribing Information';
-    piLink.href = 'https://www.rxabbvie.com/pdf/venclexta.pdf';
+    piLink.href = piUrl;
     piLink.target = '_blank';
     piLink.rel = 'noopener';
     linksRow.append(piLink);
@@ -242,7 +244,7 @@ export default async function getBlockConfigs() {
 
         const cfg = readConfig(block);
         const items = parseItems(block);
-        const { accountId, playerId } = cfg;
+        const { accountId } = cfg;
 
         block.textContent = '';
         block.classList.add('cvp-venclexta-stories');
@@ -260,16 +262,16 @@ export default async function getBlockConfigs() {
         grid.className = single ? 'cvp-grid cvp-single' : 'cvp-grid';
 
         const cards = items.map((item) => {
-          const card = buildCard(item, accountId, playerId, single);
+          const card = buildCard(item, cfg, single);
           grid.append(card);
           return card;
         });
 
         block.append(grid);
 
-        // Initialize BC players sequentially so dock loads for all
+        // Initialize BC players sequentially so metadata loads for all
         await cards.reduce(
-          (chain, card) => chain.then(() => card.initPlayer()),
+          (chain, card) => chain.then(() => card.initPlayer().catch(() => {})),
           Promise.resolve(),
         );
       },
