@@ -78,8 +78,8 @@ function bindEvents(el, triggerEl, show, hide) {
   triggerEl.addEventListener('focus', () => { if (!pointerActivated) show(); });
   triggerEl.addEventListener('blur', () => { pointerActivated = false; hide(); });
   triggerEl.addEventListener('click', (e) => {
-    e.preventDefault();
     if (pointerActivated) {
+      e.preventDefault();
       if (el.classList.contains('is-visible')) hide();
       else show();
     }
