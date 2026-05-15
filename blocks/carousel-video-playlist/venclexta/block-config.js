@@ -159,7 +159,24 @@ function buildCard(item, accountId, playerId, single) {
       window.open(item.transcriptHref, '_blank');
     }
   });
-  content.append(link);
+
+  if (single) {
+    const linksRow = document.createElement('div');
+    linksRow.className = 'cvp-links-row';
+    linksRow.append(link);
+
+    const piLink = document.createElement('a');
+    piLink.className = 'cvp-transcript-link cvp-pi-link';
+    piLink.textContent = 'View Full Prescribing Information';
+    piLink.href = 'https://www.rxabbvie.com/pdf/venclexta.pdf';
+    piLink.target = '_blank';
+    piLink.rel = 'noopener';
+    linksRow.append(piLink);
+
+    content.append(linksRow);
+  } else {
+    content.append(link);
+  }
 
   card.append(content);
 
