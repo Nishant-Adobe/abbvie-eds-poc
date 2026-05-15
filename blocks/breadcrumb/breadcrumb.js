@@ -38,12 +38,16 @@ function extractConfig(block) {
 
   let autoVal = false;
   let homeLabel = 'Home';
+  let title = 'Breadcrumb';
+  let anchorId = '';
 
   rows.forEach((row) => {
     const prop = row.querySelector('[data-aue-prop]');
     if (prop) {
       const name = prop.getAttribute('data-aue-prop');
       if (name === 'homeLabel') homeLabel = prop.textContent?.trim() || 'Home';
+      if (name === 'title') title = prop.textContent?.trim() || 'Breadcrumb';
+      if (name === 'anchorId') anchorId = prop.textContent?.trim() || '';
       if (name === 'auto') {
         const val = prop.textContent?.trim().toLowerCase();
         autoVal = val === 'true';
@@ -56,11 +60,15 @@ function extractConfig(block) {
         const val = divs[1]?.textContent?.trim().toLowerCase();
         if (key === 'auto') { autoVal = val === 'true'; row.dataset.bcConfig = ''; }
         if (key === 'homelabel') { homeLabel = divs[1]?.textContent?.trim() || 'Home'; row.dataset.bcConfig = ''; }
+        if (key === 'title') { title = divs[1]?.textContent?.trim() || 'Breadcrumb'; row.dataset.bcConfig = ''; }
+        if (key === 'anchorid') { anchorId = divs[1]?.textContent?.trim() || ''; row.dataset.bcConfig = ''; }
       }
     }
   });
 
-  return { auto: autoVal, homeLabel };
+  return {
+    auto: autoVal, homeLabel, title, anchorId,
+  };
 }
 
 function extractItems(block) {
@@ -173,7 +181,8 @@ export default async function decorate(block) {
 
   if (!crumbs.length) return;
 
-  const nav = buildNav(crumbs, 'Breadcrumb');
+  const nav = buildNav(crumbs, config.title);
+  if (config.anchorId) block.id = config.anchorId;
   block.append(nav);
   appendJsonLd(nav.querySelector('ol'));
 }
