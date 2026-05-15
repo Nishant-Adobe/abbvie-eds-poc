@@ -152,8 +152,7 @@ function buildCard(item, cfg, single) {
   link.type = 'button';
   link.className = 'cvp-transcript-link';
   link.textContent = 'View Transcript';
-  link.style.display = (hasTranscript || item.transcriptHref)
-    ? '' : 'none';
+  link.classList.toggle('is-hidden', !(hasTranscript || item.transcriptHref));
   link.addEventListener('click', () => {
     if (hasTranscript) {
       openTranscript(item.transcript);
@@ -207,7 +206,7 @@ function buildCard(item, cfg, single) {
             if (mi?.longDescription
               && /^https?:\/\//.test(mi.longDescription)
               && !hasTranscript && !item.transcriptHref) {
-              link.style.display = '';
+              link.classList.remove('is-hidden');
               link.addEventListener('click', () => {
                 window.open(mi.longDescription, '_blank', 'noopener,noreferrer');
               }, { once: true });
