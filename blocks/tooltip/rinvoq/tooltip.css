@@ -2,12 +2,13 @@
 abbr.has-tooltip {
   --tooltip-bg: var(--color-brand-primary, #222);
   --tooltip-color: var(--color-text-on-dark, #fff);
-  --tooltip-focus-ring: var(--color-brand-primary, var(--link-color));
+  --tooltip-focus-ring: var(--color-brand-primary, #035fe6);
   --tooltip-arrow-size: var(--spacing-10, 1rem);
   --tooltip-offset: var(--spacing-10, 1rem);
   --tooltip-border-radius: var(--border-radius-m, 0.8rem);
   --tooltip-shadow: var(--elevation-card, 0 0.8rem 2rem rgb(0 0 0 / 10%));
   --tooltip-panel-width: auto;
+  --tooltip-panel-max-width: calc(280 * var(--px-to-rem, 0.1rem));
   --tooltip-min-width: var(--spacing-100, 10rem);
   --tooltip-z-index: var(--z-index-10, 10);
   --tooltip-trigger-border-color: currentcolor;
@@ -37,12 +38,13 @@ abbr.has-tooltip {
   bottom: calc(100% + var(--tooltip-offset));
   left: 50%;
   transform: translateX(-50%);
-  background: var(--tooltip-bg);
-  color: var(--tooltip-color);
+  background: var(--tooltip-bg, #222);
+  color: var(--tooltip-color, #fff);
   border-radius: var(--tooltip-border-radius);
   font-size: var(--font-size-14, 1.4rem);
   line-height: var(--tooltip-panel-line-height, var(--line-height-relaxed, 1.5));
   width: var(--tooltip-panel-width);
+  max-width: var(--tooltip-panel-max-width);
   min-width: var(--tooltip-min-width);
   min-height: var(--tooltip-panel-min-height, var(--spacing-20, 2rem));
   opacity: 0;
@@ -70,7 +72,7 @@ abbr.has-tooltip {
   top: 100%;
   left: calc(50% - var(--tooltip-arrow-size));
   border: var(--tooltip-arrow-size) solid transparent;
-  border-top-color: var(--tooltip-bg);
+  border-top-color: var(--tooltip-bg, #222);
   width: 0;
   height: 0;
   pointer-events: none;
@@ -109,7 +111,7 @@ abbr.has-tooltip {
   top: auto;
   bottom: 100%;
   border-top-color: transparent;
-  border-bottom-color: var(--tooltip-bg);
+  border-bottom-color: var(--tooltip-bg, #222);
 }
 
 /* Position: bottom (authored variant) */
@@ -123,7 +125,7 @@ abbr.has-tooltip {
   top: auto;
   bottom: 100%;
   border-top-color: transparent;
-  border-bottom-color: var(--tooltip-bg);
+  border-bottom-color: var(--tooltip-bg, #222);
 }
 
 /* Position: left */
@@ -137,7 +139,7 @@ abbr.has-tooltip {
   top: 50%;
   left: 100%;
   border-top-color: transparent;
-  border-left-color: var(--tooltip-bg);
+  border-left-color: var(--tooltip-bg, #222);
   transform: translateY(calc(-1 * var(--tooltip-arrow-size)));
 }
 
@@ -155,7 +157,7 @@ abbr.has-tooltip {
   right: 100%;
   left: auto;
   border-top-color: transparent;
-  border-right-color: var(--tooltip-bg);
+  border-right-color: var(--tooltip-bg, #222);
   transform: translateY(calc(-1 * var(--tooltip-arrow-size)));
 }
 
@@ -218,7 +220,7 @@ abbr.has-tooltip.flip-bottom .tooltip-panel::after {
   top: auto;
   bottom: 100%;
   border-top-color: transparent;
-  border-bottom-color: var(--tooltip-bg);
+  border-bottom-color: var(--tooltip-bg, #222);
 }
 
 .tooltip,

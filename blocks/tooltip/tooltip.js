@@ -12,7 +12,14 @@ function createTooltipPanel(content, id) {
   return panel;
 }
 
+function resetFlip(trigger, panel) {
+  const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
+  container.classList.remove('flip-bottom');
+  panel.classList.remove('flip-left', 'flip-right');
+}
+
 function autoFlip(trigger, panel) {
+  resetFlip(trigger, panel);
   const rect = panel.getBoundingClientRect();
   const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
   if (rect.top < 0) {
@@ -23,12 +30,6 @@ function autoFlip(trigger, panel) {
   } else if (rect.right > window.innerWidth) {
     panel.classList.add('flip-right');
   }
-}
-
-function resetFlip(trigger, panel) {
-  const container = trigger.closest('.tooltip, .has-tooltip') || trigger;
-  container.classList.remove('flip-bottom');
-  panel.classList.remove('flip-left', 'flip-right');
 }
 
 function removeFromRegistry(el) {

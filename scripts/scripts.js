@@ -500,13 +500,14 @@ async function loadLazy(doc) {
 
   if (main.querySelector('abbr[title]')) {
     const brand = getMetadata('brand')?.trim();
-    Promise.all([
-      loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.css`),
-      brand && /^[\w-]+$/.test(brand) ? loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/${brand}/tooltip.css`).catch(() => {}) : Promise.resolve(),
-    ]).then(() => import(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.js`))
-      .then(({ wireInlineTooltips }) => wireInlineTooltips(main))
-      // eslint-disable-next-line no-console
-      .catch((err) => console.warn('[tooltip] lazy-load failed', err));
+    try {
+      await Promise.all([
+        loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.css`),
+        brand && /^[\w-]+$/.test(brand) ? loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/${brand}/tooltip.css`).catch(() => {}) : Promise.resolve(),
+      ]);
+      const { wireInlineTooltips } = await import(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.js`);
+      wireInlineTooltips(main);
+    } catch { /* tooltip loading is non-critical */ }
   }
 }
 
