@@ -51,9 +51,12 @@ export default async function getBlockConfigs() {
           submenu?.addEventListener('mouseleave', () => { if (desktopMQ.matches) closeAll(); });
         });
 
-        document.addEventListener('click', (e) => {
-          if (!block.querySelector('.nav-sections').contains(e.target)) closeAll();
-        });
+        if (!block.dataset.navClickBound) {
+          block.dataset.navClickBound = 'true';
+          document.addEventListener('click', (e) => {
+            if (!block.querySelector('.nav-sections').contains(e.target)) closeAll();
+          });
+        }
 
         // Utility dropdown — open on hover (desktop only; mobile utility bar is hidden)
         block.querySelectorAll('.nav-utility li:has(button[aria-haspopup])').forEach((dropLi) => {

@@ -52,12 +52,6 @@ header .nav-utility {
   box-sizing: border-box;
 }
 
-/* Show utility bar when it has children (content-driven) */
-
-header .nav-utility:has(ul) {
-  display: block;
-}
-
 header .nav-utility nav {
   display: flex;
   justify-content: flex-end;
@@ -147,7 +141,7 @@ header .nav-utility ul[role="menu"] {
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
+  background: var(--background-color, white);
   border: 1px solid rgb(221 221 221);
   border-radius: 2px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
@@ -180,17 +174,13 @@ header .nav-utility ul[role="menu"] a:hover {
   background: rgb(245 245 245);
 }
 
-/* Mobile: hide utility bar */
-
-@media (width <= 1023px) {
-  header .nav-utility {
-    display: none !important;
-  }
-}
-
-/* Desktop: account for utility bar height in header placeholder */
+/* Desktop: show utility bar when authored; account for its height */
 
 @media (width > 1023px) {
+  header .nav-utility:has(ul) {
+    display: block;
+  }
+
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
   }
@@ -357,7 +347,7 @@ header nav .nav-search .search-toggle[aria-expanded="true"] .icon-search-white {
   display: none;
 }
 
-header nav .nav-search .search-toggle[aria-expanded="true"] .icon-close
+header nav .nav-search .search-toggle[aria-expanded="true"] .icon-close,
 header nav .nav-search .search-toggle[aria-expanded="false"] .icon-search-white {
   display: inline-flex;
 }
@@ -411,8 +401,8 @@ header nav .nav-search .search-inner-wrapper input[type="search"] {
     background: rgb(255, 255, 255);
     padding: 4px 35px 4px 15px;
     box-sizing: border-box;
-    border: 1px solid #929495;
-    font-size: 14.88px;
+    border: var(--separator-height-1) solid var(--color-border, #929495);
+    font-size: var(--font-size-14, 14.88px);
     transition: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 

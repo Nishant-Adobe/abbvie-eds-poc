@@ -66,9 +66,12 @@ export default async function getBlockConfigs() {
           submenu?.addEventListener('mouseleave', () => { if (desktopMQ.matches) closeAll(); });
         });
 
-        document.addEventListener('click', (e) => {
-          if (!block.querySelector('.nav-sections').contains(e.target)) closeAll();
-        });
+        if (!block.dataset.navClickBound) {
+          block.dataset.navClickBound = 'true';
+          document.addEventListener('click', (e) => {
+            if (!block.querySelector('.nav-sections').contains(e.target)) closeAll();
+          });
+        }
       },
     },
   };
