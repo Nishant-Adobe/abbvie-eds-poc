@@ -1,4 +1,4 @@
-// import { beforeDecorate, decorateBlock, afterDecorate } from '../social-share.js';
+// import { beforeDecorate, decorateBlock, afterDecorate } from './social-share.js';
 
 export default async function getBlockConfigs() {
   return {
