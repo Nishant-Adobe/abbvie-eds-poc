@@ -36,7 +36,7 @@ function extractConfig(block) {
       const name = prop.getAttribute('data-aue-prop');
       if (name === 'heading') heading = prop.textContent?.trim() || '';
       if (name === 'question') { question = prop; }
-      if (name === 'disclaimer') { disclaimer = prop; }
+      if (name === 'disclaimer') { disclaimer = prop; row.dataset.itDisclaimer = ''; }
       if (name === 'cookieName') cookieName = prop.textContent?.trim() || '';
       if (name === 'resetLabel') resetLabel = prop.textContent?.trim() || 'Start over';
       if (name === 'showReset') {
@@ -50,7 +50,7 @@ function extractConfig(block) {
         const key = divs[0]?.textContent?.trim().toLowerCase();
         if (key === 'heading') { heading = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
         if (key === 'question') { [, question] = divs; row.dataset.itConfig = ''; }
-        if (key === 'disclaimer') { [, disclaimer] = divs; row.dataset.itConfig = ''; }
+        if (key === 'disclaimer') { [, disclaimer] = divs; row.dataset.itDisclaimer = ''; }
         if (key === 'cookiename') { cookieName = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
         if (key === 'resetlabel') { resetLabel = divs[1]?.textContent?.trim() || 'Start over'; row.dataset.itConfig = ''; }
         if (key === 'showreset') {
@@ -88,7 +88,7 @@ function extractConfig(block) {
       const text = cell.textContent?.trim() || '';
       if (text.length > 30) {
         disclaimer = cell;
-        lastRow.dataset.itConfig = '';
+        lastRow.dataset.itDisclaimer = '';
       }
     }
   }
@@ -176,7 +176,9 @@ export default function decorate(block) {
   const items = extractItems(block);
 
   const rows = [...block.querySelectorAll(':scope > div')];
-  rows.forEach((row) => { row.classList.add('info-tree-hidden'); });
+  rows.forEach((row) => {
+    if (!row.dataset.itDisclaimer) row.classList.add('info-tree-hidden');
+  });
 
   if (!items.length) return;
 
@@ -242,6 +244,8 @@ export default function decorate(block) {
       disclaimerEl.append(child.cloneNode(true));
     });
     contentEl.append(disclaimerEl);
+    const disclaimerRow = block.querySelector('[data-it-disclaimer]');
+    if (disclaimerRow) disclaimerRow.classList.add('info-tree-hidden');
   }
 
   let resetWrap = null;
