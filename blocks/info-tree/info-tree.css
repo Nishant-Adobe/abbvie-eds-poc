@@ -1,22 +1,9 @@
 /* Mobile-first: base = stacked (mobile) */
 .info-tree {
-  --info-tree-bg: var(--color-background-light);
-  --info-tree-text: var(--color-text-heading);
-  --info-tree-radio-border: var(--color-text-heading);
-  --info-tree-radio-hover: var(--color-text-heading);
-  --info-tree-radio-fill: var(--color-brand-accent);
-  --info-tree-radio-size-mobile: 15px;
-  --info-tree-radio-size-desktop: 28px;
-  --info-tree-reset-color: var(--color-brand-primary);
-  --info-tree-disclaimer-color: var(--text-color);
-  --info-tree-gap-mobile: 4px;
-  --info-tree-gap-desktop: 12px;
-
   display: flex;
   flex-direction: column;
   gap: var(--spacing-24);
   padding: var(--spacing-24) var(--spacing-16);
-  background: var(--info-tree-bg);
 }
 
 .info-tree .info-tree-image {
@@ -37,16 +24,11 @@
 }
 
 .info-tree .info-tree-heading {
-  font-size: var(--heading-font-size-m);
-  font-weight: var(--font-weight-heading);
   margin: 0 0 var(--spacing-08);
 }
 
 .info-tree .info-tree-question {
-  font-size: var(--body-font-size-l);
-  font-weight: var(--font-weight-heading);
   margin: 0 0 var(--spacing-16);
-  line-height: var(--line-height-heading);
 }
 
 .info-tree .info-tree-buttons {
@@ -58,13 +40,10 @@
 .info-tree .info-tree-option {
   display: flex;
   align-items: center;
-  gap: var(--info-tree-gap-mobile);
+  gap: 4px;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: var(--body-font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--info-tree-text);
   padding: var(--spacing-08) 0;
   text-align: left;
   white-space: normal;
@@ -73,26 +52,19 @@
 .info-tree .info-tree-option::before {
   content: '';
   display: inline-block;
-  width: var(--info-tree-radio-size-mobile);
-  height: var(--info-tree-radio-size-mobile);
-  min-width: var(--info-tree-radio-size-mobile);
-  border: 1px solid var(--info-tree-radio-border);
+  width: 15px;
+  height: 15px;
+  min-width: 15px;
+  border: 1px solid currentcolor;
   border-radius: 50%;
-}
-
-.info-tree .info-tree-option:hover::before {
-  border-color: var(--info-tree-radio-hover);
-  background: var(--info-tree-radio-fill);
-  box-shadow: var(--color-background, #fff) 0 0 0 3px inset;
 }
 
 .info-tree .info-tree-results {
   margin-top: var(--spacing-16);
 }
 
-.info-tree .info-tree-result {
-  font-size: var(--body-font-size-m);
-  line-height: var(--line-height-body);
+.info-tree .info-tree-result p {
+  margin: 0 0 var(--spacing-16);
 }
 
 .info-tree .info-tree-reset {
@@ -102,9 +74,7 @@
 .info-tree .info-tree-reset-btn {
   background: none;
   border: none;
-  color: var(--info-tree-reset-color);
   cursor: pointer;
-  font-size: var(--body-font-size-s);
   text-decoration: underline;
   padding: 0;
 }
@@ -112,28 +82,16 @@
 .info-tree .info-tree-cta-btn {
   display: inline-block;
   margin-top: var(--spacing-16);
-  padding: var(--spacing-12) var(--spacing-24);
-  border: 2px solid var(--color-brand-primary);
-  border-radius: var(--border-radius-button-secondary);
-  color: var(--color-brand-primary);
-  font-size: var(--body-font-size-s);
-  font-weight: var(--font-weight-heading);
   text-decoration: none;
   cursor: pointer;
-}
-
-.info-tree .info-tree-cta-btn:hover {
-  background: var(--color-brand-primary);
-  color: var(--color-text-on-dark);
+  vertical-align: middle;
 }
 
 .info-tree .info-tree-cta-icon {
-  margin-left: var(--spacing-08);
+  vertical-align: middle;
 }
 
 .info-tree .info-tree-disclaimer {
-  font-size: var(--body-font-size-xs);
-  color: var(--info-tree-disclaimer-color);
   margin-top: var(--spacing-16);
 }
 
@@ -155,20 +113,14 @@
     max-width: 160px;
   }
 
-  .info-tree .info-tree-question {
-    font-size: var(--heading-font-size-m);
-    margin: 0 0 var(--spacing-24);
-  }
-
   .info-tree .info-tree-option {
-    font-size: var(--body-font-size-m);
-    gap: var(--info-tree-gap-desktop);
+    gap: 12px;
   }
 
   .info-tree .info-tree-option::before {
-    width: var(--info-tree-radio-size-desktop);
-    height: var(--info-tree-radio-size-desktop);
-    min-width: var(--info-tree-radio-size-desktop);
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
     border-width: 2px;
   }
 }
