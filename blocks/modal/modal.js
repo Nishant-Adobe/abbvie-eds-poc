@@ -262,12 +262,7 @@ async function openModal(trigger, variantsOrOptions = []) {
 let exitAc = null;
 const exitModals = [];
 let exitIntentSuppressedUntil = 0;
-let mouseHasEnteredPage = false;
-
-// Only arm exit-intent after the cursor has actually moved inside the viewport.
-// This prevents spurious fires on page load/refresh when the cursor is in the
-// browser chrome and has never entered the page content.
-document.addEventListener('mousemove', () => { mouseHasEnteredPage = true; }, { once: true });
+let exitIntentReadyAt = 0;
 
 document.addEventListener('exit-intent:suppress', (e) => {
   exitIntentSuppressedUntil = Date.now() + (e.detail?.ms ?? 2000);
@@ -280,9 +275,16 @@ function registerExitIntent(trigger, variants) {
   if (exitAc) return;
   exitAc = new AbortController();
 
+  // Ignore exit-intent for 2 s after the listener is registered. Chrome fires a
+  // synthetic mousemove at the cursor's current position on page load (hover correction),
+  // which can immediately arm and then trigger the listener if the cursor is near the
+  // top edge on refresh. The delay absorbs both that synthetic event and any
+  // layout-shift-induced leave events that occur during page initialisation.
+  if (!exitIntentReadyAt) exitIntentReadyAt = Date.now() + 2000;
+
   document.addEventListener('mouseleave', (e) => {
     if (e.clientY > 0) return;
-    if (!mouseHasEnteredPage) return;
+    if (Date.now() < exitIntentReadyAt) return;
     if (Date.now() < exitIntentSuppressedUntil) return;
     const modal = exitModals.find(
       (m) => !hasSeenModal(m.trigger.dataset.modalId, m.variants),
