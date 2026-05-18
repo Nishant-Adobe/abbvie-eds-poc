@@ -26,6 +26,10 @@ export default async function getBlockConfigs() {
         const slides = block.querySelectorAll('.carousel-slide');
         if (slides.length < 2) return;
 
+        if (!block.dataset.activeSlide) {
+          block.dataset.activeSlide = '0';
+        }
+
         startAutoPlay(block);
 
         block.addEventListener('mouseenter', stopAutoPlay);
