@@ -192,22 +192,21 @@
   margin: 0;
 }
 
-/* Navigation arrows — hidden by default, shown on hover */
+/* Navigation arrows — hidden by default, shown on carousel hover */
 .carousel.carousel .carousel-navigation-buttons {
   left: 0;
   right: 0;
   z-index: 3;
-  opacity: 0;
-  transition: opacity 0.3s;
+  display: none;
 }
 
 .carousel.carousel:hover .carousel-navigation-buttons {
-  opacity: 1;
+  display: flex;
 }
 
 .carousel.carousel .carousel-navigation-buttons button {
   width: 70px;
-  height: 120px;
+  height: 100%;
   background: none;
   background-color: transparent;
   border: none;
@@ -215,27 +214,26 @@
   cursor: pointer;
 }
 
-.carousel.carousel .carousel-navigation-buttons button:hover,
-.carousel.carousel .carousel-navigation-buttons button:focus-visible {
-  background-color: transparent;
+.carousel.carousel .carousel-navigation-buttons button:hover {
+  background: none;
 }
 
-/* Arrow glyph — inline SVG matching original's tall narrow chevron at 7rem */
+/* Arrow glyph — SVG matching Material Design keyboard_arrow at 7rem white */
 .carousel.carousel .carousel-navigation-buttons button::after {
   content: '';
   display: block;
-  width: 25px;
-  height: 70px;
+  width: 35px;
+  height: 90px;
   border: none;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='%23cccccc' stroke-width='1.2'%3E%3Cpath d='M8 1 L1.5 12 L8 23'/%3E%3C/svg%3E") center / contain no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='white' stroke-width='0.8'%3E%3Cpath d='M8 1 L1.5 12 L8 23'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .carousel.carousel .carousel-navigation-buttons button.slide-next::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='%23cccccc' stroke-width='1.2'%3E%3Cpath d='M2 1 L8.5 12 L2 23'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='white' stroke-width='0.8'%3E%3Cpath d='M2 1 L8.5 12 L2 23'/%3E%3C/svg%3E");
 }
 
 /* Dot indicators */
@@ -273,17 +271,15 @@
   }
 
   .carousel.carousel .carousel-navigation-buttons {
-    opacity: 1;
+    display: flex;
   }
 
   .carousel.carousel .carousel-navigation-buttons button {
     width: 40px;
-    height: 60px;
   }
 
   .carousel.carousel .carousel-navigation-buttons button::after {
-    width: 16px;
-    height: 16px;
-    border-width: 2px;
+    width: 20px;
+    height: 50px;
   }
 }
