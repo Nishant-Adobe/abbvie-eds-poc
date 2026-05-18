@@ -14,6 +14,7 @@ const SCROLL_THRESHOLD_DEFAULT = 200;
 let lastScrollTop = 0;
 const navigationCache = new Map();
 let scrollThrottleId = null;
+let cachedHeaderEl = null;
 
 // Media query for desktop
 const isDesktop = window.matchMedia(DESKTOP_BREAKPOINT);
@@ -51,14 +52,14 @@ function createElement(tag, { className, attributes = {}, textContent, innerHTML
  * @param {boolean} expanded - Whether sections should be expanded.
  */
 function toggleAllNavSections(expanded = false) {
-  const nav = document.querySelector('nav');
-  const isSearchOpen = [...nav.querySelectorAll('.nav-sections ul > li')]
+  const nav = cachedHeaderEl?.querySelector('nav');
+  const isSearchOpen = [...(nav?.querySelectorAll('.nav-sections ul > li') || [])]
     .some((li) => li.getAttribute('aria-expanded') === 'true');
   if (nav && !isDesktop.matches && isSearchOpen) {
     nav.classList.remove('second-level-active');
   }
 
-  document.querySelectorAll('.nav-item-level-0 .default-content-wrapper > ul > li').forEach((section) => {
+  cachedHeaderEl?.querySelectorAll('.nav-item-level-0 .default-content-wrapper > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
     section.querySelector('button')?.setAttribute('aria-expanded', expanded);
   });
@@ -329,7 +330,7 @@ async function buildMegaMenu(block) {
   wrapper.appendChild(secondaryCard);
 
   wrapper.addEventListener('click', () => {
-    document.querySelector('.mega-menu-minimize')?.classList.remove('mega-menu-minimize');
+    cachedHeaderEl?.querySelector('.mega-menu-minimize')?.classList.remove('mega-menu-minimize');
   });
 
   return wrapper;
@@ -355,7 +356,7 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
     navItemPath = href ? new URL(href).pathname : `/${navigation}`;
     navigationData = await getNavigationByPath(navItemPath);
   }
-  const level2Container = document.querySelector(`#submenu-${navigation}`);
+  const level2Container = cachedHeaderEl?.querySelector(`#submenu-${navigation}`);
   if (!level2Container) return;
 
   // build mega nev
@@ -614,7 +615,7 @@ function buildMenuItem(block, isNavigation = false) {
       );
     }
     const expanded = li.getAttribute('aria-expanded') === 'true';
-    const nav = document.querySelector('nav');
+    const nav = cachedHeaderEl?.querySelector('nav');
 
     // Close hamburger menu if search is being opened and change hamburger to close icon
     if (block.classList.contains('search')) {
@@ -725,7 +726,7 @@ function buildEyebrows(headerEl) {
     //   p[n-1]    = floatingIsiCollapseLabel ("Collapse ISI" — template default)
     const cell = eb.querySelector(':scope > div > div');
     const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
-    const contentParas = paras.slice(2, -2); // skip icon, position, and last 2 ISI defaults
+    const contentParas = paras.length >= 4 ? paras.slice(2, -2) : [];
     if (!contentParas.length) return;
 
     const positionText = paras[1]?.textContent.trim().toLowerCase();
@@ -756,9 +757,9 @@ function buildFloatingIsi(headerEl) {
   //   p[n-1]    = floatingIsiCollapseLabel (authored or default "Collapse ISI")
   const cell = isiBlock.querySelector(':scope > div > div');
   const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
-  const expandLabel = paras[paras.length - 2]?.textContent.trim() || 'See Full ISI';
-  const collapseLabel = paras[paras.length - 1]?.textContent.trim() || 'Collapse ISI';
-  const isiParas = paras.slice(2, -2); // authored ISI text paragraphs
+  const expandLabel = paras.length >= 2 ? paras[paras.length - 2]?.textContent.trim() || 'See Full ISI' : 'See Full ISI';
+  const collapseLabel = paras.length >= 1 ? paras[paras.length - 1]?.textContent.trim() || 'Collapse ISI' : 'Collapse ISI';
+  const isiParas = paras.length >= 4 ? paras.slice(2, -2) : [];
 
   const bar = createElement('div', {
     className: 'nav-floating-isi',
@@ -777,6 +778,9 @@ function buildFloatingIsi(headerEl) {
     toggle.setAttribute('aria-expanded', String(!expanded));
     toggle.textContent = expanded ? expandLabel : collapseLabel;
     bar.classList.toggle('nav-floating-isi-open', !expanded);
+    document.body.style.paddingBottom = expanded
+      ? getComputedStyle(document.documentElement).getPropertyValue('--nav-isi-collapsed-height').trim() || '48px'
+      : '';
   });
 
   bar.append(toggle, textWrap);
@@ -850,14 +854,13 @@ function buildCtaGroup(headerEl) {
 function wireHcpModalLinks(container, block) {
   const headerEl = block.closest('header') || block;
   let dialog = headerEl.querySelector('.hcp-leave-site-dialog');
+  let warningP;
   if (!dialog) {
     dialog = document.createElement('dialog');
     dialog.className = 'hcp-leave-site-dialog';
-    const warningText = container.dataset.hcpWarning || '';
     const form = document.createElement('form');
     form.method = 'dialog';
-    const p = document.createElement('p');
-    p.textContent = warningText;
+    warningP = document.createElement('p');
     const menu = document.createElement('menu');
     const cancelBtn = document.createElement('button');
     cancelBtn.value = 'cancel';
@@ -866,15 +869,18 @@ function wireHcpModalLinks(container, block) {
     confirmBtn.value = 'confirm';
     confirmBtn.textContent = 'Continue';
     menu.append(cancelBtn, confirmBtn);
-    form.append(p, menu);
+    form.append(warningP, menu);
     dialog.appendChild(form);
     headerEl.appendChild(dialog);
+  } else {
+    warningP = dialog.querySelector('p');
   }
 
   container.querySelectorAll('a.hcp-modal, a[data-hcp-modal]').forEach((link) => {
     link.setAttribute('aria-haspopup', 'dialog');
     link.addEventListener('click', (e) => {
       e.preventDefault();
+      if (warningP) warningP.textContent = link.dataset.hcpWarning || '';
       dialog.showModal();
       dialog.addEventListener('close', () => {
         if (dialog.returnValue === 'confirm') window.open(link.href, '_blank', 'noopener,noreferrer');
@@ -886,9 +892,10 @@ function wireHcpModalLinks(container, block) {
 // Throttled scroll handler
 function handleScroll() {
   throttleRAF(() => {
-    const header = document.querySelector('header');
+    const header = cachedHeaderEl;
+    if (!header) return;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const heroBlock = document.querySelector('.hero.block');
+    const heroBlock = header.closest('body')?.querySelector('.hero.block');
     const threshold = heroBlock ? heroBlock.offsetHeight - 100 : SCROLL_THRESHOLD_DEFAULT;
     if (scrollTop > lastScrollTop && scrollTop > threshold) {
       header.classList.add('hide-nav');
@@ -904,7 +911,7 @@ function handleScroll() {
 // Keydown handler for ESC
 function handleKeydown(e) {
   if (e.key !== 'Escape') return;
-  const headerEl = document.querySelector('header');
+  const headerEl = cachedHeaderEl;
   headerEl?.querySelectorAll('.nav-utility button[aria-expanded="true"]').forEach((btn) => {
     btn.setAttribute('aria-expanded', 'false');
   });
@@ -929,6 +936,7 @@ export default async function decorate(block) {
   if (!fragment) return;
   const header = fragment.querySelector('.navigation-content-container');
   if (!header) return;
+  cachedHeaderEl = block.closest('header') || block;
 
   // Block-level layout variants
   const isLite = block.classList.contains('lite');
@@ -1277,7 +1285,10 @@ export default async function decorate(block) {
 
   // Floating ISI — appended to header block, sits outside nav-wrapper
   const floatingIsi = buildFloatingIsi(header);
-  if (floatingIsi) block.append(floatingIsi);
+  if (floatingIsi) {
+    block.append(floatingIsi);
+    document.body.style.paddingBottom = getComputedStyle(document.documentElement).getPropertyValue('--nav-isi-collapsed-height').trim() || '48px';
+  }
 
   await renderBlock(block);
 }

@@ -221,7 +221,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
 /* Desktop: show utility bar when authored; account for its height */
 
-@media (width > 1023px) {
+@media (width >= 1024px) {
   header .nav-utility:has(ul) {
     display: block;
   }
@@ -984,7 +984,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 
 /* Large screen styles */
 
-@media (width > 1439px) {
+@media (width >= 1440px) {
   header nav {
     max-width: var(--nav-max-width-lg);
     padding: var(--spacing-00);
@@ -1014,7 +1014,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 
 /* Desktop styles */
 
-@media (width > 1023px) {
+@media (width >= 1024px) {
   header nav .nav-hamburger {
     display: none;
     visibility: hidden;
@@ -1375,7 +1375,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 
 /* Tablet styles */
 
-@media (width <=1023px) {
+@media (width <= 1023px) {
   header nav {
     grid-template:
       'brand tools hamburger' var(--nav-height-mobile) 'sections sections sections' / 1fr auto auto;
@@ -1617,7 +1617,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 
 /* Mobile style */
 
-@media (width <=743px) {
+@media (width <= 743px) {
   /* header nav {
     padding: var(--spacing-00) var(--spacing-35);
   } */
@@ -1894,16 +1894,6 @@ header nav .nav-brand-indication img {
   display: block;
 }
 
-/* Account for floating ISI height in body bottom spacing */
-
-body:has(.nav-floating-isi) {
-  padding-bottom: var(--nav-isi-collapsed-height);
-}
-
-body:has(.nav-floating-isi-open) {
-  padding-bottom: 0;
-}
-
 /* ──────────────────────────────────────────
    Lite Header Layout
    ────────────────────────────────────────── */
@@ -1918,7 +1908,7 @@ body:has(.nav-floating-isi-open) {
 
 /* Sections always visible in lite layout (no hamburger-driven show/hide) */
 
-@media (width > 1023px) {
+@media (width >= 1024px) {
   .header-lite nav .nav-sections {
     display: flex;
     visibility: visible;
