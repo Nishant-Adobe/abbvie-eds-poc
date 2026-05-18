@@ -72,6 +72,13 @@ function buildVisuallyHidden(text) {
 
 function openSocialPopup(url) {
   window.open(url, '_blank', 'noopener,noreferrer,width=600,height=600');
+  // The popup window positions near the top of the screen. The user moving their cursor
+  // toward it causes mouseleave with clientY <= 0, triggering any page-level exit-intent
+  // modal. Suppress that first top-edge leave for 2 s via capture (fires before the
+  // bubble-phase exit-intent listener registered by modal.js).
+  const suppress = (e) => { if (e.clientY <= 0) e.stopImmediatePropagation(); };
+  document.addEventListener('mouseleave', suppress, { capture: true });
+  setTimeout(() => document.removeEventListener('mouseleave', suppress, true), 2000);
 }
 
 function buildPlatformItem(key, config, shareUrl, exitModalId) {
