@@ -77,8 +77,7 @@ function buildPlatformItem(platformKey, config, shareUrl) {
   return li;
 }
 
-function buildEmailItem(shareUrl) {
-  const title = document.title || document.querySelector('h1')?.textContent?.trim() || '';
+function buildEmailItem(shareUrl, title) {
   const li = document.createElement('li');
   li.className = 'social-share-item';
 
@@ -130,6 +129,7 @@ export default async function decorate(block) {
   });
 
   const shareUrl = rawUrl || window.location.href;
+  const pageTitle = document.title || block.closest('main')?.querySelector('h1')?.textContent?.trim() || '';
 
   const platformKeys = rawPlatforms
     ? rawPlatforms.split(',').map((s) => s.trim()).filter(Boolean)
@@ -148,7 +148,7 @@ export default async function decorate(block) {
   });
 
   if (block.classList.contains('social-share-email')) {
-    list.append(buildEmailItem(shareUrl));
+    list.append(buildEmailItem(shareUrl, pageTitle));
   }
 
   if (block.classList.contains('social-share-print')) {
