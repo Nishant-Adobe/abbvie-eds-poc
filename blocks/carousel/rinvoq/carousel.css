@@ -220,32 +220,44 @@
   background: none;
 }
 
-/* Arrow glyph — clean chevron matching original */
+/* Arrow glyph — two lines forming a clean chevron */
+.carousel.carousel .carousel-navigation-buttons .slide-prev::before,
 .carousel.carousel .carousel-navigation-buttons .slide-prev::after,
+.carousel.carousel .carousel-navigation-buttons .slide-next::before,
 .carousel.carousel .carousel-navigation-buttons .slide-next::after {
   content: '';
   display: block;
-  width: 30px;
-  height: 30px;
-  border: 0;
-  border-top: 5px solid #fff;
-  border-left: 5px solid #fff;
-  border-bottom: 0;
-  border-right: 0;
-  border-radius: 0;
   position: absolute;
-  top: 50%;
-  left: 55%;
-  transform: translate(-50%, -50%) rotate(-45deg);
-  background: none;
+  left: 50%;
+  width: 5px;
+  height: 22px;
+  background: #fff;
+  border: 0;
+  border-radius: 2px;
+}
+
+.carousel.carousel .carousel-navigation-buttons .slide-prev::before {
+  top: calc(50% - 12px);
+  transform: rotate(30deg);
+  transform-origin: bottom center;
+}
+
+.carousel.carousel .carousel-navigation-buttons .slide-prev::after {
+  top: calc(50% + 2px);
+  transform: rotate(-30deg);
+  transform-origin: top center;
+}
+
+.carousel.carousel .carousel-navigation-buttons .slide-next::before {
+  top: calc(50% - 12px);
+  transform: rotate(-30deg);
+  transform-origin: bottom center;
 }
 
 .carousel.carousel .carousel-navigation-buttons .slide-next::after {
-  border-top: 0;
-  border-left: 0;
-  border-bottom: 5px solid #fff;
-  border-right: 5px solid #fff;
-  left: 45%;
+  top: calc(50% + 2px);
+  transform: rotate(30deg);
+  transform-origin: top center;
 }
 
 /* Dot indicators */
@@ -263,19 +275,17 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel.carousel .carousel-slide-indicator button {
-  width: 12px;
-  height: 12px;
-  background-color: #fff;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #90124a;
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+  border: 2px solid #90124a;
 }
 
 .carousel.carousel .carousel-slide-indicator button:disabled,
 .carousel.carousel .carousel-slide-indicator button:hover,
 .carousel.carousel .carousel-slide-indicator button:focus-visible {
   background-color: #90124a;
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 1px #90124a;
+  border-color: #90124a;
 }
 
 /* Mobile */
