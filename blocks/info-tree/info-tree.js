@@ -65,11 +65,20 @@ function extractConfig(block) {
 function extractImage(block) {
   const imgProp = block.querySelector('[data-aue-prop="image"]');
   if (imgProp) {
-    const pic = imgProp.querySelector('picture') || imgProp.querySelector('img');
+    const pic = imgProp.closest('div')?.querySelector('picture')
+      || imgProp.querySelector('picture')
+      || imgProp.querySelector('img');
     return pic?.cloneNode(true) || null;
   }
-  const firstPic = block.querySelector(':scope > div:not([data-aue-resource]) picture');
-  return firstPic?.cloneNode(true) || null;
+  const rows = [...block.querySelectorAll(':scope > div:not([data-aue-resource])')];
+  for (let i = 0; i < rows.length; i += 1) {
+    const pic = rows[i].querySelector('picture') || rows[i].querySelector('img');
+    if (pic) {
+      rows[i].dataset.itConfig = '';
+      return pic.cloneNode(true);
+    }
+  }
+  return null;
 }
 
 function extractItems(block) {

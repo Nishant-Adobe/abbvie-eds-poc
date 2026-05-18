@@ -2,17 +2,21 @@
   display: none;
 }
 
+.info-tree [hidden] {
+  display: none;
+}
+
 .info-tree {
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-32, 2rem);
-  padding: var(--spacing-40, 2.5rem) var(--spacing-32, 2rem);
-  background: var(--info-tree-bg, var(--color-background-muted, #f4f4f4));
+  gap: var(--spacing-32);
+  padding: var(--spacing-40) var(--spacing-32);
+  background: var(--info-tree-bg);
 }
 
 .info-tree .info-tree-image {
   flex: 0 0 auto;
-  max-width: 200px;
+  max-width: 160px;
 }
 
 .info-tree .info-tree-image img,
@@ -27,35 +31,35 @@
 }
 
 .info-tree .info-tree-heading {
-  font-size: var(--heading-font-size-m, 1.25rem);
-  font-weight: var(--font-weight-heading, 700);
-  margin: 0 0 var(--spacing-8, 0.5rem);
+  font-size: var(--heading-font-size-m);
+  font-weight: var(--font-weight-heading);
+  margin: 0 0 var(--spacing-8);
 }
 
 .info-tree .info-tree-question {
-  font-size: var(--heading-font-size-l, 1.5rem);
-  font-weight: var(--font-weight-heading, 700);
-  margin: 0 0 var(--spacing-24, 1.5rem);
-  line-height: var(--line-height-heading, 1.3);
+  font-size: var(--heading-font-size-m);
+  font-weight: var(--font-weight-heading);
+  margin: 0 0 var(--spacing-24);
+  line-height: var(--line-height-heading);
 }
 
 .info-tree .info-tree-buttons {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-16, 1rem);
+  gap: var(--spacing-16);
 }
 
 .info-tree .info-tree-option {
   display: flex;
   align-items: center;
-  gap: var(--spacing-12, 0.75rem);
+  gap: var(--spacing-12);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: var(--body-font-size-m, 1rem);
-  font-weight: var(--font-weight-medium, 500);
-  color: var(--info-tree-text, var(--color-text, #1a1a1a));
-  padding: var(--spacing-8, 0.5rem) 0;
+  font-size: var(--body-font-size-m);
+  font-weight: var(--font-weight-medium);
+  color: var(--info-tree-text);
+  padding: var(--spacing-8) 0;
   text-align: left;
 }
 
@@ -65,34 +69,33 @@
   width: 28px;
   height: 28px;
   min-width: 28px;
-  border: 2px solid var(--info-tree-radio-border, var(--color-border, #999));
+  border: 2px solid var(--info-tree-radio-border);
   border-radius: 50%;
-  transition: border-color 0.2s, background 0.2s;
 }
 
 .info-tree .info-tree-option:hover::before {
-  border-color: var(--info-tree-radio-hover, var(--color-brand-primary, #333));
+  border-color: var(--info-tree-radio-hover);
 }
 
 .info-tree .info-tree-results {
-  margin-top: var(--spacing-16, 1rem);
+  margin-top: var(--spacing-16);
 }
 
 .info-tree .info-tree-result {
-  font-size: var(--body-font-size-m, 1rem);
-  line-height: var(--line-height-body, 1.5);
+  font-size: var(--body-font-size-m);
+  line-height: var(--line-height-body);
 }
 
 .info-tree .info-tree-reset {
-  margin-top: var(--spacing-24, 1.5rem);
+  margin-top: var(--spacing-24);
 }
 
 .info-tree .info-tree-reset-btn {
   background: none;
   border: none;
-  color: var(--info-tree-reset-color, var(--link-color, #0057cc));
+  color: var(--info-tree-reset-color);
   cursor: pointer;
-  font-size: var(--body-font-size-s, 0.875rem);
+  font-size: var(--body-font-size-s);
   text-decoration: underline;
   padding: 0;
 }
@@ -100,10 +103,10 @@
 @media (width < 744px) {
   .info-tree {
     flex-direction: column;
-    padding: var(--spacing-24, 1.5rem) var(--spacing-16, 1rem);
+    padding: var(--spacing-24) var(--spacing-16);
   }
 
   .info-tree .info-tree-image {
-    max-width: 150px;
+    max-width: 120px;
   }
 }
