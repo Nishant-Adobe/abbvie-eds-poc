@@ -12,8 +12,7 @@
 
 .find-provider-form {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  flex-flow: column wrap;
   gap: var(--find-provider-gap-field);
   margin-block-end: var(--spacing-24);
 }
@@ -175,13 +174,13 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgb(255 255 255 / 60%);
 }
 
 .find-provider-loader-spinner {
   inline-size: 56px;
   block-size: 56px;
-  border: 4px solid rgba(0, 0, 0, 0.1);
+  border: 4px solid rgb(0 0 0 / 10%);
   border-top-color: var(--link-color, #005272);
   border-radius: 50%;
   animation: find-provider-spin 0.8s linear infinite;
@@ -197,7 +196,7 @@
   --fp-results-accent: var(--link-color, #005272);
   --fp-results-pin-bg: var(--color-accent-yellow, #fcc02e);
   --fp-results-pin-color: var(--fp-results-accent);
-  --fp-results-divider: rgba(0, 0, 0, 0.1);
+  --fp-results-divider: rgb(0 0 0 / 10%);
   --fp-results-text: #4a4a4a;
 
   display: none;
@@ -270,10 +269,15 @@
   gap: 24px;
 }
 
-/* Mobile: map appears above results */
+/* Map container: stacked above results on mobile (order: -1) */
 
 .find-provider-map-container {
   order: -1;
+  block-size: 540px;
+  border-radius: 0;
+  overflow: hidden;
+  background-color: #e8eef2;
+  position: relative;
 }
 
 /* Results list */
@@ -292,8 +296,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  column-gap: 10px;
-  row-gap: 2px;
+  gap: 2px 10px;
   padding: 10px 4px;
   background: transparent;
   border: none;
@@ -421,22 +424,11 @@
   color: var(--fp-results-accent);
 }
 
-/* Map */
-
-.find-provider-map-container {
-  block-size: 540px;
-  border-radius: 0;
-  overflow: hidden;
-  background-color: #e8eef2;
-  position: relative;
-}
+/* Map variant: container loses bottom margin when block declares find-provider-map */
 
 .find-provider.find-provider-map .find-provider-map-container {
-  block-size: 540px;
   border: none;
-  border-radius: 0;
   margin-block-end: 0;
-  overflow: hidden;
 }
 
 .find-provider-map-iframe {
@@ -534,8 +526,7 @@
   .find-provider-results-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: 48px;
-    row-gap: 0;
+    gap: 0 48px;
     align-items: start;
   }
 
@@ -575,9 +566,7 @@
   --fp-venclexta-line-height-1: 1;
   --fp-venclexta-shadow-light: rgb(204 204 204 / 100%);
   --fp-venclexta-input-shadow: 0 0 var(--spacing-04) var(--fp-venclexta-shadow-light);
-}
 
-.find-provider {
   max-width: var(--fp-venclexta-max-width);
   margin-inline: auto;
   padding: 0;
@@ -630,7 +619,7 @@
   text-align: center;
   font-size: var(--fp-venclexta-submit-font-size);
   margin: 0;
-  font-weight: bold;
+  font-weight: var(--font-weight-700);
 }
 
 .find-provider .find-provider-captcha-message p {

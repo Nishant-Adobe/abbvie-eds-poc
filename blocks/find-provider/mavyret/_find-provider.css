@@ -13,7 +13,7 @@
   --fp-mavyret-text: #4a4a4a;
   --fp-mavyret-text-dark: #1a1a1a;
   --fp-mavyret-link: #005bbb;
-  --fp-mavyret-directions-link: #0000ee;
+  --fp-mavyret-directions-link: #00e;
   --fp-mavyret-submit-bg: #508118;
   --fp-mavyret-checkbox-border: #c7c7c7;
   --fp-mavyret-disabled-text: #b9c4cb;
@@ -34,38 +34,7 @@
   --fp-mavyret-line-height-1-6: 1.6;
   --fp-mavyret-submit-shadow: 0 var(--spacing-02) var(--spacing-04) var(--fp-mavyret-shadow-color);
   --fp-mavyret-input-shadow: 0 0 var(--spacing-04) var(--fp-mavyret-shadow-light);
-}
 
-/* Full-width submit button */
-.find-provider .find-provider-actions {
-  flex-direction: column;
-}
-
-.find-provider .find-provider-submit {
-  inline-size: 100%;
-  background-color: var(--find-provider-color-btn-bg);
-  color: var(--find-provider-color-btn-text);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--body-font-size-m);
-  padding-block: var(--spacing-16);
-  border: none;
-  border-radius: var(--find-provider-radius-input);
-  text-align: center;
-  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard);
-}
-
-.find-provider .find-provider-submit:hover,
-.find-provider .find-provider-submit:focus-visible {
-  background-color: var(--find-provider-color-btn-bg-hover);
-}
-
-/* Geo button matches input border style */
-.find-provider .find-provider-geo-btn {
-  border-color: var(--color-border-default);
-  color: var(--text-color);
-}
-
-.find-provider {
   max-width: var(--fp-mavyret-max-width);
   margin-inline: auto;
   padding: 0;
@@ -122,33 +91,47 @@
   margin: 0;
   height: stretch;
   border: var(--border-width-thin) solid var(--fp-mavyret-text);
-  border-color: var(--fp-mavyret-text);
   box-shadow: var(--fp-mavyret-input-shadow);
   font-family: inherit;
 }
 
+/* Geo button (non-search-row variant) matches input border style */
+.find-provider .find-provider-geo-btn {
+  border-color: var(--color-border-default);
+  color: var(--text-color);
+}
+
+/* Actions column + full-width submit */
 .find-provider .find-provider-actions {
+  flex-direction: column;
   align-items: flex-start;
 }
 
 .find-provider .find-provider-submit {
+  inline-size: 100%;
   max-width: var(--fp-mavyret-submit-max-width);
   padding: var(--spacing-14) var(--spacing-60);
   font-weight: var(--font-weight-700);
   background: var(--fp-mavyret-submit-bg);
+  color: var(--color-white);
+  border: none;
   border-radius: 0;
   box-shadow: var(--fp-mavyret-submit-shadow);
-  color: var(--color-white);
   font-size: var(--fp-mavyret-submit-font-size);
   line-height: var(--fp-mavyret-submit-line-height);
   text-align: center;
   overflow: visible;
   text-overflow: unset;
   white-space: normal;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.find-provider .find-provider-submit:hover,
+.find-provider .find-provider-submit:focus-visible {
+  background-color: var(--find-provider-color-btn-bg-hover);
 }
 
 .find-provider .find-provider-terms-checkbox {
-  border-color: var(--fp-mavyret-text);
   background-color: var(--color-white);
   box-shadow: none;
   outline: 0;
@@ -264,17 +247,19 @@
   min-inline-size: 0;
 }
 
-.find-provider .find-provider-results-right .find-provider-pagination {
-  margin-block-end: var(--spacing-24);
-}
-
 /* ---------- Pagination: orange active, gray arrows in boxes ---------- */
+
+/* TODO: pagination buttons are visual-only — click handlers not wired up yet */
 
 .find-provider .find-provider-pagination {
   padding: 0;
   margin: 0;
   gap: var(--spacing-06);
   justify-content: flex-end;
+}
+
+.find-provider .find-provider-results-right .find-provider-pagination {
+  margin-block-end: var(--spacing-24);
 }
 
 /* Arrow buttons: light bordered boxes */
@@ -350,8 +335,6 @@
   color: var(--fp-mavyret-separator);
 }
 
-/* ---------- Mobile layout (already handled in base): map first, no scroll ---------- */
-
 /* ---------- Desktop layout: map left full-height, right column with paginations ---------- */
 @media (width >= 744px) {
   .find-provider .find-provider-results-layout {
@@ -363,8 +346,13 @@
     grid-column: 2;
   }
 
-  .find-provider.find-provider-map .find-provider-map-container,
   .find-provider .find-provider-map-container {
+    grid-column: 1;
+    block-size: 100%;
+    min-block-size: var(--fp-mavyret-map-min-height);
+  }
+
+  .find-provider.find-provider-map .find-provider-map-container {
     grid-column: 1;
     block-size: 100%;
     min-block-size: var(--fp-mavyret-map-min-height);

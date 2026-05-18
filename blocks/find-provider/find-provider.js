@@ -1,6 +1,7 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
 const DUMMY_PROVIDERS_URL = new URL('./dummy-providers.json', import.meta.url).href;
+const MIN_LOADER_DELAY_MS = 800;
 
 let blockCounter = 0;
 let dummyProvidersCache = null;
@@ -61,7 +62,6 @@ function readConfig(block) {
 
   return config;
 }
-
 
 function buildForm(config, blockId, isLocation) {
   const form = document.createElement('form');
@@ -137,6 +137,7 @@ function buildForm(config, blockId, isLocation) {
     const termsText = document.createElement('span');
     termsText.className = 'find-provider-terms-text';
     if (config['terms-text']) {
+      // terms-text is authored rich text from CMS (see RICHTEXT_KEYS)
       termsText.innerHTML = config['terms-text'];
     }
 
@@ -175,6 +176,7 @@ function buildForm(config, blockId, isLocation) {
   if (config['captcha-message']) {
     const captcha = document.createElement('div');
     captcha.className = 'find-provider-captcha-message';
+    // captcha-message is authored rich text from CMS (see RICHTEXT_KEYS)
     captcha.innerHTML = config['captcha-message'];
     form.append(captcha);
   }
@@ -273,7 +275,12 @@ function buildResultCard(provider, config, index = 0) {
   detailsBtn.type = 'button';
   detailsBtn.className = 'find-provider-result-details';
   detailsBtn.setAttribute('aria-expanded', 'false');
-  detailsBtn.innerHTML = 'Show all practice details <span class="find-provider-result-details-icon" aria-hidden="true">+</span>';
+  detailsBtn.append('Show all practice details ');
+  const detailsIcon = document.createElement('span');
+  detailsIcon.className = 'find-provider-result-details-icon';
+  detailsIcon.setAttribute('aria-hidden', 'true');
+  detailsIcon.textContent = '+';
+  detailsBtn.append(detailsIcon);
   body.append(detailsBtn);
 
   li.append(body);
@@ -323,6 +330,7 @@ function buildResultsHeader(config) {
   return header;
 }
 
+// TODO: pagination is visual-only — buttons have no click handlers wired up yet
 function buildPagination(totalPages = 5, currentPage = 1) {
   const nav = document.createElement('nav');
   nav.className = 'find-provider-pagination';
@@ -381,9 +389,12 @@ export async function decorateBlock(block) {
 
   const loader = document.createElement('div');
   loader.className = 'find-provider-loader';
-  loader.setAttribute('aria-hidden', 'true');
+  loader.setAttribute('role', 'status');
+  loader.setAttribute('aria-live', 'polite');
+  loader.setAttribute('aria-label', 'Searching providers');
   const spinner = document.createElement('div');
   spinner.className = 'find-provider-loader-spinner';
+  spinner.setAttribute('aria-hidden', 'true');
   loader.append(spinner);
 
   const results = document.createElement('ul');
@@ -402,6 +413,7 @@ export async function decorateBlock(block) {
   const searchInput = form.querySelector('.find-provider-search-input');
   const clearBtn = form.querySelector('.find-provider-clear');
   const geoBtn = form.querySelector('.find-provider-geo-btn');
+  const termsCheckbox = form.querySelector('.find-provider-terms-checkbox');
 
   async function renderProviders(providers) {
     status.textContent = '';
@@ -459,7 +471,7 @@ export async function decorateBlock(block) {
   async function runSearchFlow(query) {
     resultsPanel.classList.remove('is-visible');
     loader.classList.add('is-visible');
-    const minDelay = new Promise((resolve) => { setTimeout(resolve, 800); });
+    const minDelay = new Promise((resolve) => { setTimeout(resolve, MIN_LOADER_DELAY_MS); });
     await Promise.all([doSearch(query), minDelay]);
     loader.classList.remove('is-visible');
     resultsPanel.classList.add('is-visible');
@@ -470,7 +482,6 @@ export async function decorateBlock(block) {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const termsCheckbox = form.querySelector('.find-provider-terms-checkbox');
     const query = searchInput?.value.trim() || '';
 
     let hasError = false;
@@ -498,10 +509,9 @@ export async function decorateBlock(block) {
     });
   }
 
-  const termsCheckboxEl = form.querySelector('.find-provider-terms-checkbox');
-  if (termsCheckboxEl && termsError) {
-    termsCheckboxEl.addEventListener('change', () => {
-      if (termsCheckboxEl.checked) termsError.textContent = '';
+  if (termsCheckbox && termsError) {
+    termsCheckbox.addEventListener('change', () => {
+      if (termsCheckbox.checked) termsError.textContent = '';
     });
   }
 
@@ -519,7 +529,6 @@ export async function decorateBlock(block) {
   if (geoBtn) {
     geoBtn.addEventListener('click', () => {
       if (!('geolocation' in navigator)) return;
-      const termsCheckbox = form.querySelector('.find-provider-terms-checkbox');
       if (termsCheckbox && !termsCheckbox.checked) return;
       geoBtn.disabled = true;
       navigator.geolocation.getCurrentPosition(
