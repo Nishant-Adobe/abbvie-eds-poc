@@ -1,14 +1,15 @@
+/* Mobile-first: base = stacked (mobile) */
 .info-tree {
   display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-32);
-  padding: var(--spacing-40) var(--spacing-32);
+  flex-direction: column;
+  gap: var(--spacing-24);
+  padding: var(--spacing-24) var(--spacing-16);
   background: var(--info-tree-bg);
 }
 
 .info-tree .info-tree-image {
   flex: 0 0 auto;
-  max-width: 160px;
+  max-width: 120px;
 }
 
 .info-tree .info-tree-image img,
@@ -68,9 +69,8 @@
 .info-tree .info-tree-option:hover::before {
   border-color: var(--info-tree-radio-hover);
   background: var(--info-tree-radio-fill);
-  box-shadow: #fff 0 0 0 3px inset;
+  box-shadow: var(--color-background, #fff) 0 0 0 3px inset;
 }
-
 
 .info-tree .info-tree-results {
   margin-top: var(--spacing-16);
@@ -106,19 +106,17 @@
   gap: var(--spacing-32);
 }
 
-@media (width < 744px) {
+/* Desktop (>=744px): side-by-side layout */
+@media (width >= 744px) {
   .info-tree {
-    flex-direction: column;
-    padding: var(--spacing-24) var(--spacing-16);
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-32);
+    padding: var(--spacing-40) var(--spacing-32);
   }
 
   .info-tree .info-tree-image {
-    max-width: 120px;
-  }
-
-  .info-tree.inline .info-tree-buttons {
-    flex-direction: column;
-    gap: var(--spacing-16);
+    max-width: 160px;
   }
 }
 
