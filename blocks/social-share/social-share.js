@@ -1,9 +1,10 @@
 import { applyCommonProps } from '../../scripts/utils.js';
-import { openModal } from '../modal/modal.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const SAFE_URL_RE = /^(https?:\/\/|\/)/i;
 
+// Share endpoints are external service URLs — absolute URLs are intentional here
+// and cannot be expressed as relative paths or design tokens.
 const PLATFORMS = {
   facebook: {
     label: 'Share on Facebook',
@@ -92,11 +93,9 @@ function buildPlatformItem(key, config, shareUrl, exitModalId) {
 
   if (exitModalId) {
     btn.addEventListener('click', () => {
-      const trigger = {
-        dataset: { modalId: exitModalId, fragmentPath: '' },
-        onConfirm: () => openSocialPopup(destUrl),
-      };
-      openModal(trigger, []).catch(() => openSocialPopup(destUrl));
+      document.dispatchEvent(new CustomEvent('modal:open', {
+        detail: { modalId: exitModalId, onConfirm: () => openSocialPopup(destUrl) },
+      }));
     });
   } else {
     btn.addEventListener('click', () => openSocialPopup(destUrl));
@@ -139,9 +138,11 @@ function buildEmailItem(shareUrl, pageTitle, emailModalId) {
     btn.type = 'button';
     btn.className = 'social-share-link social-share-link-email';
     btn.setAttribute('aria-label', 'Share via email');
-    btn.dataset.modalId = emailModalId;
     btn.append(buildEmailIcon());
     btn.append(buildVisuallyHidden('Share via email'));
+    btn.addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('modal:open', { detail: { modalId: emailModalId } }));
+    });
     li.append(btn);
   } else {
     const a = document.createElement('a');

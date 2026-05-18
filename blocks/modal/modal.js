@@ -413,6 +413,7 @@ export default async function decorate(block) {
     document.addEventListener('modal:open', (e) => {
       if (e.detail?.modalId === modalId) {
         const t = { dataset: { fragmentPath, modalId }, fragmentPath };
+        if (e.detail?.onConfirm) t.onConfirm = e.detail.onConfirm;
         openModal(t, variants).catch(() => { /* handled */ });
       }
     }, { signal: ac.signal });
