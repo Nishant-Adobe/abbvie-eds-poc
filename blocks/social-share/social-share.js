@@ -129,7 +129,7 @@ export default async function decorate(block) {
   });
 
   const shareUrl = rawUrl || window.location.href;
-  const pageTitle = document.title || block.closest('main')?.querySelector('h1')?.textContent?.trim() || '';
+  const pageTitle = document.title || '';
 
   const platformKeys = rawPlatforms
     ? rawPlatforms.split(',').map((s) => s.trim()).filter(Boolean)
