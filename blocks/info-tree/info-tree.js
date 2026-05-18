@@ -106,18 +106,22 @@ function extractItems(block) {
 
 function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
   block.classList.add('is-answered');
-  buttonsEl.hidden = true;
+  buttonsEl.classList.add('info-tree-hidden');
   [...resultsEl.children].forEach((r) => {
-    r.hidden = r.dataset.answerId !== answerId;
+    if (r.dataset.answerId === answerId) {
+      r.classList.remove('info-tree-hidden');
+    } else {
+      r.classList.add('info-tree-hidden');
+    }
   });
-  if (resetWrap) resetWrap.hidden = false;
+  if (resetWrap) resetWrap.classList.remove('info-tree-hidden');
 }
 
 function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
   block.classList.remove('is-answered');
-  buttonsEl.hidden = false;
-  [...resultsEl.children].forEach((r) => { r.hidden = true; });
-  if (resetWrap) resetWrap.hidden = true;
+  buttonsEl.classList.remove('info-tree-hidden');
+  [...resultsEl.children].forEach((r) => { r.classList.add('info-tree-hidden'); });
+  if (resetWrap) resetWrap.classList.add('info-tree-hidden');
 }
 
 export default function decorate(block) {
@@ -171,9 +175,8 @@ export default function decorate(block) {
     buttonsEl.append(btn);
 
     const result = document.createElement('div');
-    result.className = 'info-tree-result';
+    result.className = 'info-tree-result info-tree-hidden';
     result.dataset.answerId = label;
-    result.hidden = true;
     if (content) result.append(content.cloneNode(true));
     resultsEl.append(result);
   });
@@ -183,8 +186,7 @@ export default function decorate(block) {
   let resetWrap = null;
   if (config.showReset) {
     resetWrap = document.createElement('div');
-    resetWrap.className = 'info-tree-reset';
-    resetWrap.hidden = true;
+    resetWrap.className = 'info-tree-reset info-tree-hidden';
     const resetBtn = document.createElement('button');
     resetBtn.className = 'info-tree-reset-btn';
     resetBtn.textContent = config.resetLabel;
