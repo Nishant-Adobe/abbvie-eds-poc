@@ -58,26 +58,26 @@
   background: transparent;
   background-color: transparent;
   position: absolute;
-  bottom: var(--spacing-16, 16px);
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  padding: 0;
-  gap: var(--spacing-12, 12px);
+  padding: var(--spacing-12, 12px);
+  gap: var(--spacing-08, 8px);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel.carousel .carousel-slide-indicator button {
-  width: 12px;
-  height: 12px;
-  background-color: rgb(255 255 255 / 50%);
-  border: none;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border: 1px solid var(--color-brand-accent, #90124a);
 }
 
 .carousel.carousel .carousel-slide-indicator button:disabled,
 .carousel.carousel .carousel-slide-indicator button:hover,
 .carousel.carousel .carousel-slide-indicator button:focus-visible {
-  background-color: var(--color-brand-accent, #9b1b30);
+  background-color: var(--color-brand-accent, #90124a);
 }
 
 /* Mobile responsive */
