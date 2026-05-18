@@ -107,6 +107,10 @@ function extractItems(block) {
 
 function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
   block.classList.add('is-answered');
+  const headingEl = block.querySelector('.info-tree-heading');
+  const questionEl = block.querySelector('.info-tree-question');
+  if (headingEl) headingEl.classList.add('info-tree-hidden');
+  if (questionEl) questionEl.classList.add('info-tree-hidden');
   buttonsEl.classList.add('info-tree-hidden');
   [...resultsEl.children].forEach((r) => {
     if (r.dataset.answerId === answerId) {
@@ -120,6 +124,10 @@ function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
 
 function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
   block.classList.remove('is-answered');
+  const headingEl = block.querySelector('.info-tree-heading');
+  const questionEl = block.querySelector('.info-tree-question');
+  if (headingEl) headingEl.classList.remove('info-tree-hidden');
+  if (questionEl) questionEl.classList.remove('info-tree-hidden');
   buttonsEl.classList.remove('info-tree-hidden');
   [...resultsEl.children].forEach((r) => { r.classList.add('info-tree-hidden'); });
   if (resetWrap) resetWrap.classList.add('info-tree-hidden');
