@@ -220,45 +220,36 @@
   background: none;
 }
 
-/* Arrow glyph — two bars meeting at center point forming < > */
-.carousel.carousel .carousel-navigation-buttons .slide-prev::before,
+/* Arrow glyph — single rotated square with two thick borders */
 .carousel.carousel .carousel-navigation-buttons .slide-prev::after,
-.carousel.carousel .carousel-navigation-buttons .slide-next::before,
 .carousel.carousel .carousel-navigation-buttons .slide-next::after {
   content: '';
   display: block;
   position: absolute;
-  width: 8px;
-  height: 45px;
-  background: #fff;
+  top: 50%;
+  left: 50%;
+  width: 35px;
+  height: 35px;
   border: 0;
-  border-radius: 3px;
-}
-
-/* Prev < : top bar angles down-right, bottom bar angles up-right */
-.carousel.carousel .carousel-navigation-buttons .slide-prev::before {
-  top: 15px;
-  left: 28px;
-  transform: rotate(-30deg);
-}
-
-.carousel.carousel .carousel-navigation-buttons .slide-prev::after {
-  bottom: 15px;
-  left: 28px;
-  transform: rotate(30deg);
-}
-
-/* Next > : top bar angles down-left, bottom bar angles up-left */
-.carousel.carousel .carousel-navigation-buttons .slide-next::before {
-  top: 15px;
-  left: 34px;
-  transform: rotate(30deg);
+  border-bottom: 6px solid #fff;
+  border-left: 6px solid #fff;
+  background: none;
+  border-radius: 0;
+  transform: translate(-30%, -50%) rotate(45deg);
 }
 
 .carousel.carousel .carousel-navigation-buttons .slide-next::after {
-  bottom: 15px;
-  left: 34px;
-  transform: rotate(-30deg);
+  border-bottom: 0;
+  border-left: 0;
+  border-top: 6px solid #fff;
+  border-right: 6px solid #fff;
+  transform: translate(-70%, -50%) rotate(45deg);
+}
+
+/* Hide the base ::before pseudo if any */
+.carousel.carousel .carousel-navigation-buttons .slide-prev::before,
+.carousel.carousel .carousel-navigation-buttons .slide-next::before {
+  content: none;
 }
 
 /* Dot indicators */
