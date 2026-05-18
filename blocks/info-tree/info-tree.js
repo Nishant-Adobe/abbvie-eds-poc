@@ -286,6 +286,13 @@ export default function decorate(block) {
     contentEl.append(row);
   });
 
+  const section = block.closest('.section');
+  if (section) {
+    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
+      cta.classList.add('info-tree-hidden');
+    });
+  }
+
   buttonsEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.info-tree-option');
     if (!btn) return;
