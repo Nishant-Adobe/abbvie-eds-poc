@@ -675,6 +675,7 @@ function buildMenuItem(block, isNavigation = false) {
       }
       if (!isHovering) return; // cursor left during async fetch — don't open
       toggleAllNavSections(false);
+      li.querySelector('.submenu-level-1')?.classList.remove('mega-menu-minimize');
       li.setAttribute('aria-expanded', 'true');
       button.setAttribute('aria-expanded', 'true');
     };
@@ -850,14 +851,22 @@ function buildCtaGroup(headerEl) {
  * @param {Element} container
  */
 function wireHcpModalLinks(container) {
+  let dialog = document.querySelector('#hcp-leave-site-dialog');
+  if (!dialog) {
+    dialog = document.createElement('dialog');
+    dialog.id = 'hcp-leave-site-dialog';
+    dialog.innerHTML = '<form method="dialog"><p>You are about to leave this site and go to a site intended for US healthcare professionals only.<br>Do you wish to continue?</p><menu><button value="cancel">Cancel</button><button value="confirm">Continue</button></menu></form>';
+    document.body.appendChild(dialog);
+  }
+
   container.querySelectorAll('a.hcp-modal, a[data-hcp-modal]').forEach((link) => {
     link.setAttribute('aria-haspopup', 'dialog');
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      // eslint-disable-next-line no-alert
-      if (window.confirm('You are about to leave this site and go to a site intended for US healthcare professionals only.\n\nDo you wish to continue?')) {
-        window.open(link.href, '_blank', 'noopener,noreferrer');
-      }
+      dialog.showModal();
+      dialog.addEventListener('close', () => {
+        if (dialog.returnValue === 'confirm') window.open(link.href, '_blank', 'noopener,noreferrer');
+      }, { once: true });
     });
   });
 }
