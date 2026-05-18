@@ -33,6 +33,23 @@
           }
         }
       }
+    },
+    {
+      "title": "Info Tree CTA",
+      "id": "info-tree-cta",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Info Tree CTA",
+              "model": "info-tree-cta",
+              "ctaLabel": "Button",
+              "ctaHref": ""
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -154,12 +171,46 @@
           "valueType": "string"
         }
       ]
+    },
+    {
+      "id": "info-tree-cta",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Button",
+          "name": "button"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "ctaLabel",
+          "value": "Button",
+          "label": "Button Text"
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "ctaHref",
+          "label": "Button Link"
+        },
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "ctaVariant",
+          "label": "Button Style",
+          "options": [
+            { "name": "Primary", "value": "abbv-button-primary" },
+            { "name": "Secondary", "value": "abbv-button-secondary" },
+            { "name": "Tertiary", "value": "abbv-button-tertiary" }
+          ]
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "info-tree",
-      "components": ["info-tree-item", "cta"]
+      "components": ["info-tree-item", "info-tree-cta"]
     }
   ]
 }

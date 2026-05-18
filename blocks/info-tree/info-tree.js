@@ -119,10 +119,9 @@ function extractItems(block) {
         let ctaEl = null;
         const nextRow = itemRows[i + 1];
         const isCta = nextRow && (
-          nextRow.getAttribute('data-aue-component') === 'cta'
-          || nextRow.getAttribute('data-aue-model') === 'cta'
-          || nextRow.getAttribute('data-block-name') === 'cta'
-          || nextRow.classList.contains('cta')
+          nextRow.getAttribute('data-aue-component') === 'info-tree-cta'
+          || nextRow.getAttribute('data-aue-model') === 'info-tree-cta'
+          || nextRow.querySelector('[data-aue-prop="ctaLabel"]')
           || (nextRow.hasAttribute('data-aue-resource')
             && !nextRow.querySelector('[data-aue-prop="answerLabel"]'))
         );

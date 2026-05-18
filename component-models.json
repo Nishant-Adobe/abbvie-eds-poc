@@ -8899,14 +8899,40 @@
         "label": "Answer Content",
         "description": "Rich text content revealed when this answer option is selected.",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "info-tree-cta",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Button",
+        "name": "button"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "buttonLabel",
-        "value": "",
-        "label": "Button Label",
-        "description": "Label of a CTA block in this section to show with the answer. Must match the button text exactly."
+        "name": "ctaLabel",
+        "value": "Button",
+        "label": "Button Text"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "ctaHref",
+        "label": "Button Link"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "ctaVariant",
+        "label": "Button Style",
+        "options": [
+          { "name": "Primary", "value": "abbv-button-primary" },
+          { "name": "Secondary", "value": "abbv-button-secondary" },
+          { "name": "Tertiary", "value": "abbv-button-tertiary" }
+        ]
       }
     ]
   },
