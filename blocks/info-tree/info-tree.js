@@ -155,23 +155,22 @@ function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId, items) {
   [...resultsEl.children].forEach((r) => {
     if (r.dataset.answerId === answerId) {
       r.classList.remove('info-tree-hidden');
+      const existingCta = r.querySelector('.info-tree-cta');
+      if (existingCta) existingCta.remove();
+      const matchedItem = items?.find((item) => item.label === answerId);
+      if (matchedItem?.buttonLabel) {
+        const cta = findSectionCta(block, matchedItem.buttonLabel);
+        if (cta) {
+          const cloned = cta.cloneNode(true);
+          cloned.classList.add('info-tree-cta');
+          r.append(cloned);
+        }
+      }
     } else {
       r.classList.add('info-tree-hidden');
     }
   });
   if (resetWrap) resetWrap.classList.remove('info-tree-hidden');
-
-  const section = block.closest('.section');
-  if (section) {
-    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
-      cta.classList.add('info-tree-hidden');
-    });
-  }
-  const matchedItem = items?.find((item) => item.label === answerId);
-  if (matchedItem?.buttonLabel) {
-    const cta = findSectionCta(block, matchedItem.buttonLabel);
-    if (cta) cta.classList.remove('info-tree-hidden');
-  }
 }
 
 function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
@@ -181,15 +180,12 @@ function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
   if (headingEl) headingEl.classList.remove('info-tree-hidden');
   if (questionEl) questionEl.classList.remove('info-tree-hidden');
   buttonsEl.classList.remove('info-tree-hidden');
-  [...resultsEl.children].forEach((r) => { r.classList.add('info-tree-hidden'); });
+  [...resultsEl.children].forEach((r) => {
+    r.classList.add('info-tree-hidden');
+    const clonedCta = r.querySelector('.info-tree-cta');
+    if (clonedCta) clonedCta.remove();
+  });
   if (resetWrap) resetWrap.classList.add('info-tree-hidden');
-
-  const section = block.closest('.section');
-  if (section) {
-    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
-      cta.classList.remove('info-tree-hidden');
-    });
-  }
 }
 
 export default function decorate(block) {
@@ -289,13 +285,6 @@ export default function decorate(block) {
   block.querySelectorAll('.info-tree-disclaimer').forEach((row) => {
     contentEl.append(row);
   });
-
-  const section = block.closest('.section');
-  if (section) {
-    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
-      cta.classList.add('info-tree-hidden');
-    });
-  }
 
   buttonsEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.info-tree-option');
