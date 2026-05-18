@@ -105,47 +105,56 @@ function extractImage(block) {
 function extractItems(block) {
   const itemRows = [...block.querySelectorAll(':scope > div[data-aue-resource]')];
   if (itemRows.length) {
-    return itemRows.reduce((items, row) => {
-      const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
-      const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
-      const btnLabelEl = row.querySelector('[data-aue-prop="buttonLabel"]');
-      const label = labelEl?.textContent?.trim() || '';
-      const buttonLabel = btnLabelEl?.textContent?.trim() || '';
-      const cells = [...row.querySelectorAll(':scope > div')];
-      const fallbackContent = cells.length >= 2 ? cells[1] : null;
-      if (label) items.push({ label, content: contentEl || fallbackContent, buttonLabel });
-      return items;
-    }, []);
-  }
-
-  const rows = [...block.querySelectorAll(':scope > div:not([data-it-config]):not([data-it-disclaimer])')];
-  return rows.reduce((items, row) => {
-    const divs = row.querySelectorAll(':scope > div');
-    if (divs.length >= 2) {
-      const label = divs[0]?.textContent?.trim() || '';
-      const buttonLabel = divs.length >= 3 ? divs[2]?.textContent?.trim() || '' : '';
-      if (label) {
-        items.push({ label, content: divs[1], buttonLabel });
-        row.dataset.itItem = '';
+    const items = [];
+    for (let i = 0; i < itemRows.length; i += 1) {
+      const row = itemRows[i];
+      const isInfoTreeItem = row.getAttribute('data-aue-component') === 'info-tree-item'
+        || row.querySelector('[data-aue-prop="answerLabel"]');
+      if (isInfoTreeItem) {
+        const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
+        const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
+        const label = labelEl?.textContent?.trim() || '';
+        const cells = [...row.querySelectorAll(':scope > div')];
+        const fallbackContent = cells.length >= 2 ? cells[1] : null;
+        let ctaEl = null;
+        const nextRow = itemRows[i + 1];
+        if (nextRow && (nextRow.getAttribute('data-aue-component') === 'cta'
+          || nextRow.classList.contains('cta'))) {
+          ctaEl = nextRow;
+          i += 1;
+        }
+        if (label) items.push({ label, content: contentEl || fallbackContent, ctaEl });
       }
     }
     return items;
-  }, []);
-}
-
-function findSectionCta(block, buttonLabel) {
-  if (!buttonLabel) return null;
-  const section = block.closest('.section');
-  if (!section) return null;
-  const ctas = section.querySelectorAll('.cta-wrapper, .cta');
-  for (let i = 0; i < ctas.length; i += 1) {
-    const text = ctas[i].textContent?.trim();
-    if (text === buttonLabel) return ctas[i];
   }
-  return null;
+
+  const rows = [...block.querySelectorAll(':scope > div:not([data-it-config]):not([data-it-disclaimer])')];
+  const items = [];
+  for (let i = 0; i < rows.length; i += 1) {
+    const row = rows[i];
+    const divs = row.querySelectorAll(':scope > div');
+    if (divs.length >= 2) {
+      const label = divs[0]?.textContent?.trim() || '';
+      if (label) {
+        let ctaEl = null;
+        const nextRow = rows[i + 1];
+        if (nextRow && (nextRow.classList.contains('cta')
+          || nextRow.querySelector('.cta-wrapper')
+          || nextRow.querySelector('a.abbv-cta'))) {
+          ctaEl = nextRow;
+          nextRow.dataset.itItem = '';
+          i += 1;
+        }
+        items.push({ label, content: divs[1], ctaEl });
+        row.dataset.itItem = '';
+      }
+    }
+  }
+  return items;
 }
 
-function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId, items) {
+function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
   block.classList.add('is-answered');
   const headingEl = block.querySelector('.info-tree-heading');
   const questionEl = block.querySelector('.info-tree-question');
@@ -155,17 +164,6 @@ function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId, items) {
   [...resultsEl.children].forEach((r) => {
     if (r.dataset.answerId === answerId) {
       r.classList.remove('info-tree-hidden');
-      const existingCta = r.querySelector('.info-tree-cta');
-      if (existingCta) existingCta.remove();
-      const matchedItem = items?.find((item) => item.label === answerId);
-      if (matchedItem?.buttonLabel) {
-        const cta = findSectionCta(block, matchedItem.buttonLabel);
-        if (cta) {
-          const cloned = cta.cloneNode(true);
-          cloned.classList.add('info-tree-cta');
-          r.append(cloned);
-        }
-      }
     } else {
       r.classList.add('info-tree-hidden');
     }
@@ -180,11 +178,7 @@ function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
   if (headingEl) headingEl.classList.remove('info-tree-hidden');
   if (questionEl) questionEl.classList.remove('info-tree-hidden');
   buttonsEl.classList.remove('info-tree-hidden');
-  [...resultsEl.children].forEach((r) => {
-    r.classList.add('info-tree-hidden');
-    const clonedCta = r.querySelector('.info-tree-cta');
-    if (clonedCta) clonedCta.remove();
-  });
+  [...resultsEl.children].forEach((r) => { r.classList.add('info-tree-hidden'); });
   if (resetWrap) resetWrap.classList.add('info-tree-hidden');
 }
 
@@ -202,7 +196,7 @@ export default function decorate(block) {
       || row.querySelector('img[src]');
     if (consumed) {
       row.classList.add('info-tree-hidden');
-    } else {
+    } else if (row.dataset.itDisclaimer === undefined) {
       row.classList.add('info-tree-disclaimer');
     }
   });
@@ -217,6 +211,7 @@ export default function decorate(block) {
 
   const contentEl = document.createElement('div');
   contentEl.className = 'info-tree-content';
+  contentEl.style.minWidth = '0';
 
   if (config.heading) {
     const h2 = document.createElement('h2');
@@ -244,7 +239,7 @@ export default function decorate(block) {
   resultsEl.className = 'info-tree-results';
   resultsEl.setAttribute('aria-live', 'polite');
 
-  items.forEach(({ label, content }) => {
+  items.forEach(({ label, content, ctaEl }) => {
     const btn = document.createElement('button');
     btn.className = 'info-tree-option';
     btn.textContent = label;
@@ -258,6 +253,9 @@ export default function decorate(block) {
       [...content.childNodes].forEach((child) => {
         result.append(child.cloneNode(true));
       });
+    }
+    if (ctaEl) {
+      result.append(ctaEl.cloneNode(true));
     }
     resultsEl.append(result);
   });
@@ -286,23 +284,16 @@ export default function decorate(block) {
     contentEl.append(row);
   });
 
-  const section = block.closest('.section');
-  if (section) {
-    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
-      cta.classList.add('info-tree-hidden');
-    });
-  }
-
   buttonsEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.info-tree-option');
     if (!btn) return;
     const { answerId } = btn.dataset;
     if (config.cookieName) setCookie(config.cookieName, answerId, 365);
-    showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId, items);
+    showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId);
   });
 
   if (config.cookieName) {
     const saved = getCookie(config.cookieName);
-    if (saved) showAnswer(block, resultsEl, buttonsEl, resetWrap, saved, items);
+    if (saved) showAnswer(block, resultsEl, buttonsEl, resetWrap, saved);
   }
 }
