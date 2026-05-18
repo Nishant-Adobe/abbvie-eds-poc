@@ -24,6 +24,7 @@ function extractConfig(block) {
 
   let heading = '';
   let question = '';
+  let disclaimer = null;
   let cookieName = '';
   let showReset = false;
   let resetLabel = 'Start over';
@@ -35,6 +36,7 @@ function extractConfig(block) {
       const name = prop.getAttribute('data-aue-prop');
       if (name === 'heading') heading = prop.textContent?.trim() || '';
       if (name === 'question') question = prop.textContent?.trim() || '';
+      if (name === 'disclaimer') { disclaimer = prop; }
       if (name === 'cookieName') cookieName = prop.textContent?.trim() || '';
       if (name === 'resetLabel') resetLabel = prop.textContent?.trim() || 'Start over';
       if (name === 'showReset') {
@@ -48,6 +50,7 @@ function extractConfig(block) {
         const key = divs[0]?.textContent?.trim().toLowerCase();
         if (key === 'heading') { heading = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
         if (key === 'question') { question = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
+        if (key === 'disclaimer') { [, disclaimer] = divs; row.dataset.itConfig = ''; }
         if (key === 'cookiename') { cookieName = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
         if (key === 'resetlabel') { resetLabel = divs[1]?.textContent?.trim() || 'Start over'; row.dataset.itConfig = ''; }
         if (key === 'showreset') {
@@ -59,7 +62,7 @@ function extractConfig(block) {
   });
 
   return {
-    heading, question, cookieName, showReset, resetLabel,
+    heading, question, disclaimer, cookieName, showReset, resetLabel,
   };
 }
 
@@ -196,7 +199,16 @@ export default function decorate(block) {
     resultsEl.append(result);
   });
 
-  contentEl.append(buttonsEl, resultsEl);
+  if (config.disclaimer) {
+    const disclaimerEl = document.createElement('div');
+    disclaimerEl.className = 'info-tree-disclaimer';
+    [...config.disclaimer.childNodes].forEach((child) => {
+      disclaimerEl.append(child.cloneNode(true));
+    });
+    contentEl.append(buttonsEl, disclaimerEl, resultsEl);
+  } else {
+    contentEl.append(buttonsEl, resultsEl);
+  }
 
   let resetWrap = null;
   if (config.showReset) {
