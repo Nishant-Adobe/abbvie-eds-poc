@@ -26,13 +26,6 @@ export default async function getBlockConfigs() {
         const slides = block.querySelectorAll('.carousel-slide');
         if (slides.length < 2) return;
 
-        // Move indicators inside slides-container for absolute positioning
-        const container = block.querySelector('.carousel-slides-container');
-        const indicators = block.querySelector('.carousel-slide-indicators');
-        if (container && indicators) {
-          container.append(indicators.parentElement || indicators);
-        }
-
         startAutoPlay(block);
 
         block.addEventListener('mouseenter', stopAutoPlay);
