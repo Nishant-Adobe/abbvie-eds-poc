@@ -1,0 +1,111 @@
+.embed-form {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.embed-form-container {
+  min-height: 100px;
+  font-family: var(--body-font-family);
+  color: var(--text-color);
+}
+
+.embed-form-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  min-height: 200px;
+  font-style: italic;
+  color: var(--text-color);
+}
+
+.embed-form-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--color-border-default);
+  border-top-color: var(--color-brand-primary);
+  border-radius: 50%;
+  animation: embed-form-spin 0.8s linear infinite;
+}
+
+@keyframes embed-form-spin {
+  to { transform: rotate(360deg); }
+}
+
+.embed-form-error {
+  padding: var(--spacing-16, 16px);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+}
+
+.embed-form-iframe {
+  width: 100%;
+  min-height: 600px;
+  border: none;
+  border-radius: var(--linz-rounded-corner);
+}
+
+/* Form field overrides for AEM Adaptive Forms rendered inside container */
+.embed-form-container input,
+.embed-form-container select,
+.embed-form-container textarea {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  color: var(--text-color);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--linz-rounded-corner-sm);
+  padding: 12px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.embed-form-container input:focus,
+.embed-form-container select:focus,
+.embed-form-container textarea:focus {
+  border-color: var(--color-brand-primary);
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: -2px;
+}
+
+.embed-form-container label {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.embed-form-container h1,
+.embed-form-container h2,
+.embed-form-container h3 {
+  font-family: var(--heading-font-family);
+  color: var(--color-text-heading);
+}
+
+.embed-form-container button[type="submit"],
+.embed-form-container .submit-btn {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-color);
+  border: 1px solid var(--button-primary-border);
+  border-radius: var(--border-radius-button-primary);
+  padding: var(--button-primary-padding);
+  font-family: var(--body-font-family);
+  font-size: var(--button-primary-font-size);
+  font-weight: var(--button-primary-font-weight);
+  cursor: pointer;
+  transition: var(--transition-button);
+}
+
+.embed-form-container button[type="submit"]:hover,
+.embed-form-container .submit-btn:hover {
+  background: var(--button-primary-hover-bg);
+  color: var(--button-primary-hover-color);
+}
+
+.embed-form-container .required-indicator {
+  color: var(--color-brand-accent);
+}
