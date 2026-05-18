@@ -29,6 +29,7 @@ function extractConfig(block) {
   let resetLabel = 'Start over';
 
   rows.forEach((row) => {
+    if (row.querySelector('picture') || row.querySelector('img[src]')) return;
     const prop = row.querySelector('[data-aue-prop]');
     if (prop) {
       const name = prop.getAttribute('data-aue-prop');
