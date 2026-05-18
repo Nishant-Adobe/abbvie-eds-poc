@@ -911,8 +911,8 @@ export default async function decorate(block) {
   // Block-level layout variants
   const isLite = block.classList.contains('lite');
   const isSticky = block.classList.contains('sticky');
-  if (isLite) document.querySelector('header').classList.add('header-lite');
-  if (isSticky) document.querySelector('header').classList.add('header-sticky');
+  if (isLite) block.closest('header')?.classList.add('header-lite');
+  if (isSticky) block.closest('header')?.classList.add('header-sticky');
 
   const nav = createElement('nav', { attributes: { id: 'nav', 'aria-expanded': 'false' } });
 
