@@ -78,21 +78,6 @@ function extractConfig(block) {
     }
   });
 
-  if (!disclaimer) {
-    const remaining = rows.filter((r) => !r.dataset.itConfig
-      && !r.querySelector('picture')
-      && !r.querySelector('img[src]'));
-    const lastRow = remaining[remaining.length - 1];
-    if (lastRow) {
-      const cell = lastRow.querySelector(':scope > div') || lastRow;
-      const text = cell.textContent?.trim() || '';
-      if (text.length > 30) {
-        disclaimer = cell;
-        lastRow.dataset.itDisclaimer = '';
-      }
-    }
-  }
-
   return {
     heading, question, disclaimer, cookieName, showReset, resetLabel,
   };
@@ -136,7 +121,10 @@ function extractItems(block) {
     const divs = row.querySelectorAll(':scope > div');
     if (divs.length >= 2) {
       const label = divs[0]?.textContent?.trim() || '';
-      if (label) items.push({ label, content: divs[1] });
+      if (label) {
+        items.push({ label, content: divs[1] });
+        row.dataset.itItem = '';
+      }
     }
     return items;
   }, []);
@@ -177,10 +165,15 @@ export default function decorate(block) {
 
   const rows = [...block.querySelectorAll(':scope > div')];
   rows.forEach((row) => {
-    if (row.dataset.itDisclaimer !== undefined) {
-      row.classList.add('info-tree-disclaimer');
-    } else {
+    const consumed = row.dataset.itConfig !== undefined
+      || row.dataset.itItem !== undefined
+      || row.hasAttribute('data-aue-resource')
+      || row.querySelector('picture')
+      || row.querySelector('img[src]');
+    if (consumed) {
       row.classList.add('info-tree-hidden');
+    } else {
+      row.classList.add('info-tree-disclaimer');
     }
   });
 
