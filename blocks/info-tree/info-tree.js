@@ -131,7 +131,7 @@ function extractItems(block) {
     }, []);
   }
 
-  const rows = [...block.querySelectorAll(':scope > div:not([data-it-config])')];
+  const rows = [...block.querySelectorAll(':scope > div:not([data-it-config]):not([data-it-disclaimer])')];
   return rows.reduce((items, row) => {
     const divs = row.querySelectorAll(':scope > div');
     if (divs.length >= 2) {
@@ -177,7 +177,11 @@ export default function decorate(block) {
 
   const rows = [...block.querySelectorAll(':scope > div')];
   rows.forEach((row) => {
-    if (!row.dataset.itDisclaimer) row.classList.add('info-tree-hidden');
+    if (row.dataset.itDisclaimer !== undefined) {
+      row.classList.add('info-tree-disclaimer');
+    } else {
+      row.classList.add('info-tree-hidden');
+    }
   });
 
   if (!items.length) return;
@@ -236,17 +240,6 @@ export default function decorate(block) {
   });
 
   contentEl.append(buttonsEl, resultsEl);
-
-  if (config.disclaimer) {
-    const disclaimerEl = document.createElement('div');
-    disclaimerEl.className = 'info-tree-disclaimer';
-    [...config.disclaimer.childNodes].forEach((child) => {
-      disclaimerEl.append(child.cloneNode(true));
-    });
-    contentEl.append(disclaimerEl);
-    const disclaimerRow = block.querySelector('[data-it-disclaimer]');
-    if (disclaimerRow) disclaimerRow.classList.add('info-tree-hidden');
-  }
 
   let resetWrap = null;
   if (config.showReset) {
