@@ -35,11 +35,15 @@
   --nav-dropdown-min-width: 20rem;
   --nav-dropdown-z-index: 100;
   --nav-dropdown-item-padding: var(--spacing-06) var(--spacing-16);
+  --nav-dropdown-radius: 0.2rem;
+  --nav-active-indicator-height: var(--spacing-04);
+  --nav-indication-separator: var(--separator-height-1);
   /* Search */
   --nav-search-shadow: 0 var(--spacing-03) var(--spacing-05) 0 rgb(153 153 153);
   --nav-search-toggle-margin: 2.3rem;
   --nav-search-icon-offset: var(--spacing-02);
   --nav-search-input-padding: var(--spacing-04) var(--spacing-35) var(--spacing-04) var(--spacing-15);
+  --nav-search-input-min-width: 200px;
 }
 
 /* ──────────────────────────────────────────
@@ -157,7 +161,7 @@ header .nav-utility ul[role="menu"] {
   right: 0;
   background: var(--background-color, white);
   border: var(--separator-height-1) solid var(--nav-dropdown-border-color);
-  border-radius: 2px;
+  border-radius: var(--nav-dropdown-radius);
   box-shadow: var(--nav-dropdown-shadow);
   list-style: none;
   margin: 0;
@@ -410,13 +414,13 @@ header nav .nav-search .search-inner-wrapper > span.icon-search{
 }
 
 header nav .nav-search .search-inner-wrapper input[type="search"] {
-    min-width: 200px;
+    min-width: var(--nav-search-input-min-width);
     width: 100%;
     background: var(--background-color);
     padding: var(--nav-search-input-padding);
     box-sizing: border-box;
     border: var(--separator-height-1) solid var(--color-border);
-    font-size: var(--font-size-14, 14.88px);
+    font-size: var(--font-size-14, 14px);
     transition: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -1076,7 +1080,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     background: transparent;
     bottom: var(--spacing-00);
     content: "";
-    height: 4px;
+    height: var(--nav-active-indicator-height);
     left: var(--spacing-00);
     position: absolute;
     width: 100%;
@@ -1116,7 +1120,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     background: transparent;
     bottom: var(--spacing-00);
     content: "";
-    height: 4px;
+    height: var(--nav-active-indicator-height);
     left: var(--spacing-00);
     position: absolute;
     width: 100%;
@@ -1718,7 +1722,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 @media (width <= 1023px) {
   .nav-eyebrow {
     font-size: var(--font-size-12, 12px);
-    min-height: 32px;
+    min-height: var(--nav-eyebrow-min-height);
   }
 }
 
@@ -1731,7 +1735,7 @@ header nav .nav-brand-indication {
   align-items: center;
   margin-left: var(--spacing-16, 16px);
   padding-left: var(--spacing-16, 16px);
-  border-left: 1px solid currentcolor;
+  border-left: var(--nav-indication-separator) solid currentcolor;
   opacity: 0.6;
 }
 
@@ -1790,6 +1794,10 @@ header nav .nav-brand-indication img {
   --nav-isi-bg: rgb(0 0 0 / 90%);
   --nav-isi-text: var(--color-text-on-dark);
   --nav-isi-collapsed-height: 48px;
+  --nav-isi-shadow: 0 -0.2rem 0.8rem rgb(0 0 0 / 20%);
+  --nav-isi-arrow-size: 0.5rem;
+  --nav-isi-arrow-margin: var(--spacing-12);
+  --nav-eyebrow-min-height: var(--spacing-32);
   --nav-isi-expanded-max-height: 40vh;
 }
 
@@ -1801,7 +1809,7 @@ header nav .nav-brand-indication img {
   background: var(--nav-isi-bg);
   color: var(--nav-isi-text);
   z-index: var(--z-index-3, 300);
-  box-shadow: 0 -2px 8px rgb(0 0 0 / 20%);
+  box-shadow: var(--nav-isi-shadow);
   display: flex;
   flex-direction: column;
 }
@@ -1829,11 +1837,11 @@ header nav .nav-brand-indication img {
   display: inline-block;
   width: 0;
   height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid currentcolor;
+  border-left: var(--nav-isi-arrow-size) solid transparent;
+  border-right: var(--nav-isi-arrow-size) solid transparent;
+  border-bottom: var(--nav-isi-arrow-size) solid currentcolor;
   flex-shrink: 0;
-  margin-left: 12px;
+  margin-left: var(--nav-isi-arrow-margin);
   transition: transform 0.2s;
 }
 

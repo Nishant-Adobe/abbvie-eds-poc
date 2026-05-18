@@ -460,8 +460,8 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
  * @param {Element} block - The block element.
  * @returns {Element} - The search form element.
  */
-function createSearchForm() {
-  const text = 'Search';
+function createSearchForm(searchLabel = '') {
+  const text = searchLabel;
   const maindiv = createElement('div', { className: 'search-main-wrapper' });
   const wrapperdiv = createElement('div', { className: 'search-wrapper' });
   const form = createElement('form', {
@@ -517,13 +517,10 @@ function createSearchForm() {
  * @returns {Element|null} - The li element.
  */
 function buildMenuItem(block, isNavigation = false) {
-  let label = block.querySelector('p')?.textContent.trim();
-  if (block.classList.contains('search')) {
-    label = 'Search';
-  }
+  const label = block.querySelector('p')?.textContent.trim();
   if (!label && !block.classList.contains('search')) return null;
 
-  const slug = label.toLowerCase().replace(/\s+/g, '-');
+  const slug = (label || 'search').toLowerCase().replace(/\s+/g, '-');
   const segments = window.location.pathname.split('/').filter(Boolean);
   const currentParentPage = segments[0];
   const li = createElement('li', { className: `menu-${slug}` });
@@ -850,13 +847,28 @@ function buildCtaGroup(headerEl) {
  * or data-hcp-modal attribute intercepts navigation and shows a leave-site warning.
  * @param {Element} container
  */
-function wireHcpModalLinks(container) {
-  let dialog = document.querySelector('#hcp-leave-site-dialog');
+function wireHcpModalLinks(container, block) {
+  const headerEl = block.closest('header') || block;
+  let dialog = headerEl.querySelector('.hcp-leave-site-dialog');
   if (!dialog) {
     dialog = document.createElement('dialog');
-    dialog.id = 'hcp-leave-site-dialog';
-    dialog.innerHTML = '<form method="dialog"><p>You are about to leave this site and go to a site intended for US healthcare professionals only.<br>Do you wish to continue?</p><menu><button value="cancel">Cancel</button><button value="confirm">Continue</button></menu></form>';
-    document.body.appendChild(dialog);
+    dialog.className = 'hcp-leave-site-dialog';
+    const warningText = container.dataset.hcpWarning || '';
+    const form = document.createElement('form');
+    form.method = 'dialog';
+    const p = document.createElement('p');
+    p.textContent = warningText;
+    const menu = document.createElement('menu');
+    const cancelBtn = document.createElement('button');
+    cancelBtn.value = 'cancel';
+    cancelBtn.textContent = 'Cancel';
+    const confirmBtn = document.createElement('button');
+    confirmBtn.value = 'confirm';
+    confirmBtn.textContent = 'Continue';
+    menu.append(cancelBtn, confirmBtn);
+    form.append(p, menu);
+    dialog.appendChild(form);
+    headerEl.appendChild(dialog);
   }
 
   container.querySelectorAll('a.hcp-modal, a[data-hcp-modal]').forEach((link) => {
@@ -1195,7 +1207,8 @@ export default async function decorate(block) {
     searchExpanded.className = 'search-expanded';
     searchExpanded.hidden = true;
 
-    const searchForm = createSearchForm();
+    const searchLabel = searchBlock.querySelector('p')?.textContent.trim() || '';
+    const searchForm = createSearchForm(searchLabel);
 
     // Dark search icon inside the input — fresh SVG with no fill so CSS colours it
     const inputSearchIcon = document.createElement('span');
@@ -1259,7 +1272,7 @@ export default async function decorate(block) {
 
   navWrapper.append(nav);
   decorateExternalLinksUtility(navWrapper);
-  wireHcpModalLinks(navWrapper);
+  wireHcpModalLinks(navWrapper, block);
   block.append(navWrapper);
 
   // Floating ISI — appended to header block, sits outside nav-wrapper
