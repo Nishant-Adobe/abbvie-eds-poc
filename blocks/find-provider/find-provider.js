@@ -15,13 +15,14 @@ const FIELD_ORDER = [
   'terms-text',
   'no-results',
   'error',
+  'captcha-message',
   'api-endpoint',
   'indication',
   'exit-modal-id',
   'anchor-id',
 ];
 
-const RICHTEXT_KEYS = new Set(['terms-text']);
+const RICHTEXT_KEYS = new Set(['terms-text', 'captcha-message']);
 
 // UE renders each field as a single-column row; Google Doc authoring uses key | value rows
 function isUEMode(block) {
@@ -142,6 +143,14 @@ function buildForm(config, blockId, isLocation) {
   }
 
   form.append(actions);
+
+  if (config['captcha-message']) {
+    const captcha = document.createElement('div');
+    captcha.className = 'find-provider-captcha-message';
+    captcha.innerHTML = config['captcha-message'];
+    form.append(captcha);
+  }
+
   return form;
 }
 

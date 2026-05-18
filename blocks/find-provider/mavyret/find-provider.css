@@ -203,6 +203,15 @@
   overflow: hidden;
 }
 
+.find-provider .find-provider-captcha-message a{
+  font-size: 11px;
+}
+
+.find-provider .find-provider-captcha-message p{
+  font-size: 11px;
+  text-align: center;
+}
+
 @media (width >= 744px) {
   .find-provider.find-provider-map {
     display: grid;
@@ -261,12 +270,18 @@
 }
 
 .find-provider {
-  max-width: 1200px;
+  max-width: 1000px;
   margin-inline: auto;
-  padding: 40px;
+  padding: 0px;
   font-family: var(--font-family-paragraph);
   font-size: 16px;
   color: #4A4A4A;
+}
+
+@media (width >= 744px) { 
+  .find-provider {
+    padding: 40px;
+  }
 }
 
 .find-provider p a, .find-provider .find-provider-terms-text p, .find-provider .find-provider-terms-text p a {
@@ -311,6 +326,7 @@
   border: 1px solid #4a4a4a;
   border-color: #4a4a4a;
   box-shadow: 0 0 4px rgba(204, 204, 204, 1);
+  font-family: inherit;
 }
 
 .find-provider .find-provider-actions {
