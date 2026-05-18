@@ -192,18 +192,11 @@
   margin: 0;
 }
 
-/* Navigation arrows — hidden by default, shown on carousel hover */
+/* Navigation arrows */
 .carousel.carousel .carousel-navigation-buttons {
   left: 0;
   right: 0;
   z-index: 3;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.carousel.carousel:hover .carousel-navigation-buttons,
-.carousel.carousel:focus-within .carousel-navigation-buttons {
-  opacity: 1;
 }
 
 .carousel.carousel .carousel-navigation-buttons button {
@@ -215,6 +208,7 @@
   border-radius: 0;
   cursor: pointer;
   position: relative;
+  overflow: visible;
 }
 
 .carousel.carousel .carousel-navigation-buttons button:hover {
@@ -278,10 +272,6 @@
   .carousel.carousel .carousel-slide .carousel-slide-content {
     max-width: 100%;
     padding: 24px;
-  }
-
-  .carousel.carousel .carousel-navigation-buttons {
-    opacity: 1;
   }
 
   .carousel.carousel .carousel-navigation-buttons button {
