@@ -220,27 +220,29 @@
   background: none;
 }
 
-/* Arrow glyph — SVG matching Material Design keyboard_arrow at 7rem white */
-.carousel.carousel .carousel-navigation-buttons button::after {
+/* Arrow glyph — CSS border chevron matching original's tall thin < > */
+.carousel.carousel .carousel-navigation-buttons .slide-prev::after,
+.carousel.carousel .carousel-navigation-buttons .slide-next::after {
   content: '';
   display: block;
-  width: 35px;
-  height: 90px;
-  border: 0 none transparent;
-  border-top: 0;
+  width: 25px;
+  height: 25px;
+  border: 0;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
   border-bottom: 0;
   border-left: 0;
-  border-right: 0;
   border-radius: 0;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='white' stroke-width='0.8'%3E%3Cpath d='M8 1 L1.5 12 L8 23'/%3E%3C/svg%3E") center / contain no-repeat;
+  left: 55%;
+  transform: translate(-50%, -50%) rotate(-135deg);
+  background: none;
 }
 
-.carousel.carousel .carousel-navigation-buttons button.slide-next::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='white' stroke-width='0.8'%3E%3Cpath d='M2 1 L8.5 12 L2 23'/%3E%3C/svg%3E");
+.carousel.carousel .carousel-navigation-buttons .slide-next::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+  left: 45%;
 }
 
 /* Dot indicators */
@@ -285,8 +287,9 @@
     width: 40px;
   }
 
-  .carousel.carousel .carousel-navigation-buttons button::after {
-    width: 20px;
-    height: 50px;
+  .carousel.carousel .carousel-navigation-buttons .slide-prev::after,
+  .carousel.carousel .carousel-navigation-buttons .slide-next::after {
+    width: 16px;
+    height: 16px;
   }
 }
