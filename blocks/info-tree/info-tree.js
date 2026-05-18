@@ -218,15 +218,15 @@ export default function decorate(block) {
     resultsEl.append(result);
   });
 
+  contentEl.append(buttonsEl, resultsEl);
+
   if (config.disclaimer) {
     const disclaimerEl = document.createElement('div');
     disclaimerEl.className = 'info-tree-disclaimer';
     [...config.disclaimer.childNodes].forEach((child) => {
       disclaimerEl.append(child.cloneNode(true));
     });
-    contentEl.append(buttonsEl, disclaimerEl, resultsEl);
-  } else {
-    contentEl.append(buttonsEl, resultsEl);
+    contentEl.append(disclaimerEl);
   }
 
   let resetWrap = null;
