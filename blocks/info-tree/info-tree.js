@@ -78,6 +78,21 @@ function extractConfig(block) {
     }
   });
 
+  if (!disclaimer) {
+    const remaining = rows.filter((r) => !r.dataset.itConfig
+      && !r.querySelector('picture')
+      && !r.querySelector('img[src]'));
+    const lastRow = remaining[remaining.length - 1];
+    if (lastRow) {
+      const cell = lastRow.querySelector(':scope > div') || lastRow;
+      const text = cell.textContent?.trim() || '';
+      if (text.length > 30) {
+        disclaimer = cell;
+        lastRow.dataset.itConfig = '';
+      }
+    }
+  }
+
   return {
     heading, question, disclaimer, cookieName, showReset, resetLabel,
   };
