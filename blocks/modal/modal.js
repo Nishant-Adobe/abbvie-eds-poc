@@ -264,16 +264,18 @@ const exitModals = [];
 let exitIntentSuppressedUntil = 0;
 let exitIntentReadyAt = 0;
 
-document.addEventListener('exit-intent:suppress', (e) => {
-  exitIntentSuppressedUntil = Date.now() + (e.detail?.ms ?? 2000);
-});
-
 function registerExitIntent(trigger, variants) {
   const id = trigger?.dataset?.modalId;
   if (id && exitModals.some((m) => m.trigger?.dataset?.modalId === id)) return;
   exitModals.push({ trigger, variants });
   if (exitAc) return;
   exitAc = new AbortController();
+
+  // Both listeners share exitAc.signal so they are torn down together when
+  // exit-intent fires or the block is cleaned up.
+  document.addEventListener('exit-intent:suppress', (e) => {
+    exitIntentSuppressedUntil = Date.now() + (e.detail?.ms ?? 2000);
+  }, { signal: exitAc.signal });
 
   // Ignore exit-intent for 2 s after the listener is registered. Chrome fires a
   // synthetic mousemove at the cursor's current position on page load (hover correction),
