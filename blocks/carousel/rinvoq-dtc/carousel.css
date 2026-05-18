@@ -220,28 +220,22 @@
   background-color: transparent;
 }
 
-/* Arrow glyph — CSS border rotated to match original icon font */
+/* Arrow glyph — inline SVG matching original's tall narrow chevron at 7rem */
 .carousel.carousel .carousel-navigation-buttons button::after {
   content: '';
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 70px;
   border: none;
-  border-top: 3px solid #ccc;
-  border-left: 3px solid #ccc;
   position: absolute;
   top: 50%;
-  left: calc(50% + 4px);
-  transform: translate(-50%, -50%) rotate(-45deg);
-  background: none;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='%23cccccc' stroke-width='1.2'%3E%3Cpath d='M8 1 L1.5 12 L8 23'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .carousel.carousel .carousel-navigation-buttons button.slide-next::after {
-  border-top: none;
-  border-left: none;
-  border-right: 3px solid #ccc;
-  border-bottom: 3px solid #ccc;
-  left: calc(50% - 4px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 24' fill='none' stroke='%23cccccc' stroke-width='1.2'%3E%3Cpath d='M2 1 L8.5 12 L2 23'/%3E%3C/svg%3E");
 }
 
 /* Dot indicators */
