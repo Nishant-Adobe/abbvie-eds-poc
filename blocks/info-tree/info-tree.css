@@ -1,45 +1,65 @@
-.info-tree-question {
-  font-size: var(--body-font-size-m, 1rem);
-  font-weight: 600;
+.info-tree-hidden {
+  display: none;
+}
+
+.info-tree .info-tree-image {
   margin-bottom: var(--spacing-16, 16px);
 }
 
-.info-tree-options {
+.info-tree .info-tree-image img,
+.info-tree .info-tree-image picture {
+  max-width: 100%;
+  height: auto;
+}
+
+.info-tree .info-tree-heading {
+  font-size: var(--heading-font-size-m, 1.25rem);
+  margin-bottom: var(--spacing-8, 8px);
+}
+
+.info-tree .info-tree-question {
+  font-size: var(--body-font-size-m, 1rem);
+  font-weight: var(--font-weight-heading, 700);
+  margin-bottom: var(--spacing-16, 16px);
+}
+
+.info-tree .info-tree-buttons {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--spacing-8, 8px);
-  margin-bottom: var(--spacing-24, 24px);
+  margin-bottom: var(--spacing-16, 16px);
 }
 
-.info-tree-option {
+.info-tree .info-tree-option {
   background: none;
-  border: 2px solid var(--info-tree-border, var(--link-color, #0057cc));
-  border-radius: 4px;
-  color: var(--info-tree-option-color, var(--link-color, #0057cc));
+  border: 2px solid var(--color-border, #ccc);
+  border-radius: var(--border-radius-s, 4px);
+  color: var(--color-text, #333);
   cursor: pointer;
-  font-size: var(--body-font-size-s, 0.875rem);
-  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
-  transition: background-color 0.2s, color 0.2s;
+  font-size: var(--body-font-size-m, 1rem);
+  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+  text-align: left;
 }
 
-.info-tree-option.is-selected,
-.info-tree-option:hover {
-  background-color: var(--info-tree-active-bg, var(--link-color, #0057cc));
-  color: #fff;
+.info-tree .info-tree-option:hover {
+  border-color: var(--color-brand-primary, #0057cc);
+  color: var(--color-brand-primary, #0057cc);
 }
 
-.info-tree-results {
-  border-left: 3px solid var(--info-tree-border, var(--link-color, #0057cc));
-  padding-left: var(--spacing-16, 16px);
-  min-height: 0;
+.info-tree .info-tree-results {
+  margin-top: var(--spacing-16, 16px);
 }
 
-.info-tree-reset {
+.info-tree .info-tree-reset {
+  margin-top: var(--spacing-16, 16px);
+}
+
+.info-tree .info-tree-reset-btn {
   background: none;
   border: none;
   color: var(--link-color, #0057cc);
   cursor: pointer;
   font-size: var(--body-font-size-s, 0.875rem);
-  margin-top: var(--spacing-16, 16px);
   text-decoration: underline;
+  padding: 0;
 }

@@ -1,58 +1,205 @@
+function getCookie(name) {
+  try {
+    const match = document.cookie.split('; ').find((r) => r.startsWith(`${name}=`));
+    return match?.split('=')[1] || '';
+  } catch {
+    return '';
+  }
+}
+
+function setCookie(name, value, days) {
+  try {
+    document.cookie = `${name}=${value};max-age=${days * 86400};path=/`;
+  } catch { /* consent may block */ }
+}
+
+function deleteCookie(name) {
+  try {
+    document.cookie = `${name}=;max-age=0;path=/`;
+  } catch { /* consent may block */ }
+}
+
+function extractConfig(block) {
+  const rows = [...block.querySelectorAll(':scope > div:not([data-aue-resource])')];
+
+  let heading = '';
+  let question = '';
+  let cookieName = '';
+  let showReset = false;
+  let resetLabel = 'Start over';
+
+  rows.forEach((row) => {
+    const prop = row.querySelector('[data-aue-prop]');
+    if (prop) {
+      const name = prop.getAttribute('data-aue-prop');
+      if (name === 'heading') heading = prop.textContent?.trim() || '';
+      if (name === 'question') question = prop.textContent?.trim() || '';
+      if (name === 'cookieName') cookieName = prop.textContent?.trim() || '';
+      if (name === 'resetLabel') resetLabel = prop.textContent?.trim() || 'Start over';
+      if (name === 'showReset') {
+        const val = prop.textContent?.trim().toLowerCase();
+        showReset = val === 'true';
+      }
+      row.dataset.itConfig = '';
+    } else {
+      const divs = row.querySelectorAll(':scope > div');
+      if (divs.length >= 2) {
+        const key = divs[0]?.textContent?.trim().toLowerCase();
+        if (key === 'heading') { heading = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
+        if (key === 'question') { question = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
+        if (key === 'cookiename') { cookieName = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
+        if (key === 'resetlabel') { resetLabel = divs[1]?.textContent?.trim() || 'Start over'; row.dataset.itConfig = ''; }
+        if (key === 'showreset') {
+          showReset = divs[1]?.textContent?.trim().toLowerCase() === 'true';
+          row.dataset.itConfig = '';
+        }
+      }
+    }
+  });
+
+  return {
+    heading, question, cookieName, showReset, resetLabel,
+  };
+}
+
+function extractImage(block) {
+  const imgProp = block.querySelector('[data-aue-prop="image"]');
+  if (imgProp) {
+    const pic = imgProp.querySelector('picture') || imgProp.querySelector('img');
+    return pic?.cloneNode(true) || null;
+  }
+  const firstPic = block.querySelector(':scope > div:not([data-aue-resource]) picture');
+  return firstPic?.cloneNode(true) || null;
+}
+
+function extractItems(block) {
+  const itemRows = [...block.querySelectorAll(':scope > div[data-aue-resource]')];
+  if (itemRows.length) {
+    return itemRows.reduce((items, row) => {
+      const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
+      const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
+      const label = labelEl?.textContent?.trim() || '';
+      if (label) items.push({ label, content: contentEl });
+      return items;
+    }, []);
+  }
+
+  const rows = [...block.querySelectorAll(':scope > div:not([data-it-config])')];
+  return rows.reduce((items, row) => {
+    const divs = row.querySelectorAll(':scope > div');
+    if (divs.length >= 2) {
+      const label = divs[0]?.textContent?.trim() || '';
+      if (label) items.push({ label, content: divs[1] });
+    }
+    return items;
+  }, []);
+}
+
+function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
+  block.classList.add('is-answered');
+  buttonsEl.hidden = true;
+  [...resultsEl.children].forEach((r) => {
+    r.hidden = r.dataset.answerId !== answerId;
+  });
+  if (resetWrap) resetWrap.hidden = false;
+}
+
+function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
+  block.classList.remove('is-answered');
+  buttonsEl.hidden = false;
+  [...resultsEl.children].forEach((r) => { r.hidden = true; });
+  if (resetWrap) resetWrap.hidden = true;
+}
+
 export default function decorate(block) {
-  const rows = [...block.children];
-  if (!rows.length) return;
+  const config = extractConfig(block);
+  const image = extractImage(block);
+  const items = extractItems(block);
 
-  const questionRow = rows[0];
-  const optionRows = rows.slice(1);
+  const rows = [...block.querySelectorAll(':scope > div')];
+  rows.forEach((row) => { row.classList.add('info-tree-hidden'); });
 
-  const question = document.createElement('p');
-  question.className = 'info-tree-question';
-  question.textContent = questionRow.textContent.trim();
-  question.id = 'info-tree-q';
+  if (!items.length) return;
 
-  const optionsEl = document.createElement('div');
-  optionsEl.className = 'info-tree-options';
-  optionsEl.setAttribute('role', 'group');
-  optionsEl.setAttribute('aria-labelledby', 'info-tree-q');
+  const blockId = block.dataset.blockId || `info-tree-${Math.random().toString(36).slice(2, 8)}`;
+
+  const imageEl = document.createElement('div');
+  imageEl.className = 'info-tree-image';
+  if (image) imageEl.append(image);
+
+  const contentEl = document.createElement('div');
+  contentEl.className = 'info-tree-content';
+
+  if (config.heading) {
+    const h2 = document.createElement('h2');
+    h2.className = 'info-tree-heading';
+    h2.textContent = config.heading;
+    contentEl.append(h2);
+  }
+
+  if (config.question) {
+    const p = document.createElement('p');
+    p.className = 'info-tree-question';
+    p.id = `${blockId}-q`;
+    p.textContent = config.question;
+    contentEl.append(p);
+  }
+
+  const buttonsEl = document.createElement('div');
+  buttonsEl.className = 'info-tree-buttons';
+  buttonsEl.setAttribute('role', 'group');
+  buttonsEl.setAttribute('aria-labelledby', `${blockId}-q`);
 
   const resultsEl = document.createElement('div');
   resultsEl.className = 'info-tree-results';
   resultsEl.setAttribute('aria-live', 'polite');
 
-  const resetBtn = document.createElement('button');
-  resetBtn.className = 'info-tree-reset';
-  resetBtn.textContent = 'Start over';
-  resetBtn.hidden = true;
-
-  const answers = optionRows.map((row, i) => {
-    const cells = [...row.children];
-    const label = cells[0]?.textContent.trim();
-    const content = cells[1];
+  items.forEach(({ label, content }) => {
     const btn = document.createElement('button');
     btn.className = 'info-tree-option';
     btn.textContent = label;
-    btn.dataset.idx = i;
-    optionsEl.append(btn);
-    return { label, content };
+    btn.dataset.answerId = label;
+    buttonsEl.append(btn);
+
+    const result = document.createElement('div');
+    result.className = 'info-tree-result';
+    result.dataset.answerId = label;
+    result.hidden = true;
+    if (content) result.append(content.cloneNode(true));
+    resultsEl.append(result);
   });
 
-  optionsEl.addEventListener('click', (e) => {
+  contentEl.append(buttonsEl, resultsEl);
+
+  let resetWrap = null;
+  if (config.showReset) {
+    resetWrap = document.createElement('div');
+    resetWrap.className = 'info-tree-reset';
+    resetWrap.hidden = true;
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'info-tree-reset-btn';
+    resetBtn.textContent = config.resetLabel;
+    resetWrap.append(resetBtn);
+    contentEl.append(resetWrap);
+
+    resetWrap.addEventListener('click', () => {
+      if (config.cookieName) deleteCookie(config.cookieName);
+      hideAnswer(block, resultsEl, buttonsEl, resetWrap);
+    });
+  }
+
+  block.append(imageEl, contentEl);
+
+  buttonsEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.info-tree-option');
     if (!btn) return;
-    const idx = Number(btn.dataset.idx);
-    const answer = answers[idx];
-    resultsEl.innerHTML = '';
-    resultsEl.append(answer.content.cloneNode(true));
-    optionsEl.querySelectorAll('.info-tree-option').forEach((b) => b.classList.remove('is-selected'));
-    btn.classList.add('is-selected');
-    resetBtn.hidden = false;
+    const { answerId } = btn.dataset;
+    if (config.cookieName) setCookie(config.cookieName, answerId, 365);
+    showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId);
   });
 
-  resetBtn.addEventListener('click', () => {
-    resultsEl.innerHTML = '';
-    optionsEl.querySelectorAll('.info-tree-option').forEach((b) => b.classList.remove('is-selected'));
-    resetBtn.hidden = true;
-  });
-
-  block.replaceChildren(question, optionsEl, resultsEl, resetBtn);
+  if (config.cookieName) {
+    const saved = getCookie(config.cookieName);
+    if (saved) showAnswer(block, resultsEl, buttonsEl, resetWrap, saved);
+  }
 }
