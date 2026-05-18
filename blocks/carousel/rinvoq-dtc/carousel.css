@@ -220,7 +220,7 @@
   background: none;
 }
 
-/* Arrow glyph — two bars forming a chevron at 7rem (112px) scale */
+/* Arrow glyph — two bars meeting at center point forming < > */
 .carousel.carousel .carousel-navigation-buttons .slide-prev::before,
 .carousel.carousel .carousel-navigation-buttons .slide-prev::after,
 .carousel.carousel .carousel-navigation-buttons .slide-next::before,
@@ -228,38 +228,37 @@
   content: '';
   display: block;
   position: absolute;
-  left: 50%;
-  width: 10px;
-  height: 55px;
+  width: 8px;
+  height: 45px;
   background: #fff;
   border: 0;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
+/* Prev < : top bar angles down-right, bottom bar angles up-right */
 .carousel.carousel .carousel-navigation-buttons .slide-prev::before {
-  top: calc(50% - 28px);
-  transform: rotate(30deg);
-  transform-origin: bottom center;
+  top: 15px;
+  left: 28px;
+  transform: rotate(-30deg);
 }
 
 .carousel.carousel .carousel-navigation-buttons .slide-prev::after {
-  top: calc(50% + 2px);
-  transform: rotate(-30deg);
-  transform-origin: top center;
+  bottom: 15px;
+  left: 28px;
+  transform: rotate(30deg);
 }
 
+/* Next > : top bar angles down-left, bottom bar angles up-left */
 .carousel.carousel .carousel-navigation-buttons .slide-next::before {
-  top: calc(50% - 28px);
-  left: calc(50% - 4px);
-  transform: rotate(-30deg);
-  transform-origin: bottom center;
+  top: 15px;
+  left: 34px;
+  transform: rotate(30deg);
 }
 
 .carousel.carousel .carousel-navigation-buttons .slide-next::after {
-  top: calc(50% + 2px);
-  left: calc(50% - 4px);
-  transform: rotate(30deg);
-  transform-origin: top center;
+  bottom: 15px;
+  left: 34px;
+  transform: rotate(-30deg);
 }
 
 /* Dot indicators */
