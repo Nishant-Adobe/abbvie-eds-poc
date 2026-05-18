@@ -262,6 +262,12 @@ async function openModal(trigger, variantsOrOptions = []) {
 let exitAc = null;
 const exitModals = [];
 let exitIntentSuppressedUntil = 0;
+let mouseHasEnteredPage = false;
+
+// Only arm exit-intent after the cursor has actually moved inside the viewport.
+// This prevents spurious fires on page load/refresh when the cursor is in the
+// browser chrome and has never entered the page content.
+document.addEventListener('mousemove', () => { mouseHasEnteredPage = true; }, { once: true });
 
 document.addEventListener('exit-intent:suppress', (e) => {
   exitIntentSuppressedUntil = Date.now() + (e.detail?.ms ?? 2000);
@@ -276,6 +282,7 @@ function registerExitIntent(trigger, variants) {
 
   document.addEventListener('mouseleave', (e) => {
     if (e.clientY > 0) return;
+    if (!mouseHasEnteredPage) return;
     if (Date.now() < exitIntentSuppressedUntil) return;
     const modal = exitModals.find(
       (m) => !hasSeenModal(m.trigger.dataset.modalId, m.variants),
