@@ -1,6 +1,22 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
+const DUMMY_PROVIDERS_URL = new URL('./dummy-providers.json', import.meta.url).href;
+
 let blockCounter = 0;
+let dummyProvidersCache = null;
+
+async function loadDummyProviders() {
+  if (dummyProvidersCache) return dummyProvidersCache;
+  try {
+    const resp = await fetch(DUMMY_PROVIDERS_URL);
+    if (!resp.ok) return [];
+    const data = await resp.json();
+    dummyProvidersCache = data.results || data.providers || [];
+    return dummyProvidersCache;
+  } catch {
+    return [];
+  }
+}
 
 // Must match the field order in _find-provider.json (excluding tab, classes, and common-prop)
 const FIELD_ORDER = [
@@ -88,6 +104,12 @@ function buildForm(config, blockId, isLocation) {
   }
 
   searchGroup.append(searchRow);
+
+  const searchError = document.createElement('span');
+  searchError.className = 'find-provider-error find-provider-search-error';
+  searchError.setAttribute('aria-live', 'polite');
+  searchGroup.append(searchError);
+
   form.append(searchGroup);
 
   // Terms & Conditions checkbox
@@ -120,6 +142,12 @@ function buildForm(config, blockId, isLocation) {
 
     termsCheckboxLabel.append(termsCheckbox, termsText);
     termsGroup.append(termsCheckboxLabel);
+
+    const termsError = document.createElement('span');
+    termsError.className = 'find-provider-error find-provider-terms-error';
+    termsError.setAttribute('aria-live', 'polite');
+    termsGroup.append(termsError);
+
     form.append(termsGroup);
   }
 
@@ -154,7 +182,11 @@ function buildForm(config, blockId, isLocation) {
   return form;
 }
 
-function buildResultCard(provider, config) {
+function letterFromIndex(index) {
+  return String.fromCharCode(65 + (index % 26));
+}
+
+function buildResultCard(provider, config, index = 0) {
   const li = document.createElement('li');
   li.className = 'find-provider-result';
 
@@ -163,18 +195,21 @@ function buildResultCard(provider, config) {
     (c) => c.CommunicationTypeDescription === 'Telephone',
   )?.CommunicationValueText || provider.phone || '';
 
-  const name = document.createElement('strong');
-  name.className = 'find-provider-result-name';
-  name.textContent = provider.PartyName || provider.name || '';
-  li.append(name);
+  const pin = document.createElement('span');
+  pin.className = 'find-provider-result-pin';
+  pin.textContent = letterFromIndex(index);
+  pin.setAttribute('aria-hidden', 'true');
+  li.append(pin);
 
   const degree = provider.HCPExtension?.DegreeCode || provider.specialty || '';
-  if (degree) {
-    const specialtyEl = document.createElement('span');
-    specialtyEl.className = 'find-provider-result-specialty';
-    specialtyEl.textContent = degree;
-    li.append(specialtyEl);
-  }
+  const fullName = [provider.PartyName || provider.name || '', degree].filter(Boolean).join(', ');
+  const name = document.createElement('strong');
+  name.className = 'find-provider-result-name';
+  name.textContent = fullName;
+  li.append(name);
+
+  const body = document.createElement('div');
+  body.className = 'find-provider-result-body';
 
   const addr1 = address.AddressLine1 || provider.address || '';
   const city = address.CityName || '';
@@ -183,20 +218,37 @@ function buildResultCard(provider, config) {
   const addressEl = document.createElement('address');
   addressEl.className = 'find-provider-result-address';
   if (addr1) {
+    const line1 = document.createElement('span');
+    line1.textContent = addr1;
+    addressEl.append(line1);
     const cityStateZip = [city, state, zip].filter(Boolean).join(', ');
-    addressEl.textContent = [addr1, cityStateZip].filter(Boolean).join(', ');
+    if (cityStateZip) {
+      const line2 = document.createElement('span');
+      line2.textContent = cityStateZip;
+      addressEl.append(line2);
+    }
   }
-  li.append(addressEl);
+  body.append(addressEl);
 
-  if (phone) {
-    const phoneLink = document.createElement('a');
-    phoneLink.href = `tel:${phone.replace(/\D/g, '')}`;
-    phoneLink.className = 'find-provider-result-phone';
-    phoneLink.textContent = phone;
-    li.append(phoneLink);
+  const meta = document.createElement('div');
+  meta.className = 'find-provider-result-meta';
+
+  const distance = provider.distance || provider.DistanceText || '';
+  if (distance) {
+    const distEl = document.createElement('span');
+    distEl.className = 'find-provider-result-distance';
+    distEl.textContent = distance;
+    meta.append(distEl);
   }
 
   if (addr1) {
+    if (distance) {
+      const sep = document.createElement('span');
+      sep.className = 'find-provider-result-sep';
+      sep.setAttribute('aria-hidden', 'true');
+      sep.textContent = '|';
+      meta.append(sep);
+    }
     const dest = encodeURIComponent(`${addr1} ${city}, ${state} ${zip}`.trim());
     const dirLink = document.createElement('a');
     dirLink.href = `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
@@ -204,18 +256,112 @@ function buildResultCard(provider, config) {
     dirLink.rel = 'noopener noreferrer';
     dirLink.className = 'find-provider-result-directions';
     dirLink.textContent = 'Get Directions';
-    li.append(dirLink);
+    meta.append(dirLink);
   }
+
+  if (meta.childNodes.length) body.append(meta);
+
+  if (phone) {
+    const phoneLink = document.createElement('a');
+    phoneLink.href = `tel:${phone.replace(/\D/g, '')}`;
+    phoneLink.className = 'find-provider-result-phone';
+    phoneLink.textContent = phone;
+    body.append(phoneLink);
+  }
+
+  const detailsBtn = document.createElement('button');
+  detailsBtn.type = 'button';
+  detailsBtn.className = 'find-provider-result-details';
+  detailsBtn.setAttribute('aria-expanded', 'false');
+  detailsBtn.innerHTML = 'Show all practice details <span class="find-provider-result-details-icon" aria-hidden="true">+</span>';
+  body.append(detailsBtn);
+
+  li.append(body);
 
   if (config['exit-modal-id']) {
     li.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;
+      if (e.target.closest('a, button')) return;
       const modal = document.getElementById(config['exit-modal-id']);
       if (modal) modal.dispatchEvent(new CustomEvent('open-modal', { detail: { provider } }));
     });
   }
 
   return li;
+}
+
+function buildResultsHeader(config) {
+  const header = document.createElement('header');
+  header.className = 'find-provider-results-header';
+
+  const title = document.createElement('h2');
+  title.className = 'find-provider-results-title';
+  title.textContent = config['results-title'] || 'Results found';
+  header.append(title);
+
+  const radiusGroup = document.createElement('div');
+  radiusGroup.className = 'find-provider-results-radius';
+
+  if (config['radius-label']) {
+    const radiusLabel = document.createElement('span');
+    radiusLabel.className = 'find-provider-results-radius-label';
+    radiusLabel.textContent = config['radius-label'];
+    radiusGroup.append(radiusLabel);
+  }
+
+  const radiusSelect = document.createElement('select');
+  radiusSelect.className = 'find-provider-results-radius-select';
+  if (config['radius-label']) radiusSelect.setAttribute('aria-label', config['radius-label']);
+  ['5 Miles', '10 Miles', '25 Miles', '50 Miles', '100 Miles'].forEach((v) => {
+    const opt = document.createElement('option');
+    opt.value = v;
+    opt.textContent = v;
+    radiusSelect.append(opt);
+  });
+  radiusGroup.append(radiusSelect);
+
+  header.append(radiusGroup);
+  return header;
+}
+
+function buildPagination(totalPages = 5, currentPage = 1) {
+  const nav = document.createElement('nav');
+  nav.className = 'find-provider-pagination';
+  nav.setAttribute('aria-label', 'Results pagination');
+
+  const prevBtn = document.createElement('button');
+  prevBtn.type = 'button';
+  prevBtn.className = 'find-provider-pagination-btn find-provider-pagination-prev';
+  prevBtn.setAttribute('aria-label', 'Previous page');
+  prevBtn.disabled = currentPage === 1;
+  nav.append(prevBtn);
+
+  for (let i = 1; i <= totalPages; i += 1) {
+    const pageBtn = document.createElement('button');
+    pageBtn.type = 'button';
+    pageBtn.className = 'find-provider-pagination-page';
+    if (i === currentPage) pageBtn.classList.add('is-active');
+    pageBtn.textContent = String(i);
+    pageBtn.setAttribute('aria-label', `Page ${i}`);
+    if (i === currentPage) pageBtn.setAttribute('aria-current', 'page');
+    nav.append(pageBtn);
+
+    if (i < totalPages) {
+      const sep = document.createElement('span');
+      sep.className = 'find-provider-pagination-sep';
+      sep.setAttribute('aria-hidden', 'true');
+      sep.textContent = '|';
+      nav.append(sep);
+    }
+  }
+
+  const nextBtn = document.createElement('button');
+  nextBtn.type = 'button';
+  nextBtn.className = 'find-provider-pagination-btn find-provider-pagination-next';
+  nextBtn.setAttribute('aria-label', 'Next page');
+  nextBtn.disabled = currentPage === totalPages;
+  nav.append(nextBtn);
+
+  return nav;
 }
 
 export async function decorateBlock(block) {
@@ -232,6 +378,13 @@ export async function decorateBlock(block) {
   status.className = 'find-provider-status';
   status.setAttribute('aria-live', 'polite');
   status.setAttribute('aria-atomic', 'true');
+
+  const loader = document.createElement('div');
+  loader.className = 'find-provider-loader';
+  loader.setAttribute('aria-hidden', 'true');
+  const spinner = document.createElement('div');
+  spinner.className = 'find-provider-loader-spinner';
+  loader.append(spinner);
 
   const results = document.createElement('ul');
   results.className = 'find-provider-results';
@@ -250,9 +403,28 @@ export async function decorateBlock(block) {
   const clearBtn = form.querySelector('.find-provider-clear');
   const geoBtn = form.querySelector('.find-provider-geo-btn');
 
+  async function renderProviders(providers) {
+    status.textContent = '';
+    results.innerHTML = '';
+    if (!providers.length) {
+      status.textContent = config['no-results'];
+      return;
+    }
+    providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx)));
+    if (isMap) {
+      try {
+        const { updateMapMarkers } = await import('../eds-form/maps.js');
+        updateMapMarkers(providers, 0);
+      } catch {
+        // Map not ready yet — markers will be set when initializeMap resolves
+      }
+    }
+  }
+
   async function doSearch(query) {
     if (!config['api-endpoint']) {
-      status.textContent = config.error;
+      const providers = await loadDummyProviders();
+      await renderProviders(providers);
       return;
     }
     status.textContent = '';
@@ -266,64 +438,104 @@ export async function decorateBlock(block) {
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       const providers = data.results || data.providers || (Array.isArray(data) ? data : []);
-
-      if (!providers.length) {
-        status.textContent = config['no-results'];
-        return;
-      }
-
-      providers.forEach((p) => results.append(buildResultCard(p, config)));
-
-      if (isMap) {
-        const { updateMapMarkers } = await import('../eds-form/maps.js');
-        updateMapMarkers(providers, 0);
-      }
+      await renderProviders(providers);
     } catch {
       status.textContent = config.error;
     }
   }
 
+  const resultsPanel = document.createElement('div');
+  resultsPanel.className = 'find-provider-results-panel';
+  resultsPanel.append(buildResultsHeader(config));
+
+  const resultsLayout = document.createElement('div');
+  resultsLayout.className = 'find-provider-results-layout';
+  resultsLayout.append(results);
+  if (mapContainer) resultsLayout.append(mapContainer);
+  resultsPanel.append(resultsLayout);
+
+  resultsPanel.append(buildPagination(5, 1));
+
+  async function runSearchFlow(query) {
+    resultsPanel.classList.remove('is-visible');
+    loader.classList.add('is-visible');
+    const minDelay = new Promise((resolve) => { setTimeout(resolve, 800); });
+    await Promise.all([doSearch(query), minDelay]);
+    loader.classList.remove('is-visible');
+    resultsPanel.classList.add('is-visible');
+  }
+
+  const searchError = form.querySelector('.find-provider-search-error');
+  const termsError = form.querySelector('.find-provider-terms-error');
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const termsCheckbox = form.querySelector('.find-provider-terms-checkbox');
-    if (termsCheckbox && !termsCheckbox.checked) {
-      status.textContent = config['terms-error'];
-      return;
+    const query = searchInput?.value.trim() || '';
+
+    let hasError = false;
+    if (!query) {
+      if (searchError) searchError.textContent = 'Please enter a valid ZIP Code';
+      hasError = true;
+    } else if (searchError) {
+      searchError.textContent = '';
     }
-    doSearch(searchInput?.value.trim() || '');
+
+    if (termsCheckbox && !termsCheckbox.checked) {
+      if (termsError) termsError.textContent = 'Please agree to the Terms & Conditions';
+      hasError = true;
+    } else if (termsError) {
+      termsError.textContent = '';
+    }
+
+    if (hasError) return;
+    runSearchFlow(query);
   });
+
+  if (searchInput && searchError) {
+    searchInput.addEventListener('input', () => {
+      if (searchInput.value.trim()) searchError.textContent = '';
+    });
+  }
+
+  const termsCheckboxEl = form.querySelector('.find-provider-terms-checkbox');
+  if (termsCheckboxEl && termsError) {
+    termsCheckboxEl.addEventListener('change', () => {
+      if (termsCheckboxEl.checked) termsError.textContent = '';
+    });
+  }
 
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
       form.reset();
       results.innerHTML = '';
       status.textContent = '';
+      resultsPanel.classList.remove('is-visible');
+      loader.classList.remove('is-visible');
+      form.querySelectorAll('.find-provider-error').forEach((el) => { el.textContent = ''; });
     });
   }
 
   if (geoBtn) {
     geoBtn.addEventListener('click', () => {
       if (!('geolocation' in navigator)) return;
+      const termsCheckbox = form.querySelector('.find-provider-terms-checkbox');
+      if (termsCheckbox && !termsCheckbox.checked) return;
       geoBtn.disabled = true;
-      status.textContent = 'Detecting location…';
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
           geoBtn.disabled = false;
-          doSearch(`${coords.latitude},${coords.longitude}`);
+          runSearchFlow(`${coords.latitude},${coords.longitude}`);
         },
         () => {
           geoBtn.disabled = false;
-          status.textContent = config['geo-error'];
         },
         { timeout: 8000 },
       );
     });
   }
 
-  const children = [form, status];
-  if (mapContainer) children.push(mapContainer);
-  children.push(results);
-  block.replaceChildren(...children);
+  block.replaceChildren(form, status, loader, resultsPanel);
 
   if (isMap) {
     try {
@@ -331,7 +543,18 @@ export async function decorateBlock(block) {
       if (config['maps-api-key']) await loadGoogleMapsAPI(config['maps-api-key']);
       await initializeMap(config['maps-api-key'] || null);
     } catch {
-      // Maps failed to load — degrade to list-only
+      // Maps failed to load — fall through to iframe fallback below
+    }
+
+    if (mapContainer && !mapContainer.querySelector('div, iframe')) {
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://maps.google.com/maps?q=Elmhurst,NY+11373&z=11&output=embed';
+      iframe.title = 'Provider locations';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.className = 'find-provider-map-iframe';
+      mapContainer.append(iframe);
     }
   }
 }
