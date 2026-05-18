@@ -261,6 +261,11 @@ async function openModal(trigger, variantsOrOptions = []) {
 
 let exitAc = null;
 const exitModals = [];
+let exitIntentSuppressedUntil = 0;
+
+document.addEventListener('exit-intent:suppress', (e) => {
+  exitIntentSuppressedUntil = Date.now() + (e.detail?.ms ?? 2000);
+});
 
 function registerExitIntent(trigger, variants) {
   const id = trigger?.dataset?.modalId;
@@ -271,6 +276,7 @@ function registerExitIntent(trigger, variants) {
 
   document.addEventListener('mouseleave', (e) => {
     if (e.clientY > 0) return;
+    if (Date.now() < exitIntentSuppressedUntil) return;
     const modal = exitModals.find(
       (m) => !hasSeenModal(m.trigger.dataset.modalId, m.variants),
     );
