@@ -108,10 +108,12 @@ function extractItems(block) {
     return itemRows.reduce((items, row) => {
       const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
       const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
+      const btnLabelEl = row.querySelector('[data-aue-prop="buttonLabel"]');
       const label = labelEl?.textContent?.trim() || '';
+      const buttonLabel = btnLabelEl?.textContent?.trim() || '';
       const cells = [...row.querySelectorAll(':scope > div')];
       const fallbackContent = cells.length >= 2 ? cells[1] : null;
-      if (label) items.push({ label, content: contentEl || fallbackContent });
+      if (label) items.push({ label, content: contentEl || fallbackContent, buttonLabel });
       return items;
     }, []);
   }
@@ -121,8 +123,9 @@ function extractItems(block) {
     const divs = row.querySelectorAll(':scope > div');
     if (divs.length >= 2) {
       const label = divs[0]?.textContent?.trim() || '';
+      const buttonLabel = divs.length >= 3 ? divs[2]?.textContent?.trim() || '' : '';
       if (label) {
-        items.push({ label, content: divs[1] });
+        items.push({ label, content: divs[1], buttonLabel });
         row.dataset.itItem = '';
       }
     }
@@ -130,7 +133,19 @@ function extractItems(block) {
   }, []);
 }
 
-function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
+function findSectionCta(block, buttonLabel) {
+  if (!buttonLabel) return null;
+  const section = block.closest('.section');
+  if (!section) return null;
+  const ctas = section.querySelectorAll('.cta-wrapper, .cta');
+  for (let i = 0; i < ctas.length; i += 1) {
+    const text = ctas[i].textContent?.trim();
+    if (text === buttonLabel) return ctas[i];
+  }
+  return null;
+}
+
+function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId, items) {
   block.classList.add('is-answered');
   const headingEl = block.querySelector('.info-tree-heading');
   const questionEl = block.querySelector('.info-tree-question');
@@ -145,6 +160,18 @@ function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
     }
   });
   if (resetWrap) resetWrap.classList.remove('info-tree-hidden');
+
+  const section = block.closest('.section');
+  if (section) {
+    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
+      cta.classList.add('info-tree-hidden');
+    });
+  }
+  const matchedItem = items?.find((item) => item.label === answerId);
+  if (matchedItem?.buttonLabel) {
+    const cta = findSectionCta(block, matchedItem.buttonLabel);
+    if (cta) cta.classList.remove('info-tree-hidden');
+  }
 }
 
 function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
@@ -156,6 +183,13 @@ function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
   buttonsEl.classList.remove('info-tree-hidden');
   [...resultsEl.children].forEach((r) => { r.classList.add('info-tree-hidden'); });
   if (resetWrap) resetWrap.classList.add('info-tree-hidden');
+
+  const section = block.closest('.section');
+  if (section) {
+    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
+      cta.classList.remove('info-tree-hidden');
+    });
+  }
 }
 
 export default function decorate(block) {
@@ -256,16 +290,23 @@ export default function decorate(block) {
     contentEl.append(row);
   });
 
+  const section = block.closest('.section');
+  if (section) {
+    section.querySelectorAll('.cta-wrapper, .cta').forEach((cta) => {
+      cta.classList.add('info-tree-hidden');
+    });
+  }
+
   buttonsEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.info-tree-option');
     if (!btn) return;
     const { answerId } = btn.dataset;
     if (config.cookieName) setCookie(config.cookieName, answerId, 365);
-    showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId);
+    showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId, items);
   });
 
   if (config.cookieName) {
     const saved = getCookie(config.cookieName);
-    if (saved) showAnswer(block, resultsEl, buttonsEl, resetWrap, saved);
+    if (saved) showAnswer(block, resultsEl, buttonsEl, resetWrap, saved, items);
   }
 }
