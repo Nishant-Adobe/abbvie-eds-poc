@@ -252,9 +252,32 @@
   content: none;
 }
 
-/* Dot indicators — hidden */
+/* Dot indicators */
 .carousel.carousel .carousel-slide-indicators {
-  display: none;
+  background: transparent;
+  background-color: transparent;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 12px;
+  gap: 8px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel.carousel .carousel-slide-indicator button {
+  width: 14px;
+  height: 14px;
+  background-color: #fff;
+  border: 1px solid #90124a;
+}
+
+.carousel.carousel .carousel-slide-indicator button:disabled,
+.carousel.carousel .carousel-slide-indicator button:hover,
+.carousel.carousel .carousel-slide-indicator button:focus-visible {
+  background-color: #90124a;
+  border-color: #fff;
 }
 
 
