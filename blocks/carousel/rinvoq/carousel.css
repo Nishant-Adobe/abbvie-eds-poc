@@ -196,8 +196,8 @@
 }
 
 .carousel.carousel .carousel-navigation-buttons button {
-  width: 40px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background: none;
   background-color: transparent;
   border: none;
@@ -214,23 +214,18 @@
 .carousel.carousel .carousel-navigation-buttons button::after {
   content: '';
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 60px;
+  height: 60px;
   border: none;
-  border-left: 3px solid #fff;
-  border-bottom: 3px solid #fff;
   position: absolute;
   top: 50%;
-  left: 55%;
-  transform: translate(-50%, -50%) rotate(45deg);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.5'%3E%3Cpath d='M15 4 L7 12 L15 20'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .carousel.carousel .carousel-navigation-buttons button.slide-next::after {
-  border-left: none;
-  border-bottom: none;
-  border-right: 3px solid #fff;
-  border-top: 3px solid #fff;
-  left: 45%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.5'%3E%3Cpath d='M9 4 L17 12 L9 20'/%3E%3C/svg%3E");
 }
 
 .carousel.carousel .carousel-slide-indicators {
