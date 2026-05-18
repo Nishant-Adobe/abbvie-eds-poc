@@ -10715,7 +10715,7 @@
       {
         "component": "multiselect",
         "name": "classes",
-        "label": "Variants",
+        "label": "Layout",
         "valueType": "string",
         "options": [
           {
@@ -10723,41 +10723,63 @@
             "value": "social-share-horizontal"
           },
           {
-            "name": "Include Email",
-            "value": "social-share-email"
-          },
-          {
-            "name": "Include Print",
-            "value": "social-share-print"
+            "name": "Vertical",
+            "value": "social-share-vertical"
           }
         ]
       },
       {
         "component": "multiselect",
-        "name": "platforms",
-        "label": "Platforms",
+        "name": "networks",
+        "label": "Social Networks",
         "valueType": "string",
         "options": [
-          {
-            "name": "X (Twitter)",
-            "value": "twitter"
-          },
           {
             "name": "Facebook",
             "value": "facebook"
           },
           {
+            "name": "Twitter/X",
+            "value": "twitter"
+          },
+          {
             "name": "LinkedIn",
             "value": "linkedin"
+          },
+          {
+            "name": "Pinterest",
+            "value": "pinterest"
+          },
+          {
+            "name": "Copy Link",
+            "value": "copy"
+          },
+          {
+            "name": "Email",
+            "value": "email"
           }
         ]
       },
       {
-        "component": "text",
-        "name": "shareUrl",
+        "component": "aem-content",
+        "name": "link",
         "label": "Share URL Override",
         "valueType": "string",
         "description": "URL to share. Defaults to current page URL if blank."
+      },
+      {
+        "component": "text",
+        "name": "emailModalId",
+        "label": "Email Modal ID",
+        "valueType": "string",
+        "description": "ID of the modal opened when email icon is clicked. Falls back to mailto: if blank."
+      },
+      {
+        "component": "text",
+        "name": "exitModalId",
+        "label": "Exit Modal ID",
+        "valueType": "string",
+        "description": "ID of the exit-disclaimer modal shown before navigating to a social network. Leave blank to skip."
       },
       {
         "...": "../../models/_common-properties.json#/common-prop"
