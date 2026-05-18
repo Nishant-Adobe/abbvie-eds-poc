@@ -2,19 +2,19 @@ import { showSlide } from '../carousel.js';
 
 let autoPlayInterval = null;
 
+function stopAutoPlay() {
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+  }
+}
+
 function startAutoPlay(block, interval = 5000) {
   stopAutoPlay();
   autoPlayInterval = setInterval(() => {
     const current = parseInt(block.dataset.activeSlide || '0', 10);
     showSlide(block, current + 1);
   }, interval);
-}
-
-function stopAutoPlay() {
-  if (autoPlayInterval) {
-    clearInterval(autoPlayInterval);
-    autoPlayInterval = null;
-  }
 }
 
 export default async function getBlockConfigs() {
