@@ -30,7 +30,7 @@ function extractConfig(block) {
 
   rows.forEach((row) => {
     if (row.querySelector('picture') || row.querySelector('img[src]')) return;
-    const prop = row.querySelector('[data-aue-prop]');
+    const prop = row.querySelector('[data-aue-prop]') || (row.hasAttribute('data-aue-prop') ? row : null);
     if (prop) {
       const name = prop.getAttribute('data-aue-prop');
       if (name === 'heading') heading = prop.textContent?.trim() || '';
@@ -89,7 +89,9 @@ function extractItems(block) {
       const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
       const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
       const label = labelEl?.textContent?.trim() || '';
-      if (label) items.push({ label, content: contentEl });
+      const cells = [...row.querySelectorAll(':scope > div')];
+      const fallbackContent = cells.length >= 2 ? cells[1] : null;
+      if (label) items.push({ label, content: contentEl || fallbackContent });
       return items;
     }, []);
   }
