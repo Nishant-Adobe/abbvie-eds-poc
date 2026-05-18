@@ -1894,6 +1894,12 @@ header nav .nav-brand-indication img {
   display: block;
 }
 
+/* Body offset when floating ISI is visible — toggled via JS class on <html> */
+
+:root.nav-isi-visible body {
+  padding-bottom: var(--nav-isi-collapsed-height);
+}
+
 /* ──────────────────────────────────────────
    Lite Header Layout
    ────────────────────────────────────────── */
