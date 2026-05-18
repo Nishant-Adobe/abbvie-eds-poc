@@ -9,6 +9,8 @@
   --info-tree-radio-size-desktop: 28px;
   --info-tree-reset-color: var(--color-brand-primary);
   --info-tree-disclaimer-color: var(--text-color);
+  --info-tree-gap-mobile: 4px;
+  --info-tree-gap-desktop: 12px;
 
   display: flex;
   flex-direction: column;
@@ -36,7 +38,7 @@
 .info-tree .info-tree-heading {
   font-size: var(--heading-font-size-m);
   font-weight: var(--font-weight-heading);
-  margin: 0 0 var(--spacing-8);
+  margin: 0 0 var(--spacing-08);
 }
 
 .info-tree .info-tree-question {
@@ -55,14 +57,14 @@
 .info-tree .info-tree-option {
   display: flex;
   align-items: center;
-  gap: var(--spacing-4);
+  gap: var(--info-tree-gap-mobile);
   background: none;
   border: none;
   cursor: pointer;
   font-size: var(--body-font-size-xs);
   font-weight: var(--font-weight-medium);
   color: var(--info-tree-text);
-  padding: var(--spacing-8) 0;
+  padding: var(--spacing-08) 0;
   text-align: left;
 }
 
@@ -136,7 +138,7 @@
 
   .info-tree .info-tree-option {
     font-size: var(--body-font-size-m);
-    gap: var(--spacing-12);
+    gap: var(--info-tree-gap-desktop);
   }
 
   .info-tree .info-tree-option::before {
