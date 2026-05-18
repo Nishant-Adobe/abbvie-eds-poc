@@ -118,19 +118,24 @@ function readFirstCellText(row) {
 export default async function decorate(block) {
   applyCommonProps(block);
 
-  const rows = [...block.children];
-  const rawUrl = readFirstCellText(rows[0]);
-  const rawPlatforms = readFirstCellText(rows[1]);
+  // Read fields by content type, not position — xwalk omits empty-string rows so
+  // positional indexing breaks when shareUrl is blank (the common case).
+  let rawUrl = '';
+  let rawPlatforms = '';
+  [...block.children].forEach((row) => {
+    const text = readFirstCellText(row);
+    if (!text) return;
+    if (SAFE_URL_RE.test(text)) rawUrl = text;
+    else if (!rawPlatforms) rawPlatforms = text;
+  });
 
-  const shareUrl = rawUrl && SAFE_URL_RE.test(rawUrl)
-    ? rawUrl
-    : window.location.href;
+  const shareUrl = rawUrl || window.location.href;
 
   const platformKeys = rawPlatforms
     ? rawPlatforms.split(',').map((s) => s.trim()).filter(Boolean)
     : Object.keys(PLATFORMS);
 
-  rows.forEach((row) => row.remove());
+  [...block.children].forEach((row) => row.remove());
 
   const list = document.createElement('ul');
   list.className = 'social-share-list';
