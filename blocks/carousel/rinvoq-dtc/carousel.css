@@ -197,11 +197,13 @@
   left: 0;
   right: 0;
   z-index: 3;
-  display: none;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.carousel.carousel:hover .carousel-navigation-buttons {
-  display: flex;
+.carousel.carousel:hover .carousel-navigation-buttons,
+.carousel.carousel:focus-within .carousel-navigation-buttons {
+  opacity: 1;
 }
 
 .carousel.carousel .carousel-navigation-buttons button {
@@ -271,7 +273,7 @@
   }
 
   .carousel.carousel .carousel-navigation-buttons {
-    display: flex;
+    opacity: 1;
   }
 
   .carousel.carousel .carousel-navigation-buttons button {
