@@ -1020,7 +1020,7 @@ export default async function decorate(block) {
                 catList.querySelectorAll('.utility-category-item').forEach((ci) => ci.classList.toggle('active', ci === catItem));
                 const menuRect = dropMenu.getBoundingClientRect();
                 const itemRect = catItem.getBoundingClientRect();
-                colRight.style.top = `${itemRect.top - menuRect.top}px`;
+                colRight.style.setProperty('--utility-flyout-top', `${itemRect.top - menuRect.top}px`);
                 colRight.querySelectorAll('.utility-sub-list').forEach((sl) => {
                   if (sl.dataset.idx === activeIdx) sl.removeAttribute('hidden');
                   else sl.setAttribute('hidden', '');
