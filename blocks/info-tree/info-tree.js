@@ -188,7 +188,11 @@ export default function decorate(block) {
     const result = document.createElement('div');
     result.className = 'info-tree-result info-tree-hidden';
     result.dataset.answerId = label;
-    if (content) result.append(content.cloneNode(true));
+    if (content) {
+      [...content.childNodes].forEach((child) => {
+        result.append(child.cloneNode(true));
+      });
+    }
     resultsEl.append(result);
   });
 
