@@ -135,7 +135,7 @@
   }
 }
 
-/* Rinvoq DTC — Full-width hero carousel overrides */
+/* Rinvoq — Full-width hero carousel overrides */
 
 .carousel.carousel {
   position: relative;
@@ -145,14 +145,12 @@
   margin-left: calc(-1 * (100vw - 100%) / 2);
 }
 
-/* Height: responsive, content-driven like original */
 .carousel.carousel .carousel-slide {
-  min-height: 280px;
-  height: 25vw;
-  max-height: 500px;
+  min-height: var(--carousel-slide-min-height, 280px);
+  height: var(--carousel-slide-height, 25vw);
+  max-height: var(--carousel-slide-max-height, 500px);
 }
 
-/* Image fills entire slide */
 .carousel.carousel .carousel-slide .carousel-slide-image {
   position: absolute;
   inset: 0;
@@ -169,33 +167,31 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: var(--carousel-image-position, center top);
 }
 
-/* Content overlay — no background, white text */
 .carousel.carousel .carousel-slide .carousel-slide-content {
   background: none;
   background-color: transparent;
-  color: #fff;
+  color: var(--carousel-content-color, #fff);
   margin: 0;
-  padding: 32px 100px;
-  max-width: 60%;
+  padding: var(--carousel-content-padding, 32px 100px);
+  max-width: var(--carousel-content-max-width, 60%);
   width: auto;
-  text-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+  text-shadow: var(--carousel-content-text-shadow, 0 1px 4px rgb(0 0 0 / 30%));
 }
 
 .carousel.carousel .carousel-slide .carousel-slide-content h1,
 .carousel.carousel .carousel-slide .carousel-slide-content h2 {
   font-family: var(--heading-font-family, sans-serif);
-  font-weight: 700;
-  color: #fff;
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--carousel-content-color, #fff);
   margin: 0;
 }
 
-/* Navigation arrows — visible only on hover */
 .carousel.carousel .carousel-navigation-buttons {
-  left: 20px;
-  right: 20px;
+  left: var(--carousel-nav-inset, 20px);
+  right: var(--carousel-nav-inset, 20px);
   z-index: 3;
   visibility: hidden;
 }
@@ -205,8 +201,8 @@
 }
 
 .carousel.carousel .carousel-navigation-buttons button {
-  width: 70px;
-  height: 120px;
+  width: var(--carousel-nav-button-width, 70px);
+  height: var(--carousel-nav-button-height, 120px);
   background: none;
   background-color: transparent;
   border: none;
@@ -220,7 +216,6 @@
   background: none;
 }
 
-/* Arrow glyph — single rotated square with two thick borders */
 .carousel.carousel .carousel-navigation-buttons .slide-prev::after,
 .carousel.carousel .carousel-navigation-buttons .slide-next::after {
   content: '';
@@ -228,11 +223,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 35px;
-  height: 35px;
+  width: var(--carousel-arrow-size, 30px);
+  height: var(--carousel-arrow-size, 30px);
   border: 0;
-  border-bottom: 6px solid #fff;
-  border-left: 6px solid #fff;
+  border-bottom: var(--carousel-arrow-weight, 5px) solid var(--carousel-arrow-color, #fff);
+  border-left: var(--carousel-arrow-weight, 5px) solid var(--carousel-arrow-color, #fff);
   background: none;
   border-radius: 0;
   transform: translate(-30%, -50%) rotate(45deg);
@@ -241,18 +236,16 @@
 .carousel.carousel .carousel-navigation-buttons .slide-next::after {
   border-bottom: 0;
   border-left: 0;
-  border-top: 6px solid #fff;
-  border-right: 6px solid #fff;
+  border-top: var(--carousel-arrow-weight, 5px) solid var(--carousel-arrow-color, #fff);
+  border-right: var(--carousel-arrow-weight, 5px) solid var(--carousel-arrow-color, #fff);
   transform: translate(-70%, -50%) rotate(45deg);
 }
 
-/* Hide the base ::before pseudo if any */
 .carousel.carousel .carousel-navigation-buttons .slide-prev::before,
 .carousel.carousel .carousel-navigation-buttons .slide-next::before {
   content: none;
 }
 
-/* Dot indicators */
 .carousel.carousel .carousel-slide-indicators {
   background: transparent;
   background-color: transparent;
@@ -261,31 +254,32 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  padding: 12px;
-  gap: 8px;
+  padding: var(--spacing-12, 12px);
+  gap: var(--spacing-08, 8px);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .carousel.carousel .carousel-slide-indicator button {
-  width: 14px;
-  height: 14px;
-  background-color: #fff;
-  border: 1px solid #90124a;
+  width: var(--carousel-dot-size, 14px);
+  height: var(--carousel-dot-size, 14px);
+  background-color: var(--carousel-dot-inactive-bg, #fff);
+  border: var(--carousel-dot-border-width, 1px) solid var(--carousel-dot-color, #90124a);
 }
 
 .carousel.carousel .carousel-slide-indicator button:disabled,
 .carousel.carousel .carousel-slide-indicator button:hover,
 .carousel.carousel .carousel-slide-indicator button:focus-visible {
-  background-color: #90124a;
-  border-color: #fff;
+  background-color: var(--carousel-dot-color, #90124a);
+  border-color: var(--carousel-dot-active-border, #fff);
 }
 
-
-/* Mobile */
 @media (width < 768px) {
   .carousel.carousel .carousel-slide .carousel-slide-content {
     max-width: 100%;
-    padding: 24px;
+    padding: var(--spacing-24, 24px);
+  }
+
+  .carousel.carousel .carousel-navigation-buttons {
+    visibility: visible;
   }
 
   .carousel.carousel .carousel-navigation-buttons button {
