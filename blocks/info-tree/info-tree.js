@@ -252,6 +252,10 @@ export default function decorate(block) {
 
   block.append(imageEl, contentEl);
 
+  block.querySelectorAll('.info-tree-disclaimer').forEach((row) => {
+    contentEl.append(row);
+  });
+
   buttonsEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.info-tree-option');
     if (!btn) return;
