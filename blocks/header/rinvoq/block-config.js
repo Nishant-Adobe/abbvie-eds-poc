@@ -55,6 +55,7 @@ export default async function getBlockConfigs() {
 
         // PDF icon on utility dropdown links that point to PDF files
         block.querySelectorAll('.nav-utility ul[role="menu"] a').forEach((link) => {
+          if (!link.href.toLowerCase().endsWith('.pdf')) return;
           if (link.querySelector('.nav-utility-pdf-icon')) return;
           const icon = document.createElement('span');
           icon.className = 'nav-utility-pdf-icon';
