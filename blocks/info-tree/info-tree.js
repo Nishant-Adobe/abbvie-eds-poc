@@ -57,6 +57,23 @@ function extractConfig(block) {
           showReset = divs[1]?.textContent?.trim().toLowerCase() === 'true';
           row.dataset.itConfig = '';
         }
+      } else {
+        const cell = divs[0] || row;
+        const text = cell.textContent?.trim();
+        const lower = text.toLowerCase();
+        if (lower === 'true' || lower === 'false') {
+          showReset = lower === 'true';
+          row.dataset.itConfig = '';
+        } else if (!question && (cell.querySelector('h1,h2,h3,h4,h5,h6') || text.endsWith('?'))) {
+          question = cell;
+          row.dataset.itConfig = '';
+        } else if (!cookieName && text && !text.includes(' ')) {
+          cookieName = text;
+          row.dataset.itConfig = '';
+        } else if (!resetLabel || lower === 'start over') {
+          resetLabel = text || 'Start over';
+          row.dataset.itConfig = '';
+        }
       }
     }
   });
