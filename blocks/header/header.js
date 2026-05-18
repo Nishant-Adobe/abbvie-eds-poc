@@ -942,7 +942,7 @@ export default async function decorate(block) {
   const utilityBlocks = header.querySelectorAll('.navigation-content[data-type="utility-nav"]');
   if (utilityBlocks.length) {
     const utility = createElement('div', { className: 'section nav-utility' });
-    const utilityNav = createElement('div', {
+    const utilityNav = createElement('nav', {
       attributes: { 'aria-label': 'Utility Navigation' },
     });
     const utilityUl = createElement('ul', { attributes: { role: 'menubar' } });

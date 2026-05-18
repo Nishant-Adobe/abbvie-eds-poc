@@ -58,7 +58,7 @@ export default async function getBlockConfigs() {
               const catLi = document.createElement('li');
               const catHeading = document.createElement('p');
               catHeading.className = 'button-container';
-              const catAnchor = document.createElement('a');
+              const catAnchor = document.createElement('span');
               catAnchor.className = 'button';
               catAnchor.textContent = catText;
               catHeading.appendChild(catAnchor);
