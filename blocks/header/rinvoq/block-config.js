@@ -1,3 +1,5 @@
+const navClickCleanup = new WeakMap();
+
 export default async function getBlockConfigs() {
   return {
     flags: {},
@@ -19,17 +21,17 @@ export default async function getBlockConfigs() {
           }
         }
 
-        // Click outside nav-sections → collapse all top-level items
-        if (!block.dataset.navClickBound) {
-          block.dataset.navClickBound = 'true';
-          document.addEventListener('click', (e) => {
-            if (!block.querySelector('.nav-sections')?.contains(e.target)) {
-              block.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((li) => {
-                li.setAttribute('aria-expanded', 'false');
-              });
-            }
-          });
-        }
+        // Click outside nav-sections → collapse all top-level items (abort previous on re-decorate)
+        navClickCleanup.get(block)?.abort();
+        const controller = new AbortController();
+        navClickCleanup.set(block, controller);
+        document.addEventListener('click', (e) => {
+          if (!block.querySelector('.nav-sections')?.contains(e.target)) {
+            block.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((li) => {
+              li.setAttribute('aria-expanded', 'false');
+            });
+          }
+        }, { signal: controller.signal });
 
         // Utility dropdown — open on hover (desktop only; mobile utility bar is hidden)
         block.querySelectorAll('.nav-utility li:has(button[aria-haspopup])').forEach((dropLi) => {

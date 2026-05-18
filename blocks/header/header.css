@@ -42,6 +42,33 @@
   --nav-search-icon-offset: var(--spacing-02);
   --nav-search-input-padding: var(--spacing-04) var(--spacing-35) var(--spacing-04) var(--spacing-15);
   --nav-search-input-min-width: 200px;
+  /* Hamburger icon */
+  --nav-hamburger-height: 2.2rem;
+  --nav-hamburger-bar-height: 1.5px;
+  --nav-hamburger-bar-width: 13.5px;
+  --nav-hamburger-bar-offset: 6px;
+  --nav-hamburger-bar-origin: -1px 1px;
+  /* Search label */
+  --nav-search-label-font-size: 31.25px;
+  --nav-search-label-line-height: 46.875px;
+  /* Mega menu */
+  --nav-mega-card-min-height: 25.4rem;
+  --nav-mega-card-min-height-base: 27rem;
+  /* Large-screen layout widths */
+  --nav-max-width-lg: 144rem;
+  --nav-max-width-xl: 133rem;
+  /* Mobile overlay */
+  --nav-sections-min-height-mobile: 12rem;
+  --nav-hamburger-separator-width: 0.5px;
+  --nav-sections-calc-offset-lg: 27.2rem;
+  --nav-sections-calc-offset-md: 10rem;
+  /* Navigation group (mega menu panel) */
+  --nav-navigation-group-padding: 0.9rem 7rem 16.1rem;
+  --nav-mega-menu-panel-padding-left: calc(6.5% + 0.1667rem);
+  /* Search floating label */
+  --nav-search-label-float-offset: 40px;
+  /* Hamburger last bar */
+  --nav-hamburger-bar-offset-last: 2px;
 }
 
 /* ──────────────────────────────────────────
@@ -230,7 +257,7 @@ header nav[aria-expanded='true'] {
 /* Hamburger */
 header nav .nav-hamburger {
   grid-area: hamburger;
-  height: 2.2rem;
+  height: var(--nav-hamburger-height);
   display: flex;
   align-items: center;
 }
@@ -248,11 +275,11 @@ header nav .nav-hamburger button {
 header nav .nav-hamburger button>span {
   background: var(--text-color);
   display: block;
-  height: 1.5px;
-  transform-origin: -1px 1px;
+  height: var(--nav-hamburger-bar-height);
+  transform-origin: var(--nav-hamburger-bar-origin);
   transition: all 0.5s ease-in-out;
-  width: 13.5px;
-  transform: translateX(6px);
+  width: var(--nav-hamburger-bar-width);
+  transform: translateX(var(--nav-hamburger-bar-offset));
 }
 
 header nav .nav-hamburger button>span:not(:last-child) {
@@ -264,7 +291,7 @@ header nav .nav-hamburger button>span:first-child {
 }
 
 header nav .nav-hamburger button>span:last-child {
-  transform: translateX(2px);
+  transform: translateX(var(--nav-hamburger-bar-offset-last));
 }
 
 header nav .nav-sections .default-content-wrapper>ul>li>button span {
@@ -475,11 +502,11 @@ html:has(header nav .nav-item-level-0 li[aria-expanded="true"]) {
   font-family: var(--body-font-family);
   opacity: 1;
   transform: translateY(0);
-  font-size: 31.25px;
+  font-size: var(--nav-search-label-font-size);
   font-weight: var(--font-weight-650);
   order: var(--order-n1);
   transition: all 0.3s ease-in;
-  line-height: 46.875px;
+  line-height: var(--nav-search-label-line-height);
 }
 
 .nav-tools .search-inner-wrapper {
@@ -488,7 +515,7 @@ html:has(header nav .nav-item-level-0 li[aria-expanded="true"]) {
 }
 
 .nav-tools .search-input-label.focus-out {
-  transform: translateY(40px);
+  transform: translateY(var(--nav-search-label-float-offset));
   color: var(--text-color-gray);
   opacity: var(--opacity-07);
 }
@@ -689,7 +716,7 @@ header nav .external-link::after {
   grid-template-columns: repeat(12, 1fr);
   padding-right: var(--spacing-55);
   padding-top: var(--spacing-80);
-  padding-left: calc(6.5% + .1667rem);
+  padding-left: var(--nav-mega-menu-panel-padding-left);
   border-top-left-radius: var(--border-top-left-radius-40);
   margin-left: var(--spacing-55);
   order: var(--order-1);
@@ -725,7 +752,7 @@ header nav .external-link::after {
   margin: var(--spacing-00);
   align-items: center;
   background: none;
-  border: .1rem solid var(--highlight-dark-background-color);
+  border: var(--separator-height-1) solid var(--highlight-dark-background-color);
   color: var(--highlight-dark-background-color);
   display: flex;
   font-size: var(--font-size-14);
@@ -754,7 +781,7 @@ header nav .external-link::after {
   color: var(--text-color);
   -ms-flex-pack: justify;
   align-items: flex-start;
-  border-bottom: .1rem solid var(--footer-seperator-color);
+  border-bottom: var(--separator-height-1) solid var(--footer-seperator-color);
   display: flex;
   justify-content: space-between;
   padding-bottom: var(--spacing-16);
@@ -785,10 +812,10 @@ header nav .external-link::after {
 .mega-menu-card .mega-card {
   background: var(--background-color);
   align-content: space-between;
-  min-height: 27rem;
+  min-height: var(--nav-mega-card-min-height-base);
   padding: var(--spacing-24) var(--spacing-32);
   background-color: var(--highlight-background-color);
-  border: .1rem solid var(--container-border-color);
+  border: var(--separator-height-1) solid var(--container-border-color);
   color: var(--text-color);
 }
 
@@ -942,14 +969,14 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 /* Large screen styles */
 @media (width > 1439px) {
   header nav {
-    max-width: 144rem;
+    max-width: var(--nav-max-width-lg);
     padding: var(--spacing-00);
   }
 
   .nav-tools .accordion,
   .nav-tools .search-main-wrapper,
   .mega-menu-wrapper {
-    max-width: 133rem;
+    max-width: var(--nav-max-width-xl);
     margin-right: auto !important;
     margin-left: auto !important;
     width: 100%;
@@ -962,7 +989,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   .submenu-level-1>.navigation-group {
     margin-left: auto !important;
     margin-right: auto !important;
-    max-width: 133rem;
+    max-width: var(--nav-max-width-xl);
     padding: var(--spacing-48) var(--spacing-00) var(--spacing-88);
     width: 100%;
   }
@@ -1124,9 +1151,9 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     margin-left: calc(-50vw + 50%);
     background: var(--background-color);
     pointer-events: none;
-    border-top: 0.5px solid var(--footer-seperator-color);
+    border-top: var(--nav-hamburger-separator-width) solid var(--footer-seperator-color);
     max-height: calc(100vh - var(--nav-height, 88px));
-    min-height: 12rem;
+    min-height: var(--nav-sections-min-height-mobile);
     height: auto;
     overflow: auto;
     display: flex;
@@ -1213,7 +1240,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   .nav-tools .accordion .menu-item {
     font-size: var(--font-size-26);
     padding: var(--spacing-32) var(--spacing-00);
-    border-bottom: 0.5px solid var(--footer-seperator-color);
+    border-bottom: var(--nav-hamburger-separator-width) solid var(--footer-seperator-color);
     line-height: var(--line-height-32);
     color: var(--text-color);
     cursor: pointer;
@@ -1354,7 +1381,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   }
 
   header nav .nav-sections .default-content-wrapper>ul {
-    height: calc(100vh - 27.2rem);
+    height: calc(100vh - var(--nav-sections-calc-offset-lg));
     flex-direction: column;
     display: flex;
   }
@@ -1364,7 +1391,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li {
-    border-bottom: 1px solid var(--footer-seperator-color);
+    border-bottom: var(--border-width-thin) solid var(--footer-seperator-color);
   }
 
   header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(2) {
@@ -1373,7 +1400,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 
   header nav .nav-sections .default-content-wrapper>ul>li:nth-last-child(1) {
     border-bottom: none;
-    border-top: 1px solid var(--footer-seperator-color);
+    border-top: var(--border-width-thin) solid var(--footer-seperator-color);
     margin-top: auto;
   }
 
@@ -1389,7 +1416,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     padding: var(--spacing-24) var(--spacing-55) var(--nav-sections-bottom-gap);
     left: var(--spacing-00);
     overflow: auto;
-    height: calc(100vh - 10rem);
+    height: calc(100vh - var(--nav-sections-calc-offset-md));
   }
 
   header nav .nav-item-level-0 .default-content-wrapper>ul>li>button {
@@ -1433,9 +1460,9 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
     top: var(--nav-height-mobile);
     left: var(--spacing-00);
     width: 100%;
-    height: calc(100vh - 6.4rem);
+    height: calc(100vh - var(--separator-height-64));
     background: var(--background-color);
-    border-top: 0.5px solid var(--footer-seperator-color);
+    border-top: var(--nav-hamburger-separator-width) solid var(--footer-seperator-color);
     transform: scaleY(0);
     transform-origin: top;
     opacity: 0;
@@ -1475,7 +1502,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   }
 
   .navigation-group {
-    padding: .9rem 7rem 16.1rem;
+    padding: var(--nav-navigation-group-padding);
   }
 
   .menu-quick-links .navigation-group,
@@ -1484,7 +1511,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   }
 
   .navigation-item.navigation-item-level-1 {
-    border-bottom: .1rem solid var(--footer-seperator-color);
+    border-bottom: var(--separator-height-1) solid var(--footer-seperator-color);
     padding: var(--spacing-32) var(--spacing-00) var(--spacing-31);
   }
 
@@ -1556,7 +1583,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   }
 
   .mega-menu-card .mega-card {
-    min-height: 25.4rem;
+    min-height: var(--nav-mega-card-min-height);
   }
 
   .mega-menu-card .mega-card-content {
@@ -1680,7 +1707,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   color: var(--nav-eyebrow-text);
   font-size: var(--nav-eyebrow-font-size);
   font-family: var(--body-font-family);
-  padding: 6px var(--spacing-35, 24px);
+  padding: var(--spacing-06) var(--spacing-35, 24px);
   box-sizing: border-box;
 }
 
@@ -1718,7 +1745,7 @@ header nav .nav-brand-indication {
 }
 
 header nav .nav-brand-indication img {
-  max-height: 40px;
+  max-height: var(--spacing-40);
   width: auto;
 }
 
@@ -1754,7 +1781,7 @@ header nav .nav-brand-indication img {
   font-size: var(--font-size-14, 14px);
   font-weight: var(--font-weight-700, 700);
   letter-spacing: var(--letter-spacing-wide-06, 0.06em);
-  padding: 8px 20px;
+  padding: var(--spacing-08) var(--spacing-20);
   white-space: nowrap;
 }
 
