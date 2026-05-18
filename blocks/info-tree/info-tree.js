@@ -105,59 +105,44 @@ function extractImage(block) {
 function extractItems(block) {
   const itemRows = [...block.querySelectorAll(':scope > div[data-aue-resource]')];
   if (itemRows.length) {
-    const items = [];
-    for (let i = 0; i < itemRows.length; i += 1) {
-      const row = itemRows[i];
-      const isInfoTreeItem = row.getAttribute('data-aue-component') === 'info-tree-item'
-        || row.querySelector('[data-aue-prop="answerLabel"]');
-      if (isInfoTreeItem) {
-        const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
-        const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
-        const label = labelEl?.textContent?.trim() || '';
-        const cells = [...row.querySelectorAll(':scope > div')];
-        const fallbackContent = cells.length >= 2 ? cells[1] : null;
-        let ctaEl = null;
-        const nextRow = itemRows[i + 1];
-        const isCta = nextRow && (
-          nextRow.getAttribute('data-aue-component') === 'info-tree-cta'
-          || nextRow.getAttribute('data-aue-model') === 'info-tree-cta'
-          || nextRow.querySelector('[data-aue-prop="ctaLabel"]')
-          || (nextRow.hasAttribute('data-aue-resource')
-            && !nextRow.querySelector('[data-aue-prop="answerLabel"]'))
-        );
-        if (isCta) {
-          ctaEl = nextRow;
-          i += 1;
-        }
-        if (label) items.push({ label, content: contentEl || fallbackContent, ctaEl });
+    return itemRows.reduce((items, row) => {
+      const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
+      const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
+      const ctaLabelEl = row.querySelector('[data-aue-prop="ctaLabel"]');
+      const ctaHrefEl = row.querySelector('[data-aue-prop="ctaHref"]');
+      const label = labelEl?.textContent?.trim() || '';
+      const ctaLabel = ctaLabelEl?.textContent?.trim() || '';
+      const ctaHref = ctaHrefEl?.querySelector('a')?.getAttribute('href')
+        || ctaHrefEl?.textContent?.trim() || '';
+      const cells = [...row.querySelectorAll(':scope > div')];
+      const fallbackContent = cells.length >= 2 ? cells[1] : null;
+      if (label) {
+        items.push({
+          label, content: contentEl || fallbackContent, ctaLabel, ctaHref,
+        });
       }
-    }
-    return items;
+      return items;
+    }, []);
   }
 
   const rows = [...block.querySelectorAll(':scope > div:not([data-it-config]):not([data-it-disclaimer])')];
-  const items = [];
-  for (let i = 0; i < rows.length; i += 1) {
-    const row = rows[i];
+  return rows.reduce((items, row) => {
     const divs = row.querySelectorAll(':scope > div');
     if (divs.length >= 2) {
       const label = divs[0]?.textContent?.trim() || '';
+      const ctaLabel = divs.length >= 4 ? divs[3]?.textContent?.trim() || '' : '';
+      const ctaHrefRaw = divs.length >= 5 ? divs[4] : null;
+      const ctaHref = ctaHrefRaw?.querySelector('a')?.getAttribute('href')
+        || ctaHrefRaw?.textContent?.trim() || '';
       if (label) {
-        let ctaEl = null;
-        const nextRow = rows[i + 1];
-        if (nextRow && (nextRow.classList.contains('cta')
-          || nextRow.querySelector('.cta-wrapper')
-          || nextRow.querySelector('a.abbv-cta'))) {
-          ctaEl = nextRow;
-          nextRow.dataset.itItem = '';
-          i += 1;
-        }
-        items.push({ label, content: divs[1], ctaEl });
+        items.push({
+          label, content: divs[1], ctaLabel, ctaHref,
+        });
         row.dataset.itItem = '';
       }
     }
-  }
-  return items;
+    return items;
+  }, []);
 }
 
 function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
@@ -245,7 +230,9 @@ export default function decorate(block) {
   resultsEl.className = 'info-tree-results';
   resultsEl.setAttribute('aria-live', 'polite');
 
-  items.forEach(({ label, content, ctaEl }) => {
+  items.forEach(({
+    label, content, ctaLabel, ctaHref,
+  }) => {
     const btn = document.createElement('button');
     btn.className = 'info-tree-option';
     btn.textContent = label;
@@ -260,8 +247,16 @@ export default function decorate(block) {
         result.append(child.cloneNode(true));
       });
     }
-    if (ctaEl) {
-      result.append(ctaEl.cloneNode(true));
+    if (ctaLabel && ctaHref) {
+      const ctaBtn = document.createElement('a');
+      ctaBtn.className = 'info-tree-cta-btn';
+      ctaBtn.href = ctaHref;
+      ctaBtn.textContent = `${ctaLabel} `;
+      const icon = document.createElement('span');
+      icon.className = 'info-tree-cta-icon';
+      icon.textContent = '>';
+      ctaBtn.append(icon);
+      result.append(ctaBtn);
     }
     resultsEl.append(result);
   });

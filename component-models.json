@@ -8899,40 +8899,32 @@
         "label": "Answer Content",
         "description": "Rich text content revealed when this answer option is selected.",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "info-tree-cta",
-    "fields": [
+      },
       {
-        "component": "tab",
-        "label": "Button",
-        "name": "button"
+        "component": "select",
+        "valueType": "string",
+        "name": "itemVariant",
+        "label": "Variation",
+        "options": [
+          { "name": "Without CTA", "value": "without-cta" },
+          { "name": "With CTA", "value": "with-cta" }
+        ]
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "ctaLabel",
-        "value": "Button",
-        "label": "Button Text"
+        "value": "",
+        "label": "Button Label",
+        "description": "Text for the CTA button. A > icon is appended automatically.",
+        "condition": { "===": [{ "var": "itemVariant" }, "with-cta"] }
       },
       {
         "component": "aem-content",
         "valueType": "string",
         "name": "ctaHref",
-        "label": "Button Link"
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "ctaVariant",
-        "label": "Button Style",
-        "options": [
-          { "name": "Primary", "value": "abbv-button-primary" },
-          { "name": "Secondary", "value": "abbv-button-secondary" },
-          { "name": "Tertiary", "value": "abbv-button-tertiary" }
-        ]
+        "label": "Button Link",
+        "condition": { "===": [{ "var": "itemVariant" }, "with-cta"] }
       }
     ]
   },
