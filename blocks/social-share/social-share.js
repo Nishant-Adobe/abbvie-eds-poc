@@ -205,11 +205,21 @@ function readBlockFields(block) {
       }
     }
 
-    // Remaining plain-text rows are modal IDs in template order (email first, exit second)
+    // Remaining plain-text rows are modal IDs
     modalIds.push(text);
   });
 
-  [result.emailModalId, result.exitModalId] = modalIds;
+  // xwalk omits empty-string rows, so positional assignment is unreliable when one ID
+  // is blank. Use the presence of 'email' in networks as a hint: emailModalId is only
+  // meaningful when the email network is enabled. If email is not in networks, the
+  // sole modal ID (if any) must be exitModalId.
+  const hasEmailNetwork = result.networks.split(',').map((s) => s.trim()).includes('email');
+  if (hasEmailNetwork) {
+    [result.emailModalId = '', result.exitModalId = ''] = modalIds;
+  } else {
+    result.exitModalId = modalIds[0] || '';
+  }
+
   return result;
 }
 
