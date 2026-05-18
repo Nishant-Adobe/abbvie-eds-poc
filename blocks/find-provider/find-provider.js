@@ -34,6 +34,7 @@ const FIELD_ORDER = [
   'error',
   'captcha-message',
   'api-endpoint',
+  'maps-api-key',
   'indication',
   'exit-modal-id',
   'anchor-id',
@@ -288,7 +289,10 @@ function buildResultCard(provider, config, index = 0) {
   if (config['exit-modal-id']) {
     li.addEventListener('click', (e) => {
       if (e.target.closest('a, button')) return;
-      const modal = document.getElementById(config['exit-modal-id']);
+      // Scope to the closest main/section so multiple find-provider blocks on
+      // one page each resolve their own associated modal.
+      const scope = li.closest('main') || li.closest('section') || document;
+      const modal = scope.querySelector(`#${CSS.escape(config['exit-modal-id'])}`);
       if (modal) modal.dispatchEvent(new CustomEvent('open-modal', { detail: { provider } }));
     });
   }
