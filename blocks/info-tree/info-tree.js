@@ -109,11 +109,11 @@ function extractItems(block) {
       const labelEl = row.querySelector('[data-aue-prop="answerLabel"]');
       const contentEl = row.querySelector('[data-aue-prop="answerContent"]');
       const ctaLabelEl = row.querySelector('[data-aue-prop="ctaLabel"]');
-      const ctaHrefEl = row.querySelector('[data-aue-prop="ctaHref"]');
       const label = labelEl?.textContent?.trim() || '';
       const ctaLabel = ctaLabelEl?.textContent?.trim() || '';
-      const ctaHref = ctaHrefEl?.querySelector('a')?.getAttribute('href')
-        || ctaHrefEl?.textContent?.trim() || '';
+      const ctaLink = row.querySelector(':scope > div:last-child a[href]')
+        || row.querySelector('a[href]:not([data-aue-prop])');
+      const ctaHref = ctaLink?.getAttribute('href') || '';
       const cells = [...row.querySelectorAll(':scope > div')];
       const fallbackContent = cells.length >= 2 ? cells[1] : null;
       if (label) {
