@@ -10703,5 +10703,65 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "social-share",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "tab-content"
+      },
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Variants",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Horizontal",
+            "value": "social-share-horizontal"
+          },
+          {
+            "name": "Include Email",
+            "value": "social-share-email"
+          },
+          {
+            "name": "Include Print",
+            "value": "social-share-print"
+          }
+        ]
+      },
+      {
+        "component": "multiselect",
+        "name": "platforms",
+        "label": "Platforms",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "X (Twitter)",
+            "value": "twitter"
+          },
+          {
+            "name": "Facebook",
+            "value": "facebook"
+          },
+          {
+            "name": "LinkedIn",
+            "value": "linkedin"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "shareUrl",
+        "label": "Share URL Override",
+        "valueType": "string",
+        "description": "URL to share. Defaults to current page URL if blank."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
   }
 ]
