@@ -118,8 +118,15 @@ function extractItems(block) {
         const fallbackContent = cells.length >= 2 ? cells[1] : null;
         let ctaEl = null;
         const nextRow = itemRows[i + 1];
-        if (nextRow && (nextRow.getAttribute('data-aue-component') === 'cta'
-          || nextRow.classList.contains('cta'))) {
+        const isCta = nextRow && (
+          nextRow.getAttribute('data-aue-component') === 'cta'
+          || nextRow.getAttribute('data-aue-model') === 'cta'
+          || nextRow.getAttribute('data-block-name') === 'cta'
+          || nextRow.classList.contains('cta')
+          || (nextRow.hasAttribute('data-aue-resource')
+            && !nextRow.querySelector('[data-aue-prop="answerLabel"]'))
+        );
+        if (isCta) {
           ctaEl = nextRow;
           i += 1;
         }
