@@ -1,17 +1,38 @@
-// import { beforeDecorate, decorateBlock, afterDecorate } from '../carousel.js';
+import { showSlide } from '../carousel.js';
+
+let autoPlayInterval = null;
+
+function startAutoPlay(block, interval = 5000) {
+  stopAutoPlay();
+  autoPlayInterval = setInterval(() => {
+    const current = parseInt(block.dataset.activeSlide || '0', 10);
+    showSlide(block, current + 1);
+  }, interval);
+}
+
+function stopAutoPlay() {
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+  }
+}
 
 export default async function getBlockConfigs() {
   return {
-    flags: {
-      // flag: true,
-    },
-    variations: [
-      // { variation: 'variation-name', module: 'variation.js' },
-    ],
+    flags: {},
+    variations: [],
     decorations: {
-    //   beforeDecorate: async (ctx, blockConfig) => beforeDecorate(ctx, blockConfig),
-    //   decorate: async (ctx, blockConfig) => decorateBlock(ctx, blockConfig),
-    //   afterDecorate: async (ctx, blockConfig) => afterDecorate(ctx, blockConfig),
+      afterDecorate: async (block) => {
+        const slides = block.querySelectorAll('.carousel-slide');
+        if (slides.length < 2) return;
+
+        startAutoPlay(block);
+
+        block.addEventListener('mouseenter', stopAutoPlay);
+        block.addEventListener('mouseleave', () => startAutoPlay(block));
+        block.addEventListener('focusin', stopAutoPlay);
+        block.addEventListener('focusout', () => startAutoPlay(block));
+      },
     },
   };
 }
