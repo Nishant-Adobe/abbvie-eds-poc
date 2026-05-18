@@ -13,6 +13,7 @@
 .find-provider-form {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--find-provider-gap-field);
   margin-block-end: var(--spacing-24);
 }
@@ -48,6 +49,95 @@
 .find-provider-specialty-select:focus-visible {
   outline: var(--spacing-02) solid var(--color-focus);
   outline-offset: var(--spacing-02);
+}
+
+/* Search row: input + optional geo button side by side */
+
+.find-provider-search-row {
+  display: flex;
+  gap: var(--spacing-08);
+  align-items: stretch;
+}
+
+.find-provider-search-row .find-provider-search-input {
+  flex: 1;
+  inline-size: auto;
+}
+
+.find-provider-geo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-06);
+  padding: var(--spacing-08) var(--spacing-12);
+  border: var(--separator-height-1) solid var(--find-provider-color-border);
+  border-radius: var(--find-provider-radius-input);
+  background-color: var(--find-provider-color-bg-card);
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard);
+}
+
+.find-provider-geo-btn:hover {
+  background-color: var(--color-gray-light);
+}
+
+.find-provider-geo-btn:disabled {
+  opacity: var(--opacity-disabled, 0.5);
+  cursor: not-allowed;
+}
+
+.find-provider-geo-icon {
+  display: inline-block;
+  inline-size: var(--spacing-16);
+  block-size: var(--spacing-16);
+  border: var(--separator-height-1) solid currentcolor;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.find-provider-geo-icon::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+  inline-size: var(--spacing-08);
+  block-size: var(--spacing-08);
+  border-radius: 50%;
+  background-color: currentcolor;
+}
+
+/* Terms & Conditions */
+
+.find-provider-terms-group {
+  gap: var(--spacing-08);
+}
+
+.find-provider-terms-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-08);
+  cursor: pointer;
+  font-size: var(--body-font-size-s);
+  line-height: var(--spacing-24);
+}
+
+.find-provider-terms-checkbox {
+  flex-shrink: 0;
+  margin-block-start: var(--spacing-03);
+  inline-size: var(--spacing-16);
+  block-size: var(--spacing-16);
+  cursor: pointer;
+  accent-color: var(--link-color);
+}
+
+.find-provider-terms-text a {
+  color: var(--link-color);
+  text-decoration: underline;
 }
 
 .find-provider-actions {
@@ -113,6 +203,15 @@
   overflow: hidden;
 }
 
+.find-provider .find-provider-captcha-message a{
+  font-size: 11px;
+}
+
+.find-provider .find-provider-captcha-message p{
+  font-size: 11px;
+  text-align: center;
+}
+
 @media (width >= 744px) {
   .find-provider.find-provider-map {
     display: grid;
@@ -130,4 +229,74 @@
   }
 }
 
+.find-provider {
+--link-color: #005272;
+}
+
 /* Venclexta find-provider overrides */
+
+.find-provider {
+    max-width: 1114px;
+    margin-inline: auto;
+    padding: 0px;
+    font-size: 16px;
+    border-radius: 10px;
+    background: #f2f2f2;
+}
+
+.find-provider .find-provider-form {
+    gap: 20px;
+}
+
+.find-provider .find-provider-search-input {
+    border: 3px solid #f6c741;
+    background-color: #fff;
+    padding: 12px 35px 12px 15px;
+    border-radius: 2px;
+    font-size: 15px;
+    max-width: 206px;
+}
+
+.find-provider .find-provider-terms-checkbox {
+    border: 3px solid #f6c741;
+    background-color: #071d49;
+    box-shadow: 0 0 4px rgba(204, 204, 204, 1);
+    height: 40px;
+    width: 40px;
+}
+
+.find-provider .find-provider-terms-label {
+    display: flex;
+    align-items: center;
+}
+
+.find-provider .find-provider-terms-text p,
+.find-provider .find-provider-terms-text p a{
+    font-size: 14px;
+    max-width: 42ch;
+    line-height: 1;
+}
+
+.find-provider .find-provider-submit {
+    border-radius: 10px;
+    border: solid 2px #404040;
+    height: 50px;
+    padding: 0;
+    width: 150px;
+    background: #fff;
+    color: #444;
+    text-align: center;
+    font-size: 17px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.find-provider .find-provider-captcha-message p {
+    text-align: left;
+}
+
+@media (width >=744px) {
+    .find-provider {
+        padding: 30px;
+    }
+}
