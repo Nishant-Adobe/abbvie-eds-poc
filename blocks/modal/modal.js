@@ -261,6 +261,8 @@ async function openModal(trigger, variantsOrOptions = []) {
 
 let exitAc = null;
 const exitModals = [];
+let exitIntentSuppressedUntil = 0;
+let exitIntentReadyAt = 0;
 
 function registerExitIntent(trigger, variants) {
   const id = trigger?.dataset?.modalId;
@@ -269,8 +271,23 @@ function registerExitIntent(trigger, variants) {
   if (exitAc) return;
   exitAc = new AbortController();
 
+  // Both listeners share exitAc.signal so they are torn down together when
+  // exit-intent fires or the block is cleaned up.
+  document.addEventListener('exit-intent:suppress', (e) => {
+    exitIntentSuppressedUntil = Date.now() + (e.detail?.ms ?? 2000);
+  }, { signal: exitAc.signal });
+
+  // Ignore exit-intent for 2 s after the listener is registered. Chrome fires a
+  // synthetic mousemove at the cursor's current position on page load (hover correction),
+  // which can immediately arm and then trigger the listener if the cursor is near the
+  // top edge on refresh. The delay absorbs both that synthetic event and any
+  // layout-shift-induced leave events that occur during page initialisation.
+  if (!exitIntentReadyAt) exitIntentReadyAt = Date.now() + 2000;
+
   document.addEventListener('mouseleave', (e) => {
     if (e.clientY > 0) return;
+    if (Date.now() < exitIntentReadyAt) return;
+    if (Date.now() < exitIntentSuppressedUntil) return;
     const modal = exitModals.find(
       (m) => !hasSeenModal(m.trigger.dataset.modalId, m.variants),
     );
@@ -398,6 +415,7 @@ export default async function decorate(block) {
     document.addEventListener('modal:open', (e) => {
       if (e.detail?.modalId === modalId) {
         const t = { dataset: { fragmentPath, modalId }, fragmentPath };
+        if (e.detail?.onConfirm) t.onConfirm = e.detail.onConfirm;
         openModal(t, variants).catch(() => { /* handled */ });
       }
     }, { signal: ac.signal });
