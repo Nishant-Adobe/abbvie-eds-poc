@@ -734,7 +734,7 @@ function buildEyebrows(headerEl) {
     const position = positionText === 'bottom' ? 'bottom' : 'top';
 
     const bar = createElement('div', { className: `nav-eyebrow nav-eyebrow-${position}` });
-    bar.innerHTML = contentParas.map((p) => p.outerHTML).join('');
+    contentParas.forEach((p) => bar.appendChild(p.cloneNode(true)));
     result.push({ position, bar });
   });
   return result;
@@ -767,7 +767,7 @@ function buildFloatingIsi(headerEl) {
     attributes: { role: 'complementary', 'aria-label': 'Important Safety Information' },
   });
   const textWrap = createElement('div', { className: 'nav-floating-isi-text', attributes: { 'aria-live': 'polite' } });
-  if (isiParas.length) textWrap.innerHTML = isiParas.map((p) => p.outerHTML).join('');
+  isiParas.forEach((p) => textWrap.appendChild(p.cloneNode(true)));
 
   const toggle = createElement('button', {
     className: 'nav-floating-isi-toggle',
@@ -828,7 +828,7 @@ function buildCtaGroup(headerEl) {
     // No separate label — render link paras as-is (guest/user auth split)
     const mid = Math.ceil(linkParas.length / 2);
     const guestWrap = createElement('div', { className: 'nav-cta-guest' });
-    guestWrap.innerHTML = linkParas.slice(0, mid).map((p) => p.outerHTML).join('');
+    linkParas.slice(0, mid).forEach((p) => guestWrap.appendChild(p.cloneNode(true)));
     group.appendChild(guestWrap);
 
     if (linkParas.length > 1) {
@@ -836,7 +836,7 @@ function buildCtaGroup(headerEl) {
         className: 'nav-cta-user',
         attributes: { hidden: '', 'aria-hidden': 'true' },
       });
-      userWrap.innerHTML = linkParas.slice(mid).map((p) => p.outerHTML).join('');
+      linkParas.slice(mid).forEach((p) => userWrap.appendChild(p.cloneNode(true)));
       group.appendChild(userWrap);
     }
   }
@@ -883,11 +883,11 @@ function handleScroll() {
 // Keydown handler for ESC
 function handleKeydown(e) {
   if (e.key !== 'Escape') return;
-  // Close utility dropdowns
-  document.querySelectorAll('.nav-utility button[aria-expanded="true"]').forEach((btn) => {
+  const headerEl = document.querySelector('header');
+  headerEl?.querySelectorAll('.nav-utility button[aria-expanded="true"]').forEach((btn) => {
     btn.setAttribute('aria-expanded', 'false');
   });
-  const navSections = document.querySelector('.nav-sections');
+  const navSections = headerEl?.querySelector('.nav-sections');
   if (!navSections || navSections.getAttribute('aria-expanded') === 'false') return;
   toggleAllNavSections(false);
 }
@@ -901,6 +901,7 @@ document.addEventListener('keydown', handleKeydown);
  * @param {Element} block - The header block element.
  */
 export default async function decorate(block) {
+  let utilityBarEl = null;
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
@@ -1070,7 +1071,7 @@ export default async function decorate(block) {
     if (indicationWrapper.children.length) utilityNav.appendChild(indicationWrapper);
     utility.appendChild(utilityNav);
     // Utility bar stored for later insertion before nav in wrapper
-    nav.utilityBar = utility;
+    utilityBarEl = utility;
   }
 
   // Brand (Logo)
@@ -1241,9 +1242,9 @@ export default async function decorate(block) {
   const bottomEyebrows = eyebrows.filter(({ position }) => position === 'bottom').map(({ bar }) => bar);
   topEyebrows.forEach((bar) => navWrapper.append(bar));
 
-  if (nav.utilityBar) {
-    navWrapper.append(nav.utilityBar);
-    delete nav.utilityBar;
+  if (utilityBarEl) {
+    navWrapper.append(utilityBarEl);
+    utilityBarEl = null;
   }
   bottomEyebrows.forEach((bar) => navWrapper.append(bar));
 

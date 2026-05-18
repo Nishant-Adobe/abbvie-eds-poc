@@ -24,6 +24,20 @@
   /* Active/hover indicator — overridable per brand (e.g., yellow for RINVOQ HCP) */
   --nav-active-indicator: var(--text-color);
   --nav-active-bg: transparent;
+
+  /* Dropdown panel */
+  --nav-dropdown-border-color: rgb(221 221 221);
+  --nav-dropdown-shadow: 0 var(--spacing-02) var(--spacing-08) rgb(0 0 0 / 12%);
+  --nav-dropdown-hover-bg: rgb(245 245 245);
+  --nav-dropdown-padding: var(--spacing-04) 0;
+  --nav-dropdown-min-width: 20rem;
+  --nav-dropdown-z-index: 100;
+  --nav-dropdown-item-padding: var(--spacing-06) var(--spacing-16);
+  /* Search */
+  --nav-search-shadow: 0 var(--spacing-03) var(--spacing-05) 0 rgb(153 153 153);
+  --nav-search-toggle-margin: 2.3rem;
+  --nav-search-icon-offset: var(--spacing-02);
+  --nav-search-input-padding: var(--spacing-04) var(--spacing-35) var(--spacing-04) var(--spacing-15);
 }
 
 /* ──────────────────────────────────────────
@@ -78,8 +92,8 @@ header .nav-utility li + li::before {
   content: '|';
   color: var(--nav-utility-text);
   opacity: 0.4;
-  padding: 0 10px;
-  font-size: 10px;
+  padding: 0 var(--spacing-10);
+  font-size: var(--font-size-10);
 }
 
 header .nav-utility a,
@@ -105,7 +119,7 @@ header .nav-utility a:hover {
 header .nav-utility button {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--spacing-04);
   background: none;
   border: none;
   color: var(--nav-utility-text);
@@ -121,9 +135,9 @@ header .nav-utility button::after {
   display: inline-block;
   width: 0;
   height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid currentcolor;
+  border-left: var(--spacing-04) solid transparent;
+  border-right: var(--spacing-04) solid transparent;
+  border-top: var(--spacing-04) solid currentcolor;
   transition: transform 0.2s;
 }
 
@@ -138,14 +152,14 @@ header .nav-utility ul[role="menu"] {
   top: 100%;
   right: 0;
   background: var(--background-color, white);
-  border: 1px solid rgb(221 221 221);
+  border: var(--separator-height-1) solid var(--nav-dropdown-border-color);
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 12%);
+  box-shadow: var(--nav-dropdown-shadow);
   list-style: none;
   margin: 0;
-  padding: 4px 0;
-  min-width: 200px;
-  z-index: 100;
+  padding: var(--nav-dropdown-padding);
+  min-width: var(--nav-dropdown-min-width);
+  z-index: var(--nav-dropdown-z-index);
 }
 
 header .nav-utility button[aria-expanded="true"] + ul[role="menu"] {
@@ -162,12 +176,12 @@ header .nav-utility ul[role="menu"] li + li::before {
 
 header .nav-utility ul[role="menu"] a {
   display: block;
-  padding: 6px 16px;
+  padding: var(--nav-dropdown-item-padding);
   color: var(--nav-utility-text);
 }
 
 header .nav-utility ul[role="menu"] a:hover {
-  background: rgb(245 245 245);
+  background: var(--nav-dropdown-hover-bg);
 }
 
 /* Desktop: show utility bar when authored; account for its height */
@@ -328,7 +342,7 @@ header nav .nav-search {
 header nav .nav-search .search-toggle {
   background: transparent;
   cursor: pointer;
-  margin: 0 0 0 23px;
+  margin: 0 0 0 var(--nav-search-toggle-margin);
   padding: 0;
 }
 
@@ -372,21 +386,21 @@ header nav .nav-search .search-inner-wrapper .search-input-alert {
 }
 
 header nav .nav-search .search-inner-wrapper {
-  box-shadow: 0 3px 5px 0 #999;
+  box-shadow: var(--nav-search-shadow);
   position: relative;
 }
 
 header nav .nav-search .search-inner-wrapper > span.icon-search{
   position: absolute;
-  right: 2px;
-  top: 2px;
+  right: var(--nav-search-icon-offset);
+  top: var(--nav-search-icon-offset);
 }
 
 header nav .nav-search .search-inner-wrapper input[type="search"] {
     min-width: 200px;
     width: 100%;
-    background: rgb(255, 255, 255);
-    padding: 4px 35px 4px 15px;
+    background: var(--background-color);
+    padding: var(--nav-search-input-padding);
     box-sizing: border-box;
     border: var(--separator-height-1) solid var(--color-border, #929495);
     font-size: var(--font-size-14, 14.88px);
