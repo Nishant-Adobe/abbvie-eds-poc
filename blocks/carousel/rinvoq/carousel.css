@@ -135,7 +135,7 @@
   }
 }
 
-/* Rinvoq — Full-width hero carousel overrides */
+/* Rinvoq — Full-width hero carousel overrides (mobile-first) */
 
 .carousel.carousel {
   position: relative;
@@ -175,8 +175,8 @@
   background-color: transparent;
   color: var(--carousel-content-color, #fff);
   margin: 0;
-  padding: var(--carousel-content-padding, 32px 100px);
-  max-width: var(--carousel-content-max-width, 60%);
+  padding: var(--spacing-24, 24px);
+  max-width: 100%;
   width: auto;
   text-shadow: var(--carousel-content-text-shadow, 0 1px 4px rgb(0 0 0 / 30%));
 }
@@ -190,19 +190,15 @@
 }
 
 .carousel.carousel .carousel-navigation-buttons {
-  left: var(--carousel-nav-inset, 20px);
-  right: var(--carousel-nav-inset, 20px);
+  left: var(--carousel-nav-inset, 8px);
+  right: var(--carousel-nav-inset, 8px);
   z-index: 3;
-  visibility: hidden;
-}
-
-.carousel.carousel:hover .carousel-navigation-buttons {
   visibility: visible;
 }
 
 .carousel.carousel .carousel-navigation-buttons button {
-  width: var(--carousel-nav-button-width, 70px);
-  height: var(--carousel-nav-button-height, 120px);
+  width: 40px;
+  height: 60px;
   background: none;
   background-color: transparent;
   border: none;
@@ -223,8 +219,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: var(--carousel-arrow-size, 30px);
-  height: var(--carousel-arrow-size, 30px);
+  width: 16px;
+  height: 16px;
   border: 0;
   border-bottom: var(--carousel-arrow-weight, 5px) solid var(--carousel-arrow-color, #fff);
   border-left: var(--carousel-arrow-weight, 5px) solid var(--carousel-arrow-color, #fff);
@@ -272,23 +268,31 @@
   border-color: var(--carousel-dot-active-border, #fff);
 }
 
-@media (width < 768px) {
+/* Desktop */
+@media (width >= 768px) {
   .carousel.carousel .carousel-slide .carousel-slide-content {
-    max-width: 100%;
-    padding: var(--spacing-24, 24px);
+    padding: var(--carousel-content-padding, 32px 100px);
+    max-width: var(--carousel-content-max-width, 60%);
   }
 
   .carousel.carousel .carousel-navigation-buttons {
+    left: var(--carousel-nav-inset, 20px);
+    right: var(--carousel-nav-inset, 20px);
+    visibility: hidden;
+  }
+
+  .carousel.carousel:hover .carousel-navigation-buttons {
     visibility: visible;
   }
 
   .carousel.carousel .carousel-navigation-buttons button {
-    width: 40px;
+    width: var(--carousel-nav-button-width, 70px);
+    height: var(--carousel-nav-button-height, 120px);
   }
 
   .carousel.carousel .carousel-navigation-buttons .slide-prev::after,
   .carousel.carousel .carousel-navigation-buttons .slide-next::after {
-    width: 16px;
-    height: 16px;
+    width: var(--carousel-arrow-size, 30px);
+    height: var(--carousel-arrow-size, 30px);
   }
 }
