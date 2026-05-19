@@ -10791,9 +10791,10 @@
     "fields": [
       {
         "component": "select",
+        "valueType": "string",
         "name": "classes_orientation",
         "label": "Orientation",
-        "valueType": "string",
+        "description": "Direction the slider scrolls.",
         "options": [
           { "name": "Horizontal (default)", "value": "" },
           { "name": "Vertical", "value": "image-slider-vertical" }
@@ -10801,42 +10802,41 @@
       },
       {
         "component": "select",
+        "valueType": "string",
         "name": "classes_labelPosition",
         "label": "Label Position",
-        "valueType": "string",
+        "description": "Where overlay labels appear relative to each image.",
         "options": [
-          { "name": "Labels above images", "value": "image-slider-label-top" },
-          { "name": "Labels below images", "value": "image-slider-label-bottom" },
-          { "name": "Labels left", "value": "image-slider-label-left" },
-          { "name": "Labels right", "value": "image-slider-label-right" },
-          { "name": "Labels centered on image", "value": "image-slider-label-center" }
+          { "name": "Below image (default)", "value": "image-slider-label-bottom" },
+          { "name": "Above image", "value": "image-slider-label-top" },
+          { "name": "Left of image", "value": "image-slider-label-left" },
+          { "name": "Right of image", "value": "image-slider-label-right" },
+          { "name": "Centered on image", "value": "image-slider-label-center" }
         ]
       },
       {
         "component": "boolean",
-        "name": "accessible",
-        "label": "Accessible View",
         "valueType": "boolean",
-        "description": "Enable accessibility view toggle (.image-slider-accessible)"
+        "name": "classes_accessible",
+        "label": "Accessible View",
+        "description": "Enables an accessible text toggle button on the slider (.image-slider-accessible)."
       },
       {
         "component": "number",
+        "valueType": "number",
         "name": "imageHeight",
         "label": "Image Height (px)",
-        "valueType": "number",
-        "description": "Shared image height in pixels; preserves aspect ratio"
+        "description": "Shared height applied to every slide image. Aspect ratio is preserved."
       },
       {
         "component": "number",
+        "valueType": "number",
         "name": "imageWidth",
         "label": "Image Width (px)",
-        "valueType": "number"
+        "description": "Shared width applied to every slide image."
       },
       {
-        "component": "text",
-        "name": "anchorId",
-        "label": "Anchor ID",
-        "valueType": "string"
+        "...": "../../models/_common-properties.json#/common-prop"
       }
     ]
   },
@@ -10845,30 +10845,36 @@
     "fields": [
       {
         "component": "reference",
+        "valueType": "string",
         "name": "image",
         "label": "Image",
-        "valueType": "string"
+        "multi": false,
+        "value": ""
       },
       {
         "component": "text",
+        "valueType": "string",
         "name": "imageAlt",
-        "label": "Image Alt",
-        "valueType": "string",
-        "required": true
+        "value": "",
+        "label": "Image Alt Text",
+        "required": true,
+        "description": "Required. Describes the image for screen readers."
       },
       {
         "component": "text",
-        "name": "label",
-        "label": "Overlay Label",
         "valueType": "string",
-        "description": "Overlay label text (e.g. \"Week 4\")"
+        "name": "label",
+        "value": "",
+        "label": "Overlay Label",
+        "description": "Short label displayed on or near the image (e.g. \"Week 4\")."
       },
       {
         "component": "richtext",
-        "name": "accessibleText",
-        "label": "Accessible Text",
         "valueType": "string",
-        "description": "Text description shown in accessible view"
+        "name": "accessibleText",
+        "value": "",
+        "label": "Accessible Text",
+        "description": "Full text description shown in the accessible view instead of the image."
       }
     ]
   }
