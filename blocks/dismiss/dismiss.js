@@ -17,7 +17,7 @@ function readFields(block) {
   const toRemove = [];
 
   rows.forEach((row) => {
-    if (row.querySelector('strong, em, a')) return;
+    if (row.querySelector('p, strong, em, a')) return;
     const text = row.textContent.trim();
     if (!text) return;
     toRemove.push(row);
