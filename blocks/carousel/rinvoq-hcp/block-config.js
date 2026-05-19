@@ -1,17 +1,15 @@
 import { showSlide } from '../carousel.js';
 
-let autoPlayInterval = null;
-
-function stopAutoPlay() {
-  if (autoPlayInterval) {
-    clearInterval(autoPlayInterval);
-    autoPlayInterval = null;
+function stopAutoPlay(block) {
+  if (block.autoPlayTimer) {
+    clearInterval(block.autoPlayTimer);
+    block.autoPlayTimer = null;
   }
 }
 
 function startAutoPlay(block, interval = 5000) {
-  stopAutoPlay();
-  autoPlayInterval = setInterval(() => {
+  stopAutoPlay(block);
+  block.autoPlayTimer = setInterval(() => {
     const current = parseInt(block.dataset.activeSlide || '0', 10);
     showSlide(block, current + 1);
   }, interval);
@@ -32,9 +30,9 @@ export default async function getBlockConfigs() {
 
         startAutoPlay(block);
 
-        block.addEventListener('mouseenter', stopAutoPlay);
+        block.addEventListener('mouseenter', () => stopAutoPlay(block));
         block.addEventListener('mouseleave', () => startAutoPlay(block));
-        block.addEventListener('focusin', stopAutoPlay);
+        block.addEventListener('focusin', () => stopAutoPlay(block));
         block.addEventListener('focusout', () => startAutoPlay(block));
       },
     },
