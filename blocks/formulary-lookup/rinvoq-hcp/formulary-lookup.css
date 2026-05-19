@@ -211,7 +211,7 @@
   background-repeat: no-repeat;
 }
 
-/* Indications */
+/* Indications — matching live site (smaller, muted when idle) */
 .formulary-lookup .formulary-lookup-indications {
   max-width: 520px;
   margin-inline: auto;
@@ -219,8 +219,10 @@
 }
 
 .formulary-lookup .formulary-lookup-indications-heading {
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-semibold, 600);
+  font-family: var(--body-font-family);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--color-iron, #46484a);
 }
 
 .formulary-lookup .formulary-lookup-indications-group input[type="radio"] {
@@ -232,6 +234,7 @@
 .formulary-lookup .formulary-lookup-indications-group label {
   font-family: var(--body-font-family);
   font-size: 13px;
+  color: var(--color-iron, #46484a);
 }
 
 /* Submit — centered pill */
@@ -283,17 +286,36 @@
   text-align: center;
 }
 
+/* Pink/muted fade behind form when error tooltip is showing */
+.formulary-lookup .formulary-lookup-form:has(.formulary-lookup-error-tooltip) .formulary-lookup-zip-form,
+.formulary-lookup .formulary-lookup-form:has(.formulary-lookup-error-tooltip) .formulary-lookup-filter,
+.formulary-lookup .formulary-lookup-form:has(.formulary-lookup-error-tooltip) .formulary-lookup-indications,
+.formulary-lookup .formulary-lookup-form:has(.formulary-lookup-error-tooltip) .formulary-lookup-submit {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.formulary-lookup .formulary-lookup-form:has(.formulary-lookup-error-tooltip)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(255 220 220 / 30%);
+  border-radius: 10px;
+  z-index: 10;
+  pointer-events: none;
+}
+
 .formulary-lookup .formulary-lookup-error-tooltip-close {
   position: absolute;
   top: 8px;
   right: 8px;
-  width: 24px;
-  height: 24px;
-  border: 1px solid #999;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid #666;
   background: transparent;
   border-radius: 50%;
   color: #666;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
