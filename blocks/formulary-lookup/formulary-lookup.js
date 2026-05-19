@@ -465,7 +465,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
         if (disclaimerEl && disclaimerEl.open) disclaimerEl.open();
       }
     } catch {
-      showError(config.error || 'An error occurred. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
     }
   }
 
@@ -530,7 +530,7 @@ function buildDynamicVariant(config, section, status, results, flags) {
       });
       countySelect.disabled = false;
     } catch {
-      showError(config.error || 'An error occurred. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
     }
   });
 
@@ -554,7 +554,7 @@ function buildDynamicVariant(config, section, status, results, flags) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showError(config.error || 'An error occurred. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
     }
   });
 }
@@ -792,7 +792,7 @@ function buildZipVariant(config, section, status, results, flags) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showError(config.error || 'An error occurred. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
     }
   });
 }

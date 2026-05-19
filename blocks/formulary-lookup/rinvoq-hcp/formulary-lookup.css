@@ -147,15 +147,16 @@
   position: relative;
   left: 16px;
   top: 0;
-  background: var(--background-color);
+  background: var(--background-color, #fff);
   padding: 0 6px;
   font-size: 12px;
   font-weight: 400;
-  color: var(--color-iron);
+  color: var(--color-iron, #46484a);
   z-index: 2;
   line-height: 16px;
   align-self: flex-start;
-  margin-bottom: -8px;
+  margin-bottom: calc(-0.5 * 16px);
+  transform: translateY(50%);
 }
 
 /* Filter — matches input width */
