@@ -15,27 +15,11 @@ import {
 
 import { shouldRunOutsideAuthorEdit } from './utils.js';
 
-export function getMain() {
-  return document.querySelector('main');
-}
-
-/**
- * Page-level operation: moves element before <main> so it spans full viewport height.
- * Intentionally uses document.querySelector — this is a structural page-level hoist,
- * not a block-scoped query. Blocks call this instead of querying the DOM directly.
- * @param {Element} element
- */
-export function hoistBeforeMain(element) {
-  const main = getMain();
-  if (main) main.before(element);
-}
-
 /**
  * Moves all the attributes from a given elmenet to another given element.
  * @param {Element} from the element to copy attributes from
  * @param {Element} to the element to copy attributes to
  */
-
 export function moveAttributes(from, to, attributes) {
   if (!attributes) {
     // eslint-disable-next-line no-param-reassign
