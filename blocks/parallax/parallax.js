@@ -16,49 +16,47 @@ function sanitizeUrl(url) {
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // XWalk field order: image | imageAlt | content | anchorId
-  // Row 0: image cell + imageAlt cell
-  // Row 1: content cell
-  // Row 2: anchorId cell (if present)
+  // Model field order (index-based access):
+  // Row 0, Cell 0: image (picture or DAM link)
+  // Row 0, Cell 1: imageAlt (text)
+  // Row 1, Cell 0: content (richtext)
+  // Row 2, Cell 0: anchorId (text)
 
+  const imageCell = rows[0]?.children[0];
+  const altCell = rows[0]?.children[1];
+  const contentCell = rows[1]?.children[0];
+  const anchorCell = rows[2]?.children[0];
+
+  // Extract image source
   let imgSrc = '';
-  const plainTexts = [];
+  const picture = imageCell?.querySelector('picture');
+  const img = picture?.querySelector('img');
+  if (img) {
+    imgSrc = img.src;
+  } else {
+    const damLink = imageCell?.querySelector('a[href*="/content/dam"], a[href*=".jpg"], a[href*=".png"], a[href*=".webp"], a[href*=".svg"]');
+    if (damLink) imgSrc = damLink.href;
+  }
+
+  // Extract alt text
+  const altText = altCell?.textContent?.trim() || '';
+
+  // Extract anchor ID
+  const rawAnchorId = anchorCell?.textContent?.trim() || '';
+  const normalizedId = rawAnchorId.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+
+  // Clone content nodes
   const contentFragment = document.createDocumentFragment();
-
-  rows.forEach((row) => {
-    const cells = [...row.children];
-    cells.forEach((cell) => {
-      const picture = cell.querySelector('picture');
-      const damLink = cell.querySelector('a[href*="/content/dam"], a[href*=".jpg"], a[href*=".png"], a[href*=".webp"], a[href*=".svg"]');
-
-      if (picture) {
-        // Image cell — extract src
-        const img = picture.querySelector('img');
-        imgSrc = img?.src || '';
-      } else if (damLink && !imgSrc) {
-        // DAM reference link as image source
-        imgSrc = damLink.href;
-      } else if (cell.querySelector('h1, h2, h3, h4, h5, h6, p')) {
-        // Rich content cell — clone nodes for overlay
-        [...cell.childNodes].forEach((node) => {
-          contentFragment.append(node.cloneNode(true));
-        });
-      } else {
-        // Plain text cell — collect ALL (including empty) for positional assignment
-        plainTexts.push(cell.textContent.trim());
-      }
+  if (contentCell) {
+    [...contentCell.childNodes].forEach((node) => {
+      contentFragment.append(node.cloneNode(true));
     });
-  });
-
-  // Assign plain text fields positionally: [0] = imageAlt, [1] = anchorId
-  const altText = plainTexts[0] || '';
-  const anchorId = plainTexts[1] || '';
+  }
 
   // Clear block
   block.textContent = '';
 
-  // Set anchor ID if authored (normalise to valid HTML id)
-  const normalizedId = anchorId.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+  // Set anchor ID if authored
   if (normalizedId) block.id = normalizedId;
 
   // Build parallax structure
