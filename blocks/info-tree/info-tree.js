@@ -22,7 +22,6 @@ function deleteCookie(name) {
 function extractConfig(block) {
   const rows = [...block.querySelectorAll(':scope > div:not([data-aue-resource])')];
 
-  let heading = '';
   let question = null;
   let disclaimer = null;
   let cookieName = '';
@@ -34,7 +33,7 @@ function extractConfig(block) {
     const prop = row.querySelector('[data-aue-prop]') || (row.hasAttribute('data-aue-prop') ? row : null);
     if (prop) {
       const name = prop.getAttribute('data-aue-prop');
-      if (name === 'heading') heading = prop.textContent?.trim() || '';
+      if (name === 'treeName') row.dataset.itConfig = '';
       if (name === 'question') { question = prop; }
       if (name === 'disclaimer') { disclaimer = prop; row.dataset.itDisclaimer = ''; }
       if (name === 'cookieName') cookieName = prop.textContent?.trim() || '';
@@ -48,7 +47,7 @@ function extractConfig(block) {
       const divs = row.querySelectorAll(':scope > div');
       if (divs.length >= 2) {
         const key = divs[0]?.textContent?.trim().toLowerCase();
-        if (key === 'heading') { heading = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
+        if (key === 'treename') { row.dataset.itConfig = ''; }
         if (key === 'question') { [, question] = divs; row.dataset.itConfig = ''; }
         if (key === 'disclaimer') { [, disclaimer] = divs; row.dataset.itDisclaimer = ''; }
         if (key === 'cookiename') { cookieName = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
@@ -79,7 +78,7 @@ function extractConfig(block) {
   });
 
   return {
-    heading, question, disclaimer, cookieName, showReset, resetLabel,
+    question, disclaimer, cookieName, showReset, resetLabel,
   };
 }
 
@@ -147,9 +146,7 @@ function extractItems(block) {
 
 function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
   block.classList.add('is-answered');
-  const headingEl = block.querySelector('.info-tree-heading');
   const questionEl = block.querySelector('.info-tree-question');
-  if (headingEl) headingEl.classList.add('info-tree-hidden');
   if (questionEl) questionEl.classList.add('info-tree-hidden');
   buttonsEl.classList.add('info-tree-hidden');
   [...resultsEl.children].forEach((r) => {
@@ -164,9 +161,7 @@ function showAnswer(block, resultsEl, buttonsEl, resetWrap, answerId) {
 
 function hideAnswer(block, resultsEl, buttonsEl, resetWrap) {
   block.classList.remove('is-answered');
-  const headingEl = block.querySelector('.info-tree-heading');
   const questionEl = block.querySelector('.info-tree-question');
-  if (headingEl) headingEl.classList.remove('info-tree-hidden');
   if (questionEl) questionEl.classList.remove('info-tree-hidden');
   buttonsEl.classList.remove('info-tree-hidden');
   [...resultsEl.children].forEach((r) => { r.classList.add('info-tree-hidden'); });
@@ -203,13 +198,6 @@ export default function decorate(block) {
   const contentEl = document.createElement('div');
   contentEl.className = 'info-tree-content';
   contentEl.style.minWidth = '0';
-
-  if (config.heading) {
-    const h2 = document.createElement('h2');
-    h2.className = 'info-tree-heading';
-    h2.textContent = config.heading;
-    contentEl.append(h2);
-  }
 
   if (config.question) {
     const questionEl = document.createElement('div');
