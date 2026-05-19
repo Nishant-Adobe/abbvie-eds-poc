@@ -46,8 +46,14 @@
           "label": "Orientation",
           "description": "Direction the slider scrolls.",
           "options": [
-            { "name": "Horizontal (default)", "value": "" },
-            { "name": "Vertical", "value": "image-slider-vertical" }
+            {
+              "name": "Horizontal (default)",
+              "value": ""
+            },
+            {
+              "name": "Vertical",
+              "value": "image-slider-vertical"
+            }
           ]
         },
         {
@@ -57,11 +63,26 @@
           "label": "Label Position",
           "description": "Where overlay labels appear relative to each image.",
           "options": [
-            { "name": "Below image (default)", "value": "image-slider-label-bottom" },
-            { "name": "Above image", "value": "image-slider-label-top" },
-            { "name": "Left of image", "value": "image-slider-label-left" },
-            { "name": "Right of image", "value": "image-slider-label-right" },
-            { "name": "Centered on image", "value": "image-slider-label-center" }
+            {
+              "name": "Below image (default)",
+              "value": "image-slider-label-bottom"
+            },
+            {
+              "name": "Above image",
+              "value": "image-slider-label-top"
+            },
+            {
+              "name": "Left of image",
+              "value": "image-slider-label-left"
+            },
+            {
+              "name": "Right of image",
+              "value": "image-slider-label-right"
+            },
+            {
+              "name": "Centered on image",
+              "value": "image-slider-label-center"
+            }
           ]
         },
         {
@@ -94,6 +115,14 @@
       "id": "image-slider-item",
       "fields": [
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "label",
+          "value": "",
+          "label": "Overlay Label",
+          "description": "Short label displayed on or near the image (e.g. \"Week 4\")."
+        },
+        {
           "component": "reference",
           "valueType": "string",
           "name": "image",
@@ -110,14 +139,6 @@
           "description": "Required. Describes the image for screen readers."
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "label",
-          "value": "",
-          "label": "Overlay Label",
-          "description": "Short label displayed on or near the image (e.g. \"Week 4\")."
-        },
-        {
           "component": "richtext",
           "valueType": "string",
           "name": "accessibleText",
@@ -131,7 +152,9 @@
   "filters": [
     {
       "id": "image-slider",
-      "components": ["image-slider-item"]
+      "components": [
+        "image-slider-item"
+      ]
     }
   ]
 }
