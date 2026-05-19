@@ -1,3 +1,26 @@
 @import '../quick-poll.css';
 
-/* Rinvoq quick-poll overrides */
+/* Rinvoq quick-poll overrides
+ *
+ * Live site uses abbv-button-tertiary style on option buttons:
+ * gray border (#c9c9ca), charcoal text (#46484a), pill shape (100px radius),
+ * charcoal hover — not the brand-primary plum used in base.
+ * Percentage numbers use brand primary (plum) for visual emphasis.
+ */
+
+.quick-poll {
+  --qpoll-option-border-color: var(--button-tertiary-border);
+  --qpoll-option-color: var(--button-tertiary-color);
+  --qpoll-option-hover-bg: var(--button-tertiary-hover-bg);
+  --qpoll-option-hover-color: var(--button-tertiary-hover-color);
+  --qpoll-pct-color: var(--color-brand-primary);
+}
+
+.qpoll-option {
+  border-radius: var(--border-radius-button-tertiary);
+  padding: var(--button-tertiary-padding);
+}
+
+.qpoll-pct {
+  color: var(--qpoll-pct-color);
+}
