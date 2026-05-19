@@ -446,8 +446,6 @@ function buildDefaultVariant(config, section, status, results, flags) {
         ?.querySelector('.formulary-lookup-disclaimer-overlay');
       if (disclaimerEl && disclaimerEl.open) {
         disclaimerEl.open();
-      } else if (flags.disclaimerModal && config.disclaimer) {
-        showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
       } else {
         showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
       }
