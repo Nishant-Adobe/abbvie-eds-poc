@@ -72,7 +72,8 @@ export default async function decorate(block) {
   // Set background image via CSS custom property with URL validation
   const safeUrl = sanitizeUrl(imgSrc);
   if (safeUrl) {
-    wrapper.style.setProperty('--parallax-bg-image', `url('${CSS.escape ? safeUrl : encodeURI(safeUrl)}')`);
+    const encodedUrl = safeUrl.replace(/'/g, '%27');
+    wrapper.style.setProperty('--parallax-bg-image', `url('${encodedUrl}')`);
   }
 
   // Content overlay — append cloned DOM nodes (no innerHTML)
