@@ -61,6 +61,10 @@ function unwrapSingleP(html) {
 function readValue(key, cell) {
   if (RICHTEXT_KEYS.has(key)) return cell?.innerHTML.trim() || '';
   if (INLINE_HTML_KEYS.has(key)) return unwrapSingleP(cell?.innerHTML.trim() || '');
+  if (key === 'icon') {
+    const img = cell?.querySelector('img');
+    return img?.src || cell?.textContent.trim() || '';
+  }
   return cell?.textContent.trim() || '';
 }
 
