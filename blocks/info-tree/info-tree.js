@@ -11,7 +11,7 @@ function getCookie(name) {
 
 function setCookie(name, value, days) {
   try {
-    document.cookie = `${name}=${encodeURIComponent(value)};max-age=${days * 86400};path=/`;
+    document.cookie = `${name}=${encodeURIComponent(value)};max-age=${days * 86400};path=/;SameSite=Strict;Secure`;
   } catch { /* consent may block */ }
 }
 
