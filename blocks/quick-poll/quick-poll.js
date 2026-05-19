@@ -10,7 +10,7 @@ const FALLBACK_URLS = {
 let configPromise = null;
 async function getApiUrl(key) {
   if (!configPromise) {
-    configPromise = fetch('/config.json')
+    configPromise = fetch('/ab-config.json')
       .then((r) => (r.ok ? r.json() : {}))
       .catch(() => ({}));
   }
