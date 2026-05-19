@@ -5,11 +5,11 @@
   --formulary-text-align: center;
 
   /* Heading — uppercase navy, bold */
-  --formulary-heading-font-size: 14px;
+  --formulary-heading-font-size: 16px;
   --formulary-heading-font-weight: 700;
   --formulary-heading-color: var(--color-formulary-heading, #21406d);
-  --formulary-heading-margin-bottom: 16px;
-  --formulary-heading-line-height: 20px;
+  --formulary-heading-margin-bottom: 12px;
+  --formulary-heading-line-height: 22px;
   --formulary-heading-text-transform: uppercase;
 
   /* Input */
@@ -21,7 +21,7 @@
   --formulary-input-font-size: 14px;
 
   /* Label */
-  --formulary-label-font-size: 14px;
+  --formulary-label-font-size: 13px;
   --formulary-label-font-weight: 400;
   --formulary-label-color: var(--color-formulary-label, #21406d);
 
@@ -73,24 +73,26 @@
   letter-spacing: 0.1em;
 }
 
-/* Disclaimer text — bold, left-aligned, small */
+/* Disclaimer text — regular weight, left-aligned, matching live site */
 .formulary-lookup .formulary-lookup-disclaimer {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 400;
   max-width: 700px;
   margin-inline: auto;
   text-align: left;
   color: var(--color-formulary-text, #21406d);
+  margin-top: 32px;
 }
 
-/* reCAPTCHA notice — very small, matching live skyrizihcp.com */
+/* reCAPTCHA notice — matching live skyrizihcp.com (same size as body, dark) */
 .formulary-lookup .formulary-lookup-recaptcha-notice {
-  font-size: 10px;
+  font-size: 14px;
   font-style: normal;
-  color: #333;
+  color: var(--color-formulary-text, #21406d);
+  margin-top: 16px;
 }
 
 .formulary-lookup .formulary-lookup-recaptcha-notice a {
-  color: #333;
+  color: var(--color-formulary-text, #21406d);
   text-decoration: underline;
 }
