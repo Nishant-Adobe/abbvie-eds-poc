@@ -1,62 +1,87 @@
 # Embed Form Block
 
-This block allows you to embed AEM adaptive forms into your web pages using their published paths.
+Embeds an AEM Adaptive Form (AEM Forms Cloud Service) into an EDS page. Fetches form HTML via native `fetch()` and injects it into the DOM, with an iframe fallback when CORS blocks the request.
 
 ## Usage
 
-To use the Embed Form block, add it to your page with the following structure:
+### Document-based authoring
 
 ```html
 <div class="embed-form">
   <div>
-    <div>Form Path</div>
-    <div>/content/forms/af/myform.html</div>
+    <div><a href="/content/forms/af/myform">Form Link</a></div>
+  </div>
+  <div>
+    <div>title</div>
+    <div>Sign Up Form</div>
+  </div>
+  <div>
+    <div>anchorId</div>
+    <div>signup</div>
   </div>
 </div>
 ```
 
+### Universal Editor
+
+The block uses the `aem-content` picker for the form link. Authors select the form from the content browser.
+
 ## Configuration
 
-The Embed Form block supports the following configuration options:
+### Site config (ab-config.json)
 
-### Required
+The block requires `aemPublishUrl` in your site config:
 
-- **Form Path**: The path to the published adaptive form (e.g., `/content/forms/af/myform.html`)
+```json
+{
+  "data": [
+    { "key": "aemPublishUrl", "value": "https://publish-pXXXXX-eYYYYYY.adobeaemcloud.com" }
+  ]
+}
+```
 
-### Optional
+### Block fields
 
-- **Theme Path**: Optional path to a custom theme for the form
-- **Submit Endpoint**: Optional custom endpoint for form submission
+| Field | Required | Description |
+|-------|----------|-------------|
+| `formLink` | Yes | Path to the AEM Adaptive Form (e.g., `/content/forms/af/brand/formname`) |
+| `title` | No | Accessibility label set as `aria-label` on the form element |
+| `anchorId` | No | Sets `block.id` for in-page anchor linking |
 
-## Cross-Domain Considerations
+## Modes
 
-When embedding forms from a different domain, ensure that:
+1. **Fetch mode** (default) — fetches form HTML, rewrites resource URLs to AEM host, re-executes scripts, sets `data-cmp-context-path` for AF runtime
+2. **Iframe mode** (fallback) — renders form in a responsive iframe when fetch fails (CORS, network error)
 
-1. The AEM server is configured to allow cross-domain requests (CORS)
-2. The Apache Sling Referrer Filter is configured to allow your domain
+## Cross-Domain (CORS) Requirements
 
-To configure the AEM server:
+The fetch to AEM publish will fail without CORS. Configure the AEM publish instance:
 
-1. Go to AEM Web Console Configuration Manager at `https://[server]:[port]/system/console/configMgr`
-2. Locate and open the Apache Sling Referrer Filter configuration
-3. In the Allowed Hosts field, specify your domain
+```
+alloworigin: ["https://your-eds-domain.com", "https://main--repo--org.aem.live"]
+allowedpaths: ["/content/forms/af/.*"]
+supportedmethods: ["GET", "POST"]
+```
+
+If CORS is not configured, the block automatically falls back to iframe mode.
+
+## jQuery
+
+This block does NOT use jQuery. It uses native `fetch()` for form retrieval. If the AEM Adaptive Forms runtime clientlibs require jQuery at execution time, the form may need jQuery loaded separately (e.g., via `scripts.js` or a delayed load). Monitor browser console for `$ is not defined` errors after form injection.
 
 ## Events
 
-The block dispatches the following events:
-
-- `adaptiveform:loaded`: Fired when the form has been successfully loaded
-- `adaptiveform:error`: Fired when there was an error loading the form
-
-## Example
+| Event | When | Detail |
+|-------|------|--------|
+| `adaptiveform:loaded` | Form injected (fetch or iframe) | `{ finalFormPath, container, mode }` |
+| `adaptiveform:error` | Fetch failed (before iframe fallback) | `{ finalFormPath, error, container }` |
 
 ```javascript
-// Listen for form loaded event
-document.addEventListener('adaptiveform:loaded', (event) => {
-  console.log('Form loaded:', event.detail.formPath);
+document.addEventListener('adaptiveform:loaded', ({ detail }) => {
+  console.log('Form loaded via', detail.mode);
 });
 
-// Listen for form error event
-document.addEventListener('adaptiveform:error', (event) => {
-  console.error('Form error:', event.detail.error);
+document.addEventListener('adaptiveform:error', ({ detail }) => {
+  console.warn('Fetch failed, using iframe:', detail.error);
 });
+```

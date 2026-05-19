@@ -33,7 +33,7 @@ export default async function decorate(block) {
 
   // Resolve form URL — no hardcoded fallback
   let finalFormPath = '';
-  let href = formLink.href;
+  let { href } = formLink;
 
   if ((href.startsWith('http://') || href.startsWith('https://')) && (formLink.host !== window.location.host)) {
     finalFormPath = href;
@@ -86,14 +86,23 @@ export default async function decorate(block) {
     iframe.setAttribute('allowfullscreen', '');
     formContainer.appendChild(iframe);
 
-    // Resize iframe via postMessage from form
-    window.addEventListener('message', (event) => {
+    const resizeHandler = (event) => {
       if (event.origin !== formUrlObj.origin) return;
       const { height } = event.data || {};
       if (height && typeof height === 'number') {
         iframe.style.height = `${height}px`;
       }
+    };
+    window.addEventListener('message', resizeHandler);
+
+    // Clean up listener if iframe is removed from DOM
+    const observer = new MutationObserver(() => {
+      if (!document.contains(iframe)) {
+        window.removeEventListener('message', resizeHandler);
+        observer.disconnect();
+      }
     });
+    observer.observe(block.parentElement || document.body, { childList: true, subtree: true });
 
     document.dispatchEvent(
       new CustomEvent('adaptiveform:loaded', {
@@ -161,8 +170,12 @@ export default async function decorate(block) {
           detail: { finalFormPath, container: formContainer, mode: 'fetch' },
         }),
       );
-    } catch {
-      // Fetch failed (likely CORS) — fall back to iframe mode
+    } catch (error) {
+      document.dispatchEvent(
+        new CustomEvent('adaptiveform:error', {
+          detail: { finalFormPath, error, container: formContainer },
+        }),
+      );
       renderIframe();
     }
   };
