@@ -276,7 +276,8 @@ export default function decorate(block) {
     });
   }
 
-  block.append(imageEl, contentEl);
+  if (image) block.append(imageEl, contentEl);
+  else block.append(contentEl);
 
   block.querySelectorAll('.info-tree-disclaimer').forEach((row) => {
     contentEl.append(row);
