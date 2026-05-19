@@ -44,11 +44,8 @@ export default async function decorate(block) {
           contentFragment.append(node.cloneNode(true));
         });
       } else {
-        // Plain text cell — collect in order for positional assignment
-        const text = cell.textContent.trim();
-        if (text) {
-          plainTexts.push(text);
-        }
+        // Plain text cell — collect ALL (including empty) for positional assignment
+        plainTexts.push(cell.textContent.trim());
       }
     });
   });
