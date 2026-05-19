@@ -1,4 +1,4 @@
-import { getMain } from '../../scripts/scripts.js';
+import { hoistBeforeMain } from '../../scripts/scripts.js';
 
 function setCookie(name) {
   const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
@@ -55,8 +55,7 @@ export default function decorate(block) {
   // Hoist only this wrapper before <main> so its containing block is <body> (full page height).
   // Skipped in UE editor (data-aue-resource present) to preserve editor instrumentation.
   if (block.classList.contains('sticky') && !block.dataset.aueResource) {
-    const main = getMain();
-    if (main) main.before(wrapper);
+    hoistBeforeMain(wrapper);
   }
 
   if (resetOnLoad) {
