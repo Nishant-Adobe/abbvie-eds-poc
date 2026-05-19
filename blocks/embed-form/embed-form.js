@@ -64,7 +64,13 @@ export default async function decorate(block) {
     return;
   }
 
-  const formUrlObj = new URL(finalFormPath);
+  let formUrlObj;
+  try {
+    formUrlObj = new URL(finalFormPath);
+  } catch {
+    block.innerHTML = '<p class="embed-form-error">Invalid form URL configured.</p>';
+    return;
+  }
   const formUrlHost = formUrlObj.hostname;
 
   // Container for form
@@ -102,7 +108,8 @@ export default async function decorate(block) {
         observer.disconnect();
       }
     });
-    observer.observe(block.parentElement || document.body, { childList: true, subtree: true });
+    const observeTarget = block.closest('.section') || block.parentElement || document.body;
+    observer.observe(observeTarget, { childList: true, subtree: true });
 
     document.dispatchEvent(
       new CustomEvent('adaptiveform:loaded', {
@@ -119,8 +126,9 @@ export default async function decorate(block) {
 
     try {
       const params = isUniversalEditor() ? '?wcmmode=disabled' : '';
+      const credentials = formUrlObj.origin === window.location.origin ? 'same-origin' : 'omit';
       const response = await fetch(`${finalFormPath}${params}`, {
-        credentials: 'omit',
+        credentials,
       });
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
