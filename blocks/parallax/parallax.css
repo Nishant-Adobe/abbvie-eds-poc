@@ -47,7 +47,8 @@
 
 /* Desktop: enable parallax effect
    Note: background-attachment:fixed is unsupported on iOS Safari/WebKit.
-   On iOS, the image renders as a static background — acceptable graceful degradation. */
+   On iOS, the image renders as a static background — acceptable graceful degradation.
+   768px breakpoint: CSS custom properties cannot be used in @media conditions. */
 @media (width >= 768px) {
   .parallax .parallax-wrapper {
     min-height: var(--parallax-min-height-desktop, 400px);
