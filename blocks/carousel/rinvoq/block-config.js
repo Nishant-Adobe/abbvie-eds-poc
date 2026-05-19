@@ -42,13 +42,24 @@ export default async function getBlockConfigs() {
           if (!block.contains(e.relatedTarget)) startAutoPlay(block);
         });
 
-        document.addEventListener('visibilitychange', () => {
+        const onVisibilityChange = () => {
           if (document.hidden) {
             stopAutoPlay(block);
           } else {
             startAutoPlay(block);
           }
+        };
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        // Cleanup on block removal (MutationObserver)
+        const observer = new MutationObserver(() => {
+          if (!block.isConnected) {
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            stopAutoPlay(block);
+            observer.disconnect();
+          }
         });
+        observer.observe(block.parentElement || document.body, { childList: true });
       },
     },
   };
