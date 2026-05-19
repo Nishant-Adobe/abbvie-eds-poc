@@ -33,11 +33,6 @@ export default async function decorate(block) {
     });
   });
 
-  // Get speed variant from block classes
-  let speed = 'medium';
-  if (block.classList.contains('slow')) speed = 'slow';
-  else if (block.classList.contains('fast')) speed = 'fast';
-
   // Read anchorId from authored content
   const anchorId = block.querySelector('[data-anchor-id]')?.dataset.anchorId
     || block.closest('[id]')?.id || '';
@@ -51,7 +46,6 @@ export default async function decorate(block) {
   // Build parallax structure
   const wrapper = document.createElement('div');
   wrapper.className = 'parallax-wrapper';
-  wrapper.dataset.speed = speed;
   if (altText) {
     wrapper.setAttribute('role', 'img');
     wrapper.setAttribute('aria-label', altText);
