@@ -225,13 +225,13 @@
 
 .formulary-lookup .formulary-lookup-indications-group input[type="radio"] {
   accent-color: var(--color-formulary-submit-bg);
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
 }
 
 .formulary-lookup .formulary-lookup-indications-group label {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-body, 16px);
+  font-size: 13px;
 }
 
 /* Submit — centered pill */
@@ -266,7 +266,41 @@
   text-decoration: underline;
 }
 
-/* Error tooltip brand styling */
+/* Error tooltip — floating over the form, matching live site */
 .formulary-lookup .formulary-lookup-error-tooltip {
-  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 16px rgb(0 0 0 / 20%);
+  padding: 20px 48px 20px 24px;
+  max-width: 300px;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.formulary-lookup .formulary-lookup-error-tooltip-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #999;
+  background: transparent;
+  border-radius: 50%;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formulary-lookup .formulary-lookup-error-tooltip-close:hover {
+  border-color: #333;
+  color: #333;
 }
