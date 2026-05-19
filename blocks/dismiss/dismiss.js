@@ -34,7 +34,7 @@ function readFields(block) {
     toRemove.push(row);
     if (!fields.cookieName) {
       fields.cookieName = text;
-    } else if (!fields.closeLabel) {
+    } else if (!fields.closeLabel && text !== 'true' && text !== 'false') {
       fields.closeLabel = text;
     } else if (text === 'true' || text === 'false') {
       fields.resetOnLoad = text === 'true';
