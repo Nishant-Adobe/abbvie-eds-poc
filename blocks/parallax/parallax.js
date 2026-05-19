@@ -22,8 +22,7 @@ export default async function decorate(block) {
   // Row 2: anchorId cell (if present)
 
   let imgSrc = '';
-  let altText = '';
-  let anchorId = '';
+  const plainTexts = [];
   const contentFragment = document.createDocumentFragment();
 
   rows.forEach((row) => {
@@ -45,18 +44,18 @@ export default async function decorate(block) {
           contentFragment.append(node.cloneNode(true));
         });
       } else {
-        // Plain text cell — first plain text = imageAlt, last = anchorId
+        // Plain text cell — collect in order for positional assignment
         const text = cell.textContent.trim();
         if (text) {
-          if (!altText) {
-            altText = text;
-          } else {
-            anchorId = text;
-          }
+          plainTexts.push(text);
         }
       }
     });
   });
+
+  // Assign plain text fields positionally: [0] = imageAlt, [1] = anchorId
+  const altText = plainTexts[0] || '';
+  const anchorId = plainTexts[1] || '';
 
   // Clear block
   block.textContent = '';
