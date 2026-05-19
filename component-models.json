@@ -10785,5 +10785,91 @@
         "...": "../../models/_common-properties.json#/common-prop"
       }
     ]
+  },
+  {
+    "id": "image-slider",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes_orientation",
+        "label": "Orientation",
+        "valueType": "string",
+        "options": [
+          { "name": "Horizontal (default)", "value": "" },
+          { "name": "Vertical", "value": "image-slider-vertical" }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_labelPosition",
+        "label": "Label Position",
+        "valueType": "string",
+        "options": [
+          { "name": "Labels above images", "value": "image-slider-label-top" },
+          { "name": "Labels below images", "value": "image-slider-label-bottom" },
+          { "name": "Labels left", "value": "image-slider-label-left" },
+          { "name": "Labels right", "value": "image-slider-label-right" },
+          { "name": "Labels centered on image", "value": "image-slider-label-center" }
+        ]
+      },
+      {
+        "component": "boolean",
+        "name": "accessible",
+        "label": "Accessible View",
+        "valueType": "boolean",
+        "description": "Enable accessibility view toggle (.image-slider-accessible)"
+      },
+      {
+        "component": "number",
+        "name": "imageHeight",
+        "label": "Image Height (px)",
+        "valueType": "number",
+        "description": "Shared image height in pixels; preserves aspect ratio"
+      },
+      {
+        "component": "number",
+        "name": "imageWidth",
+        "label": "Image Width (px)",
+        "valueType": "number"
+      },
+      {
+        "component": "text",
+        "name": "anchorId",
+        "label": "Anchor ID",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "image-slider-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Overlay Label",
+        "valueType": "string",
+        "description": "Overlay label text (e.g. \"Week 4\")"
+      },
+      {
+        "component": "richtext",
+        "name": "accessibleText",
+        "label": "Accessible Text",
+        "valueType": "string",
+        "description": "Text description shown in accessible view"
+      }
+    ]
   }
 ]

@@ -1,0 +1,259 @@
+/* =========================================================
+   IMAGE SLIDER — CORE
+   Supports horizontal (default) and vertical orientations.
+   Label positions driven by block-level modifier classes.
+   Accessible view toggled via .show-accessible on the block.
+========================================================= */
+
+.image-slider {
+  --is-offset: 0%;
+  --is-transition: 0.4s ease;
+}
+
+/* =========================================
+   WRAPPER & TRACK
+========================================= */
+
+.image-slider-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-slider-track {
+  display: flex;
+  flex-direction: row;
+  transform: translateX(var(--is-offset));
+  transition: transform var(--is-transition);
+  outline: none;
+}
+
+.image-slider.image-slider-vertical .image-slider-track {
+  flex-direction: column;
+  transform: translateY(var(--is-offset));
+}
+
+/* =========================================
+   SLIDES
+========================================= */
+
+.image-slider-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  visibility: hidden;
+  transition: visibility 0s var(--is-transition);
+}
+
+.image-slider-slide.is-active {
+  visibility: visible;
+  transition: visibility 0s;
+}
+
+/* =========================================
+   IMAGE WRAP
+   Label position variants reorder or overlay the label.
+========================================= */
+
+.image-slider-image-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-slider-image-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+/* =========================================
+   LABEL
+========================================= */
+
+.image-slider-label {
+  display: block;
+  padding: 0.4em 0.75em;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  background: rgb(0 0 0 / 50%);
+  color: #fff;
+}
+
+/* label-bottom (default — label below image) */
+/* No extra rule needed; flex-direction: column puts label after img. */
+
+/* label-top — label above image */
+.image-slider.image-slider-label-top .image-slider-image-wrap {
+  flex-direction: column-reverse;
+}
+
+/* label-left — label left of image */
+.image-slider.image-slider-label-left .image-slider-image-wrap {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.image-slider.image-slider-label-left .image-slider-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  align-self: center;
+}
+
+/* label-right — label right of image */
+.image-slider.image-slider-label-right .image-slider-image-wrap {
+  flex-direction: row-reverse;
+  align-items: stretch;
+}
+
+.image-slider.image-slider-label-right .image-slider-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  align-self: center;
+}
+
+/* label-center — label overlaid on image */
+.image-slider.image-slider-label-center .image-slider-image-wrap {
+  flex-direction: row;
+}
+
+.image-slider.image-slider-label-center .image-slider-label {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  border-radius: 2px;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.image-slider-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+
+.image-slider-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  background: transparent;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  color: inherit;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.image-slider-btn:hover,
+.image-slider-btn:focus-visible {
+  background: currentColor;
+  color: #fff;
+  outline: none;
+}
+
+/* Arrow icons via CSS — override with brand icon font if needed */
+.image-slider-prev::after {
+  content: '‹';
+}
+
+.image-slider-next::after {
+  content: '›';
+}
+
+.image-slider.image-slider-vertical .image-slider-prev::after {
+  content: '‹';
+  transform: rotate(90deg);
+  display: inline-block;
+}
+
+.image-slider.image-slider-vertical .image-slider-next::after {
+  content: '›';
+  transform: rotate(90deg);
+  display: inline-block;
+}
+
+/* =========================================
+   DOT INDICATORS
+========================================= */
+
+.image-slider-dots {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-slider.image-slider-vertical .image-slider-dots {
+  flex-direction: column;
+}
+
+.image-slider-dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  padding: 0;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.image-slider-dot.is-active {
+  background: currentColor;
+}
+
+.image-slider-dot:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* =========================================
+   ACCESSIBLE VIEW
+========================================= */
+
+.image-slider-accessible-text {
+  display: none;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.image-slider.show-accessible .image-slider-accessible-text {
+  display: block;
+}
+
+.image-slider.show-accessible .image-slider-image-wrap img {
+  display: none;
+}
+
+.image-slider-accessible-toggle {
+  display: block;
+  margin: 0.5rem auto;
+  padding: 0.4em 1em;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: inherit;
+  transition: background-color 0.2s;
+}
+
+.image-slider-accessible-toggle:hover,
+.image-slider-accessible-toggle:focus-visible {
+  background: currentColor;
+  color: #fff;
+  outline: none;
+}
