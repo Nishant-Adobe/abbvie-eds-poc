@@ -17,8 +17,11 @@ function readFields(block) {
   const toRemove = [];
 
   rows.forEach((row) => {
-    if (row.querySelector('p, strong, em, a')) return;
-    const text = row.textContent.trim();
+    const inner = row.querySelector(':scope > div');
+    if (!inner) return;
+    // Richtext rows have an extra <div> wrapper inside the cell; text/boolean rows don't
+    if (inner.querySelector(':scope > div')) return;
+    const text = inner.textContent.trim();
     if (!text) return;
     toRemove.push(row);
     if (text === 'true' || text === 'false') {
