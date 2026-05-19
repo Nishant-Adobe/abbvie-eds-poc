@@ -45,7 +45,9 @@
   line-height: var(--body-line-height, 1.6);
 }
 
-/* Desktop: enable parallax effect */
+/* Desktop: enable parallax effect
+   Note: background-attachment:fixed is unsupported on iOS Safari/WebKit.
+   On iOS, the image renders as a static background — acceptable graceful degradation. */
 @media (width >= 768px) {
   .parallax .parallax-wrapper {
     min-height: var(--parallax-min-height-desktop, 400px);

@@ -45,12 +45,14 @@ export default async function decorate(block) {
           contentFragment.append(node.cloneNode(true));
         });
       } else {
-        // Plain text cell — could be imageAlt or anchorId
+        // Plain text cell — first plain text = imageAlt, last = anchorId
         const text = cell.textContent.trim();
-        if (text && !altText && rowIdx === 0) {
-          altText = text;
-        } else if (text && rowIdx > 0 && !cell.querySelector('h1, h2, h3, h4, h5, h6, p')) {
-          anchorId = text;
+        if (text) {
+          if (!altText) {
+            altText = text;
+          } else {
+            anchorId = text;
+          }
         }
       }
     });
