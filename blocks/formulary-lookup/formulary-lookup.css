@@ -544,6 +544,112 @@
   background: var(--formulary-row-hover-bg, #f0f0f0);
 }
 
+/* --- Error Tooltip (inline popup near input) --- */
+
+.formulary-lookup-error-tooltip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  background: var(--formulary-error-tooltip-bg, #fff);
+  border-radius: var(--formulary-error-tooltip-radius, 8px);
+  box-shadow: var(--formulary-error-tooltip-shadow, 0 4px 20px rgb(0 0 0 / 20%));
+  padding: var(--formulary-error-tooltip-padding, 16px 48px 16px 20px);
+  max-width: var(--formulary-error-tooltip-max-width, 320px);
+  font-size: var(--formulary-error-tooltip-font-size, var(--body-font-size-s, 0.875rem));
+  color: var(--formulary-text-color, var(--text-color, inherit));
+  line-height: 1.4;
+}
+
+.formulary-lookup-error-tooltip-text {
+  display: block;
+}
+
+.formulary-lookup-error-tooltip-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: var(--formulary-error-tooltip-close-bg, #e0e0e0);
+  border-radius: 50%;
+  color: var(--formulary-text-color, var(--text-color, #333));
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.formulary-lookup-error-tooltip-close:hover {
+  background: var(--formulary-error-tooltip-close-hover-bg, #ccc);
+}
+
+/* --- Error Modal (full overlay) --- */
+
+.formulary-lookup-error-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 40%);
+  padding: 24px;
+}
+
+.formulary-lookup-error-modal {
+  position: relative;
+  background: #fff;
+  border-radius: var(--formulary-error-modal-radius, 16px);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 25%);
+  padding: var(--formulary-error-modal-padding, 40px 48px);
+  max-width: var(--formulary-error-modal-max-width, 600px);
+  width: 100%;
+}
+
+.formulary-lookup-error-modal-content {
+  font-size: var(--body-font-size-m, 1rem);
+  line-height: 1.5;
+  color: var(--text-color, #333);
+}
+
+.formulary-lookup-error-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--formulary-error-modal-close-bg, rgb(88 166 52));
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.formulary-lookup-error-modal-close:hover {
+  background: var(--formulary-error-modal-close-hover-bg, rgb(70 140 40));
+}
+
+@media (width <= 600px) {
+  .formulary-lookup-error-modal {
+    padding: 24px 20px;
+    border-radius: 12px;
+  }
+
+  .formulary-lookup-error-tooltip {
+    max-width: calc(100vw - 48px);
+  }
+}
+
 /* --- Mobile responsive --- */
 
 @media (width <= 600px) {

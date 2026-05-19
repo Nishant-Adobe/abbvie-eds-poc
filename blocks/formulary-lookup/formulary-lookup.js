@@ -215,6 +215,92 @@ function showMessage(status, msg, isError = false) {
   status.classList.toggle('error', isError);
 }
 
+function createErrorTooltip(msg, container) {
+  const existing = container.querySelector('.formulary-lookup-error-tooltip');
+  if (existing) existing.remove();
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'formulary-lookup-error-tooltip';
+  tooltip.setAttribute('role', 'alert');
+  tooltip.setAttribute('aria-live', 'assertive');
+
+  const text = document.createElement('span');
+  text.className = 'formulary-lookup-error-tooltip-text';
+  text.textContent = msg;
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'formulary-lookup-error-tooltip-close';
+  closeBtn.setAttribute('aria-label', 'Dismiss error');
+  closeBtn.textContent = '✕';
+  closeBtn.addEventListener('click', () => tooltip.remove());
+
+  tooltip.append(text, closeBtn);
+  container.append(tooltip);
+
+  document.addEventListener('keydown', function handler(e) {
+    if (e.key === 'Escape' && tooltip.parentNode) {
+      tooltip.remove();
+      document.removeEventListener('keydown', handler);
+    }
+  });
+
+  return tooltip;
+}
+
+function createErrorModal(msg) {
+  const existing = document.querySelector('.formulary-lookup-error-overlay');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.className = 'formulary-lookup-error-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'formulary-lookup-error-modal';
+  modal.setAttribute('role', 'alertdialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-label', 'Error');
+
+  const content = document.createElement('div');
+  content.className = 'formulary-lookup-error-modal-content';
+  content.textContent = msg;
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'formulary-lookup-error-modal-close';
+  closeBtn.setAttribute('aria-label', 'Close error');
+  closeBtn.textContent = '✕';
+
+  modal.append(content, closeBtn);
+  overlay.append(modal);
+  document.body.append(overlay);
+
+  function close() {
+    overlay.remove();
+  }
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', function handler(e) {
+    if (e.key === 'Escape') {
+      close();
+      document.removeEventListener('keydown', handler);
+    }
+  });
+
+  closeBtn.focus();
+  return overlay;
+}
+
+function showError(msg, flags, container) {
+  if (flags.errorDisplayMode === 'modal') {
+    createErrorModal(msg);
+  } else {
+    createErrorTooltip(msg, container);
+  }
+}
+
 function renderResultsTable(plans, results, config, page) {
   results.innerHTML = '';
   const perPage = parseInt(config['results-per-page'], 10) || 10;
@@ -340,6 +426,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
   section.append(label, select);
 
   const hasSubmitBtn = !!config['submit-label'];
+  let disclaimerShown = false;
 
   async function lookupState() {
     const state = select.value;
@@ -349,8 +436,15 @@ function buildDefaultVariant(config, section, status, results, flags) {
       return;
     }
     results.innerHTML = '';
+
     if (!config.api) {
-      showMessage(status, config.error || 'Lookup not configured.', true);
+      if (flags.disclaimerModal && config.disclaimer) {
+        const disclaimerEl = section.closest('.formulary-lookup')
+          .querySelector('.formulary-lookup-disclaimer-overlay');
+        if (disclaimerEl && disclaimerEl.open) disclaimerEl.open();
+      } else {
+        showError(config.error || 'Lookup not configured.', flags, section);
+      }
       return;
     }
     showLoading(status);
@@ -363,8 +457,15 @@ function buildDefaultVariant(config, section, status, results, flags) {
       }
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
+
+      if (!disclaimerShown && flags.disclaimerModal && config.disclaimer) {
+        disclaimerShown = true;
+        const disclaimerEl = section.closest('.formulary-lookup')
+          .querySelector('.formulary-lookup-disclaimer-overlay');
+        if (disclaimerEl && disclaimerEl.open) disclaimerEl.open();
+      }
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'An error occurred. Please try again.', flags, section);
     }
   }
 
@@ -382,7 +483,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
   }
 }
 
-function buildDynamicVariant(config, section, status, results) {
+function buildDynamicVariant(config, section, status, results, flags) {
   const { label: stateLabel, select: stateSelect } = createStateSelect(config, 'formulary-state');
   const { wrapper: countyWrapper, select: countySelect } = createCountySelect(config, 'formulary-county');
   applyAnalytics(countySelect, config);
@@ -402,6 +503,9 @@ function buildDynamicVariant(config, section, status, results) {
     if (!state || !config.api) {
       countyWrapper.hidden = true;
       countySelect.disabled = true;
+      if (state && !config.api) {
+        showError(config.error || 'Lookup not configured.', flags, section);
+      }
       return;
     }
 
@@ -426,7 +530,7 @@ function buildDynamicVariant(config, section, status, results) {
       });
       countySelect.disabled = false;
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'An error occurred. Please try again.', flags, section);
     }
   });
 
@@ -450,7 +554,7 @@ function buildDynamicVariant(config, section, status, results) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'An error occurred. Please try again.', flags, section);
     }
   });
 }
@@ -665,7 +769,7 @@ function buildZipVariant(config, section, status, results, flags) {
       return;
     }
     if (!config.api) {
-      showMessage(status, config.error || 'Lookup not configured.', true);
+      showError(config.error || 'Lookup not configured.', flags, section);
       return;
     }
 
@@ -688,7 +792,7 @@ function buildZipVariant(config, section, status, results, flags) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'An error occurred. Please try again.', flags, section);
     }
   });
 }
@@ -738,7 +842,7 @@ export default async function decorate(block) {
   if (isZip) {
     buildZipVariant(config, section, status, results, flags);
   } else if (isDynamic) {
-    buildDynamicVariant(config, section, status, results);
+    buildDynamicVariant(config, section, status, results, flags);
   } else {
     buildDefaultVariant(config, section, status, results, flags);
   }
@@ -755,9 +859,6 @@ export default async function decorate(block) {
     const disclaimer = createDisclaimer(config, isModal);
     if (disclaimer) {
       section.append(disclaimer);
-      if (isModal && disclaimer.open) {
-        disclaimer.open();
-      }
     }
   }
 
