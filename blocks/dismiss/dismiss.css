@@ -1,7 +1,7 @@
 .dismiss {
   --dismiss-bg: var(--color-gray-light);
   --dismiss-border-color: var(--color-border);
-  --dismiss-z-index: var(--z-index-anchor-nav);
+
   font-size: var(--body-font-size-s);
   opacity: 1;
   padding: var(--spacing-12) var(--spacing-48) var(--spacing-12) var(--spacing-24);
@@ -9,10 +9,12 @@
   transition: opacity var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
-.dismiss.sticky {
+/* JS hoists the sticky wrapper before <main> making <body> its containing block.
+   position: sticky here then works through the full page scroll. */
+body > .dismiss-wrapper:has(.dismiss.sticky) {
   position: sticky;
   top: var(--nav-height);
-  z-index: var(--dismiss-z-index);
+  z-index: var(--z-index-anchor-nav);
 }
 
 .dismiss.dismiss-is-closing {

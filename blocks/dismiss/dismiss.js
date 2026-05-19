@@ -48,10 +48,19 @@ export default function decorate(block) {
 
   const key = cookieName || `dismiss-${window.location.pathname}`;
 
+  const wrapper = block.closest('.dismiss-wrapper') ?? block;
+
+  // Hoist only this wrapper before <main> so its containing block is <body> (full page height).
+  // Skipped in UE editor (data-aue-resource present) to preserve editor instrumentation.
+  if (block.classList.contains('sticky') && !block.dataset.aueResource) {
+    const main = document.querySelector('main');
+    if (main) main.before(wrapper);
+  }
+
   if (resetOnLoad) {
     deleteCookie(key);
   } else if (hasCookie(key)) {
-    block.closest('.section')?.remove();
+    wrapper.remove();
     return;
   }
 
@@ -63,9 +72,8 @@ export default function decorate(block) {
   block.append(closeBtn);
 
   closeBtn.addEventListener('click', () => {
-    const section = block.closest('.section');
     setCookie(key);
     block.classList.add('dismiss-is-closing');
-    setTimeout(() => section?.remove(), 300);
+    setTimeout(() => wrapper.remove(), 300);
   });
 }
