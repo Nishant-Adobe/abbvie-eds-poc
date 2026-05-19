@@ -30,12 +30,12 @@ function readFields(block) {
     const text = inner.textContent.trim();
     if (!text) return;
     toRemove.push(row);
-    if (text === 'true' || text === 'false') {
-      fields.resetOnLoad = text === 'true';
-    } else if (!fields.cookieName) {
+    if (!fields.cookieName) {
       fields.cookieName = text;
     } else if (!fields.closeLabel) {
       fields.closeLabel = text;
+    } else if (text === 'true' || text === 'false') {
+      fields.resetOnLoad = text === 'true';
     }
   });
 
@@ -53,7 +53,7 @@ export default function decorate(block) {
   // Hoist only this wrapper before <main> so its containing block is <body> (full page height).
   // Skipped in UE editor (data-aue-resource present) to preserve editor instrumentation.
   if (block.classList.contains('sticky') && !block.dataset.aueResource) {
-    const main = document.querySelector('main');
+    const main = block.closest('body')?.querySelector('main');
     if (main) main.before(wrapper);
   }
 
