@@ -24,6 +24,10 @@ export default async function getBlockConfigs() {
         const slides = block.querySelectorAll('.carousel-slide');
         if (slides.length < 2) return;
 
+        // Guard against duplicate registration on re-render
+        if (block.autoPlayInitialized) return;
+        block.autoPlayInitialized = true;
+
         if (!block.dataset.activeSlide) {
           block.dataset.activeSlide = '0';
         }

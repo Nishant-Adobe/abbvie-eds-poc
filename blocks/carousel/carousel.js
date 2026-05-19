@@ -151,5 +151,9 @@ export default async function decorate(block) {
     bindEvents(block);
   }
 
-  await renderBlock(block);
+  try {
+    await renderBlock(block);
+  } catch {
+    // brand block-config failed; carousel still renders with base functionality
+  }
 }
