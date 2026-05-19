@@ -3,17 +3,23 @@ import { renderBlock } from '../../scripts/multi-theme.js';
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Row 0: image, Row 1: content
-  const imageRow = rows[0];
-  const contentRow = rows[1];
-
-  // Extract image
-  const picture = imageRow?.querySelector('picture');
+  // Find image from any row/cell
+  const picture = block.querySelector('picture');
   const img = picture?.querySelector('img');
   const altText = img?.alt || '';
+  const imgSrc = img?.src || '';
 
-  // Extract content
-  const content = contentRow?.innerHTML || '';
+  // Find content — all non-image text content
+  let contentHTML = '';
+  rows.forEach((row) => {
+    const cells = [...row.children];
+    cells.forEach((cell) => {
+      if (!cell.querySelector('picture')) {
+        const text = cell.innerHTML.trim();
+        if (text) contentHTML += text;
+      }
+    });
+  });
 
   // Get speed variant from block classes
   let speed = 'medium';
@@ -27,19 +33,21 @@ export default async function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'parallax-wrapper';
   wrapper.dataset.speed = speed;
-  wrapper.setAttribute('role', 'img');
-  wrapper.setAttribute('aria-label', altText);
+  if (altText) {
+    wrapper.setAttribute('role', 'img');
+    wrapper.setAttribute('aria-label', altText);
+  }
 
   // Set background image
-  if (img) {
-    wrapper.style.backgroundImage = `url('${img.src}')`;
+  if (imgSrc) {
+    wrapper.style.backgroundImage = `url('${imgSrc}')`;
   }
 
   // Content overlay
-  if (content) {
+  if (contentHTML) {
     const overlay = document.createElement('div');
     overlay.className = 'parallax-content';
-    overlay.innerHTML = content;
+    overlay.innerHTML = contentHTML;
     wrapper.append(overlay);
   }
 
