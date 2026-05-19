@@ -37,7 +37,9 @@ export default async function getBlockConfigs() {
         block.addEventListener('mouseenter', () => stopAutoPlay(block));
         block.addEventListener('mouseleave', () => startAutoPlay(block));
         block.addEventListener('focusin', () => stopAutoPlay(block));
-        block.addEventListener('focusout', () => startAutoPlay(block));
+        block.addEventListener('focusout', (e) => {
+          if (!block.contains(e.relatedTarget)) startAutoPlay(block);
+        });
       },
     },
   };
