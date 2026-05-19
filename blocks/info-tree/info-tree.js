@@ -45,7 +45,7 @@ function extractConfig(block) {
         const val = prop.textContent?.trim().toLowerCase();
         showReset = val === 'true';
       }
-      row.dataset.itConfig = '';
+      if (name !== 'disclaimer') row.dataset.itConfig = '';
     } else {
       const divs = row.querySelectorAll(':scope > div');
       if (divs.length >= 2) {
@@ -187,10 +187,8 @@ export default function decorate(block) {
       || row.querySelector('img[src]');
     if (consumed) {
       row.classList.add('info-tree-hidden');
-    } else if (row.dataset.itDisclaimer !== undefined) {
-      row.classList.add('info-tree-disclaimer');
     } else {
-      row.classList.add('info-tree-hidden');
+      row.classList.add('info-tree-disclaimer');
     }
   });
 
