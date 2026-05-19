@@ -232,22 +232,28 @@ function createErrorTooltip(msg, container) {
   text.className = 'formulary-lookup-error-tooltip-text';
   text.textContent = msg;
 
+  function escHandler(e) {
+    if (e.key === 'Escape' && tooltip.parentNode) {
+      tooltip.remove();
+      document.removeEventListener('keydown', escHandler);
+    }
+  }
+
+  function dismiss() {
+    tooltip.remove();
+    document.removeEventListener('keydown', escHandler);
+  }
+
   const closeBtn = document.createElement('button');
   closeBtn.type = 'button';
   closeBtn.className = 'formulary-lookup-error-tooltip-close';
   closeBtn.setAttribute('aria-label', 'Dismiss error');
   closeBtn.textContent = '✕';
-  closeBtn.addEventListener('click', () => tooltip.remove());
+  closeBtn.addEventListener('click', dismiss);
 
   tooltip.append(text, closeBtn);
   container.append(tooltip);
-
-  document.addEventListener('keydown', function handler(e) {
-    if (e.key === 'Escape' && tooltip.parentNode) {
-      tooltip.remove();
-      document.removeEventListener('keydown', handler);
-    }
-  });
+  document.addEventListener('keydown', escHandler);
 
   return tooltip;
 }
