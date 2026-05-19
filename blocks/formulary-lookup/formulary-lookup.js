@@ -44,6 +44,7 @@ const US_STATES = [
 
 const RICHTEXT_KEYS = new Set(['recaptcha-notice', 'disclaimer']);
 const INLINE_HTML_KEYS = new Set(['heading', 'description']);
+let activeErrorOverlay = null;
 
 const FIELD_ORDER = [
   'icon', 'heading', 'description', 'state-label', 'county-label',
@@ -63,7 +64,7 @@ function readValue(key, cell) {
   if (INLINE_HTML_KEYS.has(key)) return unwrapSingleP(cell?.innerHTML.trim() || '');
   if (key === 'icon') {
     const img = cell?.querySelector('img');
-    return img?.src || cell?.textContent.trim() || '';
+    return img?.getAttribute('src') || cell?.textContent.trim() || '';
   }
   return cell?.textContent.trim() || '';
 }
@@ -221,7 +222,11 @@ function showMessage(status, msg, isError = false) {
 
 function createErrorTooltip(msg, container) {
   const existing = container.querySelector('.formulary-lookup-error-tooltip');
-  if (existing) existing.remove();
+  if (existing) {
+    const oldHandler = existing.escHandler;
+    if (oldHandler) document.removeEventListener('keydown', oldHandler);
+    existing.remove();
+  }
 
   const tooltip = document.createElement('div');
   tooltip.className = 'formulary-lookup-error-tooltip';
@@ -252,6 +257,7 @@ function createErrorTooltip(msg, container) {
   closeBtn.addEventListener('click', dismiss);
 
   tooltip.append(text, closeBtn);
+  tooltip.escHandler = escHandler;
   container.append(tooltip);
   document.addEventListener('keydown', escHandler);
 
@@ -259,8 +265,10 @@ function createErrorTooltip(msg, container) {
 }
 
 function createErrorModal(msg) {
-  const existing = document.querySelector('.formulary-lookup-error-overlay');
-  if (existing) existing.remove();
+  if (activeErrorOverlay) {
+    activeErrorOverlay.remove();
+    activeErrorOverlay = null;
+  }
 
   const overlay = document.createElement('div');
   overlay.className = 'formulary-lookup-error-overlay';
@@ -284,9 +292,11 @@ function createErrorModal(msg) {
   modal.append(content, closeBtn);
   overlay.append(modal);
   document.body.append(overlay);
+  activeErrorOverlay = overlay;
 
   function close() {
     overlay.remove();
+    activeErrorOverlay = null;
   }
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', (e) => {
@@ -450,7 +460,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
     if (!config.api) {
       const disclaimerEl = section.closest('.formulary-lookup')
         ?.querySelector('.formulary-lookup-disclaimer-overlay');
-      if (disclaimerEl && disclaimerEl.open) {
+      if (disclaimerEl && typeof disclaimerEl.open === 'function') {
         disclaimerEl.open();
       } else {
         showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
@@ -472,7 +482,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
         disclaimerShown = true;
         const disclaimerEl = section.closest('.formulary-lookup')
           .querySelector('.formulary-lookup-disclaimer-overlay');
-        if (disclaimerEl && disclaimerEl.open) disclaimerEl.open();
+        if (disclaimerEl && typeof disclaimerEl.open === 'function') disclaimerEl.open();
       }
     } catch {
       showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
