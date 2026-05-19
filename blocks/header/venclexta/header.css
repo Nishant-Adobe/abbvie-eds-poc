@@ -12,15 +12,15 @@
   --nav-sections-bottom-gap: 17.6rem;
 
   /* Utility nav — overridable per brand */
-  --nav-utility-bg: rgb(243 243 243);
-  --nav-utility-text: rgb(37 40 42);
-  --nav-utility-height: 32px;
+  --nav-utility-bg: var(--color-gray-light);
+  --nav-utility-text: var(--color-charcoal);
+  --nav-utility-height: 3.2rem;
   --nav-utility-font-size: var(--font-size-12, 12px);
-  --nav-utility-link-hover: rgb(0 0 0);
+  --nav-utility-link-hover: var(--color-black);
 
   /* Header bar — overridable per brand */
   --nav-bar-bg: var(--background-color);
-  --nav-bar-bg-scroll: hsl(0deg 0% 100% / 85%);
+  --nav-bar-bg-scroll: var(--color-white-85);
   --nav-bar-text: var(--text-color);
 
   /* Active/hover indicator — overridable per brand (e.g., yellow for RINVOQ HCP) */
@@ -28,9 +28,9 @@
   --nav-active-bg: transparent;
 
   /* Dropdown panel */
-  --nav-dropdown-border-color: rgb(221 221 221);
-  --nav-dropdown-shadow: 0 var(--spacing-02) var(--spacing-08) rgb(0 0 0 / 12%);
-  --nav-dropdown-hover-bg: rgb(245 245 245);
+  --nav-dropdown-border-color: var(--color-border-light);
+  --nav-dropdown-shadow: 0 var(--spacing-02) var(--spacing-08) var(--color-shadow-sm);
+  --nav-dropdown-hover-bg: var(--color-gray-light);
   --nav-dropdown-padding: var(--spacing-04) 0;
   --nav-dropdown-min-width: 20rem;
   --nav-dropdown-z-index: 100;
@@ -39,20 +39,20 @@
   --nav-active-indicator-height: var(--spacing-04);
   --nav-indication-separator: var(--separator-height-1);
   /* Search */
-  --nav-search-shadow: 0 var(--spacing-03) var(--spacing-05) 0 rgb(153 153 153);
+  --nav-search-shadow: 0 var(--spacing-03) var(--spacing-05) 0 var(--color-gray-400);
   --nav-search-toggle-margin: 2.3rem;
   --nav-search-icon-offset: var(--spacing-02);
   --nav-search-input-padding: var(--spacing-04) var(--spacing-35) var(--spacing-04) var(--spacing-15);
-  --nav-search-input-min-width: 200px;
+  --nav-search-input-min-width: 20rem;
   /* Hamburger icon */
   --nav-hamburger-height: 2.2rem;
-  --nav-hamburger-bar-height: 1.5px;
-  --nav-hamburger-bar-width: 13.5px;
-  --nav-hamburger-bar-offset: 6px;
-  --nav-hamburger-bar-origin: -1px 1px;
+  --nav-hamburger-bar-height: 0.15rem;
+  --nav-hamburger-bar-width: 1.35rem;
+  --nav-hamburger-bar-offset: 0.6rem;
+  --nav-hamburger-bar-origin: -0.1rem 0.1rem;
   /* Search label */
-  --nav-search-label-font-size: 31.25px;
-  --nav-search-label-line-height: 46.875px;
+  --nav-search-label-font-size: 3.125rem;
+  --nav-search-label-line-height: 4.6875rem;
   /* Mega menu */
   --nav-mega-card-min-height: 25.4rem;
   --nav-mega-card-min-height-base: 27rem;
@@ -68,9 +68,9 @@
   --nav-navigation-group-padding: 0.9rem 7rem 16.1rem;
   --nav-mega-menu-panel-padding-left: calc(6.5% + 0.1667rem);
   /* Search floating label */
-  --nav-search-label-float-offset: 40px;
+  --nav-search-label-float-offset: 4rem;
   /* Hamburger last bar */
-  --nav-hamburger-bar-offset-last: 2px;
+  --nav-hamburger-bar-offset-last: 0.2rem;
 }
 
 /* ──────────────────────────────────────────
@@ -1894,9 +1894,9 @@ header nav .nav-brand-indication img {
   display: block;
 }
 
-/* Body offset when floating ISI is visible — toggled via JS class on <html> */
+/* Body offset when floating ISI is visible — toggled via JS class on <body> */
 
-:root.nav-isi-visible body {
+body.nav-isi-visible {
   padding-bottom: var(--nav-isi-collapsed-height);
 }
 
@@ -2242,8 +2242,7 @@ header nav .nav-sections .default-content-wrapper > ul > li:hover { background-c
 /* ── Mobile open state — dark teal bg, white text ── */
 
 @media (width < 1024px) {
-  /* Show utility bar on mobile (base hides it with !important) */
-  header .nav-utility:has(ul) { display: block !important; }
+  header .nav-utility:has(ul) { display: block; }
 
   header .nav-utility ul[role="menubar"] {
     justify-content: center;

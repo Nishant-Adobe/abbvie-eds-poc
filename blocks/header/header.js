@@ -778,7 +778,7 @@ function buildFloatingIsi(headerEl) {
     toggle.setAttribute('aria-expanded', String(!expanded));
     toggle.textContent = expanded ? expandLabel : collapseLabel;
     bar.classList.toggle('nav-floating-isi-open', !expanded);
-    document.documentElement.classList.toggle('nav-isi-visible', !expanded);
+    document.body.classList.toggle('nav-isi-visible', !expanded);
   });
 
   bar.append(toggle, textWrap);
@@ -1285,7 +1285,7 @@ export default async function decorate(block) {
   const floatingIsi = buildFloatingIsi(header);
   if (floatingIsi) {
     block.append(floatingIsi);
-    document.documentElement.classList.add('nav-isi-visible');
+    document.body.classList.add('nav-isi-visible');
   }
 
   await renderBlock(block);

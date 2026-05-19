@@ -12,9 +12,15 @@ export default async function getBlockConfigs() {
           const homeLi = document.createElement('li');
           homeLi.className = 'nav-home-item';
           const homeLink = document.createElement('a');
-          homeLink.href = '/mavyret/';
+          homeLink.href = block.querySelector('.nav-brand a')?.href || '/';
           homeLink.setAttribute('aria-label', 'Home');
-          homeLink.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>';
+          const homeSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          homeSvg.setAttribute('viewBox', '0 0 24 24');
+          homeSvg.setAttribute('fill', 'currentColor');
+          const homePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          homePath.setAttribute('d', 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z');
+          homeSvg.append(homePath);
+          homeLink.append(homeSvg);
           homeLi.appendChild(homeLink);
           navUl.prepend(homeLi);
         }
