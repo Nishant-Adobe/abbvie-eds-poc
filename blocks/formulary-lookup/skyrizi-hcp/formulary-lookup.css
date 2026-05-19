@@ -20,7 +20,7 @@
   --formulary-input-padding: 12px 15px;
   --formulary-input-font-size: 14px;
 
-  /* Label */
+  /* Label — visually hidden (placeholder serves as label) */
   --formulary-label-font-size: 13px;
   --formulary-label-font-weight: 400;
   --formulary-label-color: var(--color-formulary-label, #21406d);
@@ -49,6 +49,19 @@
   --formulary-results-border-radius: 4px;
   --formulary-results-box-shadow: rgb(16 164 222 / 20%) 0 5px 15px 0;
   --formulary-results-header-font-weight: 700;
+}
+
+/* Hide ZIP label visually — placeholder serves as visible label */
+.formulary-lookup .formulary-lookup-zip-form > .formulary-lookup-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Input group — inline flex row with gap */
