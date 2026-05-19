@@ -9,6 +9,7 @@ function stopAutoPlay(block) {
 
 function startAutoPlay(block, interval = 5000) {
   stopAutoPlay(block);
+  if (document.hidden) return;
   block.autoPlayTimer = setInterval(() => {
     const current = parseInt(block.dataset.activeSlide || '0', 10);
     showSlide(block, current + 1);
@@ -39,6 +40,14 @@ export default async function getBlockConfigs() {
         block.addEventListener('focusin', () => stopAutoPlay(block));
         block.addEventListener('focusout', (e) => {
           if (!block.contains(e.relatedTarget)) startAutoPlay(block);
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            stopAutoPlay(block);
+          } else {
+            startAutoPlay(block);
+          }
         });
       },
     },
