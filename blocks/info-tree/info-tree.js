@@ -25,7 +25,6 @@ function extractConfig(block) {
   const rows = [...block.querySelectorAll(':scope > div:not([data-aue-resource])')];
 
   let question = null;
-  let disclaimer = null;
   let imageAlt = '';
   let cookieName = '';
   let showReset = false;
@@ -39,7 +38,7 @@ function extractConfig(block) {
       if (name === 'treeName') row.dataset.itConfig = '';
       if (name === 'imageAlt') { imageAlt = prop.textContent?.trim() || ''; row.dataset.itConfig = ''; }
       if (name === 'question') { question = prop; }
-      if (name === 'disclaimer') { disclaimer = prop; row.dataset.itDisclaimer = ''; }
+      if (name === 'disclaimer') { row.dataset.itDisclaimer = ''; }
       if (name === 'cookieName') cookieName = prop.textContent?.trim() || '';
       if (name === 'resetLabel') resetLabel = prop.textContent?.trim() || 'Start over';
       if (name === 'showReset') {
@@ -53,7 +52,7 @@ function extractConfig(block) {
         const key = divs[0]?.textContent?.trim().toLowerCase();
         if (key === 'treename') { row.dataset.itConfig = ''; }
         if (key === 'question') { [, question] = divs; row.dataset.itConfig = ''; }
-        if (key === 'disclaimer') { [, disclaimer] = divs; row.dataset.itDisclaimer = ''; }
+        if (key === 'disclaimer') { row.dataset.itDisclaimer = ''; }
         if (key === 'cookiename') { cookieName = divs[1]?.textContent?.trim() || ''; row.dataset.itConfig = ''; }
         if (key === 'resetlabel') { resetLabel = divs[1]?.textContent?.trim() || 'Start over'; row.dataset.itConfig = ''; }
         if (key === 'showreset') {
@@ -82,7 +81,7 @@ function extractConfig(block) {
   });
 
   return {
-    question, disclaimer, imageAlt, cookieName, showReset, resetLabel,
+    question, imageAlt, cookieName, showReset, resetLabel,
   };
 }
 
@@ -116,7 +115,8 @@ function extractItems(block) {
       const ctaLabel = ctaLabelEl?.textContent?.trim() || '';
       const ctaLink = row.querySelector(':scope > div:last-child a[href]')
         || row.querySelector('a[href]:not([data-aue-prop])');
-      const ctaHref = ctaLink?.getAttribute('href') || '';
+      const ctaHrefRaw = ctaLink?.getAttribute('href') || '';
+      const ctaHref = (/^https?:|^\/|^[./]/).test(ctaHrefRaw) ? ctaHrefRaw : '';
       const cells = [...row.querySelectorAll(':scope > div')];
       const fallbackContent = cells.length >= 2 ? cells[1] : null;
       if (label) {
@@ -135,8 +135,9 @@ function extractItems(block) {
       const label = divs[0]?.textContent?.trim() || '';
       const ctaLabel = divs.length >= 4 ? divs[3]?.textContent?.trim() || '' : '';
       const ctaHrefRaw = divs.length >= 5 ? divs[4] : null;
-      const ctaHref = ctaHrefRaw?.querySelector('a')?.getAttribute('href')
+      const ctaHrefCandidate = ctaHrefRaw?.querySelector('a')?.getAttribute('href')
         || ctaHrefRaw?.textContent?.trim() || '';
+      const ctaHref = (/^https?:|^\/|^[./]/).test(ctaHrefCandidate) ? ctaHrefCandidate : '';
       if (label) {
         items.push({
           label, content: divs[1], ctaLabel, ctaHref,
@@ -186,8 +187,10 @@ export default function decorate(block) {
       || row.querySelector('img[src]');
     if (consumed) {
       row.classList.add('info-tree-hidden');
-    } else if (row.dataset.itDisclaimer === undefined) {
+    } else if (row.dataset.itDisclaimer !== undefined) {
       row.classList.add('info-tree-disclaimer');
+    } else {
+      row.classList.add('info-tree-hidden');
     }
   });
 
