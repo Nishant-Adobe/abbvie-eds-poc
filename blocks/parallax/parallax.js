@@ -16,16 +16,29 @@ function sanitizeUrl(url) {
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Model field order (index-based access):
-  // Row 0, Cell 0: image (picture or DAM link)
-  // Row 0, Cell 1: imageAlt (text)
-  // Row 1, Cell 0: content (richtext)
-  // Row 2, Cell 0: anchorId (text)
+  // Field mapping — UE puts each field in its own row (one cell per row).
+  // Document authoring may group image+alt in same row (two cells).
+  // Detect by checking if first row has multiple cells.
+  const isMultiCell = rows[0]?.children.length > 1;
 
-  const imageCell = rows[0]?.children[0];
-  const altCell = rows[0]?.children[1];
-  const contentCell = rows[1]?.children[0];
-  const anchorCell = rows[2]?.children[0];
+  let imageCell;
+  let altCell;
+  let contentCell;
+  let anchorCell;
+
+  if (isMultiCell) {
+    // Document pattern: Row 0 = [image, alt], Row 1 = content, Row 2 = anchorId
+    imageCell = rows[0]?.children[0];
+    altCell = rows[0]?.children[1];
+    contentCell = rows[1]?.children[0];
+    anchorCell = rows[2]?.children[0];
+  } else {
+    // UE/XWalk pattern: each field = own row
+    imageCell = rows[0]?.children[0];
+    altCell = rows[1]?.children[0];
+    contentCell = rows[2]?.children[0];
+    anchorCell = rows[3]?.children[0];
+  }
 
   // Extract image source
   let imgSrc = '';
