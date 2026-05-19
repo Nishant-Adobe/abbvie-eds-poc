@@ -1,24 +1,61 @@
 @import '../quick-poll.css';
 
-/* Rinvoq quick-poll overrides
- *
- * Live site uses abbv-button-tertiary style on option buttons:
- * gray border (#c9c9ca), charcoal text (#46484a), pill shape (100px radius),
- * charcoal hover — not the brand-primary plum used in base.
- * Percentage numbers use brand primary (plum) for visual emphasis.
- */
+/* Rinvoq: radio-circle option buttons — gold ring on left, checkmark on hover/focus */
 
 .quick-poll {
-  --qpoll-option-border-color: var(--button-tertiary-border);
+  --qpoll-option-border-color: transparent;
   --qpoll-option-color: var(--button-tertiary-color);
-  --qpoll-option-hover-bg: var(--button-tertiary-hover-bg);
-  --qpoll-option-hover-color: var(--button-tertiary-hover-color);
+  --qpoll-option-hover-bg: transparent;
+  --qpoll-option-hover-color: var(--button-tertiary-color);
+  --qpoll-option-size: var(--body-font-size-m);
   --qpoll-pct-color: var(--color-brand-primary);
+  --qpoll-circle-size: var(--spacing-40);
+  --qpoll-circle-color: var(--color-rinvoq-gold);
+
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.qpoll-options {
+  flex-direction: column;
+  gap: 0;
 }
 
 .qpoll-option {
-  border-radius: var(--border-radius-button-tertiary);
-  padding: var(--button-tertiary-padding);
+  align-items: center;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex: none;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-16);
+  gap: var(--spacing-16);
+  padding: var(--spacing-08) 0;
+  text-align: left;
+  margin: 0;
+}
+
+/* Gold ring indicator */
+.qpoll-option::before {
+  border: var(--border-width-default) solid var(--qpoll-circle-color);
+  border-radius: 50%;
+  color: var(--qpoll-circle-color);
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  font-size: var(--body-font-size-m);
+  font-weight: var(--font-weight-bold);
+  height: var(--qpoll-circle-size);
+  line-height: var(--qpoll-circle-size);
+  text-align: center;
+  width: var(--qpoll-circle-size);
+}
+
+/* Hover / focus: show checkmark inside ring */
+.qpoll-option:hover::before,
+.qpoll-option:focus-visible::before {
+  content: '✓';
 }
 
 .qpoll-pct {
