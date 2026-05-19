@@ -2,7 +2,7 @@ import { getMain } from '../../scripts/scripts.js';
 
 function setCookie(name) {
   const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
-  document.cookie = `${encodeURIComponent(name)}=1;expires=${expires};path=/;SameSite=Lax`;
+  document.cookie = `${encodeURIComponent(name)}=1;expires=${expires};path=/;SameSite=Lax;Secure`;
 }
 
 function hasCookie(name) {
