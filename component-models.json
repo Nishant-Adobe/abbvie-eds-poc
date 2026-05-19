@@ -7899,6 +7899,189 @@
     ]
   },
   {
+    "id": "info-tree",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "overview"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "value": "",
+        "label": "Question",
+        "description": "The question or prompt shown to the visitor."
+      },
+      {
+        "component": "tab",
+        "label": "Common Properties",
+        "name": "commonProperties"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "blockId",
+        "valueFormat": "regexp",
+        "label": "ID",
+        "description": "Unique identifier for this block",
+        "validation": {
+          "regExp": "^id:\\S*$",
+          "customErrorMsg": "ID must start with 'id:' and contain no spaces"
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "classes_commonCustomClass",
+        "label": "Custom Class",
+        "description": "Custom CSS class to apply to this block"
+      },
+      {
+        "component": "select",
+        "name": "language",
+        "label": "Language",
+        "options": [
+          {
+            "name": "None",
+            "value": "lang:none"
+          },
+          {
+            "name": "Bulgarian",
+            "value": "lang:bg"
+          },
+          {
+            "name": "Chinese",
+            "value": "lang:zh"
+          },
+          {
+            "name": "Chinese (Taiwan)",
+            "value": "lang:zh-TW"
+          },
+          {
+            "name": "Czech",
+            "value": "lang:cs"
+          },
+          {
+            "name": "Danish",
+            "value": "lang:da"
+          },
+          {
+            "name": "Dutch",
+            "value": "lang:nl"
+          },
+          {
+            "name": "English",
+            "value": "lang:en"
+          },
+          {
+            "name": "Finnish",
+            "value": "lang:fi"
+          },
+          {
+            "name": "French",
+            "value": "lang:fr"
+          },
+          {
+            "name": "German",
+            "value": "lang:de"
+          },
+          {
+            "name": "Greek",
+            "value": "lang:el"
+          },
+          {
+            "name": "Hebrew",
+            "value": "lang:he"
+          },
+          {
+            "name": "Hungarian",
+            "value": "lang:hu"
+          },
+          {
+            "name": "Italian",
+            "value": "lang:it"
+          },
+          {
+            "name": "Japanese",
+            "value": "lang:ja"
+          },
+          {
+            "name": "Korean",
+            "value": "lang:ko"
+          },
+          {
+            "name": "Norwegian",
+            "value": "lang:no"
+          },
+          {
+            "name": "Polish",
+            "value": "lang:pl"
+          },
+          {
+            "name": "Portuguese",
+            "value": "lang:pt"
+          },
+          {
+            "name": "Russian",
+            "value": "lang:ru"
+          },
+          {
+            "name": "Slovak",
+            "value": "lang:sk"
+          },
+          {
+            "name": "Slovenian",
+            "value": "lang:sl"
+          },
+          {
+            "name": "Spanish",
+            "value": "lang:es"
+          },
+          {
+            "name": "Swedish",
+            "value": "lang:sv"
+          },
+          {
+            "name": "Turkish",
+            "value": "lang:tr"
+          },
+          {
+            "name": "Ukrainian",
+            "value": "lang:uk"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "info-tree-item",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Answer",
+        "name": "answer"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "answerLabel",
+        "value": "",
+        "label": "Answer Button Label",
+        "description": "Text shown on the option button."
+      },
+      {
+        "component": "richtext",
+        "name": "answerContent",
+        "value": "",
+        "label": "Answer Content",
+        "description": "Rich text content revealed when this answer option is selected.",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "linklist",
     "fields": [
       {
