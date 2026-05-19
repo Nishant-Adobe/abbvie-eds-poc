@@ -79,7 +79,7 @@ function toggleMenu(nav, _navSections, forceExpanded = null) {
     document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
     nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
     toggleAllNavSections(false); // Fixed: Pass boolean, not string
-    button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+    button?.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   }
 }
 
@@ -229,13 +229,23 @@ async function buildMegaMenu(block) {
   // -----------------------
   const left = document.createElement('div');
   left.className = 'mega-menu-left';
-  left.innerHTML = `
-    <h4 class="mega-menu-title">${megaMenuTitle}</h4>
-    <div class="mega-menu-description">${megaMenuDescription}</div>
-    <p class="button-container">
-      <a href="${megaMenuCta?.href || '#'}" class="button">${megaMenuCta?.textContent || ''}</a>
-    </p>
-  `;
+
+  const titleEl = document.createElement('h4');
+  titleEl.className = 'mega-menu-title';
+  titleEl.textContent = megaMenuTitle;
+
+  const descEl = document.createElement('div');
+  descEl.className = 'mega-menu-description';
+  descEl.textContent = megaMenuDescription;
+
+  const ctaP = document.createElement('p');
+  ctaP.className = 'button-container';
+  const ctaA = document.createElement('a');
+  ctaA.className = 'button';
+  ctaA.href = (megaMenuCta instanceof HTMLElement ? megaMenuCta.href : null) || '#';
+  ctaA.textContent = megaMenuCta instanceof HTMLElement ? megaMenuCta.textContent.trim() : '';
+  ctaP.append(ctaA);
+  left.append(titleEl, descEl, ctaP);
 
   // Dashboard links
   if (dashboardLinks) {
@@ -245,11 +255,12 @@ async function buildMegaMenu(block) {
       const link = li.querySelector('a');
       if (!link) return;
       const liClone = document.createElement('li');
-      liClone.innerHTML = `
-        <a href="${link.href}" class="dashboard-list-link" title="${link.title}">
-          ${link.textContent.trim()}
-        </a>
-      `;
+      const a = document.createElement('a');
+      a.className = 'dashboard-list-link';
+      a.href = link.href;
+      if (link.title) a.title = link.title;
+      a.textContent = link.textContent.trim();
+      liClone.append(a);
       ul.appendChild(liClone);
     });
     left.appendChild(ul);
@@ -778,7 +789,6 @@ function buildFloatingIsi(headerEl) {
     toggle.setAttribute('aria-expanded', String(!expanded));
     toggle.textContent = expanded ? expandLabel : collapseLabel;
     bar.classList.toggle('nav-floating-isi-open', !expanded);
-    document.body.classList.toggle('nav-isi-visible', !expanded);
   });
 
   bar.append(toggle, textWrap);
@@ -893,7 +903,8 @@ function handleScroll() {
     const header = cachedHeaderEl;
     if (!header) return;
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const heroBlock = header.closest('body')?.querySelector('.hero.block');
+    // Cross-block read: hero height drives the scroll-hide threshold.
+    const heroBlock = document.querySelector('.hero.block');
     const threshold = heroBlock ? heroBlock.offsetHeight - 100 : SCROLL_THRESHOLD_DEFAULT;
     if (scrollTop > lastScrollTop && scrollTop > threshold) {
       header.classList.add('hide-nav');
