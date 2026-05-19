@@ -1,6 +1,7 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
 function sanitizeUrl(url) {
+  if (!url) return '';
   try {
     const parsed = new URL(url, window.location.origin);
     if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
@@ -58,8 +59,9 @@ export default async function decorate(block) {
   // Clear block
   block.textContent = '';
 
-  // Set anchor ID if authored
-  if (anchorId) block.id = anchorId;
+  // Set anchor ID if authored (normalise to valid HTML id)
+  const normalizedId = anchorId.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+  if (normalizedId) block.id = normalizedId;
 
   // Build parallax structure
   const wrapper = document.createElement('div');
