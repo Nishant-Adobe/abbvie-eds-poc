@@ -1,6 +1,12 @@
+function sanitizeCookieName(name) {
+  return name.replace(/[^a-zA-Z0-9_-]/g, '');
+}
+
 function getCookie(name) {
   try {
-    const match = document.cookie.split('; ').find((r) => r.startsWith(`${name}=`));
+    const safeName = sanitizeCookieName(name);
+    if (!safeName) return '';
+    const match = document.cookie.split('; ').find((r) => r.startsWith(`${safeName}=`));
     if (!match) return '';
     const raw = match.split('=').slice(1).join('=');
     return decodeURIComponent(raw);
@@ -11,13 +17,17 @@ function getCookie(name) {
 
 function setCookie(name, value, days) {
   try {
-    document.cookie = `${name}=${encodeURIComponent(value)};max-age=${days * 86400};path=/;SameSite=Strict;Secure`;
+    const safeName = sanitizeCookieName(name);
+    if (!safeName) return;
+    document.cookie = `${safeName}=${encodeURIComponent(value)};max-age=${days * 86400};path=/;SameSite=Strict;Secure`;
   } catch { /* consent may block */ }
 }
 
 function deleteCookie(name) {
   try {
-    document.cookie = `${name}=;max-age=0;path=/`;
+    const safeName = sanitizeCookieName(name);
+    if (!safeName) return;
+    document.cookie = `${safeName}=;max-age=0;path=/`;
   } catch { /* consent may block */ }
 }
 
