@@ -28,18 +28,26 @@
         },
         {
           "component": "richtext",
-          "name": "abbreviated",
+          "name": "collapsedContent",
           "value": "",
-          "label": "Abbreviated ISI",
-          "description": "Short Important Safety Information shown in the collapsed bar.",
+          "label": "Collapsed Content",
+          "description": "Text shown in the bar when collapsed. For the 'split' variant, this is the left column.",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "fullContent",
+          "name": "collapsedContentCol2",
           "value": "",
-          "label": "Full ISI Content",
-          "description": "Complete Important Safety Information shown when expanded. Only used with 'expandable' variant.",
+          "label": "Collapsed Content – Column 2 (Split only)",
+          "description": "Right column content in collapsed state. Only used with the 'split' variant.",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "expandedContent",
+          "value": "",
+          "label": "Expanded Full ISI Content",
+          "description": "Complete Important Safety Information displayed when the bar is expanded.",
           "valueType": "string"
         },
         {
@@ -53,8 +61,9 @@
           "name": "classes_variant",
           "label": "Variant",
           "options": [
-            { "name": "Default (static bar)", "value": "" },
-            { "name": "Expandable (toggle full ISI)", "value": "expandable" }
+            { "name": "Default – single column, right aligned", "value": "" },
+            { "name": "Center – single column, collapsed center aligned", "value": "center" },
+            { "name": "Split – two-column collapsed, single-column expanded", "value": "split" }
           ]
         },
         {

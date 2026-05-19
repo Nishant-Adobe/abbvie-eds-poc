@@ -178,7 +178,26 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Breadcrumb",
-                  "model": "breadcrumb"
+                  "model": "breadcrumb",
+                  "filter": "breadcrumb",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Breadcrumb Item",
+          "id": "breadcrumb-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Breadcrumb Item",
+                  "model": "breadcrumb-item",
+                  "label": "Link Label",
+                  "href": "/"
                 }
               }
             }
@@ -300,6 +319,37 @@
           }
         },
         {
+          "title": "Cards Grid",
+          "id": "cards-grid",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Cards Grid",
+                  "model": "cards-grid",
+                  "filter": "cards-grid"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Grid Card",
+          "id": "grid-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Grid Card",
+                  "model": "grid-card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Carousel",
           "id": "carousel",
           "plugins": {
@@ -335,10 +385,26 @@
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/columns/v1/columns",
+                "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "columns": "2",
-                  "rows": "1"
+                  "name": "Columns",
+                  "model": "columns",
+                  "filter": "columns"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Column",
+          "id": "column",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Column",
+                  "model": "column"
                 }
               }
             }
@@ -354,54 +420,17 @@
                 "template": {
                   "name": "Cta",
                   "model": "cta",
-                  "link": "/link",
-                  "linkText": "Button",
-                  "linkAriaLabel": "",
+                  "label": "Button",
+                  "screenReaderText": "",
+                  "href": "/link",
                   "ctaTarget": "_self",
-                  "iconVariation": "none",
-                  "iconFont": "",
-                  "iconImage": "",
-                  "ariaHidden": false,
-                  "iconPosition": "after",
-                  "classes": "default-cta",
+                  "icon": "",
+                  "modalId": "",
+                  "anchorId": "",
+                  "analyticsInteractionId": "",
+                  "classes": "abbv-button-primary",
                   "language": "lang:none",
                   "blockId": "id:"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Custom Image",
-          "id": "custom-image",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Custom Image",
-                  "model": "custom-image",
-                  "presetType": "",
-                  "imagePreset": "",
-                  "rendition": "",
-                  "imageModifiers": "",
-                  "imageAlt": "",
-                  "getAltFromDAM": false,
-                  "imageIsDecorative": false,
-                  "caption": "",
-                  "getCaptionFromDAM": false,
-                  "displayCaptionBelowImage": false,
-                  "enableLink": false,
-                  "target": "",
-                  "clickBehavior": "_self",
-                  "modalPanelId": "",
-                  "enableWarnOnLeave": false,
-                  "warnOnLeavePath": "",
-                  "linkAriaLabel": "",
-                  "analyticsInteractionId": "",
-                  "blockId": "id:",
-                  "classes_commonCustomClass": "",
-                  "language": "lang:none"
                 }
               }
             }
@@ -589,7 +618,8 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Modal",
-                  "model": "modal"
+                  "model": "modal",
+                  "classes": ""
                 }
               }
             }
@@ -945,6 +975,7 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Tabs",
+                  "model": "tabs",
                   "filter": "tabs"
                 }
               }
@@ -952,17 +983,15 @@
           }
         },
         {
-          "title": "Tabs Item",
-          "id": "tabs-item",
+          "title": "Tab Item",
+          "id": "tab-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Tab",
-                  "model": "tabs-item",
-                  "title": "Tab Name",
-                  "content_headingType": "h3"
+                  "name": "Tab Item",
+                  "model": "tab-item"
                 }
               }
             }
@@ -1136,6 +1165,39 @@
                   "model": "anchor-nav-item",
                   "label": "Section Label",
                   "targetId": "section-id"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Section Nav",
+          "id": "section-nav",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Section Nav",
+                  "model": "section-nav",
+                  "filter": "section-nav"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Section Nav Item",
+          "id": "section-nav-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Section Nav Item",
+                  "model": "section-nav-item",
+                  "label": "Section Label",
+                  "href": "#section-id"
                 }
               }
             }
@@ -1444,17 +1506,37 @@
           }
         },
         {
-          "title": "Brand Entry",
+          "title": "Brand Explorer Item",
           "id": "brand-explorer-item",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Brand Entry",
+                  "name": "Brand Explorer Item",
                   "model": "brand-explorer-item",
                   "brandName": "Brand Name",
-                  "brandUrl": "/brand"
+                  "brandUrl": "https://example.com"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Clinical Data Panel",
+          "id": "clinical-data-panel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Clinical Data Panel",
+                  "model": "clinical-data-panel",
+                  "title": "",
+                  "chartAlt": "",
+                  "footnotes": "",
+                  "studyDesignLabel": "",
+                  "studyDesignLink": ""
                 }
               }
             }
@@ -1502,6 +1584,92 @@
                 "template": {
                   "name": "Banner Ad",
                   "model": "banner-ad",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Carousel Video Playlist",
+          "id": "carousel-video-playlist",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Carousel Video Playlist",
+                  "model": "carousel-video-playlist",
+                  "filter": "carousel-video-playlist",
+                  "classes": "",
+                  "sectionHeading": "",
+                  "sectionDescription": "",
+                  "maxVisible": 0,
+                  "accountId": "",
+                  "playlistId": "",
+                  "playerId": "",
+                  "enableCaptions": false,
+                  "anchorId": ""
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Playlist Video Item",
+          "id": "carousel-video-playlist-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Video Item",
+                  "model": "carousel-video-playlist-item",
+                  "videoId": "",
+                  "title": "",
+                  "transcriptHref": "",
+                  "transcript": "",
+                  "patientName": "",
+                  "condition": "",
+                  "quote": ""
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Image with Text",
+          "id": "image-text",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Image Text",
+                  "model": "image-text",
+                  "language": "lang:none",
+                  "blockId": "id:"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Social Share",
+          "id": "social-share",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Social Share",
+                  "model": "social-share",
+                  "classes": "",
+                  "networks": "facebook,twitter,linkedin",
+                  "link": "",
+                  "emailModalId": "",
+                  "exitModalId": "",
+                  "language": "lang:none",
                   "blockId": "id:"
                 }
               }

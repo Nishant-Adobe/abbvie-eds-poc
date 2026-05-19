@@ -1,0 +1,45 @@
+@import '../safety-bar.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* Linzess — Safety Bar Brand Overrides
+   Collapsed: white bg, purple top border + rounded corners, purple headings
+   Expanded:  white bg, purple uppercase headings, Bebas Neue display font
+*/
+
+.safety-bar {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-safety-bar);
+  border-top: 3px solid var(--color-brand-primary);
+  box-shadow: var(--shadow-safety-bar);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+}
+
+.safety-bar-abbreviated h2,
+.safety-bar-abbreviated h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+}
+
+.safety-bar-abbreviated strong,
+.safety-bar-abbreviated b {
+  color: var(--color-text-heading);
+}
+
+.safety-bar-toggle {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
+
+.safety-bar.is-expanded .safety-bar-full h2,
+.safety-bar.is-expanded .safety-bar-full h3 {
+  color: var(--color-text-heading);
+  font-family: var(--heading-font-family);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+}
+
+.safety-bar.is-expanded .safety-bar-full strong,
+.safety-bar.is-expanded .safety-bar-full b {
+  color: var(--color-text-heading);
+}

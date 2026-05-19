@@ -458,3 +458,4 @@ This runs concurrently:
 | `npm run lint:fix` | Auto-fix linting issues |
 
 > **CSS build rule:** All source CSS files are prefixed with `_` (e.g. `_accordion.css`). The build pipeline reads these, resolves `@import` statements, and writes the compiled output as the same filename without the prefix (e.g. `accordion.css`). Always edit `_*.css`, never `*.css` (except the base block CSS in the block root).
+

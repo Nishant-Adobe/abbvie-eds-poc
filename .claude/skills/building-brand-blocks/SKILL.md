@@ -14,7 +14,6 @@ This skill guides you through creating new AEM Edge Delivery blocks or modifying
 - **building-themes**: Use when brand or theme overrides need to be created alongside a block
 - **building-brand**: Use when a new brand needs to be scaffolded before brand block overrides can be added
 - **testing-blocks**: Automatically invoked after implementation for comprehensive testing
-- **token-naming**: Mandatory naming formula for all CSS custom properties — reference before adding any new tokens to block CSS
 
 ## When to Use This Skill
 
@@ -368,6 +367,20 @@ export default async function getBlockConfigs() {
 
 ### 6. Add CSS Styling
 
+> **STRICT RULE — No hardcoded values, ever.**
+> All CSS property values MUST reference a design token via `var(--token-name)`. Raw values (`#fff`, `1rem`, `600px`, `bold`, `16px`, etc.) are **never** allowed as property values. The only permitted exception is `0` (the unitless zero).
+>
+> **If a token does not exist yet, define it first at the correct level of the multi-brand hierarchy — then reference it:**
+>
+> | Scope | Define the token in |
+> |---|---|
+> | All brands and themes | `styles/tokens.css` — global base scale |
+> | One brand, all themes | `styles/{brand}/_tokens.css` |
+> | All brands, one theme | `styles/themes/{theme}/_tokens.css` |
+> | One brand + one theme | `styles/{brand}/themes/{theme}/_tokens.css` |
+>
+> Token values must themselves reference another token via `var(--...)` — never a raw value. Read the existing token files at execution time to find the right reference. Follow W3C DTCG naming: `--{type}-{semantic}-{variant}` (e.g. `--color-brand-surface`, `--spacing-section-gap`).
+
 #### Base styles (`blocks/{block-name}/{block-name}.css`)
 
 All base styles live here. All selectors scoped to `.{block-name}`:
@@ -376,19 +389,22 @@ All base styles live here. All selectors scoped to `.{block-name}`:
 /* blocks/{block-name}/{block-name}.css */
 .{block-name} {
   /* Block-scoped tokens — follow W3C DTCG: --{block-name}-{type}-{semantic}-{variant} */
-  --{block-name}-color-background: #fff;
-  --{block-name}-color-text-primary: #222;
+  /* Always reference global design tokens, never raw values */
+  --{block-name}-color-background: var(--color-background);
+  --{block-name}-color-text-primary: var(--color-text-primary);
 
   background-color: var(--{block-name}-color-background);
 }
 
 .{block-name} .item {
-  padding: 1rem;
+  /* Use spacing tokens — never hardcode px/rem values */
+  padding: var(--spacing-m);
 }
 
-@media (width >= 600px) {
+/* Use the project's named breakpoint tokens (CSS env() or documented breakpoint variable) */
+@media (width >= var(--breakpoint-m, 600px)) {
   .{block-name} .item {
-    padding: 2rem;
+    padding: var(--spacing-l);
   }
 }
 ```
@@ -417,9 +433,9 @@ Define block-scoped CSS custom properties using the pattern `--{block-name}-{typ
 /* blocks/{block-name}/themes/{theme}/_{block-name}.css */
 @import '../../{block-name}.css';
 
-/* Theme-specific overrides */
+/* Theme-specific overrides — re-declare block tokens using theme-level global tokens */
 .{block-name} {
-  --{block-name}-color-bg: #f5f5f5;
+  --{block-name}-color-bg: var(--color-theme-surface);
 }
 ```
 
@@ -490,6 +506,45 @@ Determine which approach the project uses:
 1. **Sidekick Library** — check for `/tools/sidekick/library.html`
 2. **Document Authoring (DA) Library** — check for DA library config
 3. **Docs pages** — check for pages under `/drafts` or `/docs`
+
+## Definition of Done
+
+Before marking the block complete, every item below must be checked. Do not hand off or merge until all boxes are ticked.
+
+### Structure & Files
+- [ ] Block name is generic — no brand or theme name embedded
+- [ ] `{block-name}.js`, `{block-name}.css`, and `block-config.js` exist at the block root
+- [ ] A `{brand}/` folder exists for **every** brand in `brand-config.json`
+- [ ] Each brand folder has `_{block-name}.css`, compiled `{block-name}.css`, and `block-config.js`
+- [ ] A `themes/{theme}/` subfolder exists inside each brand folder for **every** theme in `brand-config.json`
+- [ ] Every `_*.css` partial starts with the correct `@import` (right relative depth)
+
+### JavaScript
+- [ ] `decorateBlock` is a named export from `{block-name}.js` — all DOM logic lives here
+- [ ] The default `decorate(block)` export does nothing but call `renderBlock(block)`
+- [ ] Brand `block-config.js` only declares keys that differ from the root config
+
+### CSS & Tokens
+- [ ] Zero hardcoded values anywhere — every property value is `var(--token-name)`
+- [ ] Block-scoped tokens follow `--{block-name}-{type}-{semantic}[-{variant}]` naming
+- [ ] Block-scoped token definitions reference global tokens via `var(--...)`, not raw values
+- [ ] Missing tokens were defined at the correct hierarchy level before use (see Strict Rule above)
+- [ ] Brand partials re-declare block tokens using brand-level global tokens
+- [ ] Theme partials re-declare block tokens using theme-level global tokens
+- [ ] `npm run scaffold:build` ran without errors — compiled `.css` files are up to date
+
+### Testing
+- [ ] Block renders correctly at the test content URL in a browser
+- [ ] Every registered brand variant tested visually
+- [ ] Every registered theme variant tested visually
+- [ ] No console errors or warnings
+- [ ] `npm run lint` passes (zero errors)
+
+### Documentation
+- [ ] Author-facing docs updated (Sidekick Library, DA Library, or docs page)
+- [ ] `README.md` added in block folder if the block has complex variants or config
+
+---
 
 ## Quick Reference: npm Commands
 

@@ -1,5 +1,9 @@
 /* Breadcrumb Block — standalone section-level block */
 
+.breadcrumb .breadcrumb-hidden {
+  display: none;
+}
+
 .breadcrumb-wrapper {
   padding: var(--spacing-00);
 }
@@ -9,6 +13,7 @@
   flex-direction: column;
   align-items: flex-start;
   margin-bottom: var(--spacing-24);
+  min-height: var(--spacing-32);
 }
 
 /* =====================================================
@@ -27,7 +32,6 @@
   font-size: var(--font-size-12);
   font-weight: var(--font-weight-700);
   color: var(--text-color);
-  text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wide-06);
   cursor: pointer;
   line-height: var(--line-height-20);
@@ -92,7 +96,6 @@
   font-weight: var(--font-weight-700);
   letter-spacing: var(--letter-spacing-wide-06);
   line-height: var(--line-height-20);
-  text-transform: uppercase;
   color: var(--text-color);
   display: flex;
   align-items: center;
@@ -116,10 +119,16 @@
   color: var(--link-hover-color);
 }
 
-/* Current page — muted gray, no link */
+/* Current page — muted gray */
 
 .breadcrumb-nav ol li[aria-current] {
   color: var(--color-gray-dark);
+  font-weight: var(--font-weight-700);
+}
+
+/* Active link (manual mode — peer-page navigation) */
+
+.breadcrumb-nav li a.flex-active {
   font-weight: var(--font-weight-700);
 }
 

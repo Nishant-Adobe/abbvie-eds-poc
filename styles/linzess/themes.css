@@ -1,0 +1,186 @@
+@import 'tokens.css';
+@import 'fonts.css';
+
+/* ============================================================
+   LINZESS DTC — Theme Overrides
+   Primary: Purple #422E83 | Accent: Orange #FAA633
+   Display Font: Bebas Neue (headings)
+   Body Font: Lato
+   Legal Font: BasicCommercialLT
+   Rounded corners: 16px standard, 8px small
+   ============================================================ */
+
+/* ---- Global Typography ---- */
+body {
+  font-family: var(--body-font-family);
+  color: var(--text-color);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+h1, h2 {
+  font-family: var(--heading-font-family);
+  color: var(--color-text-heading);
+  font-weight: var(--font-weight-body);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-size: var(--font-size-h1-hero);
+  line-height: var(--line-height-h1-hero);
+}
+
+h2 {
+  font-size: var(--font-size-h2-hero);
+  line-height: var(--line-height-h2-hero);
+}
+
+h3, h4, h5, h6 {
+  font-family: var(--body-font-family);
+  color: var(--color-text-heading);
+  font-weight: var(--font-weight-bold);
+}
+
+h3 { font-size: var(--font-size-h3); }
+
+/* ---- Links ---- */
+a { color: var(--link-color); }
+a:hover { color: var(--color-brand-primary-light); }
+
+/* ---- Buttons ---- */
+.button-container a,
+a.button.primary {
+  color: var(--button-primary-color);
+  background-color: var(--button-primary-bg);
+  border: none;
+  border-radius: var(--border-radius-button-primary);
+  padding: var(--button-primary-padding);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  text-decoration: none;
+  display: inline-block;
+  transition: var(--transition-button);
+}
+
+.button-container a:hover,
+a.button.primary:hover {
+  background-color: #e8941e;
+}
+
+a.button.secondary {
+  color: var(--color-brand-primary);
+  background-color: transparent;
+  border: 2px solid var(--color-brand-primary);
+  border-radius: var(--border-radius-button-primary);
+  padding: var(--button-primary-padding);
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-extra-bold);
+  text-decoration: none;
+}
+
+a.button.secondary:hover {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+}
+
+/* ---- Header ---- */
+header {
+  background-color: var(--background-color);
+}
+
+header nav a {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-nav);
+  color: var(--text-color);
+}
+
+/* ---- Footer ---- */
+footer {
+  background-color: var(--color-background-footer);
+  color: var(--color-text-on-dark);
+}
+
+footer a {
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-footer);
+}
+
+/* ---- Hero Section ---- */
+.section.hero-container {
+  position: relative;
+}
+
+.section.hero-container h1 {
+  color: var(--color-text-on-dark);
+  font-family: var(--heading-font-family);
+  text-transform: uppercase;
+}
+
+/* ---- Safety Bar ---- */
+.isi-container {
+  background-color: var(--background-color);
+  border-radius: var(--border-radius-safety-bar);
+  box-shadow: var(--shadow-safety-bar);
+}
+
+/* ---- ISI / Legal Text ---- */
+.isi-container p,
+.legal-text {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+}
+
+.isi-container strong {
+  font-family: var(--font-family-legal-bold);
+}
+
+/* ---- Accordion (FAQ) ---- */
+.accordion {
+  border-radius: var(--linz-rounded-corner-sm);
+}
+
+.accordion summary {
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ---- Cards ---- */
+.cards .cards-card-body {
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+}
+
+/* ---- Video Player ---- */
+.embed.embed-brightcove {
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+}
+
+/* ---- Tabs ---- */
+.tabs .tabs-tab {
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-color);
+  border-bottom: 3px solid transparent;
+}
+
+.tabs .tabs-tab.active,
+.tabs .tabs-tab[aria-selected="true"] {
+  color: var(--color-brand-primary);
+  border-bottom-color: var(--color-brand-primary);
+}
+
+/* ---- Section Backgrounds ---- */
+.section.off-white-bg { background-color: var(--color-background-light); }
+.section.purple-bg { background-color: var(--color-brand-primary); color: var(--color-text-on-dark); }
+.section.purple-bg h1, .section.purple-bg h2, .section.purple-bg h3 { color: var(--color-text-on-dark); }
+.section.light-purple-bg { background-color: var(--linz-light-purple); }
+
+/* ---- Gradient Overlays ---- */
+.section.hero-container::after {
+  background: var(--gradient-hero-overlay);
+}
