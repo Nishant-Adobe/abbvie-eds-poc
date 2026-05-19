@@ -250,6 +250,7 @@ export default function decorate(block) {
       ctaBtn.textContent = `${ctaLabel} `;
       const icon = document.createElement('span');
       icon.className = 'info-tree-cta-icon';
+      icon.setAttribute('aria-hidden', 'true');
       icon.textContent = '>';
       ctaBtn.append(icon);
       result.append(ctaBtn);
