@@ -18,16 +18,17 @@ export default async function decorate(block) {
     }
   }
 
-  // Find content — all non-image text content (exclude image cells and DAM link cells)
-  let contentHTML = '';
+  // Find content — clone non-image cells (avoid innerHTML re-parse)
+  const contentFragment = document.createDocumentFragment();
   rows.forEach((row) => {
     const cells = [...row.children];
     cells.forEach((cell) => {
       const hasPicture = cell.querySelector('picture');
       const hasDAMLink = cell.querySelector('a[href*="/content/dam"], a[href*=".jpg"], a[href*=".png"], a[href*=".webp"], a[href*=".svg"]');
-      if (!hasPicture && !hasDAMLink) {
-        const text = cell.innerHTML.trim();
-        if (text) contentHTML += text;
+      if (!hasPicture && !hasDAMLink && cell.textContent.trim()) {
+        [...cell.childNodes].forEach((node) => {
+          contentFragment.append(node.cloneNode(true));
+        });
       }
     });
   });
@@ -37,8 +38,15 @@ export default async function decorate(block) {
   if (block.classList.contains('slow')) speed = 'slow';
   else if (block.classList.contains('fast')) speed = 'fast';
 
+  // Read anchorId from authored content
+  const anchorId = block.querySelector('[data-anchor-id]')?.dataset.anchorId
+    || block.closest('[id]')?.id || '';
+
   // Clear block
   block.textContent = '';
+
+  // Set anchor ID if authored
+  if (anchorId) block.id = anchorId;
 
   // Build parallax structure
   const wrapper = document.createElement('div');
@@ -49,16 +57,16 @@ export default async function decorate(block) {
     wrapper.setAttribute('aria-label', altText);
   }
 
-  // Set background image
+  // Set background image via CSS custom property (no inline style)
   if (imgSrc) {
-    wrapper.style.backgroundImage = `url('${imgSrc}')`;
+    wrapper.style.setProperty('--parallax-bg-image', `url('${imgSrc}')`);
   }
 
-  // Content overlay
-  if (contentHTML) {
+  // Content overlay — append cloned DOM nodes (no innerHTML)
+  if (contentFragment.childNodes.length) {
     const overlay = document.createElement('div');
     overlay.className = 'parallax-content';
-    overlay.innerHTML = contentHTML;
+    overlay.append(contentFragment);
     wrapper.append(overlay);
   }
 

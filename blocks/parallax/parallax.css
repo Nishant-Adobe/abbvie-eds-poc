@@ -11,6 +11,7 @@
 .parallax .parallax-wrapper {
   position: relative;
   min-height: var(--parallax-min-height, 300px);
+  background-image: var(--parallax-bg-image);
   background-size: cover;
   background-position: var(--parallax-bg-position, center center);
   background-repeat: no-repeat;
@@ -26,7 +27,7 @@
   z-index: 1;
   padding: var(--spacing-32, 32px) var(--spacing-24, 24px);
   max-width: 100%;
-  color: var(--parallax-text-color, #fff);
+  color: var(--parallax-text-color, var(--color-text-on-dark, #fff));
   text-shadow: var(--parallax-text-shadow, 0 1px 4px rgb(0 0 0 / 40%));
 }
 
@@ -35,7 +36,7 @@
 .parallax .parallax-content h3 {
   font-family: var(--heading-font-family, sans-serif);
   font-weight: var(--font-weight-bold, 700);
-  color: var(--parallax-text-color, #fff);
+  color: var(--parallax-text-color, var(--color-text-on-dark, #fff));
   margin: 0 0 var(--spacing-16, 16px);
 }
 
@@ -54,15 +55,6 @@
   .parallax .parallax-content {
     padding: var(--spacing-48, 48px) var(--spacing-64, 64px);
     max-width: var(--parallax-content-max-width, 50%);
-  }
-
-  /* Speed variants */
-  .parallax .parallax-wrapper[data-speed="slow"] {
-    background-attachment: fixed;
-  }
-
-  .parallax .parallax-wrapper[data-speed="fast"] {
-    background-attachment: fixed;
   }
 }
 
