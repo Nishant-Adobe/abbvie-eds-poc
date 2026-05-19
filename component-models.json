@@ -3954,11 +3954,11 @@
             "value": ""
           },
           {
-            "name": "Featured \u2014 patient experiences",
+            "name": "Featured — patient experiences",
             "value": "featured"
           },
           {
-            "name": "Bottom \u2014 playlist below",
+            "name": "Bottom — playlist below",
             "value": "bottom"
           },
           {
@@ -4330,7 +4330,7 @@
         "valueType": "string",
         "name": "chartTablet",
         "label": "Chart Image (Tablet)",
-        "description": "Chart image for tablet (601-984px). Optional \u2014 falls back to desktop.",
+        "description": "Chart image for tablet (601-984px). Optional — falls back to desktop.",
         "multi": false
       },
       {
@@ -4338,7 +4338,7 @@
         "valueType": "string",
         "name": "chartMobile",
         "label": "Chart Image (Mobile)",
-        "description": "Chart image for mobile (<=600px). Optional \u2014 falls back to desktop.",
+        "description": "Chart image for mobile (<=600px). Optional — falls back to desktop.",
         "multi": false
       },
       {
@@ -4391,19 +4391,19 @@
         "value": "",
         "options": [
           {
-            "name": "Default \u2014 Equal width columns",
+            "name": "Default — Equal width columns",
             "value": ""
           },
           {
-            "name": "Offset \u2014 Narrow left (1/3) + wide right (2/3)",
+            "name": "Offset — Narrow left (1/3) + wide right (2/3)",
             "value": "columns-offset"
           },
           {
-            "name": "Flush \u2014 No gap between columns",
+            "name": "Flush — No gap between columns",
             "value": "columns-flush"
           },
           {
-            "name": "Reverse \u2014 Swap column order on mobile",
+            "name": "Reverse — Swap column order on mobile",
             "value": "columns-reverse"
           }
         ]
@@ -6948,7 +6948,7 @@
         "component": "reference",
         "valueType": "string",
         "name": "mobileImage",
-        "label": "Mobile Image (optional \u2014 different crop for < 744px)",
+        "label": "Mobile Image (optional — different crop for < 744px)",
         "multi": false
       },
       {
@@ -6969,7 +6969,7 @@
         "component": "richtext",
         "name": "indication",
         "value": "",
-        "label": "Indication Text (optional \u2014 renders as dark box at top of hero, e.g. ISI header)",
+        "label": "Indication Text (optional — renders as dark box at top of hero, e.g. ISI header)",
         "valueType": "string"
       },
       {
@@ -6983,21 +6983,21 @@
         "component": "richtext",
         "name": "layers",
         "value": "",
-        "label": "Layers (Multilayer variant \u2014 one image ref per layer; add data-buddy-state via custom class)",
+        "label": "Layers (Multilayer variant — one image ref per layer; add data-buddy-state via custom class)",
         "valueType": "string"
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "video",
-        "label": "Background Video (Video variant \u2014 select a DAM video asset, e.g. .mp4)",
+        "label": "Background Video (Video variant — select a DAM video asset, e.g. .mp4)",
         "multi": false
       },
       {
         "component": "text",
         "valueType": "string",
         "name": "imageCaption",
-        "label": "Image Caption (e.g. Actor portrayal.) \u2014 appears bottom-right over the image",
+        "label": "Image Caption (e.g. Actor portrayal.) — appears bottom-right over the image",
         "value": ""
       },
       {
@@ -7902,17 +7902,130 @@
     "id": "info-tree",
     "fields": [
       {
-        "component": "tab",
-        "label": "Overview",
-        "name": "overview"
+        "component": "text",
+        "valueType": "string",
+        "name": "treeName",
+        "value": "",
+        "label": "Tree Name",
+        "description": "Internal identifier for this decision-tree. Not rendered — used to link CTA targets."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "heading",
+        "value": "",
+        "label": "Heading"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "subheading",
+        "value": "",
+        "label": "Subheading"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "disclaimer",
+        "value": "",
+        "label": "Disclaimer Text",
+        "description": "Small-print disclaimer rendered below the subheading."
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout",
+        "options": [
+          {
+            "name": "Default (centred cards)",
+            "value": ""
+          },
+          {
+            "name": "Full-width",
+            "value": "full-width"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "id",
+        "label": "Id",
+        "value": "",
+        "description": "Provide an ID to enable deep linking to this component instance and for anchor navigation."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "customClass",
+        "label": "Custom Class",
+        "value": "",
+        "description": "Provide a CSS class to apply custom styling to this component."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "analyticsId",
+        "value": "",
+        "label": "Analytics ID",
+        "description": "Optional ID used for analytics tracking of this info-tree block."
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "hideOnMobile",
+        "value": false,
+        "label": "Hide on Mobile"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "hideOnDesktop",
+        "value": false,
+        "label": "Hide on Desktop"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ariaLabel",
+        "value": "",
+        "label": "Accessibility Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "role",
+        "value": "",
+        "label": "ARIA Role"
+      }
+    ]
+  },
+  {
+    "id": "info-tree-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question",
+        "value": "",
+        "label": "Question",
+        "description": "The question or prompt shown on the card face."
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "answer",
+        "value": "",
+        "label": "Answer",
+        "description": "Detail text revealed when the card is selected."
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Side Image",
-        "multi": false,
-        "description": "Optional image displayed beside the question (e.g. Quick Poll badge)."
+        "label": "Card Image",
+        "multi": false
       },
       {
         "component": "text",
@@ -7924,153 +8037,18 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "treeName",
-        "value": "",
-        "label": "Tree Name",
-        "description": "Internal name to identify this info tree (e.g. ra-tnf-poll, ad-satisfaction-poll)."
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "question",
-        "value": "",
-        "label": "Question",
-        "description": "The question or prompt shown to the visitor."
-      },
-      {
-        "component": "richtext",
-        "valueType": "string",
-        "name": "disclaimer",
-        "value": "",
-        "label": "Disclaimer",
-        "description": "Optional footnote or trademark text shown below the answer buttons."
-      },
-      {
-        "component": "tab",
-        "label": "Settings",
-        "name": "settings"
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "classes",
-        "label": "Layout",
-        "options": [
-          {
-            "name": "Stacked (default)",
-            "value": ""
-          },
-          {
-            "name": "Inline (side by side)",
-            "value": "inline"
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "cookieName",
-        "value": "",
-        "label": "Cookie Name",
-        "description": "Unique name for the browser cookie that persists the user's answer. No spaces or special characters."
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "showReset",
-        "value": false,
-        "label": "Show Reset Button",
-        "description": "When enabled, a reset button lets the user clear their answer and choose again."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "resetLabel",
-        "value": "Start over",
-        "label": "Reset Button Label",
-        "condition": {
-          "===": [
-            {
-              "var": "showReset"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "...": "../../models/_common-properties.json#/common-prop"
-      }
-    ]
-  },
-  {
-    "id": "info-tree-item",
-    "fields": [
-      {
-        "component": "tab",
-        "label": "Answer",
-        "name": "answer"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "answerLabel",
-        "value": "",
-        "label": "Answer Button Label",
-        "description": "Text shown on the option button."
-      },
-      {
-        "component": "richtext",
-        "name": "answerContent",
-        "value": "",
-        "label": "Answer Content",
-        "description": "Rich text content revealed when this answer option is selected.",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "itemVariant",
-        "label": "Variation",
-        "options": [
-          {
-            "name": "Without CTA",
-            "value": "without-cta"
-          },
-          {
-            "name": "With CTA",
-            "value": "with-cta"
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
         "name": "ctaLabel",
         "value": "",
-        "label": "Button Label",
-        "description": "Text for the CTA button. A > icon is appended automatically.",
-        "condition": {
-          "===": [
-            {
-              "var": "itemVariant"
-            },
-            "with-cta"
-          ]
-        }
+        "label": "CTA Label",
+        "description": "Button text for the item-level call-to-action."
       },
       {
-        "component": "aem-content",
+        "component": "text",
         "valueType": "string",
         "name": "ctaHref",
-        "label": "Button Link",
-        "condition": {
-          "===": [
-            {
-              "var": "itemVariant"
-            },
-            "with-cta"
-          ]
-        }
+        "value": "",
+        "label": "CTA Link",
+        "description": "URL the CTA navigates to."
       }
     ]
   },
@@ -8366,11 +8344,11 @@
             "value": "single-column"
           },
           {
-            "name": "Two Columns \u2013 stack on mobile",
+            "name": "Two Columns – stack on mobile",
             "value": "two-columns-stack"
           },
           {
-            "name": "Two columns \u2013 do not stack on mobile",
+            "name": "Two columns – do not stack on mobile",
             "value": "two-columns-nostack"
           }
         ],
@@ -8389,7 +8367,7 @@
         "name": "fontIcon",
         "label": "Icon",
         "value": "",
-        "description": "Icon applied to every link when Variant is Icons. Works for all link sources \u2014 the only icon option when using Child Pages.",
+        "description": "Icon applied to every link when Variant is Icons. Works for all link sources — the only icon option when using Child Pages.",
         "condition": {
           "or": [
             {
@@ -8933,11 +8911,11 @@
             "value": ""
           },
           {
-            "name": "Panel \u2014 slide-in from right",
+            "name": "Panel — slide-in from right",
             "value": "panel"
           },
           {
-            "name": "Exit \u2014 triggered on mouse leave",
+            "name": "Exit — triggered on mouse leave",
             "value": "exit"
           },
           {
@@ -8945,19 +8923,19 @@
             "value": "exit-small"
           },
           {
-            "name": "Small \u2014 narrow dialog",
+            "name": "Small — narrow dialog",
             "value": "small"
           },
           {
-            "name": "Media \u2014 wide, no padding",
+            "name": "Media — wide, no padding",
             "value": "media"
           },
           {
-            "name": "Image \u2014 lightbox",
+            "name": "Image — lightbox",
             "value": "image"
           },
           {
-            "name": "Information \u2014 accent border",
+            "name": "Information — accent border",
             "value": "information"
           },
           {
@@ -8969,7 +8947,7 @@
             "value": "once-session"
           },
           {
-            "name": "Force Open \u2014 no dismiss",
+            "name": "Force Open — no dismiss",
             "value": "force"
           }
         ]
@@ -8981,7 +8959,7 @@
         "value": "",
         "label": "Modal ID",
         "required": true,
-        "description": "Unique slug \u2014 triggers reference this via data-modal-id attribute"
+        "description": "Unique slug — triggers reference this via data-modal-id attribute"
       },
       {
         "component": "text",
@@ -9119,7 +9097,7 @@
         "component": "reference",
         "valueType": "string",
         "name": "content_indicationImg",
-        "label": "Site Indication Logo (optional \u2014 shown alongside main logo)",
+        "label": "Site Indication Logo (optional — shown alongside main logo)",
         "multi": false,
         "condition": {
           "in": [
@@ -9373,7 +9351,7 @@
       {
         "component": "richtext",
         "name": "content_utilityItems",
-        "label": "Utility Items \u2014 one row per item: [type | label | href | options]",
+        "label": "Utility Items — one row per item: [type | label | href | options]",
         "description": "Each row = one item. type: isi-jump | pdf-dropdown | hcp-modal | phone | condition-selector | locale | locate | savings",
         "condition": {
           "in": [
@@ -9430,7 +9408,7 @@
       {
         "component": "richtext",
         "name": "content_floatingIsiText",
-        "label": "Floating ISI \u2014 MLR-approved compliance text",
+        "label": "Floating ISI — MLR-approved compliance text",
         "condition": {
           "in": [
             {
@@ -11022,7 +11000,7 @@
         "component": "richtext",
         "name": "collapsedContentCol2",
         "value": "",
-        "label": "Collapsed Content \u2013 Column 2 (Split only)",
+        "label": "Collapsed Content – Column 2 (Split only)",
         "description": "Right column content in collapsed state. Only used with the 'split' variant.",
         "valueType": "string"
       },
@@ -11046,15 +11024,15 @@
         "label": "Variant",
         "options": [
           {
-            "name": "Default \u2013 single column, right aligned",
+            "name": "Default – single column, right aligned",
             "value": ""
           },
           {
-            "name": "Center \u2013 single column, collapsed center aligned",
+            "name": "Center – single column, collapsed center aligned",
             "value": "center"
           },
           {
-            "name": "Split \u2013 two-column collapsed, single-column expanded",
+            "name": "Split – two-column collapsed, single-column expanded",
             "value": "split"
           }
         ]
