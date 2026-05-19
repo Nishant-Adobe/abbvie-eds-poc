@@ -220,7 +220,7 @@ export default function decorate(block) {
   const buttonsEl = document.createElement('div');
   buttonsEl.className = 'info-tree-buttons';
   buttonsEl.setAttribute('role', 'group');
-  buttonsEl.setAttribute('aria-labelledby', `${blockId}-q`);
+  if (config.question) buttonsEl.setAttribute('aria-labelledby', `${blockId}-q`);
 
   const resultsEl = document.createElement('div');
   resultsEl.className = 'info-tree-results';
