@@ -8766,6 +8766,63 @@
     ]
   },
   {
+    "id": "dismiss",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "tab-content"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Content",
+        "description": "Content shown until the user dismisses it. A close button is added automatically.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "tab-settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout",
+        "options": [
+          { "name": "Default (inline)", "value": "" },
+          { "name": "Sticky (fixed top)", "value": "sticky" }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "cookieName",
+        "label": "Cookie Name",
+        "valueType": "string",
+        "description": "Unique key for the dismissal cookie. Defaults to the page URL path if blank."
+      },
+      {
+        "component": "text",
+        "name": "closeLabel",
+        "label": "Close Button Label",
+        "valueType": "string",
+        "description": "Accessible label for the close button (aria-label). Defaults to 'Close' if blank."
+      },
+      {
+        "component": "boolean",
+        "name": "resetOnLoad",
+        "label": "Reset on Load",
+        "valueType": "boolean",
+        "description": "When enabled, the dismissal cookie is cleared on every page load so the banner always shows."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
+  },
+  {
     "id": "dismissible",
     "fields": [
       {
