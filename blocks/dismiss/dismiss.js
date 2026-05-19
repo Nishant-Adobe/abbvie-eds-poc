@@ -16,11 +16,17 @@ function readFields(block) {
   const fields = { cookieName: '', closeLabel: '', resetOnLoad: false };
   const toRemove = [];
 
+  let contentSkipped = false;
   rows.forEach((row) => {
     const inner = row.querySelector(':scope > div');
     if (!inner) return;
-    // Richtext rows have an extra <div> wrapper inside the cell; text/boolean rows don't
-    if (inner.querySelector(':scope > div')) return;
+    // UE annotates richtext with data-aue-type="richtext"; EDS delivery renders it as a direct <p>
+    const isContent = inner.querySelector('[data-aue-type="richtext"]')
+      || inner.querySelector(':scope > p');
+    if (!contentSkipped && isContent) {
+      contentSkipped = true;
+      return;
+    }
     const text = inner.textContent.trim();
     if (!text) return;
     toRemove.push(row);
