@@ -53,7 +53,8 @@ export default function decorate(block) {
   // Hoist only this wrapper before <main> so its containing block is <body> (full page height).
   // Skipped in UE editor (data-aue-resource present) to preserve editor instrumentation.
   if (block.classList.contains('sticky') && !block.dataset.aueResource) {
-    const main = block.closest('body')?.querySelector('main');
+    // Intentional out-of-block query: hoisting needs <main> as an anchor point.
+    const main = document.querySelector('main');
     if (main) main.before(wrapper);
   }
 
@@ -74,6 +75,7 @@ export default function decorate(block) {
   closeBtn.addEventListener('click', () => {
     setCookie(key);
     block.classList.add('dismiss-is-closing');
-    setTimeout(() => wrapper.remove(), 300);
+    const duration = parseFloat(getComputedStyle(block).getPropertyValue('--transition-duration-medium') || '0.3') * 1000;
+    setTimeout(() => wrapper.remove(), duration);
   });
 }
