@@ -442,12 +442,14 @@ function buildDefaultVariant(config, section, status, results, flags) {
     results.innerHTML = '';
 
     if (!config.api) {
-      if (flags.disclaimerModal && config.disclaimer) {
-        const disclaimerEl = section.closest('.formulary-lookup')
-          .querySelector('.formulary-lookup-disclaimer-overlay');
-        if (disclaimerEl && disclaimerEl.open) disclaimerEl.open();
+      const disclaimerEl = section.closest('.formulary-lookup')
+        ?.querySelector('.formulary-lookup-disclaimer-overlay');
+      if (disclaimerEl && disclaimerEl.open) {
+        disclaimerEl.open();
+      } else if (flags.disclaimerModal && config.disclaimer) {
+        showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
       } else {
-        showError(config.error || 'Lookup not configured.', flags, section);
+        showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
       }
       return;
     }
