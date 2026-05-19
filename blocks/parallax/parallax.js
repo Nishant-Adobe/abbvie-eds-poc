@@ -16,9 +16,9 @@ export default async function decorate(block) {
   const content = contentRow?.innerHTML || '';
 
   // Get speed variant from block classes
-  const speed = block.classList.contains('slow') ? 'slow'
-    : block.classList.contains('fast') ? 'fast'
-      : 'medium';
+  let speed = 'medium';
+  if (block.classList.contains('slow')) speed = 'slow';
+  else if (block.classList.contains('fast')) speed = 'fast';
 
   // Clear block
   block.textContent = '';
