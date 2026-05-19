@@ -294,20 +294,25 @@ function createErrorModal(msg) {
   document.body.append(overlay);
   activeErrorOverlay = overlay;
 
+  function keydownHandler(e) {
+    if (e.key === 'Escape') {
+      overlay.remove();
+      activeErrorOverlay = null;
+      document.removeEventListener('keydown', keydownHandler);
+    }
+  }
+
   function close() {
     overlay.remove();
     activeErrorOverlay = null;
+    document.removeEventListener('keydown', keydownHandler);
   }
+
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) close();
   });
-  document.addEventListener('keydown', function handler(e) {
-    if (e.key === 'Escape') {
-      close();
-      document.removeEventListener('keydown', handler);
-    }
-  });
+  document.addEventListener('keydown', keydownHandler);
 
   closeBtn.focus();
   return overlay;
@@ -481,7 +486,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
       if (!disclaimerShown && flags.disclaimerModal && config.disclaimer) {
         disclaimerShown = true;
         const disclaimerEl = section.closest('.formulary-lookup')
-          .querySelector('.formulary-lookup-disclaimer-overlay');
+          ?.querySelector('.formulary-lookup-disclaimer-overlay');
         if (disclaimerEl && typeof disclaimerEl.open === 'function') disclaimerEl.open();
       }
     } catch {
