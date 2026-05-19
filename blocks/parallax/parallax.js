@@ -26,7 +26,7 @@ export default async function decorate(block) {
   let anchorId = '';
   const contentFragment = document.createDocumentFragment();
 
-  rows.forEach((row, rowIdx) => {
+  rows.forEach((row) => {
     const cells = [...row.children];
     cells.forEach((cell) => {
       const picture = cell.querySelector('picture');
