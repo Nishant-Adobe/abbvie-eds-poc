@@ -1,0 +1,43 @@
+@import '../dismiss.css';
+@import '../../../styles/rinvoq/tokens.css';
+
+/* Rinvoq — Dismiss Brand Overrides
+   White bg, Graphik Bold, 13px→16px, circle-X close button
+*/
+
+.dismiss {
+  --dismiss-color-bg: var(--background-color);
+  --dismiss-color-text: var(--color-text-heading);
+  --dismiss-close-size: var(--spacing-20);
+  --dismiss-close-border-radius: 50%;
+
+  background-color: var(--dismiss-color-bg);
+  color: var(--dismiss-color-text);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-13);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-16);
+  padding: var(--spacing-12) var(--spacing-40) var(--spacing-12) var(--spacing-24);
+}
+
+@media (width >= 1024px) {
+  .dismiss {
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-20);
+  }
+}
+
+.dismiss-close {
+  border: var(--border-width-thin) solid var(--dismiss-color-text);
+  border-radius: var(--dismiss-close-border-radius);
+  color: var(--dismiss-color-text);
+  height: var(--dismiss-close-size);
+  width: var(--dismiss-close-size);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dismiss-close::before,
+.dismiss-close::after {
+  width: var(--spacing-10);
+}
