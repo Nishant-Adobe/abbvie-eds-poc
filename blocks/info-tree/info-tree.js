@@ -197,7 +197,6 @@ export default function decorate(block) {
 
   const contentEl = document.createElement('div');
   contentEl.className = 'info-tree-content';
-  contentEl.style.minWidth = '0';
 
   if (config.question) {
     const questionEl = document.createElement('div');
