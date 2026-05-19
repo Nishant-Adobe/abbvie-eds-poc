@@ -5,11 +5,11 @@
   --formulary-text-align: center;
 
   /* Heading */
-  --formulary-heading-font-size: 32px;
+  --formulary-heading-font-size: 36px;
   --formulary-heading-font-weight: 400;
   --formulary-heading-color: var(--color-black, #000);
   --formulary-heading-margin-bottom: 32px;
-  --formulary-heading-line-height: 1.3;
+  --formulary-heading-line-height: 1.25;
 
   /* Label */
   --formulary-label-font-size: 16px;
@@ -65,13 +65,14 @@
   margin-inline: auto;
 }
 
-/* Label — left-aligned within form */
+/* Label — left-aligned, bold, centered within form */
 .formulary-lookup .formulary-lookup-label {
-  align-self: flex-start;
+  align-self: center;
   max-width: 560px;
   width: 100%;
   margin-inline: auto;
   font-family: var(--body-font-family);
+  text-align: left;
 }
 
 /* Select — full width, block display, custom chevron */
@@ -86,6 +87,11 @@
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 20px;
+  color: #666;
+}
+
+.formulary-lookup .formulary-lookup-select option:not([value=""]) {
+  color: var(--color-black, #000);
 }
 
 /* Submit — full width matching select */
