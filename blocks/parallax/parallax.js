@@ -3,18 +3,29 @@ import { renderBlock } from '../../scripts/multi-theme.js';
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Find image from any row/cell
+  // Find image — could be a <picture> element or a DAM reference <a> link
   const picture = block.querySelector('picture');
   const img = picture?.querySelector('img');
-  const altText = img?.alt || '';
-  const imgSrc = img?.src || '';
+  let imgSrc = img?.src || '';
+  let altText = img?.alt || '';
 
-  // Find content — all non-image text content
+  // If no picture, check for a DAM reference link
+  if (!imgSrc) {
+    const link = block.querySelector('a[href*="/content/dam"], a[href*=".jpg"], a[href*=".png"], a[href*=".webp"], a[href*=".svg"]');
+    if (link) {
+      imgSrc = link.href;
+      altText = link.textContent.trim() || altText;
+    }
+  }
+
+  // Find content — all non-image text content (exclude image cells and DAM link cells)
   let contentHTML = '';
   rows.forEach((row) => {
     const cells = [...row.children];
     cells.forEach((cell) => {
-      if (!cell.querySelector('picture')) {
+      const hasPicture = cell.querySelector('picture');
+      const hasDAMLink = cell.querySelector('a[href*="/content/dam"], a[href*=".jpg"], a[href*=".png"], a[href*=".webp"], a[href*=".svg"]');
+      if (!hasPicture && !hasDAMLink) {
         const text = cell.innerHTML.trim();
         if (text) contentHTML += text;
       }
