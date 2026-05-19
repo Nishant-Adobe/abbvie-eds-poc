@@ -222,8 +222,7 @@ function showMessage(status, msg, isError = false) {
 function createErrorTooltip(msg, container) {
   const existing = container.querySelector('.formulary-lookup-error-tooltip');
   if (existing) {
-    const oldHandler = existing.escHandler;
-    if (oldHandler) document.removeEventListener('keydown', oldHandler);
+    if (existing.abortController) existing.abortController.abort();
     existing.remove();
   }
 
@@ -236,16 +235,12 @@ function createErrorTooltip(msg, container) {
   text.className = 'formulary-lookup-error-tooltip-text';
   text.textContent = msg;
 
-  function escHandler(e) {
-    if (e.key === 'Escape' && tooltip.parentNode) {
-      tooltip.remove();
-      document.removeEventListener('keydown', escHandler);
-    }
-  }
+  const controller = new AbortController();
+  tooltip.abortController = controller;
 
   function dismiss() {
     tooltip.remove();
-    document.removeEventListener('keydown', escHandler);
+    controller.abort();
   }
 
   const closeBtn = document.createElement('button');
@@ -256,9 +251,11 @@ function createErrorTooltip(msg, container) {
   closeBtn.addEventListener('click', dismiss);
 
   tooltip.append(text, closeBtn);
-  tooltip.escHandler = escHandler;
   container.append(tooltip);
-  document.addEventListener('keydown', escHandler);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && tooltip.parentNode) dismiss();
+  }, { signal: controller.signal });
 
   return tooltip;
 }
@@ -268,6 +265,7 @@ function createErrorModal(msg, state) {
     state.overlay.remove();
     state.overlay = null;
   }
+  if (state.abort) state.abort.abort();
 
   const overlay = document.createElement('div');
   overlay.className = 'formulary-lookup-error-overlay';
@@ -290,15 +288,20 @@ function createErrorModal(msg, state) {
 
   modal.append(content, closeBtn);
   overlay.append(modal);
-  document.body.append(overlay);
+  state.container.append(overlay);
   state.overlay = overlay;
 
+  const controller = new AbortController();
+  state.abort = controller;
+
+  function close() {
+    overlay.remove();
+    state.overlay = null;
+    controller.abort();
+  }
+
   function keydownHandler(e) {
-    if (e.key === 'Escape') {
-      overlay.remove();
-      state.overlay = null;
-      document.removeEventListener('keydown', keydownHandler);
-    }
+    if (e.key === 'Escape') close();
     if (e.key === 'Tab') {
       const focusable = [...modal.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])')];
       const first = focusable[0];
@@ -313,17 +316,11 @@ function createErrorModal(msg, state) {
     }
   }
 
-  function close() {
-    overlay.remove();
-    state.overlay = null;
-    document.removeEventListener('keydown', keydownHandler);
-  }
-
   closeBtn.addEventListener('click', close);
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) close();
   });
-  document.addEventListener('keydown', keydownHandler);
+  document.addEventListener('keydown', keydownHandler, { signal: controller.signal });
 
   closeBtn.focus();
   return overlay;
@@ -874,7 +871,7 @@ export default async function decorate(block) {
 
   const status = createStatus();
   const results = createResultsContainer();
-  const modalState = { overlay: null };
+  const modalState = { overlay: null, container: block, abort: null };
 
   if (isZip) {
     buildZipVariant(config, section, status, results, flags, modalState);
