@@ -274,21 +274,22 @@
   text-decoration: underline;
 }
 
-/* Error tooltip — floating over the form, matching live site */
+/* Error tooltip — floating over the form, matching live rinvoqhcp.com */
 .formulary-lookup .formulary-lookup-error-tooltip {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
   border-radius: 8px;
   background: #fff;
-  box-shadow: 0 2px 16px rgb(0 0 0 / 20%);
-  padding: 20px 48px 20px 24px;
-  max-width: 300px;
+  box-shadow: 0 4px 24px rgb(0 0 0 / 25%);
+  padding: 24px 56px 24px 28px;
+  max-width: 280px;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.5;
   text-align: center;
+  color: var(--color-charcoal, #25282a);
 }
 
 /* Pink/muted fade behind form when error tooltip is showing */
@@ -312,22 +313,24 @@
 
 .formulary-lookup .formulary-lookup-error-tooltip-close {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
-  border: 1.5px solid #666;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
   background: transparent;
-  border-radius: 50%;
-  color: #666;
-  font-size: 14px;
+  border-radius: 0;
+  color: #25282a;
+  font-size: 20px;
+  font-weight: 300;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 }
 
 .formulary-lookup .formulary-lookup-error-tooltip-close:hover {
-  border-color: #333;
-  color: #333;
+  color: #000;
 }
