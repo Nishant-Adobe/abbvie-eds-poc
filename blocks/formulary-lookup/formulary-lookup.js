@@ -44,7 +44,6 @@ const US_STATES = [
 
 const RICHTEXT_KEYS = new Set(['recaptcha-notice', 'disclaimer']);
 const INLINE_HTML_KEYS = new Set(['heading', 'description']);
-let activeErrorOverlay = null;
 
 const FIELD_ORDER = [
   'icon', 'heading', 'description', 'state-label', 'county-label',
@@ -264,10 +263,10 @@ function createErrorTooltip(msg, container) {
   return tooltip;
 }
 
-function createErrorModal(msg) {
-  if (activeErrorOverlay) {
-    activeErrorOverlay.remove();
-    activeErrorOverlay = null;
+function createErrorModal(msg, state) {
+  if (state.overlay) {
+    state.overlay.remove();
+    state.overlay = null;
   }
 
   const overlay = document.createElement('div');
@@ -292,19 +291,31 @@ function createErrorModal(msg) {
   modal.append(content, closeBtn);
   overlay.append(modal);
   document.body.append(overlay);
-  activeErrorOverlay = overlay;
+  state.overlay = overlay;
 
   function keydownHandler(e) {
     if (e.key === 'Escape') {
       overlay.remove();
-      activeErrorOverlay = null;
+      state.overlay = null;
       document.removeEventListener('keydown', keydownHandler);
+    }
+    if (e.key === 'Tab') {
+      const focusable = [...modal.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])')];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   }
 
   function close() {
     overlay.remove();
-    activeErrorOverlay = null;
+    state.overlay = null;
     document.removeEventListener('keydown', keydownHandler);
   }
 
@@ -318,9 +329,9 @@ function createErrorModal(msg) {
   return overlay;
 }
 
-function showError(msg, flags, container) {
+function showError(msg, flags, container, modalState) {
   if (flags.errorDisplayMode === 'modal') {
-    createErrorModal(msg);
+    createErrorModal(msg, modalState);
   } else {
     createErrorTooltip(msg, container);
   }
@@ -445,7 +456,7 @@ function applyAnalytics(el, config) {
   }
 }
 
-function buildDefaultVariant(config, section, status, results, flags) {
+function buildDefaultVariant(config, section, status, results, flags, modalState) {
   const { label, select } = createStateSelect(config, 'formulary-state');
   applyAnalytics(select, config);
   section.append(label, select);
@@ -468,7 +479,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
       if (disclaimerEl && typeof disclaimerEl.open === 'function') {
         disclaimerEl.open();
       } else {
-        showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
+        showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
       }
       return;
     }
@@ -490,7 +501,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
         if (disclaimerEl && typeof disclaimerEl.open === 'function') disclaimerEl.open();
       }
     } catch {
-      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   }
 
@@ -508,7 +519,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
   }
 }
 
-function buildDynamicVariant(config, section, status, results, flags) {
+function buildDynamicVariant(config, section, status, results, flags, modalState) {
   const { label: stateLabel, select: stateSelect } = createStateSelect(config, 'formulary-state');
   const { wrapper: countyWrapper, select: countySelect } = createCountySelect(config, 'formulary-county');
   applyAnalytics(countySelect, config);
@@ -529,7 +540,7 @@ function buildDynamicVariant(config, section, status, results, flags) {
       countyWrapper.hidden = true;
       countySelect.disabled = true;
       if (state && !config.api) {
-        showError(config.error || 'Lookup not configured.', flags, section);
+        showError(config.error || 'Lookup not configured.', flags, section, modalState);
       }
       return;
     }
@@ -555,7 +566,7 @@ function buildDynamicVariant(config, section, status, results, flags) {
       });
       countySelect.disabled = false;
     } catch {
-      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   });
 
@@ -579,7 +590,7 @@ function buildDynamicVariant(config, section, status, results, flags) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   });
 }
@@ -766,7 +777,7 @@ function createIndicationRadio(config) {
   return wrapper;
 }
 
-function buildZipVariant(config, section, status, results, flags) {
+function buildZipVariant(config, section, status, results, flags, modalState) {
   const { form, input } = createZipForm(config);
   const submitBtn = form.querySelector('.formulary-lookup-submit');
   if (flags.submitIconEnabled) submitBtn.classList.add('has-icon');
@@ -794,7 +805,7 @@ function buildZipVariant(config, section, status, results, flags) {
       return;
     }
     if (!config.api) {
-      showError(config.error || 'Lookup not configured.', flags, section);
+      showError(config.error || 'Lookup not configured.', flags, section, modalState);
       return;
     }
 
@@ -817,7 +828,7 @@ function buildZipVariant(config, section, status, results, flags) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   });
 }
@@ -863,13 +874,14 @@ export default async function decorate(block) {
 
   const status = createStatus();
   const results = createResultsContainer();
+  const modalState = { overlay: null };
 
   if (isZip) {
-    buildZipVariant(config, section, status, results, flags);
+    buildZipVariant(config, section, status, results, flags, modalState);
   } else if (isDynamic) {
-    buildDynamicVariant(config, section, status, results, flags);
+    buildDynamicVariant(config, section, status, results, flags, modalState);
   } else {
-    buildDefaultVariant(config, section, status, results, flags);
+    buildDefaultVariant(config, section, status, results, flags, modalState);
   }
 
   if (flags.showRecaptchaNotice !== false) {
