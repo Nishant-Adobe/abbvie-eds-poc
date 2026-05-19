@@ -40,7 +40,7 @@
 .info-tree .info-tree-option {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--spacing-04, 4px);
   background: none;
   border: none;
   cursor: pointer;
@@ -52,9 +52,9 @@
 .info-tree .info-tree-option::before {
   content: '';
   display: inline-block;
-  width: 15px;
-  height: 15px;
-  min-width: 15px;
+  width: var(--spacing-15, 15px);
+  height: var(--spacing-15, 15px);
+  min-width: var(--spacing-15, 15px);
   border: 1px solid currentcolor;
   border-radius: 50%;
 }
@@ -114,13 +114,13 @@
   }
 
   .info-tree .info-tree-option {
-    gap: 12px;
+    gap: var(--spacing-12, 12px);
   }
 
   .info-tree .info-tree-option::before {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
+    width: var(--spacing-28, 28px);
+    height: var(--spacing-28, 28px);
+    min-width: var(--spacing-28, 28px);
     border-width: 2px;
   }
 }

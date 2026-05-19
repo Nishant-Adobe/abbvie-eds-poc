@@ -1,7 +1,9 @@
 function getCookie(name) {
   try {
     const match = document.cookie.split('; ').find((r) => r.startsWith(`${name}=`));
-    return match?.split('=')[1] || '';
+    if (!match) return '';
+    const raw = match.split('=').slice(1).join('=');
+    return decodeURIComponent(raw);
   } catch {
     return '';
   }
@@ -9,7 +11,7 @@ function getCookie(name) {
 
 function setCookie(name, value, days) {
   try {
-    document.cookie = `${name}=${value};max-age=${days * 86400};path=/`;
+    document.cookie = `${name}=${encodeURIComponent(value)};max-age=${days * 86400};path=/`;
   } catch { /* consent may block */ }
 }
 
@@ -24,6 +26,7 @@ function extractConfig(block) {
 
   let question = null;
   let disclaimer = null;
+  let imageAlt = '';
   let cookieName = '';
   let showReset = false;
   let resetLabel = 'Start over';
@@ -34,6 +37,7 @@ function extractConfig(block) {
     if (prop) {
       const name = prop.getAttribute('data-aue-prop');
       if (name === 'treeName') row.dataset.itConfig = '';
+      if (name === 'imageAlt') { imageAlt = prop.textContent?.trim() || ''; row.dataset.itConfig = ''; }
       if (name === 'question') { question = prop; }
       if (name === 'disclaimer') { disclaimer = prop; row.dataset.itDisclaimer = ''; }
       if (name === 'cookieName') cookieName = prop.textContent?.trim() || '';
@@ -78,7 +82,7 @@ function extractConfig(block) {
   });
 
   return {
-    question, disclaimer, cookieName, showReset, resetLabel,
+    question, disclaimer, imageAlt, cookieName, showReset, resetLabel,
   };
 }
 
@@ -193,7 +197,11 @@ export default function decorate(block) {
 
   const imageEl = document.createElement('div');
   imageEl.className = 'info-tree-image';
-  if (image) imageEl.append(image);
+  if (image) {
+    const img = image.querySelector('img') || image;
+    if (img.tagName === 'IMG' && config.imageAlt) img.alt = config.imageAlt;
+    imageEl.append(image);
+  }
 
   const contentEl = document.createElement('div');
   contentEl.className = 'info-tree-content';
