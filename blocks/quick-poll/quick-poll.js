@@ -3,6 +3,16 @@ import { getConfigValue } from '../../scripts/config.js';
 
 const COOKIE_DAYS = 365;
 const FETCH_TIMEOUT = 10000;
+let pollInstanceCounter = 0;
+
+// Fallback UI copy — override by authoring the block's error-* and result-label fields.
+const DEFAULTS = {
+  resultLabel: 'See how others responded',
+  errorTimeout: 'Request timed out. Please try again.',
+  errorNoPoll: 'Poll is currently unavailable.',
+  errorFetchResults: 'Results unavailable. Try again later.',
+  errorSave: 'Unable to save your response.',
+};
 
 async function fetchWithTimeout(url, options = {}) {
   const controller = new AbortController();
@@ -34,17 +44,21 @@ const XWALK_FIELDS = [
 
 async function getApiUrl(key) {
   const value = (await getConfigValue(key)) || '';
-  return value.startsWith('http') ? value : '';
+  // Accept absolute (http/https) and root-relative (/api/...) URLs.
+  return (value.startsWith('http') || value.startsWith('/')) ? value : '';
 }
 
 function getCookie(name) {
-  return document.cookie.split('; ').find((c) => c.startsWith(`${name}=`))?.split('=')[1] ?? null;
+  const key = encodeURIComponent(name);
+  const entry = document.cookie.split('; ').find((c) => c.startsWith(`${key}=`));
+  return entry ? decodeURIComponent(entry.slice(key.length + 1)) : null;
 }
 
 function setCookie(name, value, days) {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
   const secure = window.location.protocol === 'https:' ? '; Secure' : '';
-  document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax${secure}`;
+  // encodeURIComponent prevents name/value chars from injecting extra cookie directives.
+  document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax${secure}`;
 }
 
 function parseOption(text) {
@@ -63,8 +77,8 @@ export async function decorateBlock(block) {
   const fields = {};
   const authoredOptions = [];
 
-  // xwalk: single-cell rows (value only). Doc authoring: two-cell rows (key + value).
-  const isXwalk = rows.length > 0 && !rows[0].children[1];
+  // xwalk: every row has exactly one cell. Doc authoring: two-cell rows (key + value).
+  const isXwalk = rows.length > 0 && rows.every((r) => r.children.length === 1);
 
   if (isXwalk) {
     rows.forEach((row, idx) => {
@@ -83,7 +97,16 @@ export async function decorateBlock(block) {
         fields[fieldName] = cell;
       }
     });
-  } else {
+  }
+
+  // Doc-authoring path, or xwalk fallback when positional map yields no campaign ID
+  // (indicates XWALK_FIELDS indices shifted — e.g. classes/tab fields gained a row).
+  if (!isXwalk || !fields['master-campaign-id']) {
+    if (isXwalk) {
+      // Clear any mis-mapped values before re-parsing
+      Object.keys(fields).forEach((k) => { delete fields[k]; });
+      authoredOptions.length = 0;
+    }
     rows.forEach((row) => {
       const cells = [...row.children];
       const key = cells[0]?.textContent.trim().toLowerCase();
@@ -103,13 +126,13 @@ export async function decorateBlock(block) {
   const pollName = getText('poll-name');
   const questionId = getText('question-id');
   const questionTextAuthored = getText('question-text');
-  const resultLabel = getText('result-label', 'See how others responded');
+  const resultLabel = getText('result-label', DEFAULTS.resultLabel);
   const resultDescEl = fields['result-description'] || null;
   const errors = {
-    timeout: getText('error-timeout', 'Request timed out. Please try again.'),
-    noPoll: getText('error-no-poll', 'Poll is currently unavailable.'),
-    fetchResults: getText('error-fetch-results', 'Results unavailable. Try again later.'),
-    save: getText('error-save', 'Unable to save your response.'),
+    timeout: getText('error-timeout', DEFAULTS.errorTimeout),
+    noPoll: getText('error-no-poll', DEFAULTS.errorNoPoll),
+    fetchResults: getText('error-fetch-results', DEFAULTS.errorFetchResults),
+    save: getText('error-save', DEFAULTS.errorSave),
   };
 
   if (!masterCampaignId || !pollName) {
@@ -118,6 +141,11 @@ export async function decorateBlock(block) {
   }
 
   block.replaceChildren();
+
+  // Sanitise for DOM id and cookie name — no spaces or chars invalid per RFC 6265 / HTML spec.
+  const safePollName = pollName.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+  pollInstanceCounter += 1;
+  const qTextId = `qpoll-q-${safePollName}-${pollInstanceCounter}`;
 
   const imgAlt = getText('image-alt', '');
   const imageCell = fields.image;
@@ -135,7 +163,6 @@ export async function decorateBlock(block) {
   const ia = document.createElement('div');
   ia.className = 'qpoll-ia';
 
-  const qTextId = `qpoll-q-${pollName}`;
   const qText = document.createElement('p');
   qText.className = 'qpoll-question';
   qText.id = qTextId;
@@ -151,8 +178,10 @@ export async function decorateBlock(block) {
 
   const optionsWrap = document.createElement('div');
   optionsWrap.className = 'qpoll-options';
-  optionsWrap.setAttribute('role', 'group');
+  optionsWrap.setAttribute('role', 'radiogroup');
   optionsWrap.setAttribute('aria-labelledby', qTextId);
+  // Fallback label while question text loads asynchronously from the API.
+  if (!questionTextAuthored) optionsWrap.setAttribute('aria-label', 'Poll options');
 
   const resultsEl = document.createElement('div');
   resultsEl.className = 'qpoll-results';
@@ -173,6 +202,7 @@ export async function decorateBlock(block) {
   const spinner = document.createElement('span');
   spinner.className = 'qpoll-spinner';
   spinner.setAttribute('aria-hidden', 'true');
+  spinner.hidden = true;
   const errorBox = document.createElement('div');
   errorBox.className = 'qpoll-error';
   errorBox.hidden = true;
@@ -206,24 +236,38 @@ export async function decorateBlock(block) {
     loadingEl.hidden = false;
   }
 
+  function enableButtons() {
+    [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
+  }
+
+  function setQuestionText(text) {
+    if (text) {
+      qText.textContent = text;
+      optionsWrap.removeAttribute('aria-label');
+    }
+  }
+
   function buildOptionButtons(options) {
     optionsWrap.replaceChildren();
     resultSet.replaceChildren();
     options.forEach((opt) => {
+      if (!opt.OptionId) return;
       const btn = document.createElement('button');
       btn.className = 'qpoll-option';
       btn.type = 'button';
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-checked', 'false');
       btn.dataset.optionid = opt.OptionId;
       btn.textContent = opt.OptionText;
       optionsWrap.append(btn);
 
       const resItem = document.createElement('div');
       resItem.className = 'qpoll-result-item';
-      // Lowercase so querySelector matches GetAggregated's QuestionOptionId (also lowercase)
-      resItem.dataset.optionid = opt.OptionId?.toLowerCase() ?? '';
+      resItem.dataset.optionid = opt.OptionId.toLowerCase();
       const pct = document.createElement('span');
       pct.className = 'qpoll-pct';
       pct.textContent = '0';
+      pct.setAttribute('aria-label', '0%');
       const label = document.createElement('p');
       label.textContent = opt.OptionText;
       resItem.append(pct, label);
@@ -238,9 +282,9 @@ export async function decorateBlock(block) {
       if (!item) return;
       const pct = item.querySelector('.qpoll-pct');
       if (pct) {
-        pct.textContent = String(
-          Math.round(parseFloat(opt.PercentageOfUsersRespondedOnOption ?? 0)),
-        );
+        const rounded = Math.round(parseFloat(opt.PercentageOfUsersRespondedOnOption ?? 0));
+        pct.textContent = String(rounded);
+        pct.setAttribute('aria-label', `${rounded}%`);
       }
       if (opt.OptionValue) {
         const label = item.querySelector('p');
@@ -254,10 +298,10 @@ export async function decorateBlock(block) {
     resultsLabel.hidden = false;
     hideLoading();
     resultsEl.hidden = false;
-    if (!getCookie(pollName)) setCookie(pollName, '1', COOKIE_DAYS);
+    if (!getCookie(safePollName)) setCookie(safePollName, '1', COOKIE_DAYS);
   }
 
-  // Tracks the real QuestionId returned by the API (may differ from authored questionId)
+  // Tracks the real QuestionId returned by the API (may differ from authored questionId).
   let activeQuestionId = questionId;
 
   showLoading();
@@ -297,13 +341,13 @@ export async function decorateBlock(block) {
       const qData = findQuestion(data?.ContentResult?.AssessmentQuestion ?? []);
       if (!qData) throw new Error('No question data');
       activeQuestionId = qData.QuestionId ?? activeQuestionId;
-      if (!questionTextAuthored && qData.QuestionText) qText.textContent = qData.QuestionText;
+      if (!questionTextAuthored) setQuestionText(qData.QuestionText);
       applyPercentages(qData.QuestionOption ?? []);
       optionsWrap.hidden = true;
       resultsLabel.hidden = false;
       hideLoading();
       resultsEl.hidden = false;
-      if (!getCookie(pollName)) setCookie(pollName, '1', COOKIE_DAYS);
+      if (!getCookie(safePollName)) setCookie(safePollName, '1', COOKIE_DAYS);
     } catch (err) {
       if (err?.name === 'AbortError') { showError(errors.timeout); return; }
       if (resultSet.children.length > 0) {
@@ -315,7 +359,10 @@ export async function decorateBlock(block) {
   }
 
   async function submitAnswer(optionId) {
-    [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = true; });
+    [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => {
+      b.setAttribute('aria-checked', b.dataset.optionid === optionId ? 'true' : 'false');
+      b.disabled = true;
+    });
     showLoading();
     try {
       if (!saveAssessmentUrl) throw new Error('not configured');
@@ -339,14 +386,17 @@ export async function decorateBlock(block) {
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       if (data?.IsStatusSuccessful) {
-        await fetchAggregated();
-        [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
+        try {
+          await fetchAggregated();
+        } finally {
+          enableButtons();
+        }
       } else {
-        [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
+        enableButtons();
         showError(errors.save);
       }
     } catch (err) {
-      [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
+      enableButtons();
       if (err?.name === 'AbortError') { showError(errors.timeout); return; }
       if (authoredOptions.length >= 2) {
         showLocalResults();
@@ -371,7 +421,7 @@ export async function decorateBlock(block) {
       const qData = findQuestion(data?.ContentResult?.AssessmentQuestion ?? []);
       if (!qData) throw new Error('No question data');
       activeQuestionId = qData.QuestionId ?? activeQuestionId;
-      if (!questionTextAuthored && qData.QuestionText) qText.textContent = qData.QuestionText;
+      if (!questionTextAuthored) setQuestionText(qData.QuestionText);
       buildOptionButtons(qData.QuestionOption ?? []);
       if (!keepLoading) hideLoading();
       return true;
@@ -389,12 +439,18 @@ export async function decorateBlock(block) {
 
   optionsWrap.addEventListener('click', (e) => {
     const btn = e.target.closest('.qpoll-option');
-    if (btn) submitAnswer(btn.dataset.optionid).catch(() => showError(errors.save));
+    const oid = btn?.dataset.optionid;
+    if (oid && !btn.disabled) {
+      submitAnswer(oid).catch(() => { enableButtons(); showError(errors.save); });
+    }
   });
 
-  errorClose.addEventListener('click', hideLoading);
+  errorClose.addEventListener('click', () => {
+    hideLoading();
+    enableButtons();
+  });
 
-  if (getCookie(pollName) === '1') {
+  if (getCookie(safePollName) === '1') {
     const ok = await loadQuestion(true);
     if (ok) await fetchAggregated();
   } else {
