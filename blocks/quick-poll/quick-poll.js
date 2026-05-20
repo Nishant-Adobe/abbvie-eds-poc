@@ -388,8 +388,7 @@ export async function decorateBlock(block) {
 
   optionsWrap.addEventListener('click', (e) => {
     const btn = e.target.closest('.qpoll-option');
-    // errors handled internally by submitAnswer (showError / showLocalResults)
-    if (btn) submitAnswer(btn.dataset.optionid).catch(() => {});
+    if (btn) submitAnswer(btn.dataset.optionid).catch(() => showError(errors.save));
   });
 
   errorClose.addEventListener('click', hideLoading);
