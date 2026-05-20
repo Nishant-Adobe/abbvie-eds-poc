@@ -44,6 +44,7 @@ const US_STATES = [
 
 const RICHTEXT_KEYS = new Set(['recaptcha-notice', 'disclaimer']);
 const INLINE_HTML_KEYS = new Set(['heading', 'description']);
+const tooltipControllers = new WeakMap();
 
 const FIELD_ORDER = [
   'icon', 'heading', 'description', 'state-label', 'county-label',
@@ -222,7 +223,8 @@ function showMessage(status, msg, isError = false) {
 function createErrorTooltip(msg, container) {
   const existing = container.querySelector('.formulary-lookup-error-tooltip');
   if (existing) {
-    if (existing.abortController) existing.abortController.abort();
+    const oldController = tooltipControllers.get(existing);
+    if (oldController) oldController.abort();
     existing.remove();
   }
 
@@ -236,7 +238,7 @@ function createErrorTooltip(msg, container) {
   text.textContent = msg;
 
   const controller = new AbortController();
-  tooltip.abortController = controller;
+  tooltipControllers.set(tooltip, controller);
 
   function dismiss() {
     tooltip.remove();
