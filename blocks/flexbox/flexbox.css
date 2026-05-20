@@ -2,8 +2,7 @@
 
 .flexbox {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
   gap: var(--flexbox-gap, var(--spacing-16, 16px));
 }
 
@@ -25,6 +24,7 @@
 }
 
 /* Desktop: enable flex row */
+
 /* 768px breakpoint: CSS custom properties cannot be used in @media conditions */
 @media (width >= 768px) {
   .flexbox {
@@ -83,7 +83,10 @@
 .flexbox.flexbox-column-reverse { flex-direction: column-reverse; }
 
 /* Justify-content variants */
-.flexbox.flexbox-center { justify-content: center; align-items: center; }
+.flexbox.flexbox-center {
+  justify-content: center;
+  align-items: center;
+}
 .flexbox.flexbox-space-between { justify-content: space-between; }
 .flexbox.flexbox-space-around { justify-content: space-around; }
 .flexbox.flexbox-space-evenly { justify-content: space-evenly; }
