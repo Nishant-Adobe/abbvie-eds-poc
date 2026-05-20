@@ -1,0 +1,105 @@
+/* Flexbox Layout Block — mobile-first */
+
+.flexbox {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: var(--flexbox-gap, var(--spacing-16, 16px));
+}
+
+/* Flex items — base (mobile: full width stack) */
+.flexbox .flexbox-item {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.flexbox .flexbox-item-image picture,
+.flexbox .flexbox-item-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.flexbox .flexbox-item-content {
+  padding: var(--flexbox-item-padding, 0);
+}
+
+/* Desktop: enable flex row */
+/* 768px breakpoint: CSS custom properties cannot be used in @media conditions */
+@media (width >= 768px) {
+  .flexbox {
+    flex-direction: row;
+  }
+
+  .flexbox .flexbox-item {
+    flex: 1;
+  }
+
+  /* Per-item width classes */
+  .flexbox .flexbox-item[data-width="full"] { flex: 0 0 100%; }
+  .flexbox .flexbox-item[data-width="half"] { flex: 0 0 calc(50% - var(--flexbox-gap, 16px) / 2); }
+  .flexbox .flexbox-item[data-width="third"] { flex: 0 0 calc(33.333% - var(--flexbox-gap, 16px) * 2 / 3); }
+  .flexbox .flexbox-item[data-width="quarter"] { flex: 0 0 calc(25% - var(--flexbox-gap, 16px) * 3 / 4); }
+
+  /* Per-item grow (data-grow="1" through "12") */
+  .flexbox .flexbox-item[data-grow="1"] { flex-grow: 1; }
+  .flexbox .flexbox-item[data-grow="2"] { flex-grow: 2; }
+  .flexbox .flexbox-item[data-grow="3"] { flex-grow: 3; }
+  .flexbox .flexbox-item[data-grow="4"] { flex-grow: 4; }
+  .flexbox .flexbox-item[data-grow="5"] { flex-grow: 5; }
+  .flexbox .flexbox-item[data-grow="6"] { flex-grow: 6; }
+  .flexbox .flexbox-item[data-grow="7"] { flex-grow: 7; }
+  .flexbox .flexbox-item[data-grow="8"] { flex-grow: 8; }
+  .flexbox .flexbox-item[data-grow="9"] { flex-grow: 9; }
+  .flexbox .flexbox-item[data-grow="10"] { flex-grow: 10; }
+  .flexbox .flexbox-item[data-grow="11"] { flex-grow: 11; }
+  .flexbox .flexbox-item[data-grow="12"] { flex-grow: 12; }
+
+  /* Per-item order (data-order="1" through "12") */
+  .flexbox .flexbox-item[data-order="1"] { order: 1; }
+  .flexbox .flexbox-item[data-order="2"] { order: 2; }
+  .flexbox .flexbox-item[data-order="3"] { order: 3; }
+  .flexbox .flexbox-item[data-order="4"] { order: 4; }
+  .flexbox .flexbox-item[data-order="5"] { order: 5; }
+  .flexbox .flexbox-item[data-order="6"] { order: 6; }
+  .flexbox .flexbox-item[data-order="7"] { order: 7; }
+  .flexbox .flexbox-item[data-order="8"] { order: 8; }
+  .flexbox .flexbox-item[data-order="9"] { order: 9; }
+  .flexbox .flexbox-item[data-order="10"] { order: 10; }
+  .flexbox .flexbox-item[data-order="11"] { order: 11; }
+  .flexbox .flexbox-item[data-order="12"] { order: 12; }
+
+  /* Per-item align-self */
+  .flexbox .flexbox-item[data-align="start"] { align-self: flex-start; }
+  .flexbox .flexbox-item[data-align="end"] { align-self: flex-end; }
+  .flexbox .flexbox-item[data-align="center"] { align-self: center; }
+  .flexbox .flexbox-item[data-align="baseline"] { align-self: baseline; }
+  .flexbox .flexbox-item[data-align="stretch"] { align-self: stretch; }
+}
+
+/* Direction variants */
+.flexbox.flexbox-column { flex-direction: column; }
+.flexbox.flexbox-row-reverse { flex-direction: row-reverse; }
+.flexbox.flexbox-column-reverse { flex-direction: column-reverse; }
+
+/* Justify-content variants */
+.flexbox.flexbox-center { justify-content: center; align-items: center; }
+.flexbox.flexbox-space-between { justify-content: space-between; }
+.flexbox.flexbox-space-around { justify-content: space-around; }
+.flexbox.flexbox-space-evenly { justify-content: space-evenly; }
+
+/* Align-items variants */
+.flexbox.flexbox-align-stretch { align-items: stretch; }
+.flexbox.flexbox-align-top { align-items: flex-start; }
+.flexbox.flexbox-align-bottom { align-items: flex-end; }
+.flexbox.flexbox-align-center { align-items: center; }
+.flexbox.flexbox-align-baseline { align-items: baseline; }
+
+/* Align-content variants (multi-row) */
+.flexbox.flexbox-content-space-between { align-content: space-between; }
+
+/* Wrap variant */
+.flexbox.flexbox-no-wrap { flex-wrap: nowrap; }
+
+/* No-wrap: don't stack on mobile */
+.flexbox.flexbox-no-wrap .flexbox-item { flex: 1; }
