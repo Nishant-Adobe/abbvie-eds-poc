@@ -186,6 +186,7 @@ export default function decorate(block) {
             // Remove unsafe elements including base tag
             doc.querySelectorAll('script, style, iframe, object, embed, base, link[rel="import"]').forEach((el) => el.remove());
             // Remove event handlers and dangerous URL schemes
+            // eslint-disable-next-line no-script-url
             const dangerousSchemes = ['javascript:', 'data:', 'vbscript:'];
             const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href'];
             doc.querySelectorAll('*').forEach((el) => {
