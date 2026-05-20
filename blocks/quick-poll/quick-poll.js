@@ -3,14 +3,6 @@ import { getConfigValue } from '../../scripts/config.js';
 
 const COOKIE_DAYS = 365;
 
-const WORKER_BASE = 'https://campaign-manager-dev.abbvie-sandbox-309.workers.dev';
-
-const FALLBACK_URLS = {
-  getAssessment: `${WORKER_BASE}/BrandAPIGateway/api/Assessment/Get`,
-  saveAssessment: `${WORKER_BASE}/BrandAPIGateway/api/Assessment/Save`,
-  getAggregated: `${WORKER_BASE}/BrandAPIGateway/api/Assessment/GetAggregated`,
-};
-
 // Positional map for xwalk delivery — must match _quick-poll.json field order.
 // Tab fields and the classes select produce no rows; all other fields produce one row each.
 const XWALK_FIELDS = [
@@ -31,7 +23,7 @@ const XWALK_FIELDS = [
 
 async function getApiUrl(key) {
   const value = (await getConfigValue(key)) || '';
-  return (value.startsWith('http') ? value : '') || FALLBACK_URLS[key] || '';
+  return value.startsWith('http') ? value : '';
 }
 
 function getCookie(name) {
@@ -303,6 +295,7 @@ export async function decorateBlock(block) {
           OtherInformation: { cid: '' },
         }),
       });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       if (data?.IsStatusSuccessful) {
         await fetchAggregated();
@@ -349,7 +342,7 @@ export async function decorateBlock(block) {
 
   optionsWrap.addEventListener('click', (e) => {
     const btn = e.target.closest('.qpoll-option');
-    if (btn) submitAnswer(btn.dataset.optionid);
+    if (btn) submitAnswer(btn.dataset.optionid).catch(() => {});
   });
 
   errorClose.addEventListener('click', hideLoading);

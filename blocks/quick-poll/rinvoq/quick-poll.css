@@ -26,6 +26,7 @@
   border: var(--border-width-thin) solid var(--qpoll-border-color);
   border-radius: var(--qpoll-border-radius);
   display: flex;
+  flex-direction: column;
   gap: var(--qpoll-gap);
   padding: var(--qpoll-padding);
   position: relative;
@@ -34,8 +35,8 @@
 /* --- Image --- */
 
 .qpoll-image {
-  flex: 0 0 25%;
-  max-width: var(--spacing-200);
+  flex: 0 0 auto;
+  max-width: 100%;
 }
 
 .qpoll-image img {
@@ -65,7 +66,7 @@
 
 .qpoll-options {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--spacing-10);
   margin-bottom: var(--spacing-16);
 }
@@ -116,13 +117,9 @@
 }
 
 .qpoll-result-item {
-  border-right: var(--border-width-thin) solid var(--qpoll-result-item-border-color);
   flex: 1;
+  min-width: 40%;
   padding: var(--spacing-10);
-}
-
-.qpoll-result-item:last-child {
-  border-right: none;
 }
 
 .qpoll-pct {
@@ -219,39 +216,42 @@
   display: none;
 }
 
-/* --- Mobile --- */
+/* --- Tablet and above --- */
 
-@media (width < 744px) {
+@media (width >= 744px) {
   .quick-poll {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .qpoll-image {
-    flex: 0 0 auto;
-    max-width: 100%;
+    flex: 0 0 25%;
+    max-width: var(--spacing-200);
   }
 
   .qpoll-options {
-    flex-direction: column;
-  }
-
-  .qpoll-option {
-    width: 100%;
+    flex-flow: row wrap;
   }
 
   .qpoll-result-set {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   .qpoll-result-item {
+    border-right: var(--border-width-thin) solid var(--qpoll-result-item-border-color);
+    min-width: auto;
+  }
+
+  .qpoll-result-item:last-child {
     border-right: none;
-    min-width: 40%;
   }
 }
 
 /* Rinvoq: radio-circle option buttons — gold ring on left, checkmark on hover/focus */
 
 .quick-poll-container {
+  --qpoll-brushstroke-width: 22.5rem;
+  --qpoll-label-letter-spacing: 0.03rem;
+
   .default-content-wrapper h4 {
     font-size: var(--font-size-10);
     letter-spacing: var(--qpoll-label-letter-spacing);
@@ -262,7 +262,7 @@
 }
 
 .quick-poll-container .default-content-wrapper h4::after {
-  background-image: url("/../icons/brushstroke-poll.png");
+  background-image: url("../../../icons/brushstroke-poll.png");
   background-position: center;
   background-repeat: no-repeat;
   bottom: calc(-1 * var(--spacing-12));
@@ -275,8 +275,6 @@
 }
 
 .quick-poll {
-  --qpoll-brushstroke-width: 22.5rem;
-  --qpoll-label-letter-spacing: 0.03rem;
   --qpoll-option-border-color: transparent;
   --qpoll-option-color: var(--button-tertiary-color);
   --qpoll-option-hover-bg: transparent;

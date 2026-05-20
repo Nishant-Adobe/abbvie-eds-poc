@@ -5,7 +5,7 @@ export default async function getBlockConfigs() {
     flags: {},
     variations: [],
     decorations: {
-      decorate: async (ctx, blockConfig) => decorateBlock(ctx, blockConfig),
+      decorate: async (ctx) => decorateBlock(ctx),
     },
   };
 }
