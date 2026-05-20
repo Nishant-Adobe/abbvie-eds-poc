@@ -133,7 +133,6 @@ export async function decorateBlock(block) {
   qText.className = 'qpoll-question';
   qText.setAttribute('role', 'heading');
   qText.setAttribute('aria-level', '2');
-  qText.setAttribute('tabindex', '0');
   if (questionId) qText.dataset.questionid = questionId;
   qText.textContent = questionTextAuthored;
 
