@@ -230,7 +230,7 @@ export async function decorateBlock(block) {
   function applyPercentages(questionOptions) {
     questionOptions.forEach((opt) => {
       const id = opt.QuestionOptionId?.toLowerCase();
-      const item = id ? resultSet.querySelector(`[data-optionid="${id}"]`) : null;
+      const item = id ? resultSet.querySelector(`[data-optionid="${CSS.escape(id)}"]`) : null;
       if (!item) return;
       const pct = item.querySelector('.qpoll-pct');
       if (pct) {

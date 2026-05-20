@@ -1,30 +1,30 @@
 .quick-poll {
-  --qpoll-bg: var(--color-white);
-  --qpoll-border-color: var(--color-border);
-  --qpoll-border-radius: var(--border-radius-m);
-  --qpoll-padding: var(--spacing-24);
-  --qpoll-gap: var(--spacing-24);
-  --qpoll-question-color: var(--text-color);
-  --qpoll-question-font-size: var(--font-size-26);
-  --qpoll-question-size: var(--body-font-size-m);
-  --qpoll-option-border-color: var(--link-color);
-  --qpoll-option-color: var(--link-color);
-  --qpoll-option-hover-bg: var(--link-color);
-  --qpoll-option-hover-color: var(--color-white);
-  --qpoll-option-size: var(--body-font-size-s);
-  --qpoll-pct-size: var(--body-font-size-s);
-  --qpoll-pct-sup-size: var(--body-font-size-xs);
-  --qpoll-result-label-color: var(--text-color);
-  --qpoll-result-label-size: var(--body-font-size-s);
-  --qpoll-result-item-border-color: var(--color-border);
+  --qpoll-bg: var(--color-white, #fff);
+  --qpoll-border-color: var(--color-border, #e0e0e0);
+  --qpoll-border-radius: var(--border-radius-m, 0.8rem);
+  --qpoll-padding: var(--spacing-24, 2.4rem);
+  --qpoll-gap: var(--spacing-24, 2.4rem);
+  --qpoll-question-color: var(--text-color, #071d49);
+  --qpoll-question-font-size: var(--font-size-26, 2.6rem);
+  --qpoll-question-size: var(--body-font-size-m, 1.8rem);
+  --qpoll-option-border-color: var(--link-color, #035fe6);
+  --qpoll-option-color: var(--link-color, #035fe6);
+  --qpoll-option-hover-bg: var(--link-color, #035fe6);
+  --qpoll-option-hover-color: var(--color-white, #fff);
+  --qpoll-option-size: var(--body-font-size-s, 1.6rem);
+  --qpoll-pct-size: var(--body-font-size-s, 1.6rem);
+  --qpoll-pct-sup-size: var(--body-font-size-xs, 1.4rem);
+  --qpoll-result-label-color: var(--text-color, #071d49);
+  --qpoll-result-label-size: var(--body-font-size-s, 1.6rem);
+  --qpoll-result-item-border-color: var(--color-border, #e0e0e0);
   --qpoll-pct-color: var(--qpoll-question-color);
-  --qpoll-spinner-track: var(--color-border);
-  --qpoll-spinner-fill: var(--link-color);
-  --qpoll-loading-bg: var(--color-white-85);
-  --qpoll-error-bg: var(--color-background-light, var(--overlay-background-color));
+  --qpoll-spinner-track: var(--color-border, #e0e0e0);
+  --qpoll-spinner-fill: var(--link-color, #035fe6);
+  --qpoll-loading-bg: var(--color-white-85, rgb(255 255 255 / 85%));
+  --qpoll-error-bg: var(--color-background-light, var(--overlay-background-color, #f5f5f5));
 
   background: var(--qpoll-bg);
-  border: var(--border-width-thin) solid var(--qpoll-border-color);
+  border: var(--border-width-thin, 1px) solid var(--qpoll-border-color);
   border-radius: var(--qpoll-border-radius);
   display: flex;
   flex-direction: column;
@@ -59,8 +59,8 @@
 .qpoll-question {
   color: var(--qpoll-question-color);
   font-size: var(--qpoll-question-font-size);
-  font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--spacing-16);
+  font-weight: var(--font-weight-bold, 700);
+  margin: 0 0 var(--spacing-16, 1.6rem);
 }
 
 /* --- Option buttons --- */
@@ -68,8 +68,8 @@
 .qpoll-options {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-10);
-  margin-bottom: var(--spacing-16);
+  gap: var(--spacing-10, 1rem);
+  margin-bottom: var(--spacing-16, 1.6rem);
 }
 
 .qpoll-options[hidden] {
@@ -78,16 +78,16 @@
 
 .qpoll-option {
   background: none;
-  border: var(--border-width-default) solid var(--qpoll-option-border-color);
-  border-radius: var(--border-radius-base);
+  border: var(--border-width-default, 2px) solid var(--qpoll-option-border-color);
+  border-radius: var(--border-radius-base, 0.4rem);
   color: var(--qpoll-option-color);
   cursor: pointer;
   flex: 1;
   font-size: var(--qpoll-option-size);
-  min-width: var(--spacing-120);
-  padding: var(--spacing-10) var(--spacing-16);
+  min-width: var(--spacing-120, 12rem);
+  padding: var(--spacing-10, 1rem) var(--spacing-16, 1.6rem);
   text-align: center;
-  transition: background-color var(--transition-duration-fast), color var(--transition-duration-fast);
+  transition: background-color var(--transition-duration-fast, 0.2s), color var(--transition-duration-fast, 0.2s);
 }
 
 .qpoll-option:hover {
@@ -99,7 +99,7 @@
 .qpoll-option:focus-visible {
   background-color: var(--qpoll-option-hover-bg);
   color: var(--qpoll-option-hover-color);
-  outline: var(--border-width-default) solid var(--color-focus);
+  outline: var(--border-width-default, 2px) solid var(--color-focus, #035fe6);
 }
 
 /* --- Results --- */
@@ -111,8 +111,8 @@
 .qpoll-results-label {
   color: var(--qpoll-question-color);
   font-size: var(--qpoll-question-size);
-  font-weight: var(--font-weight-bold);
-  margin: 0 0 var(--spacing-16);
+  font-weight: var(--font-weight-bold, 700);
+  margin: 0 0 var(--spacing-16, 1.6rem);
   text-align: center;
 }
 
@@ -125,14 +125,14 @@
 .qpoll-result-item {
   flex: 1;
   min-width: 40%;
-  padding: var(--spacing-10);
+  padding: var(--spacing-10, 1rem);
 }
 
 .qpoll-pct {
   color: var(--qpoll-pct-color);
   display: block;
   font-size: var(--qpoll-pct-size);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold, 700);
 }
 
 .qpoll-pct::after {
@@ -144,11 +144,11 @@
 .qpoll-result-item p {
   color: var(--qpoll-result-label-color);
   font-size: var(--qpoll-result-label-size);
-  margin: var(--spacing-04) 0 0;
+  margin: var(--spacing-04, 0.4rem) 0 0;
 }
 
 .qpoll-results-desc {
-  margin-top: var(--spacing-16);
+  margin-top: var(--spacing-16, 1.6rem);
 }
 
 /* --- Loading / error overlay --- */
@@ -160,7 +160,7 @@
   inset: 0;
   justify-content: center;
   position: absolute;
-  z-index: var(--z-index-10);
+  z-index: var(--z-index-10, 10);
 }
 
 .qpoll-loading[hidden] {
@@ -168,13 +168,13 @@
 }
 
 .qpoll-spinner {
-  animation: qpoll-spin var(--transition-duration-slow) linear infinite;
-  border: var(--border-width-thick) solid var(--qpoll-spinner-track);
+  animation: qpoll-spin var(--transition-duration-slow, 0.8s) linear infinite;
+  border: var(--border-width-thick, 3px) solid var(--qpoll-spinner-track);
   border-radius: 50%;
   border-top-color: var(--qpoll-spinner-fill);
   display: block;
-  height: var(--spacing-40);
-  width: var(--spacing-40);
+  height: var(--spacing-40, 4rem);
+  width: var(--spacing-40, 4rem);
 }
 
 .qpoll-spinner[hidden] {
@@ -183,10 +183,10 @@
 
 .qpoll-error {
   background: var(--qpoll-error-bg);
-  border-radius: var(--border-radius-base);
-  box-shadow: var(--elevation-card);
-  max-width: var(--spacing-320);
-  padding: var(--spacing-24);
+  border-radius: var(--border-radius-base, 0.4rem);
+  box-shadow: var(--elevation-card, 0 0.8rem 2rem rgb(7 29 73 / 10%));
+  max-width: var(--spacing-320, 32rem);
+  padding: var(--spacing-24, 2.4rem);
   position: relative;
 }
 
@@ -196,8 +196,8 @@
 
 .qpoll-error-msg {
   color: var(--qpoll-question-color);
-  font-size: var(--body-font-size-s);
-  margin: 0 var(--spacing-24) 0 0;
+  font-size: var(--body-font-size-s, 1.6rem);
+  margin: 0 var(--spacing-24, 2.4rem) 0 0;
 }
 
 .qpoll-error-close {
@@ -205,11 +205,11 @@
   border: none;
   color: var(--qpoll-question-color);
   cursor: pointer;
-  font-size: var(--body-font-size-m);
-  padding: var(--spacing-04);
+  font-size: var(--body-font-size-m, 1.8rem);
+  padding: var(--spacing-04, 0.4rem);
   position: absolute;
-  right: var(--spacing-08);
-  top: var(--spacing-08);
+  right: var(--spacing-08, 0.8rem);
+  top: var(--spacing-08, 0.8rem);
 }
 
 @keyframes qpoll-spin {
@@ -231,7 +231,7 @@
 
   .qpoll-image {
     flex: 0 0 25%;
-    max-width: var(--spacing-200);
+    max-width: var(--spacing-200, 20rem);
   }
 
   .qpoll-options {
@@ -243,7 +243,7 @@
   }
 
   .qpoll-result-item {
-    border-right: var(--border-width-thin) solid var(--qpoll-result-item-border-color);
+    border-right: var(--border-width-thin, 1px) solid var(--qpoll-result-item-border-color);
     min-width: auto;
   }
 
