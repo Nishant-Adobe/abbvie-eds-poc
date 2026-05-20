@@ -251,7 +251,10 @@ function createErrorTooltip(msg, container) {
   closeBtn.addEventListener('click', dismiss);
 
   tooltip.append(text, closeBtn);
-  container.append(tooltip);
+  const formEl = container.classList.contains('formulary-lookup-form')
+    ? container
+    : (container.querySelector('.formulary-lookup-form') || container);
+  formEl.append(tooltip);
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && tooltip.parentNode) dismiss();
