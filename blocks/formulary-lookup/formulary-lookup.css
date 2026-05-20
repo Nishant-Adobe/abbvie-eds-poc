@@ -415,8 +415,8 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: var(--formulary-modal-close-bg, var(--link-color, #0057cc));
-  color: var(--formulary-modal-close-color, #fff);
+  background: var(--formulary-modal-close-bg, var(--link-color, currentColor));
+  color: var(--formulary-modal-close-color, var(--color-white, white));
   font-size: 20px;
   cursor: pointer;
   display: flex;
@@ -426,7 +426,7 @@
 }
 
 .formulary-lookup-disclaimer-close:hover {
-  background: var(--formulary-modal-close-hover-bg, var(--link-hover-color, #004bb5));
+  background: var(--formulary-modal-close-hover-bg, var(--link-hover-color, currentColor));
 }
 
 @media (width <= 600px) {
@@ -579,9 +579,9 @@
   width: 28px;
   height: 28px;
   border: none;
-  background: var(--formulary-error-tooltip-close-bg, #e0e0e0);
+  background: var(--formulary-error-tooltip-close-bg, transparent);
   border-radius: 50%;
-  color: var(--formulary-text-color, var(--text-color, #333));
+  color: var(--formulary-text-color, var(--text-color, inherit));
   font-size: 14px;
   cursor: pointer;
   display: flex;
@@ -591,7 +591,7 @@
 }
 
 .formulary-lookup-error-tooltip-close:hover {
-  background: var(--formulary-error-tooltip-close-hover-bg, #ccc);
+  background: var(--formulary-error-tooltip-close-hover-bg, transparent);
 }
 
 /* --- Error Modal (full overlay) --- */
@@ -631,7 +631,7 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  background: var(--formulary-error-modal-close-bg, var(--link-color, #0057cc));
+  background: var(--formulary-error-modal-close-bg, var(--link-color, currentColor));
   color: var(--formulary-error-modal-close-color, var(--color-white, white));
   font-size: 20px;
   cursor: pointer;
@@ -642,17 +642,17 @@
 }
 
 .formulary-lookup-error-modal-close:hover {
-  background: var(--formulary-error-modal-close-hover-bg, var(--link-hover-color, #004bb5));
+  background: var(--formulary-error-modal-close-hover-bg, var(--link-hover-color, currentColor));
 }
 
 @media (width <= 600px) {
   .formulary-lookup-error-modal {
-    padding: 24px 20px;
-    border-radius: 12px;
+    padding: var(--formulary-error-modal-padding-mobile, var(--spacing-24, 24px) var(--spacing-20, 20px));
+    border-radius: var(--formulary-error-modal-radius-mobile, var(--spacing-12, 12px));
   }
 
   .formulary-lookup-error-tooltip {
-    max-width: calc(100vw - 48px);
+    max-width: calc(100vw - var(--spacing-48, 48px));
   }
 }
 
