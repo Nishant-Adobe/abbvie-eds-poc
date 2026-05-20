@@ -15,20 +15,59 @@
           }
         }
       }
+    },
+    {
+      "title": "Tab Item",
+      "id": "tab-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Tab Item",
+              "model": "tab-item",
+              "tabTitle": ""
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
     {
       "id": "tabs",
-      "fields": []
+      "fields": [
+        {
+          "component": "select",
+          "valueType": "string",
+          "name": "classes",
+          "label": "Style",
+          "options": [
+            { "name": "Default", "value": "" },
+            { "name": "Pill", "value": "pill" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tab-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "tabTitle",
+          "value": "",
+          "label": "Tab Name",
+          "required": true,
+          "description": "Name shown on the tab button. Must match a Tab Panel's Tab Name (case-insensitive)."
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "tabs",
-      "components": [
-        "tab-item"
-      ]
+      "components": ["tab-item"]
     }
   ]
 }

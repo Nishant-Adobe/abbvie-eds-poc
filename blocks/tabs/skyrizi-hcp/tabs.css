@@ -151,3 +151,77 @@
     margin-bottom: calc(-1 * var(--spacing-06));
   }
 }
+
+/* ============================================================
+   PILL VARIANT — .tabs.pill
+   Rounded pill bar with filled cyan active tab.
+   Used inside modals (Study Design / Baseline Characteristics)
+   ============================================================ */
+
+/* ── Pill tab list — rounded capsule bar ── */
+.tabs.pill .tabs-list {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: var(--border-width-1, 0.1rem) solid var(--color-tabs-underline, #00b4d8);
+  border-radius: var(--border-radius-button-tertiary, 10rem);
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+/* ── Pill tab buttons (inactive) — transparent, dark text ── */
+.tabs.pill .tabs-list button.tabs-tab {
+  padding: var(--spacing-10, 1rem) var(--spacing-30, 3rem);
+  background: transparent;
+  color: var(--color-text-heading, #1a2b3c);
+  font-family: var(--font-family-tabs-control, var(--body-font-family));
+  font-size: var(--font-size-body-xs, 1.2rem);
+  font-weight: var(--font-weight-heading, 700);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide-sm, 0.05em);
+  border: none;
+  border-radius: 0;
+  white-space: nowrap;
+  position: relative;
+  line-height: var(--line-height-20, 2rem);
+  cursor: pointer;
+}
+
+/* ── Pill active tab — filled cyan background ── */
+.tabs.pill .tabs-list button.tabs-tab[aria-selected='true'] {
+  background: var(--color-tabs-underline, #00b4d8);
+  color: var(--color-text-on-dark, #fff);
+  font-weight: var(--font-weight-heading, 700);
+}
+
+.tabs.pill .tabs-list button.tabs-tab[aria-selected='true']::after {
+  display: none;
+}
+
+/* ── Pill hover ── */
+.tabs.pill .tabs-list button.tabs-tab:hover:not([aria-selected='true']) {
+  background: var(--color-background-blue, #e6f7fb);
+}
+
+/* ── Pill panel — no gradient border, simple padding ── */
+.tabs.pill ~ .tabs-panel::before {
+  display: none;
+}
+
+/* ── Tablet+ pill adjustments ── */
+@media (width >= 600px) {
+  .tabs.pill .tabs-list button.tabs-tab {
+    font-size: var(--font-size-14, 1.4rem);
+    padding: var(--spacing-12, 1.2rem) var(--spacing-40, 4rem);
+  }
+}
+
+/* ── Desktop pill adjustments ── */
+@media (width >= 900px) {
+  .tabs.pill .tabs-list button.tabs-tab {
+    font-size: var(--font-size-16, 1.6rem);
+    padding: var(--spacing-14, 1.4rem) var(--spacing-48, 4.8rem);
+  }
+}
