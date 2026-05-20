@@ -56,8 +56,8 @@
 
 .qpoll-question {
   color: var(--qpoll-question-color);
-  font-size: var(--qpoll-question-size);
-  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-26);
+  font-weight: var(--font-weight-bold);
   margin: 0 0 var(--spacing-16);
 }
 
@@ -68,6 +68,10 @@
   flex-wrap: wrap;
   gap: var(--spacing-10);
   margin-bottom: var(--spacing-16);
+}
+
+.qpoll-options[hidden] {
+  display: none;
 }
 
 .qpoll-option {
@@ -81,7 +85,7 @@
   min-width: var(--spacing-120);
   padding: var(--spacing-10) var(--spacing-16);
   text-align: center;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color var(--transition-duration-fast), color var(--transition-duration-fast);
 }
 
 .qpoll-option:hover,
@@ -100,7 +104,7 @@
 .qpoll-results-label {
   color: var(--qpoll-question-color);
   font-size: var(--qpoll-question-size);
-  font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--font-weight-bold);
   margin: 0 0 var(--spacing-16);
   text-align: center;
 }
@@ -124,8 +128,8 @@
 .qpoll-pct {
   color: var(--qpoll-pct-color);
   display: block;
-  font-size: var(--qpoll-pct-size);
-  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-bold);
 }
 
 .qpoll-pct::after {
@@ -136,7 +140,7 @@
 
 .qpoll-result-item p {
   color: var(--qpoll-result-label-color);
-  font-size: var(--qpoll-result-label-size);
+  font-size: var(--font-size-16);
   margin: var(--spacing-04) 0 0;
 }
 
@@ -161,7 +165,7 @@
 }
 
 .qpoll-spinner {
-  animation: qpoll-spin 0.8s linear infinite;
+  animation: qpoll-spin var(--transition-duration-slow) linear infinite;
   border: var(--border-width-thick) solid var(--qpoll-spinner-track);
   border-radius: 50%;
   border-top-color: var(--qpoll-spinner-fill);
@@ -253,9 +257,13 @@
   --qpoll-option-hover-bg: transparent;
   --qpoll-option-hover-color: var(--button-tertiary-color);
   --qpoll-option-size: var(--body-font-size-m);
-  --qpoll-pct-color: var(--color-brand-primary);
+  --qpoll-pct-color: var(--color-rinvoq-gold);
+  --qpoll-pct-size: var(--heading-font-size-xs);
+  --qpoll-question-size: var(--heading-font-size-xs);
+  --qpoll-result-item-border-color: transparent;
   --qpoll-circle-size: var(--spacing-40);
   --qpoll-circle-color: var(--color-rinvoq-gold);
+  --qpoll-btn-icon-size: var(--heading-font-size-xs);
 
   background-color: transparent;
   border: none;
@@ -265,6 +273,7 @@
 .qpoll-options {
   flex-direction: column;
   gap: 0;
+  display: inline-flex;
 }
 
 .qpoll-option {
@@ -307,4 +316,72 @@
 
 .qpoll-pct {
   color: var(--qpoll-pct-color);
+  flex-shrink: 0;
+  margin-right: var(--spacing-38);
+}
+
+.qpoll-pct::after {
+  font-size: var(--font-size-16);
+  vertical-align: middle;
+}
+
+/* Results: vertical list — percentage left, label right */
+
+.qpoll-results-label {
+  font-size: var(--body-font-size-s);
+  font-weight: var(--font-weight-regular);
+  text-align: left;
+}
+
+.qpoll-result-set {
+  flex-direction: column;
+  gap: var(--spacing-08);
+  text-align: left;
+}
+
+.qpoll-result-item {
+  align-items: center;
+  border-right: none;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  padding: var(--spacing-08) 0;
+}
+
+.qpoll-result-item p {
+  font-size: var(--body-font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-20);
+  margin: 0;
+  text-align: left;
+  width: var(--spacing-200);
+}
+
+.qpoll-results-desc {
+  a.button {
+    background-color: var(--color-white);
+    border: var(--border-width-default) solid var(--color-brand-primary);
+    border-radius: var(--border-radius-base);
+    color: var(--color-brand-primary);
+    font-size: var(--body-font-size-s);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-20);
+    padding: var(--spacing-10);
+    padding-right: var(--spacing-30);
+    position: relative;
+
+    &::after {
+      content: "\e315";
+      font-family: var(--icon-font-family);
+      font-size: var(--qpoll-btn-icon-size);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--line-height-icon);
+      margin-left: var(--spacing-10);
+      margin-top: calc(-1 * var(--spacing-08));
+      position: absolute;
+      right: 0;
+      top: 50%;
+      vertical-align: middle;
+    }
+  }
 }

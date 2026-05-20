@@ -53,8 +53,8 @@
 /* --- Question --- */
 .qpoll-question {
   color: var(--qpoll-question-color);
-  font-size: var(--qpoll-question-size);
-  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-26);
+  font-weight: var(--font-weight-bold);
   margin: 0 0 var(--spacing-16);
 }
 
@@ -64,6 +64,10 @@
   flex-wrap: wrap;
   gap: var(--spacing-10);
   margin-bottom: var(--spacing-16);
+}
+
+.qpoll-options[hidden] {
+  display: none;
 }
 
 .qpoll-option {
@@ -77,7 +81,7 @@
   min-width: var(--spacing-120);
   padding: var(--spacing-10) var(--spacing-16);
   text-align: center;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color var(--transition-duration-fast), color var(--transition-duration-fast);
 }
 
 .qpoll-option:hover,
@@ -95,7 +99,7 @@
 .qpoll-results-label {
   color: var(--qpoll-question-color);
   font-size: var(--qpoll-question-size);
-  font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--font-weight-bold);
   margin: 0 0 var(--spacing-16);
   text-align: center;
 }
@@ -119,8 +123,8 @@
 .qpoll-pct {
   color: var(--qpoll-pct-color);
   display: block;
-  font-size: var(--qpoll-pct-size);
-  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-bold);
 }
 
 .qpoll-pct::after {
@@ -131,7 +135,7 @@
 
 .qpoll-result-item p {
   color: var(--qpoll-result-label-color);
-  font-size: var(--qpoll-result-label-size);
+  font-size: var(--font-size-16);
   margin: var(--spacing-04) 0 0;
 }
 
@@ -155,7 +159,7 @@
 }
 
 .qpoll-spinner {
-  animation: qpoll-spin 0.8s linear infinite;
+  animation: qpoll-spin var(--transition-duration-slow) linear infinite;
   border: var(--border-width-thick) solid var(--qpoll-spinner-track);
   border-radius: 50%;
   border-top-color: var(--qpoll-spinner-fill);
