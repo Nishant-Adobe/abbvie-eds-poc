@@ -176,28 +176,31 @@ export default function decorate(block) {
     if (fragmentPath && /^\/(?!\/)/.test(fragmentPath)) {
       body.dataset.fragmentPath = fragmentPath;
       body.textContent = 'Loading...';
+      body.classList.add('accordion-item-body');
       fetch(`${fragmentPath}.plain.html`)
         .then((resp) => (resp.ok ? resp.text() : ''))
         .then((html) => {
           if (html) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            // Remove unsafe elements
-            doc.querySelectorAll('script, style, iframe, object, embed, link[rel="import"]').forEach((el) => el.remove());
-            // Remove event handler attributes and javascript: URLs
+            // Remove unsafe elements including base tag
+            doc.querySelectorAll('script, style, iframe, object, embed, base, link[rel="import"]').forEach((el) => el.remove());
+            // Remove event handlers and dangerous URL schemes
+            const dangerousSchemes = ['javascript:', 'data:', 'vbscript:'];
+            const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href'];
             doc.querySelectorAll('*').forEach((el) => {
               [...el.attributes].forEach((attr) => {
                 const val = attr.value.trim().toLowerCase();
-                const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href'];
                 const isEventHandler = attr.name.startsWith('on');
-                // eslint-disable-next-line no-script-url
-                const isScriptUrl = urlAttrs.includes(attr.name) && val.startsWith('javascript:');
-                if (isEventHandler || isScriptUrl) {
+                const isUnsafeUrl = urlAttrs.includes(attr.name)
+                  && dangerousSchemes.some((scheme) => val.startsWith(scheme));
+                if (isEventHandler || isUnsafeUrl) {
                   el.removeAttribute(attr.name);
                 }
               });
             });
             body.textContent = '';
+            body.classList.add('accordion-item-body-text');
             body.append(...doc.body.childNodes);
           } else {
             body.textContent = '';

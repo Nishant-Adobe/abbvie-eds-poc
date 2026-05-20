@@ -3,16 +3,18 @@ import { renderBlock } from '../../scripts/multi-theme.js';
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Read anchor ID from last row if it's a plain text cell
-  const lastRow = rows[rows.length - 1];
-  const lastCell = lastRow?.children[0];
-  let anchorId = '';
-  if (lastCell && !lastCell.querySelector('picture, a, h1, h2, h3, h4, h5, h6')
-    && lastCell.children.length <= 1) {
-    const text = lastCell.textContent.trim();
-    if (text && !text.includes(' ') && text.length < 40) {
-      anchorId = text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-      rows.pop();
+  // Read anchor ID — UE sets block-level fields as attributes or first config rows.
+  // Check block's existing id first (UE may set it directly), then check first row.
+  let anchorId = block.id || '';
+  if (!anchorId && rows.length > 0) {
+    const firstCell = rows[0]?.children[0];
+    const firstText = firstCell?.textContent?.trim() || '';
+    // If first row is a single plain-text cell with no rich content, treat as anchorId
+    if (firstCell && rows[0].children.length === 1
+      && !firstCell.querySelector('picture, a, h1, h2, h3, h4, h5, h6')
+      && firstText && firstText.length < 40 && !/\s/.test(firstText)) {
+      anchorId = firstText.toLowerCase().replace(/[^\w-]/g, '');
+      rows.shift();
     }
   }
 
