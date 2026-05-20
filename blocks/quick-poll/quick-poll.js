@@ -311,6 +311,7 @@ export async function decorateBlock(block) {
   }
 
   async function submitAnswer(optionId) {
+    [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = true; });
     showLoading();
     try {
       if (!saveAssessmentUrl) throw new Error('not configured');
@@ -339,6 +340,7 @@ export async function decorateBlock(block) {
         showError(errors.save);
       }
     } catch (err) {
+      [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
       if (err?.name === 'AbortError') { showError(errors.timeout); return; }
       if (authoredOptions.length >= 2) {
         showLocalResults();
