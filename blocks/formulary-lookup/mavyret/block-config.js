@@ -4,6 +4,7 @@ export default async function getBlockConfigs() {
       submitIconEnabled: false,
       autoSubmitOnStateChange: false,
       disclaimerModal: true,
+      errorDisplayMode: 'modal',
     },
     variations: [],
     decorations: {},

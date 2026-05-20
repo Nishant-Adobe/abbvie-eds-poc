@@ -44,6 +44,7 @@ const US_STATES = [
 
 const RICHTEXT_KEYS = new Set(['recaptcha-notice', 'disclaimer']);
 const INLINE_HTML_KEYS = new Set(['heading', 'description']);
+const tooltipControllers = new WeakMap();
 
 const FIELD_ORDER = [
   'icon', 'heading', 'description', 'state-label', 'county-label',
@@ -61,6 +62,10 @@ function unwrapSingleP(html) {
 function readValue(key, cell) {
   if (RICHTEXT_KEYS.has(key)) return cell?.innerHTML.trim() || '';
   if (INLINE_HTML_KEYS.has(key)) return unwrapSingleP(cell?.innerHTML.trim() || '');
+  if (key === 'icon') {
+    const img = cell?.querySelector('img');
+    return img?.getAttribute('src') || cell?.textContent.trim() || '';
+  }
   return cell?.textContent.trim() || '';
 }
 
@@ -215,6 +220,125 @@ function showMessage(status, msg, isError = false) {
   status.classList.toggle('error', isError);
 }
 
+function createErrorTooltip(msg, container) {
+  const existing = container.querySelector('.formulary-lookup-error-tooltip');
+  if (existing) {
+    const oldController = tooltipControllers.get(existing);
+    if (oldController) oldController.abort();
+    existing.remove();
+  }
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'formulary-lookup-error-tooltip';
+  tooltip.setAttribute('role', 'alert');
+  tooltip.setAttribute('aria-live', 'assertive');
+
+  const text = document.createElement('span');
+  text.className = 'formulary-lookup-error-tooltip-text';
+  text.textContent = msg;
+
+  const controller = new AbortController();
+  tooltipControllers.set(tooltip, controller);
+
+  function dismiss() {
+    tooltip.remove();
+    controller.abort();
+  }
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'formulary-lookup-error-tooltip-close';
+  closeBtn.setAttribute('aria-label', 'Dismiss error');
+  closeBtn.textContent = '✕';
+  closeBtn.addEventListener('click', dismiss);
+
+  tooltip.append(text, closeBtn);
+  const formEl = container.classList.contains('formulary-lookup-form')
+    ? container
+    : (container.querySelector('.formulary-lookup-form') || container);
+  formEl.append(tooltip);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && tooltip.parentNode) dismiss();
+  }, { signal: controller.signal });
+
+  return tooltip;
+}
+
+function createErrorModal(msg, state) {
+  if (state.overlay) {
+    state.overlay.remove();
+    state.overlay = null;
+  }
+  if (state.abort) state.abort.abort();
+
+  const overlay = document.createElement('div');
+  overlay.className = 'formulary-lookup-error-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'formulary-lookup-error-modal';
+  modal.setAttribute('role', 'alertdialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-label', 'Error');
+
+  const content = document.createElement('div');
+  content.className = 'formulary-lookup-error-modal-content';
+  content.textContent = msg;
+
+  const closeBtn = document.createElement('button');
+  closeBtn.type = 'button';
+  closeBtn.className = 'formulary-lookup-error-modal-close';
+  closeBtn.setAttribute('aria-label', 'Close error');
+  closeBtn.textContent = '✕';
+
+  modal.append(content, closeBtn);
+  overlay.append(modal);
+  state.container.append(overlay);
+  state.overlay = overlay;
+
+  const controller = new AbortController();
+  state.abort = controller;
+
+  function close() {
+    overlay.remove();
+    state.overlay = null;
+    controller.abort();
+  }
+
+  function keydownHandler(e) {
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      const focusable = [...modal.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])')];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', keydownHandler, { signal: controller.signal });
+
+  closeBtn.focus();
+  return overlay;
+}
+
+function showError(msg, flags, container, modalState) {
+  if (flags.errorDisplayMode === 'modal') {
+    createErrorModal(msg, modalState);
+  } else {
+    createErrorTooltip(msg, container);
+  }
+}
+
 function renderResultsTable(plans, results, config, page) {
   results.innerHTML = '';
   const perPage = parseInt(config['results-per-page'], 10) || 10;
@@ -334,12 +458,13 @@ function applyAnalytics(el, config) {
   }
 }
 
-function buildDefaultVariant(config, section, status, results, flags) {
+function buildDefaultVariant(config, section, status, results, flags, modalState) {
   const { label, select } = createStateSelect(config, 'formulary-state');
   applyAnalytics(select, config);
   section.append(label, select);
 
   const hasSubmitBtn = !!config['submit-label'];
+  let disclaimerShown = false;
 
   async function lookupState() {
     const state = select.value;
@@ -349,8 +474,15 @@ function buildDefaultVariant(config, section, status, results, flags) {
       return;
     }
     results.innerHTML = '';
+
     if (!config.api) {
-      showMessage(status, config.error || 'Lookup not configured.', true);
+      const disclaimerEl = section.closest('.formulary-lookup')
+        ?.querySelector('.formulary-lookup-disclaimer-overlay');
+      if (disclaimerEl && typeof disclaimerEl.open === 'function') {
+        disclaimerEl.open();
+      } else {
+        showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
+      }
       return;
     }
     showLoading(status);
@@ -363,8 +495,15 @@ function buildDefaultVariant(config, section, status, results, flags) {
       }
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
+
+      if (!disclaimerShown && flags.disclaimerModal && config.disclaimer) {
+        disclaimerShown = true;
+        const disclaimerEl = section.closest('.formulary-lookup')
+          ?.querySelector('.formulary-lookup-disclaimer-overlay');
+        if (disclaimerEl && typeof disclaimerEl.open === 'function') disclaimerEl.open();
+      }
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   }
 
@@ -382,7 +521,7 @@ function buildDefaultVariant(config, section, status, results, flags) {
   }
 }
 
-function buildDynamicVariant(config, section, status, results) {
+function buildDynamicVariant(config, section, status, results, flags, modalState) {
   const { label: stateLabel, select: stateSelect } = createStateSelect(config, 'formulary-state');
   const { wrapper: countyWrapper, select: countySelect } = createCountySelect(config, 'formulary-county');
   applyAnalytics(countySelect, config);
@@ -402,6 +541,9 @@ function buildDynamicVariant(config, section, status, results) {
     if (!state || !config.api) {
       countyWrapper.hidden = true;
       countySelect.disabled = true;
+      if (state && !config.api) {
+        showError(config.error || 'Lookup not configured.', flags, section, modalState);
+      }
       return;
     }
 
@@ -426,7 +568,7 @@ function buildDynamicVariant(config, section, status, results) {
       });
       countySelect.disabled = false;
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   });
 
@@ -450,7 +592,7 @@ function buildDynamicVariant(config, section, status, results) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   });
 }
@@ -637,7 +779,7 @@ function createIndicationRadio(config) {
   return wrapper;
 }
 
-function buildZipVariant(config, section, status, results, flags) {
+function buildZipVariant(config, section, status, results, flags, modalState) {
   const { form, input } = createZipForm(config);
   const submitBtn = form.querySelector('.formulary-lookup-submit');
   if (flags.submitIconEnabled) submitBtn.classList.add('has-icon');
@@ -665,7 +807,7 @@ function buildZipVariant(config, section, status, results, flags) {
       return;
     }
     if (!config.api) {
-      showMessage(status, config.error || 'Lookup not configured.', true);
+      showError(config.error || 'Lookup not configured.', flags, section, modalState);
       return;
     }
 
@@ -688,7 +830,7 @@ function buildZipVariant(config, section, status, results, flags) {
       showMessage(status, '');
       renderResultsTable(plans, results, config, 1);
     } catch {
-      showMessage(status, config.error || 'An error occurred. Please try again.', true);
+      showError(config.error || 'The data was not able to be loaded. Please try again.', flags, section, modalState);
     }
   });
 }
@@ -734,13 +876,14 @@ export default async function decorate(block) {
 
   const status = createStatus();
   const results = createResultsContainer();
+  const modalState = { overlay: null, container: block, abort: null };
 
   if (isZip) {
-    buildZipVariant(config, section, status, results, flags);
+    buildZipVariant(config, section, status, results, flags, modalState);
   } else if (isDynamic) {
-    buildDynamicVariant(config, section, status, results);
+    buildDynamicVariant(config, section, status, results, flags, modalState);
   } else {
-    buildDefaultVariant(config, section, status, results, flags);
+    buildDefaultVariant(config, section, status, results, flags, modalState);
   }
 
   if (flags.showRecaptchaNotice !== false) {
@@ -755,9 +898,6 @@ export default async function decorate(block) {
     const disclaimer = createDisclaimer(config, isModal);
     if (disclaimer) {
       section.append(disclaimer);
-      if (isModal && disclaimer.open) {
-        disclaimer.open();
-      }
     }
   }
 

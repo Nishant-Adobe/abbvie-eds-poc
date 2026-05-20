@@ -4101,7 +4101,14 @@
         "valueType": "string",
         "name": "media_imageAlt",
         "value": "",
-        "label": "Bacgkround Alt"
+        "label": "Background Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "content_image",
+        "label": "Content Image (e.g. brushstroke SVG)",
+        "multi": false
       },
       {
         "component": "richtext",
@@ -8106,7 +8113,30 @@
         "name": "overview"
       },
       {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Side Image",
+        "multi": false,
+        "description": "Optional image displayed beside the question (e.g. Quick Poll badge)."
+      },
+      {
         "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "treeName",
+        "value": "",
+        "label": "Tree Name",
+        "description": "Internal name to identify this info tree (e.g. ra-tnf-poll, ad-satisfaction-poll)."
+      },
+      {
+        "component": "richtext",
         "valueType": "string",
         "name": "question",
         "value": "",
@@ -8114,143 +8144,67 @@
         "description": "The question or prompt shown to the visitor."
       },
       {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "disclaimer",
+        "value": "",
+        "label": "Disclaimer",
+        "description": "Optional footnote or trademark text shown below the answer buttons."
+      },
+      {
         "component": "tab",
-        "label": "Common Properties",
-        "name": "commonProperties"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "blockId",
-        "valueFormat": "regexp",
-        "label": "ID",
-        "description": "Unique identifier for this block",
-        "validation": {
-          "regExp": "^id:\\S*$",
-          "customErrorMsg": "ID must start with 'id:' and contain no spaces"
-        }
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "classes_commonCustomClass",
-        "label": "Custom Class",
-        "description": "Custom CSS class to apply to this block"
+        "label": "Settings",
+        "name": "settings"
       },
       {
         "component": "select",
-        "name": "language",
-        "label": "Language",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout",
         "options": [
           {
-            "name": "None",
-            "value": "lang:none"
+            "name": "Stacked (default)",
+            "value": ""
           },
           {
-            "name": "Bulgarian",
-            "value": "lang:bg"
-          },
-          {
-            "name": "Chinese",
-            "value": "lang:zh"
-          },
-          {
-            "name": "Chinese (Taiwan)",
-            "value": "lang:zh-TW"
-          },
-          {
-            "name": "Czech",
-            "value": "lang:cs"
-          },
-          {
-            "name": "Danish",
-            "value": "lang:da"
-          },
-          {
-            "name": "Dutch",
-            "value": "lang:nl"
-          },
-          {
-            "name": "English",
-            "value": "lang:en"
-          },
-          {
-            "name": "Finnish",
-            "value": "lang:fi"
-          },
-          {
-            "name": "French",
-            "value": "lang:fr"
-          },
-          {
-            "name": "German",
-            "value": "lang:de"
-          },
-          {
-            "name": "Greek",
-            "value": "lang:el"
-          },
-          {
-            "name": "Hebrew",
-            "value": "lang:he"
-          },
-          {
-            "name": "Hungarian",
-            "value": "lang:hu"
-          },
-          {
-            "name": "Italian",
-            "value": "lang:it"
-          },
-          {
-            "name": "Japanese",
-            "value": "lang:ja"
-          },
-          {
-            "name": "Korean",
-            "value": "lang:ko"
-          },
-          {
-            "name": "Norwegian",
-            "value": "lang:no"
-          },
-          {
-            "name": "Polish",
-            "value": "lang:pl"
-          },
-          {
-            "name": "Portuguese",
-            "value": "lang:pt"
-          },
-          {
-            "name": "Russian",
-            "value": "lang:ru"
-          },
-          {
-            "name": "Slovak",
-            "value": "lang:sk"
-          },
-          {
-            "name": "Slovenian",
-            "value": "lang:sl"
-          },
-          {
-            "name": "Spanish",
-            "value": "lang:es"
-          },
-          {
-            "name": "Swedish",
-            "value": "lang:sv"
-          },
-          {
-            "name": "Turkish",
-            "value": "lang:tr"
-          },
-          {
-            "name": "Ukrainian",
-            "value": "lang:uk"
+            "name": "Inline (side by side)",
+            "value": "inline"
           }
         ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "cookieName",
+        "value": "",
+        "label": "Cookie Name",
+        "description": "Unique name for the browser cookie that persists the user's answer. No spaces or special characters."
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "showReset",
+        "value": false,
+        "label": "Show Reset Button",
+        "description": "When enabled, a reset button lets the user clear their answer and choose again."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "resetLabel",
+        "value": "Start over",
+        "label": "Reset Button Label",
+        "condition": {
+          "===": [
+            {
+              "var": "showReset"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
       }
     ]
   },
@@ -8277,6 +8231,52 @@
         "label": "Answer Content",
         "description": "Rich text content revealed when this answer option is selected.",
         "valueType": "string"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "itemVariant",
+        "label": "Variation",
+        "options": [
+          {
+            "name": "Without CTA",
+            "value": "without-cta"
+          },
+          {
+            "name": "With CTA",
+            "value": "with-cta"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLabel",
+        "value": "",
+        "label": "Button Label",
+        "description": "Text for the CTA button. A > icon is appended automatically.",
+        "condition": {
+          "===": [
+            {
+              "var": "itemVariant"
+            },
+            "with-cta"
+          ]
+        }
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "ctaHref",
+        "label": "Button Link",
+        "condition": {
+          "===": [
+            {
+              "var": "itemVariant"
+            },
+            "with-cta"
+          ]
+        }
       }
     ]
   },
@@ -14119,6 +14119,83 @@
             "value": "lang:uk"
           }
         ]
+      },
+      {
+        "id": "dismiss",
+        "fields": [
+          {
+            "component": "tab",
+            "label": "Content",
+            "name": "tab-content"
+          },
+          {
+            "component": "richtext",
+            "name": "content",
+            "value": "",
+            "label": "Content",
+            "description": "Content shown until the user dismisses it. A close button is added automatically.",
+            "valueType": "string"
+          },
+          {
+            "component": "tab",
+            "label": "Settings",
+            "name": "tab-settings"
+          },
+          {
+            "component": "select",
+            "valueType": "string",
+            "name": "classes",
+            "label": "Layout",
+            "options": [
+              {
+                "name": "Default (inline)",
+                "value": ""
+              },
+              {
+                "name": "Sticky (fixed top)",
+                "value": "sticky"
+              }
+            ]
+          },
+          {
+            "component": "text",
+            "name": "cookieName",
+            "label": "Cookie Name",
+            "valueType": "string",
+            "description": "Unique key for the dismissal cookie. Defaults to the page URL path if blank."
+          },
+          {
+            "component": "text",
+            "name": "closeLabel",
+            "label": "Close Button Label",
+            "valueType": "string",
+            "description": "Accessible label for the close button (aria-label). Defaults to 'Close' if blank."
+          },
+          {
+            "component": "boolean",
+            "name": "resetOnLoad",
+            "label": "Reset on Load",
+            "valueType": "boolean",
+            "description": "When enabled, the dismissal cookie is cleared on every page load so the banner always shows."
+          },
+          {
+            "...": "../../models/_common-properties.json#/common-prop"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tab-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabTitle",
+        "value": "",
+        "label": "Tab Name",
+        "required": true,
+        "description": "Name shown on the tab button. Must match a Tab Panel's Tab Name (case-insensitive)."
       }
     ]
   }

@@ -1,5 +1,6 @@
 import { fetchPlaceholders } from '../../scripts/placeholders.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { renderBlock } from '../../scripts/multi-theme.js';
 
 function updateActiveSlide(slide) {
   const block = slide.closest('.carousel');
@@ -148,5 +149,11 @@ export default async function decorate(block) {
 
   if (!isSingleSlide) {
     bindEvents(block);
+  }
+
+  try {
+    await renderBlock(block);
+  } catch {
+    // brand block-config failed; carousel still renders with base functionality
   }
 }
