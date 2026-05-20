@@ -24,8 +24,8 @@ export default async function decorate(block) {
     item.className = 'flexbox-item';
 
     // Extract itemClasses (width) from last plain-text cell
-    const lastCell = cells[cells.length - 1];
-    const widthValue = lastCell?.textContent?.trim() || '';
+    const widthCell = cells[cells.length - 1];
+    const widthValue = widthCell?.textContent?.trim() || '';
     if (['full', 'half', 'third', 'quarter'].includes(widthValue)) {
       item.dataset.width = widthValue;
     }
