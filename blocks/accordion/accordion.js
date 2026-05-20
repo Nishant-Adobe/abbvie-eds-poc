@@ -182,7 +182,16 @@ export default function decorate(block) {
           if (html) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            doc.querySelectorAll('script').forEach((s) => s.remove());
+            // Remove unsafe elements
+            doc.querySelectorAll('script, style, iframe, object, embed, link[rel="import"]').forEach((el) => el.remove());
+            // Remove event handler attributes and javascript: URLs
+            doc.querySelectorAll('*').forEach((el) => {
+              [...el.attributes].forEach((attr) => {
+                if (attr.name.startsWith('on') || (attr.name === 'href' && attr.value.trim().toLowerCase().startsWith('javascript:'))) {
+                  el.removeAttribute(attr.name);
+                }
+              });
+            });
             body.textContent = '';
             body.append(...doc.body.childNodes);
           } else {
