@@ -165,10 +165,10 @@
   justify-content: center;
   background: transparent;
   border: var(--border-width-1, 0.1rem) solid var(--color-tabs-underline, #00b4d8);
-  border-radius: var(--border-radius-button-tertiary, 10rem);
-  padding: 0;
+  border-radius: var(--tabs-pill-radius, 50rem);
+  padding: var(--spacing-04, 0.4rem);
   gap: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* ── Pill tab buttons (inactive) — transparent, dark text ── */
@@ -182,7 +182,7 @@
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide-sm, 0.05em);
   border: none;
-  border-radius: 0;
+  border-radius: var(--tabs-pill-radius, 50rem);
   white-space: nowrap;
   position: relative;
   line-height: var(--line-height-20, 2rem);
@@ -191,6 +191,13 @@
 
 /* ── Pill active tab — filled cyan background ── */
 .tabs.pill .tabs-list button.tabs-tab[aria-selected='true'] {
+  background: var(--color-tabs-underline, #00b4d8);
+  color: var(--color-text-on-dark, #fff);
+  font-weight: var(--font-weight-heading, 700);
+}
+
+/* First tab appears active when no tab is explicitly selected */
+.tabs.pill .tabs-list:not(:has(button[aria-selected='true'])) button.tabs-tab:first-child {
   background: var(--color-tabs-underline, #00b4d8);
   color: var(--color-text-on-dark, #fff);
   font-weight: var(--font-weight-heading, 700);
