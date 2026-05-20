@@ -43,7 +43,8 @@ function getCookie(name) {
 
 function setCookie(name, value, days) {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
+  const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+  document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax${secure}`;
 }
 
 function parseOption(text) {
@@ -225,10 +226,16 @@ export async function decorateBlock(block) {
       const id = opt.QuestionOptionId?.toLowerCase();
       const item = id ? resultSet.querySelector(`[data-optionid="${id}"]`) : null;
       if (!item) return;
-      item.querySelector('.qpoll-pct').textContent = String(
-        Math.round(parseFloat(opt.PercentageOfUsersRespondedOnOption ?? 0)),
-      );
-      if (opt.OptionValue) item.querySelector('p').textContent = opt.OptionValue;
+      const pct = item.querySelector('.qpoll-pct');
+      if (pct) {
+        pct.textContent = String(
+          Math.round(parseFloat(opt.PercentageOfUsersRespondedOnOption ?? 0)),
+        );
+      }
+      if (opt.OptionValue) {
+        const label = item.querySelector('p');
+        if (label) label.textContent = opt.OptionValue;
+      }
     });
   }
 
@@ -358,6 +365,7 @@ export async function decorateBlock(block) {
 
   optionsWrap.addEventListener('click', (e) => {
     const btn = e.target.closest('.qpoll-option');
+    // errors handled internally by submitAnswer (showError / showLocalResults)
     if (btn) submitAnswer(btn.dataset.optionid).catch(() => {});
   });
 
