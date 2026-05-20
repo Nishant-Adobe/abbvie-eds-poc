@@ -7,6 +7,8 @@ export default async function getBlockConfigs() {
       submitIconEnabled: false,
       headingTag: 'h2',
       autoSubmitOnStateChange: true,
+      errorDisplayMode: 'tooltip',
+      disclaimerModal: false,
     },
     variations: [],
     decorations: {},

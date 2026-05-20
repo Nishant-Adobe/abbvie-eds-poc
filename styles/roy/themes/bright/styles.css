@@ -69,6 +69,7 @@
   --color-orange-dark: #cf451c;
   --color-orange-light: #f7634f;
   --color-green-primary: #338700;
+  --color-gray-900: #25282a;
 
   /* Alerts */
   --error-color: #cf451c;
@@ -347,6 +348,62 @@
   --hero-tall-image-container-height: 25.6rem;
   --hero-profile-container-height: 12rem;
   --hero-landing-container-height: 41.8rem;
+
+  /* ---- Hero: Overlay Colors ---- */
+  --hero-overlay-dark-90: rgb(0 0 0 / 90%);
+  --hero-overlay-dark-70: rgb(0 0 0 / 70%);
+  --hero-overlay-dark-60: rgb(0 0 0 / 60%);
+  --hero-overlay-dark-55: rgb(0 0 0 / 55%);
+  --hero-overlay-dark-45: rgb(0 0 0 / 45%);
+
+  /* ---- Hero: Overlay Gradients ---- */
+  --hero-overlay-gradient-full: linear-gradient(to right, rgb(0 0 0 / 60%) 0%, transparent 60%);
+  --hero-overlay-gradient-compact: linear-gradient(to right, rgb(0 0 0 / 55%) 0%, transparent 65%);
+  --hero-overlay-gradient-centered: rgb(0 0 0 / 45%);
+
+  /* ---- Hero: Text on Dark ---- */
+  --color-text-on-dark-90: rgb(255 255 255 / 90%);
+  --color-text-on-dark-80: rgb(255 255 255 / 80%);
+  --color-text-on-dark-60: rgb(255 255 255 / 60%);
+
+  /* ---- Hero: Indication Banner ---- */
+  --hero-indication-bg: rgb(0 0 0 / 70%);
+
+  /* ---- Hero: Variant min-heights (mobile base) ---- */
+  /* All values in rem (1rem = 10px at 62.5% html font-size) for WCAG 1.4.4 compliance */
+  --hero-full-min-height: 70rem;
+  --hero-full-min-height-mobile: 40rem;
+  --hero-full-min-height-desktop: 80rem;
+  --hero-compact-min-height: 28rem;
+  --hero-compact-min-height-mobile: 20rem;
+  --hero-compact-min-height-tablet: 34rem;
+  --hero-centered-min-height: 60rem;
+  --hero-centered-min-height-mobile: 40rem;
+  --hero-video-min-height: 70rem;
+  --hero-video-min-height-mobile: 40rem;
+  --hero-video-min-height-desktop: 80rem;
+  --hero-solid-min-height: 45rem;
+  --hero-solid-min-height-mobile: 30rem;
+  --hero-solid-min-height-desktop: 50rem;
+  --hero-solid-img-max-height: 40rem;
+  --hero-split-min-height: 50rem;
+  --hero-split-img-max-height: 45rem;
+
+  /* ---- Hero: Content max-widths ---- */
+  --hero-content-max-width-full: 55%;
+  --hero-content-max-width-full-desktop: 50%;
+  --hero-content-max-width-compact: 70%;
+  --hero-content-max-width-solid: 60%;
+  --hero-content-max-width-centered: 800px;
+  --hero-content-max-width-mobile: 90%;
+
+  /* ---- Hero: Multilayer animation ---- */
+  --hero-layer-transition: opacity 0.6s ease;
+  --hero-layer-opacity-hidden: 0;
+  --hero-layer-opacity-visible: 1;
+
+  /* ---- Hero: Solid fallback bg ---- */
+  --hero-solid-bg-fallback: var(--color-gray-900, #25282a);
 
   /* Line Clamp */
 
@@ -731,7 +788,7 @@ a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
-  background-color: var(--highlight-dark-background-color);
+  /* background-color: var(--highlight-dark-background-color); */
   color: var(--background-color);
   cursor: pointer;
 }
@@ -2601,7 +2658,7 @@ main > .section.purple.columns-container h4 {
 @media (width >= 1024px) {
   .section .large-radius {
     border-top-left-radius: var(--border-top-left-radius-desktop);
-  } 
+  }
 
   main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) ul li a::after {
     line-height: var(--line-height-24);
@@ -2873,7 +2930,7 @@ main > .section.cards-container:has(#the-stories-behind-our-science) .cards .car
   }
 
   .abbvie-container div {
-    grid-column: 1 / span 8;   
+    grid-column: 1 / span 8;
   }
 }
 
@@ -2892,7 +2949,7 @@ main > .section.cards-container:has(#the-stories-behind-our-science) .cards .car
   }
 
   .abbvie-container div {
-    grid-column: 1 / span 12;   
+    grid-column: 1 / span 12;
   }
 }
 
@@ -3103,7 +3160,7 @@ main .section.dark:has(#core-focus-areas) ul li a::after {
   }
 
   .abbvie-container div {
-    grid-column: 1 / span 12;   
+    grid-column: 1 / span 12;
   }
 }
 
@@ -3315,13 +3372,13 @@ main .section.highlight:has(#where-bold-science-meets-real-world-results) a {
   column-gap: var(--spacing-15);
   grid-template-columns: repeat(6, 1fr);
   margin-left: var(--spacing-20);
-  margin-right: var(--spacing-20);  
+  margin-right: var(--spacing-20);
 }
 
 /* inner cmp-container base setup */
 
 .abbvie-container div {
-  grid-column: 1 / span 6; 
+  grid-column: 1 / span 6;
 }
 
 @media (width >=744px) {
@@ -3333,7 +3390,7 @@ main .section.highlight:has(#where-bold-science-meets-real-world-results) a {
   }
 
   .abbvie-container div {
-    grid-column: 1 / span 8;   
+    grid-column: 1 / span 8;
   }
 }
 
@@ -3345,7 +3402,7 @@ main .section.highlight:has(#where-bold-science-meets-real-world-results) a {
   }
 
   .abbvie-container div {
-    grid-column: 1 / span 12;   
+    grid-column: 1 / span 12;
   }
 }
 

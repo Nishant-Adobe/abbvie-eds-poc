@@ -1,8 +1,15 @@
 import { applyCommonProps } from '../../scripts/utils.js';
 
-export default async function decorate(block) {
-  const type = [...block.classList].filter((c) => c !== 'block' && c !== 'header-content').pop();
-  block.dataset.type = type || 'menu';
+// All variant class values from the navigation-content UE model's classes select field.
+// Explicit matching prevents lang:* / id:* / custom classes from being misdetected as the type.
+const BLOCK_TYPES = [
+  'logo', 'language-links', 'search', 'utility-nav',
+  'eyebrow', 'floating-isi', 'cta-group',
+];
+
+export default function decorate(block) {
+  const typeClass = BLOCK_TYPES.find((t) => block.classList.contains(t));
+  block.dataset.type = typeClass || 'navigation-content';
 
   const secondCol = block.children[1];
   if (secondCol) {
