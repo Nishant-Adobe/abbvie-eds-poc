@@ -393,11 +393,11 @@
 
 .formulary-lookup-disclaimer-modal {
   position: relative;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgb(0 0 0 / 25%);
-  padding: 40px 48px;
-  max-width: 900px;
+  background: var(--background-color, white);
+  border-radius: var(--formulary-modal-radius, 16px);
+  box-shadow: var(--formulary-modal-shadow, 0 8px 32px rgb(0 0 0 / 25%));
+  padding: var(--formulary-modal-padding, 40px 48px);
+  max-width: var(--formulary-modal-max-width, 900px);
   width: 100%;
   max-height: 80vh;
   overflow-y: auto;
@@ -558,7 +558,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
-  background: var(--formulary-error-tooltip-bg, #fff);
+  background: var(--formulary-error-tooltip-bg, var(--background-color, white));
   border-radius: var(--formulary-error-tooltip-radius, 8px);
   box-shadow: var(--formulary-error-tooltip-shadow, 0 4px 20px rgb(0 0 0 / 20%));
   padding: var(--formulary-error-tooltip-padding, 16px 48px 16px 20px);
@@ -620,7 +620,7 @@
 .formulary-lookup-error-modal-content {
   font-size: var(--body-font-size-m, 1rem);
   line-height: 1.5;
-  color: var(--text-color, #333);
+  color: var(--text-color, inherit);
 }
 
 .formulary-lookup-error-modal-close {
@@ -632,7 +632,7 @@
   border-radius: 50%;
   border: none;
   background: var(--formulary-error-modal-close-bg, var(--link-color, #0057cc));
-  color: var(--formulary-error-modal-close-color, #fff);
+  color: var(--formulary-error-modal-close-color, var(--color-white, white));
   font-size: 20px;
   cursor: pointer;
   display: flex;
