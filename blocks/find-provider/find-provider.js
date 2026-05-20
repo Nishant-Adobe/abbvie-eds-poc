@@ -383,7 +383,6 @@ export async function decorateBlock(block) {
 
   if (config['anchor-id']) block.id = config['anchor-id'];
 
-  const isMap = block.classList.contains('find-provider-map');
   const isLocation = block.classList.contains('find-provider-location');
 
   const status = document.createElement('p');
@@ -404,14 +403,11 @@ export async function decorateBlock(block) {
   const results = document.createElement('ul');
   results.className = 'find-provider-results';
 
-  let mapContainer = null;
-  if (isMap) {
-    mapContainer = document.createElement('div');
-    mapContainer.id = 'provider-map';
-    mapContainer.className = 'find-provider-map-container';
-    mapContainer.setAttribute('role', 'region');
-    mapContainer.setAttribute('aria-label', 'Provider map');
-  }
+  const mapContainer = document.createElement('div');
+  mapContainer.id = 'provider-map';
+  mapContainer.className = 'find-provider-map-container';
+  mapContainer.setAttribute('role', 'region');
+  mapContainer.setAttribute('aria-label', 'Provider map');
 
   const form = buildForm(config, blockId, isLocation);
   const searchInput = form.querySelector('.find-provider-search-input');
@@ -427,13 +423,11 @@ export async function decorateBlock(block) {
       return;
     }
     providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx)));
-    if (isMap) {
-      try {
-        const { updateMapMarkers } = await import('../eds-form/maps.js');
-        updateMapMarkers(providers, 0);
-      } catch {
-        // Map not ready yet — markers will be set when initializeMap resolves
-      }
+    try {
+      const { updateMapMarkers } = await import('../eds-form/maps.js');
+      updateMapMarkers(providers, 0);
+    } catch {
+      // Map not ready yet — markers will be set when initializeMap resolves
     }
   }
 
@@ -469,7 +463,6 @@ export async function decorateBlock(block) {
   resultsLayout.append(results);
   if (mapContainer) resultsLayout.append(mapContainer);
   resultsPanel.append(resultsLayout);
-
   resultsPanel.append(buildPagination(5, 1));
 
   async function runSearchFlow(query) {
@@ -550,25 +543,25 @@ export async function decorateBlock(block) {
 
   block.replaceChildren(form, status, loader, resultsPanel);
 
-  if (isMap) {
+  if (config['maps-api-key']) {
     try {
       const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
-      if (config['maps-api-key']) await loadGoogleMapsAPI(config['maps-api-key']);
-      await initializeMap(config['maps-api-key'] || null);
+      await loadGoogleMapsAPI(config['maps-api-key']);
+      await initializeMap(config['maps-api-key']);
     } catch {
       // Maps failed to load — fall through to iframe fallback below
     }
+  }
 
-    if (mapContainer && !mapContainer.querySelector('div, iframe')) {
-      const iframe = document.createElement('iframe');
-      iframe.src = 'https://maps.google.com/maps?q=Elmhurst,NY+11373&z=11&output=embed';
-      iframe.title = 'Provider locations';
-      iframe.loading = 'lazy';
-      iframe.referrerPolicy = 'no-referrer-when-downgrade';
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.className = 'find-provider-map-iframe';
-      mapContainer.append(iframe);
-    }
+  if (mapContainer && !mapContainer.querySelector('div, iframe')) {
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://maps.google.com/maps?q=Elmhurst,NY+11373&z=11&output=embed';
+    iframe.title = 'Provider locations';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.className = 'find-provider-map-iframe';
+    mapContainer.append(iframe);
   }
 }
 

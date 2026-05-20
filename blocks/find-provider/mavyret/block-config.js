@@ -29,10 +29,42 @@ function restructurePagination(block) {
   if (resultsLayout && header && resultsUL) {
     const right = document.createElement('div');
     right.className = 'find-provider-results-right';
-    const topPagination = pagination.cloneNode(true);
-    right.append(topPagination, header, resultsUL);
+    right.append(header, resultsUL);
     resultsLayout.append(right);
+
+    const topPagination = pagination.cloneNode(true);
+    topPagination.dataset.mavyretDone = 'true';
+    resultsLayout.before(topPagination);
   }
+}
+
+function moveNameIntoBody(li) {
+  const name = li.querySelector('.find-provider-result-name');
+  const body = li.querySelector('.find-provider-result-body');
+  if (!name || !body || body.contains(name)) return;
+  body.prepend(name);
+}
+
+function observeResults(block) {
+  const resultsList = block.querySelector('.find-provider-results');
+  if (!resultsList) return;
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(({ addedNodes }) => {
+      addedNodes.forEach((node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) moveNameIntoBody(node);
+      });
+    });
+  });
+  observer.observe(resultsList, { childList: true });
+}
+
+function wrapForm(block) {
+  const form = block.querySelector('.find-provider-form');
+  if (!form) return;
+  const wrapper = document.createElement('div');
+  wrapper.className = 'find-provider-form-wrap';
+  form.replaceWith(wrapper);
+  wrapper.append(form);
 }
 
 export default async function getBlockConfigs() {
@@ -41,7 +73,9 @@ export default async function getBlockConfigs() {
     variations: [],
     decorations: {
       afterDecorate: async (block) => {
+        wrapForm(block);
         restructurePagination(block);
+        observeResults(block);
       },
     },
   };
