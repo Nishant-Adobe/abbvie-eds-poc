@@ -251,7 +251,32 @@
 
 /* Rinvoq: radio-circle option buttons — gold ring on left, checkmark on hover/focus */
 
+.quick-poll-container {
+  .default-content-wrapper h4 {
+    font-size: var(--font-size-10);
+    letter-spacing: var(--qpoll-label-letter-spacing);
+    line-height: var(--line-height-18);
+    margin-bottom: var(--spacing-15);
+    position: relative;
+  }
+}
+
+.quick-poll-container .default-content-wrapper h4::after {
+  background-image: url("/../icons/brushstroke-poll.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  bottom: calc(-1 * var(--spacing-12));
+  content: "";
+  display: inline-block;
+  height: var(--spacing-12);
+  left: calc(-1 * var(--spacing-15));
+  position: absolute;
+  width: var(--qpoll-brushstroke-width);
+}
+
 .quick-poll {
+  --qpoll-brushstroke-width: 22.5rem;
+  --qpoll-label-letter-spacing: 0.03rem;
   --qpoll-option-border-color: transparent;
   --qpoll-option-color: var(--button-tertiary-color);
   --qpoll-option-hover-bg: transparent;
