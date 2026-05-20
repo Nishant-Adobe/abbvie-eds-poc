@@ -37,9 +37,9 @@
 
   /* Per-item width classes */
   .flexbox .flexbox-item[data-width="full"] { flex: 0 0 100%; }
-  .flexbox .flexbox-item[data-width="half"] { flex: 0 0 calc(50% - var(--flexbox-gap, 16px) / 2); }
-  .flexbox .flexbox-item[data-width="third"] { flex: 0 0 calc(33.333% - var(--flexbox-gap, 16px) * 2 / 3); }
-  .flexbox .flexbox-item[data-width="quarter"] { flex: 0 0 calc(25% - var(--flexbox-gap, 16px) * 3 / 4); }
+  .flexbox .flexbox-item[data-width="half"] { flex: 0 0 calc(50% - var(--flexbox-gap, var(--spacing-16, 16px)) / 2); }
+  .flexbox .flexbox-item[data-width="third"] { flex: 0 0 calc(33.333% - var(--flexbox-gap, var(--spacing-16, 16px)) * 2 / 3); }
+  .flexbox .flexbox-item[data-width="quarter"] { flex: 0 0 calc(25% - var(--flexbox-gap, var(--spacing-16, 16px)) * 3 / 4); }
 
   /* Per-item grow (data-grow="1" through "12") */
   .flexbox .flexbox-item[data-grow="1"] { flex-grow: 1; }
