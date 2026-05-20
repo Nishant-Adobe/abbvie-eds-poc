@@ -170,11 +170,29 @@ export default function decorate(block) {
     if (body.firstElementChild) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
-    const ariaExpandLabel = row.children[3]?.textContent.trim() || '';
-    const ariaCollapseLabel = row.children[4]?.textContent.trim() || '';
-    const anchorId = row.children[5]?.textContent.trim() || '';
-    const itemImage = row.children[6]?.querySelector('picture') || null;
-    const imageAlt = row.children[7]?.textContent.trim() || '';
+
+    // Fragment path (overrides body content if set)
+    const fragmentPath = row.children[2]?.textContent.trim() || '';
+    if (fragmentPath && /^\//.test(fragmentPath)) {
+      body.dataset.fragmentPath = fragmentPath;
+      body.innerHTML = '<p class="accordion-loading">Loading...</p>';
+      fetch(`${fragmentPath}.plain.html`)
+        .then((resp) => (resp.ok ? resp.text() : ''))
+        .then((html) => {
+          if (html) {
+            body.innerHTML = html;
+          } else {
+            body.innerHTML = '';
+          }
+        })
+        .catch(() => { body.innerHTML = ''; });
+    }
+
+    const ariaExpandLabel = row.children[4]?.textContent.trim() || '';
+    const ariaCollapseLabel = row.children[5]?.textContent.trim() || '';
+    const anchorId = row.children[6]?.textContent.trim() || '';
+    const itemImage = row.children[7]?.querySelector('picture') || null;
+    const imageAlt = row.children[8]?.textContent.trim() || '';
 
     if (itemImage && imageAlt) {
       itemImage.querySelector('img')?.setAttribute('alt', imageAlt);
@@ -184,7 +202,7 @@ export default function decorate(block) {
     const details = document.createElement('details');
     moveInstrumentation(row, details);
     // Use the third column for additional classes on the details element
-    details.className = `${row.children[2]?.textContent.trim().replaceAll(',', '') || ''}`;
+    details.className = `${row.children[3]?.textContent.trim().replaceAll(',', '') || ''}`;
     if (anchorId) details.setAttribute('id', anchorId);
     if (details.classList.contains('defaultopen')) {
       summary.classList.add(cfg.collapseIcon);
