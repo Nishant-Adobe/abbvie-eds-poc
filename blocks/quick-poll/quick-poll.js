@@ -119,11 +119,16 @@ export async function decorateBlock(block) {
 
   block.replaceChildren();
 
+  const imgAlt = getText('image-alt', '');
   const imageCell = fields.image;
   if (imageCell?.querySelector('img, picture')) {
     const imgWrap = document.createElement('div');
     imgWrap.className = 'qpoll-image';
     [...imageCell.childNodes].forEach((n) => imgWrap.append(n.cloneNode(true)));
+    if (imgAlt) {
+      const img = imgWrap.querySelector('img');
+      if (img) img.alt = imgAlt;
+    }
     block.append(imgWrap);
   }
 
@@ -140,6 +145,7 @@ export async function decorateBlock(block) {
   const resultsLabel = document.createElement('p');
   resultsLabel.className = 'qpoll-results-label';
   resultsLabel.textContent = resultLabel;
+  resultsLabel.hidden = true;
 
   const optionsWrap = document.createElement('div');
   optionsWrap.className = 'qpoll-options';
@@ -241,6 +247,7 @@ export async function decorateBlock(block) {
 
   function showLocalResults() {
     optionsWrap.hidden = true;
+    resultsLabel.hidden = false;
     hideLoading();
     resultsEl.hidden = false;
     if (!getCookie(pollName)) setCookie(pollName, '1', COOKIE_DAYS);
@@ -253,11 +260,19 @@ export async function decorateBlock(block) {
 
   const brandCode = getBrandCode();
 
-  const [getAssessmentUrl, saveAssessmentUrl, getAggregatedUrl] = await Promise.all([
-    getApiUrl('getAssessment'),
-    getApiUrl('saveAssessment'),
-    getApiUrl('getAggregated'),
-  ]);
+  let getAssessmentUrl = '';
+  let saveAssessmentUrl = '';
+  let getAggregatedUrl = '';
+  try {
+    [getAssessmentUrl, saveAssessmentUrl, getAggregatedUrl] = await Promise.all([
+      getApiUrl('getAssessment'),
+      getApiUrl('saveAssessment'),
+      getApiUrl('getAggregated'),
+    ]);
+  } catch {
+    showError(errors.noPoll);
+    return;
+  }
 
   function findQuestion(questions) {
     return (questionId
@@ -281,6 +296,7 @@ export async function decorateBlock(block) {
       if (!questionTextAuthored && qData.QuestionText) qText.textContent = qData.QuestionText;
       applyPercentages(qData.QuestionOption ?? []);
       optionsWrap.hidden = true;
+      resultsLabel.hidden = false;
       hideLoading();
       resultsEl.hidden = false;
       if (!getCookie(pollName)) setCookie(pollName, '1', COOKIE_DAYS);
