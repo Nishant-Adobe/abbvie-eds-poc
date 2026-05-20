@@ -17,7 +17,7 @@ export default async function decorate(block) {
   }
 
   // Each remaining row is a flex item
-  // UE field order per item: image (cell 0) | imageAlt (cell 1) | content (cell 2) | itemClasses (cell 3)
+  // UE field order: image(0) | imageAlt(1) | content(2) | itemClasses(3)
   const items = rows.map((row) => {
     const cells = [...row.children];
     const item = document.createElement('div');

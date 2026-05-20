@@ -187,7 +187,9 @@ export default function decorate(block) {
             // Remove event handler attributes and javascript: URLs
             doc.querySelectorAll('*').forEach((el) => {
               [...el.attributes].forEach((attr) => {
-                if (attr.name.startsWith('on') || (attr.name === 'href' && attr.value.trim().toLowerCase().startsWith('javascript:'))) {
+                const val = attr.value.trim().toLowerCase();
+                // eslint-disable-next-line no-script-url
+                if (attr.name.startsWith('on') || (attr.name === 'href' && val.startsWith('javascript:'))) {
                   el.removeAttribute(attr.name);
                 }
               });
