@@ -1,6 +1,7 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
 const COOKIE_DAYS = 365;
+
 const FALLBACK_URLS = {
   getAssessment: 'https://www.abbviebrandconsumer.com/BrandAPIGateway/api/Assessment/Get',
   saveAssessment: 'https://www.abbviebrandconsumer.com/BrandAPIGateway/api/Assessment/Save',
@@ -36,22 +37,70 @@ export async function decorateBlock(block) {
   const rows = [...block.children];
   const fields = {};
   const authoredOptions = [];
-  rows.forEach((row) => {
-    const cells = [...row.children];
-    const key = cells[0]?.textContent.trim().toLowerCase();
-    if (!key) return;
-    if (key === 'option' && cells[1]) {
-      const parts = cells[1].textContent.trim().split('|').map((p) => p.trim());
-      if (parts[0]) {
-        authoredOptions.push({
-          OptionId: parts[1] || parts[0].toLowerCase().replace(/\s+/g, '-'),
-          OptionText: parts[0],
+
+  // xwalk delivery: 1 cell per row (value only, positional ordering).
+  // Doc authoring: 2 cells per row (key text + value cell).
+  const isXwalk = rows.length > 0 && !rows[0].children[1];
+
+  if (isXwalk) {
+    // Positional field map — matches _quick-poll.json field order.
+    // The `classes` select field sets CSS classes on the block element directly (no row).
+    // Tab fields produce no rows. All other fields produce one row each.
+    const XWALK_FIELDS = [
+      'image', // 0
+      'image-alt', // 1
+      'master-campaign-id', // 2
+      'poll-name', // 3
+      'question-id', // 4
+      'question-text', // 5
+      'result-label', // 6
+      'result-description', // 7
+      'option', // 8
+      'error-timeout', // 9
+      'error-no-poll', // 10
+      'error-fetch-results', // 11
+      'error-save', // 12
+    ];
+    rows.forEach((row, idx) => {
+      const fieldName = XWALK_FIELDS[idx];
+      if (!fieldName) return;
+      const cell = row.children[0] || null;
+      if (fieldName === 'option' && cell) {
+        // Richtext field: each <p> is one option. Format: "Label | OptionId"
+        const lines = [...cell.querySelectorAll('p')]
+          .map((p) => p.textContent.trim())
+          .filter(Boolean);
+        lines.forEach((line) => {
+          const parts = line.split('|').map((s) => s.trim());
+          if (parts[0]) {
+            authoredOptions.push({
+              OptionId: parts[1] || parts[0].toLowerCase().replace(/\s+/g, '-'),
+              OptionText: parts[0],
+            });
+          }
         });
+      } else {
+        fields[fieldName] = cell;
       }
-    } else {
-      fields[key] = cells[1] || null;
-    }
-  });
+    });
+  } else {
+    rows.forEach((row) => {
+      const cells = [...row.children];
+      const key = cells[0]?.textContent.trim().toLowerCase();
+      if (!key) return;
+      if (key === 'option' && cells[1]) {
+        const parts = cells[1].textContent.trim().split('|').map((p) => p.trim());
+        if (parts[0]) {
+          authoredOptions.push({
+            OptionId: parts[1] || parts[0].toLowerCase().replace(/\s+/g, '-'),
+            OptionText: parts[0],
+          });
+        }
+      } else {
+        fields[key] = cells[1] || null;
+      }
+    });
+  }
 
   const masterCampaignId = fields['master-campaign-id']?.textContent?.trim();
   const pollName = fields['poll-name']?.textContent?.trim();
@@ -219,7 +268,7 @@ export async function decorateBlock(block) {
 
   async function fetchAggregated() {
     try {
-      const url = new URL(getAggregatedUrl);
+      const url = new URL(getAggregatedUrl, window.location.origin);
       url.searchParams.set('CampaignMasterId', masterCampaignId);
       const resp = await fetch(url.toString());
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -283,7 +332,7 @@ export async function decorateBlock(block) {
   async function loadQuestion(keepLoading = false) {
     showLoading();
     try {
-      const url = new URL(getAssessmentUrl);
+      const url = new URL(getAssessmentUrl, window.location.origin);
       url.searchParams.set('CampaignMasterId', masterCampaignId);
       if (questionId) url.searchParams.set('QuesId', questionId);
       const resp = await fetch(url.toString());
@@ -306,10 +355,10 @@ export async function decorateBlock(block) {
       if (authoredOptions.length >= 2) {
         buildOptionButtons(authoredOptions);
         if (!keepLoading) hideLoading();
-        return true;
+      } else {
+        showError(errors.noPoll);
       }
-      showError(e?.name === 'AbortError' ? errors.timeout : errors.noPoll);
-      return false;
+      return true;
     }
   }
 
