@@ -135,8 +135,10 @@ export async function decorateBlock(block) {
   const ia = document.createElement('div');
   ia.className = 'qpoll-ia';
 
+  const qTextId = `qpoll-q-${pollName}`;
   const qText = document.createElement('p');
   qText.className = 'qpoll-question';
+  qText.id = qTextId;
   qText.setAttribute('role', 'heading');
   qText.setAttribute('aria-level', '2');
   if (questionId) qText.dataset.questionid = questionId;
@@ -149,6 +151,8 @@ export async function decorateBlock(block) {
 
   const optionsWrap = document.createElement('div');
   optionsWrap.className = 'qpoll-options';
+  optionsWrap.setAttribute('role', 'group');
+  optionsWrap.setAttribute('aria-labelledby', qTextId);
 
   const resultsEl = document.createElement('div');
   resultsEl.className = 'qpoll-results';
@@ -337,6 +341,7 @@ export async function decorateBlock(block) {
       if (data?.IsStatusSuccessful) {
         await fetchAggregated();
       } else {
+        [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
         showError(errors.save);
       }
     } catch (err) {
