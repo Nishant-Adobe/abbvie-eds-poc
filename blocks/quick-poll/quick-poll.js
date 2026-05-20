@@ -11,14 +11,30 @@ const FALLBACK_URLS = {
 };
 
 let configPromise = null;
-async function getApiUrl(key) {
+function loadConfig() {
   if (!configPromise) {
     configPromise = fetch('/ab-config.json')
       .then((r) => (r.ok ? r.json() : {}))
       .catch(() => ({}));
   }
-  const cfg = await configPromise;
-  return cfg?.data?.find((r) => r.key === key)?.value || FALLBACK_URLS[key] || '';
+  return configPromise;
+}
+
+async function getApiUrl(key) {
+  const cfg = await loadConfig();
+  const value = cfg?.data?.find((r) => r.key === key)?.value || '';
+  if (value.startsWith('http')) return value;
+  if (value.startsWith('/')) {
+    const publishUrl = cfg?.data?.find((r) => r.key === 'aemPublishUrl')?.value || '';
+    if (publishUrl) return `${publishUrl}${value}`;
+  }
+  return FALLBACK_URLS[key] || '';
+}
+
+async function getAuthHeader() {
+  const cfg = await loadConfig();
+  const auth = cfg?.data?.find((r) => r.key === 'campaignManagerAuth')?.value || '';
+  return auth ? { Authorization: `Basic ${auth}` } : {};
 }
 
 function getCookie(name) {
@@ -262,10 +278,11 @@ export async function decorateBlock(block) {
   // Fetch API URLs from /config.json (cached after first call).
   // DOM is already built above so the spinner is visible immediately.
 
-  const [getAssessmentUrl, saveAssessmentUrl, getAggregatedUrl] = await Promise.all([
+  const [getAssessmentUrl, saveAssessmentUrl, getAggregatedUrl, authHeader] = await Promise.all([
     getApiUrl('getAssessment'),
     getApiUrl('saveAssessment'),
     getApiUrl('getAggregated'),
+    getAuthHeader(),
   ]);
 
   async function fetchAggregated() {
@@ -273,7 +290,7 @@ export async function decorateBlock(block) {
       const url = new URL(getAggregatedUrl, window.location.origin);
       url.searchParams.set('brand', getBrandCode());
       url.searchParams.set('CampaignMasterId', masterCampaignId);
-      const resp = await fetch(url.toString());
+      const resp = await fetch(url.toString(), { headers: authHeader });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       if (!data?.IsStatusSuccessful) throw new Error('API error');
@@ -306,7 +323,7 @@ export async function decorateBlock(block) {
       saveUrl.searchParams.set('brand', getBrandCode());
       const resp = await fetch(saveUrl.toString(), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeader },
         body: JSON.stringify({
           CampaignMasterId: masterCampaignId,
           CompleteDate: null,
@@ -341,7 +358,7 @@ export async function decorateBlock(block) {
       url.searchParams.set('brand', getBrandCode());
       url.searchParams.set('CampaignMasterId', masterCampaignId);
       if (questionId) url.searchParams.set('QuesId', questionId);
-      const resp = await fetch(url.toString());
+      const resp = await fetch(url.toString(), { headers: authHeader });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       if (!data?.IsStatusSuccessful) throw new Error('API error');
