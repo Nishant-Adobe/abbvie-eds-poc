@@ -173,19 +173,23 @@ export default function decorate(block) {
 
     // Fragment path (overrides body content if set)
     const fragmentPath = row.children[2]?.textContent.trim() || '';
-    if (fragmentPath && /^\//.test(fragmentPath)) {
+    if (fragmentPath && /^\/(?!\/)/.test(fragmentPath)) {
       body.dataset.fragmentPath = fragmentPath;
-      body.innerHTML = '<p class="accordion-loading">Loading...</p>';
+      body.textContent = 'Loading...';
       fetch(`${fragmentPath}.plain.html`)
         .then((resp) => (resp.ok ? resp.text() : ''))
         .then((html) => {
           if (html) {
-            body.innerHTML = html;
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            doc.querySelectorAll('script').forEach((s) => s.remove());
+            body.textContent = '';
+            body.append(...doc.body.childNodes);
           } else {
-            body.innerHTML = '';
+            body.textContent = '';
           }
         })
-        .catch(() => { body.innerHTML = ''; });
+        .catch(() => { body.textContent = ''; });
     }
 
     const ariaExpandLabel = row.children[4]?.textContent.trim() || '';

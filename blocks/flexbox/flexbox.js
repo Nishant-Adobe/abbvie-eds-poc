@@ -17,19 +17,28 @@ export default async function decorate(block) {
   }
 
   // Each remaining row is a flex item
+  // UE field order per item: image | imageAlt | content | itemClasses
   const items = rows.map((row) => {
     const cells = [...row.children];
     const item = document.createElement('div');
     item.className = 'flexbox-item';
 
+    // Extract itemClasses (width) from last plain-text cell
+    const lastCell = cells[cells.length - 1];
+    const widthValue = lastCell?.textContent?.trim() || '';
+    if (['full', 'half', 'third', 'quarter'].includes(widthValue)) {
+      item.dataset.width = widthValue;
+    }
+
     cells.forEach((cell) => {
       const picture = cell.querySelector('picture');
+      const text = cell.textContent.trim();
       if (picture) {
         const imgWrap = document.createElement('div');
         imgWrap.className = 'flexbox-item-image';
         imgWrap.append(picture);
         item.append(imgWrap);
-      } else if (cell.textContent.trim()) {
+      } else if (cell.querySelector('h1, h2, h3, h4, h5, h6, p, ul, ol') || (text && !['full', 'half', 'third', 'quarter'].includes(text))) {
         const contentWrap = document.createElement('div');
         contentWrap.className = 'flexbox-item-content';
         [...cell.childNodes].forEach((node) => {
