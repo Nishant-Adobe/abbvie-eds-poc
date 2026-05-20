@@ -1,11 +1,13 @@
-import { renderBlock } from '../../scripts/multi-theme.js';
+import { renderBlock, getBrandCode } from '../../scripts/multi-theme.js';
 
 const COOKIE_DAYS = 365;
 
+const WORKER_BASE = 'https://campaign-manager-dev.abbvie-sandbox-309.workers.dev';
+
 const FALLBACK_URLS = {
-  getAssessment: 'https://www.abbviebrandconsumer.com/BrandAPIGateway/api/Assessment/Get',
-  saveAssessment: 'https://www.abbviebrandconsumer.com/BrandAPIGateway/api/Assessment/Save',
-  getAggregated: 'https://www.abbviebrandconsumer.com/BrandAPIGateway/api/Assessment/GetAggregated',
+  getAssessment: `${WORKER_BASE}/BrandAPIGateway/api/Assessment/Get`,
+  saveAssessment: `${WORKER_BASE}/BrandAPIGateway/api/Assessment/Save`,
+  getAggregated: `${WORKER_BASE}/BrandAPIGateway/api/Assessment/GetAggregated`,
 };
 
 let configPromise = null;
@@ -269,6 +271,7 @@ export async function decorateBlock(block) {
   async function fetchAggregated() {
     try {
       const url = new URL(getAggregatedUrl, window.location.origin);
+      url.searchParams.set('brand', getBrandCode());
       url.searchParams.set('CampaignMasterId', masterCampaignId);
       const resp = await fetch(url.toString());
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -299,7 +302,9 @@ export async function decorateBlock(block) {
   async function submitAnswer(optionId) {
     showLoading();
     try {
-      const resp = await fetch(saveAssessmentUrl, {
+      const saveUrl = new URL(saveAssessmentUrl, window.location.origin);
+      saveUrl.searchParams.set('brand', getBrandCode());
+      const resp = await fetch(saveUrl.toString(), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -333,6 +338,7 @@ export async function decorateBlock(block) {
     showLoading();
     try {
       const url = new URL(getAssessmentUrl, window.location.origin);
+      url.searchParams.set('brand', getBrandCode());
       url.searchParams.set('CampaignMasterId', masterCampaignId);
       if (questionId) url.searchParams.set('QuesId', questionId);
       const resp = await fetch(url.toString());
