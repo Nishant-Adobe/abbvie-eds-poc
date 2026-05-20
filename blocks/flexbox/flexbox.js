@@ -34,7 +34,7 @@ export default async function decorate(block) {
         item.append(imgWrap);
       }
 
-      if (contentCell?.textContent?.trim()) {
+      if (contentCell?.childNodes?.length) {
         const contentWrap = document.createElement('div');
         contentWrap.className = 'flexbox-item-content';
         [...contentCell.childNodes].forEach((node) => {

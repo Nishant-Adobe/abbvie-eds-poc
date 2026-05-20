@@ -176,7 +176,6 @@ export default function decorate(block) {
     if (fragmentPath && /^\/(?!\/)/.test(fragmentPath)) {
       body.dataset.fragmentPath = fragmentPath;
       body.textContent = 'Loading...';
-      body.classList.add('accordion-item-body');
       fetch(`${fragmentPath}.plain.html`)
         .then((resp) => (resp.ok ? resp.text() : ''))
         .then((html) => {
@@ -201,8 +200,10 @@ export default function decorate(block) {
               });
             });
             body.textContent = '';
-            body.classList.add('accordion-item-body-text');
-            body.append(...doc.body.childNodes);
+            const fragmentContent = document.createElement('div');
+            fragmentContent.className = 'accordion-item-body-text';
+            fragmentContent.append(...doc.body.childNodes);
+            body.append(fragmentContent);
           } else {
             body.textContent = '';
           }
