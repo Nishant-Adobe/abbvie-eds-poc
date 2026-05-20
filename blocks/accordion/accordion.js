@@ -188,8 +188,11 @@ export default function decorate(block) {
             doc.querySelectorAll('*').forEach((el) => {
               [...el.attributes].forEach((attr) => {
                 const val = attr.value.trim().toLowerCase();
+                const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href'];
+                const isEventHandler = attr.name.startsWith('on');
                 // eslint-disable-next-line no-script-url
-                if (attr.name.startsWith('on') || (attr.name === 'href' && val.startsWith('javascript:'))) {
+                const isScriptUrl = urlAttrs.includes(attr.name) && val.startsWith('javascript:');
+                if (isEventHandler || isScriptUrl) {
                   el.removeAttribute(attr.name);
                 }
               });
