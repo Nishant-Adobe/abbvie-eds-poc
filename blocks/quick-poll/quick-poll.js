@@ -220,7 +220,7 @@ export async function decorateBlock(block) {
       const resItem = document.createElement('div');
       resItem.className = 'qpoll-result-item';
       // Lowercase so querySelector matches GetAggregated's QuestionOptionId (also lowercase)
-      resItem.dataset.optionid = opt.OptionId.toLowerCase();
+      resItem.dataset.optionid = opt.OptionId?.toLowerCase() ?? '';
       const pct = document.createElement('span');
       pct.className = 'qpoll-pct';
       pct.textContent = '0';
@@ -340,6 +340,7 @@ export async function decorateBlock(block) {
       const data = await resp.json();
       if (data?.IsStatusSuccessful) {
         await fetchAggregated();
+        [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
       } else {
         [...optionsWrap.querySelectorAll('.qpoll-option')].forEach((b) => { b.disabled = false; });
         showError(errors.save);
