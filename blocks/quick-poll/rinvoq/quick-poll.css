@@ -89,11 +89,16 @@
   transition: background-color var(--transition-duration-fast), color var(--transition-duration-fast);
 }
 
-.qpoll-option:hover,
-.qpoll-option:focus-visible {
+.qpoll-option:hover {
   background-color: var(--qpoll-option-hover-bg);
   color: var(--qpoll-option-hover-color);
   outline: none;
+}
+
+.qpoll-option:focus-visible {
+  background-color: var(--qpoll-option-hover-bg);
+  color: var(--qpoll-option-hover-color);
+  outline: var(--border-width-default) solid var(--color-focus);
 }
 
 /* --- Results --- */
@@ -251,6 +256,8 @@
 .quick-poll-container {
   --qpoll-brushstroke-width: 22.5rem;
   --qpoll-label-letter-spacing: 0.03rem;
+
+  padding: var(--spacing-45) var(--spacing-70);
 
   .default-content-wrapper h4 {
     font-size: var(--font-size-10);

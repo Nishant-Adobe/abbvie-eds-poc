@@ -2,6 +2,17 @@ import { renderBlock, getBrandCode } from '../../scripts/multi-theme.js';
 import { getConfigValue } from '../../scripts/config.js';
 
 const COOKIE_DAYS = 365;
+const FETCH_TIMEOUT = 10000;
+
+async function fetchWithTimeout(url, options = {}) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(id);
+  }
+}
 
 // Positional map for xwalk delivery — must match _quick-poll.json field order.
 // Tab fields and the classes select produce no rows; all other fields produce one row each.
@@ -250,10 +261,11 @@ export async function decorateBlock(block) {
 
   async function fetchAggregated() {
     try {
+      if (!getAggregatedUrl) throw new Error('not configured');
       const url = new URL(getAggregatedUrl, window.location.origin);
       url.searchParams.set('brand', brandCode);
       url.searchParams.set('CampaignMasterId', masterCampaignId);
-      const resp = await fetch(url.toString());
+      const resp = await fetchWithTimeout(url.toString());
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       if (!data?.IsStatusSuccessful) throw new Error('API error');
@@ -266,7 +278,8 @@ export async function decorateBlock(block) {
       hideLoading();
       resultsEl.hidden = false;
       if (!getCookie(pollName)) setCookie(pollName, '1', COOKIE_DAYS);
-    } catch {
+    } catch (err) {
+      if (err?.name === 'AbortError') { showError(errors.timeout); return; }
       if (resultSet.children.length > 0) {
         showLocalResults();
       } else {
@@ -278,9 +291,10 @@ export async function decorateBlock(block) {
   async function submitAnswer(optionId) {
     showLoading();
     try {
+      if (!saveAssessmentUrl) throw new Error('not configured');
       const saveUrl = new URL(saveAssessmentUrl, window.location.origin);
       saveUrl.searchParams.set('brand', brandCode);
-      const resp = await fetch(saveUrl.toString(), {
+      const resp = await fetchWithTimeout(saveUrl.toString(), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -302,7 +316,8 @@ export async function decorateBlock(block) {
       } else {
         showError(errors.save);
       }
-    } catch {
+    } catch (err) {
+      if (err?.name === 'AbortError') { showError(errors.timeout); return; }
       if (authoredOptions.length >= 2) {
         showLocalResults();
       } else {
@@ -314,11 +329,12 @@ export async function decorateBlock(block) {
   async function loadQuestion(keepLoading = false) {
     showLoading();
     try {
+      if (!getAssessmentUrl) throw new Error('not configured');
       const url = new URL(getAssessmentUrl, window.location.origin);
       url.searchParams.set('brand', brandCode);
       url.searchParams.set('CampaignMasterId', masterCampaignId);
       if (questionId) url.searchParams.set('QuesId', questionId);
-      const resp = await fetch(url.toString());
+      const resp = await fetchWithTimeout(url.toString());
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       if (!data?.IsStatusSuccessful) throw new Error('API error');
@@ -329,7 +345,8 @@ export async function decorateBlock(block) {
       buildOptionButtons(qData.QuestionOption ?? []);
       if (!keepLoading) hideLoading();
       return true;
-    } catch {
+    } catch (err) {
+      if (err?.name === 'AbortError') { showError(errors.timeout); return false; }
       if (authoredOptions.length >= 2) {
         buildOptionButtons(authoredOptions);
         if (!keepLoading) hideLoading();
