@@ -180,7 +180,8 @@ export default function decorate(block) {
       body.dataset.fragmentPath = maybeFragment;
       // Preserve original content as fallback
       const fallbackNodes = [...body.childNodes].map((n) => n.cloneNode(true));
-      body.textContent = 'Loading...';
+      body.textContent = '';
+      body.classList.add('accordion-fragment-loading');
       fetch(`${maybeFragment}.plain.html`)
         .then((resp) => (resp.ok ? resp.text() : ''))
         .then((html) => {
@@ -203,6 +204,7 @@ export default function decorate(block) {
               });
             });
             body.textContent = '';
+            body.classList.remove('accordion-fragment-loading');
             const fragmentContent = document.createElement('div');
             fragmentContent.className = 'accordion-item-body-text';
             fragmentContent.append(...doc.body.childNodes);
@@ -210,12 +212,14 @@ export default function decorate(block) {
           } else {
             // Restore original content on empty response
             body.textContent = '';
+            body.classList.remove('accordion-fragment-loading');
             body.append(...fallbackNodes);
           }
         })
         .catch(() => {
           // Restore original content on network error
           body.textContent = '';
+          body.classList.remove('accordion-fragment-loading');
           body.append(...fallbackNodes);
         });
     }
