@@ -1,0 +1,87 @@
+{
+  "definitions": [
+    {
+      "title": "Badge",
+      "id": "badge",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Badge",
+              "model": "badge",
+              "filter": "badge",
+              "language": "lang:none",
+              "blockId": "id:"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "badge",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Settings",
+          "name": "settingsTab"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "sectionTitle",
+          "value": "",
+          "label": "Section Title",
+          "description": "Heading displayed above the badge grid."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "seeAllLabel",
+          "value": "See All",
+          "label": "See All Label",
+          "description": "Label for the See All / Manage call-to-action."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "seeAllHref",
+          "value": "",
+          "label": "See All URL",
+          "description": "Destination URL for the See All CTA."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "certificateStatusLabel",
+          "value": "Certificate",
+          "label": "Certificate Status Label",
+          "description": "Prefix label shown beside the certificate status icon."
+        },
+        {
+          "component": "number",
+          "valueType": "number",
+          "name": "maxBadges",
+          "label": "Max Badges",
+          "description": "Maximum number of badges to display. Leave empty to show all."
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "pdfDownloadLabel",
+          "value": "Download Certificate",
+          "label": "PDF Download Label",
+          "description": "Label for the PDF download link shown when a certificate URL is available."
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "badge",
+      "components": []
+    }
+  ]
+}
