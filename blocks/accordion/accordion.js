@@ -171,12 +171,12 @@ export default function decorate(block) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
 
-    // Fragment path — detect if extra column exists.
-    // Old documents: 8 columns (no fragmentPath field).
-    // New UE documents: 9 columns (fragmentPath at index 2, may be empty).
-    const hasFragmentCol = row.children.length > 8;
+    // Fragment path detection: children[2] is fragmentPath if it's empty or starts with /
+    // Old documents have classes (e.g. "defaultopen") at children[2] — never empty or /-prefixed.
+    const col2Text = row.children[2]?.textContent.trim() || '';
+    const hasFragmentCol = col2Text === '' || /^\/(?!\/)/.test(col2Text);
     const offset = hasFragmentCol ? 1 : 0;
-    const maybeFragment = hasFragmentCol ? (row.children[2]?.textContent.trim() || '') : '';
+    const maybeFragment = hasFragmentCol ? col2Text : '';
 
     if (maybeFragment && /^\/(?!\/)/.test(maybeFragment)) {
       body.dataset.fragmentPath = maybeFragment;

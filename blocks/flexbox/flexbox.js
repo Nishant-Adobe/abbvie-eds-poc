@@ -14,8 +14,8 @@ export default async function decorate(block) {
     const item = document.createElement('div');
     item.className = 'flexbox-item';
 
-    // Detect multi-cell (UE) vs single-cell (document) authoring
-    const isMultiField = cells.length >= 3;
+    // Detect UE (4 cells: image, imageAlt, content, itemClasses) vs document authoring
+    const isMultiField = cells.length >= 4;
 
     if (isMultiField) {
       // Index-based: image=0, imageAlt=1, content=2, itemClasses=3
