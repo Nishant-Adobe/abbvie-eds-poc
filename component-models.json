@@ -4112,13 +4112,6 @@
         "label": "Background Alt"
       },
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "content_image",
-        "label": "Content Image (e.g. brushstroke SVG)",
-        "multi": false
-      },
-      {
         "component": "richtext",
         "name": "content_text",
         "value": "",
@@ -5661,6 +5654,238 @@
           { "name": "Half (50%)", "value": "half" },
           { "name": "Third (33%)", "value": "third" },
           { "name": "Quarter (25%)", "value": "quarter" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "parallax",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Overlay Content",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      }
+    ]
+  },
+  {
+    "id": "dismiss",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "tab-content"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Content",
+        "description": "Content shown until the user dismisses it. A close button is added automatically.",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Settings",
+        "name": "tab-settings"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout",
+        "options": [
+          {
+            "name": "Default (inline)",
+            "value": ""
+          },
+          {
+            "name": "Sticky (fixed top)",
+            "value": "sticky"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "cookieName",
+        "label": "Cookie Name",
+        "valueType": "string",
+        "description": "Unique key for the dismissal cookie. Use the same value across pages to share dismissed state site-wide. Defaults to the page URL path if blank."
+      },
+      {
+        "component": "text",
+        "name": "closeLabel",
+        "label": "Close Button Label",
+        "valueType": "string",
+        "description": "Accessible label for the close button (aria-label). Defaults to 'Close' if blank."
+      },
+      {
+        "component": "boolean",
+        "name": "resetOnLoad",
+        "label": "Reset on Load",
+        "valueType": "boolean",
+        "description": "When enabled, the dismissal cookie is cleared on every page load so the banner always shows."
+      },
+      {
+        "component": "tab",
+        "label": "Common Properties",
+        "name": "commonProperties"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "blockId",
+        "valueFormat": "regexp",
+        "label": "ID",
+        "description": "Unique identifier for this block",
+        "validation": {
+          "regExp": "^id:\\S*$",
+          "customErrorMsg": "ID must start with 'id:' and contain no spaces"
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "classes_commonCustomClass",
+        "label": "Custom Class",
+        "description": "Custom CSS class to apply to this block"
+      },
+      {
+        "component": "select",
+        "name": "language",
+        "label": "Language",
+        "options": [
+          {
+            "name": "None",
+            "value": "lang:none"
+          },
+          {
+            "name": "Bulgarian",
+            "value": "lang:bg"
+          },
+          {
+            "name": "Chinese",
+            "value": "lang:zh"
+          },
+          {
+            "name": "Chinese (Taiwan)",
+            "value": "lang:zh-TW"
+          },
+          {
+            "name": "Czech",
+            "value": "lang:cs"
+          },
+          {
+            "name": "Danish",
+            "value": "lang:da"
+          },
+          {
+            "name": "Dutch",
+            "value": "lang:nl"
+          },
+          {
+            "name": "English",
+            "value": "lang:en"
+          },
+          {
+            "name": "Finnish",
+            "value": "lang:fi"
+          },
+          {
+            "name": "French",
+            "value": "lang:fr"
+          },
+          {
+            "name": "German",
+            "value": "lang:de"
+          },
+          {
+            "name": "Greek",
+            "value": "lang:el"
+          },
+          {
+            "name": "Hebrew",
+            "value": "lang:he"
+          },
+          {
+            "name": "Hungarian",
+            "value": "lang:hu"
+          },
+          {
+            "name": "Italian",
+            "value": "lang:it"
+          },
+          {
+            "name": "Japanese",
+            "value": "lang:ja"
+          },
+          {
+            "name": "Korean",
+            "value": "lang:ko"
+          },
+          {
+            "name": "Norwegian",
+            "value": "lang:no"
+          },
+          {
+            "name": "Polish",
+            "value": "lang:pl"
+          },
+          {
+            "name": "Portuguese",
+            "value": "lang:pt"
+          },
+          {
+            "name": "Russian",
+            "value": "lang:ru"
+          },
+          {
+            "name": "Slovak",
+            "value": "lang:sk"
+          },
+          {
+            "name": "Slovenian",
+            "value": "lang:sl"
+          },
+          {
+            "name": "Spanish",
+            "value": "lang:es"
+          },
+          {
+            "name": "Swedish",
+            "value": "lang:sv"
+          },
+          {
+            "name": "Turkish",
+            "value": "lang:tr"
+          },
+          {
+            "name": "Ukrainian",
+            "value": "lang:uk"
+          }
         ]
       }
     ]
@@ -8082,7 +8307,143 @@
         }
       },
       {
-        "...": "../../models/_common-properties.json#/common-prop"
+        "component": "tab",
+        "label": "Common Properties",
+        "name": "commonProperties"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "blockId",
+        "valueFormat": "regexp",
+        "label": "ID",
+        "description": "Unique identifier for this block",
+        "validation": {
+          "regExp": "^id:\\S*$",
+          "customErrorMsg": "ID must start with 'id:' and contain no spaces"
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "classes_commonCustomClass",
+        "label": "Custom Class",
+        "description": "Custom CSS class to apply to this block"
+      },
+      {
+        "component": "select",
+        "name": "language",
+        "label": "Language",
+        "options": [
+          {
+            "name": "None",
+            "value": "lang:none"
+          },
+          {
+            "name": "Bulgarian",
+            "value": "lang:bg"
+          },
+          {
+            "name": "Chinese",
+            "value": "lang:zh"
+          },
+          {
+            "name": "Chinese (Taiwan)",
+            "value": "lang:zh-TW"
+          },
+          {
+            "name": "Czech",
+            "value": "lang:cs"
+          },
+          {
+            "name": "Danish",
+            "value": "lang:da"
+          },
+          {
+            "name": "Dutch",
+            "value": "lang:nl"
+          },
+          {
+            "name": "English",
+            "value": "lang:en"
+          },
+          {
+            "name": "Finnish",
+            "value": "lang:fi"
+          },
+          {
+            "name": "French",
+            "value": "lang:fr"
+          },
+          {
+            "name": "German",
+            "value": "lang:de"
+          },
+          {
+            "name": "Greek",
+            "value": "lang:el"
+          },
+          {
+            "name": "Hebrew",
+            "value": "lang:he"
+          },
+          {
+            "name": "Hungarian",
+            "value": "lang:hu"
+          },
+          {
+            "name": "Italian",
+            "value": "lang:it"
+          },
+          {
+            "name": "Japanese",
+            "value": "lang:ja"
+          },
+          {
+            "name": "Korean",
+            "value": "lang:ko"
+          },
+          {
+            "name": "Norwegian",
+            "value": "lang:no"
+          },
+          {
+            "name": "Polish",
+            "value": "lang:pl"
+          },
+          {
+            "name": "Portuguese",
+            "value": "lang:pt"
+          },
+          {
+            "name": "Russian",
+            "value": "lang:ru"
+          },
+          {
+            "name": "Slovak",
+            "value": "lang:sk"
+          },
+          {
+            "name": "Slovenian",
+            "value": "lang:sl"
+          },
+          {
+            "name": "Spanish",
+            "value": "lang:es"
+          },
+          {
+            "name": "Swedish",
+            "value": "lang:sv"
+          },
+          {
+            "name": "Turkish",
+            "value": "lang:tr"
+          },
+          {
+            "name": "Ukrainian",
+            "value": "lang:uk"
+          }
+        ]
       }
     ]
   },
@@ -10288,29 +10649,135 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Overview",
-        "name": "overview"
+        "label": "Content",
+        "name": "content"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Variation",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "No Image",
+            "value": "no-image"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Poll Image (optional)"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "question",
+        "name": "image-alt",
         "value": "",
-        "label": "Poll Question",
-        "description": "The question presented to the visitor."
+        "label": "Image Alt Text"
       },
       {
         "component": "tab",
-        "label": "Settings",
-        "name": "settings"
+        "label": "Poll Settings",
+        "name": "poll"
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "api",
+        "name": "master-campaign-id",
         "value": "",
-        "label": "API Endpoint",
-        "description": "Optional endpoint to submit votes and receive aggregated results. Leave blank for client-side only mode."
+        "label": "Master Campaign ID",
+        "description": "UUID from Campaign Manager. Required — block will not render without this."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "poll-name",
+        "value": "",
+        "label": "Poll Name (cookie key)",
+        "description": "Unique key used as the cookie name to track whether the visitor has already voted. Use kebab-case (e.g. rinvoq-as-poll-1). Required."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question-id",
+        "value": "",
+        "label": "Question ID (UUID)",
+        "description": "UUID of the specific question within the campaign (QuestionId from Campaign Manager)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "question-text",
+        "value": "",
+        "label": "Question Text (optional override)",
+        "description": "If blank, question text is fetched from Campaign Manager via API."
+      },
+      {
+        "component": "tab",
+        "label": "Results",
+        "name": "results"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "result-label",
+        "value": "See how others responded",
+        "label": "Results Label",
+        "description": "Heading shown above the percentage results."
+      },
+      {
+        "component": "richtext",
+        "name": "result-description",
+        "label": "Results Description",
+        "description": "Optional rich text shown below the percentage results."
+      },
+      {
+        "component": "richtext",
+        "name": "option",
+        "value": "",
+        "label": "Answer Option (fallback)",
+        "description": "Format: 'Option Label | OptionId-UUID'. Used when Campaign Manager API is unavailable. Add one row per option. Must have at least 2 to activate fallback."
+      },
+      {
+        "component": "tab",
+        "label": "Error Messages",
+        "name": "errors"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error-timeout",
+        "value": "",
+        "label": "Timeout Error",
+        "description": "Shown when any API request times out."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error-no-poll",
+        "value": "",
+        "label": "Poll Unavailable Error",
+        "description": "Shown when the getAssessment API fails or returns no matching question."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error-fetch-results",
+        "value": "",
+        "label": "Fetch Results Error",
+        "description": "Shown when the getAggregated API fails."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error-save",
+        "value": "",
+        "label": "Save Error",
+        "description": "Shown when the saveAssessment POST fails."
       },
       {
         "component": "tab",
@@ -10450,32 +10917,6 @@
             "value": "lang:uk"
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "quick-poll-item",
-    "fields": [
-      {
-        "component": "tab",
-        "label": "Option",
-        "name": "option"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "optionLabel",
-        "value": "",
-        "label": "Option Label",
-        "description": "Text shown on the poll option button."
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "optionId",
-        "value": "",
-        "label": "Option ID",
-        "description": "Unique identifier sent to the API when this option is selected."
       }
     ]
   },
@@ -13912,83 +14353,6 @@
             "value": "lang:uk"
           }
         ]
-      },
-      {
-        "id": "dismiss",
-        "fields": [
-          {
-            "component": "tab",
-            "label": "Content",
-            "name": "tab-content"
-          },
-          {
-            "component": "richtext",
-            "name": "content",
-            "value": "",
-            "label": "Content",
-            "description": "Content shown until the user dismisses it. A close button is added automatically.",
-            "valueType": "string"
-          },
-          {
-            "component": "tab",
-            "label": "Settings",
-            "name": "tab-settings"
-          },
-          {
-            "component": "select",
-            "valueType": "string",
-            "name": "classes",
-            "label": "Layout",
-            "options": [
-              {
-                "name": "Default (inline)",
-                "value": ""
-              },
-              {
-                "name": "Sticky (fixed top)",
-                "value": "sticky"
-              }
-            ]
-          },
-          {
-            "component": "text",
-            "name": "cookieName",
-            "label": "Cookie Name",
-            "valueType": "string",
-            "description": "Unique key for the dismissal cookie. Defaults to the page URL path if blank."
-          },
-          {
-            "component": "text",
-            "name": "closeLabel",
-            "label": "Close Button Label",
-            "valueType": "string",
-            "description": "Accessible label for the close button (aria-label). Defaults to 'Close' if blank."
-          },
-          {
-            "component": "boolean",
-            "name": "resetOnLoad",
-            "label": "Reset on Load",
-            "valueType": "boolean",
-            "description": "When enabled, the dismissal cookie is cleared on every page load so the banner always shows."
-          },
-          {
-            "...": "../../models/_common-properties.json#/common-prop"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "tab-item",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "tabTitle",
-        "value": "",
-        "label": "Tab Name",
-        "required": true,
-        "description": "Name shown on the tab button. Must match a Tab Panel's Tab Name (case-insensitive)."
       }
     ]
   }
