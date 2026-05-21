@@ -6,22 +6,21 @@ function createNavBtn(suffix, ariaLabel) {
   return btn;
 }
 
-const CONSULTATION_TEXT = 'Consultation visits need not be in person. Ask your doctor about virtual appointments.';
+function injectFirstLast(pagination) {
+  const activePage = pagination.querySelector('.find-provider-pagination-page.is-active');
+  const totalPages = pagination.querySelectorAll('.find-provider-pagination-page').length;
+  const firstBtn = createNavBtn('first', 'First page');
+  firstBtn.disabled = activePage?.textContent.trim() === '1';
+  pagination.prepend(firstBtn);
+  const lastBtn = createNavBtn('last', 'Last page');
+  lastBtn.disabled = activePage?.textContent.trim() === String(totalPages);
+  pagination.append(lastBtn);
+}
 
 function restructurePagination(block) {
   const pagination = block.querySelector('.find-provider-pagination');
   if (!pagination || pagination.dataset.paginationBuilt) return;
   pagination.dataset.paginationBuilt = 'true';
-
-  const firstBtn = createNavBtn('first', 'First page');
-  const lastBtn = createNavBtn('last', 'Last page');
-  const activePage = pagination.querySelector('.find-provider-pagination-page.is-active');
-  firstBtn.disabled = activePage?.textContent.trim() === '1';
-  pagination.prepend(firstBtn);
-  pagination.append(lastBtn);
-
-  const title = block.querySelector('.find-provider-results-title');
-  if (title) title.textContent = CONSULTATION_TEXT;
 
   const resultsLayout = block.querySelector('.find-provider-results-layout');
   const header = block.querySelector('.find-provider-results-header');
@@ -38,6 +37,7 @@ function restructurePagination(block) {
     topPagination.dataset.paginationBuilt = 'true';
     resultsLayout.before(topPagination);
     pagination.addEventListener('find-provider:pagination-rebuilt', () => {
+      injectFirstLast(pagination);
       topPagination.innerHTML = pagination.innerHTML;
     });
     topPagination.addEventListener('click', (e) => {
@@ -50,6 +50,10 @@ function restructurePagination(block) {
         sel = '.find-provider-pagination-prev';
       } else if (src.classList.contains('find-provider-pagination-next')) {
         sel = '.find-provider-pagination-next';
+      } else if (src.classList.contains('find-provider-pagination-first')) {
+        sel = '.find-provider-pagination-first';
+      } else if (src.classList.contains('find-provider-pagination-last')) {
+        sel = '.find-provider-pagination-last';
       }
       if (sel) pagination.querySelector(sel)?.click();
     });

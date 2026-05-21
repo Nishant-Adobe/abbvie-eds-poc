@@ -39,7 +39,7 @@ function resolveTokenColor(token, el) {
   el.append(probe);
   const { color } = getComputedStyle(probe);
   probe.remove();
-  return color || null;
+  return color || undefined;
 }
 
 function parseRadius(radiusStr) {
@@ -242,7 +242,7 @@ function letterFromIndex(index) {
   return String.fromCharCode(65 + (index % 26));
 }
 
-function buildResultCard(provider, config, index = 0, scopeEl = null) {
+function buildResultCard(provider, config, index = 0) {
   const li = document.createElement('li');
   li.className = 'find-provider-result';
 
@@ -349,9 +349,7 @@ function buildResultCard(provider, config, index = 0, scopeEl = null) {
   if (config['exit-modal-id']) {
     li.addEventListener('click', (e) => {
       if (e.target.closest('a, button')) return;
-      if (!scopeEl) return;
-      const scope = scopeEl;
-      const modal = scope.querySelector(`#${CSS.escape(config['exit-modal-id'])}`);
+      const modal = document.getElementById(config['exit-modal-id']);
       if (modal) modal.dispatchEvent(new CustomEvent('open-modal', { detail: { provider } }));
     });
   }
@@ -504,7 +502,7 @@ export async function decorateBlock(block) {
       rebuildPagination(0, 1);
       return;
     }
-    providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx, block)));
+    providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx)));
     rebuildPagination(Math.max(1, Math.ceil(matchCount / recordCount)), page);
     try {
       const { updateMapMarkers } = await import('../eds-form/maps.js');
