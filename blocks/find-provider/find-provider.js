@@ -333,9 +333,10 @@ function buildResultCard(provider, config, index = 0) {
   if (config['exit-modal-id']) {
     li.addEventListener('click', (e) => {
       if (e.target.closest('a, button')) return;
-      // exit-modal is a page-scope sibling, not inside this block — getElementById is intentional
-      const modal = document.getElementById(config['exit-modal-id']);
-      if (modal) modal.dispatchEvent(new CustomEvent('open-modal', { detail: { provider } }));
+      li.dispatchEvent(new CustomEvent('find-provider:open-modal', {
+        bubbles: true,
+        detail: { provider, modalId: config['exit-modal-id'] },
+      }));
     });
   }
 
@@ -572,20 +573,21 @@ export async function decorateBlock(block) {
     const pageBtn = e.target.closest('.find-provider-pagination-page');
     const prevBtn = e.target.closest('.find-provider-pagination-prev');
     const nextBtn = e.target.closest('.find-provider-pagination-next');
+    const catchFn = () => { loader.classList.remove('is-visible'); };
     if (pageBtn) {
       const page = parseInt(pageBtn.dataset.page, 10);
-      if (page !== currentPage) runSearchFlow(lastQuery, page);
+      if (page !== currentPage) runSearchFlow(lastQuery, page).catch(catchFn);
     } else if (prevBtn && currentPage > 1) {
-      runSearchFlow(lastQuery, currentPage - 1);
+      runSearchFlow(lastQuery, currentPage - 1).catch(catchFn);
     } else if (nextBtn && currentPage < totalPages) {
-      runSearchFlow(lastQuery, currentPage + 1);
+      runSearchFlow(lastQuery, currentPage + 1).catch(catchFn);
     }
   });
 
   const radiusSelectEl = resultsPanel.querySelector('.find-provider-results-radius-select');
   if (radiusSelectEl) {
     radiusSelectEl.addEventListener('change', () => {
-      if (lastQuery !== null) runSearchFlow(lastQuery, 1);
+      if (lastQuery !== null) runSearchFlow(lastQuery, 1).catch(() => { loader.classList.remove('is-visible'); });
     });
   }
 
@@ -612,7 +614,7 @@ export async function decorateBlock(block) {
     }
 
     if (hasError) return;
-    runSearchFlow(query);
+    runSearchFlow(query).catch(() => { loader.classList.remove('is-visible'); });
   });
 
   if (searchInput && searchError) {
@@ -646,7 +648,7 @@ export async function decorateBlock(block) {
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
           geoBtn.disabled = false;
-          runSearchFlow(`${coords.latitude},${coords.longitude}`);
+          runSearchFlow(`${coords.latitude},${coords.longitude}`).catch(() => { loader.classList.remove('is-visible'); });
         },
         () => {
           geoBtn.disabled = false;
