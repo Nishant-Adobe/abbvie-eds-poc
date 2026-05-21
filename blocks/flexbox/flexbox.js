@@ -13,11 +13,8 @@ export default async function decorate(block) {
     const item = document.createElement('div');
     item.className = 'flexbox-item';
 
-    // Detect UE pattern: cell[0] has picture/DAM link AND cell[3] is a width keyword
-    const hasImageInFirst = cells[0]?.querySelector('picture, a[href*="/content/dam"]');
-    const lastCellText = cells[3]?.textContent?.trim() || '';
-    const hasWidthInLast = ['full', 'half', 'third', 'quarter'].includes(lastCellText);
-    const isMultiField = cells.length >= 4 && hasImageInFirst && hasWidthInLast;
+    // Detect UE pattern: exactly 4 cells (image, imageAlt, content, itemClasses)
+    const isMultiField = cells.length === 4;
 
     if (isMultiField) {
       // Index-based: image=0, imageAlt=1, content=2, itemClasses=3
