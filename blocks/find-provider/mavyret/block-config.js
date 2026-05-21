@@ -32,9 +32,24 @@ function restructurePagination(block) {
     right.append(header, resultsUL);
     resultsLayout.append(right);
 
-    const topPagination = pagination.cloneNode(true);
+    const topPagination = document.createElement('nav');
+    topPagination.className = 'find-provider-pagination find-provider-pagination-top';
+    topPagination.setAttribute('aria-label', 'Results pagination');
     topPagination.dataset.paginationBuilt = 'true';
     resultsLayout.before(topPagination);
+    pagination.addEventListener('find-provider:pagination-rebuilt', () => {
+      topPagination.innerHTML = pagination.innerHTML;
+    });
+    topPagination.addEventListener('click', (e) => {
+      const src = e.target.closest('button');
+      if (!src) return;
+      const sel = src.dataset.page
+        ? `[data-page="${src.dataset.page}"]`
+        : src.classList.contains('find-provider-pagination-prev') ? '.find-provider-pagination-prev'
+        : src.classList.contains('find-provider-pagination-next') ? '.find-provider-pagination-next'
+        : null;
+      if (sel) pagination.querySelector(sel)?.click();
+    });
   }
 }
 

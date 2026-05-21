@@ -308,7 +308,11 @@ function buildResultCard(provider, config, index = 0, scopeEl = null) {
     }
     const dest = encodeURIComponent(`${addr1} ${city}, ${state} ${zip}`.trim());
     const dirLink = document.createElement('a');
-    dirLink.href = (config['directions-base-url'] || 'https://www.google.com/maps/dir/?api=1&destination=') + dest;
+    const rawBase = config['directions-base-url'];
+    const safeBase = rawBase && /^https?:\/\//i.test(rawBase)
+      ? rawBase
+      : 'https://www.google.com/maps/dir/?api=1&destination=';
+    dirLink.href = safeBase + dest;
     dirLink.target = '_blank';
     dirLink.rel = 'noopener noreferrer';
     dirLink.className = 'find-provider-result-directions';
@@ -653,7 +657,7 @@ export async function decorateBlock(block) {
   function showMapFallback() {
     mapContainer.innerHTML = '';
     const fallbackUrl = config['maps-fallback-url'];
-    if (!fallbackUrl) return;
+    if (!fallbackUrl || !/^https?:\/\//i.test(fallbackUrl)) return;
     const iframe = document.createElement('iframe');
     iframe.src = fallbackUrl;
     iframe.title = 'Provider locations';
