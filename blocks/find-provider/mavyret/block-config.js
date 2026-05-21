@@ -43,11 +43,14 @@ function restructurePagination(block) {
     topPagination.addEventListener('click', (e) => {
       const src = e.target.closest('button');
       if (!src) return;
-      const sel = src.dataset.page
-        ? `[data-page="${src.dataset.page}"]`
-        : src.classList.contains('find-provider-pagination-prev') ? '.find-provider-pagination-prev'
-        : src.classList.contains('find-provider-pagination-next') ? '.find-provider-pagination-next'
-        : null;
+      let sel = null;
+      if (src.dataset.page) {
+        sel = `[data-page="${src.dataset.page}"]`;
+      } else if (src.classList.contains('find-provider-pagination-prev')) {
+        sel = '.find-provider-pagination-prev';
+      } else if (src.classList.contains('find-provider-pagination-next')) {
+        sel = '.find-provider-pagination-next';
+      }
       if (sel) pagination.querySelector(sel)?.click();
     });
   }

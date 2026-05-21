@@ -401,7 +401,6 @@ export async function decorateBlock(block) {
   let lastQuery = null;
   let currentPage = 1;
   let totalPages = 1;
-  let mapsLoaded = false;
 
   if (config['anchor-id']) block.id = config['anchor-id'];
 
@@ -518,7 +517,7 @@ export async function decorateBlock(block) {
     status.textContent = '';
     results.innerHTML = '';
 
-    if (!mapsLoaded || !config['api-endpoint']) {
+    if (!config['api-endpoint']) {
       const result = await loadDummyProviders();
       await renderProviders(result.providers, result.matchCount, result.recordCount, page);
       return;
@@ -545,9 +544,8 @@ export async function decorateBlock(block) {
       const { providers, matchCount, recordCount } = extractParties(data);
       await renderProviders(providers, matchCount, recordCount, page);
     } catch {
-      // API failed (CORS, network, bad params) — fall back to dummy data
-      const result = await loadDummyProviders();
-      await renderProviders(result.providers, result.matchCount, result.recordCount, page);
+      status.textContent = config.error || 'Unable to load results. Please try again.';
+      rebuildPagination(0, 1);
     }
   }
 
@@ -669,23 +667,20 @@ export async function decorateBlock(block) {
   }
 
   if (config['maps-api-key']) {
-    // gm_authFailure is Google's global callback for RefererNotAllowedMapError,
-    // InvalidKeyMapError, etc. — fires even when the script itself loads fine.
-    // authFailed guards against the race where gm_authFailure fires after mapsLoaded = true.
+    // gm_authFailure fires for RefererNotAllowedMapError, InvalidKeyMapError, etc.
+    // authFailed guards against the race where the callback fires after initializeMap resolves.
     let authFailed = false;
     const prevAuthFailure = window.gm_authFailure;
     window.gm_authFailure = () => {
       if (typeof prevAuthFailure === 'function') prevAuthFailure();
       authFailed = true;
-      mapsLoaded = false;
       showMapFallback();
     };
 
     try {
       const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
       await loadGoogleMapsAPI(config['maps-api-key']);
-      await initializeMap(config['maps-api-key'], mapContainer);
-      if (!authFailed) mapsLoaded = true;
+      if (!authFailed) await initializeMap(config['maps-api-key'], mapContainer);
     } catch {
       showMapFallback();
     }
