@@ -78,15 +78,6 @@
   display: none;
 }
 
-/* Prevent CLS: hide sections following tabs-container before JS moves them */
-.section.tabs-container ~ .section:not(.tabs-container) {
-  opacity: 0;
-  height: 0;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
 /* Tab panel — sections inside use 12-column grid */
 .tabs-panel > .section[data-tabs-grid] {
   display: grid;
@@ -94,9 +85,6 @@
   gap: var(--spacing-24);
   margin: 0;
   min-width: 0;
-  opacity: 1;
-  height: auto;
-  overflow: visible;
 }
 
 /* Override abbvie-container grid-column on block wrappers */
