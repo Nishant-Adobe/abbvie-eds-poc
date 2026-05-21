@@ -225,7 +225,7 @@ function letterFromIndex(index) {
   return String.fromCharCode(65 + (index % 26));
 }
 
-function buildResultCard(provider, config, index = 0) {
+function buildResultCard(provider, config, index = 0, scopeEl = null) {
   const li = document.createElement('li');
   li.className = 'find-provider-result';
 
@@ -328,9 +328,7 @@ function buildResultCard(provider, config, index = 0) {
   if (config['exit-modal-id']) {
     li.addEventListener('click', (e) => {
       if (e.target.closest('a, button')) return;
-      // Scope to the closest main/section so multiple find-provider blocks on
-      // one page each resolve their own associated modal.
-      const scope = li.closest('main') || li.closest('section') || document;
+      const scope = scopeEl ?? li.closest('main') ?? document.body;
       const modal = scope.querySelector(`#${CSS.escape(config['exit-modal-id'])}`);
       if (modal) modal.dispatchEvent(new CustomEvent('open-modal', { detail: { provider } }));
     });
@@ -482,7 +480,7 @@ export async function decorateBlock(block) {
       rebuildPagination(0, 1);
       return;
     }
-    providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx)));
+    providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx, block)));
     rebuildPagination(Math.max(1, Math.ceil(matchCount / recordCount)), page);
     try {
       const { updateMapMarkers } = await import('../eds-form/maps.js');

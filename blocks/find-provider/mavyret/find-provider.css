@@ -96,9 +96,7 @@
   --find-provider-pagination-page-font-size: 16px;
   --find-provider-pagination-page-padding-inline: 4px;
   --find-provider-pagination-page-min-width: 20px;
-}
 
-.find-provider {
   position: relative;
 }
 
@@ -693,13 +691,6 @@
   align-items: center;
 }
 
-.find-provider .find-provider-form-wrap {
-  margin-right: calc(-50vw + 50%);
-  margin-left: calc(-50vw + 50%);
-  padding-right: calc(50vw - 50%);
-  padding-left: calc(50vw - 50%);
-}
-
 .find-provider .find-provider-form {
   gap: var(--spacing-20);
   max-width: var(--fp-mavyret-max-width);
@@ -773,11 +764,11 @@
 
 .find-provider .find-provider-form-wrap {
   margin-right: calc(-50vw + 50%);
-    margin-left: calc(-50vw + 50%);
-    padding-right: calc(50vw - 50%);
-    padding-left: calc(50vw - 50%);
-    background: var(--color-background-light, #f2f2f2);
-    padding-block: 40px;
+  margin-left: calc(-50vw + 50%);
+  padding-right: calc(50vw - 50%);
+  padding-left: calc(50vw - 50%);
+  background: var(--color-background-light, #f2f2f2);
+  padding-block: 40px;
 }
 
 .find-provider .find-provider-submit:hover,
@@ -803,6 +794,8 @@
 
 .find-provider .find-provider-result-body {
   padding: 0;
+  color: var(--fp-mavyret-text);
+  font-size: var(--fp-mavyret-font-size-15);
 }
 
 /* Pin: orange teardrop with white letter; accent + text dial in mavyret colors */
@@ -812,6 +805,7 @@
   --find-provider-color-pin-text: var(--color-white);
   --find-provider-color-accent: var(--fp-mavyret-link);
   --find-provider-color-text: var(--fp-mavyret-text);
+
   padding-inline: 30px;
 }
 
@@ -849,11 +843,6 @@
   color: var(--fp-mavyret-text-dark);
   font-size: var(--spacing-18);
   font-weight: var(--font-weight-700);
-}
-
-.find-provider .find-provider-result-body {
-  color: var(--fp-mavyret-text);
-  font-size: var(--fp-mavyret-font-size-15);
 }
 
 .find-provider .find-provider-result-address span,
