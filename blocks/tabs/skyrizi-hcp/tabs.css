@@ -208,9 +208,17 @@
 }
 
 
-/* ── Pill panel — no gradient border, simple padding ── */
-.tabs.pill ~ .tabs-panel::before {
+/* ── Pill panel — no gradient line, no grid split ── */
+.section:has(.tabs.pill) ~ .tabs-panel::before {
   display: none;
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel > .section[data-tabs-grid] {
+  display: block;
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel > .section[data-tabs-grid].abbvie-container > div {
+  grid-column: unset;
 }
 
 /* ── Tablet+ pill adjustments ── */
