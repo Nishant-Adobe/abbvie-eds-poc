@@ -13,8 +13,8 @@ export default async function decorate(block) {
     const item = document.createElement('div');
     item.className = 'flexbox-item';
 
-    // Detect UE pattern: exactly 4 cells (image, imageAlt, content, itemClasses)
-    const isMultiField = cells.length === 4;
+    // Detect UE-authored rows via data-aue-type attribute
+    const isMultiField = row.hasAttribute('data-aue-type');
 
     if (isMultiField) {
       // Index-based: image=0, imageAlt=1, content=2, itemClasses=3
