@@ -3,9 +3,19 @@ import { renderBlock } from '../../scripts/multi-theme.js';
 export default async function decorate(block) {
   const rows = [...block.children];
 
-  // Anchor ID: UE sets block.id directly from the anchorId model field.
-  // No heuristic needed — block.id is authoritative.
-  const anchorId = block.id || '';
+  // Anchor ID: check block.id, data attribute, or block-level config row
+  let anchorId = block.id || block.dataset.anchorId || '';
+  if (!anchorId && rows.length > 0) {
+    // Block-level fields may render as first row with single cell
+    const firstCell = rows[0]?.children[0];
+    if (firstCell && rows[0].children.length === 1 && !firstCell.querySelector('picture')) {
+      const text = firstCell.textContent.trim();
+      if (text && text.length < 50 && /^[\w-]+$/.test(text)) {
+        anchorId = text;
+        rows.shift();
+      }
+    }
+  }
 
   // Each remaining row is a flex item
   // UE field order: image(0) | imageAlt(1) | content(2) | itemClasses(3)
