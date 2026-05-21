@@ -16,7 +16,7 @@ export default async function decorate(block) {
     // Detect UE pattern: cell[0] has picture/DAM link AND cell[3] is a width keyword
     const hasImageInFirst = cells[0]?.querySelector('picture, a[href*="/content/dam"]');
     const lastCellText = cells[3]?.textContent?.trim() || '';
-    const hasWidthInLast = ['', 'full', 'half', 'third', 'quarter'].includes(lastCellText);
+    const hasWidthInLast = ['full', 'half', 'third', 'quarter'].includes(lastCellText);
     const isMultiField = cells.length >= 4 && hasImageInFirst && hasWidthInLast;
 
     if (isMultiField) {
