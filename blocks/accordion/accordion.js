@@ -193,7 +193,7 @@ export default function decorate(block) {
             doc.querySelectorAll('script, style, iframe, object, embed, base, link').forEach((el) => el.remove());
             // eslint-disable-next-line no-script-url
             const dangerousSchemes = ['javascript:', 'data:', 'vbscript:'];
-            const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href'];
+            const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href', 'srcset', 'poster'];
             doc.querySelectorAll('*').forEach((el) => {
               [...el.attributes].forEach((attr) => {
                 const val = attr.value.trim().toLowerCase();
