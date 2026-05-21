@@ -85,6 +85,7 @@ const FIELD_ORDER = [
   'api-endpoint',
   'maps-api-key',
   'maps-fallback-url',
+  'directions-base-url',
   'indication',
   'exit-modal-id',
   'anchor-id',
@@ -307,7 +308,7 @@ function buildResultCard(provider, config, index = 0, scopeEl = null) {
     }
     const dest = encodeURIComponent(`${addr1} ${city}, ${state} ${zip}`.trim());
     const dirLink = document.createElement('a');
-    dirLink.href = `https://www.google.com/maps/dir/?api=1&destination=${dest}`;
+    dirLink.href = (config['directions-base-url'] || 'https://www.google.com/maps/dir/?api=1&destination=') + dest;
     dirLink.target = '_blank';
     dirLink.rel = 'noopener noreferrer';
     dirLink.className = 'find-provider-result-directions';
