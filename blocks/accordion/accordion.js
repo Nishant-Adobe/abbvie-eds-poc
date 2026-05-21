@@ -178,6 +178,8 @@ export default function decorate(block) {
 
     if (hasFragmentCol) {
       body.dataset.fragmentPath = maybeFragment;
+      // Preserve original content as fallback
+      const fallbackNodes = [...body.childNodes].map((n) => n.cloneNode(true));
       body.textContent = 'Loading...';
       fetch(`${maybeFragment}.plain.html`)
         .then((resp) => (resp.ok ? resp.text() : ''))
@@ -206,10 +208,16 @@ export default function decorate(block) {
             fragmentContent.append(...doc.body.childNodes);
             body.append(fragmentContent);
           } else {
+            // Restore original content on empty response
             body.textContent = '';
+            body.append(...fallbackNodes);
           }
         })
-        .catch(() => { body.textContent = ''; });
+        .catch(() => {
+          // Restore original content on network error
+          body.textContent = '';
+          body.append(...fallbackNodes);
+        });
     }
 
     const ariaExpandLabel = row.children[3 + offset]?.textContent.trim() || '';
