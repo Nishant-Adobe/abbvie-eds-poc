@@ -187,7 +187,7 @@ export default function decorate(block) {
           if (html) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            doc.querySelectorAll('script, style, iframe, object, embed, base, link[rel="import"]').forEach((el) => el.remove());
+            doc.querySelectorAll('script, style, iframe, object, embed, base, link').forEach((el) => el.remove());
             // eslint-disable-next-line no-script-url
             const dangerousSchemes = ['javascript:', 'data:', 'vbscript:'];
             const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href'];
