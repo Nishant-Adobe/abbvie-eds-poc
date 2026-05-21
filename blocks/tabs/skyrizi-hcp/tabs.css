@@ -227,9 +227,19 @@
   padding: 0;
 }
 
-.section:has(.tabs.pill) ~ .tabs-panel .text-container li {
-  font-size: inherit;
-  line-height: inherit;
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text {
+  font-size: var(--font-size-18, 1.8rem);
+  line-height: var(--line-height-24, 2.4rem);
+  font-weight: var(--font-weight-body, 400);
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text p,
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text li,
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text ol,
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text ul {
+  font-size: var(--font-size-18, 1.8rem);
+  line-height: var(--line-height-24, 2.4rem);
+  font-weight: var(--font-weight-body, 400);
 }
 
 /* ── Pill panel — base typography ── */
