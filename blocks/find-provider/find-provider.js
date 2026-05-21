@@ -292,18 +292,18 @@ function buildResultCard(provider, config, index = 0) {
       sep.textContent = '|';
       meta.append(sep);
     }
-    const dest = encodeURIComponent(`${addr1} ${city}, ${state} ${zip}`.trim());
-    const dirLink = document.createElement('a');
     const rawBase = config['directions-base-url'];
-    const safeBase = rawBase && /^https?:\/\//i.test(rawBase)
-      ? rawBase
-      : 'https://www.google.com/maps/dir/?api=1&destination=';
-    dirLink.href = safeBase + dest;
-    dirLink.target = '_blank';
-    dirLink.rel = 'noopener noreferrer';
-    dirLink.className = 'find-provider-result-directions';
-    dirLink.textContent = config['directions-label'] || 'Get Directions';
-    meta.append(dirLink);
+    const safeBase = rawBase && /^https?:\/\//i.test(rawBase) ? rawBase : null;
+    if (safeBase) {
+      const dest = encodeURIComponent(`${addr1} ${city}, ${state} ${zip}`.trim());
+      const dirLink = document.createElement('a');
+      dirLink.href = safeBase + dest;
+      dirLink.target = '_blank';
+      dirLink.rel = 'noopener noreferrer';
+      dirLink.className = 'find-provider-result-directions';
+      dirLink.textContent = config['directions-label'] || 'Get Directions';
+      meta.append(dirLink);
+    }
   }
 
   if (meta.childNodes.length) body.append(meta);
