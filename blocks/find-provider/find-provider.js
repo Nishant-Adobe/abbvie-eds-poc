@@ -189,8 +189,9 @@ function buildForm(config, blockId, isLocation) {
     const termsText = document.createElement('span');
     termsText.className = 'find-provider-terms-text';
     if (config['terms-text']) {
-      // CMS-authored HTML from trusted source (see RICHTEXT_KEYS)
-      termsText.innerHTML = config['terms-text'];
+      const parser = new DOMParser();
+      const sanitized = parser.parseFromString(config['terms-text'], 'text/html');
+      [...sanitized.body.childNodes].forEach((n) => termsText.append(n));
     }
 
     termsCheckboxLabel.append(termsCheckbox, termsText);
@@ -228,8 +229,9 @@ function buildForm(config, blockId, isLocation) {
   if (config['captcha-message']) {
     const captcha = document.createElement('div');
     captcha.className = 'find-provider-captcha-message';
-    // CMS-authored HTML from trusted source (see RICHTEXT_KEYS)
-    captcha.innerHTML = config['captcha-message'];
+    const parser = new DOMParser();
+    const sanitized = parser.parseFromString(config['captcha-message'], 'text/html');
+    [...sanitized.body.childNodes].forEach((n) => captcha.append(n));
     form.append(captcha);
   }
 
@@ -347,7 +349,8 @@ function buildResultCard(provider, config, index = 0, scopeEl = null) {
   if (config['exit-modal-id']) {
     li.addEventListener('click', (e) => {
       if (e.target.closest('a, button')) return;
-      const scope = scopeEl ?? li.closest('main') ?? document.body;
+      if (!scopeEl) return;
+      const scope = scopeEl;
       const modal = scope.querySelector(`#${CSS.escape(config['exit-modal-id'])}`);
       if (modal) modal.dispatchEvent(new CustomEvent('open-modal', { detail: { provider } }));
     });

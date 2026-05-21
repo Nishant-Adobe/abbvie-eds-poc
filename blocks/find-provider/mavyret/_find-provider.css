@@ -10,26 +10,28 @@
 
   /* find-provider-specific tokens (no matching brand/common token) */
   --fp-mavyret-orange: var(--color-fire, #e35b25);
-  --fp-mavyret-text: #4a4a4a;
-  --fp-mavyret-text-dark: #1a1a1a;
-  --fp-mavyret-link: #005bbb;
-  --fp-mavyret-directions-link: #00e;
-  --fp-mavyret-submit-bg: #508118;
+  --fp-mavyret-text: var(--color-text, #4a4a4a);
+  --fp-mavyret-text-dark: var(--color-text-dark, #1a1a1a);
+  --fp-mavyret-link: var(--color-link, #005bbb);
+  --fp-mavyret-directions-link: var(--color-link-default, #00e);
+  --fp-mavyret-submit-bg: var(--color-indication-bg, #508118);
   --fp-mavyret-checkbox-border: var(--color-border-default, #c7c7c7);
-  --fp-mavyret-disabled-text: #b9c4cb;
+  --fp-mavyret-disabled-text: var(--color-text-disabled, #b9c4cb);
   --fp-mavyret-separator: var(--color-border-default, #c2c2c2);
   --fp-mavyret-shadow-color: rgb(0 0 0 / 50%);
   --fp-mavyret-shadow-light: rgb(204 204 204 / 100%);
   --fp-mavyret-hover-bg: rgb(0 0 0 / 4%);
-  --fp-mavyret-max-width: 1000px;
-  --fp-mavyret-input-max-width: 300px;
-  --fp-mavyret-submit-max-width: 320px;
-  --fp-mavyret-submit-font-size: 19px;
-  --fp-mavyret-submit-line-height: 18px;
-  --fp-mavyret-font-size-15: 15px;
-  --fp-mavyret-pagination-btn-size: 28px;
-  --fp-mavyret-pagination-radius: 3px;
-  --fp-mavyret-map-min-height: 540px;
+  --fp-mavyret-max-width: var(--spacing-1000, 1000px);
+  --fp-mavyret-input-max-width: var(--spacing-300, 300px);
+  --fp-mavyret-submit-max-width: var(--spacing-320, 320px);
+  --fp-mavyret-submit-font-size: var(--spacing-19, 19px);
+  --fp-mavyret-submit-line-height: var(--spacing-18, 18px);
+  --fp-mavyret-font-size-15: var(--body-font-size-xs, 15px);
+  --fp-mavyret-pagination-btn-size: var(--spacing-28, 28px);
+  --fp-mavyret-pagination-radius: var(--spacing-03, 3px);
+  --fp-mavyret-map-min-height: var(--spacing-540, 540px);
+  --fp-mavyret-results-row-height: var(--spacing-570, 570px);
+  --fp-mavyret-results-panel-inline: var(--spacing-30);
   --fp-mavyret-line-height-1-4: 1.4;
   --fp-mavyret-line-height-1-6: 1.6;
   --fp-mavyret-submit-shadow: 0 var(--spacing-02) var(--spacing-04) var(--fp-mavyret-shadow-color);
@@ -169,7 +171,7 @@
   --find-provider-color-accent: var(--fp-mavyret-link);
   --find-provider-color-text: var(--fp-mavyret-text);
 
-  padding-inline: 30px;
+  padding-inline: var(--fp-mavyret-results-panel-inline);
 }
 
 .find-provider .find-provider-result-pin {
@@ -359,7 +361,7 @@
   .find-provider .find-provider-results-layout {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: stretch;
-    grid-auto-rows: 570px;
+    grid-auto-rows: var(--fp-mavyret-results-row-height);
   }
 
   .find-provider .find-provider-results-right {
