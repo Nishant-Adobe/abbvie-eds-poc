@@ -76,7 +76,6 @@
   --find-provider-pin-offset: var(--spacing-01);
   --find-provider-name-font-size: var(--spacing-18);
   --find-provider-name-line-height: 1.4;
-  --find-provider-specialty-font-size: var(--body-font-size-s);
   --find-provider-meta-gap: var(--spacing-06);
   --find-provider-sep-opacity: 0.6;
   --find-provider-directions-gap: var(--spacing-06);
@@ -124,8 +123,7 @@
 }
 
 .find-provider-search-input,
-.find-provider-radius-select,
-.find-provider-specialty-select {
+.find-provider-radius-select {
   border: var(--separator-height-1) solid var(--find-provider-color-border);
   border-radius: var(--find-provider-radius-input);
   font-size: var(--body-font-size-s);
@@ -136,8 +134,7 @@
 }
 
 .find-provider-search-input:focus-visible,
-.find-provider-radius-select:focus-visible,
-.find-provider-specialty-select:focus-visible {
+.find-provider-radius-select:focus-visible {
   outline: var(--spacing-02) solid var(--color-focus);
   outline-offset: var(--spacing-02);
 }
@@ -434,11 +431,6 @@
   font-size: var(--find-provider-result-body-font-size);
   color: var(--find-provider-color-text);
   line-height: var(--find-provider-result-body-line-height);
-}
-
-.find-provider-result-specialty {
-  font-size: var(--find-provider-specialty-font-size);
-  color: var(--find-provider-color-text-muted);
 }
 
 .find-provider-result-address {

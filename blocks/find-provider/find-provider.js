@@ -54,7 +54,7 @@ const FIELD_ORDER = [
   'search-label',
   'search-placeholder',
   'radius-label',
-  'specialty-label',
+  'radius-options',
   'submit-label',
   'geo-button-label',
   'clear-label',
@@ -333,6 +333,7 @@ function buildResultCard(provider, config, index = 0) {
   if (config['exit-modal-id']) {
     li.addEventListener('click', (e) => {
       if (e.target.closest('a, button')) return;
+      // exit-modal is a page-scope sibling, not inside this block — getElementById is intentional
       const modal = document.getElementById(config['exit-modal-id']);
       if (modal) modal.dispatchEvent(new CustomEvent('open-modal', { detail: { provider } }));
     });
@@ -363,13 +364,16 @@ function buildResultsHeader(config) {
   const radiusSelect = document.createElement('select');
   radiusSelect.className = 'find-provider-results-radius-select';
   if (config['radius-label']) radiusSelect.setAttribute('aria-label', config['radius-label']);
-  ['5 Miles', '10 Miles', '25 Miles', '50 Miles', '100 Miles'].forEach((v) => {
+  const radiusOptionList = config['radius-options']
+    ? config['radius-options'].split(',').map((s) => s.trim()).filter(Boolean)
+    : ['5 Miles', '10 Miles', '25 Miles', '50 Miles', '100 Miles'];
+  radiusOptionList.forEach((v) => {
     const opt = document.createElement('option');
     opt.value = v;
     opt.textContent = v;
     radiusSelect.append(opt);
   });
-  radiusSelect.value = '5 Miles';
+  radiusSelect.value = radiusOptionList[0] || '';
   const selectWrapper = document.createElement('div');
   selectWrapper.className = 'find-provider-select-wrapper';
   selectWrapper.append(radiusSelect);
