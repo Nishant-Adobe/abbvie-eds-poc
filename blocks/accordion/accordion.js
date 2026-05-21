@@ -171,8 +171,8 @@ export default function decorate(block) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
 
-    // Fragment path detection: only offset when children[2] is positively a path (starts with /).
-    // Empty children[2] is ambiguous (could be empty classes OR empty fragmentPath) — default to offset=0.
+    // Fragment path: only offset when children[2] starts with /.
+    // Empty children[2] is ambiguous — default to offset=0.
     const col2Text = row.children[2]?.textContent.trim() || '';
     const isFragmentPath = /^\/(?!\/)/.test(col2Text);
     const offset = isFragmentPath ? 1 : 0;
