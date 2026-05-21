@@ -1,5 +1,6 @@
 let map = null;
 let markers = [];
+let providerToMarkerMap = new Map();
 
 function getBestAddress(provider) {
   const addresses = provider.PartyAddress || [];
@@ -21,10 +22,14 @@ export function loadGoogleMapsAPI(apiKey) {
     }
 
     if (document.querySelector('script[src*="maps.googleapis.com"]')) {
+      const deadline = Date.now() + 10000;
       const checkInterval = setInterval(() => {
         if (window.google && window.google.maps) {
           clearInterval(checkInterval);
           resolve();
+        } else if (Date.now() > deadline) {
+          clearInterval(checkInterval);
+          reject(new Error('Google Maps API load timeout'));
         }
       }, 100);
       return;
@@ -46,7 +51,7 @@ function getMarkerLetter(index) {
   return String.fromCharCode(65 + (index % 26));
 }
 
-export async function initializeMap(apiKey = null) {
+export async function initializeMap(apiKey = null, containerEl = null) {
   try {
     if (apiKey) {
       await loadGoogleMapsAPI(apiKey);
@@ -54,7 +59,7 @@ export async function initializeMap(apiKey = null) {
       return null;
     }
 
-    const mapContainer = document.getElementById('provider-map');
+    const mapContainer = containerEl || document.getElementById('provider-map');
     if (!mapContainer) return null;
 
     // eslint-disable-next-line no-undef
@@ -96,7 +101,7 @@ export function updateMapMarkers(providers, startIndex) {
 
   // Group providers by address to identify duplicates
   const addressGroups = new Map();
-  const providerToMarkerMap = new Map();
+  providerToMarkerMap = new Map();
 
   // First pass: Group providers by address
   providers.forEach((provider, index) => {
@@ -163,8 +168,10 @@ export function updateMapMarkers(providers, startIndex) {
           strokeColor: '#ffffff',
           strokeWeight: 1,
           scale: 1.2,
-          anchor: { x: 12, y: 24 },
-          labelOrigin: { x: 12, y: 9 },
+          // eslint-disable-next-line no-undef
+          anchor: new google.maps.Point(12, 24),
+          // eslint-disable-next-line no-undef
+          labelOrigin: new google.maps.Point(12, 9),
         },
       });
 
@@ -176,9 +183,9 @@ export function updateMapMarkers(providers, startIndex) {
       const infoContent = `
       <div class="gm-info-window">
         <div class="gm-info-window-content">
-          <a href="javascript:void(0)" class="gm-provider-name">
+          <span class="gm-provider-name">
             ${fullName}
-          </a>
+          </span>
           <div class="gm-provider-address">
             ${address.AddressLine1}<br>
             ${address.CityName}, ${address.StateProvinceCode} ${
@@ -239,9 +246,9 @@ export function updateMapMarkers(providers, startIndex) {
         const newContent = `
         <div class="gm-info-window">
           <div class="gm-info-window-content">
-            <a href="javascript:void(0)" class="gm-provider-name">
+            <span class="gm-provider-name">
               ${providerFullName}
-            </a>
+            </span>
             <div class="gm-provider-address">
               ${providerAddress.AddressLine1}<br>
               ${providerAddress.CityName}, ${
@@ -277,9 +284,6 @@ export function updateMapMarkers(providers, startIndex) {
     },
   );
 
-  // Store the provider-to-marker mapping for external access
-  window.providerToMarkerMap = providerToMarkerMap;
-
   if (validMarkers > 0) {
     map.fitBounds(bounds);
     // eslint-disable-next-line no-undef
@@ -301,4 +305,8 @@ export function getMap() {
 
 export function getMarkers() {
   return markers;
+}
+
+export function getProviderToMarkerMap() {
+  return providerToMarkerMap;
 }

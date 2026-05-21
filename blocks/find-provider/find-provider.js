@@ -174,7 +174,7 @@ function buildForm(config, blockId, isLocation) {
     const termsText = document.createElement('span');
     termsText.className = 'find-provider-terms-text';
     if (config['terms-text']) {
-      // terms-text is authored rich text from CMS (see RICHTEXT_KEYS)
+      // CMS-authored HTML from trusted source (see RICHTEXT_KEYS)
       termsText.innerHTML = config['terms-text'];
     }
 
@@ -213,7 +213,7 @@ function buildForm(config, blockId, isLocation) {
   if (config['captcha-message']) {
     const captcha = document.createElement('div');
     captcha.className = 'find-provider-captcha-message';
-    // captcha-message is authored rich text from CMS (see RICHTEXT_KEYS)
+    // CMS-authored HTML from trusted source (see RICHTEXT_KEYS)
     captcha.innerHTML = config['captcha-message'];
     form.append(captcha);
   }
@@ -367,52 +367,11 @@ function buildResultsHeader(config) {
     opt.textContent = v;
     radiusSelect.append(opt);
   });
+  radiusSelect.value = '25 Miles';
   radiusGroup.append(radiusSelect);
 
   header.append(radiusGroup);
   return header;
-}
-
-// TODO: pagination is visual-only — buttons have no click handlers wired up yet
-function buildPagination(totalPages = 5, currentPage = 1) {
-  const nav = document.createElement('nav');
-  nav.className = 'find-provider-pagination';
-  nav.setAttribute('aria-label', 'Results pagination');
-
-  const prevBtn = document.createElement('button');
-  prevBtn.type = 'button';
-  prevBtn.className = 'find-provider-pagination-btn find-provider-pagination-prev';
-  prevBtn.setAttribute('aria-label', 'Previous page');
-  prevBtn.disabled = currentPage === 1;
-  nav.append(prevBtn);
-
-  for (let i = 1; i <= totalPages; i += 1) {
-    const pageBtn = document.createElement('button');
-    pageBtn.type = 'button';
-    pageBtn.className = 'find-provider-pagination-page';
-    if (i === currentPage) pageBtn.classList.add('is-active');
-    pageBtn.textContent = String(i);
-    pageBtn.setAttribute('aria-label', `Page ${i}`);
-    if (i === currentPage) pageBtn.setAttribute('aria-current', 'page');
-    nav.append(pageBtn);
-
-    if (i < totalPages) {
-      const sep = document.createElement('span');
-      sep.className = 'find-provider-pagination-sep';
-      sep.setAttribute('aria-hidden', 'true');
-      sep.textContent = '|';
-      nav.append(sep);
-    }
-  }
-
-  const nextBtn = document.createElement('button');
-  nextBtn.type = 'button';
-  nextBtn.className = 'find-provider-pagination-btn find-provider-pagination-next';
-  nextBtn.setAttribute('aria-label', 'Next page');
-  nextBtn.disabled = currentPage === totalPages;
-  nav.append(nextBtn);
-
-  return nav;
 }
 
 export async function decorateBlock(block) {
@@ -447,7 +406,7 @@ export async function decorateBlock(block) {
   results.className = 'find-provider-results';
 
   const mapContainer = document.createElement('div');
-  mapContainer.id = 'provider-map';
+  mapContainer.id = `find-provider-map-${blockId}`;
   mapContainer.className = 'find-provider-map-container';
   mapContainer.setAttribute('role', 'region');
   mapContainer.setAttribute('aria-label', 'Provider map');
@@ -468,7 +427,9 @@ export async function decorateBlock(block) {
   if (mapContainer) resultsLayout.append(mapContainer);
   resultsPanel.append(resultsLayout);
 
-  const paginationNav = buildPagination(5, 1);
+  const paginationNav = document.createElement('nav');
+  paginationNav.className = 'find-provider-pagination';
+  paginationNav.setAttribute('aria-label', 'Results pagination');
   resultsPanel.append(paginationNav);
 
   function rebuildPagination(total, active) {
@@ -700,7 +661,7 @@ export async function decorateBlock(block) {
     try {
       const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
       await loadGoogleMapsAPI(config['maps-api-key']);
-      await initializeMap(config['maps-api-key']);
+      await initializeMap(config['maps-api-key'], mapContainer);
       if (!authFailed) mapsLoaded = true;
     } catch {
       showMapFallback();
