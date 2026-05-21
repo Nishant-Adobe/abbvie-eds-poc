@@ -171,20 +171,21 @@ export default function decorate(block) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
 
-    // Fragment path: only offset when children[2] starts with /.
-    // Empty children[2] is ambiguous — default to offset=0.
+    // Fragment path detection: UE always has fragmentPath at children[2] (may be empty).
+    // Detect UE-authored rows by data-aue-type attribute presence.
+    const isUEAuthored = row.hasAttribute('data-aue-type');
     const col2Text = row.children[2]?.textContent.trim() || '';
     const isFragmentPath = /^\/(?!\/)/.test(col2Text);
-    const offset = isFragmentPath ? 1 : 0;
-    const maybeFragment = isFragmentPath ? col2Text : '';
+    const offset = (isUEAuthored || isFragmentPath) ? 1 : 0;
+    const fragmentPath = isFragmentPath ? col2Text : '';
 
-    if (maybeFragment && /^\/(?!\/)/.test(maybeFragment)) {
-      body.dataset.fragmentPath = maybeFragment;
+    if (isFragmentPath) {
+      body.dataset.fragmentPath = fragmentPath;
       // Preserve original content as fallback
       const fallbackNodes = [...body.childNodes].map((n) => n.cloneNode(true));
       body.textContent = '';
       body.classList.add('accordion-fragment-loading');
-      fetch(`${maybeFragment}.plain.html`)
+      fetch(`${fragmentPath}.plain.html`)
         .then((resp) => (resp.ok ? resp.text() : ''))
         .then((html) => {
           if (html) {
