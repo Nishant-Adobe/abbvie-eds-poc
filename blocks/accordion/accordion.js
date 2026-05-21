@@ -171,20 +171,21 @@ export default function decorate(block) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
 
-    // Fragment path (overrides body content if set)
-    const fragmentPath = row.children[2]?.textContent.trim() || '';
-    if (fragmentPath && /^\/(?!\/)/.test(fragmentPath)) {
-      body.dataset.fragmentPath = fragmentPath;
+    // Fragment path — detect if column exists (starts with /) to determine offset
+    const maybeFragment = row.children[2]?.textContent.trim() || '';
+    const hasFragmentCol = maybeFragment && /^\/(?!\/)/.test(maybeFragment);
+    const offset = hasFragmentCol ? 1 : 0;
+
+    if (hasFragmentCol) {
+      body.dataset.fragmentPath = maybeFragment;
       body.textContent = 'Loading...';
-      fetch(`${fragmentPath}.plain.html`)
+      fetch(`${maybeFragment}.plain.html`)
         .then((resp) => (resp.ok ? resp.text() : ''))
         .then((html) => {
           if (html) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            // Remove unsafe elements including base tag
             doc.querySelectorAll('script, style, iframe, object, embed, base, link[rel="import"]').forEach((el) => el.remove());
-            // Remove event handlers and dangerous URL schemes
             // eslint-disable-next-line no-script-url
             const dangerousSchemes = ['javascript:', 'data:', 'vbscript:'];
             const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href'];
@@ -211,11 +212,11 @@ export default function decorate(block) {
         .catch(() => { body.textContent = ''; });
     }
 
-    const ariaExpandLabel = row.children[4]?.textContent.trim() || '';
-    const ariaCollapseLabel = row.children[5]?.textContent.trim() || '';
-    const anchorId = row.children[6]?.textContent.trim() || '';
-    const itemImage = row.children[7]?.querySelector('picture') || null;
-    const imageAlt = row.children[8]?.textContent.trim() || '';
+    const ariaExpandLabel = row.children[3 + offset]?.textContent.trim() || '';
+    const ariaCollapseLabel = row.children[4 + offset]?.textContent.trim() || '';
+    const anchorId = row.children[5 + offset]?.textContent.trim() || '';
+    const itemImage = row.children[6 + offset]?.querySelector('picture') || null;
+    const imageAlt = row.children[7 + offset]?.textContent.trim() || '';
 
     if (itemImage && imageAlt) {
       itemImage.querySelector('img')?.setAttribute('alt', imageAlt);
@@ -225,7 +226,7 @@ export default function decorate(block) {
     const details = document.createElement('details');
     moveInstrumentation(row, details);
     // Use the third column for additional classes on the details element
-    details.className = `${row.children[3]?.textContent.trim().replaceAll(',', '') || ''}`;
+    details.className = `${row.children[2 + offset]?.textContent.trim().replaceAll(',', '') || ''}`;
     if (anchorId) details.setAttribute('id', anchorId);
     if (details.classList.contains('defaultopen')) {
       summary.classList.add(cfg.collapseIcon);
