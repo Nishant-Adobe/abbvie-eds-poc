@@ -86,7 +86,7 @@ export async function initializeMap(apiKey = null, containerEl = null) {
   }
 }
 
-export function updateMapMarkers(providers, startIndex, markerFillColor = '#fcc02e', markerLabelColor = 'white') {
+export function updateMapMarkers(providers, startIndex, markerFillColor = 'transparent', markerLabelColor = 'white') {
   // eslint-disable-next-line no-undef
   if (!map || typeof google === 'undefined') {
     return;

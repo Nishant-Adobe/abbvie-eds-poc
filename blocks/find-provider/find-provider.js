@@ -75,9 +75,13 @@ const FIELD_ORDER = [
   'clear-label',
   'terms-label',
   'terms-text',
+  'terms-error',
   'no-results',
   'error',
   'captcha-message',
+  'results-title',
+  'directions-label',
+  'details-label',
   'api-endpoint',
   'maps-api-key',
   'maps-fallback-url',
@@ -307,7 +311,7 @@ function buildResultCard(provider, config, index = 0, scopeEl = null) {
     dirLink.target = '_blank';
     dirLink.rel = 'noopener noreferrer';
     dirLink.className = 'find-provider-result-directions';
-    dirLink.textContent = 'Get Directions';
+    dirLink.textContent = config['directions-label'] || 'Get Directions';
     meta.append(dirLink);
   }
 
@@ -325,7 +329,7 @@ function buildResultCard(provider, config, index = 0, scopeEl = null) {
   detailsBtn.type = 'button';
   detailsBtn.className = 'find-provider-result-details';
   detailsBtn.setAttribute('aria-expanded', 'false');
-  detailsBtn.append('Show all practice details ');
+  detailsBtn.append(`${config['details-label'] || 'Show all practice details'} `);
   const detailsIcon = document.createElement('span');
   detailsIcon.className = 'find-provider-result-details-icon';
   detailsIcon.setAttribute('aria-hidden', 'true');
@@ -376,7 +380,10 @@ function buildResultsHeader(config) {
     radiusSelect.append(opt);
   });
   radiusSelect.value = '5 Miles';
-  radiusGroup.append(radiusSelect);
+  const selectWrapper = document.createElement('div');
+  selectWrapper.className = 'find-provider-select-wrapper';
+  selectWrapper.append(radiusSelect);
+  radiusGroup.append(selectWrapper);
 
   header.append(radiusGroup);
   return header;
@@ -589,7 +596,7 @@ export async function decorateBlock(block) {
     }
 
     if (termsCheckbox && !termsCheckbox.checked) {
-      if (termsError) termsError.textContent = 'Please agree to the Terms & Conditions';
+      if (termsError) termsError.textContent = config['terms-error'] || 'Please agree to the Terms & Conditions';
       hasError = true;
     } else if (termsError) {
       termsError.textContent = '';

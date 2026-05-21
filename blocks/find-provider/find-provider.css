@@ -48,8 +48,7 @@
   --find-provider-radius-select-min-width: 150px;
   --find-provider-radius-select-font-size: var(--body-font-size-s);
   --find-provider-radius-select-border: 1px;
-  --find-provider-radius-select-arrow-pos: right 14px center;
-  --find-provider-radius-select-arrow-size: 10px 7px;
+  --find-provider-color-select-arrow: var(--find-provider-color-text);
   --find-provider-focus-outline-width: var(--spacing-02);
   --find-provider-focus-outline-offset: var(--spacing-02);
 
@@ -321,13 +320,27 @@
   white-space: nowrap;
 }
 
+.find-provider-select-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.find-provider-select-wrapper::after {
+  content: '';
+  position: absolute;
+  inset-inline-end: 14px;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  inline-size: 10px;
+  block-size: 7px;
+  background-color: var(--find-provider-color-select-arrow);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  pointer-events: none;
+}
+
 .find-provider-results-radius-select {
   appearance: none;
   background-color: var(--find-provider-color-surface);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='%234a4a4a' d='M6 8 0 0h12z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: var(--find-provider-radius-select-arrow-pos);
-  background-size: var(--find-provider-radius-select-arrow-size);
   border: var(--find-provider-radius-select-border) solid var(--find-provider-color-input-border);
   border-radius: var(--find-provider-radius-select-radius);
   padding: var(--find-provider-radius-select-padding);
@@ -335,6 +348,7 @@
   color: var(--find-provider-color-text);
   min-inline-size: var(--find-provider-radius-select-min-width);
   cursor: pointer;
+  inline-size: 100%;
 }
 
 .find-provider-results-radius-select:focus-visible {
