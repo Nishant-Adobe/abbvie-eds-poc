@@ -200,7 +200,8 @@ export default function decorate(block) {
                 const isEventHandler = attr.name.startsWith('on');
                 const isUnsafeUrl = urlAttrs.includes(attr.name)
                   && dangerousSchemes.some((scheme) => val.startsWith(scheme));
-                if (isEventHandler || isUnsafeUrl) {
+                const isInlineStyle = attr.name === 'style';
+                if (isEventHandler || isUnsafeUrl || isInlineStyle) {
                   el.removeAttribute(attr.name);
                 }
               });
