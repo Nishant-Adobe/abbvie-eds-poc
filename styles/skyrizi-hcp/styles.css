@@ -2,3 +2,8 @@
 @import 'fonts.css';
 
 /* SKYRIZI HCP — Brand-specific style overrides */
+
+/* Prevent CLS: hide tab-panel sections before block CSS/JS loads */
+.section.tabs-container ~ .section:has(.section-metadata) {
+  display: none;
+}
