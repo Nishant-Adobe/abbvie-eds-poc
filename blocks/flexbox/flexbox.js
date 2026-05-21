@@ -2,51 +2,46 @@ import { renderBlock } from '../../scripts/multi-theme.js';
 
 export default async function decorate(block) {
   const rows = [...block.children];
-
-  // Anchor ID: read from block.id or data attribute only (no row heuristic)
   const anchorId = block.id || block.dataset.anchorId || '';
+  if (anchorId) block.id = anchorId;
 
-  // Each remaining row is a flex item
-  // UE field order: image(0) | imageAlt(1) | content(2) | itemClasses(3)
-  const items = rows.map((row) => {
-    const cells = [...row.children];
-    const item = document.createElement('div');
-    item.className = 'flexbox-item';
+  // Detect UE context: rows have data-aue-type instrumentation
+  const isUE = rows.some((row) => row.hasAttribute('data-aue-type'));
 
-    // Detect UE-authored rows via data-aue-type attribute
-    const isMultiField = row.hasAttribute('data-aue-type');
-
-    if (isMultiField) {
-      // Index-based: image=0, imageAlt=1, content=2, itemClasses=3
+  if (isUE) {
+    // UE mode: decorate in-place to preserve instrumentation
+    rows.forEach((row) => {
+      row.classList.add('flexbox-item');
+      const cells = [...row.children];
+      // Field order: image(0) | imageAlt(1) | content(2) | itemClasses(3)
       const imageCell = cells[0];
       const altText = cells[1]?.textContent?.trim() || '';
       const contentCell = cells[2];
       const widthValue = cells[3]?.textContent?.trim() || '';
 
-      const picture = imageCell?.querySelector('picture');
-      if (picture) {
-        const img = picture.querySelector('img');
-        if (img && altText) img.alt = altText;
-        const imgWrap = document.createElement('div');
-        imgWrap.className = 'flexbox-item-image';
-        imgWrap.append(picture);
-        item.append(imgWrap);
+      if (imageCell) {
+        const picture = imageCell.querySelector('picture');
+        if (picture) {
+          const img = picture.querySelector('img');
+          if (img && altText) img.alt = altText;
+          imageCell.classList.add('flexbox-item-image');
+        }
       }
-
-      if (contentCell?.childNodes?.length) {
-        const contentWrap = document.createElement('div');
-        contentWrap.className = 'flexbox-item-content';
-        [...contentCell.childNodes].forEach((node) => {
-          contentWrap.append(node.cloneNode(true));
-        });
-        item.append(contentWrap);
-      }
+      if (contentCell) contentCell.classList.add('flexbox-item-content');
+      if (cells[1]) cells[1].hidden = true;
+      if (cells[3]) cells[3].hidden = true;
 
       if (['full', 'half', 'third', 'quarter'].includes(widthValue)) {
-        item.dataset.width = widthValue;
+        row.dataset.width = widthValue;
       }
-    } else {
-      // Document authoring: each cell is image or content
+    });
+  } else {
+    // Document authoring: rebuild DOM for clean markup
+    const items = rows.map((row) => {
+      const cells = [...row.children];
+      const item = document.createElement('div');
+      item.className = 'flexbox-item';
+
       cells.forEach((cell) => {
         const picture = cell.querySelector('picture');
         if (picture) {
@@ -63,19 +58,13 @@ export default async function decorate(block) {
           item.append(contentWrap);
         }
       });
-    }
 
-    return item;
-  });
+      return item;
+    });
 
-  // Clear block
-  block.textContent = '';
-
-  // Set anchor ID
-  if (anchorId) block.id = anchorId;
-
-  // Append flex items
-  items.forEach((item) => block.append(item));
+    block.textContent = '';
+    items.forEach((item) => block.append(item));
+  }
 
   try {
     await renderBlock(block);
