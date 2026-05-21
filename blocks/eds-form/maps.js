@@ -86,7 +86,7 @@ export async function initializeMap(apiKey = null, containerEl = null) {
   }
 }
 
-export function updateMapMarkers(providers, startIndex) {
+export function updateMapMarkers(providers, startIndex, markerFillColor = '#fcc02e', markerLabelColor = 'white') {
   // eslint-disable-next-line no-undef
   if (!map || typeof google === 'undefined') {
     return;
@@ -156,14 +156,14 @@ export function updateMapMarkers(providers, startIndex) {
         title: `${letter}|${fullName}`,
         label: {
           text: letter,
-          color: 'white',
+          color: markerLabelColor,
           fontWeight: 'bold',
           fontSize: '14px',
         },
         icon: {
           path:
             'M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13C19,5.13 15.87,2 12,2z',
-          fillColor: '#000000',
+          fillColor: markerFillColor,
           fillOpacity: 1,
           strokeColor: '#ffffff',
           strokeWeight: 1,

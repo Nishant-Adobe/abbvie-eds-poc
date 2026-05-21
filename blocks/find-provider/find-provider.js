@@ -33,6 +33,15 @@ function extractParties(data) {
   return { providers, matchCount: providers.length, recordCount: providers.length };
 }
 
+function resolveTokenColor(token, el) {
+  const probe = document.createElement('span');
+  probe.style.cssText = `position:absolute;visibility:hidden;color:var(${token})`;
+  el.append(probe);
+  const { color } = getComputedStyle(probe);
+  probe.remove();
+  return color || null;
+}
+
 function parseRadius(radiusStr) {
   const n = parseInt(radiusStr, 10);
   return Number.isNaN(n) ? 25 : n;
@@ -366,7 +375,7 @@ function buildResultsHeader(config) {
     opt.textContent = v;
     radiusSelect.append(opt);
   });
-  radiusSelect.value = '25 Miles';
+  radiusSelect.value = '5 Miles';
   radiusGroup.append(radiusSelect);
 
   header.append(radiusGroup);
@@ -485,7 +494,9 @@ export async function decorateBlock(block) {
     rebuildPagination(Math.max(1, Math.ceil(matchCount / recordCount)), page);
     try {
       const { updateMapMarkers } = await import('../eds-form/maps.js');
-      updateMapMarkers(providers, 0);
+      const markerFill = resolveTokenColor('--find-provider-color-pin-bg', block);
+      const markerLabel = resolveTokenColor('--find-provider-color-pin-text', block);
+      updateMapMarkers(providers, 0, markerFill, markerLabel);
     } catch {
       // Map not ready yet — markers will be set when initializeMap resolves
     }
@@ -531,8 +542,7 @@ export async function decorateBlock(block) {
   async function runSearchFlow(query, page = 1) {
     lastQuery = query;
     const radiusSelect = resultsPanel.querySelector('.find-provider-results-radius-select');
-    const radius = parseRadius(radiusSelect?.value || '25 Miles');
-    resultsPanel.classList.remove('is-visible');
+    const radius = parseRadius(radiusSelect?.value || '5 Miles');
     loader.classList.add('is-visible');
     const minDelay = new Promise((resolve) => { setTimeout(resolve, MIN_LOADER_DELAY_MS); });
     await Promise.all([doSearch(query, page, radius), minDelay]);
