@@ -171,12 +171,14 @@ export default function decorate(block) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
 
-    // Fragment path — detect if column exists (starts with /) to determine offset
-    const maybeFragment = row.children[2]?.textContent.trim() || '';
-    const hasFragmentCol = maybeFragment && /^\/(?!\/)/.test(maybeFragment);
+    // Fragment path — detect if extra column exists.
+    // Old documents: 8 columns (no fragmentPath field).
+    // New UE documents: 9 columns (fragmentPath at index 2, may be empty).
+    const hasFragmentCol = row.children.length > 8;
     const offset = hasFragmentCol ? 1 : 0;
+    const maybeFragment = hasFragmentCol ? (row.children[2]?.textContent.trim() || '') : '';
 
-    if (hasFragmentCol) {
+    if (maybeFragment && /^\/(?!\/)/.test(maybeFragment)) {
       body.dataset.fragmentPath = maybeFragment;
       // Preserve original content as fallback
       const fallbackNodes = [...body.childNodes].map((n) => n.cloneNode(true));
