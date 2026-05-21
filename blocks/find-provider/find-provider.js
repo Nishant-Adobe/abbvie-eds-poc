@@ -1,10 +1,8 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
-const DUMMY_PROVIDERS_URL = new URL('./dummy-providers.json', import.meta.url).href;
 const MIN_LOADER_DELAY_MS = 800;
 
 let blockCounter = 0;
-let dummyProvidersCache = null;
 
 function getBestAddress(provider) {
   const addresses = provider.PartyAddress || [];
@@ -51,19 +49,6 @@ function isLatLng(query) {
   return /^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/.test(query.trim());
 }
 
-async function loadDummyProviders() {
-  if (dummyProvidersCache) return dummyProvidersCache;
-  try {
-    const resp = await fetch(DUMMY_PROVIDERS_URL);
-    if (!resp.ok) return { providers: [], matchCount: 0, recordCount: 10 };
-    const data = await resp.json();
-    dummyProvidersCache = extractParties(data);
-    return dummyProvidersCache;
-  } catch {
-    return { providers: [], matchCount: 0, recordCount: 10 };
-  }
-}
-
 // Must match the field order in _find-provider.json (excluding tab, classes, and common-prop)
 const FIELD_ORDER = [
   'search-label',
@@ -83,7 +68,6 @@ const FIELD_ORDER = [
   'directions-label',
   'details-label',
   'api-endpoint',
-  'maps-api-key',
   'maps-fallback-url',
   'directions-base-url',
   'indication',
@@ -395,6 +379,17 @@ function buildResultsHeader(config) {
   return header;
 }
 
+async function getMapsApiKey() {
+  try {
+    const resp = await fetch('/config.json');
+    if (!resp.ok) return null;
+    const { data } = await resp.json();
+    return data?.find(({ key }) => key === 'maps-api-key')?.value || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function decorateBlock(block) {
   blockCounter += 1;
   const blockId = `fp-${blockCounter}`;
@@ -406,6 +401,7 @@ export async function decorateBlock(block) {
   if (config['anchor-id']) block.id = config['anchor-id'];
 
   const isLocation = block.classList.contains('find-provider-location');
+  const isMapVariant = block.classList.contains('find-provider-map');
 
   const status = document.createElement('p');
   status.className = 'find-provider-status';
@@ -425,11 +421,14 @@ export async function decorateBlock(block) {
   const results = document.createElement('ul');
   results.className = 'find-provider-results';
 
-  const mapContainer = document.createElement('div');
-  mapContainer.id = `find-provider-map-${blockId}`;
-  mapContainer.className = 'find-provider-map-container';
-  mapContainer.setAttribute('role', 'region');
-  mapContainer.setAttribute('aria-label', 'Provider map');
+  let mapContainer = null;
+  if (isMapVariant) {
+    mapContainer = document.createElement('div');
+    mapContainer.id = `find-provider-map-${blockId}`;
+    mapContainer.className = 'find-provider-map-container';
+    mapContainer.setAttribute('role', 'region');
+    mapContainer.setAttribute('aria-label', 'Provider map');
+  }
 
   const form = buildForm(config, blockId, isLocation);
   const searchInput = form.querySelector('.find-provider-search-input');
@@ -504,13 +503,15 @@ export async function decorateBlock(block) {
     }
     providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx)));
     rebuildPagination(Math.max(1, Math.ceil(matchCount / recordCount)), page);
-    try {
-      const { updateMapMarkers } = await import('../eds-form/maps.js');
-      const markerFill = resolveTokenColor('--find-provider-color-pin-bg', block);
-      const markerLabel = resolveTokenColor('--find-provider-color-pin-text', block);
-      updateMapMarkers(providers, 0, markerFill, markerLabel);
-    } catch {
-      // Map not ready yet — markers will be set when initializeMap resolves
+    if (isMapVariant) {
+      try {
+        const { updateMapMarkers } = await import('../eds-form/maps.js');
+        const markerFill = resolveTokenColor('--find-provider-color-pin-bg', block);
+        const markerLabel = resolveTokenColor('--find-provider-color-pin-text', block);
+        updateMapMarkers(providers, 0, markerFill, markerLabel);
+      } catch {
+        // Map not ready yet — markers will be set when initializeMap resolves
+      }
     }
   }
 
@@ -519,8 +520,8 @@ export async function decorateBlock(block) {
     results.innerHTML = '';
 
     if (!config['api-endpoint']) {
-      const result = await loadDummyProviders();
-      await renderProviders(result.providers, result.matchCount, result.recordCount, page);
+      status.textContent = config.error || 'Search unavailable. Please try again later.';
+      rebuildPagination(0, 1);
       return;
     }
 
@@ -654,6 +655,7 @@ export async function decorateBlock(block) {
   block.replaceChildren(form, status, loader, resultsPanel);
 
   function showMapFallback() {
+    if (!mapContainer) return;
     mapContainer.innerHTML = '';
     const fallbackUrl = config['maps-fallback-url'];
     if (!fallbackUrl || !/^https?:\/\//i.test(fallbackUrl)) return;
@@ -667,26 +669,29 @@ export async function decorateBlock(block) {
     mapContainer.append(iframe);
   }
 
-  if (config['maps-api-key']) {
-    // gm_authFailure fires for RefererNotAllowedMapError, InvalidKeyMapError, etc.
-    // authFailed guards against the race where the callback fires after initializeMap resolves.
-    let authFailed = false;
-    const prevAuthFailure = window.gm_authFailure;
-    window.gm_authFailure = () => {
-      if (typeof prevAuthFailure === 'function') prevAuthFailure();
-      authFailed = true;
-      showMapFallback();
-    };
+  if (isMapVariant) {
+    const mapsApiKey = await getMapsApiKey();
+    if (mapsApiKey) {
+      // gm_authFailure fires for RefererNotAllowedMapError, InvalidKeyMapError, etc.
+      // authFailed guards against the race where the callback fires after initializeMap resolves.
+      let authFailed = false;
+      const prevAuthFailure = window.gm_authFailure;
+      window.gm_authFailure = () => {
+        if (typeof prevAuthFailure === 'function') prevAuthFailure();
+        authFailed = true;
+        showMapFallback();
+      };
 
-    try {
-      const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
-      await loadGoogleMapsAPI(config['maps-api-key']);
-      if (!authFailed) await initializeMap(config['maps-api-key'], mapContainer);
-    } catch {
+      try {
+        const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
+        await loadGoogleMapsAPI(mapsApiKey);
+        if (!authFailed) await initializeMap(mapsApiKey, mapContainer);
+      } catch {
+        showMapFallback();
+      }
+    } else {
       showMapFallback();
     }
-  } else {
-    showMapFallback();
   }
 }
 
