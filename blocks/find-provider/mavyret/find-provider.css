@@ -10,18 +10,18 @@
   --find-provider-padding-card: var(--spacing-16);
 
   /* ---- Colors (block-level, brand-overridable) ---- */
-  --find-provider-color-error: #d0021b;
+  --find-provider-color-error: var(--error-color, #d0021b);
   --find-provider-color-accent: var(--link-color, #005272);
-  --find-provider-color-on-accent: #fff;
-  --find-provider-color-surface: #fff;
-  --find-provider-color-text: #4a4a4a;
+  --find-provider-color-on-accent: var(--color-white);
+  --find-provider-color-surface: var(--color-white);
+  --find-provider-color-text: var(--color-text-muted, #4a4a4a);
   --find-provider-color-pin-bg: var(--color-accent-yellow, #fcc02e);
   --find-provider-color-pin-text: var(--find-provider-color-accent);
   --find-provider-color-divider: rgb(0 0 0 / 10%);
-  --find-provider-color-input-border: #d0d0d0;
-  --find-provider-color-map-bg: #e8eef2;
-  --find-provider-color-disabled-bg: #b9c4cb;
-  --find-provider-color-separator: #c2c2c2;
+  --find-provider-color-input-border: var(--form-light-border-color, #d0d0d0);
+  --find-provider-color-map-bg: var(--color-gray-light, #e8eef2);
+  --find-provider-color-disabled-bg: var(--color-gray-medium, #b9c4cb);
+  --find-provider-color-separator: var(--color-border, #c2c2c2);
   --find-provider-color-loader-overlay: rgb(255 255 255 / 60%);
   --find-provider-color-spinner-track: rgb(0 0 0 / 10%);
 
@@ -96,6 +96,10 @@
   --find-provider-pagination-page-font-size: 16px;
   --find-provider-pagination-page-padding-inline: 4px;
   --find-provider-pagination-page-min-width: 20px;
+}
+
+.find-provider {
+  position: relative;
 }
 
 .find-provider-form {
@@ -257,7 +261,7 @@
 
 .find-provider-loader.is-visible {
   display: flex;
-  position: fixed;
+  position: absolute;
   inset: 0;
   align-items: center;
   justify-content: center;
@@ -640,15 +644,15 @@
   --find-provider-color-border: var(--color-border-default);
 
   /* find-provider-specific tokens (no matching brand/common token) */
-  --fp-mavyret-orange: #e35b25;
+  --fp-mavyret-orange: var(--color-fire, #e35b25);
   --fp-mavyret-text: #4a4a4a;
   --fp-mavyret-text-dark: #1a1a1a;
   --fp-mavyret-link: #005bbb;
   --fp-mavyret-directions-link: #00e;
   --fp-mavyret-submit-bg: #508118;
-  --fp-mavyret-checkbox-border: #c7c7c7;
+  --fp-mavyret-checkbox-border: var(--color-border-default, #c7c7c7);
   --fp-mavyret-disabled-text: #b9c4cb;
-  --fp-mavyret-separator: #c2c2c2;
+  --fp-mavyret-separator: var(--color-border-default, #c2c2c2);
   --fp-mavyret-shadow-color: rgb(0 0 0 / 50%);
   --fp-mavyret-shadow-light: rgb(204 204 204 / 100%);
   --fp-mavyret-hover-bg: rgb(0 0 0 / 4%);
@@ -772,7 +776,7 @@
     margin-left: calc(-50vw + 50%);
     padding-right: calc(50vw - 50%);
     padding-left: calc(50vw - 50%);
-    background: #f2f2f2;
+    background: var(--color-background-light, #f2f2f2);
     padding-block: 40px;
 }
 
@@ -829,7 +833,7 @@
 .find-provider .find-provider-results-title {
   font-size: var(--spacing-16);
   font-weight: var(--font-weight-600);
-  color: #4a4a4a;
+  color: var(--fp-mavyret-text);
   line-height: var(--fp-mavyret-line-height-1-4);
   max-width: 50ch;
   font-family: var(--font-family-paragraph);

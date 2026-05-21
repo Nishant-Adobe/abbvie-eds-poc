@@ -10,18 +10,18 @@
   --find-provider-padding-card: var(--spacing-16);
 
   /* ---- Colors (block-level, brand-overridable) ---- */
-  --find-provider-color-error: #d0021b;
+  --find-provider-color-error: var(--error-color, #d0021b);
   --find-provider-color-accent: var(--link-color, #005272);
-  --find-provider-color-on-accent: #fff;
-  --find-provider-color-surface: #fff;
-  --find-provider-color-text: #4a4a4a;
+  --find-provider-color-on-accent: var(--color-white);
+  --find-provider-color-surface: var(--color-white);
+  --find-provider-color-text: var(--color-text-muted, #4a4a4a);
   --find-provider-color-pin-bg: var(--color-accent-yellow, #fcc02e);
   --find-provider-color-pin-text: var(--find-provider-color-accent);
   --find-provider-color-divider: rgb(0 0 0 / 10%);
-  --find-provider-color-input-border: #d0d0d0;
-  --find-provider-color-map-bg: #e8eef2;
-  --find-provider-color-disabled-bg: #b9c4cb;
-  --find-provider-color-separator: #c2c2c2;
+  --find-provider-color-input-border: var(--form-light-border-color, #d0d0d0);
+  --find-provider-color-map-bg: var(--color-gray-light, #e8eef2);
+  --find-provider-color-disabled-bg: var(--color-gray-medium, #b9c4cb);
+  --find-provider-color-separator: var(--color-border, #c2c2c2);
   --find-provider-color-loader-overlay: rgb(255 255 255 / 60%);
   --find-provider-color-spinner-track: rgb(0 0 0 / 10%);
 
@@ -96,6 +96,10 @@
   --find-provider-pagination-page-font-size: 16px;
   --find-provider-pagination-page-padding-inline: 4px;
   --find-provider-pagination-page-min-width: 20px;
+}
+
+.find-provider {
+  position: relative;
 }
 
 .find-provider-form {
@@ -257,7 +261,7 @@
 
 .find-provider-loader.is-visible {
   display: flex;
-  position: fixed;
+  position: absolute;
   inset: 0;
   align-items: center;
   justify-content: center;
@@ -638,9 +642,9 @@
 
 
   /* find-provider-specific tokens (no matching brand/common token) */
-  --fp-venclexta-bg: #f2f2f2;
+  --fp-venclexta-bg: var(--color-background-light, #f2f2f2);
   --fp-venclexta-accent-gold: #f6c741;
-  --fp-venclexta-submit-color: #444;
+  --fp-venclexta-submit-color: var(--color-text-legal, #444);
   --fp-venclexta-submit-font-size: 17px;
   --fp-venclexta-max-width: 1114px;
   --fp-venclexta-input-max-width: 206px;
