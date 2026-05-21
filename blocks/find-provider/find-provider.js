@@ -6,16 +6,52 @@ const MIN_LOADER_DELAY_MS = 800;
 let blockCounter = 0;
 let dummyProvidersCache = null;
 
+function getBestAddress(provider) {
+  const addresses = provider.PartyAddress || [];
+  const best = addresses.find((a) => a.BestAddressIndicator === 'Yes');
+  if (best) return best;
+  if (addresses.length > 1) {
+    return [...addresses].sort(
+      (a, b) => parseFloat(a.DistanceInMiles || 9999) - parseFloat(b.DistanceInMiles || 9999),
+    )[0];
+  }
+  return addresses[0] || {};
+}
+
+function extractParties(data) {
+  const body = data?.PhysicianLocatorResponse?.PhysicianLocatorResponseBody;
+  if (body) {
+    if (body.IsStatusSuccessful === 'false') return { providers: [], matchCount: 0, recordCount: 10 };
+    const content = body.ContentResult || {};
+    return {
+      providers: content.Party || [],
+      matchCount: parseInt(content.MatchCount || '0', 10),
+      recordCount: parseInt(content.RecordCount || '10', 10),
+    };
+  }
+  const providers = data?.results || data?.providers || (Array.isArray(data) ? data : []);
+  return { providers, matchCount: providers.length, recordCount: providers.length };
+}
+
+function parseRadius(radiusStr) {
+  const n = parseInt(radiusStr, 10);
+  return Number.isNaN(n) ? 25 : n;
+}
+
+function isLatLng(query) {
+  return /^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/.test(query.trim());
+}
+
 async function loadDummyProviders() {
   if (dummyProvidersCache) return dummyProvidersCache;
   try {
     const resp = await fetch(DUMMY_PROVIDERS_URL);
-    if (!resp.ok) return [];
+    if (!resp.ok) return { providers: [], matchCount: 0, recordCount: 10 };
     const data = await resp.json();
-    dummyProvidersCache = data.results || data.providers || [];
+    dummyProvidersCache = extractParties(data);
     return dummyProvidersCache;
   } catch {
-    return [];
+    return { providers: [], matchCount: 0, recordCount: 10 };
   }
 }
 
@@ -193,9 +229,9 @@ function buildResultCard(provider, config, index = 0) {
   const li = document.createElement('li');
   li.className = 'find-provider-result';
 
-  const address = provider.PartyAddress?.[0] || {};
+  const address = getBestAddress(provider);
   const phone = provider.Communication?.find(
-    (c) => c.CommunicationTypeDescription === 'Telephone',
+    (c) => c.CommunicationTypeCode === '203200' || c.CommunicationTypeDescription === 'Telephone',
   )?.CommunicationValueText || provider.phone || '';
 
   const pin = document.createElement('span');
@@ -236,7 +272,10 @@ function buildResultCard(provider, config, index = 0) {
   const meta = document.createElement('div');
   meta.className = 'find-provider-result-meta';
 
-  const distance = provider.distance || provider.DistanceText || '';
+  const rawDist = address.DistanceInMiles;
+  const distance = rawDist
+    ? `${parseFloat(rawDist).toFixed(1)} mi`
+    : provider.distance || provider.DistanceText || '';
   if (distance) {
     const distEl = document.createElement('span');
     distEl.className = 'find-provider-result-distance';
@@ -380,6 +419,10 @@ export async function decorateBlock(block) {
   blockCounter += 1;
   const blockId = `fp-${blockCounter}`;
   const config = readConfig(block);
+  let lastQuery = null;
+  let currentPage = 1;
+  let totalPages = 1;
+  let mapsLoaded = false;
 
   if (config['anchor-id']) block.id = config['anchor-id'];
 
@@ -415,45 +458,6 @@ export async function decorateBlock(block) {
   const geoBtn = form.querySelector('.find-provider-geo-btn');
   const termsCheckbox = form.querySelector('.find-provider-terms-checkbox');
 
-  async function renderProviders(providers) {
-    status.textContent = '';
-    results.innerHTML = '';
-    if (!providers.length) {
-      status.textContent = config['no-results'];
-      return;
-    }
-    providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx)));
-    try {
-      const { updateMapMarkers } = await import('../eds-form/maps.js');
-      updateMapMarkers(providers, 0);
-    } catch {
-      // Map not ready yet — markers will be set when initializeMap resolves
-    }
-  }
-
-  async function doSearch(query) {
-    if (!config['api-endpoint']) {
-      const providers = await loadDummyProviders();
-      await renderProviders(providers);
-      return;
-    }
-    status.textContent = '';
-    results.innerHTML = '';
-
-    try {
-      const params = new URLSearchParams({ q: query });
-      if (config.indication) params.set('indication', config.indication);
-
-      const resp = await fetch(`${config['api-endpoint']}?${params}`);
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-      const data = await resp.json();
-      const providers = data.results || data.providers || (Array.isArray(data) ? data : []);
-      await renderProviders(providers);
-    } catch {
-      status.textContent = config.error;
-    }
-  }
-
   const resultsPanel = document.createElement('div');
   resultsPanel.className = 'find-provider-results-panel';
   resultsPanel.append(buildResultsHeader(config));
@@ -463,15 +467,140 @@ export async function decorateBlock(block) {
   resultsLayout.append(results);
   if (mapContainer) resultsLayout.append(mapContainer);
   resultsPanel.append(resultsLayout);
-  resultsPanel.append(buildPagination(5, 1));
 
-  async function runSearchFlow(query) {
+  const paginationNav = buildPagination(5, 1);
+  resultsPanel.append(paginationNav);
+
+  function rebuildPagination(total, active) {
+    paginationNav.innerHTML = '';
+    delete paginationNav.dataset.mavyretDone;
+    totalPages = total;
+    if (total <= 0) return;
+
+    const prevBtn = document.createElement('button');
+    prevBtn.type = 'button';
+    prevBtn.className = 'find-provider-pagination-btn find-provider-pagination-prev';
+    prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.disabled = active === 1;
+    paginationNav.append(prevBtn);
+
+    for (let i = 1; i <= total; i += 1) {
+      const pageBtn = document.createElement('button');
+      pageBtn.type = 'button';
+      pageBtn.className = 'find-provider-pagination-page';
+      if (i === active) { pageBtn.classList.add('is-active'); pageBtn.setAttribute('aria-current', 'page'); }
+      pageBtn.textContent = String(i);
+      pageBtn.setAttribute('aria-label', `Page ${i}`);
+      pageBtn.dataset.page = String(i);
+      paginationNav.append(pageBtn);
+      if (i < total) {
+        const sep = document.createElement('span');
+        sep.className = 'find-provider-pagination-sep';
+        sep.setAttribute('aria-hidden', 'true');
+        sep.textContent = '|';
+        paginationNav.append(sep);
+      }
+    }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button';
+    nextBtn.className = 'find-provider-pagination-btn find-provider-pagination-next';
+    nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.disabled = active === total;
+    paginationNav.append(nextBtn);
+
+    paginationNav.dispatchEvent(new CustomEvent('find-provider:pagination-rebuilt', { bubbles: true }));
+  }
+
+  async function renderProviders(providers, matchCount = 0, recordCount = 10, page = 1) {
+    status.textContent = '';
+    results.innerHTML = '';
+    currentPage = page;
+    if (!providers.length) {
+      status.textContent = config['no-results'];
+      rebuildPagination(0, 1);
+      return;
+    }
+    providers.forEach((p, idx) => results.append(buildResultCard(p, config, idx)));
+    rebuildPagination(Math.max(1, Math.ceil(matchCount / recordCount)), page);
+    try {
+      const { updateMapMarkers } = await import('../eds-form/maps.js');
+      updateMapMarkers(providers, 0);
+    } catch {
+      // Map not ready yet — markers will be set when initializeMap resolves
+    }
+  }
+
+  async function doSearch(query, page = 1, radius = 25) {
+    status.textContent = '';
+    results.innerHTML = '';
+
+    if (!mapsLoaded || !config['api-endpoint']) {
+      const result = await loadDummyProviders();
+      await renderProviders(result.providers, result.matchCount, result.recordCount, page);
+      return;
+    }
+
+    try {
+      const params = new URLSearchParams();
+      if (config.indication) params.set('publisherName', config.indication);
+      params.set('pageNumber', String(page));
+      params.set('pageSize', '10');
+      params.set('radius', String(radius));
+
+      if (isLatLng(query)) {
+        const [lat, lng] = query.split(',');
+        params.set('latitude', lat.trim());
+        params.set('longitude', lng.trim());
+      } else {
+        params.set('zipCode', query);
+      }
+
+      const resp = await fetch(`${config['api-endpoint']}?${params}`);
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+      const { providers, matchCount, recordCount } = extractParties(data);
+      await renderProviders(providers, matchCount, recordCount, page);
+    } catch {
+      // API failed (CORS, network, bad params) — fall back to dummy data
+      const result = await loadDummyProviders();
+      await renderProviders(result.providers, result.matchCount, result.recordCount, page);
+    }
+  }
+
+  async function runSearchFlow(query, page = 1) {
+    lastQuery = query;
+    const radiusSelect = resultsPanel.querySelector('.find-provider-results-radius-select');
+    const radius = parseRadius(radiusSelect?.value || '25 Miles');
     resultsPanel.classList.remove('is-visible');
     loader.classList.add('is-visible');
     const minDelay = new Promise((resolve) => { setTimeout(resolve, MIN_LOADER_DELAY_MS); });
-    await Promise.all([doSearch(query), minDelay]);
+    await Promise.all([doSearch(query, page, radius), minDelay]);
     loader.classList.remove('is-visible');
     resultsPanel.classList.add('is-visible');
+  }
+
+  // Delegated listener — wired once so rebuilding paginationNav doesn't lose handlers
+  paginationNav.addEventListener('click', (e) => {
+    if (!lastQuery) return;
+    const pageBtn = e.target.closest('.find-provider-pagination-page');
+    const prevBtn = e.target.closest('.find-provider-pagination-prev');
+    const nextBtn = e.target.closest('.find-provider-pagination-next');
+    if (pageBtn) {
+      const page = parseInt(pageBtn.dataset.page, 10);
+      if (page !== currentPage) runSearchFlow(lastQuery, page);
+    } else if (prevBtn && currentPage > 1) {
+      runSearchFlow(lastQuery, currentPage - 1);
+    } else if (nextBtn && currentPage < totalPages) {
+      runSearchFlow(lastQuery, currentPage + 1);
+    }
+  });
+
+  const radiusSelectEl = resultsPanel.querySelector('.find-provider-results-radius-select');
+  if (radiusSelectEl) {
+    radiusSelectEl.addEventListener('change', () => {
+      if (lastQuery !== null) runSearchFlow(lastQuery, 1);
+    });
   }
 
   const searchError = form.querySelector('.find-provider-search-error');
@@ -543,17 +672,8 @@ export async function decorateBlock(block) {
 
   block.replaceChildren(form, status, loader, resultsPanel);
 
-  if (config['maps-api-key']) {
-    try {
-      const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
-      await loadGoogleMapsAPI(config['maps-api-key']);
-      await initializeMap(config['maps-api-key']);
-    } catch {
-      // Maps failed to load — fall through to iframe fallback below
-    }
-  }
-
-  if (mapContainer && !mapContainer.querySelector('div, iframe')) {
+  function showMapFallback() {
+    mapContainer.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.src = 'https://maps.google.com/maps?q=Elmhurst,NY+11373&z=11&output=embed';
     iframe.title = 'Provider locations';
@@ -562,6 +682,31 @@ export async function decorateBlock(block) {
     iframe.setAttribute('allowfullscreen', '');
     iframe.className = 'find-provider-map-iframe';
     mapContainer.append(iframe);
+  }
+
+  if (config['maps-api-key']) {
+    // gm_authFailure is Google's global callback for RefererNotAllowedMapError,
+    // InvalidKeyMapError, etc. — fires even when the script itself loads fine.
+    // authFailed guards against the race where gm_authFailure fires after mapsLoaded = true.
+    let authFailed = false;
+    const prevAuthFailure = window.gm_authFailure;
+    window.gm_authFailure = () => {
+      if (typeof prevAuthFailure === 'function') prevAuthFailure();
+      authFailed = true;
+      mapsLoaded = false;
+      showMapFallback();
+    };
+
+    try {
+      const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
+      await loadGoogleMapsAPI(config['maps-api-key']);
+      await initializeMap(config['maps-api-key']);
+      if (!authFailed) mapsLoaded = true;
+    } catch {
+      showMapFallback();
+    }
+  } else {
+    showMapFallback();
   }
 }
 

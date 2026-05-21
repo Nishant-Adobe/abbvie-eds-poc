@@ -1,6 +1,18 @@
 let map = null;
 let markers = [];
 
+function getBestAddress(provider) {
+  const addresses = provider.PartyAddress || [];
+  const best = addresses.find((a) => a.BestAddressIndicator === 'Yes');
+  if (best) return best;
+  if (addresses.length > 1) {
+    return [...addresses].sort(
+      (a, b) => parseFloat(a.DistanceInMiles || 9999) - parseFloat(b.DistanceInMiles || 9999),
+    )[0];
+  }
+  return addresses[0] || {};
+}
+
 export function loadGoogleMapsAPI(apiKey) {
   return new Promise((resolve, reject) => {
     if (window.google && window.google.maps) {
@@ -88,7 +100,7 @@ export function updateMapMarkers(providers, startIndex) {
 
   // First pass: Group providers by address
   providers.forEach((provider, index) => {
-    const address = provider.PartyAddress?.[0];
+    const address = getBestAddress(provider);
 
     if (!address || !address.Latitude || !address.Longitude) {
       return;
@@ -126,7 +138,7 @@ export function updateMapMarkers(providers, startIndex) {
   addressGroups.forEach(
     ({ firstIndex, position, providers: groupProviders }) => {
       const firstProvider = groupProviders[0];
-      const address = firstProvider.provider.PartyAddress?.[0];
+      const address = getBestAddress(firstProvider.provider);
       const letter = getMarkerLetter(startIndex + firstIndex);
       const name = `${firstProvider.provider.PartyName}`;
       const degree = firstProvider.provider.HCPExtension?.DegreeCode || '';
@@ -157,10 +169,9 @@ export function updateMapMarkers(providers, startIndex) {
       });
 
       // Create info window for the first provider initially
-      const primaryPhone = firstProvider.provider.Communication?.[0];
-      const phone = (primaryPhone?.CommunicationTypeDescription === 'Telephone'
-          && primaryPhone?.CommunicationValueText)
-        || '';
+      const phone = firstProvider.provider.Communication?.find(
+        (c) => c.CommunicationTypeCode === '203200' || c.CommunicationTypeDescription === 'Telephone',
+      )?.CommunicationValueText || '';
 
       const infoContent = `
       <div class="gm-info-window">
@@ -214,17 +225,16 @@ export function updateMapMarkers(providers, startIndex) {
       // Store the info window and method to update content
       marker.infoWindow = infoWindow;
       marker.updateInfoContent = (provider) => {
-        const providerAddress = provider.PartyAddress?.[0];
+        const providerAddress = getBestAddress(provider);
         const providerName = `${provider.PartyName}`;
         const providerDegree = provider.HCPExtension?.DegreeCode || '';
         const providerFullName = `${providerName}${
           providerDegree ? `, ${providerDegree}` : ''
         }`;
 
-        const providerPhone = provider.Communication?.[0];
-        const providerPhoneNumber = (providerPhone?.CommunicationTypeDescription === 'Telephone'
-            && providerPhone?.CommunicationValueText)
-          || '';
+        const providerPhoneNumber = provider.Communication?.find(
+          (c) => c.CommunicationTypeCode === '203200' || c.CommunicationTypeDescription === 'Telephone',
+        )?.CommunicationValueText || '';
 
         const newContent = `
         <div class="gm-info-window">
