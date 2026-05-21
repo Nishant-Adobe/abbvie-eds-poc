@@ -78,6 +78,11 @@
   display: none;
 }
 
+/* Prevent CLS: hide tab-panel candidate sections (those with section-metadata after tabs) */
+.section.tabs-container ~ .section:has(.section-metadata) {
+  display: none;
+}
+
 /* Tab panel — sections inside use 12-column grid */
 .tabs-panel > .section[data-tabs-grid] {
   display: grid;
