@@ -221,6 +221,27 @@
   grid-column: unset;
 }
 
+/* ── Pill panel — reset text-container overrides ── */
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-wrapper {
+  background: transparent;
+  padding: 0;
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel .text-container li {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* ── Pill panel — base typography ── */
+.section:has(.tabs.pill) ~ .tabs-panel p,
+.section:has(.tabs.pill) ~ .tabs-panel a,
+.section:has(.tabs.pill) ~ .tabs-panel li,
+.section:has(.tabs.pill) ~ .tabs-panel dd,
+.section:has(.tabs.pill) ~ .tabs-panel dt {
+  font-size: var(--font-size-18, 1.8rem);
+  line-height: var(--line-height-24, 2.4rem);
+}
+
 /* ── Tablet+ pill adjustments ── */
 @media (width >= 600px) {
   .tabs.pill .tabs-list button.tabs-tab {
