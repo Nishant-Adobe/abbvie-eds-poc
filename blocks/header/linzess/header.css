@@ -228,6 +228,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
+    min-height: calc(var(--nav-height) + var(--nav-utility-height));
   }
 }
 
@@ -2029,6 +2030,11 @@ header .nav-utility a.button {
   text-transform: none;
 }
 
+header .nav-utility a:hover,
+header .nav-utility a.button:hover { 
+  text-decoration: underline;
+}
+
 /* Must precede more-specific hamburger button selector */
 
 header .nav-utility button {
@@ -2379,6 +2385,11 @@ header nav .nav-sections .mobile-utility-clone {
     margin: 0 auto;
     max-width: var(--header-nav-max-width);
     padding: var(--spacing-20) 0;
+    justify-content: center;
+  }
+
+  header .nav-wrapper .nav-utility nav {
+    padding: 0;
   }
 
   /* Logo — vertical centering in single nav row */
@@ -2536,7 +2547,7 @@ header nav .nav-sections .mobile-utility-clone {
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
-  header .nav-utility ul li:nth-child(n+3) { display: block; }
+  header .nav-utility ul li:nth-child(n+3) { display: flex; }
 
   /* Scrolled state — dark maintained */
   header.hide-nav .nav-wrapper {
