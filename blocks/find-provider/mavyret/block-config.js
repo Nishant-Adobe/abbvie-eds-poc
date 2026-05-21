@@ -10,8 +10,8 @@ const CONSULTATION_TEXT = 'Consultation visits need not be in person. Ask your d
 
 function restructurePagination(block) {
   const pagination = block.querySelector('.find-provider-pagination');
-  if (!pagination || pagination.dataset.mavyretDone) return;
-  pagination.dataset.mavyretDone = 'true';
+  if (!pagination || pagination.dataset.paginationBuilt) return;
+  pagination.dataset.paginationBuilt = 'true';
 
   const firstBtn = createNavBtn('first', 'First page');
   const lastBtn = createNavBtn('last', 'Last page');
@@ -33,7 +33,7 @@ function restructurePagination(block) {
     resultsLayout.append(right);
 
     const topPagination = pagination.cloneNode(true);
-    topPagination.dataset.mavyretDone = 'true';
+    topPagination.dataset.paginationBuilt = 'true';
     resultsLayout.before(topPagination);
   }
 }
@@ -56,6 +56,16 @@ function observeResults(block) {
     });
   });
   observer.observe(resultsList, { childList: true });
+
+  if (block.parentNode) {
+    const teardown = new MutationObserver(() => {
+      if (!block.isConnected) {
+        observer.disconnect();
+        teardown.disconnect();
+      }
+    });
+    teardown.observe(block.parentNode, { childList: true });
+  }
 }
 
 function wrapForm(block) {

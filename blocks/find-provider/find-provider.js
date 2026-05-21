@@ -71,6 +71,7 @@ const FIELD_ORDER = [
   'captcha-message',
   'api-endpoint',
   'maps-api-key',
+  'maps-fallback-url',
   'indication',
   'exit-modal-id',
   'anchor-id',
@@ -432,7 +433,7 @@ export async function decorateBlock(block) {
 
   function rebuildPagination(total, active) {
     paginationNav.innerHTML = '';
-    delete paginationNav.dataset.mavyretDone;
+    delete paginationNav.dataset.paginationBuilt;
     totalPages = total;
     if (total <= 0) return;
 
@@ -571,7 +572,7 @@ export async function decorateBlock(block) {
 
     let hasError = false;
     if (!query) {
-      if (searchError) searchError.textContent = 'Please enter a valid ZIP Code';
+      if (searchError) searchError.textContent = config.error || 'Please enter a valid ZIP Code';
       hasError = true;
     } else if (searchError) {
       searchError.textContent = '';
@@ -633,8 +634,10 @@ export async function decorateBlock(block) {
 
   function showMapFallback() {
     mapContainer.innerHTML = '';
+    const fallbackUrl = config['maps-fallback-url'];
+    if (!fallbackUrl) return;
     const iframe = document.createElement('iframe');
-    iframe.src = 'https://maps.google.com/maps?q=Elmhurst,NY+11373&z=11&output=embed';
+    iframe.src = fallbackUrl;
     iframe.title = 'Provider locations';
     iframe.loading = 'lazy';
     iframe.referrerPolicy = 'no-referrer-when-downgrade';
