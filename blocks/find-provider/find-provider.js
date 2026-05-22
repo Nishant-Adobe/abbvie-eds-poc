@@ -731,7 +731,6 @@ export async function decorateBlock(block) {
   block.replaceChildren(form, status, loader, resultsPanel);
 
   if (isMapVariant) {
-    resultsPanel.classList.add('is-visible');
     const [mapsApiKey, fetchedFallbackUrl] = await Promise.all([
       getConfigValue('maps-api-key'),
       getConfigValue('maps-fallback-url'),
