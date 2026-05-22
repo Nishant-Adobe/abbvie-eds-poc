@@ -141,7 +141,8 @@
 
 .find-provider-search-input:focus-visible,
 .find-provider-radius-select:focus-visible {
-  outline: none;
+   outline: var(--find-provider-focus-outline-width, 2px) solid var(--color-focus, highlight);
+   outline-offset: var(--find-provider-focus-outline-offset, 2px);
 }
 
 /* Search row: input + optional geo button side by side */

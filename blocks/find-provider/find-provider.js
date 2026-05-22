@@ -411,7 +411,7 @@ export async function decorateBlock(block) {
   if (config['anchor-id']) block.id = config['anchor-id'];
 
   const isLocation = block.classList.contains('find-provider-location');
-  const isMapVariant = block.classList.contains('find-provider-location');
+  const isMapVariant = block.classList.contains('find-provider-map');
 
   const status = document.createElement('p');
   status.className = 'find-provider-status';
