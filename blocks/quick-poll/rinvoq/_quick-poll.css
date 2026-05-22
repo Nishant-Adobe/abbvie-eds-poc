@@ -6,7 +6,8 @@
   --qpoll-brushstroke-width: var(--spacing-225);
   --qpoll-label-letter-spacing: var(--letter-spacing-wide-03);
 
-  padding: var(--spacing-45) var(--spacing-70);
+  padding: var(--spacing-40) var(--spacing-31);
+  margin: 0;
 
   .default-content-wrapper h4 {
     font-size: var(--font-size-10);
@@ -27,7 +28,7 @@
   height: var(--spacing-12);
   left: calc(-1 * var(--spacing-15));
   position: absolute;
-  width: var(--qpoll-brushstroke-width);
+  width: var(--spacing-225);
 }
 
 .quick-poll {
@@ -160,5 +161,11 @@
       top: 50%;
       vertical-align: middle;
     }
+  }
+}
+
+@media (width >= 1024px) { 
+  .quick-poll-container { 
+    padding: var(--spacing-45) var(--spacing-70);
   }
 }
