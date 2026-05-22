@@ -24,26 +24,51 @@ function rewriteResourceUrls(container, formUrlObj) {
 }
 
 /**
- * Re-executes <script> elements in the injected HTML.
+ * Re-executes <script> elements in the injected HTML sequentially.
  * Plain innerHTML assignment does not run scripts; replacing each node forces execution.
+ * External scripts (src) are awaited one-by-one before the next script runs, so inline
+ * scripts that depend on jQuery never fire before jQuery has finished loading.
  * All attributes (type, src, etc.) are preserved.
  * @param {Element} container
+ * @returns {Promise<void>}
  */
 function reExecuteScripts(container) {
-  container.querySelectorAll('script').forEach((oldScript) => {
+  const replaceOne = (oldScript) => {
     const newScript = document.createElement('script');
     [...oldScript.attributes].forEach((attr) => newScript.setAttribute(attr.name, attr.value));
     newScript.textContent = oldScript.textContent;
+
+    if (newScript.src) {
+      // External script — return a promise that resolves once loaded so the
+      // reduce chain waits before executing the next script.
+      return new Promise((resolve) => {
+        newScript.onload = resolve;
+        newScript.onerror = resolve; // don't block on a failed resource
+        oldScript.replaceWith(newScript);
+      });
+    }
+    // Inline script — executes synchronously on insertion
     oldScript.replaceWith(newScript);
-  });
+    return Promise.resolve();
+  };
+
+  // Sequential execution via promise chain (avoids for-of + await-in-loop)
+  return [...container.querySelectorAll('script')].reduce(
+    (chain, script) => chain.then(() => replaceOne(script)),
+    Promise.resolve(),
+  );
 }
 
-/** Loads jQuery from CDN if not already present. */
+/**
+ * Loads jQuery from CDN if not already present.
+ * Resolves regardless of success/failure so the caller can check window.jQuery.
+ */
 const ensureJQuery = () => new Promise((resolve) => {
   if (window.jQuery) { resolve(); return; }
   const script = document.createElement('script');
   script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
   script.onload = resolve;
+  script.onerror = resolve; // CSP or network failure — resolve so caller can handle
   document.head.appendChild(script);
 });
 
@@ -74,11 +99,13 @@ export default async function decorate(block) {
     // Same-host link: strip origin so we can inspect the pathname
     href = formLink.pathname + formLink.search + formLink.hash;
 
-    if (href.startsWith('/content/forms')) {
-      if (!href.endsWith('.html')) href = `${href}.html`;
-      finalFormPath = `${aemHost}${href}`;
+    // Match both /content/forms/... and proxy paths like /abbviecloud/content/forms/...
+    if (/\/content\/forms\//.test(href)) {
+      const formsPath = href.slice(href.indexOf('/content/forms'));
+      if (!formsPath.endsWith('.html')) href = `${href}.html`;
+      finalFormPath = `${aemHost}${formsPath.endsWith('.html') ? formsPath : `${formsPath}.html`}`;
     } else {
-      // Non-forms same-host path — use as-is (relative to current origin)
+      // Non-forms same-host path — use as-is relative to current origin
       finalFormPath = `${window.location.origin}${href}`;
     }
   }
@@ -102,17 +129,18 @@ export default async function decorate(block) {
       success(data) {
         formContainer.innerHTML = data;
         rewriteResourceUrls(formContainer, formUrlObj);
-        reExecuteScripts(formContainer);
 
-        // Let AEM adaptive-form JS resolve assets relative to the publish host
-        const form = formContainer.querySelector('[data-cmp-path]');
-        if (form) {
-          form.setAttribute('data-cmp-context-path', formUrlObj.origin);
-        }
-
-        document.dispatchEvent(new CustomEvent('adaptiveform:loaded', {
-          detail: { finalFormPath, container: formContainer },
-        }));
+        // Sequential script execution: wait for all external scripts (including
+        // any jQuery bundled with the form) before firing loaded event.
+        reExecuteScripts(formContainer).then(() => {
+          const form = formContainer.querySelector('[data-cmp-path]');
+          if (form) {
+            form.setAttribute('data-cmp-context-path', formUrlObj.origin);
+          }
+          document.dispatchEvent(new CustomEvent('adaptiveform:loaded', {
+            detail: { finalFormPath, container: formContainer },
+          }));
+        });
       },
       error(error) {
         formContainer.innerHTML = '<p class="embed-form-error">Error loading form. Please try again later.</p>';
@@ -124,5 +152,9 @@ export default async function decorate(block) {
   };
 
   await ensureJQuery();
+  if (!window.jQuery) {
+    formContainer.innerHTML = '<p class="embed-form-error">Form could not be loaded (jQuery unavailable).</p>';
+    return;
+  }
   loadAdaptiveForm();
 }
