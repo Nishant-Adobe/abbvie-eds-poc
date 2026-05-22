@@ -1224,7 +1224,9 @@ export default async function decorate(block) {
     searchExpanded.className = 'search-expanded';
     searchExpanded.hidden = true;
 
-    const searchLabel = searchBlock.querySelector('p')?.textContent.trim() || '';
+    const searchCell = searchBlock.querySelector(':scope > div > div');
+    const searchParas = [...(searchCell?.querySelectorAll(':scope > p') || [])];
+    const searchLabel = searchParas[1]?.textContent.trim() || '';
     const searchForm = createSearchForm(searchLabel);
 
     // Dark search icon inside the input — fresh SVG with no fill so CSS colours it
