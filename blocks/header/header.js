@@ -469,16 +469,23 @@ async function buildLevelTwoNavigations(block, languageLinkData, element) {
 
 /**
  * Creates a search form.
- * @param {Element} block - The block element.
- * @returns {Element} - The search form element.
+ * Reads label text, mobile placeholder and results page path from the
+ * authored navigation-content search block.
+ * @param {Element} searchBlock - The navigation-content block with data-type="search".
+ * @returns {Element} - The search form wrapper element.
  */
-function createSearchForm(searchLabel = '') {
-  const text = searchLabel;
+function createSearchForm(searchBlock) {
+  const searchCell = searchBlock.querySelector(':scope > div > div');
+  const paras = [...(searchCell?.querySelectorAll(':scope > p') || [])];
+  const text = paras[1]?.textContent.trim() || 'Search';
+  const mobilePlaceholder = searchBlock.dataset.searchMobilePlaceholder || text;
+  const resultsPath = searchCell?.querySelector('a[href]')?.getAttribute('href')?.trim() || '/search-results';
+
   const maindiv = createElement('div', { className: 'search-main-wrapper' });
   const wrapperdiv = createElement('div', { className: 'search-wrapper' });
   const form = createElement('form', {
     className: 'search-form',
-    attributes: { method: 'get', role: 'search' },
+    attributes: { method: 'get', role: 'search', action: resultsPath },
   });
   const innerDiv = createElement('div', { className: 'search-inner-wrapper' });
   const input = createElement('input', {
@@ -491,9 +498,11 @@ function createSearchForm(searchLabel = '') {
       maxlength: '100',
       'aria-label': text,
       name: 'q',
-      placeholder: text,
       'aria-describedby': 'search-alert-text',
     },
+  });
+  const charsetInput = createElement('input', {
+    attributes: { type: 'hidden', name: '_charset_', value: 'UTF-8' },
   });
   const label = createElement('label', {
     className: 'search-input-label',
@@ -505,19 +514,46 @@ function createSearchForm(searchLabel = '') {
 
   alertDiv.appendChild(alertP);
   innerDiv.append(input, label, alertDiv);
-  form.appendChild(innerDiv);
+  form.append(innerDiv, charsetInput);
   wrapperdiv.appendChild(form);
   maindiv.appendChild(wrapperdiv);
 
-  // Label update logic
+  // Responsive placeholder swap (mobile vs desktop)
+  const mq = window.matchMedia('(width < 744px)');
+  const updatePlaceholder = () => {
+    const placeholder = mq.matches ? mobilePlaceholder : text;
+    label.textContent = placeholder;
+    input.setAttribute('aria-label', placeholder);
+  };
+  mq.addEventListener('change', updatePlaceholder);
+  updatePlaceholder();
+
+  // Floating label state
   const updateLabel = () => {
     label.classList.toggle('focus-out', input.value.trim() === '' && document.activeElement !== input);
   };
-  input.addEventListener('focus', updateLabel);
+  input.addEventListener('focus', () => {
+    updateLabel();
+    alertDiv.classList.remove('visible');
+    input.classList.remove('search-input-error');
+  });
   input.addEventListener('blur', updateLabel);
   label.addEventListener('focus', updateLabel);
   label.addEventListener('blur', updateLabel);
   updateLabel();
+
+  // Submit: validate non-empty, then let form navigate to resultsPath?q=value
+  form.addEventListener('submit', (e) => {
+    if (!input.value.trim()) {
+      e.preventDefault();
+      alertDiv.classList.add('visible');
+      input.classList.add('search-input-error');
+      input.focus();
+    } else {
+      alertDiv.classList.remove('visible');
+      input.classList.remove('search-input-error');
+    }
+  });
 
   return maindiv;
 }
@@ -1224,10 +1260,7 @@ export default async function decorate(block) {
     searchExpanded.className = 'search-expanded';
     searchExpanded.hidden = true;
 
-    const searchCell = searchBlock.querySelector(':scope > div > div');
-    const searchParas = [...(searchCell?.querySelectorAll(':scope > p') || [])];
-    const searchLabel = searchParas[1]?.textContent.trim() || '';
-    const searchForm = createSearchForm(searchLabel);
+    const searchForm = createSearchForm(searchBlock);
 
     // Dark search icon inside the input — fresh SVG with no fill so CSS colours it
     const inputSearchIcon = document.createElement('span');
