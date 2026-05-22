@@ -42,7 +42,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 max(24px, calc((100% - var(--header-wrapper-max-width, 122rem)) / 2 + 24px));
+  padding: 0 max(var(--spacing-24, 2.4rem), calc((100% - var(--header-wrapper-max-width, 122rem)) / 2 + var(--spacing-24, 2.4rem)));
   color: var(--be-color-bar-text);
   background: var(--be-color-bar-bg);
   box-sizing: border-box;
@@ -221,20 +221,20 @@
 /* ── content panel ───────────────────────────────────────────── */
 .brand-explorer-content {
   width: 100%;
-  padding: 0 24px;
+  padding: 0 var(--spacing-24, 2.4rem);
   background: var(--background-color, #fff);
   color: var(--be-color-text);
   position: relative;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.4s ease;
+  transition: max-height var(--transition-duration-medium, 0.4s) ease, padding var(--transition-duration-medium, 0.4s) ease;
   box-sizing: border-box;
   pointer-events: none;
 }
 
 .brand-explorer.is-open .brand-explorer-content {
   max-height: none;
-  padding: 30px 24px 20px;
+  padding: var(--spacing-30, 3rem) var(--spacing-24, 2.4rem) var(--spacing-20, 2rem);
   overflow: visible;
   pointer-events: auto;
 }
