@@ -397,9 +397,12 @@ async function getMapsApiKey() {
 
 async function getApiToken() {
   try {
-    const resp = await fetch('/config.json');
+    const resp = await fetch('/ab-config.json');
     if (!resp.ok) return null;
-    const { data } = await resp.json();
+    const json = await resp.json();
+    // eslint-disable-next-line no-console
+    console.log('[find-provider] raw config.json:', json);
+    const { data } = json;
     return data?.find(({ key }) => key === 'find-provider-token')?.value || null;
   } catch {
     return null;
@@ -410,6 +413,8 @@ export async function decorateBlock(block) {
   blockCounter += 1;
   const blockId = `fp-${blockCounter}`;
   const config = readConfig(block);
+  // eslint-disable-next-line no-console
+  console.log('[find-provider] author config:', config);
   let lastQuery = null;
   let currentPage = 1;
   let totalPages = 1;
@@ -559,6 +564,8 @@ export async function decorateBlock(block) {
       innerReq.RecordCount = String(pageSize);
 
       const token = await getApiToken();
+      // eslint-disable-next-line no-console
+      console.log('[find-provider] find-provider-token:', token);
       const body = {
         brandName: '',
         actionType: 'apigee',
@@ -570,6 +577,8 @@ export async function decorateBlock(block) {
         version: 'V2',
       };
 
+      // eslint-disable-next-line no-console
+      console.log('[find-provider] POST body:', body);
       const resp = await fetch(config['api-endpoint'], {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -705,7 +714,10 @@ export async function decorateBlock(block) {
   }
 
   if (isMapVariant) {
+    resultsPanel.classList.add('is-visible');
     const mapsApiKey = await getMapsApiKey();
+    // eslint-disable-next-line no-console
+    console.log('[find-provider] maps-api-key:', mapsApiKey);
     if (mapsApiKey) {
       // gm_authFailure fires for RefererNotAllowedMapError, InvalidKeyMapError, etc.
       // authFailed guards against the race where the callback fires after initializeMap resolves.
