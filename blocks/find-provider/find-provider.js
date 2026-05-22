@@ -387,8 +387,6 @@ async function getConfigValue(key) {
     const resp = await fetch('/ab-config.json');
     if (!resp.ok) return null;
     const json = await resp.json();
-    // eslint-disable-next-line no-console
-    console.log('[find-provider] raw ab-config.json:', json);
     return json.data?.find(({ key: k }) => k === key)?.value || null;
   } catch {
     return null;
@@ -401,8 +399,6 @@ export async function decorateBlock(block) {
   const config = readConfig(block);
   const directionsBaseUrl = await getConfigValue('directions-base-url');
   if (directionsBaseUrl) config['directions-base-url'] = directionsBaseUrl;
-  // eslint-disable-next-line no-console
-  console.log('[find-provider] author config:', config);
   let lastQuery = null;
   let currentPage = 1;
   let totalPages = 1;
@@ -413,8 +409,6 @@ export async function decorateBlock(block) {
 
   const isLocation = block.classList.contains('find-provider-location');
   const isMapVariant = block.classList.contains('find-provider-location');
-  // eslint-disable-next-line no-console
-  console.log('[find-provider] block classes:', [...block.classList].join(', '), '| isMapVariant:', isMapVariant, '| isLocation:', isLocation);
 
   const status = document.createElement('p');
   status.className = 'find-provider-status';
@@ -529,15 +523,9 @@ export async function decorateBlock(block) {
   }
 
   function showMapFallback(fallbackUrl) {
-    // eslint-disable-next-line no-console
-    console.log('[find-provider] showMapFallback — mapContainer:', !!mapContainer, '| url:', fallbackUrl || '(not set)');
     if (!mapContainer) return;
     mapContainer.innerHTML = '';
-    if (!fallbackUrl || !/^https?:\/\//i.test(fallbackUrl)) {
-      // eslint-disable-next-line no-console
-      console.warn('[find-provider] showMapFallback — skipped: maps-fallback-url missing or not a valid http(s) URL');
-      return;
-    }
+    if (!fallbackUrl || !/^https?:\/\//i.test(fallbackUrl)) return;
     const iframe = document.createElement('iframe');
     iframe.src = fallbackUrl;
     iframe.title = 'Provider locations';
@@ -546,21 +534,15 @@ export async function decorateBlock(block) {
     iframe.setAttribute('allowfullscreen', '');
     iframe.className = 'find-provider-map-iframe';
     mapContainer.append(iframe);
-    // eslint-disable-next-line no-console
-    console.log('[find-provider] showMapFallback — iframe inserted:', fallbackUrl);
   }
 
   async function doSearch(query, page = 1, radius = 25) {
     status.textContent = '';
     results.innerHTML = '';
 
-    if (!config['api-endpoint']) {
-      status.textContent = config.error || 'Search unavailable. Please try again later.';
-      rebuildPagination(0, 1);
-      return;
-    }
-
     try {
+      if (!config['api-endpoint']) throw new Error('api-endpoint not configured');
+
       const pageSize = 10;
       const recordsFrom = (page - 1) * pageSize;
 
@@ -578,8 +560,6 @@ export async function decorateBlock(block) {
       innerReq.RecordCount = String(pageSize);
 
       const token = await getConfigValue('find-provider-token');
-      // eslint-disable-next-line no-console
-      console.log('[find-provider] find-provider-token:', token);
       const body = {
         brandName: '',
         actionType: 'apigee',
@@ -591,8 +571,6 @@ export async function decorateBlock(block) {
         version: 'V2',
       };
 
-      // eslint-disable-next-line no-console
-      console.log('[find-provider] POST body:', body);
       const resp = await fetch(config['api-endpoint'], {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -603,22 +581,17 @@ export async function decorateBlock(block) {
       const { providers, matchCount, recordCount } = extractParties(data);
       await renderProviders(providers, matchCount, recordCount, page);
     } catch {
-      // eslint-disable-next-line no-console
-      console.warn('[find-provider] primary API failed — loading dummy-providers.json');
       if (isMapVariant && !mapInitialized) showMapFallback(mapsFallbackUrl);
 
       try {
         const fallbackResp = await fetch('/blocks/find-provider/dummy-providers.json');
         if (!fallbackResp.ok) throw new Error(`HTTP ${fallbackResp.status}`);
         const fallbackData = await fallbackResp.json();
-        // eslint-disable-next-line no-console
-        console.log('[find-provider] dummy providers loaded:', fallbackData);
         const { providers, matchCount, recordCount } = extractParties(fallbackData);
         await renderProviders(providers, matchCount, recordCount, page);
         return;
       } catch {
-        // eslint-disable-next-line no-console
-        console.warn('[find-provider] dummy-providers.json also failed');
+        // dummy data unavailable — fall through to error message
       }
 
       status.textContent = config.error || 'Unable to load results. Please try again.';
@@ -736,8 +709,6 @@ export async function decorateBlock(block) {
       getConfigValue('maps-fallback-url'),
     ]);
     mapsFallbackUrl = fetchedFallbackUrl;
-    // eslint-disable-next-line no-console
-    console.log('[find-provider] maps-api-key:', mapsApiKey, '| maps-fallback-url:', mapsFallbackUrl);
     if (mapsApiKey) {
       // gm_authFailure fires for RefererNotAllowedMapError, InvalidKeyMapError, etc.
       // authFailed guards against the race where the callback fires after initializeMap resolves.

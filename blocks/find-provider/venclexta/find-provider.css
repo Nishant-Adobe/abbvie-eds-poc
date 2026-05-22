@@ -84,7 +84,7 @@
   --find-provider-details-gap: var(--spacing-06);
   --find-provider-details-margin-top: var(--spacing-02);
   --find-provider-details-icon-font-size: var(--spacing-18);
-  --find-provider-captcha-font-size: var(--body-font-size-xs, 11px);
+  --find-provider-captcha-font-size: var(--font-size-12, 11px);
 
   /* ---- Pagination ---- */
   --find-provider-pagination-gap: var(--spacing-12);
@@ -135,8 +135,7 @@
 
 .find-provider-search-input:focus-visible,
 .find-provider-radius-select:focus-visible {
-  outline: var(--spacing-02) solid var(--color-focus);
-  outline-offset: var(--spacing-02);
+  outline: none;
 }
 
 /* Search row: input + optional geo button side by side */
@@ -237,6 +236,10 @@
 
 .find-provider-status {
   display: none;
+}
+
+.find-provider-status:not(:empty) {
+  display: block;
 }
 
 .find-provider-error {
