@@ -8,6 +8,7 @@
   margin: 0;
   padding: 0;
   display: block;
+  background: var(--be-color-bar-bg, #25282a);
 }
 
 .brand-explorer-section .default-content-wrapper,
@@ -714,7 +715,8 @@
 }
 
 /* ── Utility classes used by JS (no inline styles) ── */
-.brand-explorer-hidden {
+.brand-explorer-hidden,
+.brand-explorer > div:not(.brand-explorer-bar):not(.brand-explorer-content) {
   display: none;
 }
 
