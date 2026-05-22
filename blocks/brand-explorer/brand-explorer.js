@@ -459,8 +459,13 @@ export default function decorate(block) {
   const section = block.closest('.section');
   if (section) {
     section.classList.add('brand-explorer-section');
-    const header = document.querySelector('header');
-    if (header) header.before(section);
+    if (!section.dataset.bePositioned) {
+      const header = section.ownerDocument.querySelector('header');
+      if (header && header.previousElementSibling !== section) {
+        header.before(section);
+      }
+      section.dataset.bePositioned = 'true';
+    }
   }
 
   attachEventListeners(block, browseBtn, closeBtn, content, accordions);
