@@ -228,6 +228,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
+    min-height: calc(var(--nav-height) + var(--nav-utility-height));
   }
 }
 
@@ -2520,6 +2521,14 @@ header nav .nav-tools {
     order: var(--order-0);
   }
 
+  header .nav-utility nav {
+    display: flex;
+    justify-content: flex-end;
+    max-width: var(--content-max-width, 1440px);
+    margin: 0 auto;
+    height: 100%;
+  }
+
   /* "Request a Rep" — rust-filled on desktop */
   /* stylelint-disable-next-line no-descending-specificity */
   header .nav-utility a.nav-utility-cta {
@@ -2544,7 +2553,7 @@ header nav .nav-tools {
   }
 
   /* 2-row nav grid: logo row (white) + sections row (rust, full-width) */
-  header .nav-wrapper nav {
+  header .nav-wrapper > nav {
     display: grid;
     gap: var(--spacing-25);
     grid-template:
