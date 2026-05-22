@@ -20,7 +20,7 @@
 
 .brand-explorer {
   position: relative;
-  background: var(--be-color-bar-bg);
+  background: var(--background-color, #fff);
   color: var(--be-color-text);
   font-family: var(--be-font-body);
   font-size: var(--be-font-size-body);
@@ -41,10 +41,9 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: var(--header-wrapper-max-width, 122rem);
-  margin: 0 auto;
   padding: 0 24px;
   color: var(--be-color-bar-text);
+  background: var(--be-color-bar-bg);
   box-sizing: border-box;
   position: relative;
   z-index: 2;
@@ -741,5 +740,13 @@ body.brand-explorer-modal-open {
 
 .brand-explorer-visit[data-brand="skyrizi"] .brand-explorer-visit-arrow {
   background-color: var(--be-color-skyrizi);
+}
+
+.brand-explorer-separator[data-brand="humira"] {
+  background: var(--be-color-humira);
+}
+
+.brand-explorer-visit[data-brand="humira"] .brand-explorer-visit-arrow {
+  background-color: var(--be-color-humira);
 }
 
