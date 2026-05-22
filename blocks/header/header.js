@@ -992,7 +992,7 @@ export default async function decorate(block) {
   // Sticky-on-scrollback: permanent feature flag — set via navigation-content block or page model
   if (
     header.querySelector('.navigation-content.stickyheadercheckbox')
-    || document.body.classList.contains('stickyheadercheckbox')
+    || getMetadata('stickyheadercheckbox') === 'true'
   ) {
     cachedHeaderEl.classList.add('has-sticky-scrollback');
   }
