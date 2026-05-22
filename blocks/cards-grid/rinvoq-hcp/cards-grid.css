@@ -833,7 +833,7 @@
   padding: var(--spacing-24, 24px);
   border: 1px solid var(--color-border-default, #c9c9ca);
   border-radius: 20px;
-  box-shadow: var(--shadow-default, 0 4px 19px 0 rgba(0, 0, 0, 0.07));
+  box-shadow: var(--shadow-default, 0 4px 19px 0 rgb(0 0 0 / 7%));
   text-decoration: none;
   color: var(--text-color);
   background: var(--background-color);
@@ -841,7 +841,7 @@
 }
 
 .cards-grid.cards-grid-cta-card .grid-card:hover {
-  box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px 0 rgb(0 0 0 / 12%);
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
@@ -857,22 +857,48 @@
   margin-bottom: var(--spacing-16, 16px);
 }
 
+/* Default: plain text links with arrow (indication cards) */
+
 .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a {
   display: inline-flex;
   align-items: center;
+  color: var(--color-brand-primary);
+  font-family: var(--font-family-medium);
+  font-weight: var(--font-weight-button);
+  font-size: var(--font-size-body);
+  text-decoration: none;
+  gap: 6px;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a::after {
+  content: '\203A';
+  font-size: 1.2em;
+  color: var(--color-brand-primary);
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a:hover {
+  text-decoration: underline;
+}
+
+/* Pill button style only in glacier/support section */
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a {
   background: var(--button-primary-bg);
   color: var(--button-primary-color);
   padding: var(--button-primary-padding);
   border-radius: var(--border-radius-button-primary);
-  font-family: var(--font-family-medium);
-  font-weight: var(--button-primary-font-weight);
   font-size: var(--button-primary-font-size);
-  text-decoration: none;
   margin-top: var(--spacing-12, 12px);
+  gap: 0;
 }
 
-.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a:hover {
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a::after {
+  content: none;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a:hover {
   background: var(--button-primary-hover-bg);
+  text-decoration: none;
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */

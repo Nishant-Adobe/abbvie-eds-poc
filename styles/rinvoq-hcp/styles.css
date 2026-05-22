@@ -38,3 +38,22 @@
   position: relative;
   z-index: 1;
 }
+
+/* Hero: brushstroke underline on TREATMENT GOALS (strong after em) */
+.hero.no-padding h1 strong {
+  position: relative;
+  display: inline-block;
+}
+
+.hero.no-padding h1 strong::after {
+  content: '';
+  position: absolute;
+  bottom: var(--hero-stroke-bottom-offset, -15px);
+  left: 0;
+  width: 100%;
+  height: var(--hero-stroke-height, 22px);
+  background-image: url('/icons/stroke.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}

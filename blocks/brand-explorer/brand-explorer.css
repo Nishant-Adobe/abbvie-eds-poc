@@ -714,6 +714,11 @@
   margin: 0;
 }
 
+/* Hide raw content rows before JS processes them (prevents FOUC) */
+.brand-explorer:not([data-block-status="loaded"]) > div {
+  display: none;
+}
+
 /* ── Utility classes used by JS (no inline styles) ── */
 .brand-explorer-hidden,
 .brand-explorer > div:not(.brand-explorer-bar, .brand-explorer-content) {
