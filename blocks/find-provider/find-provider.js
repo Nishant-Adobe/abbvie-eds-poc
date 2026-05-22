@@ -395,6 +395,17 @@ async function getMapsApiKey() {
   }
 }
 
+async function getApiToken() {
+  try {
+    const resp = await fetch('/config.json');
+    if (!resp.ok) return null;
+    const { data } = await resp.json();
+    return data?.find(({ key }) => key === 'find-provider-token')?.value || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function decorateBlock(block) {
   blockCounter += 1;
   const blockId = `fp-${blockCounter}`;
@@ -531,21 +542,39 @@ export async function decorateBlock(block) {
     }
 
     try {
-      const params = new URLSearchParams();
-      if (config.indication) params.set('publisherName', config.indication);
-      params.set('pageNumber', String(page));
-      params.set('pageSize', '10');
-      params.set('radius', String(radius));
+      const pageSize = 10;
+      const recordsFrom = (page - 1) * pageSize;
 
+      const innerReq = {};
+      if (config.indication) innerReq.PublisherName = config.indication;
       if (isLatLng(query)) {
         const [lat, lng] = query.split(',');
-        params.set('latitude', lat.trim());
-        params.set('longitude', lng.trim());
+        innerReq.GeoCoordinates = { Latitude: lat.trim(), Longitude: lng.trim() };
       } else {
-        params.set('zipCode', query);
+        innerReq.Zip = query;
       }
+      innerReq.SearchRadius = String(radius);
+      innerReq.TermsConditionsCheck = 'Y';
+      innerReq.RecordsFrom = String(recordsFrom);
+      innerReq.RecordCount = String(pageSize);
 
-      const resp = await fetch(`${config['api-endpoint']}?${params}`);
+      const token = await getApiToken();
+      const body = {
+        brandName: '',
+        actionType: 'apigee',
+        apiEndpointType: 'prod',
+        formAction: 'PhysicianLocator',
+        originName: 'originNameWeb',
+        payload: JSON.stringify({ PhysicianLocatorRequest: innerReq }),
+        token: token || '',
+        version: 'V2',
+      };
+
+      const resp = await fetch(config['api-endpoint'], {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data = await resp.json();
       const { providers, matchCount, recordCount } = extractParties(data);
