@@ -14303,5 +14303,632 @@
         ]
       }
     ]
+  },
+  {
+    "id": "image-text",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Style",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Reverse (text left, image right)",
+            "value": "image-text-reverse"
+          },
+          {
+            "name": "Swap (responsive image at mobile)",
+            "value": "image-text-swap"
+          },
+          {
+            "name": "Scale (image scales on hover)",
+            "value": "image-text-scale"
+          },
+          {
+            "name": "Stretched Link (entire card clickable)",
+            "value": "image-text-stretched"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "classes_imageSize",
+        "value": "",
+        "label": "Image Size",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default (50/50)",
+            "value": ""
+          },
+          {
+            "name": "Large (60% image)",
+            "value": "image-text-image-large"
+          },
+          {
+            "name": "Medium (40% image)",
+            "value": "image-text-image-medium"
+          },
+          {
+            "name": "Small (33% image)",
+            "value": "image-text-image-small"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Image Alt Text",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Mobile Image (swap variant only)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobileImageAlt",
+        "label": "Mobile Image Alt Text",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content",
+        "value": "",
+        "label": "Content"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLabel",
+        "value": "",
+        "label": "CTA Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaHref",
+        "value": "",
+        "label": "CTA URL"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "ctaTarget",
+        "value": "_self",
+        "label": "CTA Target",
+        "options": [
+          {
+            "name": "Same Tab",
+            "value": "_self"
+          },
+          {
+            "name": "New Tab",
+            "value": "_blank"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "modalId",
+        "value": "",
+        "label": "Modal ID (overrides CTA URL with modal trigger)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "analyticsId",
+        "value": "",
+        "label": "Analytics ID"
+      }
+    ]
+  },
+  {
+    "id": "carousel-video-playlist",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout",
+        "options": [
+          {
+            "name": "Cards Grid (default)",
+            "value": ""
+          },
+          {
+            "name": "Grid",
+            "value": "grid"
+          },
+          {
+            "name": "Featured \u2014 patient experiences",
+            "value": "featured"
+          },
+          {
+            "name": "Bottom \u2014 playlist below",
+            "value": "bottom"
+          },
+          {
+            "name": "Left Sidebar",
+            "value": "left"
+          },
+          {
+            "name": "Right Sidebar",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "sectionHeading",
+        "value": "",
+        "label": "Section Heading"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "sectionDescription",
+        "value": "",
+        "label": "Section Description"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "maxVisible",
+        "value": "",
+        "label": "Max Visible Cards",
+        "options": [
+          {
+            "name": "Show All",
+            "value": ""
+          },
+          {
+            "name": "1",
+            "value": "1"
+          },
+          {
+            "name": "2",
+            "value": "2"
+          },
+          {
+            "name": "3",
+            "value": "3"
+          },
+          {
+            "name": "4",
+            "value": "4"
+          },
+          {
+            "name": "5",
+            "value": "5"
+          },
+          {
+            "name": "6",
+            "value": "6"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "accountId",
+        "value": "",
+        "label": "Brightcove Account ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "playlistId",
+        "value": "",
+        "label": "Brightcove Playlist ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "playerId",
+        "value": "",
+        "label": "Brightcove Player ID"
+      },
+      {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "enableCaptions",
+        "value": false,
+        "label": "Enable Captions"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "playMode",
+        "value": "",
+        "label": "Play Mode",
+        "description": "Default: click thumbnail to play in main player. Inline: plays directly inside the thumbnail card (Mavyret only). Leave as Default for most brands.",
+        "options": [
+          {
+            "name": "Default (plays in main player)",
+            "value": ""
+          },
+          {
+            "name": "Inline (plays in thumbnail \u2014 Mavyret only)",
+            "value": "inline"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carousel-video-playlist-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "videoId",
+        "value": "",
+        "label": "Brightcove Video ID"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "value": "",
+        "label": "Video Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "transcriptHref",
+        "value": "",
+        "label": "Transcript URL"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "transcript",
+        "value": "",
+        "label": "Transcript (inline)"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "patientName",
+        "value": "",
+        "label": "Patient Name"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "condition",
+        "value": "",
+        "label": "Condition / Prescribed Info"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "quote",
+        "value": "",
+        "label": "Patient Quote"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "description",
+        "value": "",
+        "label": "Video Description"
+      }
+    ]
+  },
+  {
+    "id": "cards-grid",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Container layout",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "CTA Cards 1",
+            "value": "cards-grid-cta-card"
+          },
+          {
+            "name": "CTA Cards Stacked",
+            "value": "cards-grid-cta-cards-stacked"
+          },
+          {
+            "name": "Image Text Cards",
+            "value": "cards-grid-image-text"
+          },
+          {
+            "name": "Icon Image Cards",
+            "value": "cards-grid-icon-image-card"
+          },
+          {
+            "name": "Article Cards",
+            "value": "cards-grid-article-cards"
+          },
+          {
+            "name": "Flex Row Cards",
+            "value": "cards-grid-flex-row-cards"
+          },
+          {
+            "name": "Icon Flex Cards",
+            "value": "cards-grid-icon-flex-cards"
+          },
+          {
+            "name": "Section Cards",
+            "value": "cards-grid-section-cards"
+          },
+          {
+            "name": "Callout Cards",
+            "value": "cards-grid-callout-cards"
+          },
+          {
+            "name": "Slider Thumbnail Cards",
+            "value": "cards-grid-slider-thumbnails"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "grid-card",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Item Image",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "line1",
+        "label": "Line 1",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "line2",
+        "label": "Line 2",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "line3",
+        "label": "Line 3",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "line4",
+        "label": "Line 4",
+        "value": "",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "find-provider",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Labels",
+        "name": "labels"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Variant",
+        "description": "Select the search mode. Default: name/ZIP search. Location: auto-detects user location. Map: shows a map alongside results. Support: support-group finder.",
+        "options": [
+          { "name": "Default", "value": "" },
+          { "name": "Location-based search", "value": "find-provider-location" },
+          { "name": "Map view", "value": "find-provider-map" },
+          { "name": "Support group finder", "value": "find-provider-support" }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search-label",
+        "value": "",
+        "label": "Search Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search-placeholder",
+        "value": "",
+        "label": "Search Placeholder"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "radius-label",
+        "value": "",
+        "label": "Radius Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "radius-options",
+        "value": "",
+        "label": "Radius Options",
+        "description": "Comma-separated radius options shown in the results select (e.g. '5 Miles, 10 Miles, 25 Miles'). Defaults to 5/10/25/50/100 Miles when blank."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "submit-label",
+        "value": "",
+        "label": "Submit Button Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "geo-button-label",
+        "value": "",
+        "label": "Geo Button Label",
+        "description": "Label for the 'Use my location' button shown in the location variant."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "clear-label",
+        "value": "",
+        "label": "Clear Button Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "terms-label",
+        "value": "",
+        "label": "Terms Label",
+        "description": "Heading above the Terms & Conditions checkbox (e.g. 'Terms & Conditions')."
+      },
+      {
+        "component": "richtext",
+        "name": "terms-text",
+        "value": "",
+        "label": "Terms Text",
+        "description": "Checkbox label text. May include a hyperlink to the full T&C page."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "terms-error",
+        "value": "",
+        "label": "Terms Error Message",
+        "description": "Validation message shown when the user submits without accepting the Terms & Conditions."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "no-results",
+        "value": "",
+        "label": "No Results Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error",
+        "value": "",
+        "label": "Error Message"
+      },
+      {
+        "component": "richtext",
+        "name": "captcha-message",
+        "value": "",
+        "label": "Captcha Message",
+        "description": "Message displayed alongside the CAPTCHA challenge."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "results-title",
+        "value": "",
+        "label": "Results Title",
+        "description": "Heading shown above the results list (e.g. 'Results found')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "directions-label",
+        "value": "",
+        "label": "Directions Link Label",
+        "description": "Label for the 'Get Directions' link on each result card."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "details-label",
+        "value": "",
+        "label": "Details Button Label",
+        "description": "Label for the 'Show all practice details' toggle button on each result card."
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "api-endpoint",
+        "value": "",
+        "label": "API Endpoint",
+        "description": "Provider search API URL."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "indication",
+        "value": "",
+        "label": "Indication",
+        "description": "PublisherName sent in the API request payload."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "exit-modal-id",
+        "value": "",
+        "label": "Exit Modal ID",
+        "description": "ID of the modal to open when a provider card is clicked (exit-like UX)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchor-id",
+        "value": "",
+        "label": "Anchor ID",
+        "description": "Sets the id attribute on the block for in-page anchor links."
+      },
+      {
+        "...": "../../models/_common-properties.json#/common-prop"
+      }
+    ]
   }
 ]
