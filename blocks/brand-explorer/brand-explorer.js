@@ -460,7 +460,8 @@ export default function decorate(block) {
   if (section) {
     section.classList.add('brand-explorer-section');
     if (!section.dataset.bePositioned) {
-      const header = section.ownerDocument.querySelector('header');
+      const doc = block.ownerDocument;
+      const header = doc.querySelector('header');
       if (header && header.previousElementSibling !== section) {
         header.before(section);
       }
