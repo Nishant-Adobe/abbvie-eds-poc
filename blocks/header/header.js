@@ -990,7 +990,7 @@ export default async function decorate(block) {
   cachedHeaderEl = block.closest('header') || block;
 
   // Sticky-on-scrollback: permanent feature flag read from checkbox field
-  if (header.querySelector('.navigation-content.stickyheaderonscrollback')) {
+  if (header.querySelector('.navigation-content.stickyheadercheckbox')) {
     cachedHeaderEl.classList.add('has-sticky-scrollback');
   }
 
