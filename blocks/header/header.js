@@ -942,12 +942,18 @@ function handleScroll() {
     // Cross-block read: hero height drives the scroll-hide threshold.
     const heroBlock = document.querySelector('.hero.block');
     const threshold = heroBlock ? heroBlock.offsetHeight - 100 : SCROLL_THRESHOLD_DEFAULT;
-    if (scrollTop > lastScrollTop && scrollTop > threshold) {
+    const scrollingDown = scrollTop > lastScrollTop;
+    const scrollingUp = scrollTop < lastScrollTop;
+    if (scrollingDown && scrollTop > threshold) {
       header.classList.add('hide-nav');
       header.classList.remove('show-nav');
-    } else {
+      header.classList.remove('sticky-scrollback');
+    } else if (scrollingUp || scrollTop <= threshold) {
       header.classList.add('show-nav');
       header.classList.remove('hide-nav');
+      if (header.classList.contains('has-sticky-scrollback')) {
+        header.classList.toggle('sticky-scrollback', scrollingUp && scrollTop > threshold);
+      }
     }
     lastScrollTop = Math.max(scrollTop, 0);
   });
@@ -982,6 +988,14 @@ export default async function decorate(block) {
   const header = fragment.querySelector('.navigation-content-container');
   if (!header) return;
   cachedHeaderEl = block.closest('header') || block;
+
+  // Sticky-on-scrollback: permanent feature flag — set via navigation-content block or page model
+  if (
+    header.querySelector('.navigation-content.stickyheadercheckbox')
+    || getMetadata('stickyheadercheckbox') === 'true'
+  ) {
+    cachedHeaderEl.classList.add('has-sticky-scrollback');
+  }
 
   // Block-level layout variants
   const isLite = block.classList.contains('lite');
