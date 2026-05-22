@@ -457,7 +457,11 @@ export default function decorate(block) {
   block.append(bar);
 
   const section = block.closest('.section');
-  if (section) section.classList.add('brand-explorer-section');
+  if (section) {
+    section.classList.add('brand-explorer-section');
+    const header = document.querySelector('header');
+    if (header) header.before(section);
+  }
 
   attachEventListeners(block, browseBtn, closeBtn, content, accordions);
 }
