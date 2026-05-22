@@ -221,7 +221,9 @@
 /* ── content panel ───────────────────────────────────────────── */
 .brand-explorer-content {
   width: 100%;
-  padding: 0 20px;
+  max-width: var(--header-wrapper-max-width, 122rem);
+  margin: 0 auto;
+  padding: 0 24px;
   background: var(--be-color-bg);
   position: relative;
   max-height: 0;
@@ -233,7 +235,7 @@
 
 .brand-explorer.is-open .brand-explorer-content {
   max-height: 80vh;
-  padding: 30px 20px 20px;
+  padding: 30px 24px 20px;
   overflow-y: auto;
   pointer-events: auto;
 }
@@ -244,6 +246,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 40px;
   max-width: 1200px;
+  margin: 0 auto;
 }
 
 .brand-explorer-accordion {
