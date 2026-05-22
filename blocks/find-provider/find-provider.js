@@ -68,8 +68,6 @@ const FIELD_ORDER = [
   'directions-label',
   'details-label',
   'api-endpoint',
-  'maps-fallback-url',
-  'directions-base-url',
   'indication',
   'exit-modal-id',
   'anchor-id',
@@ -384,26 +382,14 @@ function buildResultsHeader(config) {
   return header;
 }
 
-async function getMapsApiKey() {
-  try {
-    const resp = await fetch('/ab-config.json');
-    if (!resp.ok) return null;
-    const { data } = await resp.json();
-    return data?.find(({ key }) => key === 'maps-api-key')?.value || null;
-  } catch {
-    return null;
-  }
-}
-
-async function getApiToken() {
+async function getConfigValue(key) {
   try {
     const resp = await fetch('/ab-config.json');
     if (!resp.ok) return null;
     const json = await resp.json();
     // eslint-disable-next-line no-console
-    console.log('[find-provider] raw config.json:', json);
-    const { data } = json;
-    return data?.find(({ key }) => key === 'find-provider-token')?.value || null;
+    console.log('[find-provider] raw ab-config.json:', json);
+    return json.data?.find(({ key: k }) => k === key)?.value || null;
   } catch {
     return null;
   }
@@ -413,16 +399,22 @@ export async function decorateBlock(block) {
   blockCounter += 1;
   const blockId = `fp-${blockCounter}`;
   const config = readConfig(block);
+  const directionsBaseUrl = await getConfigValue('directions-base-url');
+  if (directionsBaseUrl) config['directions-base-url'] = directionsBaseUrl;
   // eslint-disable-next-line no-console
   console.log('[find-provider] author config:', config);
   let lastQuery = null;
   let currentPage = 1;
   let totalPages = 1;
+  let mapInitialized = false;
+  let mapsFallbackUrl = null;
 
   if (config['anchor-id']) block.id = config['anchor-id'];
 
   const isLocation = block.classList.contains('find-provider-location');
-  const isMapVariant = block.classList.contains('find-provider-map');
+  const isMapVariant = block.classList.contains('find-provider-location');
+  // eslint-disable-next-line no-console
+  console.log('[find-provider] block classes:', [...block.classList].join(', '), '| isMapVariant:', isMapVariant, '| isLocation:', isLocation);
 
   const status = document.createElement('p');
   status.className = 'find-provider-status';
@@ -536,6 +528,28 @@ export async function decorateBlock(block) {
     }
   }
 
+  function showMapFallback(fallbackUrl) {
+    // eslint-disable-next-line no-console
+    console.log('[find-provider] showMapFallback — mapContainer:', !!mapContainer, '| url:', fallbackUrl || '(not set)');
+    if (!mapContainer) return;
+    mapContainer.innerHTML = '';
+    if (!fallbackUrl || !/^https?:\/\//i.test(fallbackUrl)) {
+      // eslint-disable-next-line no-console
+      console.warn('[find-provider] showMapFallback — skipped: maps-fallback-url missing or not a valid http(s) URL');
+      return;
+    }
+    const iframe = document.createElement('iframe');
+    iframe.src = fallbackUrl;
+    iframe.title = 'Provider locations';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'no-referrer-when-downgrade';
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.className = 'find-provider-map-iframe';
+    mapContainer.append(iframe);
+    // eslint-disable-next-line no-console
+    console.log('[find-provider] showMapFallback — iframe inserted:', fallbackUrl);
+  }
+
   async function doSearch(query, page = 1, radius = 25) {
     status.textContent = '';
     results.innerHTML = '';
@@ -563,7 +577,7 @@ export async function decorateBlock(block) {
       innerReq.RecordsFrom = String(recordsFrom);
       innerReq.RecordCount = String(pageSize);
 
-      const token = await getApiToken();
+      const token = await getConfigValue('find-provider-token');
       // eslint-disable-next-line no-console
       console.log('[find-provider] find-provider-token:', token);
       const body = {
@@ -589,6 +603,24 @@ export async function decorateBlock(block) {
       const { providers, matchCount, recordCount } = extractParties(data);
       await renderProviders(providers, matchCount, recordCount, page);
     } catch {
+      // eslint-disable-next-line no-console
+      console.warn('[find-provider] primary API failed — loading dummy-providers.json');
+      if (isMapVariant && !mapInitialized) showMapFallback(mapsFallbackUrl);
+
+      try {
+        const fallbackResp = await fetch('/blocks/find-provider/dummy-providers.json');
+        if (!fallbackResp.ok) throw new Error(`HTTP ${fallbackResp.status}`);
+        const fallbackData = await fallbackResp.json();
+        // eslint-disable-next-line no-console
+        console.log('[find-provider] dummy providers loaded:', fallbackData);
+        const { providers, matchCount, recordCount } = extractParties(fallbackData);
+        await renderProviders(providers, matchCount, recordCount, page);
+        return;
+      } catch {
+        // eslint-disable-next-line no-console
+        console.warn('[find-provider] dummy-providers.json also failed');
+      }
+
       status.textContent = config.error || 'Unable to load results. Please try again.';
       rebuildPagination(0, 1);
     }
@@ -698,26 +730,15 @@ export async function decorateBlock(block) {
 
   block.replaceChildren(form, status, loader, resultsPanel);
 
-  function showMapFallback() {
-    if (!mapContainer) return;
-    mapContainer.innerHTML = '';
-    const fallbackUrl = config['maps-fallback-url'];
-    if (!fallbackUrl || !/^https?:\/\//i.test(fallbackUrl)) return;
-    const iframe = document.createElement('iframe');
-    iframe.src = fallbackUrl;
-    iframe.title = 'Provider locations';
-    iframe.loading = 'lazy';
-    iframe.referrerPolicy = 'no-referrer-when-downgrade';
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.className = 'find-provider-map-iframe';
-    mapContainer.append(iframe);
-  }
-
   if (isMapVariant) {
     resultsPanel.classList.add('is-visible');
-    const mapsApiKey = await getMapsApiKey();
+    const [mapsApiKey, fetchedFallbackUrl] = await Promise.all([
+      getConfigValue('maps-api-key'),
+      getConfigValue('maps-fallback-url'),
+    ]);
+    mapsFallbackUrl = fetchedFallbackUrl;
     // eslint-disable-next-line no-console
-    console.log('[find-provider] maps-api-key:', mapsApiKey);
+    console.log('[find-provider] maps-api-key:', mapsApiKey, '| maps-fallback-url:', mapsFallbackUrl);
     if (mapsApiKey) {
       // gm_authFailure fires for RefererNotAllowedMapError, InvalidKeyMapError, etc.
       // authFailed guards against the race where the callback fires after initializeMap resolves.
@@ -726,18 +747,21 @@ export async function decorateBlock(block) {
       window.gm_authFailure = () => {
         if (typeof prevAuthFailure === 'function') prevAuthFailure();
         authFailed = true;
-        showMapFallback();
+        showMapFallback(mapsFallbackUrl);
       };
 
       try {
         const { loadGoogleMapsAPI, initializeMap } = await import('../eds-form/maps.js');
         await loadGoogleMapsAPI(mapsApiKey);
-        if (!authFailed) await initializeMap(mapsApiKey, mapContainer);
+        if (!authFailed) {
+          await initializeMap(mapsApiKey, mapContainer);
+          mapInitialized = true;
+        }
       } catch {
-        showMapFallback();
+        showMapFallback(mapsFallbackUrl);
       }
     } else {
-      showMapFallback();
+      showMapFallback(mapsFallbackUrl);
     }
   }
 }
