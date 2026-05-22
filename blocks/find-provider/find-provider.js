@@ -144,7 +144,9 @@ function buildForm(config, blockId, isLocation) {
   searchError.setAttribute('aria-live', 'polite');
   searchGroup.append(searchError);
 
-  form.append(searchGroup);
+  const formWrap = document.createElement('div');
+  formWrap.className = 'find-provider-form-wrap';
+  formWrap.append(searchGroup);
 
   // Terms & Conditions checkbox
   if (config['terms-label'] || config['terms-text']) {
@@ -184,7 +186,7 @@ function buildForm(config, blockId, isLocation) {
     termsError.setAttribute('aria-live', 'polite');
     termsGroup.append(termsError);
 
-    form.append(termsGroup);
+    formWrap.append(termsGroup);
   }
 
   const actions = document.createElement('div');
@@ -206,7 +208,8 @@ function buildForm(config, blockId, isLocation) {
     actions.append(clearBtn);
   }
 
-  form.append(actions);
+  formWrap.append(actions);
+  form.append(formWrap);
 
   if (config['captcha-message']) {
     const captcha = document.createElement('div');
@@ -643,7 +646,7 @@ export async function decorateBlock(block) {
 
     let hasError = false;
     if (!query) {
-      if (searchError) searchError.textContent = config.error || 'Please enter a valid ZIP Code';
+      if (searchError) searchError.textContent = 'Please enter a valid ZIP code or city';
       hasError = true;
     } else if (searchError) {
       searchError.textContent = '';
