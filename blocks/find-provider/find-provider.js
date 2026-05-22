@@ -386,7 +386,7 @@ function buildResultsHeader(config) {
 
 async function getMapsApiKey() {
   try {
-    const resp = await fetch('/config.json');
+    const resp = await fetch('/ab-config.json');
     if (!resp.ok) return null;
     const { data } = await resp.json();
     return data?.find(({ key }) => key === 'maps-api-key')?.value || null;
