@@ -1,132 +1,160 @@
 import { getConfigValue } from '../../scripts/config.js';
 import { isUniversalEditor } from '../../scripts/utils.js';
 
-const HOST = await getConfigValue('aemPublishUrl') || 'https://publish-p157365-e1665798.adobeaemcloud.com';
+const DEFAULT_HOST = 'https://publish-p157365-e1665798.adobeaemcloud.com';
+
+/**
+ * Rewrites same-page-origin resource URLs (script src / link href) inside the
+ * fetched form HTML so they resolve against the AEM publish host, not the EDS host.
+ * @param {Element} container
+ * @param {URL} formUrlObj
+ */
+function rewriteResourceUrls(container, formUrlObj) {
+  container.querySelectorAll('script[src], link[href]').forEach((el) => {
+    const attr = el.tagName.toLowerCase() === 'script' ? 'src' : 'href';
+    try {
+      const parsed = new URL(el[attr]);
+      if (parsed.host === window.location.host) {
+        el[attr] = `${formUrlObj.protocol}//${formUrlObj.hostname}${parsed.pathname}`;
+      }
+    } catch {
+      // relative or invalid URLs — leave as-is
+    }
+  });
+}
+
+/**
+ * Re-executes <script> elements in the injected HTML sequentially.
+ * Plain innerHTML assignment does not run scripts; replacing each node forces execution.
+ * External scripts (src) are awaited one-by-one before the next script runs, so inline
+ * scripts that depend on jQuery never fire before jQuery has finished loading.
+ * All attributes (type, src, etc.) are preserved.
+ * @param {Element} container
+ * @returns {Promise<void>}
+ */
+function reExecuteScripts(container) {
+  const replaceOne = (oldScript) => {
+    const newScript = document.createElement('script');
+    [...oldScript.attributes].forEach((attr) => newScript.setAttribute(attr.name, attr.value));
+    newScript.textContent = oldScript.textContent;
+
+    if (newScript.src) {
+      // External script — return a promise that resolves once loaded so the
+      // reduce chain waits before executing the next script.
+      return new Promise((resolve) => {
+        newScript.onload = resolve;
+        newScript.onerror = resolve; // don't block on a failed resource
+        oldScript.replaceWith(newScript);
+      });
+    }
+    // Inline script — executes synchronously on insertion
+    oldScript.replaceWith(newScript);
+    return Promise.resolve();
+  };
+
+  // Sequential execution via promise chain (avoids for-of + await-in-loop)
+  return [...container.querySelectorAll('script')].reduce(
+    (chain, script) => chain.then(() => replaceOne(script)),
+    Promise.resolve(),
+  );
+}
+
+/**
+ * Loads jQuery from CDN if not already present.
+ * Resolves regardless of success/failure so the caller can check window.jQuery.
+ */
+const ensureJQuery = () => new Promise((resolve) => {
+  if (window.jQuery) { resolve(); return; }
+  const script = document.createElement('script');
+  script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
+  script.onload = resolve;
+  script.onerror = resolve; // CSP or network failure — resolve so caller can handle
+  document.head.appendChild(script);
+});
 
 /**
  * Embed Form Block
- * Renders an AEM adaptive form using its published path
+ * Renders an AEM Adaptive Form by fetching its published HTML and injecting it
+ * into the page. Mirrors the AEM forms-embed component behaviour.
  */
-export default function decorate(block) {
-  if (!block) {
-    return;
-  }
+export default async function decorate(block) {
+  if (!block) return;
 
-  // AEM Published Form Path
   const formLink = block.querySelector('a');
+  if (!formLink?.href) return;
 
-  if (!formLink?.href) {
-    return;
-  }
+  // Resolve the AEM publish host from site config (falls back to default)
+  const aemHost = (await getConfigValue('aemPublishUrl')) || DEFAULT_HOST;
 
+  let { href } = formLink;
   let finalFormPath = '';
-  let href = formLink?.href;
-
-  if ((href.startsWith('http://') || href.startsWith('https://')) && (formLink.host !== window.location.host)) {
-    finalFormPath = href;
-  }
 
   if (isUniversalEditor()) {
+    // In UE, use the raw authored href (wcmmode=disabled added as query param below)
     finalFormPath = href;
-  }
-
-  if ((formLink.host === window.location.host) && !isUniversalEditor()) {
+  } else if (formLink.host !== window.location.host) {
+    // Absolute URL pointing to a different host — use directly
+    finalFormPath = href;
+  } else {
+    // Same-host link: strip origin so we can inspect the pathname
     href = formLink.pathname + formLink.search + formLink.hash;
-  }
 
-  if (href.startsWith('/content/forms')) {
-    if (!href.endsWith('.html')) {
-      href = `${href}.html`;
+    // Match both /content/forms/... and proxy paths like /abbviecloud/content/forms/...
+    if (/\/content\/forms\//.test(href)) {
+      const formsPath = href.slice(href.indexOf('/content/forms'));
+      if (!formsPath.endsWith('.html')) href = `${href}.html`;
+      finalFormPath = `${aemHost}${formsPath.endsWith('.html') ? formsPath : `${formsPath}.html`}`;
+    } else {
+      // Non-forms same-host path — use as-is relative to current origin
+      finalFormPath = `${window.location.origin}${href}`;
     }
-
-    finalFormPath = `${HOST}${href}`;
   }
-  const formUrlObj = new URL(finalFormPath);
-  const formUrlHost = formUrlObj.hostname;
 
-  // Container for form
+  const formUrlObj = new URL(finalFormPath);
+
+  // Replace block content with the form container
   const formContainer = document.createElement('div');
   formContainer.className = 'embed-form-container';
   block.querySelector(':scope div').replaceWith(formContainer);
 
-  // Load jQuery if missing
-  const ensureJQuery = () => new Promise((resolve) => {
-    if (window.jQuery) {
-      resolve();
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
-    script.onload = resolve;
-    document.head.appendChild(script);
-  });
-
-  // Load and render adaptive form
   const loadAdaptiveForm = () => {
-    formContainer.innerHTML = '<div class="embed-form-loading">Loading form...</div>';
+    formContainer.innerHTML = '<div class="embed-form-loading">Loading form…</div>';
+
+    const ajaxData = isUniversalEditor() ? { wcmmode: 'disabled' } : {};
 
     window.jQuery.ajax({
       url: finalFormPath,
       type: 'GET',
-      data: isUniversalEditor() ? { wcmmode: 'disabled' } : {},
+      data: ajaxData,
       success(data) {
         formContainer.innerHTML = data;
+        rewriteResourceUrls(formContainer, formUrlObj);
 
-        const elements = formContainer.querySelectorAll('script, link');
-        elements.forEach((element) => {
-          const attr = element.tagName.toLowerCase() === 'script' ? 'src' : 'href';
-          const value = element[attr];
-
-          if (value) {
-            try {
-              const parsedUrl = new URL(value);
-              if (parsedUrl.host === window.location.host) {
-                element[attr] = `${formUrlObj.protocol}//${formUrlHost}${parsedUrl.pathname}`;
-              }
-            } catch {
-              // ignore invalid URLs
-            }
+        // Sequential script execution: wait for all external scripts (including
+        // any jQuery bundled with the form) before firing loaded event.
+        reExecuteScripts(formContainer).then(() => {
+          const form = formContainer.querySelector('[data-cmp-path]');
+          if (form) {
+            form.setAttribute('data-cmp-context-path', formUrlObj.origin);
           }
-        });
-
-        const scripts = formContainer.querySelectorAll('script');
-        scripts.forEach((oldScript) => {
-          const newScript = document.createElement('script');
-          if (oldScript.src) {
-            newScript.src = oldScript.src;
-          } else {
-            newScript.textContent = oldScript.textContent;
-          }
-          oldScript.replaceWith(newScript);
-        });
-
-        const form = document.querySelector('[data-cmp-path]');
-        if (form) {
-          form.setAttribute(
-            'data-cmp-context-path',
-            `${formUrlObj.protocol}//${formUrlHost}`,
-          );
-        }
-
-        document.dispatchEvent(
-          new CustomEvent('adaptiveform:loaded', {
+          document.dispatchEvent(new CustomEvent('adaptiveform:loaded', {
             detail: { finalFormPath, container: formContainer },
-          }),
-        );
+          }));
+        });
       },
-
       error(error) {
-        formContainer.innerHTML = '<p>Error loading form. Please try again later.</p>';
-
-        document.dispatchEvent(
-          new CustomEvent('adaptiveform:error', {
-            detail: { finalFormPath, error },
-          }),
-        );
+        formContainer.innerHTML = '<p class="embed-form-error">Error loading form. Please try again later.</p>';
+        document.dispatchEvent(new CustomEvent('adaptiveform:error', {
+          detail: { finalFormPath, error },
+        }));
       },
     });
   };
 
-  ensureJQuery().then(loadAdaptiveForm);
+  await ensureJQuery();
+  if (!window.jQuery) {
+    formContainer.innerHTML = '<p class="embed-form-error">Form could not be loaded (jQuery unavailable).</p>';
+    return;
+  }
+  loadAdaptiveForm();
 }
