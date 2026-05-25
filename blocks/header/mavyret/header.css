@@ -228,6 +228,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
+    min-height: calc(var(--nav-height) + var(--nav-utility-height));
   }
 }
 
@@ -238,6 +239,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: var(--z-index-2);
   position: fixed;
+  top: 0;
 }
 
 header nav {
@@ -1957,6 +1959,24 @@ body.nav-isi-visible {
   background: var(--nav-bar-bg, var(--background-color));
 }
 
+/* Sticky on scroll back to top — bar slides out when scrolling down, back in when scrolling up */
+
+header.has-sticky-scrollback.hide-nav .nav-wrapper {
+  transform: translateY(-100%);
+}
+
+header.has-sticky-scrollback.hide-nav .nav-sections,
+header.has-sticky-scrollback.hide-nav .nav-tools {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+header.has-sticky-scrollback.sticky-scrollback .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 /* ──────────────────────────────────────────
    MAVYRET HCP — Header Brand Overrides
    Source: mavyret.com/hcp
@@ -2520,6 +2540,14 @@ header nav .nav-tools {
     order: var(--order-0);
   }
 
+  header .nav-utility nav {
+    display: flex;
+    justify-content: flex-end;
+    max-width: var(--content-max-width, 1440px);
+    margin: 0 auto;
+    height: 100%;
+  }
+
   /* "Request a Rep" — rust-filled on desktop */
   /* stylelint-disable-next-line no-descending-specificity */
   header .nav-utility a.nav-utility-cta {
@@ -2544,7 +2572,7 @@ header nav .nav-tools {
   }
 
   /* 2-row nav grid: logo row (white) + sections row (rust, full-width) */
-  header .nav-wrapper nav {
+  header .nav-wrapper > nav {
     display: grid;
     gap: var(--spacing-25);
     grid-template:

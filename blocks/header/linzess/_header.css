@@ -67,6 +67,11 @@ header .nav-utility a.button {
   text-transform: none;
 }
 
+header .nav-utility a:hover,
+header .nav-utility a.button:hover { 
+  text-decoration: underline;
+}
+
 /* Must precede more-specific hamburger button selector */
 header .nav-utility button {
   color: var(--color-text-on-dark);
@@ -248,6 +253,29 @@ header nav .nav-sections .mobile-utility-clone {
   display: none;
 }
 
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header {
+  background: var(--color-text-on-dark);
+  border-bottom-left-radius: var(--border-radius-l);
+  border-bottom-right-radius: var(--border-radius-l);
+  transition: background var(--transition-duration-medium) var(--transition-easing-in-out),
+    color var(--transition-duration-medium) var(--transition-easing-in-out);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header ul li a,
+/* stylelint-disable-next-line no-descending-specificity */
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header ul li button {
+  color: var(--color-brand-primary);
+}
+
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-brand img {
+  filter: brightness(1) invert(0);
+}
+
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-sections .default-content-wrapper > ul > li.menu-home > a.nav-item-link::before {
+  background-color: var(--color-brand-primary);
+}
+
 /* ── Mobile open state — white bg, dark purple text, full-color logo ── */
 @media (width < 1024px) {
   /* CTA clone — visible in header row on mobile */
@@ -399,6 +427,11 @@ header nav .nav-sections .mobile-utility-clone {
     margin: 0 auto;
     max-width: var(--header-nav-max-width);
     padding: var(--spacing-20) 0;
+    justify-content: center;
+  }
+
+  header .nav-wrapper .nav-utility nav {
+    padding: 0;
   }
 
   /* Logo — vertical centering in single nav row */
@@ -556,7 +589,7 @@ header nav .nav-sections .mobile-utility-clone {
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
-  header .nav-utility ul li:nth-child(n+3) { display: block; }
+  header .nav-utility ul li:nth-child(n+3) { display: flex; }
 
   /* Scrolled state — dark maintained */
   header.hide-nav .nav-wrapper {

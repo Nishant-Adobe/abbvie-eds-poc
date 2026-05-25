@@ -223,6 +223,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
+    min-height: calc(var(--nav-height) + var(--nav-utility-height));
   }
 }
 
@@ -232,6 +233,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: var(--z-index-2);
   position: fixed;
+  top: 0;
 }
 
 header nav {
@@ -1929,4 +1931,21 @@ body.nav-isi-visible {
 
 .header-sticky.hide-nav .nav-wrapper {
   background: var(--nav-bar-bg, var(--background-color));
+}
+
+/* Sticky on scroll back to top — bar slides out when scrolling down, back in when scrolling up */
+header.has-sticky-scrollback.hide-nav .nav-wrapper {
+  transform: translateY(-100%);
+}
+
+header.has-sticky-scrollback.hide-nav .nav-sections,
+header.has-sticky-scrollback.hide-nav .nav-tools {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+header.has-sticky-scrollback.sticky-scrollback .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }

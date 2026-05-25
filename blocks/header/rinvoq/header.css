@@ -228,6 +228,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
+    min-height: calc(var(--nav-height) + var(--nav-utility-height));
   }
 }
 
@@ -238,6 +239,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: var(--z-index-2);
   position: fixed;
+  top: 0;
 }
 
 header nav {
@@ -1957,6 +1959,24 @@ body.nav-isi-visible {
   background: var(--nav-bar-bg, var(--background-color));
 }
 
+/* Sticky on scroll back to top — bar slides out when scrolling down, back in when scrolling up */
+
+header.has-sticky-scrollback.hide-nav .nav-wrapper {
+  transform: translateY(-100%);
+}
+
+header.has-sticky-scrollback.hide-nav .nav-sections,
+header.has-sticky-scrollback.hide-nav .nav-tools {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+header.has-sticky-scrollback.sticky-scrollback .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 /* ──────────────────────────────────────────
    RINVOQ DTC — Header Brand Overrides
    Source: rinvoq.com
@@ -2493,6 +2513,7 @@ header nav[aria-expanded='true'] .nav-brand-info > p a {
     justify-content: center;
     max-width: var(--header-content-max-width);
     padding: 0;
+    display: flex;
   }
 
   header .nav-utility button { color: var(--color-nav-utility); }
@@ -2554,7 +2575,7 @@ header nav[aria-expanded='true'] .nav-brand-info > p a {
     height: var(--spacing-15);
     position: absolute;
     right: 0;
-    top: var(--spacing-02);
+    top: var(--spacing-06);
     width: var(--spacing-02);
   }
 

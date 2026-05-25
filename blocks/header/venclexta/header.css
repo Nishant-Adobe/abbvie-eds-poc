@@ -228,6 +228,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
+    min-height: calc(var(--nav-height) + var(--nav-utility-height));
   }
 }
 
@@ -238,6 +239,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: var(--z-index-2);
   position: fixed;
+  top: 0;
 }
 
 header nav {
@@ -1957,6 +1959,24 @@ body.nav-isi-visible {
   background: var(--nav-bar-bg, var(--background-color));
 }
 
+/* Sticky on scroll back to top — bar slides out when scrolling down, back in when scrolling up */
+
+header.has-sticky-scrollback.hide-nav .nav-wrapper {
+  transform: translateY(-100%);
+}
+
+header.has-sticky-scrollback.hide-nav .nav-sections,
+header.has-sticky-scrollback.hide-nav .nav-tools {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+header.has-sticky-scrollback.sticky-scrollback .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 /* ──────────────────────────────────────────
    VENCLEXTA DTC — Header Brand Overrides
    Source: venclexta.com/aml
@@ -2448,7 +2468,7 @@ header nav .nav-sections .default-content-wrapper > ul > li:hover { background-c
   header nav .nav-sections .mobile-utility-clone { display: none; }
 
   /* 2-row grid: logo+info row (white) + nav sections row (white, full-width) */
-  header .nav-wrapper nav {
+  header .nav-wrapper > nav {
     display: grid;
     grid-template:
       'brand info tools hamburger' auto
@@ -2460,6 +2480,10 @@ header nav .nav-sections .default-content-wrapper > ul > li:hover { background-c
     padding: 0;
     position: relative;
     width: 100%;
+  }
+
+  header .nav-utility nav {
+    max-width: var(--header-content-max-width);
   }
 
   /* Logo — vertical padding for brand row height */
@@ -2668,7 +2692,7 @@ header nav .nav-sections .default-content-wrapper > ul > li:hover { background-c
   header .nav-utility li:hover > button::after { transform: rotate(180deg); }
 
   /* stylelint-disable-next-line no-descending-specificity */
-  header .nav-utility ul li:nth-child(n+4) { display: block; }
+  header .nav-utility ul li:nth-child(n+4) { display: flex; }
 
   header nav .nav-search .search-toggle[aria-expanded="false"] span.icon-close { display: none; }
   header nav .nav-search .search-toggle[aria-expanded="true"] span.icon-search { display: none; }
@@ -2696,4 +2720,8 @@ header nav .nav-sections .default-content-wrapper > ul > li:hover { background-c
 
   /* stylelint-disable-next-line no-descending-specificity */
   header nav .nav-search .search-inner-wrapper > span.icon-search { top: var(--spacing-12); }
+
+  header nav .nav-search {
+    display: flex;
+  }
 }

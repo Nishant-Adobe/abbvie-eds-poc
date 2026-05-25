@@ -228,6 +228,7 @@ header .nav-utility ul[role="menu"] a:hover {
 
   header:has(.nav-utility ul) {
     height: calc(var(--nav-height) + var(--nav-utility-height));
+    min-height: calc(var(--nav-height) + var(--nav-utility-height));
   }
 }
 
@@ -238,6 +239,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: var(--z-index-2);
   position: fixed;
+  top: 0;
 }
 
 header nav {
@@ -1957,6 +1959,24 @@ body.nav-isi-visible {
   background: var(--nav-bar-bg, var(--background-color));
 }
 
+/* Sticky on scroll back to top — bar slides out when scrolling down, back in when scrolling up */
+
+header.has-sticky-scrollback.hide-nav .nav-wrapper {
+  transform: translateY(-100%);
+}
+
+header.has-sticky-scrollback.hide-nav .nav-sections,
+header.has-sticky-scrollback.hide-nav .nav-tools {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+header.has-sticky-scrollback.sticky-scrollback .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 /* ──────────────────────────────────────────
    SKYRIZI HCP — Header Brand Overrides
    Source: skyrizihcp.com
@@ -1972,6 +1992,10 @@ body.nav-isi-visible {
    ────────────────────────────────────────── */
 
 /* ─── All viewports ─── */
+
+body.skyrizi-hcp {
+  background: var(--color-skyrizi-navy);
+}
 
 header .nav-wrapper {
   background-color: transparent;
@@ -2493,6 +2517,14 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li > a.nav-item-lin
     max-width: var(--header-wrapper-max-width);
     padding: var(--spacing-20) 0 0;
     position: relative;
+    width: 100%;
+  }
+  
+  header .nav-utility nav {
+    padding: var(--spacing-00) var(--spacing-35);
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
     width: 100%;
   }
 
