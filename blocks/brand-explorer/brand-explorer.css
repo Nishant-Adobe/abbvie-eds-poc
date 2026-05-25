@@ -1,14 +1,6 @@
 /* brand-explorer — multi-brand navigator v3.0 */
 @import '../../styles/tokens.css';
 
-@font-face {
-  font-family: abbv-iconFont;
-  src: url('/fonts/abbv-iconFont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
 .brand-explorer-section {
   position: relative;
   width: 100vw;
@@ -89,11 +81,11 @@
 }
 
 .brand-explorer-bar a:any-link {
-  font-family: var(--font-family-medium);
-  font-weight: 600;
-  font-size: 1.3rem;
+  font-family: var(--be-bar-font-family, var(--body-font-family));
+  font-weight: var(--be-bar-font-weight, 400);
+  font-size: var(--be-bar-font-size, 0.9rem);
   font-style: normal;
-  line-height: 1.2;
+  line-height: var(--be-bar-line-height, 16px);
   letter-spacing: normal;
   color: var(--be-color-bar-text, #fff);
   text-decoration: none;
@@ -138,11 +130,11 @@
   border: none;
   border-radius: 0;
   color: var(--be-color-bar-text, #fff);
-  font-family: var(--font-family-medium);
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-family: var(--be-bar-font-family, var(--body-font-family));
+  font-size: var(--be-bar-font-size, 0.9rem);
+  font-weight: var(--be-bar-font-weight, 400);
   font-style: normal;
-  line-height: 1.2;
+  line-height: var(--be-bar-line-height, 16px);
   letter-spacing: normal;
   padding: 12px 0;
   cursor: pointer;
@@ -183,12 +175,12 @@
 /* ── close button ────────────────────────────────────────────── */
 .brand-explorer .brand-explorer-close {
   position: absolute;
-  top: 10px;
-  right: -10px;
+  top: var(--spacing-10, 1rem);
+  right: var(--spacing-neg-10, -1rem);
   z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-08, 0.8rem);
   background: transparent;
   background-color: transparent;
   border: none;
@@ -198,11 +190,11 @@
   font-family: var(--be-font-medium);
   font-weight: var(--font-weight-500, 500);
   padding: 0;
-  padding-right: 42px;
+  padding-right: var(--spacing-42, 4.2rem);
   cursor: pointer;
   appearance: none;
   box-shadow: none;
-  line-height: 19.2px;
+  line-height: 1.2;
   text-decoration: none;
 }
 
@@ -240,7 +232,7 @@
   width: 100%;
   max-width: var(--be-bar-max-width);
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 var(--spacing-15, 1.5rem);
   background: var(--background-color, var(--color-white));
   color: var(--be-color-navy);
   position: relative;
@@ -253,7 +245,7 @@
 
 .brand-explorer.is-open .brand-explorer-content {
   max-height: 100dvh;
-  padding: var(--spacing-30, 3rem) 15px var(--spacing-20, 2rem);
+  padding: var(--spacing-30, 3rem) var(--spacing-15, 1.5rem) var(--spacing-20, 2rem);
   overflow-y: auto;
   pointer-events: auto;
 }
@@ -322,8 +314,8 @@
 /* ── colored separator bar ───────────────────────────────────── */
 .brand-explorer-separator {
   border: none;
-  height: 10px;
-  margin: 9px 0 0;
+  height: var(--be-separator-height, 1rem);
+  margin: var(--spacing-09, 0.9rem) 0 0;
   margin-bottom: 0;
   background: var(--be-color-separator);
 }
@@ -355,8 +347,8 @@
   font-weight: var(--font-weight-400, normal);
   color: var(--be-color-muted-blue);
   display: block;
-  line-height: 11px;
-  margin-bottom: 2px;
+  line-height: var(--line-height-11, 1.1rem);
+  margin-bottom: var(--spacing-02, 0.2rem);
 }
 
 .brand-explorer-indication--moderate::before {
@@ -467,30 +459,30 @@
   .brand-explorer-bar {
     flex-direction: column;
     align-items: stretch;
-    height: 112px;
-    padding: 0 15px;
+    height: var(--spacing-112, 11.2rem);
+    padding: 0 var(--spacing-15, 1.5rem);
   }
 
   .brand-explorer-left {
     width: 100%;
     justify-content: space-between;
-    height: 40px;
-    padding: 10px 0 0;
-    border-bottom: 1px solid #d8d8d8;
+    height: var(--spacing-40, 4rem);
+    padding: var(--spacing-10, 1rem) 0 0;
+    border-bottom: var(--border-width-1, 0.1rem) solid var(--color-border-light, #d8d8d8);
   }
 
   .brand-explorer-right {
     width: 100%;
     justify-content: space-between;
     gap: 0;
-    padding: 12px 0;
+    padding: var(--spacing-12, 1.2rem) 0;
   }
 
   .brand-explorer-right a:any-link {
-    max-width: 100px;
-    padding: 12px 0;
+    max-width: var(--spacing-100, 10rem);
+    padding: var(--spacing-12, 1.2rem) 0;
     text-align: center;
-    font-size: 13px;
+    font-size: var(--font-size-13, 1.3rem);
     font-weight: var(--font-weight-700, 700);
   }
 
@@ -501,7 +493,7 @@
 
   .brand-explorer-blade {
     cursor: pointer;
-    padding-right: 40px;
+    padding-right: var(--spacing-40, 4rem);
   }
 
   .brand-explorer-blade::after {
@@ -509,13 +501,13 @@
     font-family: abbv-iconFont, sans-serif;
     position: absolute;
     top: 50%;
-    right: 10px;
-    font-size: 20px;
+    right: var(--spacing-10, 1rem);
+    font-size: var(--font-size-20, 2rem);
     font-weight: normal;
     font-style: normal;
     color: var(--be-color-text);
     transform: translateY(-50%);
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-duration-medium, 0.3s) ease;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -525,7 +517,7 @@
 
   .brand-explorer-links {
     display: none;
-    padding-top: 10px;
+    padding-top: var(--spacing-10, 1rem);
   }
 
   .brand-explorer-accordion.is-active .brand-explorer-links {
