@@ -67,10 +67,9 @@
   align-items: center;
   width: 100%;
   height: var(--be-bar-height);
-  max-width: var(--be-bar-max-width);
-  margin: 0 auto;
-  padding: 0 var(--spacing-15, 1.5rem);
+  padding: 0 max(var(--spacing-15, 1.5rem), calc((100% - var(--be-bar-max-width)) / 2 + var(--spacing-15, 1.5rem)));
   color: var(--be-color-bar-text);
+  background: var(--be-color-bar-bg, #25282a);
   box-sizing: border-box;
   position: relative;
   z-index: 2;
@@ -325,7 +324,7 @@
 
 /* ── indication links ────────────────────────────────────────── */
 .brand-explorer-links {
-  padding-top: 10px;
+  padding-top: var(--spacing-06, 0.6rem);
   display: block;
 }
 
@@ -339,7 +338,7 @@
   font-family: var(--be-font-medium);
   line-height: var(--line-height-16, 1.68rem);
   text-decoration: none;
-  padding: var(--spacing-12, 1.2rem) var(--spacing-12, 1.2rem) var(--spacing-16, 1.6rem) 0;
+  padding: var(--spacing-06, 0.6rem) 0;
   cursor: pointer;
   position: relative;
 }
