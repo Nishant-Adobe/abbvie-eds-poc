@@ -3,40 +3,131 @@
 
 /* RINVOQ HCP — Brand-specific style overrides */
 
-/* Section: glacier gradient (white → glacier) — matches live site resource-container--gold */
+/* Section: glacier — matches live site resource-container--gold + section-bg-brushstroke + gradient--white-glacier */
 .section.glacier {
   position: relative;
-  padding: 48px 0 80px;
-  overflow: hidden;
+  padding: 48px 0 220px;
+  overflow: visible;
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .section.glacier::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, var(--background-color, #fff), var(--color-glacier, #f5f5f5));
+  z-index: -1;
+  top: 50px;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
   pointer-events: none;
-  z-index: 0;
 }
 
 .section.glacier::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  z-index: -1;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 516px;
+  height: calc(100% + 12px);
   background-image: url('/content/dam/abbvie-eds-poc/stroke--section-back.svg');
   background-repeat: no-repeat;
-  background-position: center bottom;
   background-size: cover;
   pointer-events: none;
-  z-index: 0;
 }
 
 .section.glacier > * {
   position: relative;
   z-index: 1;
+}
+
+.section.glacier .default-content-wrapper h2 {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: var(--color-charcoal, #25282a);
+  text-align: center;
+  margin: 0 0 16px;
+  position: relative;
+  display: inline-block;
+}
+
+.section.glacier .default-content-wrapper {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 20px;
+}
+
+.section.glacier .default-content-wrapper:last-of-type {
+  text-align: left;
+  width: 100%;
+  max-width: 1180px;
+  margin: 4px auto 0;
+  padding: 0 20px;
+}
+
+.section.glacier .default-content-wrapper:last-of-type p {
+  font-size: 14px;
+  font-style: normal;
+  margin: 0;
+}
+
+.section.glacier .default-content-wrapper h2::after {
+  content: '';
+  display: block;
+  position: relative;
+  margin-top: 8px;
+  width: 100%;
+  height: 6px;
+  background-image: url('/content/dam/abbvie-eds-poc/section-title-underline-stroke-black.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+@media (min-width: 986px) {
+  .section.glacier {
+    margin: 32px 0;
+    padding: 32px 0 64px;
+  }
+
+  .section.glacier::before {
+    top: 35px;
+    bottom: -35px;
+  }
+
+  .section.glacier::after {
+    height: 100%;
+    background-size: 100% 110%;
+    background-position: center;
+  }
+
+  .section.glacier .default-content-wrapper h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .section.glacier .default-content-wrapper {
+    padding: 0;
+  }
+}
+
+/* Section: text-container — full-width so block controls its own centering */
+.section.text-container-container {
+  max-width: none;
+  width: 100%;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section.text-container-container + .section.text-container-container {
+  margin-top: 48px;
 }
 
 /* Hero: brushstroke underline on TREATMENT GOALS (strong after em) */
@@ -56,4 +147,93 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% auto;
+}
+
+/* Hero homepage: constrain height and position bg absolutely */
+.hero.no-padding {
+  position: relative;
+  overflow: hidden;
+  min-height: 340px;
+}
+
+.hero.no-padding > div:first-child {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero.no-padding > div:first-child img {
+  width: 3100px;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Hero homepage: inner content flex row — text left, badge right */
+.hero.no-padding .hero-text-container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero.no-padding .hero-text-container .cmp-container-x-large {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 340px;
+  padding: 64px 20px 0;
+  max-width: 1220px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Hero: H1 line-height fix for mobile parity */
+.hero.no-padding h1 {
+  line-height: var(--hero-h1-line-height, 0.9);
+}
+
+/* Hero: expansion badge — hidden below 986px, visible on desktop right */
+.hero.no-padding .hero-badge {
+  display: none;
+  margin: 0;
+}
+
+@media (min-width: 986px) {
+  .hero.no-padding .hero-badge {
+    display: block;
+    flex-shrink: 0;
+    margin-left: 40px;
+  }
+
+  .hero.no-padding .hero-badge img {
+    width: 220px;
+    height: auto;
+  }
+}
+
+@media (max-width: 985px) {
+  .hero-container {
+    padding-top: 100px;
+  }
+
+  .hero.no-padding {
+    min-height: auto;
+    overflow: visible;
+    position: static;
+  }
+
+  .hero.no-padding > div:first-child {
+    display: none;
+  }
+
+  .hero.no-padding .hero-text-container .cmp-container-x-large {
+    flex-direction: column;
+    min-height: auto;
+    padding: 0;
+    align-items: flex-start;
+  }
 }
