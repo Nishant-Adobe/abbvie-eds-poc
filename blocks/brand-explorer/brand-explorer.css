@@ -45,7 +45,7 @@
 
   /* ── Layout ── */
   position: relative;
-  background: var(--be-color-bar-bg, #25282a);
+  background: var(--background-color, var(--color-white));
   color: var(--be-color-navy);
   font-family: var(--be-font-medium);
   font-size: var(--be-font-size-body);
@@ -65,11 +65,10 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: var(--be-bar-max-width);
-  margin: 0 auto;
   height: var(--be-bar-height);
-  padding: 0 var(--spacing-15, 1.5rem);
+  padding: 0 max(var(--spacing-15, 1.5rem), calc((100% - var(--be-bar-max-width)) / 2 + var(--spacing-15, 1.5rem)));
   color: var(--color-white, #fff);
+  background: var(--be-color-bar-bg, #25282a);
   box-sizing: border-box;
   position: relative;
   z-index: 2;
