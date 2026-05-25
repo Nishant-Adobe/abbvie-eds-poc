@@ -1024,9 +1024,8 @@ export default async function decorate(block) {
       //   child[n-2]     = floatingIsiExpandLabel <p> (template default)
       //   child[n-1]     = floatingIsiCollapseLabel <p> (template default)
       const cell = utilBlock.querySelector(':scope > div > div');
-      const children = [...(cell?.children || [])];
-      // skip icon (first); skip 3 trailing template defaults
-      const authoredChildren = children.slice(1, -3);
+
+      const authoredChildren = [...(cell?.children || [])];
 
       authoredChildren.forEach((child, idx) => {
         if (child.tagName !== 'P') return; // <ul> nodes are handled by the preceding <p>
