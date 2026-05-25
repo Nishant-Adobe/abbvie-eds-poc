@@ -2,15 +2,17 @@
 
 /* Rinvoq HCP — brand-explorer overrides (matching rinvoqhcp.com) */
 
-/* Bar background: black */
+/* Only the bar area is black — section provides full-width bg for bar */
 .brand-explorer-section {
   background: var(--color-black, #000);
 }
 
+/* Block wrapper stays white for the content panel */
 .brand-explorer {
-  background: var(--color-black, #000);
+  background: #fff;
 }
 
+/* Bar is black */
 .brand-explorer-bar {
   background: var(--color-black, #000);
 }
@@ -29,6 +31,6 @@
 }
 
 /* Rinvoq HCP — indication links underline on hover */
-.brand-explorer-indication:hover {
+.brand-explorer .brand-explorer-indication:hover {
   text-decoration: underline;
 }
