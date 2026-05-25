@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0;
   display: block;
-  background: var(--color-background-footer, #17181b);
+  background: var(--be-color-bar-bg, #25282a);
 }
 
 .brand-explorer-section .default-content-wrapper,
@@ -21,8 +21,8 @@
 
 .brand-explorer {
   position: relative;
-  background: var(--color-background-footer, #17181b);
-  color: var(--be-color-text-light);
+  background: var(--background-color, var(--color-white));
+  color: var(--be-color-text);
   font-family: var(--be-font-body);
   font-size: var(--be-font-size-body);
   line-height: var(--be-line-height-body);
@@ -42,10 +42,9 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: var(--header-wrapper-max-width, 122rem);
-  margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 max(var(--spacing-24, 2.4rem), calc((100% - var(--header-wrapper-max-width, 122rem)) / 2 + var(--spacing-24, 2.4rem)));
   color: var(--be-color-bar-text);
+  background: var(--be-color-bar-bg);
   box-sizing: border-box;
   position: relative;
   z-index: 2;
@@ -222,19 +221,20 @@
 /* ── content panel ───────────────────────────────────────────── */
 .brand-explorer-content {
   width: 100%;
-  padding: 0 20px;
-  background: var(--be-color-bg);
+  padding: 0 var(--spacing-24, 2.4rem);
+  background: var(--background-color, var(--color-white));
+  color: var(--be-color-text);
   position: relative;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.4s ease;
+  transition: max-height var(--transition-duration-medium, 0.4s) ease, padding var(--transition-duration-medium, 0.4s) ease;
   box-sizing: border-box;
   pointer-events: none;
 }
 
 .brand-explorer.is-open .brand-explorer-content {
-  max-height: 80vh;
-  padding: 30px 20px 20px;
+  max-height: 100dvh;
+  padding: var(--spacing-30, 3rem) var(--spacing-24, 2.4rem) var(--spacing-20, 2rem);
   overflow-y: auto;
   pointer-events: auto;
 }
@@ -245,6 +245,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 40px;
   max-width: 1200px;
+  margin: 0 auto;
 }
 
 .brand-explorer-accordion {
@@ -714,11 +715,6 @@
   margin: 0;
 }
 
-/* Hide raw content rows before JS processes them (prevents FOUC) */
-.brand-explorer:not([data-block-status="loaded"]) > div {
-  display: none;
-}
-
 /* ── Utility classes used by JS (no inline styles) ── */
 .brand-explorer-hidden,
 .brand-explorer > div:not(.brand-explorer-bar, .brand-explorer-content) {
@@ -729,7 +725,9 @@ body.brand-explorer-modal-open {
   overflow: hidden;
 }
 
-/* ── Brand-specific separator and arrow colors ── */
+/* ── Product brand accent colors (content-driven, not site-brand overrides).
+   These style portfolio cards via authored [data-brand] attributes and are
+   identical across all sites — not site-specific, so they belong in core. ── */
 .brand-explorer-separator[data-brand="rinvoq"] {
   background: var(--be-color-rinvoq);
 }
@@ -745,5 +743,13 @@ body.brand-explorer-modal-open {
 
 .brand-explorer-visit[data-brand="skyrizi"] .brand-explorer-visit-arrow {
   background-color: var(--be-color-skyrizi);
+}
+
+.brand-explorer-separator[data-brand="humira"] {
+  background: var(--be-color-humira);
+}
+
+.brand-explorer-visit[data-brand="humira"] .brand-explorer-visit-arrow {
+  background-color: var(--be-color-humira);
 }
 

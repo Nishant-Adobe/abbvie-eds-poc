@@ -51,6 +51,14 @@
         "value": false
       },
       {
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "stickyHeaderCheckBox",
+        "label": "Make the Header sticky on scroll back to top.",
+        "description": "Make the page header sticky when the user scrolls back to the top.",
+        "value": false
+      },
+      {
         "component": "tab",
         "label": "Card Story",
         "name": "tabCardStory"
@@ -1929,6 +1937,14 @@
         "value": "",
         "label": "Item Description Text",
         "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "fragmentPath",
+        "value": "",
+        "label": "Fragment Path (overrides Description Text)",
+        "description": "Path to a fragment page with complex content (tabs, video, charts). If set, this is rendered instead of the Description Text field above."
       },
       {
         "component": "boolean",
@@ -5582,6 +5598,108 @@
     ]
   },
   {
+    "id": "flexbox",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout Variant",
+        "options": [
+          { "name": "Column direction", "value": "column" },
+          { "name": "Row reverse", "value": "row-reverse" },
+          { "name": "Column reverse", "value": "column-reverse" },
+          { "name": "Center (justify + align)", "value": "center" },
+          { "name": "Space between", "value": "space-between" },
+          { "name": "No wrap", "value": "no-wrap" },
+          { "name": "Align stretch", "value": "align-stretch" },
+          { "name": "Align top", "value": "align-top" },
+          { "name": "Align bottom", "value": "align-bottom" }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      }
+    ]
+  },
+  {
+    "id": "flexbox-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Item Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Item Content",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "itemClasses",
+        "value": "",
+        "label": "Item Width",
+        "options": [
+          { "name": "Auto (equal flex)", "value": "" },
+          { "name": "Full (100%)", "value": "full" },
+          { "name": "Half (50%)", "value": "half" },
+          { "name": "Third (33%)", "value": "third" },
+          { "name": "Quarter (25%)", "value": "quarter" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "parallax",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Background Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Overlay Content",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      }
+    ]
+  },
+  {
     "id": "dismiss",
     "fields": [
       {
@@ -6562,6 +6680,335 @@
         "description": "Identifier used for tracking interactions in analytics systems.",
         "value": "",
         "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Common Properties",
+        "name": "commonProperties"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "blockId",
+        "valueFormat": "regexp",
+        "label": "ID",
+        "description": "Unique identifier for this block",
+        "validation": {
+          "regExp": "^id:\\S*$",
+          "customErrorMsg": "ID must start with 'id:' and contain no spaces"
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "classes_commonCustomClass",
+        "label": "Custom Class",
+        "description": "Custom CSS class to apply to this block"
+      },
+      {
+        "component": "select",
+        "name": "language",
+        "label": "Language",
+        "options": [
+          {
+            "name": "None",
+            "value": "lang:none"
+          },
+          {
+            "name": "Bulgarian",
+            "value": "lang:bg"
+          },
+          {
+            "name": "Chinese",
+            "value": "lang:zh"
+          },
+          {
+            "name": "Chinese (Taiwan)",
+            "value": "lang:zh-TW"
+          },
+          {
+            "name": "Czech",
+            "value": "lang:cs"
+          },
+          {
+            "name": "Danish",
+            "value": "lang:da"
+          },
+          {
+            "name": "Dutch",
+            "value": "lang:nl"
+          },
+          {
+            "name": "English",
+            "value": "lang:en"
+          },
+          {
+            "name": "Finnish",
+            "value": "lang:fi"
+          },
+          {
+            "name": "French",
+            "value": "lang:fr"
+          },
+          {
+            "name": "German",
+            "value": "lang:de"
+          },
+          {
+            "name": "Greek",
+            "value": "lang:el"
+          },
+          {
+            "name": "Hebrew",
+            "value": "lang:he"
+          },
+          {
+            "name": "Hungarian",
+            "value": "lang:hu"
+          },
+          {
+            "name": "Italian",
+            "value": "lang:it"
+          },
+          {
+            "name": "Japanese",
+            "value": "lang:ja"
+          },
+          {
+            "name": "Korean",
+            "value": "lang:ko"
+          },
+          {
+            "name": "Norwegian",
+            "value": "lang:no"
+          },
+          {
+            "name": "Polish",
+            "value": "lang:pl"
+          },
+          {
+            "name": "Portuguese",
+            "value": "lang:pt"
+          },
+          {
+            "name": "Russian",
+            "value": "lang:ru"
+          },
+          {
+            "name": "Slovak",
+            "value": "lang:sk"
+          },
+          {
+            "name": "Slovenian",
+            "value": "lang:sl"
+          },
+          {
+            "name": "Spanish",
+            "value": "lang:es"
+          },
+          {
+            "name": "Swedish",
+            "value": "lang:sv"
+          },
+          {
+            "name": "Turkish",
+            "value": "lang:tr"
+          },
+          {
+            "name": "Ukrainian",
+            "value": "lang:uk"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "find-provider",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Labels",
+        "name": "labels"
+      },
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Variant",
+        "description": "Select the search mode. Default: name/ZIP search. Location: auto-detects user location. Map: shows a map alongside results. Support: support-group finder.",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Location-based search",
+            "value": "find-provider-location"
+          },
+          {
+            "name": "Map view",
+            "value": "find-provider-map"
+          },
+          {
+            "name": "Support group finder",
+            "value": "find-provider-support"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search-label",
+        "value": "",
+        "label": "Search Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "search-placeholder",
+        "value": "",
+        "label": "Search Placeholder"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "radius-label",
+        "value": "",
+        "label": "Radius Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "radius-options",
+        "value": "",
+        "label": "Radius Options",
+        "description": "Comma-separated radius options shown in the results select (e.g. '5 Miles, 10 Miles, 25 Miles'). Defaults to 5/10/25/50/100 Miles when blank."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "submit-label",
+        "value": "",
+        "label": "Submit Button Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "geo-button-label",
+        "value": "",
+        "label": "Geo Button Label",
+        "description": "Label for the 'Use my location' button shown in the location variant."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "clear-label",
+        "value": "",
+        "label": "Clear Button Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "terms-label",
+        "value": "",
+        "label": "Terms Label",
+        "description": "Heading above the Terms & Conditions checkbox (e.g. 'Terms & Conditions')."
+      },
+      {
+        "component": "richtext",
+        "name": "terms-text",
+        "value": "",
+        "label": "Terms Text",
+        "description": "Checkbox label text. May include a hyperlink to the full T&C page."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "terms-error",
+        "value": "",
+        "label": "Terms Error Message",
+        "description": "Validation message shown when the user submits without accepting the Terms & Conditions."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "no-results",
+        "value": "",
+        "label": "No Results Message"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "error",
+        "value": "",
+        "label": "Error Message"
+      },
+      {
+        "component": "richtext",
+        "name": "captcha-message",
+        "value": "",
+        "label": "Captcha Message",
+        "description": "Message displayed alongside the CAPTCHA challenge."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "results-title",
+        "value": "",
+        "label": "Results Title",
+        "description": "Heading shown above the results list (e.g. 'Results found')."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "directions-label",
+        "value": "",
+        "label": "Directions Link Label",
+        "description": "Label for the 'Get Directions' link on each result card."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "details-label",
+        "value": "",
+        "label": "Details Button Label",
+        "description": "Label for the 'Show all practice details' toggle button on each result card."
+      },
+      {
+        "component": "tab",
+        "label": "Configuration",
+        "name": "config"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "api-endpoint",
+        "value": "",
+        "label": "API Endpoint",
+        "description": "Provider search API URL."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "indication",
+        "value": "",
+        "label": "Indication",
+        "description": "PublisherName sent in the API request payload."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "exit-modal-id",
+        "value": "",
+        "label": "Exit Modal ID",
+        "description": "ID of the modal to open when a provider card is clicked (exit-like UX)."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchor-id",
+        "value": "",
+        "label": "Anchor ID",
+        "description": "Sets the id attribute on the block for in-page anchor links."
       },
       {
         "component": "tab",
@@ -11649,6 +12096,177 @@
     ]
   },
   {
+    "id": "search-input",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Overview",
+        "name": "tabOverview"
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "searchResultsPagePath",
+        "label": "Search Results Page Path",
+        "required": true,
+        "description": "Enter the path for the search results page."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "searchButtonPlaceholder",
+        "label": "Search Button Placeholder Text",
+        "description": "Placeholder text displayed on the search action/button in desktop and larger viewports. Optional; shown when no custom label is provided."
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "searchButtonPlaceholderMobile",
+        "label": "Search Button Placeholder Text (Mobile View)",
+        "description": "Placeholder text for the search action/button optimized for mobile view. Optional; used when mobile-specific label differs from desktop."
+      },
+      {
+        "component": "tab",
+        "label": "Common Properties",
+        "name": "commonProperties"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "blockId",
+        "valueFormat": "regexp",
+        "label": "ID",
+        "description": "Unique identifier for this block",
+        "validation": {
+          "regExp": "^id:\\S*$",
+          "customErrorMsg": "ID must start with 'id:' and contain no spaces"
+        }
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "classes_commonCustomClass",
+        "label": "Custom Class",
+        "description": "Custom CSS class to apply to this block"
+      },
+      {
+        "component": "select",
+        "name": "language",
+        "label": "Language",
+        "options": [
+          {
+            "name": "None",
+            "value": "lang:none"
+          },
+          {
+            "name": "Bulgarian",
+            "value": "lang:bg"
+          },
+          {
+            "name": "Chinese",
+            "value": "lang:zh"
+          },
+          {
+            "name": "Chinese (Taiwan)",
+            "value": "lang:zh-TW"
+          },
+          {
+            "name": "Czech",
+            "value": "lang:cs"
+          },
+          {
+            "name": "Danish",
+            "value": "lang:da"
+          },
+          {
+            "name": "Dutch",
+            "value": "lang:nl"
+          },
+          {
+            "name": "English",
+            "value": "lang:en"
+          },
+          {
+            "name": "Finnish",
+            "value": "lang:fi"
+          },
+          {
+            "name": "French",
+            "value": "lang:fr"
+          },
+          {
+            "name": "German",
+            "value": "lang:de"
+          },
+          {
+            "name": "Greek",
+            "value": "lang:el"
+          },
+          {
+            "name": "Hebrew",
+            "value": "lang:he"
+          },
+          {
+            "name": "Hungarian",
+            "value": "lang:hu"
+          },
+          {
+            "name": "Italian",
+            "value": "lang:it"
+          },
+          {
+            "name": "Japanese",
+            "value": "lang:ja"
+          },
+          {
+            "name": "Korean",
+            "value": "lang:ko"
+          },
+          {
+            "name": "Norwegian",
+            "value": "lang:no"
+          },
+          {
+            "name": "Polish",
+            "value": "lang:pl"
+          },
+          {
+            "name": "Portuguese",
+            "value": "lang:pt"
+          },
+          {
+            "name": "Russian",
+            "value": "lang:ru"
+          },
+          {
+            "name": "Slovak",
+            "value": "lang:sk"
+          },
+          {
+            "name": "Slovenian",
+            "value": "lang:sl"
+          },
+          {
+            "name": "Spanish",
+            "value": "lang:es"
+          },
+          {
+            "name": "Swedish",
+            "value": "lang:sv"
+          },
+          {
+            "name": "Turkish",
+            "value": "lang:tr"
+          },
+          {
+            "name": "Ukrainian",
+            "value": "lang:uk"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "search",
     "fields": [
       {
@@ -11656,6 +12274,12 @@
         "valueType": "string",
         "name": "index",
         "label": "Index"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobilePlaceholder",
+        "label": "Mobile Placeholder"
       },
       {
         "component": "multiselect",
@@ -13036,7 +13660,38 @@
   },
   {
     "id": "tabs",
-    "fields": []
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Style",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Pill",
+            "value": "pill"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tab-item",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "tabTitle",
+        "value": "",
+        "label": "Tab Name",
+        "required": true,
+        "description": "Name shown on the tab button. Must match a Tab Panel's Tab Name (case-insensitive)."
+      }
+    ]
   },
   {
     "id": "tag-utility-nav",

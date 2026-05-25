@@ -118,7 +118,6 @@
 
 /* ── Text container inside tab panels ── */
 .tabs-panel .text-container-wrapper {
-  background: var(--color-background-blue);
   padding: var(--spacing-40);
 }
 
@@ -149,5 +148,131 @@
   .tabs-container .tabs-wrapper {
     margin-top: calc(-1 * var(--spacing-20));
     margin-bottom: calc(-1 * var(--spacing-06));
+  }
+}
+
+/* ============================================================
+   PILL VARIANT — .tabs.pill
+   Rounded pill bar with filled cyan active tab.
+   Used inside modals (Study Design / Baseline Characteristics)
+   ============================================================ */
+
+/* ── Pill tab list — rounded capsule bar ── */
+.tabs.pill .tabs-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: var(--border-width-1, 0.1rem) solid var(--color-tabs-underline, #00b4d8);
+  border-radius: var(--tabs-pill-radius, 50rem);
+  padding: var(--spacing-04, 0.4rem);
+  gap: 0;
+  overflow: visible;
+  width: 100%;
+}
+
+/* ── Pill tab buttons (inactive) — transparent, dark text ── */
+.tabs.pill .tabs-list button.tabs-tab {
+  padding: var(--spacing-08, 0.8rem) var(--spacing-12, 1.2rem);
+  background: transparent;
+  color: var(--color-text-heading, #1a2b3c);
+  font-family: var(--font-family-tabs-control, var(--body-font-family));
+  font-size: var(--font-size-body-xs, 1.2rem);
+  font-weight: var(--font-weight-heading, 700);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide-sm, 0.05em);
+  border: none;
+  border-radius: var(--tabs-pill-radius, 50rem);
+  white-space: nowrap;
+  position: relative;
+  line-height: var(--line-height-20, 2rem);
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+}
+
+/* ── Pill active tab — filled cyan background ── */
+.tabs.pill .tabs-list button.tabs-tab[aria-selected='true'] {
+  background: var(--color-tabs-underline, #00b4d8);
+  color: var(--color-text-on-dark, #fff);
+  font-weight: var(--font-weight-heading, 700);
+}
+
+/* First tab appears active when no tab is explicitly selected */
+.tabs.pill .tabs-list:not(:has(button[aria-selected='true'])) button.tabs-tab:first-child {
+  background: var(--color-tabs-underline, #00b4d8);
+  color: var(--color-text-on-dark, #fff);
+  font-weight: var(--font-weight-heading, 700);
+}
+
+.tabs.pill .tabs-list button.tabs-tab[aria-selected='true']::after {
+  display: none;
+}
+
+
+/* ── Pill panel — no gradient line, no grid split ── */
+.section:has(.tabs.pill) ~ .tabs-panel::before {
+  display: none;
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel > .section[data-tabs-grid] {
+  display: block;
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel > .section[data-tabs-grid].abbvie-container > div {
+  grid-column: unset;
+}
+
+/* ── Pill panel — reset text-container overrides ── */
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-wrapper {
+  background: transparent;
+  padding: 0;
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-18, 1.8rem);
+  line-height: var(--line-height-24, 2.4rem);
+  font-weight: var(--font-weight-body, 400);
+}
+
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text p,
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text li,
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text ol,
+.section:has(.tabs.pill) ~ .tabs-panel .text-container-text ul {
+  font-size: var(--font-size-18, 1.8rem);
+  line-height: var(--line-height-24, 2.4rem);
+  font-weight: var(--font-weight-body, 400);
+}
+
+/* ── Pill panel — base typography ── */
+.section:has(.tabs.pill) ~ .tabs-panel p,
+.section:has(.tabs.pill) ~ .tabs-panel a,
+.section:has(.tabs.pill) ~ .tabs-panel li,
+.section:has(.tabs.pill) ~ .tabs-panel dd,
+.section:has(.tabs.pill) ~ .tabs-panel dt {
+  font-size: var(--font-size-18, 1.8rem);
+  line-height: var(--line-height-24, 2.4rem);
+}
+
+/* ── Tablet+ pill adjustments ── */
+@media (width >= 600px) {
+  .tabs.pill .tabs-list {
+    display: inline-flex;
+    width: auto;
+  }
+
+  .tabs.pill .tabs-list button.tabs-tab {
+    font-size: var(--font-size-14, 1.4rem);
+    padding: var(--spacing-12, 1.2rem) var(--spacing-40, 4rem);
+    flex: none;
+  }
+}
+
+/* ── Desktop pill adjustments ── */
+@media (width >= 900px) {
+  .tabs.pill .tabs-list button.tabs-tab {
+    font-size: var(--font-size-16, 1.6rem);
+    padding: var(--spacing-14, 1.4rem) var(--spacing-48, 4.8rem);
   }
 }

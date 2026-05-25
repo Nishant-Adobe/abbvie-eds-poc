@@ -239,6 +239,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: var(--z-index-2);
   position: fixed;
+  top: 0;
 }
 
 header nav {
@@ -1958,6 +1959,24 @@ body.nav-isi-visible {
   background: var(--nav-bar-bg, var(--background-color));
 }
 
+/* Sticky on scroll back to top — bar slides out when scrolling down, back in when scrolling up */
+
+header.has-sticky-scrollback.hide-nav .nav-wrapper {
+  transform: translateY(-100%);
+}
+
+header.has-sticky-scrollback.hide-nav .nav-sections,
+header.has-sticky-scrollback.hide-nav .nav-tools {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+header.has-sticky-scrollback.sticky-scrollback .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 /* ──────────────────────────────────────────
    LINZESS DTC — Header Brand Overrides
    Source: linzess.com (Platform C)
@@ -2230,6 +2249,30 @@ header nav .mobile-cta-clone {
 
 header nav .nav-sections .mobile-utility-clone {
   display: none;
+}
+
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header {
+  background: var(--color-text-on-dark);
+  border-bottom-left-radius: var(--border-radius-l);
+  border-bottom-right-radius: var(--border-radius-l);
+  transition: background var(--transition-duration-medium) var(--transition-easing-in-out),
+    color var(--transition-duration-medium) var(--transition-easing-in-out);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header ul li a,
+/* stylelint-disable-next-line no-descending-specificity */
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header ul li button {
+  color: var(--color-brand-primary);
+}
+
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-brand img {
+  filter: brightness(1) invert(0);
+}
+
+header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-sections .default-content-wrapper > ul > li.menu-home > a.nav-item-link::before {
+  background-color: var(--color-brand-primary);
 }
 
 /* ── Mobile open state — white bg, dark purple text, full-color logo ── */
