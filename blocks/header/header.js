@@ -861,7 +861,9 @@ function buildCtaGroup(headerEl) {
   const lastPara = ctaParas[ctaParas.length - 1];
   // If the last para is text-only (no anchor), it's an explicit CTA label
   const ctaLabel = !lastPara?.querySelector('a') ? lastPara?.textContent.trim() : null;
-  const primaryLinkEl = linkParas[0]?.querySelector('a');
+  // content_ctaPrimaryLink is an aem-content field — renders in the second block row, not the first cell
+  const primaryLinkEl = linkParas[0]?.querySelector('a')
+    || ctaBlock.querySelector(':scope > div:nth-child(2) a');
 
   if (ctaLabel && primaryLinkEl) {
     // Separate label para exists — build clean anchor (avoids href-as-text EDS default)
