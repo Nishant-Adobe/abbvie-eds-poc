@@ -184,7 +184,8 @@ export default function decorate(block) {
     const details = document.createElement('details');
     moveInstrumentation(row, details);
     // Use the third column for additional classes on the details element
-    details.className = `${row.children[2]?.textContent.trim().replaceAll(',', '') || ''}`;
+    const extraClasses = row.children[2]?.textContent.trim().replaceAll(',', '') || '';
+    details.className = extraClasses ? `accordion-item ${extraClasses}` : 'accordion-item';
     if (anchorId) details.setAttribute('id', anchorId);
     if (details.classList.contains('defaultopen')) {
       summary.classList.add(cfg.collapseIcon);
