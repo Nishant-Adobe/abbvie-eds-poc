@@ -168,14 +168,15 @@
   z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   background: transparent;
   background-color: transparent;
   border: none;
   border-radius: 0;
   color: var(--be-color-text);
-  font-size: var(--be-font-size-body);
+  font-size: 16px;
   font-family: var(--be-font-body);
+  font-weight: 500;
   padding: 8px 0;
   cursor: pointer;
   appearance: none;
@@ -192,9 +193,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  border: 2px solid var(--be-color-text);
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--be-color-text);
   border-radius: 50%;
   position: relative;
 }
@@ -208,13 +209,13 @@
 
 .brand-explorer-close-icon::before {
   width: 12px;
-  height: 2px;
+  height: 1.5px;
   transform: rotate(45deg);
 }
 
 .brand-explorer-close-icon::after {
   width: 12px;
-  height: 2px;
+  height: 1.5px;
   transform: rotate(-45deg);
 }
 
@@ -300,7 +301,7 @@
 
 /* ── colored separator bar ───────────────────────────────────── */
 .brand-explorer-separator {
-  border: none;
+  border: 1px dashed var(--be-color-border, #d8d8d8);
   height: 10px;
   margin-top: auto;
   margin-bottom: 12px;
@@ -470,17 +471,18 @@
   }
 
   .brand-explorer-blade::after {
-    content: '\25BC';
+    content: '\276F';
     position: absolute;
-    top: 12px;
-    right: 0;
-    font-size: 10px;
+    top: 50%;
+    right: 10px;
+    font-size: 20px;
     color: var(--be-color-text-light);
+    transform: translateY(-50%) rotate(90deg);
     transition: transform 0.3s ease;
   }
 
   .brand-explorer-accordion.is-active .brand-explorer-blade::after {
-    transform: rotate(180deg);
+    transform: translateY(-50%) rotate(270deg);
   }
 
   .brand-explorer-links {

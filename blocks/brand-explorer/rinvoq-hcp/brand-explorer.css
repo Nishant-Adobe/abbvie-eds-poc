@@ -1,6 +1,8 @@
 @import '../brand-explorer.css';
 
-/* Rinvoq HCP — brand-explorer black background */
+/* Rinvoq HCP — brand-explorer overrides (matching rinvoqhcp.com) */
+
+/* Bar background: black (not charcoal) */
 .brand-explorer-section {
   background: var(--color-black, #000);
 }
@@ -11,4 +13,40 @@
 
 .brand-explorer-bar {
   background: var(--color-black, #000);
+}
+
+/* Browse button: Graphik Medium, weight 500, 0.9rem */
+.brand-explorer .brand-explorer-browse {
+  font-family: var(--font-family-medium, 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif);
+  font-weight: var(--font-weight-500, 500);
+  font-size: var(--be-font-size-bar, 0.9rem);
+  padding: var(--spacing-12, 1.2rem) 0;
+}
+
+/* Browse icon: matching live site — grey circle, thin lines */
+.brand-explorer-browse-icon {
+  width: var(--spacing-20, 2rem);
+  height: var(--spacing-20, 2rem);
+  border: var(--border-width-1, 0.1rem) solid var(--color-border-icon, #e6e8ec);
+}
+
+.brand-explorer-browse-icon::before,
+.brand-explorer-browse-icon::after {
+  background: var(--color-border-icon, #e6e8ec);
+}
+
+.brand-explorer-browse-icon::before {
+  width: var(--spacing-10, 1rem);
+  height: var(--border-width-1, 0.1rem);
+}
+
+.brand-explorer-browse-icon::after {
+  width: var(--border-width-1, 0.1rem);
+  height: var(--spacing-10, 1rem);
+}
+
+/* Bar utility links: matching live font */
+.brand-explorer-right a:any-link {
+  font-family: var(--font-family-medium, 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif);
+  font-weight: var(--font-weight-500, 500);
 }
