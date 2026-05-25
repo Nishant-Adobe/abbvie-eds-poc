@@ -1,6 +1,14 @@
 /* brand-explorer — multi-brand navigator v3.0 */
 @import '../../styles/tokens.css';
 
+@font-face {
+  font-family: abbv-iconFont;
+  src: url('/fonts/abbv-iconFont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
 .brand-explorer-section {
   position: relative;
   width: 100%;
@@ -129,31 +137,21 @@
 }
 
 .brand-explorer-browse-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--be-color-bar-text);
-  border-radius: 50%;
-  position: relative;
-}
-
-.brand-explorer-browse-icon::before,
-.brand-explorer-browse-icon::after {
-  content: '';
-  position: absolute;
-  background: var(--be-color-bar-text);
+  font-family: abbv-iconFont, sans-serif;
+  font-size: 1.3rem;
+  color: var(--color-border-icon, #e6e8ec);
+  line-height: 1;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
 }
 
 .brand-explorer-browse-icon::before {
-  width: 10px;
-  height: 2px;
+  content: '\e147';
 }
 
 .brand-explorer-browse-icon::after {
-  width: 2px;
-  height: 10px;
+  display: none;
 }
 
 .brand-explorer.is-open .brand-explorer-browse {
@@ -190,33 +188,21 @@
 }
 
 .brand-explorer-close-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border: 2px solid var(--be-color-text);
-  border-radius: 50%;
-  position: relative;
-}
-
-.brand-explorer-close-icon::before,
-.brand-explorer-close-icon::after {
-  content: '';
-  position: absolute;
-  background: var(--be-color-text);
+  font-family: abbv-iconFont, sans-serif;
+  font-size: 1.3rem;
+  color: var(--be-color-text);
+  line-height: 1;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
 }
 
 .brand-explorer-close-icon::before {
-  width: 14px;
-  height: 2px;
-  transform: rotate(45deg);
+  content: '\e5c9';
 }
 
 .brand-explorer-close-icon::after {
-  width: 14px;
-  height: 2px;
-  transform: rotate(-45deg);
+  display: none;
 }
 
 /* ── content panel ───────────────────────────────────────────── */
@@ -471,16 +457,18 @@
   }
 
   .brand-explorer-blade::after {
-    content: '\2304';
+    content: '\e313';
+    font-family: abbv-iconFont, sans-serif;
     position: absolute;
     top: 50%;
     right: 10px;
-    font-size: 28px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
     color: var(--be-color-text);
     transform: translateY(-50%);
     transition: transform 0.3s ease;
-    line-height: 1;
+    -webkit-font-smoothing: antialiased;
   }
 
   .brand-explorer-accordion.is-active .brand-explorer-blade::after {
