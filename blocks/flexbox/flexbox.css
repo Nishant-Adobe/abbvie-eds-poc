@@ -25,8 +25,12 @@
 
 /* Desktop: enable flex row */
 @media (width >= 744px) {
-  .flexbox {
+  .flexbox:not(.column):not(.column-reverse) {
     flex-direction: row;
+  }
+
+  .flexbox.row-reverse {
+    flex-direction: row-reverse;
   }
 
   .flexbox .flexbox-item {
@@ -38,12 +42,10 @@
   .flexbox .flexbox-item[data-width="half"] { flex: 0 0 calc(50% - var(--flexbox-gap, var(--spacing-16, 16px)) / 2); }
   .flexbox .flexbox-item[data-width="third"] { flex: 0 0 calc(33.333% - var(--flexbox-gap, var(--spacing-16, 16px)) * 2 / 3); }
   .flexbox .flexbox-item[data-width="quarter"] { flex: 0 0 calc(25% - var(--flexbox-gap, var(--spacing-16, 16px)) * 3 / 4); }
-
 }
 
-/* Direction variants — class values applied directly by EDS */
+/* Direction variants */
 .flexbox.column { flex-direction: column; }
-.flexbox.row-reverse { flex-direction: row-reverse; }
 .flexbox.column-reverse { flex-direction: column-reverse; }
 
 /* Justify-content variants */
