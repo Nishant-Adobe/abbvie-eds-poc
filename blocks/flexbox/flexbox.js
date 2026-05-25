@@ -31,7 +31,7 @@ export default async function decorate(block) {
       if (cells[1]) cells[1].hidden = true;
       if (cells[3]) cells[3].hidden = true;
 
-      if (['full', 'half', 'third', 'quarter'].includes(widthValue)) {
+      if (['full', 'sixty', 'half', 'third', 'thirty', 'quarter'].includes(widthValue)) {
         row.dataset.width = widthValue;
       }
     });
