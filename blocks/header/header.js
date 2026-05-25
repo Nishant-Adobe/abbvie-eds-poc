@@ -861,9 +861,10 @@ function buildCtaGroup(headerEl) {
   const lastPara = ctaParas[ctaParas.length - 1];
   // If the last para is text-only (no anchor), it's an explicit CTA label
   const ctaLabel = !lastPara?.querySelector('a') ? lastPara?.textContent.trim() : null;
-  // content_ctaPrimaryLink is an aem-content field — renders in the second block row, not the first cell
+  // content_ctaPrimaryLink is an aem-content field — renders as a later block row (after any empty
+  // aem-content rows from template defaults like megamenu_link). Use a non-empty href to skip those.
   const primaryLinkEl = linkParas[0]?.querySelector('a')
-    || ctaBlock.querySelector(':scope > div:nth-child(2) a');
+    || ctaBlock.querySelector(':scope > div:not(:first-child) a[href]:not([href=""])');
 
   if (ctaLabel && primaryLinkEl) {
     // Separate label para exists — build clean anchor (avoids href-as-text EDS default)
