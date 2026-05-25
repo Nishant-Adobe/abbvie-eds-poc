@@ -4,15 +4,15 @@
 /* Skyrizi HCP accordion — matches skyrizihcp.com */
 
 .accordion {
-  --accordion-color-bg: var(--color-background);
-  --accordion-color-text: var(--color-text);
+  --accordion-color-bg: var(--background-color);
+  --accordion-color-text: var(--text-color);
   --accordion-color-border: var(--color-brand-primary);
   --accordion-color-heading: var(--color-brand-primary);
-  --accordion-color-icon: var(--color-text);
-  --accordion-font-family: var(--font-family-body);
+  --accordion-color-icon: var(--text-color);
+  --accordion-font-family: var(--body-font-family);
   --accordion-font-size-heading: var(--body-font-size-m);
-  --accordion-font-weight-heading: var(--font-weight-bold);
-  --accordion-border-width: var(--border-02);
+  --accordion-font-weight-heading: var(--font-weight-heading);
+  --accordion-border-width: 2px;
   --accordion-padding-item: var(--spacing-16) var(--spacing-40) var(--spacing-24) 0;
   --accordion-icon-size: var(--icon-size);
 
@@ -37,7 +37,7 @@
   font-weight: var(--accordion-font-weight-heading);
   font-size: var(--accordion-font-size-heading);
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-wide);
+  letter-spacing: var(--tracking-wide-md);
 }
 
 /* Summary layout — flex row, text left / icon right, vertically centered */
@@ -84,7 +84,7 @@
 
 /* Focus */
 .accordion summary:focus-visible {
-  background: var(--color-background-subtle);
+  background: var(--color-background-tint);
   outline: none;
 }
 
@@ -106,7 +106,7 @@
 
 .accordion .accordion-expand-all:focus {
   border: var(--accordion-border-width) solid var(--accordion-color-heading);
-  border-radius: var(--border-radius-s);
+  border-radius: var(--border-radius-base);
   outline: none;
 }
 
@@ -138,7 +138,7 @@
   text-align: left;
   white-space: normal;
   border: none;
-  border-bottom: var(--border-01) solid var(--color-border-default);
+  border-bottom: 1px solid var(--color-border-default);
   border-radius: 0;
   padding: var(--spacing-16) var(--spacing-08);
   margin: var(--spacing-00);
@@ -181,7 +181,7 @@
 
 /* Lighter separator for second-level items */
 .accordion .accordion-item-body .accordion .accordion-item {
-  border-bottom: var(--border-01) solid var(--color-border-muted);
+  border-bottom: 1px solid var(--color-border-muted);
 }
 
 /* Compact padding, top-align text and icon */
