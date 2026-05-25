@@ -84,7 +84,6 @@
 .brand-explorer-right {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: var(--spacing-12, 1.2rem) var(--spacing-24, 2.4rem);
 }
 
@@ -459,21 +458,31 @@
   .brand-explorer-bar {
     flex-direction: column;
     align-items: stretch;
+    height: 112px;
     padding: 0 15px;
   }
 
   .brand-explorer-left {
     width: 100%;
     justify-content: space-between;
-    padding: 12px 0;
+    height: 40px;
+    padding: 10px 0 0;
+    border-bottom: 1px solid rgb(255 255 255 / 20%);
   }
 
   .brand-explorer-right {
     width: 100%;
     justify-content: space-between;
-    gap: 8px 20px;
+    gap: 0;
     padding: 12px 0;
-    border-top: 1px solid rgb(255 255 255 / 20%);
+  }
+
+  .brand-explorer-right a:any-link {
+    max-width: 100px;
+    padding: 12px 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: var(--font-weight-700, 700);
   }
 
   .brand-explorer-accordions {
