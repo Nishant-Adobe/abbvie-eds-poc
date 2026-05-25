@@ -50,9 +50,11 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 max(var(--spacing-24, 2.4rem), calc((100% - var(--header-wrapper-max-width, 122rem)) / 2 + var(--spacing-24, 2.4rem)));
+  height: 60px;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 15px;
   color: var(--be-color-bar-text);
-  background: var(--be-color-bar-bg);
   box-sizing: border-box;
   position: relative;
   z-index: 2;
@@ -62,7 +64,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 0;
   flex-shrink: 0;
 }
 
@@ -71,7 +72,6 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px 24px;
-  padding: 10px 0;
 }
 
 .brand-explorer-bar a:any-link {
@@ -216,7 +216,9 @@
 /* ── content panel ───────────────────────────────────────────── */
 .brand-explorer-content {
   width: 100%;
-  padding: 0 var(--spacing-24, 2.4rem);
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 15px;
   background: var(--background-color, var(--color-white));
   color: var(--be-color-text);
   position: relative;
@@ -229,7 +231,7 @@
 
 .brand-explorer.is-open .brand-explorer-content {
   max-height: 100dvh;
-  padding: var(--spacing-30, 3rem) var(--spacing-24, 2.4rem) var(--spacing-20, 2rem);
+  padding: 30px 15px 20px;
   overflow-y: auto;
   pointer-events: auto;
 }
@@ -306,7 +308,7 @@
 
 /* ── indication links ────────────────────────────────────────── */
 .brand-explorer-links {
-  padding-top: 12px;
+  padding-top: 20px;
   display: block;
 }
 
