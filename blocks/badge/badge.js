@@ -1,153 +1,110 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
-// Platform-managed user profile badges endpoint
-const PROFILE_API = '/api/user/badges';
-
-function cellText(row) {
-  return row?.children?.[0]?.textContent?.trim() || '';
-}
-
-function cellHref(row) {
-  const a = row?.querySelector('a');
-  return a ? (a.getAttribute('href') || a.href) : cellText(row);
-}
-
-function cellNumber(row) {
-  const n = parseInt(cellText(row), 10);
-  return Number.isNaN(n) ? null : n;
-}
-
 function readConfig(block) {
-  const rows = [...block.children];
+  const cells = [...block.querySelectorAll(':scope > div > div')];
+  const get = (i) => cells[i]?.textContent.trim() || '';
   return {
-    sectionTitle: cellText(rows[0]),
-    seeAllLabel: cellText(rows[1]),
-    seeAllHref: cellHref(rows[2]),
-    certificateStatusLabel: cellText(rows[3]),
-    maxBadges: cellNumber(rows[4]),
-    pdfDownloadLabel: cellText(rows[5]),
+    sectionName: get(0),
+    seeAllButtonText: get(1),
+    seeAllUrl: get(2),
+    statusLabel: get(3) || 'Status:',
+    pdfLabel: get(4) || 'PDF',
+    apiEndpoint: get(5),
+    dashboardMode: get(6) === 'true',
+    maxBadges: parseInt(get(7), 10) || 6,
   };
 }
 
-function buildStatusIcon(status) {
-  const icon = document.createElement('span');
-  const safeStatus = status.replace(/[^a-z0-9]/g, '-');
-  icon.className = `badge-status-icon badge-status-icon-${safeStatus}`;
-  icon.setAttribute('aria-hidden', 'true');
-  return icon;
+function renderCard(badge, config) {
+  const achieved = badge.badgeStatus === 'Completed';
+  const card = document.createElement('div');
+  card.className = 'badge-card';
+  if (!achieved) card.classList.add('badge-card--inprogress');
+
+  const dateText = badge.dateAchieved
+    ? `${badge.badgeStatus} ${badge.courseName} on ${badge.dateAchieved}${badge.expiryDate ? ` · Valid until ${badge.expiryDate}` : ''}`
+    : `Complete ${badge.courseName} to achieve this badge`;
+
+  card.innerHTML = `
+    <div class="badge-card__top">
+      <div class="badge-card__image">
+        <img src="${badge.badgeImgUrl}" alt="${badge.badgeName}">
+      </div>
+      <div class="badge-card__info">
+        <h4 class="badge-card__name">${badge.badgeName}</h4>
+        <p class="badge-card__desc">${dateText}</p>
+      </div>
+    </div>
+    <div class="badge-card__bottom">
+      <div class="badge-card__status">
+        <span class="badge-card__status-label">${config.statusLabel}</span>
+        <span class="badge-card__status-value">${achieved ? 'Achieved' : 'In Progress'}</span>
+      </div>
+      <div class="badge-card__actions${achieved ? '' : ' badge-card__actions--inprogress'}">
+        <a class="badge-card__pdf${achieved ? '' : ' badge-card__pdf--disabled'}"
+           href="${achieved ? badge.s3PdfUrl : '#'}"
+           aria-label="Download certificate PDF"
+           ${achieved ? '' : 'aria-disabled="true" tabindex="-1"'}>
+          ${config.pdfLabel}
+        </a>
+        <span class="badge-card__certificate${achieved ? '' : ' badge-card__certificate--inprogress'}">
+          Certificate
+        </span>
+      </div>
+    </div>`;
+  return card;
 }
 
-function buildBadgeItem(badge, cfg) {
-  const li = document.createElement('li');
-  li.className = 'badge-item';
-  li.setAttribute('role', 'listitem');
-
-  const img = document.createElement('img');
-  img.className = 'badge-item-image';
-  img.src = badge.imageUrl;
-  img.alt = badge.imageAlt || badge.title;
-  img.loading = 'lazy';
-  img.width = 80;
-  img.height = 80;
-
-  const info = document.createElement('div');
-  info.className = 'badge-item-info';
-
-  const title = document.createElement('p');
-  title.className = 'badge-item-title';
-  title.textContent = badge.title;
-
-  const statusWrap = document.createElement('p');
-  statusWrap.className = 'badge-item-status';
-  statusWrap.append(buildStatusIcon(badge.status));
-  const statusText = document.createElement('span');
-  statusText.className = 'badge-item-status-text';
-  statusText.textContent = cfg.certificateStatusLabel
-    ? `${cfg.certificateStatusLabel}: ${badge.status}`
-    : badge.status;
-  statusWrap.append(statusText);
-
-  info.append(title, statusWrap);
-
-  if (badge.certificateUrl && cfg.pdfDownloadLabel) {
-    const pdfLink = document.createElement('a');
-    pdfLink.className = 'badge-item-pdf';
-    pdfLink.href = badge.certificateUrl;
-    pdfLink.textContent = cfg.pdfDownloadLabel;
-    pdfLink.target = '_blank';
-    pdfLink.rel = 'noopener';
-    info.append(pdfLink);
-  }
-
-  li.append(img, info);
-  return li;
-}
-
-function buildGrid(badges, cfg) {
-  const grid = document.createElement('ul');
-  grid.className = 'badge-grid';
-  grid.setAttribute('role', 'list');
-  const limit = cfg.maxBadges || badges.length;
-  badges.slice(0, limit).forEach((badge) => grid.append(buildBadgeItem(badge, cfg)));
-  return grid;
+function renderError(container) {
+  container.innerHTML = '<p class="badge-error">Unable to load badges. Please try again later.</p>';
 }
 
 export async function decorateBlock(block) {
-  const cfg = readConfig(block);
+  const config = readConfig(block);
   block.textContent = '';
+
+  if (!config.apiEndpoint) {
+    block.innerHTML = '<p class="badge-error">No API endpoint configured.</p>';
+    return;
+  }
 
   const header = document.createElement('div');
   header.className = 'badge-header';
-
-  if (cfg.sectionTitle) {
-    const heading = document.createElement('h2');
-    heading.className = 'badge-title';
-    heading.textContent = cfg.sectionTitle;
-    header.append(heading);
+  header.innerHTML = `<h3 class="badge-title">${config.sectionName}</h3>`;
+  if (config.dashboardMode && config.seeAllUrl) {
+    const btn = document.createElement('a');
+    btn.className = 'badge-seeall';
+    btn.href = config.seeAllUrl;
+    btn.textContent = config.seeAllButtonText || 'See All';
+    header.appendChild(btn);
   }
+  block.appendChild(header);
 
-  if (cfg.seeAllLabel && cfg.seeAllHref) {
-    const seeAll = document.createElement('a');
-    seeAll.className = 'badge-see-all';
-    seeAll.href = cfg.seeAllHref;
-    seeAll.textContent = cfg.seeAllLabel;
-    header.append(seeAll);
-  }
+  const grid = document.createElement('div');
+  grid.className = 'badge-grid';
+  grid.innerHTML = '<p class="badge-loading">Loading badges…</p>';
+  block.appendChild(grid);
 
-  block.append(header);
-
-  const loading = document.createElement('div');
-  loading.className = 'badge-loading';
-  loading.setAttribute('aria-live', 'polite');
-  loading.setAttribute('aria-busy', 'true');
-  block.append(loading);
-
-  let badges;
   try {
-    const res = await fetch(PROFILE_API, { credentials: 'include' });
+    const res = await fetch(config.apiEndpoint, { credentials: 'include' });
     if (!res.ok) throw new Error(`API ${res.status}`);
     const data = await res.json();
-    badges = data.badges || [];
+
+    let badges = Array.isArray(data) ? data : data.badges || [];
+    if (config.dashboardMode && config.maxBadges) {
+      badges = badges.slice(0, config.maxBadges);
+    }
+
+    grid.textContent = '';
+    if (!badges.length) {
+      grid.innerHTML = '<p class="badge-empty">No badges found.</p>';
+      return;
+    }
+
+    badges.forEach((badge) => grid.appendChild(renderCard(badge, config)));
   } catch {
-    loading.remove();
-    const msg = document.createElement('p');
-    msg.className = 'badge-error';
-    msg.textContent = 'Unable to load badges at this time.';
-    block.append(msg);
-    return;
+    renderError(grid);
   }
-
-  loading.remove();
-
-  if (!badges.length) {
-    const empty = document.createElement('p');
-    empty.className = 'badge-empty';
-    empty.textContent = 'No badges earned yet.';
-    block.append(empty);
-    return;
-  }
-
-  block.append(buildGrid(badges, cfg));
 }
 
 export default async function decorate(block) {
