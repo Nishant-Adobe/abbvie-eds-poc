@@ -15,11 +15,27 @@ import {
 
 import { shouldRunOutsideAuthorEdit } from './utils.js';
 
+export function getMain() {
+  return document.querySelector('main');
+}
+
+/**
+ * Page-level operation: moves element before <main> so it spans full viewport height.
+ * Intentionally uses document.querySelector — this is a structural page-level hoist,
+ * not a block-scoped query. Blocks call this instead of querying the DOM directly.
+ * @param {Element} element
+ */
+export function hoistBeforeMain(element) {
+  const main = getMain();
+  if (main) main.before(element);
+}
+
 /**
  * Moves all the attributes from a given elmenet to another given element.
  * @param {Element} from the element to copy attributes from
  * @param {Element} to the element to copy attributes to
  */
+
 export function moveAttributes(from, to, attributes) {
   if (!attributes) {
     // eslint-disable-next-line no-param-reassign
@@ -197,7 +213,12 @@ function applySectionBackground(section, idx, allSections) {
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
-  await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  const brand = getMetadata('brand')?.trim();
+  const base = loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  const brandFonts = brand
+    ? loadCSS(`${window.hlx.codeBasePath}/styles/${brand}/fonts.css`).catch(() => {})
+    : Promise.resolve();
+  await Promise.all([base, brandFonts]);
   try {
     if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
   } catch (e) {
@@ -410,7 +431,26 @@ export function decorateMain(main) {
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
+function processLocalMetadata() {
+  const metadataBlock = document.querySelector('main > div.metadata, main div.metadata');
+  if (!metadataBlock) return;
+  [...metadataBlock.children].forEach((row) => {
+    const cells = [...row.children];
+    if (cells.length < 2) return;
+    const key = cells[0]?.textContent?.trim().toLowerCase();
+    const value = cells[1]?.textContent?.trim();
+    if (key && value && !document.head.querySelector(`meta[name="${key}"]`)) {
+      const meta = document.createElement('meta');
+      meta.name = key;
+      meta.content = value;
+      document.head.append(meta);
+    }
+  });
+  metadataBlock.remove();
+}
+
 async function loadEager(doc) {
+  processLocalMetadata();
   document.documentElement.lang = 'en';
   loadCSS(`${window.hlx.codeBasePath}/styles/section.css`);
   decorateTemplateAndTheme();
@@ -473,6 +513,18 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  if (main.querySelector('abbr[title]')) {
+    const brand = getMetadata('brand')?.trim();
+    try {
+      await Promise.all([
+        loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.css`),
+        brand && /^[\w-]+$/.test(brand) ? loadCSS(`${window.hlx.codeBasePath}/blocks/tooltip/${brand}/tooltip.css`).catch(() => {}) : Promise.resolve(),
+      ]);
+      const { wireInlineTooltips } = await import(`${window.hlx.codeBasePath}/blocks/tooltip/tooltip.js`);
+      wireInlineTooltips(main);
+    } catch { /* tooltip loading is non-critical */ }
+  }
 }
 
 /**

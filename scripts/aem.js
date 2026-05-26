@@ -289,22 +289,12 @@ function getMetadata(name, doc = document) {
 }
 
 /**
- * Returns the brand path for block/theme assets (e.g. 'abbvie/'). Used to load compiled block CSS
- * from styles/<brand>/blocks/<blockName>/ (breakpoint tokens resolved to real media queries).
- * @returns {string} Brand path with trailing slash, default 'abbvie/'
+ * Returns the brand path for block assets (e.g. 'abbvie/'). Empty string when no brand is authored.
+ * @returns {string} Brand path with trailing slash, or empty string
  */
 function getBrandPath() {
   const brand = getMetadata('brand')?.trim();
-  if (brand) return `${brand}/`;
-  const path = window.location.pathname.toLowerCase();
-  // Check specific sub-brands before generic ones
-  const knownBrands = ['rinvoq-hcp', 'rinvoq-dtc', 'skyrizi-hcp', 'skyrizi-dtc', 'botox', 'linzess', 'venclexta', 'mavyret'];
-  const pathBrand = knownBrands.find((b) => path.includes(b));
-  if (pathBrand) return `${pathBrand}/`;
-  // Plain 'rinvoq' or 'skyrizi' path → default to HCP variant
-  if (path.includes('rinvoq')) return 'rinvoq-hcp/';
-  if (path.includes('skyrizi')) return 'skyrizi-hcp/';
-  return 'abbvie/';
+  return brand ? `${brand}/` : '';
 }
 
 /**
@@ -606,10 +596,13 @@ async function loadBlock(block) {
     const { blockName } = block.dataset;
     const brandPath = getBrandPath();
     const baseCss = `${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`;
-    const brandCss = `${window.hlx.codeBasePath}/styles/${brandPath}blocks/${blockName}/${blockName}.css`;
     try {
-      // Load brand-compiled CSS first, fall back to base if brand css not found
-      const cssLoaded = loadCSS(brandCss).catch(() => loadCSS(baseCss));
+      const cssLoaded = brandPath
+        ? Promise.all([
+          loadCSS(baseCss),
+          loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${brandPath}${blockName}.css`).catch(() => {}),
+        ])
+        : loadCSS(baseCss);
       const decorationComplete = new Promise((resolve) => {
         (async () => {
           try {

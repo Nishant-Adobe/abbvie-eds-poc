@@ -27,6 +27,7 @@ function getIconImage(row) {
  * 10: collapseIconImage
  * 11: ariaExpandAllLabel
  * 12: ariaCollapseAllLabel
+ * 13: analyticsId (optional)
  */
 function gteConfigIcons(block) {
   const headingText = block.children[0].textContent.trim();
@@ -42,10 +43,11 @@ function gteConfigIcons(block) {
   const collapseIconImage = getIconImage(block.children[10]);
   const ariaExpandAllLabel = block.children[11].textContent.trim();
   const ariaCollapseAllLabel = block.children[12].textContent.trim();
+  const analyticsId = block.children[13]?.textContent.trim() || '';
 
   // clean config rows
   [...block.children].forEach((child, index) => {
-    if (index <= 12) {
+    if (index <= 13) {
       child.remove();
     }
   });
@@ -64,6 +66,7 @@ function gteConfigIcons(block) {
     collapseIconImage,
     ariaExpandAllLabel,
     ariaCollapseAllLabel,
+    analyticsId,
   };
 }
 
@@ -128,7 +131,8 @@ function addExpandCollapseAllButton(block, cfg) {
 }
 
 function closeAllExceptCurrent(block) {
-  if (!block.classList.contains('allowmultipleopen')) {
+  const multiOpen = block.classList.contains('allowmultipleopen') || block.classList.contains('accordion-multi');
+  if (!multiOpen) {
     const details = block.querySelectorAll('details.accordion-item');
     details.forEach((detail) => {
       detail.addEventListener('toggle', () => {
@@ -146,6 +150,10 @@ export default function decorate(block) {
   applyCommonProps(block);
   const cfg = gteConfigIcons(block);
 
+  if (cfg.analyticsId) {
+    block.setAttribute('data-analytics-id', cfg.analyticsId);
+  }
+
   [...block.children].forEach((row) => {
     // decorate accordion item label
     if (!row.children[0] || !row.children[1]) return;
@@ -162,14 +170,80 @@ export default function decorate(block) {
     if (body.firstElementChild) {
       body.firstElementChild.classList.add('accordion-item-body-text');
     }
-    const ariaExpandLabel = row.children[3].textContent.trim() || '';
-    const ariaCollapseLabel = row.children[4].textContent.trim() || '';
+
+    // Fragment path detection: UE always has fragmentPath at children[2] (may be empty).
+    // Detect UE-authored rows by data-aue-type attribute presence.
+    const isUEAuthored = row.hasAttribute('data-aue-type');
+    const col2Text = row.children[2]?.textContent.trim() || '';
+    const isFragmentPath = /^\/(?!\/)/.test(col2Text);
+    const offset = (isUEAuthored || isFragmentPath) ? 1 : 0;
+    const fragmentPath = isFragmentPath ? col2Text : '';
+
+    if (isFragmentPath) {
+      body.dataset.fragmentPath = fragmentPath;
+      // Preserve original content as fallback
+      const fallbackNodes = [...body.childNodes].map((n) => n.cloneNode(true));
+      body.textContent = '';
+      body.classList.add('accordion-fragment-loading');
+      fetch(`${fragmentPath}.plain.html`)
+        .then((resp) => (resp.ok ? resp.text() : ''))
+        .then((html) => {
+          if (html) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            doc.querySelectorAll('script, style, iframe, object, embed, base, link').forEach((el) => el.remove());
+            // eslint-disable-next-line no-script-url
+            const dangerousSchemes = ['javascript:', 'data:', 'vbscript:'];
+            const urlAttrs = ['href', 'action', 'formaction', 'src', 'xlink:href', 'srcset', 'poster'];
+            doc.querySelectorAll('*').forEach((el) => {
+              [...el.attributes].forEach((attr) => {
+                const val = attr.value.trim().toLowerCase();
+                const isEventHandler = attr.name.startsWith('on');
+                const isUnsafeUrl = urlAttrs.includes(attr.name)
+                  && dangerousSchemes.some((scheme) => val.startsWith(scheme));
+                const isInlineStyle = attr.name === 'style';
+                if (isEventHandler || isUnsafeUrl || isInlineStyle) {
+                  el.removeAttribute(attr.name);
+                }
+              });
+            });
+            body.textContent = '';
+            body.classList.remove('accordion-fragment-loading');
+            const fragmentContent = document.createElement('div');
+            fragmentContent.className = 'accordion-item-body-text';
+            fragmentContent.append(...doc.body.childNodes);
+            body.append(fragmentContent);
+          } else {
+            // Restore original content on empty response
+            body.textContent = '';
+            body.classList.remove('accordion-fragment-loading');
+            body.append(...fallbackNodes);
+          }
+        })
+        .catch(() => {
+          // Restore original content on network error
+          body.textContent = '';
+          body.classList.remove('accordion-fragment-loading');
+          body.append(...fallbackNodes);
+        });
+    }
+
+    const ariaExpandLabel = row.children[3 + offset]?.textContent.trim() || '';
+    const ariaCollapseLabel = row.children[4 + offset]?.textContent.trim() || '';
+    const anchorId = row.children[5 + offset]?.textContent.trim() || '';
+    const itemImage = row.children[6 + offset]?.querySelector('picture') || null;
+    const imageAlt = row.children[7 + offset]?.textContent.trim() || '';
+
+    if (itemImage && imageAlt) {
+      itemImage.querySelector('img')?.setAttribute('alt', imageAlt);
+    }
 
     // decorate accordion item
     const details = document.createElement('details');
     moveInstrumentation(row, details);
     // Use the third column for additional classes on the details element
-    details.className = `${row.children[2].textContent.trim().replaceAll(',', '')}`;
+    details.className = `${row.children[2 + offset]?.textContent.trim().replaceAll(',', '') || ''}`;
+    if (anchorId) details.setAttribute('id', anchorId);
     if (details.classList.contains('defaultopen')) {
       summary.classList.add(cfg.collapseIcon);
       details.setAttribute('open', '');
@@ -197,6 +271,7 @@ export default function decorate(block) {
       summary.classList.toggle(cfg.expandIcon, !details.open);
     });
 
+    if (itemImage) body.appendChild(itemImage);
     details.append(summary, body);
     row.replaceWith(details);
   });
@@ -205,7 +280,8 @@ export default function decorate(block) {
   decorateHeading(block, cfg.headingText);
 
   // Add Expand All / Collapse All button
-  if (block.classList.contains('showexpandcollapseall')) {
+  const showExpandAll = block.classList.contains('showexpandcollapseall') || block.classList.contains('accordion-expand-all');
+  if (showExpandAll) {
     addExpandCollapseAllButton(block, cfg);
   }
 

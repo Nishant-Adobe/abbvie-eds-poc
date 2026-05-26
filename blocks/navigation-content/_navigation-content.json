@@ -10,18 +10,8 @@
             "template": {
               "name": "Navigation Content",
               "model": "navigation-content",
-              "content_searchIcon": ":icon-search:",
-              "megamenutitle": "",
-              "megamenudescription": "",
-              "megamenu_link": "",
-              "megamenu_linktText": "",
-              "megamenudashboardlinks": "",
-              "megamenucardtitle": "",
-              "megamenucardcontent": "",
-              "megamenucard_link": "",
-              "megamenucard_linkText": "",
-              "megamenudashboardcard": "",
-              "dashboardcardType": "light",
+
+
               "language": "lang:none",
               "blockId": "id:"
             }
@@ -61,6 +51,22 @@
             {
               "name": "Search",
               "value": "search"
+            },
+            {
+              "name": "Utility Nav",
+              "value": "utility-nav"
+            },
+            {
+              "name": "Eyebrow Bar",
+              "value": "eyebrow"
+            },
+            {
+              "name": "Floating ISI (HCP compliance)",
+              "value": "floating-isi"
+            },
+            {
+              "name": "CTA Group (Register / Sign In)",
+              "value": "cta-group"
             }
           ]
         },
@@ -129,6 +135,39 @@
           }
         },
         {
+          "component": "reference",
+          "valueType": "string",
+          "name": "content_indicationImg",
+          "label": "Site Indication Logo (optional — shown alongside main logo)",
+          "multi": false,
+          "condition": {
+            "in": [
+              {
+                "var": "classes"
+              },
+              [
+                "logo"
+              ]
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "content_indicationImgTitle",
+          "label": "Site Indication Logo Alt Text",
+          "value": "",
+          "condition": {
+            "in": [
+              {
+                "var": "classes"
+              },
+              [
+                "logo"
+              ]
+            ]
+          }
+        },
+        {
           "component": "richtext",
           "name": "content_languageLinksItems",
           "label": "Language/Links Item",
@@ -147,7 +186,6 @@
           "component": "text",
           "name": "content_searchIcon",
           "label": "Search Icon",
-          "value": ":icon-search:",
           "condition": {
             "in": [
               {
@@ -237,7 +275,7 @@
         {
           "component": "richtext",
           "name": "megamenudashboardlinks",
-          "label": "Mega Menu Deshboard Links",
+          "label": "Mega Menu Dashboard Links",
           "condition": {
             "in": [
               {
@@ -351,7 +389,125 @@
           ]
         },
         {
-           "...": "../../models/_common-properties.json#/common-prop"
+          "component": "richtext",
+          "name": "content_utilityItems",
+          "label": "Utility Items — one row per item: [type | label | href | options]",
+          "description": "Each row = one item. type: isi-jump | pdf-dropdown | hcp-modal | phone | condition-selector | locale | locate | savings",
+          "condition": {
+            "in": [{ "var": "classes" }, ["utility-nav"]]
+          }
+        },
+        {
+          "component": "select",
+          "name": "content_eyebrowPosition",
+          "label": "Eyebrow Position",
+          "condition": {
+            "in": [{ "var": "classes" }, ["eyebrow"]]
+          },
+          "options": [
+            { "name": "Top", "value": "top" },
+            { "name": "Bottom", "value": "bottom" }
+          ]
+        },
+        {
+          "component": "richtext",
+          "name": "content_eyebrowContent",
+          "label": "Eyebrow message (supports links and inline markup)",
+          "condition": {
+            "in": [{ "var": "classes" }, ["eyebrow"]]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "content_floatingIsiText",
+          "label": "Floating ISI — MLR-approved compliance text",
+          "condition": {
+            "in": [{ "var": "classes" }, ["floating-isi"]]
+          }
+        },
+        {
+          "component": "text",
+          "name": "content_floatingIsiExpandLabel",
+          "label": "Expand button label",
+          "condition": {
+            "in": [{ "var": "classes" }, ["floating-isi"]]
+          }
+        },
+        {
+          "component": "text",
+          "name": "content_floatingIsiCollapseLabel",
+          "label": "Collapse button label",
+          "condition": {
+            "in": [{ "var": "classes" }, ["floating-isi"]]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "content_ctaGuestLinks",
+          "label": "Guest state links (Register / Sign In)",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "content_ctaUserLinks",
+          "label": "Authenticated user links (My Account / Sign Out)",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
+        },
+        {
+          "component": "aem-content",
+          "name": "content_ctaPrimaryLink",
+          "label": "Primary CTA button link",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
+        },
+        {
+          "component": "text",
+          "name": "content_ctaPrimaryLabel",
+          "label": "Primary CTA button text",
+          "condition": {
+            "in": [{ "var": "classes" }, ["cta-group"]]
+          }
+        },
+        {
+          "component": "tab",
+          "label": "Common Properties",
+          "name": "commonProperties"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "blockId",
+          "valueFormat": "regexp",
+          "label": "ID",
+          "description": "Unique identifier for this block",
+          "validation": {
+            "regExp": "^id:\\S*$",
+            "customErrorMsg": "ID must start with 'id:' and contain no spaces"
+          }
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "classes_commonCustomClass",
+          "label": "Custom Class",
+          "description": "Custom CSS class to apply to this block"
+        },
+        {
+          "component": "select",
+          "name": "language",
+          "label": "Language",
+          "options": [
+            { "name": "None", "value": "lang:none" },
+            { "name": "English", "value": "lang:en" },
+            { "name": "Spanish", "value": "lang:es" },
+            { "name": "French", "value": "lang:fr" },
+            { "name": "German", "value": "lang:de" }
+          ]
         }
       ]
     }

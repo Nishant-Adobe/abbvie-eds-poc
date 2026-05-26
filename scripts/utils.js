@@ -139,3 +139,126 @@ export function shouldRunOutsideAuthorEdit() {
 export function shouldRunOutsideAllUESurfaces() {
   return !isUEAuthorSurface();
 }
+
+function addIconClasses(element, classes) {
+  if (!classes) return;
+  const classesToAdd = Array.isArray(classes)
+    ? classes
+    : classes.split(/\s+/).filter(Boolean);
+  classesToAdd.forEach((cls) => element.classList.add(cls));
+}
+
+function wrapIconIfNeeded(element, wrapperClass) {
+  if (!wrapperClass) return element;
+  const wrapperSpan = document.createElement('span');
+  wrapperSpan.className = wrapperClass;
+  wrapperSpan.appendChild(element);
+  return wrapperSpan;
+}
+
+/**
+ * Creates an icon element with the Abbvie icon font or image.
+ * @param {string|HTMLPictureElement} source - The icon source
+ * @param {string} type - 'icon-font', 'image', or 'svg'
+ * @param {Object} options - Optional: additionalClasses, ariaHidden, wrapperClass
+ * @returns {HTMLElement} The icon element (or wrapper if wrapperClass is provided)
+ */
+export function createIcon(source, type, options = {}) {
+  if (!type || !['icon-font', 'image', 'svg'].includes(type)) {
+    throw new Error('createIcon: type must be "icon-font", "image", or "svg"');
+  }
+
+  if (!source) return null;
+
+  const {
+    additionalClasses = '',
+    ariaHidden = true,
+    wrapperClass = '',
+  } = options;
+
+  if (type === 'image') {
+    const iconSpan = document.createElement('span');
+    addIconClasses(iconSpan, additionalClasses);
+
+    let pictureEl;
+    if (source instanceof Element && source.tagName === 'PICTURE') {
+      pictureEl = source.cloneNode(true);
+    } else {
+      pictureEl = document.createElement('picture');
+      const img = document.createElement('img');
+      img.src = source;
+      pictureEl.appendChild(img);
+    }
+
+    const innerImg = pictureEl.querySelector('img');
+    if (innerImg) {
+      innerImg.alt = '';
+      if (ariaHidden) innerImg.setAttribute('aria-hidden', 'true');
+    }
+
+    iconSpan.appendChild(pictureEl);
+    return wrapIconIfNeeded(iconSpan, wrapperClass);
+  }
+
+  if (type === 'svg') {
+    const colonMatch = source.trim().match(/^:([a-z0-9-]+):$/i);
+    const svgName = colonMatch ? colonMatch[1] : source.trim();
+
+    const codeBasePath = window.hlx?.codeBasePath || '';
+
+    const iconSpan = document.createElement('span');
+    addIconClasses(iconSpan, additionalClasses);
+    if (ariaHidden) iconSpan.setAttribute('aria-hidden', 'true');
+
+    const pictureEl = document.createElement('picture');
+    const img = document.createElement('img');
+    img.src = `${codeBasePath}/icons/${svgName}.svg`;
+    img.alt = '';
+    img.loading = 'lazy';
+    pictureEl.appendChild(img);
+    iconSpan.appendChild(pictureEl);
+
+    return wrapIconIfNeeded(iconSpan, wrapperClass);
+  }
+
+  // icon-font: normalize to 'icon-abbvie-*'
+  let normalizedClass = source.trim();
+  const colonMatch = normalizedClass.match(/^:([a-z0-9-]+):$/i);
+  if (colonMatch) {
+    normalizedClass = `icon-abbvie-${colonMatch[1]}`;
+  } else if (normalizedClass.startsWith('icon-abbvie-')) {
+    // already correct
+  } else if (normalizedClass.startsWith('icon-')) {
+    normalizedClass = `icon-abbvie-${normalizedClass.slice('icon-'.length)}`;
+  } else if (!normalizedClass.includes(' ')) {
+    normalizedClass = `icon-abbvie-${normalizedClass}`;
+  }
+
+  const iconSpan = document.createElement('span');
+  iconSpan.className = `${normalizedClass}`;
+  addIconClasses(iconSpan, additionalClasses);
+
+  if (ariaHidden) {
+    iconSpan.setAttribute('aria-hidden', 'true');
+  }
+
+  return wrapIconIfNeeded(iconSpan, wrapperClass);
+}
+
+/**
+ * Extracts an icon source from an authoring cell element.
+ * Returns a cloned <picture> element, href string, or plain text.
+ * @param {Element} cell - The authoring cell to extract from
+ * @returns {HTMLPictureElement|string}
+ */
+export function extractIconSource(cell) {
+  if (!cell) return '';
+
+  const link = cell.querySelector('a[href]');
+  if (link) return link.getAttribute('href');
+
+  const picture = cell.querySelector('picture');
+  if (picture) return picture.cloneNode(true);
+
+  return cell.textContent?.trim() || '';
+}
