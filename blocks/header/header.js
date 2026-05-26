@@ -10,6 +10,11 @@ import { renderBlock } from '../../scripts/multi-theme.js';
 const DESKTOP_BREAKPOINT = '(min-width: 1024px)';
 const SCROLL_THRESHOLD_DEFAULT = 200;
 
+// Field values baked into all navigation-content blocks as template defaults.
+// These must be excluded when parsing typed blocks (utility-nav, cta-group, etc.)
+// so they are never rendered as visible content.
+const TEMPLATE_DEFAULT_TEXTS = new Set(['top', 'bottom', 'See Full ISI', 'Collapse ISI', 'Home']);
+
 // Cached state and selectors
 let lastScrollTop = 0;
 const navigationCache = new Map();
@@ -764,20 +769,21 @@ function buildMenuItem(block, isNavigation = false) {
 function buildEyebrows(headerEl) {
   const result = [];
   headerEl.querySelectorAll('.navigation-content[data-type="eyebrow"]').forEach((eb) => {
-    // All block fields are packed inline as <p> tags inside row 0's inner cell.
-    // Fixed positions (determined by model field order — same in UE and production):
-    //   p[0]      = searchIcon (template default — always first)
-    //   p[1]      = eyebrowPosition ("top"|"bottom" — template default)
-    //   p[2..n-3] = eyebrowContent (authored — one <p> per richtext paragraph)
-    //   p[n-2]    = floatingIsiExpandLabel ("See Full ISI" — template default)
-    //   p[n-1]    = floatingIsiCollapseLabel ("Collapse ISI" — template default)
     const cell = eb.querySelector(':scope > div > div');
     const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
-    const contentParas = paras.length >= 4 ? paras.slice(2, -2) : [];
-    if (!contentParas.length) return;
-
-    const positionText = paras[1]?.textContent.trim().toLowerCase();
+    // Detect position from whichever para holds "top"/"bottom" (eyebrowPosition field).
+    // That para is always present for eyebrow blocks but wiped on UE re-save for other types.
+    const positionText = paras.find((p) => ['top', 'bottom'].includes(p.textContent.trim().toLowerCase()))
+      ?.textContent.trim().toLowerCase();
     const position = positionText === 'bottom' ? 'bottom' : 'top';
+    // Content = all paras that are not known template-default strings.
+    // TEMPLATE_DEFAULT_TEXTS covers "top"/"bottom" (eyebrowPosition), "See Full ISI"/"Collapse ISI"
+    // (floatingIsi labels baked into old JCR), and "Home" (imgTitle default).
+    const contentParas = paras.filter((p) => {
+      const t = p.textContent.trim();
+      return t && !TEMPLATE_DEFAULT_TEXTS.has(t);
+    });
+    if (!contentParas.length) return;
 
     const bar = createElement('div', { className: `nav-eyebrow nav-eyebrow-${position}` });
     contentParas.forEach((p) => bar.appendChild(p.cloneNode(true)));
@@ -796,17 +802,19 @@ function buildFloatingIsi(headerEl) {
   const isiBlock = headerEl.querySelector('.navigation-content[data-type="floating-isi"]');
   if (!isiBlock) return null;
 
-  // Fixed positions in row 0's inner cell (model field order — same in UE and production):
-  //   p[0]      = searchIcon (template default)
-  //   p[1]      = eyebrowPosition ("top" — template default)
-  //   p[2..n-3] = floatingIsiText (authored ISI text)
-  //   p[n-2]    = floatingIsiExpandLabel (authored or default "See Full ISI")
-  //   p[n-1]    = floatingIsiCollapseLabel (authored or default "Collapse ISI")
   const cell = isiBlock.querySelector(':scope > div > div');
   const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
-  const expandLabel = paras.length >= 2 ? paras[paras.length - 2]?.textContent.trim() || 'See Full ISI' : 'See Full ISI';
-  const collapseLabel = paras.length >= 1 ? paras[paras.length - 1]?.textContent.trim() || 'Collapse ISI' : 'Collapse ISI';
-  const isiParas = paras.length >= 4 ? paras.slice(2, -2) : [];
+  // Strip empty paras and "top"/"bottom" (eyebrowPosition baked into old JCR as template default,
+  // wiped on UE re-save for floating-isi blocks). Expand/collapse labels come last in model order
+  // and are preserved by UE (they are visible fields for floating-isi type), so last-2 / last-1
+  // remain the correct positions even after a re-save strips the position sentinel.
+  const meaningful = paras.filter((p) => {
+    const t = p.textContent.trim();
+    return t && !['top', 'bottom'].includes(t);
+  });
+  const expandLabel = meaningful[meaningful.length - 2]?.textContent.trim() || 'See Full ISI';
+  const collapseLabel = meaningful[meaningful.length - 1]?.textContent.trim() || 'Collapse ISI';
+  const isiParas = meaningful.slice(0, -2);
 
   const bar = createElement('div', {
     className: 'nav-floating-isi',
@@ -857,8 +865,9 @@ function buildCtaGroup(headerEl) {
 
   const linkParas = paras.filter((p) => p.querySelector('a'));
   const lastPara = paras[paras.length - 1];
-  // If the last para is text-only (no anchor), it's an explicit CTA label
-  const ctaLabel = !lastPara?.querySelector('a') ? lastPara?.textContent.trim() : null;
+  // If the last para is text-only (no anchor) and not a template default, it's an explicit CTA label
+  const rawLabel = !lastPara?.querySelector('a') ? lastPara?.textContent.trim() : null;
+  const ctaLabel = rawLabel && !TEMPLATE_DEFAULT_TEXTS.has(rawLabel) ? rawLabel : null;
   // content_ctaPrimaryLink is an aem-content field — renders as a later block row (after any empty
   // aem-content rows from template defaults like megamenu_link). Use a non-empty href to skip those.
   const primaryLinkEl = linkParas[0]?.querySelector('a')
@@ -1032,9 +1041,10 @@ export default async function decorate(block) {
         if (child.tagName !== 'P') return; // <ul> nodes are handled by the preceding <p>
         const link = child.querySelector('a');
         if (!link) {
-          // Plain text paragraph — collected into indicationWrapper, appended after utilityUl
+          // Plain text paragraph — collected into indicationWrapper, appended after utilityUl.
+          // Skip empty paras and known template-default strings that bake into all block types.
           const text = child.textContent.trim();
-          if (!text) return;
+          if (!text || TEMPLATE_DEFAULT_TEXTS.has(text)) return;
           const p = document.createElement('p');
           p.textContent = text;
           indicationWrapper.appendChild(p);
