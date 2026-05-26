@@ -83,6 +83,15 @@ function createSlide(row, slideIndex, carouselId) {
     slide.append(column);
   });
 
+  // Mark the first picture in content as overlay image (SVG/decoration)
+  const content = slide.querySelector('.carousel-slide-content');
+  if (content) {
+    const overlayPic = content.querySelector(':scope > picture:first-child');
+    if (overlayPic) {
+      overlayPic.classList.add('carousel-overlay-image');
+    }
+  }
+
   const labeledBy = slide.querySelector('h1, h2, h3, h4, h5, h6');
   if (labeledBy) {
     slide.setAttribute('aria-labelledby', labeledBy.getAttribute('id'));
