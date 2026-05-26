@@ -84,11 +84,16 @@ function createSlide(row, slideIndex, carouselId) {
   });
 
   // Mark the first picture in content as overlay image (SVG/decoration)
+  // Position it after the first heading (H1/H2) for correct visual order
   const content = slide.querySelector('.carousel-slide-content');
   if (content) {
     const overlayPic = content.querySelector(':scope > picture:first-child');
     if (overlayPic) {
       overlayPic.classList.add('carousel-overlay-image');
+      const firstHeading = content.querySelector('h1, h2');
+      if (firstHeading) {
+        firstHeading.after(overlayPic);
+      }
     }
   }
 
