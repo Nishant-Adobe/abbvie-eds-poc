@@ -1002,7 +1002,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
   }
 
   header nav .nav-sections .default-content-wrapper>ul {
-    gap: var(--gap-42) !important;
+    gap: var(--gap-24) !important;
   }
 
   .submenu-level-1>.navigation-group {
@@ -2495,7 +2495,7 @@ header nav .nav-search .search-inner-wrapper > span.icon-search svg {
 
 /* stylelint-disable-next-line selector-class-pattern */
 
-.header nav .nav-search .search-inner-wrapper input[type="search"]::placeholder {
+header nav .nav-search .search-inner-wrapper input[type="search"]::placeholder {
   color: var(--color-white);
 }
 
@@ -2583,6 +2583,7 @@ header nav .nav-tools {
     margin: 0 auto;
     max-width: var(--header-content-max-width);
     padding: var(--header-logo-row-padding-top) 0 var(--spacing-18);
+    position: relative;
     width: calc(100% - var(--spacing-40));
   }
 
@@ -2615,9 +2616,9 @@ header nav .nav-tools {
     background-color: var(--color-background-footer);
     content: '';
     height: var(--header-sections-bg-height);
-    left: 0;
+    left: 50%;
     position: absolute;
-    right: 0;
+    transform: translateX(-50%);
     width: 100vw;
     z-index: 0;
   }
@@ -2625,6 +2626,7 @@ header nav .nav-tools {
   header nav .nav-sections .default-content-wrapper > ul {
     gap: var(--gap-24);
     justify-content: flex-start;
+    padding-right: calc(var(--nav-search-input-min-width) + var(--spacing-35) + var(--spacing-16));
   }
 
   /* Compact nav button sizing + submenu desktop layout */
@@ -2758,12 +2760,14 @@ header nav .nav-tools {
   }
 
   header nav .nav-search {
+    align-items: center;
+    bottom: 0;
     display: flex;
-    grid-area: tools;
+    grid-area: sections;
     padding: 0;
     position: absolute;
-    right: var(--header-search-desktop-right);
-    top: 68%;
+    right: var(--spacing-35);
+    top: 0;
     width: auto;
     z-index: var(--header-search-z-index);
   }
@@ -2785,4 +2789,10 @@ header nav .nav-tools {
   }
 
   header nav .nav-tools { padding: 0; }
+}
+
+@media (width >= 1440px) {
+  header nav .nav-sections .default-content-wrapper > ul {
+    gap: var(--gap-24) !important;
+  }
 }
