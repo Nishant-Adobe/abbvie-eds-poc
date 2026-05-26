@@ -83,17 +83,22 @@ function createSlide(row, slideIndex, carouselId) {
     slide.append(column);
   });
 
-  // Mark the first picture in content as overlay image (SVG/decoration)
-  // Position it after the first heading (H1/H2) for correct visual order
+  // Mark overlay image in content and position after first heading
   const content = slide.querySelector('.carousel-slide-content');
   if (content) {
-    const overlayPic = content.querySelector(':scope > picture:first-child');
-    if (overlayPic) {
+    const firstHeading = content.querySelector('h1, h2');
+    const overlayPic = content.querySelector('picture');
+    if (overlayPic && firstHeading) {
       overlayPic.classList.add('carousel-overlay-image');
-      const firstHeading = content.querySelector('h1, h2');
-      if (firstHeading) {
+      const overlayParent = overlayPic.parentElement;
+      if (overlayParent && overlayParent !== content) {
+        overlayParent.classList.add('carousel-overlay-image');
+        firstHeading.after(overlayParent);
+      } else {
         firstHeading.after(overlayPic);
       }
+    } else if (overlayPic && !firstHeading) {
+      overlayPic.classList.add('carousel-overlay-image');
     }
   }
 
