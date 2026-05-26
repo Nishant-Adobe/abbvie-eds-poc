@@ -851,17 +851,18 @@ function buildCtaGroup(headerEl) {
 
   const cell = ctaBlock.querySelector(':scope > div > div');
   const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
-  // skip 4 template defaults: icon, eyebrowPos, isiExpand, isiCollapse
-  const ctaParas = paras.slice(4);
-  if (!ctaParas.length) return null;
+  if (!paras.length) return null;
 
   const group = createElement('div', { className: 'nav-cta-group' });
 
-  const linkParas = ctaParas.filter((p) => p.querySelector('a'));
-  const lastPara = ctaParas[ctaParas.length - 1];
+  const linkParas = paras.filter((p) => p.querySelector('a'));
+  const lastPara = paras[paras.length - 1];
   // If the last para is text-only (no anchor), it's an explicit CTA label
   const ctaLabel = !lastPara?.querySelector('a') ? lastPara?.textContent.trim() : null;
-  const primaryLinkEl = linkParas[0]?.querySelector('a');
+  // content_ctaPrimaryLink is an aem-content field — renders as a later block row (after any empty
+  // aem-content rows from template defaults like megamenu_link). Use a non-empty href to skip those.
+  const primaryLinkEl = linkParas[0]?.querySelector('a')
+    || ctaBlock.querySelector(':scope > div:not(:first-child) a[href]:not([href=""])');
 
   if (ctaLabel && primaryLinkEl) {
     // Separate label para exists — build clean anchor (avoids href-as-text EDS default)
@@ -942,12 +943,18 @@ function handleScroll() {
     // Cross-block read: hero height drives the scroll-hide threshold.
     const heroBlock = document.querySelector('.hero.block');
     const threshold = heroBlock ? heroBlock.offsetHeight - 100 : SCROLL_THRESHOLD_DEFAULT;
-    if (scrollTop > lastScrollTop && scrollTop > threshold) {
+    const scrollingDown = scrollTop > lastScrollTop;
+    const scrollingUp = scrollTop < lastScrollTop;
+    if (scrollingDown && scrollTop > threshold) {
       header.classList.add('hide-nav');
       header.classList.remove('show-nav');
-    } else {
+      header.classList.remove('sticky-scrollback');
+    } else if (scrollingUp || scrollTop <= threshold) {
       header.classList.add('show-nav');
       header.classList.remove('hide-nav');
+      if (header.classList.contains('has-sticky-scrollback')) {
+        header.classList.toggle('sticky-scrollback', scrollingUp && scrollTop > threshold);
+      }
     }
     lastScrollTop = Math.max(scrollTop, 0);
   });
@@ -983,6 +990,14 @@ export default async function decorate(block) {
   if (!header) return;
   cachedHeaderEl = block.closest('header') || block;
 
+  // Sticky-on-scrollback: permanent feature flag — set via navigation-content block or page model
+  if (
+    header.querySelector('.navigation-content.stickyheadercheckbox')
+    || getMetadata('stickyheadercheckbox') === 'true'
+  ) {
+    cachedHeaderEl.classList.add('has-sticky-scrollback');
+  }
+
   // Block-level layout variants
   const isLite = block.classList.contains('lite');
   const isSticky = block.classList.contains('sticky');
@@ -1010,9 +1025,8 @@ export default async function decorate(block) {
       //   child[n-2]     = floatingIsiExpandLabel <p> (template default)
       //   child[n-1]     = floatingIsiCollapseLabel <p> (template default)
       const cell = utilBlock.querySelector(':scope > div > div');
-      const children = [...(cell?.children || [])];
-      // skip icon (first); skip 3 trailing template defaults
-      const authoredChildren = children.slice(1, -3);
+
+      const authoredChildren = [...(cell?.children || [])];
 
       authoredChildren.forEach((child, idx) => {
         if (child.tagName !== 'P') return; // <ul> nodes are handled by the preceding <p>
