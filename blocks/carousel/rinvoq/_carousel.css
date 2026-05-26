@@ -142,11 +142,38 @@
   border-color: var(--carousel-dot-active-border, #fff);
 }
 
+/* Overlay image (brushstroke SVG) — inline with text */
+.carousel.carousel .carousel-slide-content .carousel-overlay-image {
+  max-width: var(--carousel-overlay-max-width, 280px);
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 8px 0 0;
+}
+
+.carousel.carousel .carousel-slide-content .carousel-overlay-image img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel.carousel .carousel-slide-content h3 {
+  display: inline;
+  vertical-align: middle;
+  font-family: var(--heading-font-family, sans-serif);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: clamp(18px, 3vw, 28px);
+  line-height: 1.2;
+  margin: 0;
+}
+
 /* Desktop */
 @media (width >= 768px) {
   .carousel.carousel .carousel-slide .carousel-slide-content {
     padding: var(--carousel-content-padding, 32px 100px);
     max-width: var(--carousel-content-max-width, 60%);
+  }
+
+  .carousel.carousel .carousel-slide-content .carousel-overlay-image {
+    max-width: var(--carousel-overlay-max-width, 380px);
   }
 
   .carousel.carousel .carousel-navigation-buttons {
