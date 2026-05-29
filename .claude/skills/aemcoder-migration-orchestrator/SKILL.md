@@ -177,8 +177,8 @@ Pages already migrated (treat as reference for remaining pages):
   section variants, page-specific custom-class patterns
 
 Pages remaining in current batch:
+- /dermatology/access (access & savings programs)
 - /dermatology/dosing-lab-monitoring (clinical tables, references)
-- /atopic-dermatitis (Dermatology Access — landing page variant)
 - /atopic-dermatitis/real-patients (Brightcove video, story-cards)
 - /atopic-dermatitis/efficacy/rinvoq-vs-dupixent/level-up (charts, comparisons)
 
