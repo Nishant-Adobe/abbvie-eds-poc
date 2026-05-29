@@ -10,7 +10,7 @@ export default async function decorate(block) {
 
   if (isUE) {
     // UE mode: decorate in-place to preserve instrumentation
-    rows.forEach((row) => {
+    rows.filter((row) => row.children.length > 0).forEach((row) => {
       row.classList.add('flexbox-item');
       const cells = [...row.children];
       // Field order: image(0) | imageAlt(1) | content(2) | itemClasses(3)
@@ -31,13 +31,13 @@ export default async function decorate(block) {
       if (cells[1]) cells[1].hidden = true;
       if (cells[3]) cells[3].hidden = true;
 
-      if (['full', 'half', 'third', 'quarter'].includes(widthValue)) {
+      if (['full', 'sixty', 'half', 'third', 'thirty', 'quarter'].includes(widthValue)) {
         row.dataset.width = widthValue;
       }
     });
   } else {
-    // Document authoring: rebuild DOM for clean markup
-    const items = rows.map((row) => {
+    // Document authoring: rebuild DOM for clean markup, skip empty config rows
+    const items = rows.filter((row) => row.textContent.trim() || row.querySelector('picture')).map((row) => {
       const cells = [...row.children];
       const item = document.createElement('div');
       item.className = 'flexbox-item';

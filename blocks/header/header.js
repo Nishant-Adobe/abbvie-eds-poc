@@ -851,17 +851,18 @@ function buildCtaGroup(headerEl) {
 
   const cell = ctaBlock.querySelector(':scope > div > div');
   const paras = [...(cell?.querySelectorAll(':scope > p') || [])];
-  // skip 4 template defaults: icon, eyebrowPos, isiExpand, isiCollapse
-  const ctaParas = paras.slice(4);
-  if (!ctaParas.length) return null;
+  if (!paras.length) return null;
 
   const group = createElement('div', { className: 'nav-cta-group' });
 
-  const linkParas = ctaParas.filter((p) => p.querySelector('a'));
-  const lastPara = ctaParas[ctaParas.length - 1];
+  const linkParas = paras.filter((p) => p.querySelector('a'));
+  const lastPara = paras[paras.length - 1];
   // If the last para is text-only (no anchor), it's an explicit CTA label
   const ctaLabel = !lastPara?.querySelector('a') ? lastPara?.textContent.trim() : null;
-  const primaryLinkEl = linkParas[0]?.querySelector('a');
+  // content_ctaPrimaryLink — renders as a later block row (after any empty
+  // aem-content rows from template defaults). Use non-empty href to skip.
+  const primaryLinkEl = linkParas[0]?.querySelector('a')
+    || ctaBlock.querySelector(':scope > div:not(:first-child) a[href]:not([href=""])');
 
   if (ctaLabel && primaryLinkEl) {
     // Separate label para exists — build clean anchor (avoids href-as-text EDS default)
