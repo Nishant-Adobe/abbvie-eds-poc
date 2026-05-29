@@ -47,7 +47,7 @@
   - "remove theme bright"
   - "customize theme colors"
 
-### AbbVie Block Reference
+### AbbVie Block Reference (brand × block matrix)
 **Skill:** `abbvie-block-library`
 
 **Trigger Patterns:**
@@ -58,6 +58,19 @@
   - "show me the accordion variations"
   - "what DOM selectors map to the hero block?"
   - "list all card variations across brands"
+
+### AbbVie Block xwalk Model Reference (per-block field details)
+**Skill:** `abbvie-block-analysis`
+
+**Trigger Patterns:**
+- User says: "block model", "row mapping", "plain.html structure", "{block-name} fields", "applyCommonProps", "md2jcr error", "block fields reference"
+- Combined with: any block name (hero, cards-grid, accordion, safety-bar, etc.), questions about row count, plain.html row structure, field types
+- Examples:
+  - "what fields does the hero block have?"
+  - "row mapping for cards-grid"
+  - "md2jcr error on brand-explorer"
+  - "how many rows in the accordion block table?"
+  - "applyCommonProps startIndex for text-container"
 
 ### AbbVie ISI Migration
 **Skill:** `abbvie-isi-migration`
@@ -139,6 +152,7 @@
 | "Create/modify block", "block override", "brand block CSS" | `building-brand-blocks` | Block development with multi-brand/theme CSS cascade |
 | "Add/create/remove theme", "theme tokens", "dark/bright theme" | `building-themes` | Theme lifecycle: scaffold, tokens, styles, cross-brand themes |
 | "Which blocks", "block types", "DOM selectors", "variations" | `abbvie-block-library` | 22 block types, 47 variations, AEM-to-EDS selector mapping |
+| **"Block model", "row mapping", "plain.html structure", "{block} fields"** | **`abbvie-block-analysis`** | **Per-block xwalk model details: Row Mapping, applyCommonProps, field tables, variants. Top 20 deep + 48 pointers** |
 | "ISI", "safety bar", "safety information", "black box" | `abbvie-isi-migration` | 3-layer ISI architecture, brand-specific safety patterns |
 | "Design tokens", "brand colors", "typography", "button style" | `abbvie-design-tokens` | Color, font, spacing tokens across 6 brands |
 | "Migrate page", "import page", "convert to EDS" | `abbvie-page-migration` | End-to-end AEM Platform C to EDS page migration |
