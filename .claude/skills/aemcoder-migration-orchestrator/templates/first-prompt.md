@@ -156,6 +156,28 @@ approved. Today's scope is page {{N}}: {{TARGET_URL}}.
 6. Before publishing, validate: parent row count = non-tab non-classes_*
    field count; item cell count = non-tab non-classes_* item-field count.
 
+### J. Analytics & tracking attribute preservation
+1. **Preserve verbatim** any of these attributes from live source DOM:
+   - `data-cmp-data-layer` (Adobe Experience Cloud data layer payloads)
+   - `data-track-*` (e.g. `data-track-pageload`, `data-track-link`,
+     `data-track-cta`) — used by AbbVie marketing analytics
+   - `data-analytics-*` (generic analytics tagging)
+   - `data-gtm-*` (Google Tag Manager hooks)
+   - `data-cmp-*` (Adobe Component data attributes beyond data-layer)
+2. **Where they live:** in the block's authored content (`.plain.html` row
+   values can include attributes when inline HTML is used) OR added at the
+   block-decoration JS layer (brand `block-config.js`, not base).
+3. **Do NOT silently drop** these attributes when migrating. They are
+   invisible to pixel diff but business-critical — marketing teams
+   instrument conversion funnels, A/B tests, and attribution against them.
+4. **Validation:** for any migrated section, grep the rendered DOM for
+   `data-cmp-`, `data-track-`, `data-analytics-`, `data-gtm-` and compare
+   counts vs live source. Counts must match. Any missing attribute is a
+   defect (silent but high-impact).
+5. **JSON payloads in `data-cmp-data-layer`** must be byte-for-byte
+   identical — even whitespace and key ordering can break downstream
+   parsers. Copy verbatim.
+
 ---
 
 ## 3. Workflow — follow phases in order, do not skip or combine
