@@ -172,9 +172,14 @@ These apply to every regulated content block:
    ADVERSE REACTIONS — all dropped in initial migration.
 5. **"INDICATIONS" subheading missing** — heading text gone, body kept.
 6. **Used `<em>` arbitrarily** — drug names sometimes need italic per
-   FDA convention, but `<em>` semantic ≠ italic visual.
+   FDA convention, but `<em>` semantic ≠ italic visual. **Note:** Only
+   flag this when live source explicitly uses a different element (e.g.
+   live uses `<i>` but migration used `<em>`). If live uses `<em>`,
+   preserve `<em>`. Don't second-guess the source.
 7. **Used `<strong>` for emphasis** when live used `<span class="bold">`
-   or `<b>` — semantic difference matters for assistive tech.
+   or `<b>` — semantic difference matters for assistive tech. **Note:**
+   Only flag when live source explicitly uses a different element. If
+   live uses `<strong>`, preserve `<strong>`.
 8. **`<sup>` reference markers wrapping awkwardly on mobile** —
    superscript markers must stay attached to preceding word; use
    `white-space: nowrap` on the parent inline.
