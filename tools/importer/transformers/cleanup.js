@@ -16,6 +16,13 @@ export default function transform(hookName, element, payload) {
       '[class*="onetrust"]',
       '.abbv-skip-to-main-content',
       '[data-stick-anchor-pos]',
+      'header',
+      'footer',
+      '.abbv-header-v2',
+      '.abbv-footer',
+      '.abbv-safety-bar',
+      '.abbv-safety-bar-fade',
+      '.abbv-search-navigation',
     ];
 
     selectorsToRemove.forEach((selector) => {

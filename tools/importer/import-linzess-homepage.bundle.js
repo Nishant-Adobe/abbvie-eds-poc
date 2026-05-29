@@ -218,7 +218,14 @@ var CustomImportScript = (() => {
         "#onetrust-consent-sdk",
         '[class*="onetrust"]',
         ".abbv-skip-to-main-content",
-        "[data-stick-anchor-pos]"
+        "[data-stick-anchor-pos]",
+        "header",
+        "footer",
+        ".abbv-header-v2",
+        ".abbv-footer",
+        ".abbv-safety-bar",
+        ".abbv-safety-bar-fade",
+        ".abbv-search-navigation"
       ];
       selectorsToRemove.forEach((selector) => {
         document.querySelectorAll(selector).forEach((el) => el.remove());
@@ -238,9 +245,34 @@ var CustomImportScript = (() => {
   function transform2(hookName, element, payload) {
     if (hookName === "afterTransform") {
       const { document } = payload;
+      const main = document.querySelector('[role="main"]') || document.body;
       document.querySelectorAll(".background-dark-purple, .abbv-container.background-dark-purple").forEach((el) => {
         el.setAttribute("data-section-style", "dark");
       });
+      const isiRegion = document.querySelector('[aria-label="Important Safety Information"]');
+      if (isiRegion) {
+        const useSection = isiRegion.querySelector('.abbv-inline-use, [id="abbv_use_statement"] + div');
+        const safetySection = isiRegion.querySelector('.abbv-inline-safety, [id="abbv_safety_information"] + div');
+        const collapsedDiv = document.createElement("div");
+        if (useSection) {
+          collapsedDiv.innerHTML = useSection.innerHTML;
+        }
+        const expandedDiv = document.createElement("div");
+        if (safetySection) {
+          expandedDiv.innerHTML = safetySection.innerHTML;
+        }
+        const safetyCells = [
+          ["Safety Bar"],
+          [collapsedDiv],
+          [""],
+          [expandedDiv]
+        ];
+        const safetyTable = WebImporter.DOMUtils.createTable(safetyCells, document);
+        const hr = document.createElement("hr");
+        main.appendChild(hr);
+        main.appendChild(safetyTable);
+        isiRegion.remove();
+      }
     }
   }
 
