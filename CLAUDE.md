@@ -72,6 +72,19 @@
   - "how many rows in the accordion block table?"
   - "applyCommonProps startIndex for text-container"
 
+### AbbVie Page Templates (composition recipes per page archetype)
+**Skill:** `abbvie-page-templates`
+
+**Trigger Patterns:**
+- User says: "page template", "page recipe", "compose {page-type}", "what blocks for {page-type} page", "homepage recipe", "dosing page structure", "real patients page", "H2H comparison page", "condition landing page"
+- Combined with: starting a new page migration, asking which blocks to use, page archetype questions
+- Examples:
+  - "what's the recipe for a dosing & lab monitoring page?"
+  - "how do I compose the H2H comparison page?"
+  - "show me the canonical homepage section sequence"
+  - "blocks needed for real patients page"
+  - "page template for /access coverage page"
+
 ### AbbVie ISI Migration
 **Skill:** `abbvie-isi-migration`
 
@@ -153,6 +166,7 @@
 | "Add/create/remove theme", "theme tokens", "dark/bright theme" | `building-themes` | Theme lifecycle: scaffold, tokens, styles, cross-brand themes |
 | "Which blocks", "block types", "DOM selectors", "variations" | `abbvie-block-library` | 22 block types, 47 variations, AEM-to-EDS selector mapping |
 | **"Block model", "row mapping", "plain.html structure", "{block} fields"** | **`abbvie-block-analysis`** | **Per-block xwalk model details: Row Mapping, applyCommonProps, field tables, variants. Top 20 deep + 48 pointers** |
+| **"Page template", "page recipe", "compose {page-type}", "what blocks for X page"** | **`abbvie-page-templates`** | **Composition recipes for 5 pharma page archetypes: Homepage, Condition Landing, Dosing & Lab, Real Patients, H2H Comparison** |
 | "ISI", "safety bar", "safety information", "black box" | `abbvie-isi-migration` | 3-layer ISI architecture, brand-specific safety patterns |
 | "Design tokens", "brand colors", "typography", "button style" | `abbvie-design-tokens` | Color, font, spacing tokens across 6 brands |
 | "Migrate page", "import page", "convert to EDS" | `abbvie-page-migration` | End-to-end AEM Platform C to EDS page migration |
