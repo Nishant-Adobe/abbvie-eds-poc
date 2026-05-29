@@ -137,20 +137,23 @@ Most-customized block in the project. Front-and-center on every brand homepage.
 
 ### Row Mapping (`.plain.html`)
 
-11 rows (fields 2–11; field 1 is `classes` multiselect → class attr, fields 12–14 are `classes_*`).
+10 rows (fields 2–11; field 1 `classes` → class attr, fields 12–14 are `classes_*` → class attr).
 
 ```
-Row 1: <div><div>image-reference-or-img-tag</div></div>
-Row 2: <div><div>imageAlt-text</div></div>
-Row 3: <div><div>mobileImage-reference</div></div>
-Row 4: <div><div>mobileImageAlt-text</div></div>
-Row 5: <div><div>eyebrow-text</div></div>
-Row 6: <div><div>indication-richtext</div></div>
-Row 7: <div><div>text-richtext</div></div>
-Row 8: <div><div>layers-richtext</div></div>
-Row 9: <div><div>video-reference</div></div>
-Row 10: <div><div>imageCaption-text</div></div>
+Row 1:  <div><div><picture><img src="..."></picture></div></div>  → image
+Row 2:  <div><div>Alt text here</div></div>                       → imageAlt
+Row 3:  <div><div><picture><img src="..."></picture></div></div>  → mobileImage
+Row 4:  <div><div>Mobile alt text</div></div>                     → mobileImageAlt
+Row 5:  <div><div>Eyebrow text</div></div>                        → eyebrow
+Row 6:  <div><div>Indication richtext</div></div>                 → indication
+Row 7:  <div><div><h1>Hero heading</h1><p>body</p></div></div>   → text
+Row 8:  <div><div>Overlay layers</div></div>                      → layers
+Row 9:  <div><div>video-reference</div></div>                     → video
+Row 10: <div><div>Caption text</div></div>                        → imageCaption
 ```
+
+Note: Hero has NO `commonProperties` tab, NO `blockId`/`language` fields —
+so no `id:`/`lang:` rows. The model is flat (fields only, no tabs).
 
 ### Authoring rules
 
@@ -397,21 +400,58 @@ container.
 - **JS:** calls `applyCommonProps`
 - **Brand overrides:** all 9 brands
 
-### Fields
+### Fields (in order)
 
-Block: `ctaLabel` (text), `link` (aem-content), `classes_style` (primary/secondary/text-link),
-`classes_iconAfter` (boolean — `::after` arrow icon), `ariaLabel`, then common-properties tab.
+| # | Field | Component | Notes |
+|---|---|---|---|
+| 1 | label | text | button text |
+| 2 | href | aem-content | link target |
+| 3 | ariaLabel | text | accessibility label |
+| 4 | ctaTarget | select | `_self` / `_blank` / `new-modal` / etc. |
+| 5 | modalId | text | modal trigger (overrides link) |
+| 6 | iconType | select | `none` / `icon-font` / `image` |
+| 7 | iconFont | text | font icon code (e.g. `e901`) |
+| 8 | iconImage | reference | image icon |
+| 9 | iconPosition | select | `i-b` (before) / `i-a` (after) |
+| 10 | ariaHidden | boolean | prevent screen reader announcement |
+| 11 | classes | multiselect | variant → class attr (NOT a row) |
+| 12 | anchorId | text | (in separate tab — NOT a row, see note) |
+| 13 | analyticsInteractionId | text | (in separate tab — NOT a row) |
+| 14 | blockId | text | `id:value` format |
+| 15 | classes_commonCustomClass | text | class attr (NOT a row) |
+| 16 | language | select | `lang:value` format |
 
 ### Row Mapping
 
-Order: `ctaLabel`, `link`, `ariaLabel`, common-properties (id, language, custom class).
-`classes_*` go in class attr.
+**12 rows** (validated via `cta-button-test.plain.html`):
+
+```
+Row 1:  label text                    → label
+Row 2:  <a href="...">...</a>         → href
+Row 3:  (empty or aria text)          → ariaLabel
+Row 4:  _self / _blank / new-modal    → ctaTarget
+Row 5:  (empty or modal ID)           → modalId
+Row 6:  none / icon-font / image      → iconType
+Row 7:  (icon code or empty)          → iconFont
+Row 8:  (image reference or empty)    → iconImage
+Row 9:  i-a / i-b / after             → iconPosition
+Row 10: false / true                  → ariaHidden
+Row 11: id:value                      → blockId
+Row 12: lang:none                     → language
+```
+
+Note: `classes` → block class attr. `anchorId` and `analyticsInteractionId`
+are in a separate "Common Properties" tab that is NOT `commonProperties` —
+these fields are NOT emitted as rows (validated empirically).
+`classes_commonCustomClass` → class attr.
 
 ### Authoring rules
 
 - Live source CTAs often use `display: inline-flex` with `::after` SVG arrow —
-  enable via `classes_iconAfter: true` not by adding the SVG to the label.
+  enable via `iconType: icon-font` + `iconPosition: i-a`, not by adding SVG
+  to the label text.
 - `ariaLabel` only needed if visual label is icon-only or ambiguous.
+- `ctaTarget: new-modal` triggers modal behavior — pair with `modalId`.
 
 ## 11. Rich Text (`rich-text`)
 
@@ -473,16 +513,72 @@ above the header.
 - **Model:** `blocks/brand-explorer/_brand-explorer.json`
 - **JS:** calls `applyCommonProps`; hoists `<section>` to be `header.before(section)`
 - **Brand overrides:** abbvie, botox, rinvoq-hcp, skyrizi-hcp (4)
+- **Filter children:** `brand-explorer-item`
 
-### Block-level fields
+### Block-level fields (in order)
 
-`overview` (tab, skip), `classes` (select for variant), `anchorId`, `barLabel`
-(text — the cross-condition switcher label), `projectNumber`, `navTab` (tab, skip),
-plus item rows for each nav link.
+| # | Field | Component | Notes |
+|---|---|---|---|
+| 1 | classes | select | variant picklist → class attr (NOT a row) |
+| 2 | anchorId | text | anchor for deep-linking |
+| 3 | barLabel | text | cross-condition switcher button label |
+| 4 | projectNumber | text | regulatory project number (e.g. US-MULT-250253) |
+| 5 | navLink1Text | text | "Contact Medical Info" |
+| 6 | navLink1Url | text | link URL |
+| 7 | navLink2Text | text | "Full Prescribing Information" |
+| 8 | navLink2Url | text | link URL |
+| 9 | navLink3Text | text | "Patient Site" |
+| 10 | navLink3Url | text | link URL |
+| 11 | blockId | text | `id:value` format |
+| 12 | classes_commonCustomClass | text | class attr (NOT a row) |
+| 13 | language | select | `lang:value` format |
 
-### Item-level fields
+### Row Mapping (`.plain.html`)
 
-Typically: `label`, `link`, `target` per nav item.
+**11 parent rows** (exclude `classes` field #1, `classes_commonCustomClass` #12; tabs excluded):
+
+```
+Row 1:  <div><div></div></div>                          → anchorId (empty)
+Row 2:  <div><div>Immunology Therapies</div></div>      → barLabel
+Row 3:  <div><div>US-MULT-250253</div></div>            → projectNumber
+Row 4:  <div><div>Contact Medical Info</div></div>      → navLink1Text
+Row 5:  <div><div><a href="#">#</a></div></div>         → navLink1Url
+Row 6:  <div><div>Full Prescribing Information</div></div> → navLink2Text
+Row 7:  <div><div><a href="...">...</a></div></div>     → navLink2Url
+Row 8:  <div><div>Patient Site</div></div>              → navLink3Text
+Row 9:  <div><div><a href="...">...</a></div></div>     → navLink3Url
+Row 10: <div><div>id:</div></div>                       → blockId
+Row 11: <div><div>lang:none</div></div>                 → language
+```
+
+### Item-level fields (`brand-explorer-item`)
+
+| # | Field | Component | Notes |
+|---|---|---|---|
+| 1 | logo | aem-content | `<picture><img>` — brand logo image |
+| 2 | logoAlt | text | alt text for the logo |
+| 3 | brandName | text | e.g. "RINVOQ" |
+| 4 | therapeuticArea | text | e.g. "Immunology" |
+| 5 | description | richtext | brand short description |
+| 6 | brandUrl | text | link to brand site |
+| 7 | safetyText | richtext | safety disclaimer below logo |
+| 8 | indications | text | pipe-delimited: `Name\|URL\|severity` per line |
+
+**8 cells per item row** (no tabs, no `classes_*` in item model):
+
+```
+<div>
+  <div><picture><img src="..." alt="RINVOQ product logo"></picture></div>
+  <div>RINVOQ product logo</div>
+  <div>RINVOQ</div>
+  <div>Immunology</div>
+  <div></div>
+  <div><a href="https://www.rinvoqhcp.com/">...</a></div>
+  <div><strong>Please see Important Safety Information...</strong></div>
+  <div>Rheumatoid Arthritis|/rheumatoid-arthritis|moderate
+Psoriatic Arthritis|/psoriatic-arthritis|active</div>
+</div>
+```
 
 ### Authoring rules
 
@@ -490,6 +586,10 @@ Typically: `label`, `link`, `target` per nav item.
   label. Get verbatim from live source.
 - The bar background color must match the header bar — typically a brand-token
   value, not a hardcoded color.
+- **11 parent rows + 8 cells per item is validated** (AEMCODER-010, AEMCODER-013).
+  Fewer rows = md2jcr error "Cannot read properties of undefined".
+- `logoAlt` IS a cell (not handled by server). All non-tab non-classes_* fields
+  are cells for blocks with `commonProperties` tab.
 
 ## 14. Formulary Lookup (`formulary-lookup`)
 

@@ -9,6 +9,11 @@ Reference for all blocks and variations identified from the Analysis report at `
 
 ## Related Skills
 
+- **abbvie-block-analysis**: Use for per-block xwalk model fields, Row Mapping
+  tables, cell counts, and authoring rules. This skill (block-library) tells
+  you WHICH block to use; block-analysis tells you HOW to author it.
+- **abbvie-page-templates**: Use for page-level composition recipes (which
+  blocks in what order for each page archetype)
 - **building-brand-blocks**: Use to implement block CSS with brand/theme override support
 - **building-brand**: Use to scaffold a new brand with token/style structure
 - **abbvie-design-tokens**: Use for brand color, font, and spacing token details
