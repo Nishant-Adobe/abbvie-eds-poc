@@ -1,10 +1,11 @@
-# Canonical section-fix prompt for aemcoder
+# Canonical section-fix workflow
 
-Use this when aemcoder has migrated a page but one or more sections diverge
-from live source. This template enforces the diff → root-cause → lowest-specificity
-fix → regression-check loop that prevents back-and-forth.
+Follow this when a migrated page has one or more sections that diverge
+from live source. This template enforces the diff → root-cause →
+lowest-specificity fix → regression-check loop that prevents back-and-forth.
 
-Fill in `{{...}}` placeholders. Send to aemcoder.
+You execute this workflow directly. Fill in `{{...}}` placeholders
+mentally from context.
 
 ---
 

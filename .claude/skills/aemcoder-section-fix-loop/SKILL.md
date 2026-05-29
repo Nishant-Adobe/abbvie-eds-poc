@@ -5,7 +5,16 @@ description: Repair a single section of an aemcoder-migrated page that diverges 
 
 # aemcoder Section Fix Loop
 
-Per-section repair workflow for any block on an aemcoder-migrated page
+## Execution context
+
+**You execute this workflow directly.** When the user reports a section
+not matching, follow the 8-step loop below. The prompt template in
+`../aemcoder-migration-orchestrator/templates/section-fix-prompt.md`
+is your internal checklist, not output for another tool.
+
+---
+
+Per-section repair workflow for any block on a migrated page
 that diverges from live source. Replaces the ad-hoc iterate-on-screenshot
 pattern with a structured 8-step loop:
 

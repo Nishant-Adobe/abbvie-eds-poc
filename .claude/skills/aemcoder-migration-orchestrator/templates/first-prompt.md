@@ -1,7 +1,9 @@
-# Canonical first-prompt for aemcoder.adobe.io
+# Canonical first-prompt — internal migration guidance
 
-Copy-paste this into aemcoder when starting migration of any new page. Fill in
-`{{...}}` placeholders. Remove sections that don't apply.
+This is your internal reference when starting migration of any new page.
+Read it as your own instructions — you ARE the migration agent executing
+this workflow directly. Fill in `{{...}}` placeholders mentally based on
+the user's request. Remove sections that don't apply.
 
 ---
 
@@ -141,11 +143,18 @@ approved. Today's scope is page {{N}}: {{TARGET_URL}}.
 ### I. xwalk / md2jcr content format
 1. Parent block: one `<div><div>value</div></div>` row per non-tab,
    non-`classes_*` model field, in model order. Empty rows for empty fields.
-2. Item rows: one `<div>` with one `<div>` cell per item-model field.
-3. `classes_*` fields are NOT rows — they live in the block element's
-   class attribute. `blockId` → `id:value` row. `language` → `lang:value`.
-4. Before publishing, validate row count = model field count and item
-   cell count = item-model field count.
+2. Item rows: one `<div>` with one `<div>` cell per non-tab,
+   non-`classes_*` item-model field, in model order.
+3. `classes_*` fields (including `classes`, `classes_commonCustomClass`,
+   `classes_iconType`, etc.) are NEVER rows/cells — they live in the
+   block element's class attribute.
+4. `blockId` → row with value `id:value`. `language` → row with value
+   `lang:value`. These ARE rows (they're not `classes_*` prefixed).
+5. Alt text fields (`logoAlt`, `imageAlt`, etc.) ARE regular rows/cells
+   for blocks with a `commonProperties` tab. Validate against working
+   test content (accordion-test.plain.html, cta-button-test.plain.html).
+6. Before publishing, validate: parent row count = non-tab non-classes_*
+   field count; item cell count = non-tab non-classes_* item-field count.
 
 ---
 
@@ -220,11 +229,13 @@ Do not begin Phase A until I confirm the answers.
 
 ## How to use this template
 
-1. Copy the entire fenced block above.
-2. Replace all `{{...}}` placeholders.
-3. Remove sections that don't apply (Phase A if already done for the brand, Phase C if standalone page, batch table if standalone).
-4. Paste into aemcoder.
-5. After aemcoder responds with summary + clarifying questions, answer them, then say "begin Phase A" (or "begin Phase B" if Phase A was previously done).
+1. Read the fenced block above as your internal instructions.
+2. Fill in `{{...}}` placeholders from the user's request context.
+3. Skip sections that don't apply (Phase A if already done for the brand,
+   Phase C if standalone page, batch table if standalone).
+4. Execute the workflow directly — present your summary + clarifying
+   questions to the user before beginning.
+5. After user answers, begin Phase A (or Phase B if A was previously done).
 
-For per-section fix-up prompts after the initial scaffolding, use the
-companion `aemcoder-section-fix-loop` skill's template.
+For per-section repairs after the initial scaffolding, follow the
+companion `aemcoder-section-fix-loop` skill workflow.
