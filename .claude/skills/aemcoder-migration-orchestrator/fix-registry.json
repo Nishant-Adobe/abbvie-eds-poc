@@ -1,0 +1,140 @@
+{
+  "$schema": "Each entry = one observed aemcoder failure mode. Load this at session start so aemcoder is pre-warned. Add new entries when you discover new failure modes during migration.",
+  "version": 1,
+  "lastUpdated": "2026-05-29",
+  "entries": [
+    {
+      "id": "AEMCODER-001",
+      "date": "2026-05-21",
+      "category": "block-selection",
+      "pages": ["rinvoqhcp.com", "rinvoqhcp.com/dermatology"],
+      "failure": "Picks first plausible block + variant without diffing live DOM structure against block JS output. Used `cards-grid cards-grid-cta-card` variant for both indication links (text + chevron) AND glacier patient-support cards (pill buttons) — incompatible inner structures.",
+      "rootCause": "Missing rule: for every section, capture live block DOM structure and map every class/element BEFORE selecting block.",
+      "prevention": "Force live DOM inspection in Step 3 of section-fix-prompt. Tag mismatches as 'Variant' or 'Block mismatch' in root-cause taxonomy.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-002",
+      "date": "2026-05-22",
+      "category": "brand-override-scope",
+      "pages": ["rinvoqhcp.com"],
+      "failure": "Edited `blocks/brand-explorer/brand-explorer.css` (base, affects all 9 brands) when the fix belonged in `rinvoq-hcp/`. Multiple times treated base CSS as default fix target.",
+      "rootCause": "Missing rule: lowest-specificity-first cascade not internalized — must be re-asserted in every prompt.",
+      "prevention": "Step 5 root-cause taxonomy explicitly lists base CSS/JS as ESCALATE-ONLY. First-prompt rule B.5: 'Base block CSS or JS — ESCALATE, do not patch.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator + aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-003",
+      "date": "2026-05-23",
+      "category": "section-styling-asset",
+      "pages": ["rinvoqhcp.com", "rinvoqhcp.com/dermatology"],
+      "failure": "Tried to recreate `section-bg-brushstroke` `gradient--white-glacier` with pure-CSS gradients across 10+ iterations; never downloaded the actual SVG until user demanded.",
+      "rootCause": "Missing rule: when live uses an SVG, download and reference, do not simulate.",
+      "prevention": "First-prompt rule F.1: 'When live site uses an SVG/PNG, download once to content/content/dam/abbvie-eds-poc/ and reference. Never simulate with CSS gradients.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator"
+    },
+    {
+      "id": "AEMCODER-004",
+      "date": "2026-05-25",
+      "category": "header-per-section",
+      "pages": ["rinvoqhcp.com/dermatology"],
+      "failure": "Assumed shared header fragment for all rinvoq-hcp pages. Dermatology actually uses different nav items + indication paragraph + active-state styling. Took 30+ turns to discover and fix.",
+      "rootCause": "Missing context: pharma sites use per-condition headers. No first-prompt rule about discovering header pattern.",
+      "prevention": "First-prompt rule D.1: 'Pharma sites often have per-condition nav and indication text — verify whether shared or sectioned before assuming.' Header fix-loop has fragment-vs-config decision tree.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator"
+    },
+    {
+      "id": "AEMCODER-005",
+      "date": "2026-05-26",
+      "category": "safety-bar-content",
+      "pages": ["rinvoqhcp.com", "rinvoqhcp.com/dermatology"],
+      "failure": "Abbreviated indications list (dropped PsA + pJIA), dropped 'Limitations of Use', missing entire Boxed Warning section in expanded state, missing 8+ subsections (GASTROINTESTINAL PERFORATIONS, LABORATORY ABNORMALITIES, etc.). Multi-day arc of paraphrasing safety copy.",
+      "rootCause": "Missing rule (verbatim) + missing context (pharma compliance). Took explicit Step 0 hard-rules prompt with 6 verbatim rules before paraphrasing stopped.",
+      "prevention": "pharma-content-fidelity skill auto-triggers on safety-bar / ISI text-container / references / dosing blocks. Verbatim rule mandatory. Content diff PRECEDES visual diff.",
+      "status": "incorporated-in-skill",
+      "skill": "pharma-content-fidelity"
+    },
+    {
+      "id": "AEMCODER-006",
+      "date": "2026-05-26",
+      "category": "responsive-breakpoint",
+      "pages": ["rinvoqhcp.com/dermatology"],
+      "failure": "Wrote desktop-first CSS, patched mobile with `@media (max-width: 985px)` overrides fighting compiled-CSS specificity. Used `0.9rem` (= 9px due to 10px root) instead of `14px` absolute. Hid hero bg on mobile but empty div took 200+ px height. Used `!important` (against project rule).",
+      "rootCause": "Missing rule (mobile-first) + missing context (10px root font-size) + missing skill (regression-protection workflow).",
+      "prevention": "First-prompt rule E.1: 'Mobile-first. Use min-width media queries.' Rule E.2: '10px root font-size — use absolute px when matching live.' Rule B.6: 'No !important ever.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator + aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-007",
+      "date": "2026-05-27",
+      "category": "regression-protection",
+      "pages": ["rinvoqhcp.com (after dermatology edits)"],
+      "failure": "Declared '≥90% match' / 'no regression' before user pointed out homepage hero now had 720px min-height, cards-grid had margin-top: -200px, gap between sections changed. Multiple shared-asset regressions undetected.",
+      "rootCause": "Missing skill: no built-in regression-protection loop. Match-% guessed visually, not measured.",
+      "prevention": "section-fix-prompt Step 2: capture baseline BEFORE edit. Step 7: per-fix desktop regression diff at 1440 + 1200. Step 8: cross-page regression sweep on every previously approved page.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-008",
+      "date": "2026-05-27",
+      "category": "class-name-chasing",
+      "pages": ["rinvoqhcp.com/dermatology"],
+      "failure": "Tried to recreate `abbv-container resource-container--gold section-bg-brushstroke gradient--white-glacier`, `abbv-safety-bar-content-maximized`, `abbv-nav-active` literally — renaming local classes to match Platform-C names.",
+      "rootCause": "Missing rule: class names diverge by design, do not rename.",
+      "prevention": "First-prompt rule A.2 + section-fix-prompt Step 0.1: 'Class names diverge between Platform-C abbv-* and EDS naming. Do NOT rename our classes to match. Match visual and behavioral outcome only.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator + aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-009",
+      "date": "2026-05-28",
+      "category": "premature-commit",
+      "pages": ["rinvoqhcp.com (twice)"],
+      "failure": "Committed and pushed with `git push -u origin` before user said go. Declared 'Pushed successfully' while still failing to recognize regressions. Pasted GitHub PAT in plaintext once.",
+      "rootCause": "Missing rule: no explicit approval gate before git operations.",
+      "prevention": "First-prompt rule H.1: 'Never git add / commit / push without explicit user approval.' Rule H.2: 'Never declare done without per-viewport screenshots + regression check on other approved pages.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator"
+    },
+    {
+      "id": "AEMCODER-010",
+      "date": "2026-05-29",
+      "category": "xwalk-content-format",
+      "pages": ["rinvoqhcp.com"],
+      "failure": "Recurring 'Brand Explorer has errors! Cannot read properties of undefined (reading fields)'. Flip-flopped between '13 rows' and '10 rows' and 'items need 7 cells' vs '8 cells' for `.plain.html` block tables.",
+      "rootCause": "Missing rule for xwalk content row count + cell count alignment with model.",
+      "prevention": "First-prompt rule I.1–I.4: 'Parent block = one row per non-tab, non-classes_* field in model order. Item rows = one cell per item-model field. classes_* are NOT rows. Validate row count = model field count before publish.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator"
+    },
+    {
+      "id": "AEMCODER-011",
+      "date": "2026-05-29",
+      "category": "fragment-vs-local-content",
+      "pages": ["rinvoqhcp.com"],
+      "failure": "Confused gitignored `.plain.html` local-preview content with published AEM JCR content. Hours spent thinking the two were the same.",
+      "rootCause": "Missing context: `.plain.html` in `content/` is gitignored local-only preview; UE/JCR is separate.",
+      "prevention": "First-prompt rule D.3: '.plain.html in content/ is gitignored local-only preview. AEM / UE / JCR is separate. Never confuse the two.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator"
+    },
+    {
+      "id": "AEMCODER-012",
+      "date": "2026-05-29",
+      "category": "a11y-pharma",
+      "pages": ["rinvoqhcp.com", "rinvoqhcp.com/dermatology"],
+      "failure": "3 H1 tags on homepage hero, no alt text on 10+ images, '+' toggle button without aria-label, single anchor wrapping entire card defeating screen-reader nav. Only caught in Phase D QA.",
+      "rootCause": "Missing rule: a11y checklist not in first-prompt.",
+      "prevention": "First-prompt rule A.3 + pharma-content-fidelity skill: 'Single H1, alt text on every image, aria-label on icon-only controls, individual links per indication, touch targets ≥44px.'",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator + pharma-content-fidelity"
+    }
+  ],
+  "howToAdd": "When you discover a new failure mode during migration: 1) Append a new entry with next AEMCODER-NNN id, 2) Set status: 'pending', 3) Once prevention is encoded in a skill, change to 'incorporated-in-skill' and name the skill. The orchestrator skill loads this file at session start so aemcoder is pre-warned about known failures."
+}
