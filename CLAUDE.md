@@ -146,19 +146,23 @@
 | **"Section not matching", "{block} not matching live", "regression after fix"** | **`aemcoder-section-fix-loop`** | **Per-section diff → root-cause-tag → lowest-specificity-fix → regression-check loop** |
 | **"ISI verbatim", "boxed warning", "regulatory content"** | **`pharma-content-fidelity`** | **Always-on overlay: verbatim safety copy, references round-trip, pharma a11y** |
 
-### Skill chaining for aemcoder migrations
+### Skill chaining for migrations
 
-For any aemcoder-driven migration, the typical chain is:
+For any page migration, the typical chain is:
 
 ```
-aemcoder-migration-orchestrator  (entry point — first prompt for any new page)
+aemcoder-migration-orchestrator  (entry point — internal guidance for any new page)
     ↓
 aemcoder-section-fix-loop        (per-section repair when sections diverge)
     ↓
 pharma-content-fidelity          (auto-overlay for any regulated-copy block)
 ```
 
-The orchestrator's `templates/first-prompt.md` is the canonical kickoff. The
-fix-loop's prompt template at `aemcoder-migration-orchestrator/templates/section-fix-prompt.md`
-is the canonical per-section repair prompt. Both reference pharma-content-fidelity's
-hard rules for any safety/ISI/dosing/reference content.
+**Execution context:** You ARE the migration agent. These skills are your
+internal workflow — you execute them directly (scrape, author, render,
+validate, report). You do NOT generate prompts for a separate tool.
+
+The orchestrator's `templates/first-prompt.md` is your internal kickoff
+checklist. The fix-loop's `section-fix-prompt.md` is your per-section
+repair checklist. Both reference pharma-content-fidelity's hard rules
+for any safety/ISI/dosing/reference content.

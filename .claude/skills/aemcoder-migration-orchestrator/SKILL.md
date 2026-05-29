@@ -5,14 +5,27 @@ description: Orchestrate end-to-end page migration to the multi-brand EDS projec
 
 # aemcoder Migration Orchestrator
 
+## Execution context
+
+**You ARE aemcoder.** This skill is internal guidance for YOU to follow
+directly when migrating pages. You do not generate prompts for a separate
+tool — you execute the workflow yourself: scraping, authoring content,
+writing CSS, validating in preview, and reporting results back to the user.
+
+The templates in `templates/` are reference documents that encode the
+hard rules and workflow steps. Read them as your own instructions, not as
+copy-paste output for another system.
+
+---
+
 This skill governs the full lifecycle of migrating any commercial pharma
 brand page from a live `*.com` source into the multi-brand AbbVie EDS POC
-project, using aemcoder.adobe.io as the migration agent.
+project.
 
 The skill exists because page migrations historically took 80+ back-and-forth
-rounds with aemcoder due to recurring failure modes (paraphrasing safety
-copy, editing base when brand was right, regression on desktop after mobile
-fix, class-name chasing, premature commits, etc.). This skill bakes those
+rounds due to recurring failure modes (paraphrasing safety copy, editing
+base when brand was right, regression on desktop after mobile fix,
+class-name chasing, premature commits, etc.). This skill bakes those
 lessons into a single workflow so subsequent pages migrate in a handful of
 rounds.
 
@@ -120,14 +133,14 @@ class + brand global CSS rule over creating a new brand block override
 ## How to start a new page migration
 
 ```
-1. Copy templates/first-prompt.md
-2. Fill in {{...}} placeholders (BRAND_NAME, BRAND_KEY, TARGET_URL, etc.)
-3. Remove sections that don't apply (Phase A if done, batch table if standalone)
-4. Paste into aemcoder.adobe.io
-5. Aemcoder responds with summary + clarifying questions
-6. Answer questions, say "begin Phase A" (or "begin Phase B")
-7. Approve / reject each phase output
-8. For section divergences, use aemcoder-section-fix-loop's template
+1. Read templates/first-prompt.md as your internal guidance
+2. Mentally fill in {{...}} placeholders (BRAND_NAME, BRAND_KEY, TARGET_URL, etc.)
+3. Skip sections that don't apply (Phase A if done, batch table if standalone)
+4. Execute the workflow directly — scrape, author, render, validate
+5. Present summary + any clarifying questions to the user
+6. After user answers, begin Phase A (or Phase B if A was previously done)
+7. Present each phase output for user approval / rejection
+8. For section divergences, follow aemcoder-section-fix-loop workflow
 ```
 
 ## The fix-registry
@@ -157,7 +170,7 @@ the next migration.
 
 ## Cross-page reuse cheat sheet for current Rinvoq HCP batch
 
-Pages already migrated (treat as reference for pages 3–5):
+Pages already migrated (treat as reference for remaining pages):
 - Homepage (rinvoqhcp.com) — establishes header fragment, footer fragment,
   safety-bar fragment, brand metadata pattern
 - /dermatology — establishes condition-specific header fragment, brushstroke
@@ -165,11 +178,15 @@ Pages already migrated (treat as reference for pages 3–5):
 
 Pages remaining in current batch:
 - /dermatology/dosing-lab-monitoring (clinical tables, references)
+- /atopic-dermatitis (Dermatology Access — landing page variant)
 - /atopic-dermatitis/real-patients (Brightcove video, story-cards)
 - /atopic-dermatitis/efficacy/rinvoq-vs-dupixent/level-up (charts, comparisons)
 
 For each remaining page: invoke Phase C reuse-first analysis FIRST.
 Most sections should land in REUSE category.
+
+> **Note:** Update this list as pages are approved. This section is a
+> living reference — not frozen at skill-creation time.
 
 ## Anti-patterns to call out in user-facing prompts
 
