@@ -68,10 +68,28 @@
 
 /* Linzess — Columns Brand Overrides */
 
+/* Card-style columns: icon top, text centered below */
+
 .columns > div > div {
   border-radius: var(--linz-rounded-corner, 16px);
   padding: var(--spacing-32, 32px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.columns > div > div picture {
+  margin-bottom: 16px;
+  max-width: 110px;
+}
+
+.columns > div > div picture img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* First card: dark purple */
 
 .columns > div > div:first-child {
   background-color: var(--color-brand-primary, #422e83);
@@ -84,10 +102,12 @@
 }
 
 .columns > div > div:first-child a.button {
-  background-color: var(--color-brand-accent, #faa633);
+  background-color: var(--linz-light-purple, #d9d7f9);
   color: var(--color-brand-primary, #422e83);
-  border-color: var(--color-brand-accent, #faa633);
+  border: none;
 }
+
+/* Second card: light purple */
 
 .columns > div > div:nth-child(2) {
   background-color: var(--linz-light-purple, #d9d7f9);
@@ -102,4 +122,5 @@
 .columns > div > div:nth-child(2) a.button {
   background-color: var(--color-brand-primary, #422e83);
   color: var(--color-text-on-dark, #fff);
+  border: none;
 }
