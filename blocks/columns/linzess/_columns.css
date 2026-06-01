@@ -1,1 +1,39 @@
 @import '../columns.css';
+
+/* Linzess — Columns Brand Overrides */
+
+.columns > div > div {
+  border-radius: var(--linz-rounded-corner, 16px);
+  padding: var(--spacing-32, 32px);
+}
+
+.columns > div > div:first-child {
+  background-color: var(--color-brand-primary, #422e83);
+  color: var(--color-text-on-dark, #fff);
+}
+
+.columns > div > div:first-child p,
+.columns > div > div:first-child strong {
+  color: var(--color-text-on-dark, #fff);
+}
+
+.columns > div > div:first-child a.button {
+  background-color: var(--color-brand-accent, #faa633);
+  color: var(--color-brand-primary, #422e83);
+  border-color: var(--color-brand-accent, #faa633);
+}
+
+.columns > div > div:nth-child(2) {
+  background-color: var(--linz-light-purple, #d9d7f9);
+  color: var(--color-brand-primary, #422e83);
+}
+
+.columns > div > div:nth-child(2) p,
+.columns > div > div:nth-child(2) strong {
+  color: var(--color-brand-primary, #422e83);
+}
+
+.columns > div > div:nth-child(2) a.button {
+  background-color: var(--color-brand-primary, #422e83);
+  color: var(--color-text-on-dark, #fff);
+}
