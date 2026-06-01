@@ -1939,14 +1939,6 @@
         "valueType": "string"
       },
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "fragmentPath",
-        "value": "",
-        "label": "Fragment Path (overrides Description Text)",
-        "description": "Path to a fragment page with complex content (tabs, video, charts). If set, this is rendered instead of the Description Text field above."
-      },
-      {
         "component": "boolean",
         "valueType": "boolean",
         "name": "classes_defaultOpen",
@@ -2663,22 +2655,12 @@
         "description": "Link to brand site."
       },
       {
-        "component": "tab",
-        "label": "Safety",
-        "name": "safetyTab"
-      },
-      {
         "component": "richtext",
         "valueType": "string",
         "name": "safetyText",
         "value": "",
         "label": "Safety Text",
         "description": "Safety disclaimer shown below the brand logo."
-      },
-      {
-        "component": "tab",
-        "label": "Indications",
-        "name": "indicationsTab"
       },
       {
         "component": "text",
@@ -5585,110 +5567,6 @@
     ]
   },
   {
-    "id": "flexbox",
-    "fields": [
-      {
-        "component": "multiselect",
-        "valueType": "string",
-        "name": "classes",
-        "label": "Layout Variant",
-        "options": [
-          { "name": "Column direction", "value": "column" },
-          { "name": "Row reverse", "value": "row-reverse" },
-          { "name": "Column reverse", "value": "column-reverse" },
-          { "name": "Center (justify + align)", "value": "center" },
-          { "name": "Space between", "value": "space-between" },
-          { "name": "No wrap", "value": "no-wrap" },
-          { "name": "Align stretch", "value": "align-stretch" },
-          { "name": "Align top", "value": "align-top" },
-          { "name": "Align bottom", "value": "align-bottom" }
-        ]
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "anchorId",
-        "value": "",
-        "label": "Anchor ID"
-      }
-    ]
-  },
-  {
-    "id": "flexbox-item",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Item Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "value": "",
-        "label": "Image Alt Text"
-      },
-      {
-        "component": "richtext",
-        "name": "content",
-        "value": "",
-        "label": "Item Content",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "valueType": "string",
-        "name": "itemClasses",
-        "value": "",
-        "label": "Item Width",
-        "options": [
-          { "name": "Auto (equal flex)", "value": "" },
-          { "name": "Full (100%)", "value": "full" },
-          { "name": "Sixty (60%)", "value": "sixty" },
-          { "name": "Half (50%)", "value": "half" },
-          { "name": "Third (33%)", "value": "third" },
-          { "name": "Thirty (30%)", "value": "thirty" },
-          { "name": "Quarter (25%)", "value": "quarter" }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "parallax",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Background Image",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "value": "",
-        "label": "Image Alt Text"
-      },
-      {
-        "component": "richtext",
-        "name": "content",
-        "value": "",
-        "label": "Overlay Content",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "anchorId",
-        "value": "",
-        "label": "Anchor ID"
-      }
-    ]
-  },
-  {
     "id": "dismiss",
     "fields": [
       {
@@ -7135,6 +7013,125 @@
           {
             "name": "Ukrainian",
             "value": "lang:uk"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "flexbox",
+    "fields": [
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Layout Variant",
+        "options": [
+          {
+            "name": "Column direction",
+            "value": "column"
+          },
+          {
+            "name": "Row reverse",
+            "value": "row-reverse"
+          },
+          {
+            "name": "Column reverse",
+            "value": "column-reverse"
+          },
+          {
+            "name": "Center (justify + align)",
+            "value": "center"
+          },
+          {
+            "name": "Space between",
+            "value": "space-between"
+          },
+          {
+            "name": "No wrap",
+            "value": "no-wrap"
+          },
+          {
+            "name": "Align stretch",
+            "value": "align-stretch"
+          },
+          {
+            "name": "Align top",
+            "value": "align-top"
+          },
+          {
+            "name": "Align bottom",
+            "value": "align-bottom"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "anchorId",
+        "value": "",
+        "label": "Anchor ID"
+      }
+    ]
+  },
+  {
+    "id": "flexbox-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Item Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "value": "",
+        "label": "Item Content",
+        "valueType": "string"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "itemClasses",
+        "value": "",
+        "label": "Item Width",
+        "options": [
+          {
+            "name": "Auto (equal flex)",
+            "value": ""
+          },
+          {
+            "name": "Full (100%)",
+            "value": "full"
+          },
+          {
+            "name": "Sixty (60%)",
+            "value": "sixty"
+          },
+          {
+            "name": "Half (50%)",
+            "value": "half"
+          },
+          {
+            "name": "Third (33%)",
+            "value": "third"
+          },
+          {
+            "name": "Thirty (30%)",
+            "value": "thirty"
+          },
+          {
+            "name": "Quarter (25%)",
+            "value": "quarter"
           }
         ]
       }
@@ -9938,7 +9935,6 @@
         "component": "text",
         "name": "content_searchIcon",
         "label": "Search Icon",
-        "value": ":icon-search:",
         "condition": {
           "in": [
             {
@@ -10161,7 +10157,6 @@
         "component": "select",
         "name": "content_eyebrowPosition",
         "label": "Eyebrow Position",
-        "value": "top",
         "condition": {
           "in": [
             {
@@ -10217,7 +10212,6 @@
         "component": "text",
         "name": "content_floatingIsiExpandLabel",
         "label": "Expand button label",
-        "value": "See Full ISI",
         "condition": {
           "in": [
             {
@@ -10233,7 +10227,6 @@
         "component": "text",
         "name": "content_floatingIsiCollapseLabel",
         "label": "Collapse button label",
-        "value": "Collapse ISI",
         "condition": {
           "in": [
             {
@@ -13156,6 +13149,18 @@
     ]
   },
   {
+    "id": "stock-ticker",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "symbol",
+        "value": "",
+        "label": "Stock Symbol"
+      }
+    ]
+  },
+  {
     "id": "story-card",
     "fields": [
       {
@@ -14920,18 +14925,6 @@
             "value": "lang:uk"
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "stock-ticker",
-    "fields": [
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "symbol",
-        "value": "",
-        "label": "Stock Symbol"
       }
     ]
   }
