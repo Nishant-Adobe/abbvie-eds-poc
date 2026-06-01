@@ -318,7 +318,11 @@
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
   --color-border: #e0e0e0;
+  --color-border-light: #ddd;
   --color-focus: var(--link-color);
+  --color-white-85: rgb(255 255 255 / 85%);
+  --color-shadow-sm: rgb(0 0 0 / 12%);
+  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -343,6 +347,8 @@
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
+  --color-warning-bg: #fff4c2;
+  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -409,12 +415,15 @@
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
+  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
+  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
+  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -430,7 +439,9 @@
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
+  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
+  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -440,6 +451,7 @@
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
+  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
   --spacing-48: 4.8rem;
   --spacing-50: 5rem;
@@ -465,9 +477,11 @@
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
   --spacing-200: 20rem;
+  --spacing-225: 22.5rem;
   --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
+  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -499,6 +513,7 @@
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
+  --border-radius-l: 1.6rem;
 
   /* Border Width */
   --border-width-thin: 1px;
@@ -512,6 +527,10 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-60: 60;
+
+  /* Opacity */
+  --opacity-full: 1;
   --z-index-anchor-nav: 100;
   --z-index-safety-bar: 500;
 
@@ -519,6 +538,7 @@
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
+  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -537,6 +557,7 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-900: 900;
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -562,6 +583,7 @@
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
+  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -571,6 +593,7 @@
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
+  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
   --line-height-relaxed: 1.5;
   --line-height-loose: 1.6;
@@ -578,8 +601,10 @@
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --transition-easing-in-out: ease-in-out;
   --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
@@ -755,14 +780,14 @@
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
-  --font-size-body: 14px;
+  --font-size-body: 1.6rem;
   --font-size-body-small: 12px;
   --font-size-body-xs: 0.75rem;
   --font-size-legal: 14px;
   --font-size-legal-large: 16px;
   --font-size-nav: 14.4px;
   --font-size-footer: 14.4px;
-  --font-size-h1: 2rem;
+  --font-size-h1: 3.2rem;
   --font-size-h1-hero: 56px;
   --font-size-h2: 1.125rem;
   --font-size-h2-hero: 32px;
@@ -856,6 +881,44 @@
   /* ---- Transition ---- */
   --transition-button: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
+  /* ---- Opacity ---- */
+  --opacity-hover: 0.85;
+  --opacity-muted: 0.4;
+
+  /* ---- Header block ---- */
+  --color-nav-dark: #231d1d;
+  --header-logo-width: 14.8rem;
+  --header-logo-height: 7.2rem;
+  --header-logo-filter: brightness(0) invert(1);
+  --header-content-max-width: 115rem;
+  --header-submenu-width: 20.2rem;
+  --header-nav-line-height: 1.2;
+  --header-nav-letter-spacing: 0.05em;
+  --header-eyebrow-bg: var(--linz-purple);
+  --header-eyebrow-line-height: 1.4;
+  --header-utility-height: 28px;
+  --header-nav-separator: rgb(255 255 255 / 20%);
+  --header-utility-border: rgb(247 248 245 / 20%);
+  --header-scroll-bg: rgb(35 29 29 / 95%);
+  --header-eyebrow-gradient: linear-gradient(180deg, rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --header-cta-margin-top: -1rem;
+  --header-nav-max-width: 100rem;
+  --header-chevron-size: var(--spacing-20);
+  --header-hamburger-bar-width: 3.1rem;
+  --header-hamburger-transform-origin: 1.1rem 0.1rem;
+  --header-nav-mobile-padding: var(--spacing-15) var(--spacing-20);
+  --header-nav-item-line-height-mobile: 5.8rem;
+  --header-nav-item-before-top: 30%;
+  --header-mobile-cta-width: 12.1rem;
+  --header-submenu-item-min-height: 5rem;
+  --header-submenu-item-line-height: 5rem;
+  --header-submenu-link-font-size: 1.28rem;
+  --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
+  --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+  /* ---- Cards Grid Block ---- */
+  --linz-heading2-font-size: var(--font-size-h2);
+  --linz-body-font-size: var(--font-size-body);
+
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
   --hero-behind-nav-min-height-desktop: 62rem;
@@ -895,50 +958,248 @@
 
 
 /* Linzess — Safety Bar Brand Overrides
-   Collapsed: white bg, purple top border + rounded corners, purple headings
-   Expanded:  white bg, purple uppercase headings, Bebas Neue display font
-*/
+   Source: linzess.com .linzess-safety-bar computed styles
+   Container: white bg, no border, rounded top corners, box-shadow
+   Typography: BasicCommercialLT-Black headings, BasicCommercialLT-Roman body
+   Toggle: purple icon color, no filled background */
+
+
+/* Container */
 
 
 .safety-bar {
   background-color: var(--background-color);
+  border: none;
   border-radius: var(--border-radius-safety-bar);
-  border-top: 3px solid var(--color-brand-primary);
   box-shadow: var(--shadow-safety-bar);
   color: var(--text-color);
-  font-family: var(--body-font-family);
+  font-family: var(--font-family-legal);
 }
 
 
-.safety-bar-abbreviated h2,
-.safety-bar-abbreviated h3 {
-  color: var(--color-text-heading);
-  font-family: var(--heading-font-family);
-}
-
-
-.safety-bar-abbreviated strong,
-.safety-bar-abbreviated b {
-  color: var(--color-text-heading);
-}
+/* Toggle button: icon-font circle plus/minus, purple, no border */
 
 
 .safety-bar-toggle {
-  border-color: var(--color-brand-primary);
+  border: none;
+  background-color: transparent;
+  color: var(--color-brand-primary);
+  font-family: var(--icon-font-family);
+  font-size: var(--spacing-20);
+  width: auto;
+  height: var(--spacing-24);
+  border-radius: 0;
+  top: var(--spacing-08);
+  right: 0;
+  padding: 0 var(--spacing-20);
+}
+
+
+.safety-bar-toggle[aria-expanded='true'] {
+  background-color: transparent;
+  border: none;
   color: var(--color-brand-primary);
 }
 
 
+.safety-bar-toggle::after {
+  content: '\e147';
+  font-family: var(--icon-font-family);
+  font-size: var(--spacing-20);
+  font-weight: normal;
+  font-style: normal;
+  color: var(--color-brand-primary);
+  transform: none;
+  display: inline-block;
+}
+
+
+.safety-bar-toggle[aria-expanded='true']::after {
+  content: '\e15c';
+  color: var(--color-brand-primary);
+  transform: none;
+}
+
+
+/* Collapsed: headings — BasicCommercialLT-Black, purple */
+
+
+.safety-bar-abbreviated h2,
+.safety-bar-abbreviated h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: normal;
+  color: var(--color-text-heading);
+  line-height: normal;
+  letter-spacing: -0.032rem;
+  margin: var(--spacing-10) 0 0;
+}
+
+
+/* Collapsed: paragraphs — BasicCommercialLT-Roman */
+
+
+.safety-bar-abbreviated p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+}
+
+
+/* Collapsed: bold text */
+
+
+.safety-bar-abbreviated strong,
+.safety-bar-abbreviated b {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: normal;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+}
+
+
+/* Collapsed: list items */
+
+
+.safety-bar-abbreviated ul {
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+
+.safety-bar-abbreviated li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+}
+
+
+.safety-bar-abbreviated li::marker {
+  color: var(--color-brand-primary);
+}
+
+
+/* Expanded: headings */
+
+
 .safety-bar.is-expanded .safety-bar-full h2,
 .safety-bar.is-expanded .safety-bar-full h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: normal;
   color: var(--color-text-heading);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
+  line-height: normal;
+  letter-spacing: -0.032rem;
+  margin: var(--spacing-10) 0 0;
 }
+
+
+/* Expanded: paragraphs */
+
+
+.safety-bar.is-expanded .safety-bar-full p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+}
+
+
+/* Expanded: bold text */
 
 
 .safety-bar.is-expanded .safety-bar-full strong,
 .safety-bar.is-expanded .safety-bar-full b {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: normal;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+}
+
+
+/* Expanded: list items */
+
+
+.safety-bar.is-expanded .safety-bar-full ul {
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+
+.safety-bar.is-expanded .safety-bar-full li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+}
+
+
+.safety-bar.is-expanded .safety-bar-full li::marker {
+  color: var(--color-brand-primary);
+}
+
+
+/* Expanded: purple subtitle paragraphs (all-bold lines like "Before you take..." and "Side Effects") */
+
+
+.safety-bar.is-expanded .safety-bar-full p > strong:only-child {
   color: var(--color-text-heading);
+}
+
+
+/* Expanded: links */
+
+
+.safety-bar.is-expanded .safety-bar-full a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: var(--line-height-legal);
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  letter-spacing: -0.028rem;
+}
+
+
+/* Expanded: superscript (®) */
+
+
+.safety-bar.is-expanded .safety-bar-full sup {
+  position: relative;
+  top: var(--spacing-04);
+  line-height: 0;
+}
+
+
+/* Maximized height override */
+
+
+.safety-bar.is-expanded .safety-bar-full {
+  max-height: calc(100vh - var(--spacing-192, 19.2rem));
+}
+
+
+/* Responsive */
+
+
+@media (width <= 600px) {
+  .safety-bar-abbreviated h3 {
+    font-size: var(--font-size-legal);
+  }
 }
