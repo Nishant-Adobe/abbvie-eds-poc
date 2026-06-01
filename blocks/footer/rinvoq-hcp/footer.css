@@ -1,4 +1,5 @@
-/** TODO  - Fix ESlint Issue */
+/* stylelint-disable no-descending-specificity, selector-not-notation, no-duplicate-selectors, media-feature-range-notation, declaration-block-no-redundant-longhand-properties */
+
 /* ============================================================
    Footer Block — Base styles
    Live-matching flat horizontal layout (matches all 6 AbbVie brand sites):
@@ -9,7 +10,9 @@
      --color-background-footer, --color-text-on-dark,
      --body-font-family, --font-size-footer
    ============================================================ */
+
 /* ── Block-scoped tokens (W3C DTCG: --footer-{type}-{semantic}-{variant}) ── */
+
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
   --footer-color-text: var(--color-text-on-dark, #fff);
@@ -26,11 +29,15 @@
   --footer-spacing-legal-gap: var(--spacing-60);
   --footer-spacing-bottom-gap: var(--spacing-12);
   --footer-logo-height: var(--spacing-22);
+  --footer-content-max-width: 1200px;
 }
+
 /* ── Container: flat, full-bleed ─────────────────────────────── */
+
 .footer-wrapper {
   margin-top: 0;
 }
+
 .footer {
   background-color: var(--footer-color-bg);
   color: var(--footer-color-text);
@@ -41,22 +48,32 @@
   border-top-left-radius: 0;
   max-width: none;
   margin: 0;
-  padding: var(--footer-spacing-padding-y) var(--footer-spacing-padding-x);
+  padding-block: var(--footer-spacing-padding-y);
+  padding-inline: max(
+    var(--footer-spacing-padding-x),
+    calc((100% - var(--footer-content-max-width)) / 2)
+  );
   position: relative;
   box-sizing: border-box;
 }
+
 .footer p {
   margin: 0;
 }
+
 .footer ul li a {
   text-decoration: none;
   color: inherit;
 }
+
 /* Auto-hide any empty column (depends on what's authored) */
+
 .footer .footer-column:empty {
   display: none;
 }
+
 /* ── Link rows ──────────────────────────────────────────────── */
+
 .footer .footer-columns {
   display: flex;
   flex-direction: column;
@@ -64,27 +81,35 @@
   margin: 0;
   padding: 0;
 }
+
 .footer .footer-column {
   width: 100%;
   margin: 0;
   text-align: center;
 }
+
 /* Primary column may hold both link rows (when 2 ULs authored in section 1) — stack them */
+
 .footer .footer-links-primary {
   display: flex;
   flex-direction: column;
   gap: var(--footer-spacing-row-gap);
 }
+
 /* Reset legacy "first p as label" styling */
+
 .footer .footer-column p:first-child {
   text-transform: none;
   margin-bottom: 0;
 }
+
 .footer .footer-links-tertiary p:last-child {
   margin-top: 0;
   text-align: center;
 }
+
 /* UL row — flex layout, gap-separated */
+
 .footer .footer-links-primary ul,
 .footer .footer-links-secondary ul,
 .footer .footer-links-tertiary ul {
@@ -102,6 +127,7 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
+
 .footer .footer-links-primary li,
 .footer .footer-links-secondary li,
 .footer .footer-links-tertiary li,
@@ -111,7 +137,9 @@
   margin: 0;
   padding: 0;
 }
+
 /* Link styling — high specificity to override legacy heading-style rules */
+
 .footer .footer-links-primary li a,
 .footer .footer-links-secondary li a,
 .footer .footer-links-tertiary li a {
@@ -124,6 +152,7 @@
   text-decoration: none;
   white-space: nowrap;
 }
+
 .footer .footer-links-primary li a:hover,
 .footer .footer-links-secondary li a:hover,
 .footer .footer-links-tertiary li a:hover {
@@ -131,7 +160,9 @@
   font-weight: var(--footer-font-weight);
   text-decoration: underline;
 }
+
 /* P-based authoring fallback (pipe-separated text) */
+
 .footer .footer-links-secondary p,
 .footer .footer-links-tertiary p {
   margin: 0;
@@ -143,7 +174,9 @@
   line-height: var(--footer-line-height);
   color: var(--footer-color-text);
 }
+
 /* External link icon */
+
 .footer-column li a.external-link::after {
   content: '';
   display: inline-flex;
@@ -156,7 +189,9 @@
   margin: 0 var(--spacing-04);
   vertical-align: middle;
 }
+
 /* ── Footer bottom: legal text + number + logo ──────────────── */
+
 .footer .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -165,6 +200,7 @@
   padding: 0;
   margin-top: var(--footer-spacing-legal-gap);
 }
+
 .footer .footer-bottom p {
   margin: 0;
   text-align: center;
@@ -174,7 +210,9 @@
   line-height: var(--footer-line-height);
   text-transform: none;
 }
+
 /* Anchors inside footer-bottom paragraphs inherit text styling */
+
 .footer .footer-bottom p a {
   color: var(--footer-color-link);
   font-family: inherit;
@@ -183,67 +221,84 @@
   line-height: inherit;
   text-decoration: underline;
 }
+
 .footer .footer-bottom p a:hover {
   text-decoration: none;
 }
-/* Strip button-pill styling when legal text is authored as a button (legacy) */
-.footer .footer-bottom a.button,
-.footer .footer-bottom .button-container a {
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  color: var(--footer-color-link) !important;
-  font-size: var(--footer-font-size) !important;
-  font-weight: var(--footer-font-weight) !important;
-  text-decoration: underline !important;
-  text-transform: none !important;
-  display: inline !important;
-  white-space: normal !important;
-  line-height: var(--footer-line-height) !important;
+
+/* Strip button-pill styling when legal text is authored as a button (legacy).
+   Selector specificity (0,4,1) beats global a.button rules in styles/styles.css
+   without needing !important. */
+
+.footer-wrapper .footer .footer-bottom a.button,
+.footer-wrapper .footer .footer-bottom .button-container a {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  color: var(--footer-color-link);
+  font-size: var(--footer-font-size);
+  font-weight: var(--footer-font-weight);
+  text-decoration: underline;
+  text-transform: none;
+  display: inline;
+  white-space: normal;
+  line-height: var(--footer-line-height);
 }
-.footer .footer-bottom a.button:hover,
-.footer .footer-bottom .button-container a:hover {
-  text-decoration: none !important;
+
+.footer-wrapper .footer .footer-bottom a.button:hover,
+.footer-wrapper .footer .footer-bottom .button-container a:hover {
+  text-decoration: none;
 }
+
 /* Legal number — small text. Detected by .legal-number class OR by being
    the 2nd-to-last child (paragraph immediately before the logo picture) */
+
 .footer .footer-bottom > p.legal-number,
 .footer .footer-bottom > p:nth-last-child(2):not(:has(picture)):not(:has(img)) {
   font-size: var(--footer-font-size-small);
 }
+
 /* Logo — centered mobile, right-aligned desktop, white via filter (raster) or fill (SVG) */
+
 .footer .footer-bottom p:has(picture),
 .footer .footer-bottom p:has(img) {
   margin: var(--footer-spacing-bottom-gap) 0 0;
   text-align: center;
 }
+
 .footer .footer-bottom p:has(picture) img,
 .footer .footer-bottom p:has(img) img {
   height: var(--footer-logo-height);
   width: auto;
   mix-blend-mode: screen;
 }
+
 .footer .footer-bottom svg {
   height: var(--footer-logo-height);
   width: auto;
   fill: var(--footer-color-text);
 }
+
 /* Legacy ul fallback inside footer-bottom */
+
 .footer .footer-bottom ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
 }
+
 .footer .footer-bottom ul li,
 .footer .footer-bottom ul li a {
   color: var(--footer-color-text);
   font-size: var(--footer-font-size);
   text-decoration: none;
 }
+
 /* ── Desktop ≥601px (matches live media query) ──────────────── */
+
 @media (min-width: 601px) {
   .footer .footer-links-primary ul,
   .footer .footer-links-secondary ul,
@@ -284,6 +339,7 @@
     margin: 0;
   }
 }
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -295,11 +351,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
+
 @custom-media --bp-tablet (min-width: 744px);
+
 @custom-media --bp-desktop (min-width: 1024px);
+
 @custom-media --bp-wide (min-width: 1440px);
+
 :root {
 /* -----------------------------------------------------------
    PX → REM Conversion Helper
@@ -343,9 +404,21 @@
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-border-light: #ddd;
+  --color-focus: var(--link-color);
+  --color-white-85: rgb(255 255 255 / 85%);
+  --color-shadow-sm: rgb(0 0 0 / 12%);
+  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -366,6 +439,8 @@
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
+  --color-warning-bg: #fff4c2;
+  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -432,12 +507,15 @@
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
+  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
+  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
+  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -453,7 +531,9 @@
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
+  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
+  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -463,6 +543,7 @@
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
+  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
   --spacing-48: 4.8rem;
   --spacing-50: 5rem;
@@ -484,10 +565,15 @@
   --spacing-110: 11rem;
   --spacing-120: 12rem;
   --spacing-124: 12.4rem;
+  --spacing-155: 15.5rem;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
+  --spacing-200: 20rem;
+  --spacing-225: 22.5rem;
+  --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
+  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -519,6 +605,12 @@
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
+  --border-radius-l: 1.6rem;
+
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
 
   /* z-index */
   --z-index-negative: -1;
@@ -527,11 +619,18 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-60: 60;
+
+  /* Opacity */
+  --opacity-full: 1;
+  --z-index-anchor-nav: 100;
+  --z-index-safety-bar: 500;
 
   /* Flex/Grid order */
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
+  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -539,6 +638,7 @@
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -549,8 +649,12 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-900: 900;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -571,6 +675,7 @@
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
+  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -580,13 +685,20 @@
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
+  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
 
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --transition-easing-in-out: ease-in-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -635,7 +747,7 @@
 
   /* Form Fonts */
 
-  /* ---- Brand Explorer Block (defaults) ---- */
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --be-color-bg: var(--background-color);
   --be-color-text: var(--text-color);
   --be-color-text-light: #21406d;
@@ -648,6 +760,7 @@
   --be-color-btn-hover: #1c2d49;
   --be-color-btn-no-border: #555;
   --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
   --be-font-body: var(--body-font-family);
   --be-font-size-body: 14px;
   --be-font-size-small: 11px;
@@ -657,7 +770,7 @@
   --be-line-height-body: 16px;
   --be-line-height-small: 14px;
 
-  /* ---- Clinical Data Panel Block (defaults) ---- */
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
   --cdp-color-text: var(--text-color);
   --cdp-color-heading: var(--text-color);
   --cdp-color-accent: var(--link-color);
@@ -680,6 +793,7 @@
   --cdp-max-width: 1180px;
   --cdp-letter-spacing-title: 0.02em;
 }
+
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -687,6 +801,7 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
+
 @media (--bp-desktop) {
   :root {
     --border-top-radius: 8rem;
@@ -694,11 +809,13 @@
     --hero-tall-image-container-height: 60.8rem;
   }
 }
+
 /* ============================================================
    RINVOQ HCP — Brand Token Overrides
    Source: rinvoqhcp.com/dermatology (Platform C)
    Font: Graphik family
    ============================================================ */
+
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #90124a;
@@ -716,6 +833,7 @@
   --color-mulberry: #b15980;
   --color-heather: #d3a0b7;
   --color-gold: #ffd100;
+  --color-gold-dark: #ba9900;
   --color-light-gold: rgba(255, 209, 0, 0.55);
   --color-lemon: #ffe673;
   --color-butter: #fff1b3;
@@ -741,6 +859,12 @@
   --color-background-footer: #17181b;
   --color-background-safety-bar: #f5f5f5;
 
+  /* ---- Color: Accordion ---- */
+  --color-accordion-text: #25282a;
+  --color-accordion-accent: #c8373e;
+  --color-accordion-separator: #46484a;
+  --color-accordion-tab-inactive: #767688;
+
   /* ---- Color: Border ---- */
   --color-border-default: #c9c9ca;
   --color-border-safety: #ffd100;
@@ -760,6 +884,8 @@
   --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
   --font-family-semibold: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
   --icon-font-family: 'abbv-iconFont';
+  /* Handwriting accent used in no-padding hero variant — no local font file, loads from CDN/host */
+  --font-family-handwriting: 'Upa Handwriting', serif;
 
   /* ---- Font: Size ---- */
   --font-size-body: 16px;
@@ -799,7 +925,41 @@
   /* ---- Button: Primary ---- */
   --button-primary-color: #fff;
   --button-primary-bg: #90124a;
+  --button-primary-border: transparent;
   --button-primary-padding: 16px 54px 16px 32px;
+  --button-primary-font-size: 0.875rem;
+  --button-primary-font-weight: 700;
+  --button-primary-hover-bg: #25282a;
+  --button-primary-hover-color: #fff;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: transparent;
+  --button-secondary-color: #90124a;
+  --button-secondary-border: #90124a;
+  --button-secondary-padding: 16px 54px 16px 32px;
+  --border-radius-button-secondary: 100px;
+  --button-secondary-hover-bg: #90124a;
+  --button-secondary-hover-color: #fff;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: transparent;
+  --button-tertiary-color: #46484a;
+  --button-tertiary-border: #c9c9ca;
+  --button-tertiary-padding: 12px 24px;
+  --button-tertiary-font-size: 0.875rem;
+  --border-radius-button-tertiary: 100px;
+  --button-tertiary-hover-bg: #46484a;
+  --button-tertiary-hover-color: #fff;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #90124a;
+  --button-plain-weight: 600;
+  --button-plain-hover-color: #25282a;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #c9c9ca;
+  --toggle-bg-on: #90124a;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
   --link-color: #90124a;
@@ -807,7 +967,16 @@
   /* ---- Brand Explorer Block ---- */
   --be-color-text: #46484a;
   --be-color-text-light: #46484a;
-  --be-color-bar-bg: #25282a;
+  --be-color-bar-bg: #000;
+  --be-bar-font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --be-bar-font-weight: 600;
+  --be-bar-font-size: 1.3rem;
+  --be-bar-line-height: 1.728rem;
+  --be-color-rinvoq: #ffd41d;
+  --be-color-rinvoq-hover: #b8860b;
+  --be-color-skyrizi: #00a8e1;
+  --be-color-skyrizi-hover: #0088b5;
+  --be-color-humira: #931947;
   --be-font-body: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
   --be-font-heading: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
   --be-font-weight-bold: 600;
@@ -887,7 +1056,46 @@
   --formulary-label-left: 12px;
   --formulary-label-line-height: 16px;
   --formulary-chevron-bg-size: 14px;
+
+  /* ---- Footer ---- */
+  --footer-links-max-width: 33.5rem;
+
+  /* ---- Header block ---- */
+  --header-logo-width: 15rem;
+  --header-content-max-width: 115rem;
+  --header-submenu-width: 22rem;
+  --header-submenu-border-width: var(--spacing-03);
+  --header-nav-line-height: 1.3;
+  --header-search-pill-width: 36rem;
+  --header-search-pill-min-width: 20rem;
+  --header-wrapper-max-width: 122rem;
+  --header-nav-sections-height: 5.1rem;
+  /* ---- Section Nav ---- */
+  --shadow-section-nav-stuck: 0 2px 1em rgb(0 0 0 / 50%);
+  --shadow-focus-plum: 0 0 var(--spacing-05) var(--spacing-05) var(--color-plum);
+  /* ---- Hero: no-padding variant layout ---- */
+  --hero-img-height-mobile: 375px;
+  --hero-no-padding-min-height: 340px;
+  --hero-text-max-width: 1180px;
+  --hero-text-padding: 64px 20px;
+  --hero-text-margin-top: 20px;
+  --hero-img-width-desktop: 1440px;
+
+  /* ---- Hero: no-padding h1 typography ---- */
+  --hero-h1-line-height: 0.9;
+  --hero-h1-font-size-desktop: 40px;
+
+  /* ---- Hero: no-padding em (handwriting accent) typography ---- */
+  --hero-em-font-size-mobile: 58px;
+  --hero-em-font-size-desktop: 100px;
+  --hero-em-line-height: 0.8;
+  --hero-em-letter-spacing: -4px;
+
+  /* ---- Hero: stroke underline decoration ---- */
+  --hero-stroke-height: 22px;
+  --hero-stroke-bottom-offset: -15px;
 }
+
 /* ============================================================
    RINVOQ HCP — Footer brand overrides
    Live: www.rinvoqhcp.com/dermatology
@@ -896,8 +1104,9 @@
    - 48px gap between legal text and legal-number/logo row
    - Border-top separator between link rows
    ============================================================ */
-/* stylelint-disable */
+
 /* Brand token overrides */
+
 .footer-wrapper {
   /* Live: .abbv-footer ul.abbv-footer-horizontal li a { color: var(--silver); } */
   --footer-color-text: var(--color-silver);
@@ -907,21 +1116,19 @@
 
   /* Live: font-family: "Graphik Semibold", "Helvetica Neue", arial, helvetica, sans-serif */
   --footer-font-family: var(--font-family-semibold);
-
-  --footer-content-max-width: 1200px;
 }
+
 /* Live: .abbv-footer { padding: 0 20px } — no top vertical padding;
    add bottom padding so logo/legal-number don't touch the footer's bottom edge.
-   bg stays edge-to-edge, content is constrained to a centered max-width via padding-inline max() */
+   Centering (max-width + padding-inline max()) is inherited from base. */
+
 .footer {
   padding-block: 0 var(--spacing-20);
-  padding-inline: max(
-    var(--footer-spacing-padding-x),
-    calc((100% - var(--footer-content-max-width)) / 2)
-  );
 }
+
 /* Live: each <ul> has padding: 24px 0 + margin: 4px 0 0;
    mobile row-wrap centers links within --footer-links-max-width */
+
 .footer .footer-links-primary ul {
   padding: var(--spacing-24) 0;
   margin: var(--spacing-04) 0 0;
@@ -931,25 +1138,34 @@
   margin-inline: auto;
   column-gap: var(--spacing-16);
 }
+
 /* Reset the column's flex gap — UL padding handles vertical spacing */
+
 .footer .footer-links-primary {
   gap: 0;
 }
+
 /* Border separator on second UL (matches live `abbv-footer-border-top`) */
+
 .footer .footer-links-primary ul + ul {
   border-top: var(--separator-height-1) solid var(--color-steel);
 }
+
 /* Footer bottom: grid layout — smaller font, legal/logo in two-column row */
+
 .footer .footer-bottom {
   /* Live: .abbv-legal-text { font-size: 0.75rem } = 12px */
   --footer-font-size: var(--footer-font-size-small);
+
   display: grid;
   grid-template-columns: 1fr auto;
   row-gap: var(--spacing-24);
   align-items: center;
   margin-top: 0;
 }
+
 /* Indication code left + logo right in same row via grid */
+
 .footer .footer-bottom > p:has(picture),
 .footer .footer-bottom > p:has(img) {
   grid-column: 2;
@@ -961,6 +1177,7 @@
 }
 
 /* Compact line-height on first legal paragraph (matches live 1.2rem) */
+
 .footer .footer-bottom > p:first-of-type {
   line-height: var(--spacing-12);
 }
@@ -977,6 +1194,7 @@
 }
 
 /* ── Desktop (≥ 768px): reset mobile-only overrides ────────── */
+
 @media (width >= 768px) {
   /* Remove 335px mobile constraint; base CSS handles row-wrap for links */
   .footer .footer-links-primary ul {

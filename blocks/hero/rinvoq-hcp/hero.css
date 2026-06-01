@@ -674,9 +674,9 @@ color: inherit;
   opacity: 1;
 }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.full :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
 /* stylelint-disable-next-line no-descending-specificity */
-.hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
+.hero.solid :where(a).button { color: var(--color-text-on-dark, var(--color-white)); }
 /* =====================================================
    Hero Dual-CTA Variant — two side-by-side CTAs
    Authoring: use block name "Hero (dual-cta)"
@@ -699,7 +699,7 @@ color: inherit;
    ===================================================== */
 .hero .hero-eyebrow {
   display: block;
-  font-size: var(--font-size-body-small, 11px);
+  font-size: var(--font-size-body-small, 0.6875rem);
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-heading);
   text-transform: uppercase;
@@ -717,7 +717,7 @@ color: inherit;
   background-color: var(--hero-indication-bg);
   color: var(--color-white);
   padding: var(--spacing-16, 1rem) var(--spacing-24, 1.5rem);
-  font-size: var(--font-size-body-small, 13px);
+  font-size: var(--font-size-body-small, 0.8125rem);
   line-height: 1.5;
   text-align: center;
   box-sizing: border-box;
@@ -734,7 +734,7 @@ color: inherit;
   position: absolute;
   bottom: var(--spacing-08, 0.8rem);
   right: var(--spacing-08, 0.8rem);
-  font-size: var(--font-size-body-small, 11px);
+  font-size: var(--font-size-body-small, 0.6875rem);
   color: var(--color-text-on-dark-80);
   font-style: italic;
   pointer-events: none;
@@ -760,7 +760,7 @@ color: inherit;
 .hero.text-light h3,
 .hero.text-light p,
 .hero.text-light .hero-eyebrow {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
 }
 .hero.text-dark h1,
 .hero.text-dark h2,
@@ -829,7 +829,7 @@ color: inherit;
   display: block;
 }
 .hero.full h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   font-size: var(--font-size-h1-hero, var(--font-size-h1, 2.6rem));
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
@@ -916,7 +916,7 @@ color: inherit;
   display: block;
 }
 .hero.compact h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   font-size: var(--font-size-h2, 2rem);
   line-height: var(--line-height-h2, 2.5rem);
 }
@@ -1064,7 +1064,7 @@ color: inherit;
   display: block;
 }
 .hero.centered h1 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
   text-align: center;
 }
 .hero.centered p {
@@ -1160,7 +1160,7 @@ color: inherit;
 .hero.video .hero-text-container {
   display: block;
 }
-.hero.video h1 { color: var(--color-text-on-dark, #fff); }
+.hero.video h1 { color: var(--color-text-on-dark, var(--color-white)); }
 .hero.video p {
   color: var(--color-text-on-dark-90);
 }
@@ -1171,10 +1171,6 @@ color: inherit;
 @media (width < 744px) {
   .hero.video {
     min-height: var(--hero-video-min-height-mobile);
-  }
-
-  .hero.video .hero-video-bg {
-    display: none;
   }
 
   .hero.video > :where(div):nth-child(2) {
@@ -1238,7 +1234,7 @@ color: inherit;
 }
 .hero.solid h1,
 .hero.solid h2 {
-  color: var(--color-text-on-dark, #fff);
+  color: var(--color-text-on-dark, var(--color-white));
 }
 .hero.solid p {
   color: var(--color-text-on-dark-90);
@@ -1330,6 +1326,12 @@ color: inherit;
   --color-charcoal: #25282a;
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-border-light: #ddd;
+  --color-focus: var(--link-color);
+  --color-white-85: rgb(255 255 255 / 85%);
+  --color-shadow-sm: rgb(0 0 0 / 12%);
+  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -1354,6 +1356,8 @@ color: inherit;
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
+  --color-warning-bg: #fff4c2;
+  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -1420,12 +1424,15 @@ color: inherit;
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
+  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
+  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
+  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -1441,7 +1448,9 @@ color: inherit;
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
+  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
+  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -1451,6 +1460,7 @@ color: inherit;
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
+  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
   --spacing-48: 4.8rem;
   --spacing-50: 5rem;
@@ -1476,9 +1486,11 @@ color: inherit;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
   --spacing-200: 20rem;
+  --spacing-225: 22.5rem;
   --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
+  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -1510,6 +1522,12 @@ color: inherit;
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
+  --border-radius-l: 1.6rem;
+
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
 
   /* z-index */
   --z-index-negative: -1;
@@ -1518,11 +1536,18 @@ color: inherit;
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-60: 60;
+
+  /* Opacity */
+  --opacity-full: 1;
+  --z-index-anchor-nav: 100;
+  --z-index-safety-bar: 500;
 
   /* Flex/Grid order */
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
+  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -1530,6 +1555,7 @@ color: inherit;
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -1540,6 +1566,7 @@ color: inherit;
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-900: 900;
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -1565,6 +1592,7 @@ color: inherit;
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
+  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -1574,13 +1602,20 @@ color: inherit;
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
+  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
 
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --transition-easing-in-out: ease-in-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -1845,7 +1880,11 @@ color: inherit;
   /* ---- Brand Explorer Block ---- */
   --be-color-text: #46484a;
   --be-color-text-light: #46484a;
-  --be-color-bar-bg: #25282a;
+  --be-color-bar-bg: #000;
+  --be-bar-font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --be-bar-font-weight: 600;
+  --be-bar-font-size: 1.3rem;
+  --be-bar-line-height: 1.728rem;
   --be-color-rinvoq: #ffd41d;
   --be-color-rinvoq-hover: #b8860b;
   --be-color-skyrizi: #00a8e1;
@@ -1934,6 +1973,19 @@ color: inherit;
   /* ---- Footer ---- */
   --footer-links-max-width: 33.5rem;
 
+  /* ---- Header block ---- */
+  --header-logo-width: 15rem;
+  --header-content-max-width: 115rem;
+  --header-submenu-width: 22rem;
+  --header-submenu-border-width: var(--spacing-03);
+  --header-nav-line-height: 1.3;
+  --header-search-pill-width: 36rem;
+  --header-search-pill-min-width: 20rem;
+  --header-wrapper-max-width: 122rem;
+  --header-nav-sections-height: 5.1rem;
+  /* ---- Section Nav ---- */
+  --shadow-section-nav-stuck: 0 2px 1em rgb(0 0 0 / 50%);
+  --shadow-focus-plum: 0 0 var(--spacing-05) var(--spacing-05) var(--color-plum);
   /* ---- Hero: no-padding variant layout ---- */
   --hero-img-height-mobile: 375px;
   --hero-no-padding-min-height: 340px;

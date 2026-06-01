@@ -410,7 +410,11 @@
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
   --color-border: #e0e0e0;
+  --color-border-light: #ddd;
   --color-focus: var(--link-color);
+  --color-white-85: rgb(255 255 255 / 85%);
+  --color-shadow-sm: rgb(0 0 0 / 12%);
+  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -435,6 +439,8 @@
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
+  --color-warning-bg: #fff4c2;
+  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -501,12 +507,15 @@
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
+  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
+  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
+  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -522,7 +531,9 @@
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
+  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
+  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -532,6 +543,7 @@
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
+  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
   --spacing-48: 4.8rem;
   --spacing-50: 5rem;
@@ -557,9 +569,11 @@
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
   --spacing-200: 20rem;
+  --spacing-225: 22.5rem;
   --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
+  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -591,6 +605,7 @@
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
+  --border-radius-l: 1.6rem;
 
   /* Border Width */
   --border-width-thin: 1px;
@@ -604,12 +619,18 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-60: 60;
+
+  /* Opacity */
+  --opacity-full: 1;
   --z-index-anchor-nav: 100;
+  --z-index-safety-bar: 500;
 
   /* Flex/Grid order */
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
+  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -628,6 +649,7 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-900: 900;
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -653,6 +675,7 @@
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
+  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -662,14 +685,20 @@
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
+  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
 
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --transition-easing-in-out: ease-in-out;
   --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -833,8 +862,8 @@
     --color-safety-bar-border: #999;
 
     /* ---- Font: Family ---- */
-    --body-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
-    --heading-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
+    --body-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    --heading-font-family: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
     --heading-font-family-bold: 'Univers LT W01_67 Bold_1476016', 'Arial Narrow', sans-serif;
     --icon-font-family: 'abbv-iconFont';
 
@@ -918,7 +947,9 @@
     --link-color: #005272;
 
     /* ---- Gradient ---- */
-    --gradient-fade: linear-gradient(
+    --gradient-hero-landing: linear-gradient(to right, var(--color-background-footer) 0%, rgb(0 59 82 / 30%) 100%);
+  --gradient-hero-full: linear-gradient(to right, var(--color-background-footer) 0%, rgb(0 82 114 / 25%) 60%, transparent 100%);
+  --gradient-fade: linear-gradient(
         to top,
         rgba(255, 255, 255, 0) 0px,
         rgb(243, 243, 243) 100%
@@ -933,8 +964,8 @@
     --be-color-skyrizi: #00a8e1;
     --be-color-skyrizi-hover: #0088b5;
     --be-color-humira: #931947;
-    --be-font-body: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
-    --be-font-heading: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
+    --be-font-body: "Univers LT W01_57 Condensed", sans-serif;
+    --be-font-heading: "Univers LT W01_57 Condensed", sans-serif;
 
     /* ---- Formulary Lookup ---- */
     --color-formulary-text: #21406d;
@@ -1129,9 +1160,16 @@
   --spacing-24: 24px;
 
   /* ---- Brand Explorer Block ---- */
+  --font-family-medium: 'Univers Regular', 'Arial Narrow', sans-serif;
+  --font-family-semibold: 'Univers Regular', 'Arial Narrow', sans-serif;
+  --font-size-09: 0.9rem;
   --be-color-text: #21406d;
   --be-color-text-light: #21406d;
   --be-color-bar-bg: #25282a;
+  --be-bar-font-family: 'Univers Regular', 'Arial Narrow', sans-serif;
+  --be-bar-font-weight: 400;
+  --be-bar-font-size: 0.9rem;
+  --be-bar-line-height: 1.6rem;
   --be-font-body: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
   --be-font-heading: 'Univers LT W01_57 Condensed', 'Arial Narrow', sans-serif;
 
@@ -1201,8 +1239,52 @@
   --formulary-disclaimer-width: 700px;
   --formulary-recaptcha-size: 11px;
 
+  /* ---- Header block ---- */
+  --header-logo-width: 15.7rem;
+  --header-logo-width-mobile: 13rem;
+  --header-logo-max-height-mobile: 5rem;
+  --nav-height-mobile: var(--header-brand-row-height);
+  --header-content-max-width: 118rem;
+  --header-submenu-width: 22rem;
+  --color-skyrizi-navy: var(--color-background-footer);
+  --header-nav-sections-z-index: 9;
+  --header-mobile-nav-separator: rgb(0 0 0 / 20%);
+  --header-search-panel-top: var(--spacing-full);
+  --header-search-panel-left: 65%;
+  --header-search-panel-min-height: 6.2rem;
+  --header-search-panel-radius: 0.5rem;
+  --header-search-input-min-width: 28rem;
+  --header-nav-line-height: 1;
+  --header-nav-separator: rgb(255 255 255 / 20%);
+  --header-scroll-bg: rgb(255 255 255 / 95%);
+  --header-nav-blue: rgb(0 118 175);
+  --color-nav-gradient-start: #00a6db;
+  --color-nav-gradient-end: #c9effc;
+  --header-mobile-nav-gradient: linear-gradient(180deg, var(--color-nav-gradient-start), var(--color-nav-gradient-end));
+  --header-hamburger-letter-spacing: 0.05rem;
+  --header-utility-letter-spacing: 0.1em;
+  --header-nav-underline-bottom: calc(var(--spacing-09) * -1);
+  --header-brand-row-height: 8rem;
+  --header-brand-col-width: calc(var(--header-logo-width) + var(--spacing-12));
+  --header-search-panel-width: 28rem;
+  --header-search-panel-border: 0.3rem solid var(--color-text-black);
+  --header-utility-dropdown-border-color: var(--color-brand-accent-blue);
+  --header-utility-dropdown-border-width: 0.2rem;
+  --header-utility-dropdown-radius: var(--border-radius-m);
+  --header-utility-dropdown-min-width: 28rem;
+  --header-utility-dropdown-notch-outer: 0.9rem;
+  --header-utility-dropdown-notch-inner: 0.7rem;
+  --header-utility-dropdown-divider: rgb(210 225 240);
+  --header-utility-dropdown-item-padding: var(--spacing-20) var(--spacing-16);
+  --color-background-page: #1ba2da;
+  --header-nav-gap: var(--spacing-30);
+  --header-nav-underline-width: 80%;
+  --header-chevron-size: var(--spacing-16);
+  --header-submenu-width-mega: 55rem;
+  --header-wrapper-max-width: 122rem;
+  --color-nav-submenu-hover-bg: #baecff;
+  --header-flyout-box-shadow: 0 var(--spacing-03) var(--spacing-10) 0 rgb(0 0 0 / 15%);
   /* ---- Skyrizi HCP: Image Compare ---- */
-  --color-skyrizi-navy: #071d49;
   --color-skyrizi-navy-dark: #051331;
   --color-skyrizi-blue: #1398d1;
   --color-skyrizi-blue-rule: #1ba2da;
@@ -1216,6 +1298,41 @@
 
   /* ---- Section Nav ---- */
   --shadow-section-nav-stuck: 0 2px 12px rgb(0 0 0 / 30%);
+  /* ---- Hero: layout ---- */
+  --hero-img-min-height: 500px;
+  --hero-text-top-offset: 155px;
+  --hero-video-min-height: 450px;
+
+  /* ---- Hero: h1 banner (navy box with teal right-border) ---- */
+  --hero-h1-bg: #091d49;
+  --hero-h1-border-right-color: var(--color-skyrizi-blue);
+  --hero-h1-border-right-width: 20px;
+  --hero-h1-padding: 14px 11px 14px 65px;
+  --hero-h1-line-height: 1;
+  --hero-h1-font-size-mobile: 12px;
+  --hero-h1-font-size-tablet: 20px;
+  --hero-h1-width-tablet: 50%;
+
+  /* ---- Hero: h1 strong (large display number) ---- */
+  --hero-h1-strong-font-size-mobile: 22px;
+  --hero-h1-strong-font-size-tablet: 30px;
+
+  /* ---- Hero: h1 em strong (highlight colour) ---- */
+  --hero-h1-em-color: var(--color-background-blue);
+
+  /* ---- Breadcrumb (tab-nav variant) ---- */
+  --breadcrumb-font-size: 12px;
+  --breadcrumb-font-size-tablet: 10px;
+  --breadcrumb-height: 38px;
+  --breadcrumb-max-width: 1160px;
+  --breadcrumb-max-width-tablet: 1035px;
+  --breadcrumb-border-radius: 3px;
+  --breadcrumb-item-padding: 4px 0;
+  --breadcrumb-item-margin: 0 10px;
+  --breadcrumb-active-border-width: 2px;
+  --breadcrumb-color-text: var(--color-text-black);
+  --breadcrumb-color-active-border: var(--color-brand-accent-cyan);
+  --breadcrumb-color-bg: var(--background-color);
 }
 
 /* ============================================================
