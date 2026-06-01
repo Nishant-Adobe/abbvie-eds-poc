@@ -1,3 +1,4 @@
+/* global WebImporter */
 export default function parse(element, { document }) {
   const heading = element.querySelector('.heading-2, h2, h3, p.heading-2');
   const ctaLink = element.querySelector('a[href]');

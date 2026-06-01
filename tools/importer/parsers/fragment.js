@@ -1,3 +1,4 @@
+/* global WebImporter */
 export default function parse(element, { document }) {
   const link = document.createElement('a');
   link.href = '/linzess/fragments/safety-bar';

@@ -1,3 +1,4 @@
+/* global WebImporter */
 export default function parse(element, { document }) {
   const items = element.querySelectorAll('.abbv-flex-item-v2, .abbv-col');
   const cells = [['Columns']];
@@ -8,8 +9,12 @@ export default function parse(element, { document }) {
       const col = document.createElement('div');
       const img = item.querySelector('picture') || item.querySelector('img');
       const headingEl = item.querySelector('.heading-2, h2, h3');
-      const headingText = headingEl ? headingEl.textContent.trim()
-        : (item.querySelector('p strong') ? item.querySelector('p strong').textContent.trim() : '');
+      let headingText = '';
+      if (headingEl) {
+        headingText = headingEl.textContent.trim();
+      } else if (item.querySelector('p strong')) {
+        headingText = item.querySelector('p strong').textContent.trim();
+      }
       const bodyPs = item.querySelectorAll('p:not(.heading-2)');
       const cta = item.querySelector('a[href]');
 

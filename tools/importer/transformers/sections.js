@@ -1,3 +1,4 @@
+/* global WebImporter */
 export default function transform(hookName, element, payload) {
   if (hookName === 'afterTransform') {
     const { document } = payload;
@@ -9,7 +10,7 @@ export default function transform(hookName, element, payload) {
     });
 
     // Add Safety Bar block at the end with verbatim ISI content
-    // The safety-bar block model has 3 fields: collapsedContent, collapsedContentCol2, expandedContent
+    // Model: collapsedContent, collapsedContentCol2, expandedContent
     const isiRegion = document.querySelector('[aria-label="Important Safety Information"]');
     if (isiRegion) {
       const useSection = isiRegion.querySelector('.abbv-inline-use, [id="abbv_use_statement"] + div');

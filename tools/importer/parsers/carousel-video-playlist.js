@@ -1,5 +1,6 @@
+/* global WebImporter */
 export default function parse(element, { document }) {
-  // Find videos in both homepage format (flexbox-video-cards) and inner page format (playlist carousel)
+  // Find videos in both homepage and inner page format
   let videoPlayers = element.querySelectorAll('[data-video-id]');
   // Deduplicate by video ID (some pages have nested video-js elements)
   const seen = new Set();
@@ -19,14 +20,14 @@ export default function parse(element, { document }) {
   const cells = [['Carousel Video Playlist']];
 
   // Config rows
-  cells.push(['']);  // sectionHeading
-  cells.push(['']);  // sectionDescription
+  cells.push(['']);// sectionHeading
+  cells.push(['']);// sectionDescription
   cells.push(['0']); // maxVisible
   cells.push([account]); // accountId
-  cells.push(['']);  // playlistId
+  cells.push(['']);// playlistId
   cells.push([player]); // playerId
   cells.push(['false']); // playMode
-  cells.push(['']);  // empty
+  cells.push(['']);// empty
 
   // Item rows
   videoPlayers.forEach((vp) => {
