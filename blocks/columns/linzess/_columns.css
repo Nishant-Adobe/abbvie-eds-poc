@@ -1,9 +1,11 @@
 @import '../columns.css';
 
-/* Linzess — Columns Brand Overrides */
+/* Linzess — Columns Brand Overrides
+   Note: Card backgrounds only apply via custom class "card-style"
+   to avoid coloring ALL columns blocks on the page.
+   Set custom class in UE on the columns block that needs card styling. */
 
-/* Card-style columns: icon top, text centered below */
-.columns > div > div {
+.columns.card-style > div > div {
   border-radius: var(--linz-rounded-corner, 16px);
   padding: var(--spacing-32, 32px);
   text-align: center;
@@ -12,45 +14,45 @@
   align-items: center;
 }
 
-.columns > div > div picture {
+.columns.card-style > div > div picture {
   margin-bottom: 16px;
   max-width: 110px;
 }
 
-.columns > div > div picture img {
+.columns.card-style > div > div picture img {
   max-width: 100%;
   height: auto;
 }
 
 /* First card: dark purple */
-.columns > div > div:first-child {
+.columns.card-style > div > div:first-child {
   background-color: var(--color-brand-primary, #422e83);
   color: var(--color-text-on-dark, #fff);
 }
 
-.columns > div > div:first-child p,
-.columns > div > div:first-child strong {
+.columns.card-style > div > div:first-child p,
+.columns.card-style > div > div:first-child strong {
   color: var(--color-text-on-dark, #fff);
 }
 
-.columns > div > div:first-child a.button {
+.columns.card-style > div > div:first-child a.button {
   background-color: var(--linz-light-purple, #d9d7f9);
   color: var(--color-brand-primary, #422e83);
   border: none;
 }
 
 /* Second card: light purple */
-.columns > div > div:nth-child(2) {
+.columns.card-style > div > div:nth-child(2) {
   background-color: var(--linz-light-purple, #d9d7f9);
   color: var(--color-brand-primary, #422e83);
 }
 
-.columns > div > div:nth-child(2) p,
-.columns > div > div:nth-child(2) strong {
+.columns.card-style > div > div:nth-child(2) p,
+.columns.card-style > div > div:nth-child(2) strong {
   color: var(--color-brand-primary, #422e83);
 }
 
-.columns > div > div:nth-child(2) a.button {
+.columns.card-style > div > div:nth-child(2) a.button {
   background-color: var(--color-brand-primary, #422e83);
   color: var(--color-text-on-dark, #fff);
   border: none;
