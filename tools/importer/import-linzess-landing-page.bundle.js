@@ -153,10 +153,18 @@ var CustomImportScript = (() => {
 
   // tools/importer/parsers/carousel-video-playlist.js
   function parse5(element, { document }) {
-    const videoPlayers = element.querySelectorAll("[data-video-id]");
+    let videoPlayers = element.querySelectorAll("[data-video-id]");
+    const seen = /* @__PURE__ */ new Set();
+    videoPlayers = Array.from(videoPlayers).filter((vp) => {
+      const id = vp.getAttribute("data-video-id");
+      if (!id || seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    });
     const firstVideo = videoPlayers[0];
     const account = firstVideo ? firstVideo.getAttribute("data-account") || "1029485116001" : "1029485116001";
     const player = firstVideo ? firstVideo.getAttribute("data-player") || "Mcp9TXMkPT" : "Mcp9TXMkPT";
+    if (videoPlayers.length === 0) return;
     const cells = [["Carousel Video Playlist"]];
     cells.push([""]);
     cells.push([""]);
@@ -164,12 +172,12 @@ var CustomImportScript = (() => {
     cells.push([account]);
     cells.push([""]);
     cells.push([player]);
-    cells.push([""]);
+    cells.push(["false"]);
     cells.push([""]);
     videoPlayers.forEach((vp) => {
       const videoId = vp.getAttribute("data-video-id") || "";
       if (!videoId) return;
-      const card = vp.closest(".abbv-flex-item-v2") || vp.closest(".flexboxitem-v2") || vp.parentElement;
+      const card = vp.closest(".abbv-flex-item-v2") || vp.closest(".flexboxitem-v2") || vp.closest(".abbv-video-player") || vp.parentElement;
       const titleEl = card ? card.querySelector("h3, .vjs-dock-title") : null;
       const title = titleEl ? titleEl.textContent.trim() : "";
       const transcriptLink = card ? card.querySelector('a[href*="transcript"]') : null;
@@ -177,7 +185,12 @@ var CustomImportScript = (() => {
       cells.push([videoId, title, transcript, "", "", "", ""]);
     });
     const table = WebImporter.DOMUtils.createTable(cells, document);
-    element.replaceWith(table);
+    if (element.getAttribute("role") === "main" || element.tagName === "BODY") {
+      element.appendChild(document.createElement("hr"));
+      element.appendChild(table);
+    } else {
+      element.replaceWith(table);
+    }
   }
 
   // tools/importer/parsers/fragment.js
