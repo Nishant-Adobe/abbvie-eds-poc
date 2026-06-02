@@ -110,21 +110,31 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Hide the bar when the footer is visible; reveal it when footer scrolls away.
-  // Footer loads async in EDS, so fall back to a MutationObserver if not yet in DOM.
-  const footerObserver = new IntersectionObserver(([entry]) => {
-    stickySection.classList.toggle('is-hidden', entry.isIntersecting);
+  // Hide the bar when the inline ISI section or footer is visible.
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    const anyVisible = entries.some((e) => e.isIntersecting);
+    stickySection.classList.toggle('is-hidden', anyVisible);
   });
 
+  // Observe inline ISI section (default-content-wrapper sibling after rich-text-wrapper)
+  const isiSection = block.closest('.section')?.parentElement
+    ?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
+    || block.closest('.section')?.parentElement
+      ?.querySelector('.section.isi .default-content-wrapper');
+  if (isiSection) {
+    visibilityObserver.observe(isiSection);
+  }
+
+  // Footer loads async in EDS, so fall back to a MutationObserver if not yet in DOM.
   const footer = document.querySelector('footer');
   if (footer) {
-    footerObserver.observe(footer);
+    visibilityObserver.observe(footer);
   } else {
     const mo = new MutationObserver(() => {
       const el = document.querySelector('footer');
       if (el) {
         mo.disconnect();
-        footerObserver.observe(el);
+        visibilityObserver.observe(el);
       }
     });
     mo.observe(document.body, { childList: true });
