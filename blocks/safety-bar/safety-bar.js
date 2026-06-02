@@ -110,31 +110,37 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Hide the bar when the inline ISI section or footer is visible.
-  const visibilityObserver = new IntersectionObserver((entries) => {
-    const anyVisible = entries.some((e) => e.isIntersecting);
-    stickySection.classList.toggle('is-hidden', anyVisible);
-  });
-
-  // Observe inline ISI section (default-content-wrapper sibling after rich-text-wrapper)
+  // Hide the bar once the user scrolls past the inline ISI section top.
+  // The bar stays hidden for everything below the ISI (ISI visible, footer, etc.)
+  // It only reappears when user scrolls back above the ISI section.
   const isiSection = block.closest('.section')?.parentElement
     ?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
     || block.closest('.section')?.parentElement
       ?.querySelector('.section.isi .default-content-wrapper');
+
   if (isiSection) {
-    visibilityObserver.observe(isiSection);
+    const observer = new IntersectionObserver(() => {
+      const isiRect = isiSection.getBoundingClientRect();
+      const isAboveISI = isiRect.top > window.innerHeight;
+      stickySection.classList.toggle('is-hidden', !isAboveISI);
+    }, { threshold: 0 });
+    observer.observe(isiSection);
   }
 
-  // Footer loads async in EDS, so fall back to a MutationObserver if not yet in DOM.
+  // Also hide when footer is visible
+  const footerObserver = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) stickySection.classList.add('is-hidden');
+  });
+
   const footer = document.querySelector('footer');
   if (footer) {
-    visibilityObserver.observe(footer);
+    footerObserver.observe(footer);
   } else {
     const mo = new MutationObserver(() => {
       const el = document.querySelector('footer');
       if (el) {
         mo.disconnect();
-        visibilityObserver.observe(el);
+        footerObserver.observe(el);
       }
     });
     mo.observe(document.body, { childList: true });
