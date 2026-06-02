@@ -1,13 +1,11 @@
 @import '../columns.css';
 
 /* Linzess — Columns Brand Overrides
-   Note: Card backgrounds only apply via custom class "card-style"
-   to avoid coloring ALL columns blocks on the page.
-   Set custom class in UE on the columns block that needs card styling. */
+   Card backgrounds only apply via "card-style" custom class in UE */
 
 .columns.card-style > div > div {
   border-radius: var(--linz-rounded-corner, 16px);
-  padding: var(--spacing-32, 32px);
+  padding: 32px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -19,12 +17,6 @@
   max-width: 110px;
 }
 
-.columns.card-style > div > div picture img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* First card: dark purple */
 .columns.card-style > div > div:first-child {
   background-color: var(--color-brand-primary, #422e83);
   color: var(--color-text-on-dark, #fff);
@@ -35,13 +27,6 @@
   color: var(--color-text-on-dark, #fff);
 }
 
-.columns.card-style > div > div:first-child a.button {
-  background-color: var(--linz-light-purple, #d9d7f9);
-  color: var(--color-brand-primary, #422e83);
-  border: none;
-}
-
-/* Second card: light purple */
 .columns.card-style > div > div:nth-child(2) {
   background-color: var(--linz-light-purple, #d9d7f9);
   color: var(--color-brand-primary, #422e83);
@@ -50,10 +35,4 @@
 .columns.card-style > div > div:nth-child(2) p,
 .columns.card-style > div > div:nth-child(2) strong {
   color: var(--color-brand-primary, #422e83);
-}
-
-.columns.card-style > div > div:nth-child(2) a.button {
-  background-color: var(--color-brand-primary, #422e83);
-  color: var(--color-text-on-dark, #fff);
-  border: none;
 }
