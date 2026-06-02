@@ -269,13 +269,17 @@
 
 .rich-text strong,
 .rich-text b {
-  color: var(--color-text-heading);
+  color: var(--text-color);
   font-weight: 700;
 }
 
 .rich-text p:has(> strong:only-child) {
   color: var(--color-text-heading);
   margin-top: var(--spacing-40);
+}
+
+.rich-text p:has(> strong:only-child) strong {
+  color: var(--color-text-heading);
 }
 
 .rich-text em {
