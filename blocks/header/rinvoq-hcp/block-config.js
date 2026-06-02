@@ -27,17 +27,36 @@ function addActiveNavState(block) {
   const brandPrefix = currentPath.match(/^\/content\/[^/]+/);
   if (brandPrefix) currentPath = currentPath.slice(brandPrefix[0].length) || '/';
   if (currentPath === '/') return;
+
+  let exactMatch = null;
+  const startsWithMatches = [];
+
   block.querySelectorAll('.nav-sections a').forEach((link) => {
     const linkPath = new URL(link.href).pathname.replace(/\/$/, '') || '/';
-    if (currentPath === linkPath || (linkPath !== '/' && currentPath.startsWith(linkPath))) {
+    if (currentPath === linkPath) {
+      exactMatch = link;
+    } else if (linkPath !== '/' && currentPath.startsWith(linkPath)) {
+      startsWithMatches.push(link);
+    }
+  });
+
+  if (exactMatch) {
+    exactMatch.classList.add('nav-active');
+    const topLi = exactMatch.closest('.nav-sections .default-content-wrapper > ul > li');
+    if (topLi) {
+      const topTrigger = topLi.querySelector(':scope > a, :scope > button');
+      if (topTrigger && topTrigger !== exactMatch) topTrigger.classList.add('nav-active');
+    }
+  } else if (startsWithMatches.length) {
+    startsWithMatches.forEach((link) => {
       link.classList.add('nav-active');
       const topLi = link.closest('.nav-sections .default-content-wrapper > ul > li');
       if (topLi) {
         const topTrigger = topLi.querySelector(':scope > a, :scope > button');
         if (topTrigger && topTrigger !== link) topTrigger.classList.add('nav-active');
       }
-    }
-  });
+    });
+  }
 }
 
 export default async function getBlockConfigs() {
