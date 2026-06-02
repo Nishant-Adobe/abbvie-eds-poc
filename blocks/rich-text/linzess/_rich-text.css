@@ -50,20 +50,14 @@
   color: var(--text-color, #4d4d4f);
 }
 
-/* PART 1 header: purple, 40px top margin */
+/* PART 1 header: purple, 40px top margin (first bold-only paragraph after h1) */
 /* stylelint-disable no-descending-specificity */
-.rich-text.transcript h1 ~ p:has(> strong:only-child):first-of-type {
+.rich-text.transcript h1 + p:has(> strong:only-child) {
   color: var(--color-text-heading, #422e83);
   margin: var(--spacing-40, 4rem) 0 var(--spacing-16, 1.6rem);
 }
 
-/* PART 2 header: purple, 16px margin — only before ISI (h3) */
-.rich-text.transcript h1 ~ p:has(> strong:only-child) {
-  color: var(--color-text-heading, #422e83);
-  margin: var(--spacing-16, 1.6rem) 0;
-}
-
-.rich-text.transcript h1 ~ p:has(> strong:only-child) strong {
+.rich-text.transcript h1 + p:has(> strong:only-child) strong {
   color: var(--color-text-heading, #422e83);
   font-weight: 700;
 }
