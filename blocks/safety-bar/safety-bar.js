@@ -110,39 +110,17 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Hide the bar once the user scrolls past the inline ISI section top.
-  // The bar stays hidden for everything below the ISI (ISI visible, footer, etc.)
-  // It only reappears when user scrolls back above the ISI section.
+  // Hide the bar when user scrolls to or past the inline ISI section.
+  // Matches live site: visible above ISI, hidden at/below ISI.
   const isiSection = block.closest('.section')?.parentElement
     ?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
     || block.closest('.section')?.parentElement
       ?.querySelector('.section.isi .default-content-wrapper');
 
   if (isiSection) {
-    const observer = new IntersectionObserver(() => {
-      const isiRect = isiSection.getBoundingClientRect();
-      const isAboveISI = isiRect.top > window.innerHeight;
-      stickySection.classList.toggle('is-hidden', !isAboveISI);
-    }, { threshold: 0 });
-    observer.observe(isiSection);
-  }
-
-  // Also hide when footer is visible
-  const footerObserver = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) stickySection.classList.add('is-hidden');
-  });
-
-  const footer = document.querySelector('footer');
-  if (footer) {
-    footerObserver.observe(footer);
-  } else {
-    const mo = new MutationObserver(() => {
-      const el = document.querySelector('footer');
-      if (el) {
-        mo.disconnect();
-        footerObserver.observe(el);
-      }
-    });
-    mo.observe(document.body, { childList: true });
+    window.addEventListener('scroll', () => {
+      const hidden = window.scrollY >= isiSection.offsetTop;
+      stickySection.style.display = hidden ? 'none' : '';
+    }, { passive: true });
   }
 }
