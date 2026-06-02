@@ -8,31 +8,35 @@ body.appear {
   overflow-x: hidden;
 }
 
-.section {
+main > .section {
+  margin-bottom: 0;
+}
+
+/* Section: transcript — white arc container for transcript content */
+.section.transcript {
   background-color: #fff;
   border-radius: var(--spacing-40) var(--spacing-40) 0 0;
   position: relative;
   overflow: visible;
   padding: 0 var(--spacing-20) var(--spacing-100);
-  margin-bottom: 0;
 }
 
-.section + .section {
+.section.transcript + .section {
   border-radius: 0;
 }
 
-.default-content-wrapper h1 {
+.section.transcript h1 {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1);
   font-weight: 400;
   font-style: normal;
   color: var(--color-text-heading);
   text-align: center;
-  line-height: var(--line-height-h1);
+  line-height: var(--spacing-30);
   margin: 0;
 }
 
-.default-content-wrapper h1::before {
+.section.transcript h1::before {
   content: '';
   display: block;
   width: var(--spacing-64);
@@ -43,7 +47,7 @@ body.appear {
   margin: 0 auto var(--spacing-10);
 }
 
-.default-content-wrapper p {
+.section.transcript .default-content-wrapper p {
   font-family: var(--body-font-family);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
@@ -51,18 +55,25 @@ body.appear {
   margin: var(--spacing-14) 0;
 }
 
-.default-content-wrapper strong,
-.default-content-wrapper b {
+.section.transcript .default-content-wrapper strong,
+.section.transcript .default-content-wrapper b {
   color: var(--text-color);
   font-weight: 700;
 }
 
-.default-content-wrapper p:has(> strong:only-child) {
+.section.transcript .default-content-wrapper p:has(> strong:only-child) {
   color: var(--color-text-heading);
   margin-top: var(--spacing-40);
 }
 
-.default-content-wrapper h3 {
+/* Section: isi — inline Important Safety Information */
+.section.isi {
+  background-color: #fff;
+  position: relative;
+  padding: 0 var(--spacing-20) var(--spacing-80);
+}
+
+.section.isi h3 {
   font-family: var(--font-family-legal-bold);
   font-size: var(--font-size-legal-large);
   font-weight: 400;
@@ -71,15 +82,46 @@ body.appear {
   margin: var(--spacing-10) 0 0;
 }
 
+.section.isi p,
+.section.isi li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+}
+
+.section.isi strong,
+.section.isi b {
+  font-family: var(--font-family-legal-bold);
+  color: var(--color-text-muted);
+  font-weight: normal;
+}
+
+.section.isi a {
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
 @media (width >= 744px) {
-  .section {
+  .section.transcript {
     padding: 0 var(--spacing-40) var(--spacing-100);
+  }
+
+  .section.isi {
+    padding: 0 var(--spacing-40) var(--spacing-80);
   }
 }
 
 @media (width >= 1024px) {
-  .section {
+  .section.transcript {
     padding: 0 var(--spacing-80) var(--spacing-100);
+    max-width: var(--spacing-960, 96rem);
+    margin: 0 auto;
+  }
+
+  .section.isi {
+    padding: 0 var(--spacing-80) var(--spacing-80);
     max-width: var(--spacing-960, 96rem);
     margin: 0 auto;
   }
