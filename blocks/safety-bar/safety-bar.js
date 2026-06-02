@@ -110,15 +110,17 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Hide the bar when the inline ISI "USES" section appears in the viewport.
-  const pageMain = document.querySelector('main');
-  const isiTarget = pageMain?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
-    || pageMain?.querySelector('.section.isi');
+  // Linzess only: hide the bar when inline ISI "USES" section appears in viewport.
+  if (document.body.classList.contains('linzess')) {
+    const pageMain = document.querySelector('main');
+    const isiTarget = pageMain?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
+      || pageMain?.querySelector('.section.isi');
 
-  if (isiTarget) {
-    const observer = new IntersectionObserver(([entry]) => {
-      stickySection.style.display = entry.isIntersecting ? 'none' : '';
-    });
-    observer.observe(isiTarget);
+    if (isiTarget) {
+      const isiAbsoluteTop = isiTarget.getBoundingClientRect().top + window.scrollY;
+      window.addEventListener('scroll', () => {
+        stickySection.style.display = window.scrollY >= isiAbsoluteTop ? 'none' : '';
+      }, { passive: true });
+    }
   }
 }
