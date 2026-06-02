@@ -110,16 +110,15 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Hide the bar when user scrolls to the inline ISI content (USES heading).
-  // Matches live site: visible above ISI, hidden at/below ISI.
+  // Hide the bar when the inline ISI "USES" section appears in the viewport.
   const pageMain = document.querySelector('main');
   const isiTarget = pageMain?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
     || pageMain?.querySelector('.section.isi');
 
   if (isiTarget) {
-    const isiAbsoluteTop = isiTarget.getBoundingClientRect().top + window.scrollY;
-    window.addEventListener('scroll', () => {
-      stickySection.style.display = window.scrollY >= isiAbsoluteTop ? 'none' : '';
-    }, { passive: true });
+    const observer = new IntersectionObserver(([entry]) => {
+      stickySection.style.display = entry.isIntersecting ? 'none' : '';
+    });
+    observer.observe(isiTarget);
   }
 }
