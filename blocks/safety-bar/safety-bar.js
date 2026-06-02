@@ -110,17 +110,16 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Hide the bar when user scrolls to or past the inline ISI section.
+  // Hide the bar when user scrolls to the inline ISI content (USES heading).
   // Matches live site: visible above ISI, hidden at/below ISI.
-  const isiSection = block.closest('.section')?.parentElement
-    ?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
-    || block.closest('.section')?.parentElement
-      ?.querySelector('.section.isi .default-content-wrapper');
+  const pageMain = document.querySelector('main');
+  const isiTarget = pageMain?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
+    || pageMain?.querySelector('.section.isi');
 
-  if (isiSection) {
+  if (isiTarget) {
+    const isiAbsoluteTop = isiTarget.getBoundingClientRect().top + window.scrollY;
     window.addEventListener('scroll', () => {
-      const hidden = window.scrollY >= isiSection.offsetTop;
-      stickySection.style.display = hidden ? 'none' : '';
+      stickySection.style.display = window.scrollY >= isiAbsoluteTop ? 'none' : '';
     }, { passive: true });
   }
 }
