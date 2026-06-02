@@ -1,7 +1,7 @@
 {
   "_description": "Each entry = one observed failure mode. Load this at session start so you are pre-warned. Add new entries when you discover new failure modes during migration.",
   "version": 1,
-  "lastUpdated": "2026-05-29",
+  "lastUpdated": "2026-06-02",
   "entries": [
     {
       "id": "AEMCODER-001",
@@ -145,6 +145,105 @@
       "prevention": "First-prompt rule I.5: For blocks with commonProperties tab, ALL non-tab non-classes_* fields are rows/cells including alt text fields. Always validate against working test content (accordion-test.plain.html has 8 cells matching 8 non-tab non-classes_* item fields; cta-button-test has 12 rows matching model).",
       "status": "incorporated-in-skill",
       "skill": "aemcoder-migration-orchestrator"
+    },
+    {
+      "id": "AEMCODER-013",
+      "date": "2026-06-01",
+      "category": "regression-protection-shared-file",
+      "pages": ["rinvoqhcp.com regressed during /dermatology/access migration"],
+      "failure": "Edits to shared assets (styles/rinvoq-hcp/_styles.css, _tokens.css, brand block overrides, or shared fragments) made while migrating /dermatology/access silently regressed the already-approved homepage. The orchestrator's Phase D 'cross-viewport + cross-page QA' is end-of-phase advisory — it ran AFTER the regression had been shipped to local preview. No pre-edit gate forced a snapshot of approved pages BEFORE the shared-file edit. No mechanical list of approved pages to verify against.",
+      "rootCause": "Existing rule was end-of-phase guidance instead of pre-edit gate. No canonical registry of approved pages — Phase D said 'check previously approved pages' but didn't name them or enforce per-file mapping (which file edit → which page must be checked).",
+      "prevention": "1) `approved-pages.json` registry in the orchestrator skill — concrete list of pages requiring regression check. 2) Shared-File Inventory in orchestrator SKILL.md — explicit map of file paths whose edit triggers regression check against EVERY approved page. 3) PRE-EDIT GATE in first-prompt.md Section C: before editing any shared file, snapshot every approved page at 1440/390. 4) Section-fix-loop Step 8 references approved-pages.json mechanically. 5) When a page is approved, append to approved-pages.json — future shared-file edits will automatically guard against regression on it.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator + aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-014",
+      "date": "2026-06-02",
+      "category": "css-thrash-delta-edits",
+      "pages": ["rinvoqhcp.com/dermatology/access"],
+      "failure": "Made CSS edits one property at a time without dumping live computed styles first. Spent ~30 turns on the formulary section ping-ponging max-width: 900px → 1220px → none → 100% → 100%; max-width: 100% → revert → re-add. Each tweak was reactive to one user comment without re-reading the live computed-style block as a whole.",
+      "rootCause": "Section-fix-loop Step 3 (side-by-side diff) is advisory — gets skipped under iteration pressure. No procedural mandate to dump FULL computed-styles for ALL section descendants in one pass before writing CSS.",
+      "prevention": "Section-fix-loop Step 0 hard gate: MUST run `getComputedStyle()` for live + local for ALL section descendants, output a complete delta table, then write ONE consolidated CSS replacement. If a section needs >3 corrective prompts, STOP and re-dump computed styles before any further CSS edit.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-015",
+      "date": "2026-06-02",
+      "category": "no-screenshot-diff-discipline",
+      "pages": ["rinvoqhcp.com/dermatology/access"],
+      "failure": "User had to explicitly say 'do pixel comparison', 'do screenshot comparison', 'compare with live site', 'scan each and every node' 12+ separate times. Each time aemcoder would do it and find an issue — but the next round it reverted to 'I think the fix is X' without verification.",
+      "rootCause": "Section-fix-loop's regression-check step is advisory and was skipped between fixes. No mandatory screenshot+computed-style diff per CSS edit.",
+      "prevention": "Section-fix-loop Step 0 = mandatory live-vs-local screenshot + style dump. NO CSS edit before this step. Auto-invoke on phrases: 'still not', 'not matching', 'still off', 'still broken', 'pixel comparison', 'scan each node', 'fix is limited to', 'do screenshot comparison', 'compare with live', 'still seems broken', 'we have issues', 'Refer the skills'.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-016",
+      "date": "2026-06-02",
+      "category": "md2jcr-publish-error",
+      "pages": ["rinvoq-hcp index — Brand Explorer block"],
+      "failure": "~30 minutes guessing at brand-explorer model format (11 rows vs 8 rows, with/without field hints, `aem-content` vs `reference`, rebuilding compiled JSON) when md2jcr threw 'Cannot read properties of undefined (reading fields)'. Ended with `aem-content` → `reference` change of unclear correctness.",
+      "rootCause": "Completely uncovered domain. No skill or fix-registry entry documented md2jcr field-collapsing rules, field-hint comment syntax, or the `aem-content` vs `reference` distinction for image fields in container item blocks.",
+      "prevention": "New 'md2jcr publish rules' section in abbvie-block-analysis: (1) Field-collapsing rules — fields ending in Alt/Text/Title/Type/MimeType become HTML attributes on the parent element, NOT cells. (2) `aem-content` component breaks md2jcr for image fields in item blocks — use `reference`. (3) Required field-hint comment syntax for ambiguous fields. (4) 5-step triage runbook when 'Cannot read properties of undefined' appears: compare working block model, check filter→model chain, verify compiled JSON, check field-component types, dump browser console error stack.",
+      "status": "incorporated-in-skill",
+      "skill": "abbvie-block-analysis"
+    },
+    {
+      "id": "AEMCODER-017",
+      "date": "2026-06-01",
+      "category": "scaffold-build-side-effect",
+      "pages": ["all rinvoq-hcp-adjacent brands silently modified"],
+      "failure": "Ran `npm run build:json` and `npm run scaffold:build` which silently recompiled every brand's CSS, polluting the diff with changes to accordion, brand-explorer, cta, footer, formulary-lookup CSS across all brands. User had to flag: 'i am seeing too many changes in other brand level css as well. did we run scaffold:build? if yes, that's wrong, revert' and 'we have unstaged changes in component-*.json files? revert it'.",
+      "rootCause": "Orchestrator's pre-edit gate covers content files but not build artifacts. No rule about scaffold/build command scope.",
+      "prevention": "Pre-edit gate Section C addition: Before running ANY `npm run scaffold*` or `npm run build*` command: (1) `git stash` non-target brand files OR use targeted command (`npm run scaffold:build:block --block-name X --brand-name Y` for single brand). (2) After build, `git diff --stat` and verify ONLY the target brand's files changed. (3) Revert any unintended changes to other brands or root component-*.json files immediately.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator"
+    },
+    {
+      "id": "AEMCODER-018",
+      "date": "2026-06-01",
+      "category": "generic-selector-cross-page-regression",
+      "pages": ["rinvoqhcp.com regressed during /access migration — second occurrence after AEMCODER-013 supposedly fixed this"],
+      "failure": "Added `.cards-grid-container .cards-grid.cards-grid-cta-card a` rule — affected ALL cards-grid blocks site-wide, broke homepage. Also added `.section.text-container-container .text-container.legal .text-container-text p` — affected all legal text blocks across all pages. AEMCODER-013's pre-edit gate exists but only checks content file scope, not CSS selector scope.",
+      "rootCause": "Pre-edit gate (AEMCODER-013) checks WHICH FILE is edited, not WHAT SELECTOR is written inside the file. Generic block selectors in styles/{brand}/_styles.css affect every page using that block, but the gate doesn't catch this until visual regression is observed.",
+      "prevention": "Pre-edit gate addition (CSS selector scope check): Any CSS rule in styles/{brand}/_styles.css touching a shared block class (`.cards-grid`, `.text-container`, `.image-text`, `.hero`, `.formulary-lookup`, etc.) MUST be prefixed with a section-metadata style class (`.section.access-hero-section X`) OR a page-body class (`body.page-access X`). Generic block selectors without a page/section scope prefix are FORBIDDEN — refuse the edit and force re-scope.",
+      "status": "incorporated-in-skill",
+      "skill": "aemcoder-migration-orchestrator + aemcoder-section-fix-loop"
+    },
+    {
+      "id": "AEMCODER-019",
+      "date": "2026-06-02",
+      "category": "section-metadata-vs-has-selector",
+      "pages": ["rinvoqhcp.com/dermatology/access"],
+      "failure": "Wrote selectors like `.section.hero-container:has(.hero.access-hero)`, `body:has(.hero.access-hero) ...` for ~10 selectors across the migration. Late June 2 user asked 'are you applying section metadata or targeting the .section-wrapper classes directly' — turned out the correct approach was section-metadata `style` class. ALL `:has()` selectors had to be rewritten.",
+      "rootCause": "Page-templates skill describes recipes but doesn't say 'always introduce a section-metadata style class first and target THAT — never :has() on the block class'. The page-level CSS layer pattern (styles/{brand}/_styles.css uses section-metadata classes) wasn't a procedural rule.",
+      "prevention": "Page-templates procedural rule P1: Every custom page section MUST have a section-metadata `style` class authored BEFORE any CSS is written. Authoring: `<div class='section-metadata'><div><div>style</div><div>access-hero-section</div></div></div>`. Selectors in styles/{brand}/_styles.css MUST be of form `.section.<style-class> ...` and MUST NOT use `:has()` on block class names.",
+      "status": "incorporated-in-skill",
+      "skill": "abbvie-page-templates"
+    },
+    {
+      "id": "AEMCODER-020",
+      "date": "2026-06-02",
+      "category": "layered-background-rediscovery",
+      "pages": ["rinvoqhcp.com/dermatology/access (mobile hero)"],
+      "failure": "Mobile hero needed 4 layers — (1) skateboarder image on section `::before`, (2) grey brushstroke on `.hero-text-container` `::after`, (3) text on top, (4) `display: block` because parent grid collapsed `::before` to 50px. Each layer discovered separately over ~12 turns. Grid-collapsing-::before issue alone took 4 turns of head-scratching.",
+      "rootCause": "No skill covers the AbbVie pattern of multi-layered `::before` / `::after` / wrapper-background hero compositions. Layered backgrounds are a recurring pattern across brands but undocumented.",
+      "prevention": "New 'Layered-background hero recipe' subsection in abbvie-page-templates Hero archetype: BEFORE writing any CSS, inspect live source DevTools and list ALL `::before`, `::after`, parent backgrounds, z-indexes, and parent display-mode constraints (grid collapses pseudo-elements to content-box height — use `display: block` on the section if pseudo-elements need viewport width).",
+      "status": "incorporated-in-skill",
+      "skill": "abbvie-page-templates + abbvie-block-analysis"
+    },
+    {
+      "id": "AEMCODER-021",
+      "date": "2026-06-02",
+      "category": "double-decoration-over-brand-css",
+      "pages": ["rinvoqhcp.com/dermatology/access — formulary submit button, filter dropdown, plum-circle-vs-cross-button"],
+      "failure": "Added custom search-icon `::before` to formulary submit button. User reported 'now i am seeing two search icon, follow the block library and brand css only'. Same pattern with filter dropdown — added `::before` plum circle + `::after` chevron on top of brand CSS that already had a single `::after` doing both. 3 occurrences before the pattern was internalized.",
+      "rootCause": "building-brand-blocks documents the cascade hierarchy but doesn't have a procedural pre-read rule. Page-CSS work didn't read existing brand-block CSS before adding decorations.",
+      "prevention": "building-brand-blocks procedural rule: BEFORE adding ANY `::before`/`::after`/icon rule in styles/{brand}/_styles.css for a block, MUST `Read` both `blocks/{block}/{brand}/_{block}.css` AND `blocks/{block}/{block}.css` to inventory existing pseudo-elements. Do NOT duplicate — override existing rules via CSS variables (if brand block exposes them) or by extending the same selector, never by adding parallel pseudo-elements.",
+      "status": "incorporated-in-skill",
+      "skill": "building-brand-blocks + aemcoder-section-fix-loop"
     }
   ],
   "howToAdd": "When you discover a new failure mode during migration: 1) Append a new entry with next AEMCODER-NNN id, 2) Set status: 'pending', 3) Once prevention is encoded in a skill, change to 'incorporated-in-skill' and name the skill. The orchestrator skill loads this file at session start so aemcoder is pre-warned about known failures."
