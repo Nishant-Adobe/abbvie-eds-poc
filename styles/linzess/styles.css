@@ -4,6 +4,7 @@
 /* LINZESS DTC — Brand-specific style overrides */
 
 body.appear {
+  background-color: var(--color-brand-primary);
   overflow-x: hidden;
 }
 
@@ -11,19 +12,22 @@ main > .section {
   margin-bottom: 0;
 }
 
-/* Section: transcript — white arc container for transcript content */
-.section.transcript {
+/* Transcript section */
+.section.transcript,
+.section:first-of-type {
   background-color: #fff;
   position: relative;
   overflow: visible;
   padding: 0 0 var(--spacing-100);
 }
 
-.section.transcript + .section {
+.section.transcript + .section,
+.section:first-of-type + .section {
   border-radius: 0;
 }
 
-.section.transcript h1 {
+.section.transcript h1,
+.default-content-wrapper h1 {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1);
   font-weight: 400;
@@ -34,7 +38,8 @@ main > .section {
   margin: 0;
 }
 
-.section.transcript h1::before {
+.section.transcript h1::before,
+.default-content-wrapper h1::before {
   content: '';
   display: block;
   width: var(--spacing-64);
@@ -45,7 +50,8 @@ main > .section {
   margin: 0 auto var(--spacing-10);
 }
 
-.section.transcript .default-content-wrapper p {
+.section.transcript .default-content-wrapper p,
+.section:first-of-type .default-content-wrapper p {
   font-family: var(--body-font-family);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
@@ -54,24 +60,29 @@ main > .section {
 }
 
 .section.transcript .default-content-wrapper strong,
-.section.transcript .default-content-wrapper b {
+.section.transcript .default-content-wrapper b,
+.section:first-of-type .default-content-wrapper strong,
+.section:first-of-type .default-content-wrapper b {
   color: var(--color-text-heading);
   font-weight: 700;
 }
 
-.section.transcript .default-content-wrapper p:has(> strong:only-child) {
+.section.transcript .default-content-wrapper p:has(> strong:only-child),
+.section:first-of-type .default-content-wrapper p:has(> strong:only-child) {
   color: var(--color-text-heading);
   margin-top: var(--spacing-40);
 }
 
-/* Section: isi — inline Important Safety Information */
-.section.isi {
+/* ISI section */
+.section.isi,
+.section:nth-of-type(2):not(.safety-bar-container) {
   background-color: #fff;
   position: relative;
   padding: 0 var(--spacing-20) var(--spacing-80);
 }
 
-.section.isi h3 {
+.section.isi h3,
+.section:nth-of-type(2):not(.safety-bar-container) h3 {
   font-family: var(--font-family-legal-bold);
   font-size: var(--font-size-legal-large);
   font-weight: 400;
@@ -81,7 +92,9 @@ main > .section {
 }
 
 .section.isi p,
-.section.isi li {
+.section.isi li,
+.section:nth-of-type(2):not(.safety-bar-container) p,
+.section:nth-of-type(2):not(.safety-bar-container) li {
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
@@ -90,19 +103,16 @@ main > .section {
 }
 
 .section.isi strong,
-.section.isi b {
+.section.isi b,
+.section:nth-of-type(2):not(.safety-bar-container) strong,
+.section:nth-of-type(2):not(.safety-bar-container) b {
   font-family: var(--font-family-legal-bold);
   color: var(--color-text-muted);
   font-weight: normal;
 }
 
-.section.isi a {
+.section.isi a,
+.section:nth-of-type(2):not(.safety-bar-container) a {
   color: var(--color-text-heading);
   text-decoration: underline;
-}
-
-@media (width >= 1024px) {
-  .section.isi {
-    padding: 0 var(--spacing-20) var(--spacing-80);
-  }
 }
