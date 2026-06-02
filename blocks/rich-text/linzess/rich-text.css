@@ -235,20 +235,25 @@
   margin-bottom: var(--spacing-08);
 }
 
-/* Linzess transcript page — scoped to .section.transcript only
-   Shared across all 7 transcript pages via section-metadata.
-   Won't affect rich-text blocks on other pages. */
+/* Linzess transcript page — scoped via .rich-text.transcript variant
+   Shared across all 7 transcript pages. Won't affect other rich-text blocks. */
+
+/* ============ Transcript Content Section ============ */
+
+/* H1: NAN Transcript */
 
 .rich-text.transcript h1 {
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
-  font-size: var(--font-size-h1, 3.2rem);
+  font-size: var(--font-size-h1, 4rem);
   font-weight: 400;
   font-style: normal;
   color: var(--color-text-heading, #422e83);
   text-align: center;
-  line-height: var(--spacing-30, 3rem);
-  margin: 0 0 var(--spacing-20, 2rem);
+  margin: 0;
+  padding: 0;
 }
+
+/* Divider above H1 */
 
 .rich-text.transcript h1::before {
   content: '';
@@ -261,85 +266,187 @@
   margin: 0 auto var(--spacing-10, 1rem);
 }
 
+/* Paragraphs: Lato 16px, dark grey */
+
 .rich-text.transcript p {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 1.4rem);
+  font-size: var(--font-size-body, 1.6rem);
+  font-weight: 400;
   line-height: var(--line-height-body, normal);
   color: var(--text-color, #4d4d4f);
-  margin: var(--spacing-14, 1.4rem) 0;
+  text-align: left;
+  margin: var(--spacing-16, 1.6rem) 0;
+  padding: 0;
 }
+
+/* Bold speaker names: Lato 16px bold, dark grey */
 
 .rich-text.transcript p strong,
 .rich-text.transcript p b {
-  color: var(--text-color, #4d4d4f);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-body, 1.6rem);
   font-weight: 700;
+  color: var(--text-color, #4d4d4f);
 }
+
+/* PART 1 header: purple, 40px top margin */
+
+.rich-text.transcript p:has(> strong:only-child):first-of-type {
+  color: var(--color-text-heading, #422e83);
+  margin: var(--spacing-40, 4rem) 0 var(--spacing-16, 1.6rem);
+}
+
+/* PART 2 header: purple, 16px margin */
+
+/* stylelint-disable no-descending-specificity */
 
 .rich-text.transcript p:has(> strong:only-child) {
   color: var(--color-text-heading, #422e83);
-  margin-top: var(--spacing-40, 4rem);
+  margin: var(--spacing-16, 1.6rem) 0;
 }
 
 .rich-text.transcript p:has(> strong:only-child) strong {
   color: var(--color-text-heading, #422e83);
+  font-weight: 700;
 }
+
+/* Emphasis/italic: dark grey */
 
 .rich-text.transcript em {
   font-style: italic;
   color: var(--text-color, #4d4d4f);
 }
 
+/* Links in transcript: dark grey, underline */
+
 .rich-text.transcript a {
-  color: var(--color-text-heading, #422e83);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-body, 1.6rem);
+  color: var(--text-color, #4d4d4f);
   text-decoration: underline;
+}
+
+/* Superscript ® */
+
+.rich-text.transcript sup {
+  font-size: 1.33rem;
+  font-weight: 400;
+  color: var(--text-color, #4d4d4f);
+}
+
+/* Lists */
+
+.rich-text.transcript ul {
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-body, 1.6rem);
+  color: var(--text-color, #4d4d4f);
+  margin: var(--spacing-16, 1.6rem) 0;
+  padding: 0 0 0 var(--spacing-40, 4rem);
 }
 
 .rich-text.transcript li {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 1.4rem);
+  font-size: var(--font-size-body, 1.6rem);
+  font-weight: 400;
   line-height: var(--line-height-body, normal);
   color: var(--text-color, #4d4d4f);
-  margin: var(--spacing-14, 1.4rem) 0;
+  margin: 0;
+  padding: 0;
 }
 
-.rich-text.transcript li::marker {
-  color: var(--color-text-heading, #422e83);
-}
+/* ============ Inline ISI Section (after H3) ============ */
 
-/* ISI content after H3 headings */
+/* H3: USES, IMPORTANT RISK INFORMATION */
 
 .rich-text.transcript h3 {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal-large, 1.6rem);
   font-weight: 400;
   color: var(--color-text-heading, #422e83);
+  text-align: left;
+  line-height: normal;
   text-transform: none;
   margin: var(--spacing-10, 1rem) 0 0;
+  padding: 0;
 }
 
-/* stylelint-disable no-descending-specificity */
+/* ISI paragraphs after H3 */
 
-.rich-text.transcript h3 ~ p,
-.rich-text.transcript h3 ~ ul li {
+.rich-text.transcript h3 ~ p {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
+  font-weight: 400;
   line-height: var(--line-height-legal, 1.6rem);
   color: var(--color-text-muted, #555);
   margin: var(--spacing-10, 1rem) 0;
+  padding: 0;
 }
 
+/* ISI bold text after H3 */
+
 .rich-text.transcript h3 ~ p strong,
-.rich-text.transcript h3 ~ p b,
+.rich-text.transcript h3 ~ p b {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-size: var(--font-size-legal, 1.4rem);
+  font-weight: 400;
+  line-height: var(--line-height-legal, 1.6rem);
+  color: var(--color-text-muted, #555);
+}
+
+/* ISI purple subtitle bold ("Before you take LINZESS...", "Side Effects") */
+
+.rich-text.transcript h3 ~ p:has(> strong:only-child) strong {
+  color: var(--color-text-heading, #422e83);
+}
+
+/* ISI list */
+
+.rich-text.transcript h3 ~ ul {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
+  font-size: var(--font-size-legal-large, 1.6rem);
+  line-height: var(--spacing-20, 2rem);
+  color: #000;
+  margin: var(--spacing-10, 1rem) 0;
+  padding: 0 0 0 var(--spacing-15, 1.5rem);
+}
+
+/* ISI list items */
+
+.rich-text.transcript h3 ~ ul li {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
+  font-size: var(--font-size-legal, 1.4rem);
+  font-weight: 400;
+  line-height: var(--line-height-legal, 1.6rem);
+  color: var(--color-text-muted, #555);
+  margin: var(--spacing-10, 1rem) 0;
+  padding: 0;
+}
+
+/* ISI list item bold */
+
 .rich-text.transcript h3 ~ ul li strong {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
-  font-weight: normal;
+  font-weight: 400;
   color: var(--color-text-muted, #555);
 }
+
+/* ISI superscript ® */
+
+.rich-text.transcript h3 ~ p sup,
+.rich-text.transcript h3 ~ ul sup {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-text-muted, #555);
+  line-height: 0;
+}
+
+/* ISI links */
 
 .rich-text.transcript h3 ~ p a {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
+  font-weight: 400;
   color: var(--color-text-heading, #422e83);
   text-decoration: underline;
 }
