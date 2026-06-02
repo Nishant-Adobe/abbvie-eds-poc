@@ -772,10 +772,11 @@
 
 /* stylelint-disable no-descending-specificity */
 
-/* Linzess — Savings Tout Card (columns directly after hero)
-   Live site: light purple card, 16px radius, image left + text right */
+/* Linzess — Savings Tout Cards (light purple card style)
+   Applies to both: savings promo after hero + savings card before footer
+   Live site: light purple bg, 16px radius, image left + text right */
 
-.hero-container + .columns-container .columns {
+.linzess .columns-container .columns {
   display: flex;
   flex-wrap: wrap;
   background-color: var(--linz-light-purple);
@@ -788,37 +789,37 @@
   gap: 24px;
 }
 
-.hero-container + .columns-container .columns > .columns-item {
+.linzess .columns-container .columns > .columns-item {
   grid-column: unset;
 }
 
-.hero-container + .columns-container .columns > .columns-item:not(:has(img, strong, a)) {
+.linzess .columns-container .columns > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+.linzess .columns-container .columns > .columns-item:has(.columns-item-image) {
   flex: 0 1 auto;
   max-width: 50%;
 }
 
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-content) {
+.linzess .columns-container .columns > .columns-item:has(.columns-item-content) {
   flex: 1 1 auto;
-  text-align: center;
+  text-align: left;
 }
 
-.hero-container + .columns-container .columns .columns-item-image img {
+.linzess .columns-container .columns .columns-item-image img {
   max-width: 100%;
   height: auto;
 }
 
-.hero-container + .columns-container .columns .columns-item-content p strong {
+.linzess .columns-container .columns .columns-item-content p strong {
   font-family: var(--body-font-family);
   font-size: 18px;
   font-weight: 700;
   color: var(--linz-dark-purple);
 }
 
-.hero-container + .columns-container .columns .button-container a.button {
+.linzess .columns-container .columns .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -831,7 +832,7 @@
   position: relative;
 }
 
-.hero-container + .columns-container .columns .button-container a.button::after {
+.linzess .columns-container .columns .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -840,13 +841,30 @@
   font-size: 21px;
 }
 
-.hero-container + .columns-container .columns .button-container a.button:hover {
+.linzess .columns-container .columns .button-container a.button:hover {
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
 }
 
+/* Section heading above savings card */
+
+.linzess .columns-container > .default-content-wrapper p strong {
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h2-hero);
+  color: var(--linz-dark-purple);
+  text-transform: uppercase;
+}
+
+/* Disclaimer text below savings card */
+
+.linzess .columns-container > .default-content-wrapper:last-child {
+  font-size: var(--font-size-body-small);
+  color: var(--linz-grey);
+  margin-top: 24px;
+}
+
 @media (width >= 768px) {
-  .hero-container + .columns-container .columns {
+  .linzess .columns-container .columns {
     flex-wrap: nowrap;
     padding: 40px 48px;
   }
