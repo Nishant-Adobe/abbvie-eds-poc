@@ -437,14 +437,20 @@ page, MOA animation page, copay/savings page):
 
 ## Hybrid example: Coverage & Access page
 
-`rinvoqhcp.com/access` doesn't fit cleanly. Likely composition:
-- Condition Landing recipe sections 1–4 (brand-explorer, header, hero,
-  section-nav)
-- Insert `formulary-lookup` (block 14 in block-analysis) — coverage tool
+`rinvoqhcp.com/dermatology/access` (condition-specific access page). Likely
+composition:
+- Condition Landing recipe sections 1–3 (brand-explorer, **per-condition
+  header**, hero) — uses Dermatology header fragment, NOT homepage nav
+- `section-nav` for in-page anchors (savings, insurance, support)
+- `formulary-lookup` (block 14 in block-analysis) — coverage tool
 - `accordion` for plan-by-plan breakdown
 - `info-tree` for support program tiers
 - `cards-grid` (support variant) for patient resources
 - Standard footer + safety-bar
+
+Note: This is a CONDITION-SPECIFIC access page (under `/dermatology/`), not
+a brand-wide one. It uses the per-condition header, same as the Condition
+Landing archetype.
 
 ---
 
