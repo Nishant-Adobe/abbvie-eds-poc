@@ -14,10 +14,9 @@ main > .section {
 /* Section: transcript — white arc container for transcript content */
 .section.transcript {
   background-color: #fff;
-  border-radius: var(--spacing-40) var(--spacing-40) 0 0;
   position: relative;
   overflow: visible;
-  padding: 0 var(--spacing-20) var(--spacing-100);
+  padding: 0 0 var(--spacing-100);
 }
 
 .section.transcript + .section {
@@ -56,7 +55,7 @@ main > .section {
 
 .section.transcript .default-content-wrapper strong,
 .section.transcript .default-content-wrapper b {
-  color: var(--text-color);
+  color: var(--color-text-heading);
   font-weight: 700;
 }
 
@@ -102,26 +101,8 @@ main > .section {
   text-decoration: underline;
 }
 
-@media (width >= 744px) {
-  .section.transcript {
-    padding: 0 var(--spacing-40) var(--spacing-100);
-  }
-
-  .section.isi {
-    padding: 0 var(--spacing-40) var(--spacing-80);
-  }
-}
-
 @media (width >= 1024px) {
-  .section.transcript {
-    padding: 0 var(--spacing-80) var(--spacing-100);
-    max-width: var(--spacing-960, 96rem);
-    margin: 0 auto;
-  }
-
   .section.isi {
-    padding: 0 var(--spacing-80) var(--spacing-80);
-    max-width: var(--spacing-960, 96rem);
-    margin: 0 auto;
+    padding: 0 var(--spacing-20) var(--spacing-80);
   }
 }
