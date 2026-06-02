@@ -110,11 +110,12 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Linzess only: hide the bar when the H3 "USES" inside the rich-text block appears.
+  // Linzess only: hide the bar when the inline ISI "USES" section appears in viewport.
   const brand = document.querySelector('meta[name="brand"]')?.content;
   if (brand === 'linzess') {
-    const richTextBlock = document.querySelector('.rich-text.transcript');
-    const triggerEl = richTextBlock?.querySelector('h3');
+    const isiSection = document.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
+      || document.querySelector('.section.isi');
+    const triggerEl = isiSection?.querySelector('h3') || isiSection;
 
     if (triggerEl) {
       const triggerTop = triggerEl.getBoundingClientRect().top + window.scrollY;
