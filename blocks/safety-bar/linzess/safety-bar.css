@@ -1195,7 +1195,7 @@
 }
 
 
-/* Mobile: single column, hide USES (col1), show only IRI (col2) */
+/* Mobile: single column, hide USES (col1), show only IRI (col2) with first bullet only */
 
 
 @media (width <= 744px) {
@@ -1210,6 +1210,14 @@
 
   .safety-bar.split .safety-bar-col2 {
     display: block;
+  }
+
+  .safety-bar.split .safety-bar-col2 li:nth-child(n+2) {
+    display: none;
+  }
+
+  .safety-bar.split .safety-bar-col2 > p {
+    display: none;
   }
 
   .safety-bar-abbreviated h3 {
