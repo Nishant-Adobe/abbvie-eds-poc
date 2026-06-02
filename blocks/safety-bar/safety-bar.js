@@ -111,7 +111,8 @@ export default function decorate(block) {
   document.body.append(stickySection);
 
   // Linzess only: hide the bar when inline ISI "USES" section appears in viewport.
-  if (document.body.classList.contains('linzess')) {
+  const brand = document.querySelector('meta[name="brand"]')?.content;
+  if (brand === 'linzess') {
     const pageMain = document.querySelector('main');
     const isiTarget = pageMain?.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
       || pageMain?.querySelector('.section.isi');
