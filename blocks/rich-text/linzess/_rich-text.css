@@ -233,6 +233,14 @@
   color: var(--color-text-muted, #555);
 }
 
+.rich-text-wrapper ~ .default-content-wrapper p:has(> strong:only-child) {
+  color: var(--color-text-heading, #422e83);
+}
+
+.rich-text-wrapper ~ .default-content-wrapper p:has(> strong:only-child) strong {
+  color: var(--color-text-heading, #422e83);
+}
+
 .rich-text-wrapper ~ .default-content-wrapper ul {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal-large, 1.6rem);
