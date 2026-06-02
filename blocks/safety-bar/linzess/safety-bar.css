@@ -780,7 +780,7 @@
   --icon-font-family: 'abbv-iconFont';
 
   /* ---- Font: Size ---- */
-  --font-size-body: 1.6rem;
+  --font-size-body: 1.4rem;
   --font-size-body-small: 12px;
   --font-size-body-xs: 0.75rem;
   --font-size-legal: 14px;
@@ -1195,10 +1195,23 @@
 }
 
 
-/* Responsive */
+/* Mobile: single column, hide USES (col1), show only IRI (col2) */
 
 
-@media (width <= 600px) {
+@media (width <= 744px) {
+  .safety-bar.split .safety-bar-abbreviated {
+    display: block;
+    grid-template-columns: none;
+  }
+
+  .safety-bar.split .safety-bar-col1 {
+    display: none;
+  }
+
+  .safety-bar.split .safety-bar-col2 {
+    display: block;
+  }
+
   .safety-bar-abbreviated h3 {
     font-size: var(--font-size-legal);
   }

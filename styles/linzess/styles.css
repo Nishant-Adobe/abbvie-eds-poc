@@ -12,17 +12,24 @@ main > .section {
   margin-bottom: 0;
 }
 
-/* Transcript section */
+/* Transcript section — outer container */
 .section.transcript,
 .section:first-of-type {
   background-color: #fff;
   position: relative;
   overflow: visible;
   padding: 0 0 var(--spacing-100);
+  margin: var(--spacing-80) 0 0;
   max-width: none;
-  margin-left: 0;
-  margin-right: 0;
   width: 100%;
+}
+
+/* Transcript content wrapper — centered with 48px side padding */
+.section.transcript .rich-text-wrapper,
+.section:first-of-type .rich-text-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-48);
 }
 
 .section.transcript + .section,
@@ -40,6 +47,7 @@ main > .section {
   text-align: center;
   line-height: var(--spacing-30);
   margin: 0;
+  padding: 0;
 }
 
 .section.transcript h1::before,
@@ -60,7 +68,8 @@ main > .section {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   color: var(--text-color);
-  margin: var(--spacing-14) 0;
+  margin: var(--spacing-16) 0;
+  padding: 0;
 }
 
 .section.transcript .default-content-wrapper strong,
@@ -74,7 +83,19 @@ main > .section {
 .section.transcript .default-content-wrapper p:has(> strong:only-child),
 .section:first-of-type .default-content-wrapper p:has(> strong:only-child) {
   color: var(--color-text-heading);
-  margin-top: var(--spacing-40);
+  margin: var(--spacing-40) 0 var(--spacing-16);
+}
+
+.section.transcript .default-content-wrapper ul,
+.section:first-of-type .default-content-wrapper ul {
+  margin: var(--spacing-16) 0;
+  padding: 0 0 0 var(--spacing-40);
+}
+
+.section.transcript .default-content-wrapper li,
+.section:first-of-type .default-content-wrapper li {
+  margin: 0;
+  padding: 0;
 }
 
 /* ISI section */
@@ -83,10 +104,15 @@ main > .section {
   background-color: #fff;
   position: relative;
   padding: 0 var(--spacing-20) var(--spacing-80);
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
+  margin: var(--spacing-10) auto var(--spacing-20);
+  max-width: 100%;
   width: 100%;
+}
+
+.section.isi .default-content-wrapper,
+.section:nth-of-type(2):not(.safety-bar-container) .default-content-wrapper {
+  max-width: 124rem;
+  margin: 0 auto;
 }
 
 .section.isi h3,
@@ -97,17 +123,33 @@ main > .section {
   color: var(--color-text-heading);
   text-transform: none;
   margin: var(--spacing-10) 0 0;
+  padding: 0;
 }
 
 .section.isi p,
+.section:nth-of-type(2):not(.safety-bar-container) p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi ul,
+.section:nth-of-type(2):not(.safety-bar-container) ul {
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
 .section.isi li,
-.section:nth-of-type(2):not(.safety-bar-container) p,
 .section:nth-of-type(2):not(.safety-bar-container) li {
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
   color: var(--color-text-muted);
   margin: var(--spacing-10) 0;
+  padding: 0;
 }
 
 .section.isi strong,
@@ -123,4 +165,17 @@ main > .section {
 .section:nth-of-type(2):not(.safety-bar-container) a {
   color: var(--color-text-heading);
   text-decoration: underline;
+}
+
+/* Mobile — transcript and ISI padding adjustments */
+@media (width <= 744px) {
+  .section.transcript .rich-text-wrapper,
+  .section:first-of-type .rich-text-wrapper {
+    padding: 0 var(--spacing-16);
+  }
+
+  .section.isi h3,
+  .section:nth-of-type(2):not(.safety-bar-container) h3 {
+    font-size: var(--font-size-legal);
+  }
 }
