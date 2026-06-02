@@ -69,6 +69,8 @@
   color: var(--color-text-heading);
 }
 
+/* ISI section styles — H3, ISI paragraphs, ISI bold, ISI links */
+
 .rich-text h3 {
   font-family: var(--font-family-legal-bold);
   font-size: var(--font-size-legal-large);
@@ -77,3 +79,30 @@
   text-transform: none;
   margin: var(--spacing-10) 0 0;
 }
+
+/* stylelint-disable no-descending-specificity */
+.rich-text h3 ~ p,
+.rich-text h3 ~ ul li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+}
+
+.rich-text h3 ~ p strong,
+.rich-text h3 ~ p b,
+.rich-text h3 ~ ul li strong {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: normal;
+  color: var(--color-text-muted);
+}
+
+.rich-text h3 ~ p a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+/* stylelint-enable no-descending-specificity */
