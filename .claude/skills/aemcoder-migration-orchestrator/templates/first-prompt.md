@@ -89,9 +89,9 @@ approved. Today's scope is page {{N}}: {{TARGET_URL}}.
 
 ### C. Regression protection (MECHANICAL — AEMCODER-013)
 
-**The canonical list of approved pages is in
-`.claude/skills/aemcoder-migration-orchestrator/approved-pages.json`.**
-Read it. Don't rely on memory.
+**Enumerate every previously approved page in the active batch.** If you
+don't know the list, ASK the user before any shared-file edit. Don't
+rely on memory for the page list.
 
 **Shared-File Inventory** — these files trigger cross-page regression
 risk. Editing any of them MUST follow the pre-edit gate below.
@@ -109,11 +109,11 @@ risk. Editing any of them MUST follow the pre-edit gate below.
 
 **PRE-EDIT GATE — mandatory:**
 1. Identify if the file you're about to edit is in the Shared-File Inventory.
-2. If YES: BEFORE editing, snapshot EACH page in `approved-pages.json`
-   `pages[]` at 1440px AND 390px. Save as baseline.
+2. If YES: BEFORE editing, snapshot EACH previously approved page in the
+   active batch at 1440px AND 390px. Save as baseline.
 3. Apply the edit. Run `npm run scaffold:build:block --block-name X
    --brand-name {{BRAND_KEY}}` if CSS partials touched.
-4. AFTER editing, re-snapshot EACH page at 1440 + 390.
+4. AFTER editing, re-snapshot EACH approved page at 1440 + 390.
 5. Diff against the pre-edit baseline. ANY unintended visual change on
    ANY approved page = REGRESSION.
 
@@ -125,14 +125,13 @@ risk. Editing any of them MUST follow the pre-edit gate below.
 - Re-attempt with the narrower fix; repeat the gate.
 
 **On approval gate (before declaring "done"):**
-- Re-snapshot every page in `approved-pages.json` `pages[]` at 1440 + 390.
+- Re-snapshot every previously approved page at 1440 + 390.
 - Confirm zero unintended changes.
 - Then ask for user approval.
 
 **When the user approves the current in-progress page:**
-- Move the entry from `inProgress` to `pages` in `approved-pages.json`.
-- Set `approvedDate`.
-- All future edits will then guard regression against this page too.
+- Add it to your working list of approved pages for the rest of the
+  session, so future edits guard regression against it too.
 
 ### D. Page structure / metadata / fragments
 1. First, identify header fragment, footer fragment, safety-bar

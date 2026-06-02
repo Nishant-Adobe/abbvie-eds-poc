@@ -163,22 +163,20 @@ the next migration.
 **Triggered by AEMCODER-013 (2026-06-01).** /dermatology/access migration
 silently regressed the approved homepage. Phase D's end-of-phase check
 was insufficient because regressions had already shipped to local preview
-by then. The fix is a **pre-edit gate** + **mechanical registry of
-approved pages** + **shared-file inventory**.
+by then. The fix is a **pre-edit gate** + **shared-file inventory**.
 
-### approved-pages.json (registry)
+### Approved pages (state)
 
-The file `.claude/skills/aemcoder-migration-orchestrator/approved-pages.json`
-lists every approved migrated page. As of 2026-06-01: homepage,
-/dermatology. New page becomes approved → append to the registry.
-
-This is the canonical list. The regression gate below cites it directly —
-don't paraphrase or rely on memory.
+At the start of any fix session, the user names the previously approved
+pages in this batch (or ask them). Examples for the active Rinvoq HCP
+batch (as of 2026-06-02): homepage (rinvoqhcp.com), /dermatology. Add
+to your working list whenever the user approves a new page.
 
 ### Shared-File Inventory (edit-to-page mapping)
 
 These file paths affect MULTIPLE pages. Editing any of them requires
-regression check against EVERY page in `approved-pages.json`:
+regression check against EVERY previously approved page in the active
+batch:
 
 | File pattern | Affects | Why |
 |---|---|---|
@@ -204,8 +202,8 @@ Files that DO NOT trigger cross-page regression:
 
 ```
 BEFORE editing a file in the Shared-File Inventory:
-  1. Read approved-pages.json — note all 'pages' entries.
-  2. Snapshot EACH page at 1440px AND 390px (its regressionCheckpoints).
+  1. Confirm the active batch's previously approved pages (from user or session context).
+  2. Snapshot EACH approved page at 1440px AND 390px.
   3. Save as "pre-edit-{file-being-edited}-{timestamp}.png" baseline.
 
 DURING editing:
@@ -214,7 +212,7 @@ DURING editing:
      CSS partials touched.
 
 AFTER editing:
-  6. Re-snapshot EACH page at 1440 + 390.
+  6. Re-snapshot EACH approved page at 1440 + 390.
   7. Diff against pre-edit baselines.
   8. Any unintended visual change on ANY approved page = REGRESSION.
   9. If regression: REVERT, narrow the fix scope (custom class + scoped
@@ -226,37 +224,23 @@ AFTER editing:
 
 Before saying "done" or asking for user approval on the in-progress page:
 
-- [ ] Read `approved-pages.json` `pages` array
-- [ ] For each entry, capture 1440px + 390px screenshots of the live local URL
+- [ ] Enumerate every previously approved page in the active batch
+- [ ] For each, capture 1440px + 390px screenshots of the live local URL
 - [ ] Diff each against the pre-edit baseline OR the user's last-approved state
 - [ ] Report any visual changes detected (even minor)
 - [ ] If ZERO unintended changes: proceed to user approval
 - [ ] If ANY unintended change: revert, document the trigger, narrow scope
 
-### Auto-update approved-pages.json when user approves
-
-When the user explicitly approves the current in-progress page:
-
-```
-1. Move the entry from "inProgress" to "pages"
-2. Set approvedDate = today
-3. Populate criticalBlocks and knownDistinctiveSections from the migration
-4. Save the file
-```
-
-Future shared-file edits will then automatically guard against regression
-on this new page too.
-
 ### Why this is mechanical, not advisory
 
 Advisory rules ("check previously approved pages") failed in
 AEMCODER-013 because:
-- They didn't NAME which pages
 - They didn't enforce a TIMING (before or after the edit?)
 - They didn't list WHICH file edits triggered the check
 
-This protocol fixes all three with concrete files: approved-pages.json
-(names), pre-edit gate (timing), Shared-File Inventory (triggers).
+This protocol fixes both with the pre-edit gate (timing) and the
+Shared-File Inventory (triggers). The approved-pages list is kept in
+session context rather than a registry file — simpler to maintain.
 
 ### CSS SELECTOR SCOPE CHECK (AEMCODER-018)
 
@@ -346,15 +330,16 @@ that can also be targeted if needed.
 
 The skill is brand-agnostic — substitute the brand key everywhere you see
 `{{BRAND_KEY}}` placeholders in the templates. Brand-specific data
-(approved pages, fragments, brand-customized blocks) lives in
-`approved-pages.json` keyed by brand. See `abbvie-page-migration` skill
-for per-brand DOM-mapping details (fonts, primary colors, page inventory).
+(fragments, brand-customized blocks) lives in the project under
+`styles/{brand}/` and `blocks/{block}/{brand}/`. See `abbvie-page-migration`
+skill for per-brand DOM-mapping details (fonts, primary colors, page inventory).
 
 ## Cross-page reuse cheat sheet (CURRENT ACTIVE BATCH)
 
 Determine the active brand from the migration kickoff prompt or the
-in-progress page URL, then read the corresponding `brands.{brand-key}`
-entry in `approved-pages.json` for the current state.
+in-progress page URL. The approved-pages list for the active batch is
+tracked in session context — at the start of any fix session, ask the
+user (or check session history) which pages they have already approved.
 
 ### Currently active: Rinvoq HCP (as of 2026-06-02)
 

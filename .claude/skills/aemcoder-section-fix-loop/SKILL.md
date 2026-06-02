@@ -209,12 +209,12 @@ Ordered list per fix:
 
 ### Step 8 — Cross-page regression sweep (MECHANICAL — AEMCODER-013)
 
-**Read `aemcoder-migration-orchestrator/approved-pages.json`.** That file
-is the canonical list of pages requiring regression check. Don't paraphrase
-or rely on memory.
+**Enumerate every previously approved page in the active batch** (ask the
+user or check session history if uncertain). For example, in the active
+Rinvoq HCP batch as of 2026-06-02: homepage + /dermatology.
 
-For each page in `approved-pages.json` `pages[]`:
-- Re-snapshot the page at 1440px AND 390px (its `regressionCheckpoints`).
+For each approved page:
+- Re-snapshot the page at 1440px AND 390px.
 - Diff against the pre-edit baseline you captured in Step 2 — OR if no
   pre-edit baseline exists for this page, diff against the user's
   last-approved visual state.
