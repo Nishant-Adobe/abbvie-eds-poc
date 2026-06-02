@@ -87,14 +87,52 @@ approved. Today's scope is page {{N}}: {{TARGET_URL}}.
 7. **Brand override is OPT-IN** — missing `blocks/{block}/{{BRAND_KEY}}/`
    means inheritance is intentional. Don't auto-create.
 
-### C. Regression protection
-1. Before editing any shared file (`_styles.css`, `_tokens.css`, brand
-   block override, fragment), capture baseline screenshots of *every*
-   approved page at 1440 / 768 / 390.
-2. After each fix, diff every viewport of every approved page against
-   baseline. ANY unintended change is regression.
-3. After each fix, also re-render homepage + every previously approved
-   page to confirm no shared-asset regression.
+### C. Regression protection (MECHANICAL — AEMCODER-013)
+
+**The canonical list of approved pages is in
+`.claude/skills/aemcoder-migration-orchestrator/approved-pages.json`.**
+Read it. Don't rely on memory.
+
+**Shared-File Inventory** — these files trigger cross-page regression
+risk. Editing any of them MUST follow the pre-edit gate below.
+
+| File pattern | Affects |
+|---|---|
+| `styles/{brand}/_tokens.css` | ALL pages w/ `brand: {brand}` |
+| `styles/{brand}/_fonts.css` | ALL pages w/ `brand: {brand}` |
+| `styles/{brand}/_styles.css` | ALL pages w/ `brand: {brand}` |
+| `blocks/{block}/{brand}/_{block}.css` | All pages using that block + brand |
+| `blocks/{block}/block-config.js` (base OR brand) | All pages using that block |
+| Fragment docs (`/nav`, `/footer`, `/safety-bar`, etc.) | All pages referencing |
+| `models/_*.json` partials | All pages using affected block |
+| `component-{models,definition,filters}.json` | NEVER edit manually |
+
+**PRE-EDIT GATE — mandatory:**
+1. Identify if the file you're about to edit is in the Shared-File Inventory.
+2. If YES: BEFORE editing, snapshot EACH page in `approved-pages.json`
+   `pages[]` at 1440px AND 390px. Save as baseline.
+3. Apply the edit. Run `npm run scaffold:build:block --block-name X
+   --brand-name {{BRAND_KEY}}` if CSS partials touched.
+4. AFTER editing, re-snapshot EACH page at 1440 + 390.
+5. Diff against the pre-edit baseline. ANY unintended visual change on
+   ANY approved page = REGRESSION.
+
+**On regression:**
+- REVERT the edit immediately.
+- Narrow scope: prefer `classes_commonCustomClass` value on the section
+  + a tightly-scoped rule in `styles/{{BRAND_KEY}}/_styles.css` over
+  brand-wide changes.
+- Re-attempt with the narrower fix; repeat the gate.
+
+**On approval gate (before declaring "done"):**
+- Re-snapshot every page in `approved-pages.json` `pages[]` at 1440 + 390.
+- Confirm zero unintended changes.
+- Then ask for user approval.
+
+**When the user approves the current in-progress page:**
+- Move the entry from `inProgress` to `pages` in `approved-pages.json`.
+- Set `approvedDate`.
+- All future edits will then guard regression against this page too.
 
 ### D. Page structure / metadata / fragments
 1. First, identify header fragment, footer fragment, safety-bar
@@ -245,7 +283,7 @@ Do not begin Phase A until I confirm the answers.
 | `{{TARGET_URL}}` | https://www.rinvoqhcp.com/dermatology/dosing-lab-monitoring |
 | `{{N}}` | 3 (page sequence number in batch) |
 | `{{FULL_SCOPE_TABLE_IF_PART_OF_A_LARGER_BATCH}}` | Markdown table of all pages with execution order |
-| `{{BRAND_CUSTOMIZED_BLOCKS}}` | Run `ls -d blocks/*/rinvoq-hcp/ \| sed 's\|blocks/\|\|;s\|/rinvoq-hcp/\|\|'` to enumerate |
+| `{{BRAND_CUSTOMIZED_BLOCKS}}` | Run `ls -d blocks/*/{{BRAND_KEY}}/ \| sed 's\|blocks/\|\|;s\|/{{BRAND_KEY}}/\|\|'` to enumerate (substitute actual brand key) |
 | `{{BLOCK_LIST_OR_REFER_TO_REPO}}` | Inline list of 65 blocks OR "see `/blocks/` directory" |
 | `{{ONLY_IF_BATCH_MIGRATION}}` | Remove section entirely if migrating one standalone page |
 

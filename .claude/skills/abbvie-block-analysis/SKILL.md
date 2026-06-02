@@ -300,10 +300,12 @@ NO model JSON file. Loaded as a Fragment.
 
 - Author header content as a Fragment document at `/nav` (default) or any path.
 - Set page metadata `nav: /path/to/header-fragment` on each page.
-- **Pharma sites often use per-section nav** (e.g. `/rinvoq-hcp/header` for
-  homepage, `/rinvoq-hcp/header-dermatology` for `/dermatology/*` pages).
+- **Pharma sites often use per-section nav** (e.g. `/{brand-key}/header` for
+  homepage, `/{brand-key}/header-{condition}` for `/{condition}/*` pages).
+  Pattern observed on Rinvoq HCP; applies to Skyrizi HCP and other
+  condition-segmented brands too.
 - For brand-specific behavior (active-state, indication text injection):
-  edit `blocks/header/rinvoq-hcp/block-config.js`, not base `header.js`.
+  edit `blocks/header/{brand-key}/block-config.js`, not base `header.js`.
 
 ### Authoring rules
 
@@ -953,3 +955,191 @@ from these via `npm run scaffold:build`.
 - [ ] For images: alt text on every content image
 
 If all checked: ready to publish. If any unchecked: do not publish; md2jcr will fail.
+
+---
+
+# Known block limitations (from chat history)
+
+Real constraints discovered during migration that the block JS or model
+enforces beyond what the field list suggests. Read this BEFORE proposing
+to author content in a non-obvious shape.
+
+## image-text — image column accepts ONLY `<picture>`
+
+The image-text block's JS strips anything in the image cell that isn't a
+`<picture>` element. Captions / text / overlays placed in the image cell
+are silently removed at decoration time.
+
+**If the design requires text-over-image:** use the `hero` block (which
+supports `layers` field for overlay text) or `columns` block (manual
+2-col layout with `rich-text` next to `custom-image`).
+
+## formulary-lookup — brand block CSS fully styles sub-elements
+
+The brand-block CSS for `formulary-lookup` (in
+`blocks/formulary-lookup/{brand}/_formulary-lookup.css`) already styles
+every sub-element including: submit-button icon, filter-dropdown icon
+(plum circle + chevron), input borders, results table.
+
+**Do NOT add `::before` / `::after` decorations in page-level CSS for
+this block** — you will get duplicated icons (AEMCODER-021). Override
+via CSS variables if brand block exposes them, or extend the brand
+block partial directly.
+
+## hero — image cell is row 0 only; text in row 2
+
+The hero block JS expects the image in the FIRST authored row, and the
+text/CTA in the SECOND row. Any other ordering produces empty divs or
+unexpected DOM shape.
+
+**Row Mapping reminder:** hero is a flat block (no item children) with
+14 fields. The first 4 rows are image-related (`image`, `imageAlt`,
+`mobileImage`, `mobileImageAlt`), then eyebrow/indication/text/layers/
+video/caption.
+
+## brand-explorer — md2jcr breaks if image field uses `aem-content`
+
+When defining brand-explorer's `logo` field in `_brand-explorer.json`,
+the `component` value MUST be `reference`, NOT `aem-content`. Using
+`aem-content` triggers md2jcr "Cannot read properties of undefined
+(reading 'fields')" because the field-collapsing logic only handles
+`reference` for image-type fields in container item blocks.
+
+See md2jcr publish rules below.
+
+## accordion item — `classes_defaultOpen` MUST be the LAST item field
+
+`classes_*` fields are typically last in any model. For `accordion-item`,
+`classes_defaultOpen` boolean ends the field list, then accessibility
+tab + tab-skipped fields follow. Validate against
+`blocks/accordion/_accordion.json` — the order must match for md2jcr.
+
+## cards-grid — item cells are 6 EXACTLY (link, image, line1-4)
+
+cards-grid items have exactly 6 cells per row. Adding a 7th (e.g. for
+secondary CTA) requires extending the item model, not just adding a
+cell to the authored content. Doing so without model update produces
+md2jcr "Cannot read properties of undefined" because cell N has no
+field to map to.
+
+## safety-bar — content lives in Fragment, not page
+
+safety-bar is a fragment block. Authoring safety-bar content directly
+on a page (not via fragment reference) bypasses the shared-fragment
+mechanism — each page would have its own copy, defeating the regulatory
+single-source-of-truth.
+
+**Authoring contract:** always set page metadata `safety-bar: /path/to/safety-bar-fragment`. Edit content in the fragment, not on
+individual pages.
+
+---
+
+# md2jcr publish rules
+
+When publishing block content from `.plain.html` / authoring through to
+JCR, the md2jcr transformer applies these rules. Violations produce
+"Cannot read properties of undefined (reading 'fields')" or worse —
+silent content corruption.
+
+## Field-collapsing rules
+
+Fields ending in certain suffixes are NOT emitted as separate cells in
+the block table — they collapse into HTML attributes on the parent
+element:
+
+| Suffix | Becomes attribute on... | Example |
+|---|---|---|
+| `Alt` | parent `<img>` | `logoAlt` → `<img alt="VALUE">` |
+| `Text` | parent `<a>` text node (deprecated; prefer `Title`) | `linkText` → `<a>VALUE</a>` |
+| `Title` | parent `<a>` title attribute | `linkTitle` → `<a title="VALUE">` |
+| `Type` | parent `<a>` type attribute | `linkType` → `<a type="VALUE">` |
+| `MimeType` | parent `<source>` type attribute | `videoMimeType` → `<source type="VALUE">` |
+
+These fields DO appear in the model and authoring UI — but they DO NOT
+get rows/cells in `.plain.html`. The transformer pairs them with the
+preceding non-suffix field automatically.
+
+## `aem-content` vs `reference` for image fields
+
+For image fields in **container item blocks** (cards-grid item,
+brand-explorer item, story-cards item, etc.):
+
+- ✅ `"component": "reference"` — works correctly. Renders as
+  `<img src="...">` (or `<picture>` for responsive images).
+- ❌ `"component": "aem-content"` — triggers md2jcr failure "Cannot
+  read properties of undefined (reading 'fields')". The `aem-content`
+  component is intended for content-fragment references at the page
+  level, not for image references inside container items.
+
+**Diagnostic:** if you see this error and the failing block has an
+image field with `component: aem-content`, change to `reference`,
+rebuild, and re-publish.
+
+## Required field-hint comments (for ambiguous fields)
+
+When a field's purpose isn't clear from its name, add a comment in the
+`.plain.html` row to help md2jcr (and future editors):
+
+```html
+<div>
+  <div>
+    <!-- field:linkLabel -->
+    Read more
+  </div>
+</div>
+```
+
+Without these hints, md2jcr falls back to positional matching against
+the model — which silently breaks if fields are reordered or added.
+
+## Tab and `classes_*` exclusion (recap from earlier section)
+
+- Fields with `"component": "tab"` are UI section markers only — no row.
+- Fields prefixed `classes_` get appended to the block element's class
+  attribute — no row.
+- `classes` (no underscore suffix) is a multiselect for variant
+  picklists — also class attribute, no row.
+
+## blockId and language rows
+
+- Field `blockId` → row with literal text `id:VALUE` (NOT
+  `<div>VALUE</div>` — the `id:` prefix is mandatory).
+- Field `language` → row with literal text `lang:VALUE` (same).
+
+These ARE rows even though they look attribute-like.
+
+## 5-step triage when md2jcr fails
+
+When "Cannot read properties of undefined (reading 'fields')" or similar
+appears:
+
+1. **Compare with a working block** — find a block of the same shape
+   (parent + item, or flat) that publishes successfully. Diff its
+   `_{block-name}.json` against yours.
+2. **Check filter → model chain** — does the parent block's
+   `filters[0].components` include the item block ID? Does the item
+   block's `id` in `models[]` match what the parent expects?
+3. **Verify compiled JSON** — open `component-models.json` at the
+   project root. Find the failing block. Are ALL fields present?
+   `npm run scaffold:build` regenerates from partials.
+4. **Check field-component types** — is any image field using
+   `aem-content`? Change to `reference`.
+5. **Dump browser console** — md2jcr errors sometimes include a more
+   specific stack trace in the publish console than in the UI message.
+   Look for the field NAME in the error, not just the block name.
+
+If all 5 steps don't resolve: re-author the content as a test block
+from scratch using a known-working similar block's `.plain.html` as
+template. Diff your version cell-by-cell against the template.
+
+## Validation script (run before publish)
+
+```sh
+# Validate plain.html row count matches model field count
+python3 tools/validate-plain-html.py \
+  --content content/{path}/{page}.plain.html \
+  --models component-models.json
+```
+
+(Script does not exist yet — TODO. Until then, manual count using the
+Validation Checklist at the top of this section.)

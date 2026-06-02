@@ -49,14 +49,79 @@ For any new page:
    relevant recipe into the "Section 1 Mission" or "block-fit hypotheses"
    area).
 
+## Procedural rule P1: section-metadata FIRST, then CSS (AEMCODER-019)
+
+**For every Custom/Hybrid page section and every non-standard section in any
+archetype:** introduce a section-metadata `style` class BEFORE writing any
+CSS. This is a hard procedural rule that was missing — and its absence cost
+~10 selectors to be rewritten during the /access migration.
+
+### Workflow
+
+1. **Author the section-metadata block in the page content**:
+   ```
+   <div class="section-metadata">
+     <div><div>style</div><div>access-hero-section</div></div>
+   </div>
+   ```
+   This emits a class on the `<div class="section">` wrapper at render time
+   (e.g. `<div class="section access-hero-section">`).
+2. **Pick a unique style-class name** that includes the page slug:
+   `{page-slug}-{section-purpose}-section` — e.g. `access-hero-section`,
+   `dosing-lab-monitoring-table-section`, `real-patients-quote-section`.
+3. **THEN write CSS** in `styles/{brand}/_styles.css`, scoped to that class:
+   ```css
+   .section.access-hero-section .hero { ... }
+   .section.access-hero-section .cards-grid { ... }
+   ```
+4. Run `npm run scaffold:build:block --block-name X --brand-name {brand}`
+   (single block, single brand — never the unscoped `scaffold:build`).
+
+### Forbidden selectors in `styles/{brand}/_styles.css`
+
+**Per AEMCODER-019, do NOT write:**
+
+- `:has()` selectors targeting block classes —
+  `.section.hero-container:has(.hero.access-hero)` is forbidden.
+- `body:has(.hero.access-hero) ...` — forbidden.
+- Bare block selectors — `.cards-grid ...`, `.text-container ...`,
+  `.hero ...` — forbidden (these affect every page using that block).
+- Auto-generated section classes that match generic block names — selectors
+  like `.section.hero-container ...` are forbidden because every page with
+  a hero gets that auto-class. Use your authored style-class instead.
+
+**Always write:**
+
+- `.section.<unique-style-class> .<block-class> ...` — scoped, predictable.
+- `.section.<unique-style-class> > div.<block-class> ...` — child combinator
+  if needed for specificity over base block CSS.
+- `body.page-<slug> ...` — only when section-metadata isn't possible
+  (rare; section-metadata should cover ~all cases).
+
+### Why this is mandatory now
+
+The /access migration started with `:has()` selectors and bare block
+selectors. ~20 hours in, the user asked "are you applying section
+metadata or targeting `.section-wrapper` classes directly?" — at that
+point ~10 selectors had to be rewritten. Section-metadata is the
+EDS-native pattern; the others are workarounds that compound regression
+risk on every shared block they touch.
+
+This rule is also enforced by the orchestrator's CSS Selector Scope Check
+(AEMCODER-018 prevention) — generic block selectors are refused at
+edit time.
+
 ---
 
 # Page archetype 1: Homepage (brand entry)
 
-**Examples:**
-- rinvoqhcp.com (HCP brand homepage)
-- skyrizihcp.com (HCP brand homepage)
-- linzess.com (DTC brand homepage)
+**Examples across the 6 commercial pharma brands:**
+- rinvoqhcp.com (HCP)
+- skyrizihcp.com (HCP)
+- rinvoq.com (DTC)
+- linzess.com (DTC, hash-based nav)
+- venclexta.com (HCP, CLL focus)
+- mavyret.com (HCP, Univers Condensed)
 
 **Purpose:** Brand entry point. Multi-condition switcher (HCP sites), hero,
 key indications, primary CTAs, support resources.
@@ -79,13 +144,13 @@ key indications, primary CTAs, support resources.
 
 | Key | Value | Notes |
 |---|---|---|
-| brand | `{brand-key}` | e.g. `rinvoq-hcp` |
-| nav | `/rinvoq-hcp/nav` or similar | Homepage may use brand-default nav |
-| footer | `/rinvoq-hcp/footer` | Usually shared across brand pages |
+| brand | `{brand-key}` | One of: `rinvoq-hcp`, `skyrizi-hcp`, `rinvoq-dtc`, `linzess`, `venclexta`, `mavyret` |
+| nav | `/{brand-key}/nav` or similar | Homepage may use brand-default nav |
+| footer | `/{brand-key}/footer` | Usually shared across brand pages |
 | title | from live `<title>` | Verbatim |
 | description | from live meta description | Verbatim |
 | og:image | hero image asset | Same image as hero block |
-| job-code | from live footer / legal | e.g. `US-RNQ-XXXXXX` |
+| job-code | from live footer / legal | Brand-specific format (e.g. `US-RNQ-XXXXXX` for Rinvoq, `US-SKZ-XXXXXX` for Skyrizi, `US-LNZ-XXXXXX` for Linzess) |
 
 ## Key composition rules
 
@@ -113,10 +178,12 @@ key indications, primary CTAs, support resources.
 
 # Page archetype 2: Condition Landing
 
-**Examples:**
-- rinvoqhcp.com/dermatology
-- rinvoqhcp.com/rheumatology
-- skyrizihcp.com/psoriatic-arthritis
+**Examples across brands:**
+- rinvoqhcp.com/dermatology, /rheumatology, /gastroenterology
+- skyrizihcp.com/psoriatic-arthritis, /plaque-psoriasis
+- venclexta.com/cll, /aml
+- mavyret.com/treatment (single-condition brand)
+- linzess.com/ibs-c, /cic
 
 **Purpose:** Condition-specific entry. Different header than homepage
 (condition nav), condition-focused hero, sub-section nav, condition-relevant
@@ -127,9 +194,9 @@ cards.
 | # | Block | Section variant / classes | Purpose |
 |---|---|---|---|
 | 1 | brand-explorer (HCP only) | — | Cross-condition bar (same as homepage) |
-| 2 | header (fragment) | **DIFFERENT fragment than homepage** | Per-condition nav — e.g. `nav: /rinvoq-hcp/header-dermatology` |
+| 2 | header (fragment) | **DIFFERENT fragment than homepage** | Per-condition nav — e.g. `nav: /{brand-key}/header-{condition}` |
 | 3 | hero | condition-themed, often with indication paragraph | Condition-specific hero copy |
-| 4 | section-nav | (linzess, rinvoq-hcp, skyrizi-hcp brands) | Anchor nav for sub-sections |
+| 4 | section-nav | (`linzess`, `rinvoq-hcp`, `skyrizi-hcp` brands have brand customization) | Anchor nav for sub-sections |
 | 5 | cards-grid | varied — efficacy / safety / dosing previews | 3–4 cards linking to condition sub-pages |
 | 6 | rich-text | indication-statement variant | Condition indication paragraph (verbatim) |
 | 7 | text-container | references variant | Footnote references for indication |
@@ -168,9 +235,12 @@ Same as Homepage, **except:**
 
 # Page archetype 3: Dosing & Lab Monitoring (clinical reference)
 
-**Examples:**
+**Examples across brands:**
 - rinvoqhcp.com/dermatology/dosing-lab-monitoring
 - skyrizihcp.com/psoriatic-arthritis/dosing
+- venclexta.com/cll/dosing-administration
+- mavyret.com/dosing-and-administration
+- linzess.com/hcp/dosing
 
 **Purpose:** Clinical reference page. Dosing schedules, lab monitoring
 guidance, dose adjustments, contraindications detail. Information-dense,
@@ -226,9 +296,11 @@ Same as Condition Landing.
 
 # Page archetype 4: Real Patients (testimonial)
 
-**Examples:**
+**Examples across brands:**
 - rinvoqhcp.com/atopic-dermatitis/real-patients
 - skyrizihcp.com/psoriatic-arthritis/patient-stories
+- linzess.com/patient-stories
+- rinvoq.com/atopic-dermatitis/patient-experience (DTC)
 
 **Purpose:** Patient testimonial showcase. Video-heavy, story-card-heavy,
 consent disclaimer prominent.
@@ -279,9 +351,12 @@ Same as Condition Landing. Plus:
 
 # Page archetype 5: H2H Comparison (head-to-head efficacy)
 
-**Examples:**
+**Examples across brands:**
 - rinvoqhcp.com/atopic-dermatitis/efficacy/rinvoq-vs-dupixent/level-up
 - skyrizihcp.com/psoriatic-arthritis/efficacy/skyrizi-vs-cosentyx
+- skyrizihcp.com/plaque-psoriasis/efficacy/skyrizi-vs-humira
+- venclexta.com/cll/efficacy (less common — single-arm trials)
+- mavyret.com/efficacy (single-arm SVR data)
 
 **Purpose:** Head-to-head efficacy comparison. Chart-heavy, table-heavy,
 footnote-heavy, statistical-significance markers, study design references.

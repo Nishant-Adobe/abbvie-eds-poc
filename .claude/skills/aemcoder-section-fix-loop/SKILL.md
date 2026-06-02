@@ -1,6 +1,6 @@
 ---
 name: aemcoder-section-fix-loop
-description: Repair a single section of an aemcoder-migrated page that diverges from the live source. Codifies the diff → root-cause-tag → lowest-specificity-fix → regression-check loop that prevents back-and-forth iterations. Use whenever a section on a migrated page does not pixel-match the live source — hero, brush card, glacier section, header, safety bar, brand explorer, cards-grid, etc. Trigger phrases include "section not matching", "fix section X with aemcoder", "pixel diff for section", "{block-name} not matching live", "header/hero/safety-bar/footer not matching", "regression on {page}".
+description: Repair a single section of an aemcoder-migrated page that diverges from the live source. Codifies the diff → root-cause-tag → lowest-specificity-fix → regression-check loop that prevents back-and-forth iterations. Use whenever a section on a migrated page does not pixel-match the live source — hero, brush card, glacier section, header, safety bar, brand explorer, cards-grid, formulary-lookup, text-container, etc. AGGRESSIVE TRIGGER PHRASES (auto-invoke whenever user types any of these during a migration session) — "still not", "not matching", "still off", "still broken", "still seems broken", "still issue", "pixel comparison", "pixel by pixel", "do screenshot comparison", "screenshot comparison", "scan each node", "scan each and every node", "scan all the html nodes", "fix is limited to", "compare with live", "compare with live site", "we have issues", "we have issue in", "Refer the skills", "Refer the skills to fix", "section X is not matching", "issues in few section", "{block-name} not matching live", "header/hero/safety-bar/footer not matching", "regression on {page}", "fix migration", "address review", "not approved", "{block-name} is not fixed", "{block-name} not fixed properly".
 ---
 
 # aemcoder Section Fix Loop
@@ -8,7 +8,7 @@ description: Repair a single section of an aemcoder-migrated page that diverges 
 ## Execution context
 
 **You execute this workflow directly.** When the user reports a section
-not matching, follow the 8-step loop below. The prompt template in
+not matching, follow the 9-step loop below. The prompt template in
 `../aemcoder-migration-orchestrator/templates/section-fix-prompt.md`
 is your internal checklist, not output for another tool.
 
@@ -16,9 +16,10 @@ is your internal checklist, not output for another tool.
 
 Per-section repair workflow for any block on a migrated page
 that diverges from live source. Replaces the ad-hoc iterate-on-screenshot
-pattern with a structured 8-step loop:
+pattern with a structured 9-step loop:
 
 ```
+0. Live+local computed-style + screenshot dump (HARD GATE — no edits before this)
 1. Preconditions   → 2. Desktop baseline → 3. Side-by-side diff
 4. Behavior diff   → 5. Root-cause tag  → 6. Fix proposal
 7. Apply (1 at a time) → 8. Cross-page regression sweep
@@ -26,6 +27,54 @@ pattern with a structured 8-step loop:
 
 The loop has hard stop conditions (≥90% match per viewport, 3-round cap,
 escalation triggers) so we don't churn forever.
+
+## Step 0 — Live + local computed-style and screenshot dump (HARD GATE — AEMCODER-014, AEMCODER-015)
+
+**THIS IS A HARD GATE. NO CSS EDIT MAY BE WRITTEN BEFORE STEP 0 COMPLETES.**
+
+When auto-invoked (see trigger phrases in description), the FIRST action
+MUST be to dump both live and local DOM + computed styles for the section
+in question. Skipping this step is the #1 cause of back-and-forth thrash
+(AEMCODER-014: 30 turns ping-ponging max-width values; AEMCODER-015:
+12 user re-asks for screenshot comparison).
+
+### Required dump (do BEFORE proposing any fix)
+
+1. **Live screenshot** — Playwright (or browser) screenshot of the section
+   on the live URL at 1440px AND 390px. Save to a known location.
+2. **Local screenshot** — same section on the local preview URL at
+   1440px AND 390px.
+3. **Live computed styles** — for every DOM descendant in the section,
+   collect `getComputedStyle()` output. Required properties at minimum:
+   `display, position, width, max-width, min-width, height, min-height,
+   padding, margin, gap, font-family, font-size, font-weight,
+   line-height, color, background, background-image, background-size,
+   background-position, border, border-radius, box-shadow, transform,
+   z-index`. Plus pseudo-elements (`::before`, `::after`).
+4. **Local computed styles** — same set on the local DOM.
+5. **Delta table** — single side-by-side table, one row per DOM descendant,
+   columns: [selector | property | live value | local value | match/diff].
+
+### After the dump
+
+- Identify ALL differences in one pass. Do NOT cherry-pick one delta to
+  fix at a time.
+- Write ONE consolidated CSS replacement that addresses ALL deltas,
+  scoped per AEMCODER-018 selector-scope rule.
+- Only then proceed to Step 5 (root-cause tag) and Step 6 (fix proposal).
+
+### Three-round circuit breaker
+
+If a section has had >3 corrective prompts from the user without
+reaching ≥90% match, STOP all further CSS edits and re-run Step 0 from
+scratch. Delta-based fixing has compounding error — fresh dump resets
+the baseline.
+
+### Why this is a hard gate
+
+The /access migration burned ~30 turns on the formulary section because
+each CSS edit was reactive to one user comment without re-reading the
+full live computed-style block. Step 0 collapses that pattern.
 
 ## Related skills
 
@@ -158,11 +207,47 @@ Ordered list per fix:
 
 **Do not batch fixes.** Per-fix isolation makes regressions bisectable.
 
-### Step 8 — Cross-page regression sweep
-After all approved fixes:
-- Re-snapshot every previously approved page at 390 + 1440.
-- Confirm no shared-asset regression on homepage + any page sharing the
-  edited fragment / brand CSS partial.
+### Step 8 — Cross-page regression sweep (MECHANICAL — AEMCODER-013)
+
+**Read `aemcoder-migration-orchestrator/approved-pages.json`.** That file
+is the canonical list of pages requiring regression check. Don't paraphrase
+or rely on memory.
+
+For each page in `approved-pages.json` `pages[]`:
+- Re-snapshot the page at 1440px AND 390px (its `regressionCheckpoints`).
+- Diff against the pre-edit baseline you captured in Step 2 — OR if no
+  pre-edit baseline exists for this page, diff against the user's
+  last-approved visual state.
+- Report ✓ unchanged or ✗ regressed per page per viewport.
+
+**If ANY approved page shows unintended change:**
+- Identify which file edit triggered it (see Shared-File Inventory in
+  `aemcoder-migration-orchestrator/SKILL.md`).
+- REVERT that edit.
+- Narrow the fix scope — typically swap a brand-wide rule for a
+  custom-class + scoped rule that only affects the in-progress page.
+- Re-attempt Step 7 with narrower scope.
+
+**Do not declare done while any approved page is regressed.** This was
+the AEMCODER-013 root cause — declaring done before mechanically
+verifying every approved page.
+
+### Pre-edit-gate cross-reference (AEMCODER-013)
+
+If your fix in Step 7 touches any file in the orchestrator's
+Shared-File Inventory:
+
+| File pattern | Triggers regression check on |
+|---|---|
+| `styles/{brand}/_tokens.css` | ALL approved pages |
+| `styles/{brand}/_styles.css` | ALL approved pages |
+| `blocks/{block}/{brand}/_{block}.css` | All approved pages using that block + brand |
+| Fragment docs | All approved pages referencing the fragment |
+| Block-config.js (base or brand) | All approved pages using that block |
+
+If the file you're about to edit is in this inventory, the PRE-EDIT
+GATE in the orchestrator skill applies — capture baselines for ALL
+approved pages BEFORE the edit, not just the in-progress page.
 
 ## Stop conditions
 

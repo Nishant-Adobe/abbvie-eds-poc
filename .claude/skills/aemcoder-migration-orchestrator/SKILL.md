@@ -146,8 +146,8 @@ class + brand global CSS rule over creating a new brand block override
 ## The fix-registry
 
 `fix-registry.json` is the running log of every aemcoder failure mode
-observed. Currently 12 entries (AEMCODER-001 through AEMCODER-012), all
-incorporated into one of the three new skills.
+observed. Currently 13 entries (AEMCODER-001 through AEMCODER-013), all
+incorporated into one of the four new skills.
 
 **Workflow:**
 - Load `fix-registry.json` at session start so aemcoder sees known failure modes.
@@ -157,6 +157,165 @@ incorporated into one of the three new skills.
 This is the same pattern as the reference team's `fix-forward pipeline` —
 each bug becomes a registry entry that MUST be prevented upstream before
 the next migration.
+
+## Cross-page regression protection (mandatory gate)
+
+**Triggered by AEMCODER-013 (2026-06-01).** /dermatology/access migration
+silently regressed the approved homepage. Phase D's end-of-phase check
+was insufficient because regressions had already shipped to local preview
+by then. The fix is a **pre-edit gate** + **mechanical registry of
+approved pages** + **shared-file inventory**.
+
+### approved-pages.json (registry)
+
+The file `.claude/skills/aemcoder-migration-orchestrator/approved-pages.json`
+lists every approved migrated page. As of 2026-06-01: homepage,
+/dermatology. New page becomes approved → append to the registry.
+
+This is the canonical list. The regression gate below cites it directly —
+don't paraphrase or rely on memory.
+
+### Shared-File Inventory (edit-to-page mapping)
+
+These file paths affect MULTIPLE pages. Editing any of them requires
+regression check against EVERY page in `approved-pages.json`:
+
+| File pattern | Affects | Why |
+|---|---|---|
+| `styles/{brand}/_tokens.css` | ALL pages w/ `brand: {brand}` metadata | Brand-wide token cascade |
+| `styles/{brand}/_fonts.css` | ALL pages w/ `brand: {brand}` | Brand-wide fonts |
+| `styles/{brand}/_styles.css` | ALL pages w/ `brand: {brand}` | Brand-wide global rules |
+| `styles/{brand}/themes/{theme}/_styles.css` | ALL pages w/ both `brand` + `theme` | Theme overlay |
+| `blocks/{block}/{brand}/_{block}.css` | EVERY page using that block + brand | Brand block override |
+| `blocks/{block}/block-config.js` | EVERY page using that block (all brands) | Block JS variants — high regression risk |
+| `blocks/{block}/{brand}/block-config.js` | EVERY page using that block + brand | Brand block config override |
+| Any Fragment doc (`/nav`, `/footer`, `/safety-bar`, etc.) | EVERY page referencing the fragment | Shared content |
+| `models/_*.json` partials | EVERY page using affected block | UE authoring contract |
+| `component-{models,definition,filters}.json` (root, compiled) | EVERY page | NEVER edit manually — auto-generated |
+
+Files that DO NOT trigger cross-page regression:
+- The current page's own `.plain.html` (only affects this page)
+- Custom-class rules scoped via `classes_commonCustomClass` + tight
+  selectors in `styles/{brand}/_styles.css` (custom class is page-specific)
+- A new asset under `content/content/dam/abbvie-eds-poc/` (only affects
+  pages that reference it)
+
+### PRE-EDIT GATE (mandatory before editing any shared file)
+
+```
+BEFORE editing a file in the Shared-File Inventory:
+  1. Read approved-pages.json — note all 'pages' entries.
+  2. Snapshot EACH page at 1440px AND 390px (its regressionCheckpoints).
+  3. Save as "pre-edit-{file-being-edited}-{timestamp}.png" baseline.
+
+DURING editing:
+  4. Apply the change.
+  5. Run `npm run scaffold:build:block --block-name X --brand-name Y` if
+     CSS partials touched.
+
+AFTER editing:
+  6. Re-snapshot EACH page at 1440 + 390.
+  7. Diff against pre-edit baselines.
+  8. Any unintended visual change on ANY approved page = REGRESSION.
+  9. If regression: REVERT, narrow the fix scope (custom class + scoped
+     rule instead of brand-wide), re-attempt.
+  10. Only declare done when ALL approved pages match their baselines.
+```
+
+### POST-EDIT VERIFICATION (mandatory before user approval)
+
+Before saying "done" or asking for user approval on the in-progress page:
+
+- [ ] Read `approved-pages.json` `pages` array
+- [ ] For each entry, capture 1440px + 390px screenshots of the live local URL
+- [ ] Diff each against the pre-edit baseline OR the user's last-approved state
+- [ ] Report any visual changes detected (even minor)
+- [ ] If ZERO unintended changes: proceed to user approval
+- [ ] If ANY unintended change: revert, document the trigger, narrow scope
+
+### Auto-update approved-pages.json when user approves
+
+When the user explicitly approves the current in-progress page:
+
+```
+1. Move the entry from "inProgress" to "pages"
+2. Set approvedDate = today
+3. Populate criticalBlocks and knownDistinctiveSections from the migration
+4. Save the file
+```
+
+Future shared-file edits will then automatically guard against regression
+on this new page too.
+
+### Why this is mechanical, not advisory
+
+Advisory rules ("check previously approved pages") failed in
+AEMCODER-013 because:
+- They didn't NAME which pages
+- They didn't enforce a TIMING (before or after the edit?)
+- They didn't list WHICH file edits triggered the check
+
+This protocol fixes all three with concrete files: approved-pages.json
+(names), pre-edit gate (timing), Shared-File Inventory (triggers).
+
+### CSS SELECTOR SCOPE CHECK (AEMCODER-018)
+
+**AEMCODER-013 added file-scope checking but selector-scope was missing.**
+The /access migration regressed the homepage AGAIN even with the gate,
+because a generic block selector inside an approved file affected pages
+beyond the active one.
+
+**Rule:** any CSS rule in `styles/{brand}/_styles.css` that touches a
+shared block class MUST be scoped under one of:
+
+1. **Section-metadata style class** — `.section.<style-class> .<block> ...`
+   (preferred — see AEMCODER-019 and abbvie-page-templates).
+2. **Page body class** — `body.page-<slug> .<block> ...`
+3. **Brand-scoped block CSS** — move the rule into
+   `blocks/{block}/{brand}/_{block}.css` (still affects all pages
+   using that block + brand, but at least it's the right layer).
+
+**Forbidden generic selectors** (refuse to write these in styles/{brand}/_styles.css):
+- `.cards-grid ...` (without section-class or body-class prefix)
+- `.text-container ...`
+- `.image-text ...`
+- `.hero ...`
+- `.formulary-lookup ...`
+- `.accordion ...`
+- `.tabs ...`
+- `.modal ...`
+- `.safety-bar ...`
+- `.brand-explorer ...`
+- Any `:has()` selector targeting a block class without section-class scope
+
+**Detection:** before saving a CSS edit to `styles/{brand}/_styles.css`,
+inspect each rule selector. If it matches `^\\s*\\.(cards-grid|text-container|image-text|hero|formulary-lookup|accordion|tabs|modal|safety-bar|brand-explorer)\\s` (i.e. starts with a bare block class), REFUSE the edit and force re-scoping under a section/body class.
+
+### BUILD COMMAND SCOPE CHECK (AEMCODER-017)
+
+**Build commands have site-wide side effects.** Running
+`npm run build:json` or `npm run scaffold:build` (no flags) recompiles
+every brand's CSS, polluting the working tree with changes across
+brands you're not migrating.
+
+**Rule — before running any `npm run scaffold*` or `npm run build*`:**
+
+1. **Prefer the targeted variant**:
+   - `npm run scaffold:build:block --block-name X --brand-name Y` for
+     a single block + brand (lowest blast radius).
+2. **If you must run the un-targeted variant** (e.g. structural rebuild):
+   - `git status` first — note the clean baseline.
+   - Run the build.
+   - `git diff --stat` immediately after — verify ONLY the target brand's
+     files changed.
+   - Revert unintended changes:
+     - `git checkout -- styles/<other-brand>/` for polluted brand styles
+     - `git checkout -- component-{models,definition,filters}.json` for
+       root compiled JSON (NEVER hand-edit these anyway)
+
+**Why this matters:** the working tree must stay focused on the active
+brand's edits. Polluted diffs make code review impossible, cause
+accidental commits of unrelated changes, and break PR isolation.
 
 ## Stop conditions
 
@@ -168,7 +327,36 @@ the next migration.
   user.
 - aemcoder proposes base-block edit: stop, escalate.
 
-## Cross-page reuse cheat sheet for current Rinvoq HCP batch
+## Brand scope — generalized to all 6 commercial pharma brands
+
+This orchestrator works for any of the 6 commercial pharma brands in scope
+for the POC migration:
+
+| Brand key | Live domain | Special notes |
+|---|---|---|
+| `rinvoq-hcp` | rinvoqhcp.com | HCP site, per-condition nav |
+| `skyrizi-hcp` | skyrizihcp.com | HCP site, similar per-condition pattern |
+| `rinvoq-dtc` | rinvoq.com | DTC site, broader audience |
+| `linzess` | linzess.com | Hash-based navigation pattern |
+| `venclexta` | venclexta.com | CLL-specific ISI variant, clinical-data heavy |
+| `mavyret` | mavyret.com | Univers Condensed font, alt-therapy clauses |
+
+Plus 3 non-commercial brands (`abbvie`, `botox`, `rinvoq`) in `brand-config.json`
+that can also be targeted if needed.
+
+The skill is brand-agnostic — substitute the brand key everywhere you see
+`{{BRAND_KEY}}` placeholders in the templates. Brand-specific data
+(approved pages, fragments, brand-customized blocks) lives in
+`approved-pages.json` keyed by brand. See `abbvie-page-migration` skill
+for per-brand DOM-mapping details (fonts, primary colors, page inventory).
+
+## Cross-page reuse cheat sheet (CURRENT ACTIVE BATCH)
+
+Determine the active brand from the migration kickoff prompt or the
+in-progress page URL, then read the corresponding `brands.{brand-key}`
+entry in `approved-pages.json` for the current state.
+
+### Currently active: Rinvoq HCP (as of 2026-06-02)
 
 Pages already migrated (treat as reference for remaining pages):
 - Homepage (rinvoqhcp.com) — establishes header fragment, footer fragment,

@@ -1,0 +1,95 @@
+{
+  "_description": "Multi-brand registry of approved migrated pages requiring regression protection. Every shared-asset edit (see Shared-File Inventory in SKILL.md) must be regression-tested against EVERY page in the active brand's 'pages' array before being declared done. Update this file whenever the user approves a page: move its entry from 'inProgress' to 'pages' under the correct brand, and set approvedDate.",
+  "version": 2,
+  "lastUpdated": "2026-06-02",
+  "_howToFindActiveBrand": "Read the in-progress page's URL or the page metadata. The brand key is one of the 9 entries in brand-config.json. For migration work, focus on commercial pharma brands: rinvoq-hcp, skyrizi-hcp, rinvoq-dtc, linzess, venclexta, mavyret.",
+  "brands": {
+    "rinvoq-hcp": {
+      "displayName": "Rinvoq HCP",
+      "liveDomain": "rinvoqhcp.com",
+      "previewDomain": "preview-aemcoder.adobe.io/content/rinvoq-hcp",
+      "pages": [
+        {
+          "id": "homepage",
+          "title": "Rinvoq HCP — Homepage",
+          "liveUrl": "https://www.rinvoqhcp.com",
+          "localUrl": "https://preview-aemcoder.adobe.io/content/rinvoq-hcp/",
+          "approvedDate": "2026-05-22",
+          "archetype": "Homepage",
+          "criticalBlocks": ["brand-explorer", "hero", "cards-grid", "safety-bar", "header", "footer"],
+          "knownDistinctiveSections": ["hero with indication cards", "brush card glacier section", "footer with job code"],
+          "regressionCheckpoints": ["1440px desktop", "1200px breakpoint edge", "768px tablet", "390px mobile"]
+        },
+        {
+          "id": "dermatology",
+          "title": "Rinvoq HCP — Dermatology landing",
+          "liveUrl": "https://www.rinvoqhcp.com/dermatology",
+          "localUrl": "https://preview-aemcoder.adobe.io/content/rinvoq-hcp/dermatology/",
+          "approvedDate": "2026-05-26",
+          "archetype": "Condition Landing",
+          "criticalBlocks": ["brand-explorer", "header (per-condition)", "hero", "section-nav", "cards-grid", "safety-bar", "footer"],
+          "knownDistinctiveSections": ["dermatology-specific header with siteIndication", "anchor nav", "atopic-dermatitis cards", "safety-bar maximized state"],
+          "regressionCheckpoints": ["1440px desktop", "1200px breakpoint edge", "768px tablet", "390px mobile"]
+        }
+      ],
+      "inProgress": [
+        {
+          "id": "dermatology-access",
+          "title": "Rinvoq HCP — Coverage & Access (dermatology)",
+          "liveUrl": "https://www.rinvoqhcp.com/dermatology/access",
+          "archetype": "Custom / Hybrid (formulary-lookup + accordion + info-tree)",
+          "startedDate": "2026-06-01",
+          "regressionTriggeredOn": ["homepage (AEMCODER-013)"],
+          "notes": "First page where shared-asset edits regressed an approved page. Pre-edit gate now enforced."
+        }
+      ]
+    },
+    "skyrizi-hcp": {
+      "displayName": "Skyrizi HCP",
+      "liveDomain": "skyrizihcp.com",
+      "previewDomain": "preview-aemcoder.adobe.io/content/skyrizi-hcp",
+      "pages": [],
+      "inProgress": []
+    },
+    "rinvoq-dtc": {
+      "displayName": "Rinvoq DTC",
+      "liveDomain": "rinvoq.com",
+      "previewDomain": "preview-aemcoder.adobe.io/content/rinvoq-dtc",
+      "pages": [],
+      "inProgress": []
+    },
+    "linzess": {
+      "displayName": "Linzess",
+      "liveDomain": "linzess.com",
+      "previewDomain": "preview-aemcoder.adobe.io/content/linzess",
+      "pages": [],
+      "inProgress": [],
+      "specialNotes": "Hash-based navigation pattern — see abbvie-page-migration skill Linzess section"
+    },
+    "venclexta": {
+      "displayName": "Venclexta",
+      "liveDomain": "venclexta.com",
+      "previewDomain": "preview-aemcoder.adobe.io/content/venclexta",
+      "pages": [],
+      "inProgress": [],
+      "specialNotes": "CLL-specific ISI variant; clinical-data-panel block heavy"
+    },
+    "mavyret": {
+      "displayName": "Mavyret",
+      "liveDomain": "mavyret.com",
+      "previewDomain": "preview-aemcoder.adobe.io/content/mavyret",
+      "pages": [],
+      "inProgress": [],
+      "specialNotes": "Univers Condensed font; alternative-therapy clauses in ISI"
+    }
+  },
+  "howToUse": [
+    "1. Identify the active brand for the current migration (from page URL or page metadata `brand:` value).",
+    "2. Before editing ANY file in the Shared-File Inventory (see orchestrator SKILL.md), snapshot every page under `brands.{activeBrand}.pages` at 1440 + 390.",
+    "3. After edit, re-snapshot every page in that brand's `pages` array and diff against pre-edit baseline.",
+    "4. Any unintended visual change on any page in that brand's `pages` = regression. Revert and reconsider scope.",
+    "5. When the user approves the in-progress page, move it from `inProgress` to `pages` under the same brand key. Set approvedDate.",
+    "6. Cross-brand caveat: if your edit touches BASE block CSS/JS (which you should escalate, not patch), regression check must run across EVERY brand's pages, not just the active brand's. Brand-only edits stay within their brand's page list."
+  ],
+  "addingANewBrand": "If migration starts for a brand not in this list (e.g. abbvie, botox, rinvoq for corporate/non-commercial work), add the brand key under `brands` with empty `pages` and `inProgress` arrays. The Shared-File Inventory rules in SKILL.md apply identically."
+}
