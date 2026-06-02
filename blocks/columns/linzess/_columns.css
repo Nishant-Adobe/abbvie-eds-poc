@@ -1,1 +1,85 @@
 @import '../columns.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* stylelint-disable no-descending-specificity */
+
+/* Linzess — Savings Tout Card (columns directly after hero)
+   Live site: light purple card, 16px radius, image left + text right */
+.hero-container + .columns-container .columns {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--linz-light-purple);
+  border-radius: var(--linz-rounded-corner);
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.hero-container + .columns-container .columns > .columns-item {
+  grid-column: unset;
+}
+
+.hero-container + .columns-container .columns > .columns-item:not(:has(img, strong, a)) {
+  display: none;
+}
+
+.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+  flex: 0 1 auto;
+  max-width: 50%;
+}
+
+.hero-container + .columns-container .columns > .columns-item:has(.columns-item-content) {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.hero-container + .columns-container .columns .columns-item-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.hero-container + .columns-container .columns .columns-item-content p strong {
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--linz-dark-purple);
+}
+
+.hero-container + .columns-container .columns .button-container a.button {
+  background-color: var(--linz-dark-purple);
+  color: var(--linz-white);
+  border-radius: var(--linz-rounded-corner);
+  padding: 16px 59px 16px 24px;
+  font-weight: 800;
+  font-size: 14.4px;
+  font-family: var(--body-font-family);
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+}
+
+.hero-container + .columns-container .columns .button-container a.button::after {
+  content: '\203A';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 21px;
+}
+
+.hero-container + .columns-container .columns .button-container a.button:hover {
+  background-color: var(--linz-off-white);
+  color: var(--linz-dark-purple);
+}
+
+@media (width >= 768px) {
+  .hero-container + .columns-container .columns {
+    flex-wrap: nowrap;
+    padding: 40px 48px;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */
