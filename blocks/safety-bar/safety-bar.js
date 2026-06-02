@@ -118,10 +118,12 @@ export default function decorate(block) {
       || pageMain?.querySelector('.section.isi');
 
     if (isiTarget) {
-      const observer = new IntersectionObserver(([entry]) => {
-        stickySection.style.display = entry.isIntersecting ? 'none' : '';
-      }, { threshold: 0 });
-      observer.observe(isiTarget);
+      const usesHeading = isiTarget.querySelector('h3');
+      const triggerEl = usesHeading || isiTarget;
+      const triggerTop = triggerEl.getBoundingClientRect().top + window.scrollY;
+      window.addEventListener('scroll', () => {
+        stickySection.style.display = window.scrollY + window.innerHeight >= triggerTop ? 'none' : '';
+      }, { passive: true });
     }
   }
 }
