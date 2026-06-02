@@ -17,13 +17,13 @@
   --find-provider-color-text: var(--color-text-muted);
   --find-provider-color-pin-bg: var(--color-accent-yellow);
   --find-provider-color-pin-text: var(--find-provider-color-accent);
-  --find-provider-color-divider: var(--color-divider, rgb(0 0 0 / 10%));
+  --find-provider-color-divider: rgb(0 0 0 / 10%);
   --find-provider-color-input-border: var(--form-light-border-color);
   --find-provider-color-map-bg: var(--color-gray-light);
   --find-provider-color-disabled-bg: var(--color-gray-medium);
   --find-provider-color-separator: var(--color-border);
-  --find-provider-color-loader-overlay: var(--color-loader-overlay, rgb(255 255 255 / 60%));
-  --find-provider-color-spinner-track: var(--color-spinner-track, rgb(0 0 0 / 10%));
+  --find-provider-color-loader-overlay: rgb(255 255 255 / 60%);
+  --find-provider-color-spinner-track: rgb(0 0 0 / 10%);
 
   /* ---- Loader / spinner ---- */
   --find-provider-spinner-size: var(--spacing-56);
@@ -36,7 +36,7 @@
   --find-provider-panel-padding-block: var(--spacing-24);
   --find-provider-header-gap: var(--spacing-16);
   --find-provider-header-padding-inline: var(--spacing-04);
-  --find-provider-title-font-size: var(--body-font-size-m);
+  --find-provider-title-font-size: var(--spacing-22);
   --find-provider-title-line-height: 1.2;
 
   /* ---- Radius select ---- */
@@ -58,8 +58,8 @@
   /* ---- Layout ---- */
   --find-provider-layout-gap: var(--spacing-24);
   --find-provider-layout-column-gap: var(--spacing-48);
-  --find-provider-map-height: var(--spacing-540, 540px);
-  --find-provider-results-scroll-height: var(--spacing-550, 550px);
+  --find-provider-map-height: var(--spacing-540);
+  --find-provider-results-scroll-height: var(--spacing-550);
 
   /* ---- Result card ---- */
   --find-provider-result-row-gap: var(--spacing-02);
@@ -76,6 +76,7 @@
   --find-provider-pin-offset: var(--spacing-01);
   --find-provider-name-font-size: var(--spacing-18);
   --find-provider-name-line-height: 1.4;
+  --find-provider-specialty-font-size: var(--body-font-size-s);
   --find-provider-meta-gap: var(--spacing-06);
   --find-provider-sep-opacity: 0.6;
   --find-provider-directions-gap: var(--spacing-06);
@@ -84,7 +85,7 @@
   --find-provider-details-gap: var(--spacing-06);
   --find-provider-details-margin-top: var(--spacing-02);
   --find-provider-details-icon-font-size: var(--spacing-18);
-  --find-provider-captcha-font-size: var(--font-size-12, 11px);
+  --find-provider-captcha-font-size: var(--spacing-11, 11px);
 
   /* ---- Pagination ---- */
   --find-provider-pagination-gap: var(--spacing-12);
@@ -108,12 +109,6 @@
   margin-block-end: var(--spacing-24);
 }
 
-.find-provider-form-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: var(--find-provider-gap-field);
-}
-
 .find-provider-field-group {
   display: flex;
   flex-direction: column;
@@ -129,7 +124,8 @@
 }
 
 .find-provider-search-input,
-.find-provider-radius-select {
+.find-provider-radius-select,
+.find-provider-specialty-select {
   border: var(--separator-height-1) solid var(--find-provider-color-border);
   border-radius: var(--find-provider-radius-input);
   font-size: var(--body-font-size-s);
@@ -140,9 +136,10 @@
 }
 
 .find-provider-search-input:focus-visible,
-.find-provider-radius-select:focus-visible {
-   outline: var(--find-provider-focus-outline-width, 2px) solid var(--color-focus, highlight);
-   outline-offset: var(--find-provider-focus-outline-offset, 2px);
+.find-provider-radius-select:focus-visible,
+.find-provider-specialty-select:focus-visible {
+  outline: var(--spacing-02) solid var(--color-focus);
+  outline-offset: var(--spacing-02);
 }
 
 /* Search row: input + optional geo button side by side */
@@ -243,10 +240,6 @@
 
 .find-provider-status {
   display: none;
-}
-
-.find-provider-status:not(:empty) {
-  display: block;
 }
 
 .find-provider-error {
@@ -448,6 +441,11 @@
   font-size: var(--find-provider-result-body-font-size);
   color: var(--find-provider-color-text);
   line-height: var(--find-provider-result-body-line-height);
+}
+
+.find-provider-result-specialty {
+  font-size: var(--find-provider-specialty-font-size);
+  color: var(--find-provider-color-text-muted);
 }
 
 .find-provider-result-address {
