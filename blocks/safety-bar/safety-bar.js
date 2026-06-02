@@ -118,10 +118,10 @@ export default function decorate(block) {
       || pageMain?.querySelector('.section.isi');
 
     if (isiTarget) {
-      const isiAbsoluteTop = isiTarget.getBoundingClientRect().top + window.scrollY;
-      window.addEventListener('scroll', () => {
-        stickySection.style.display = window.scrollY >= isiAbsoluteTop ? 'none' : '';
-      }, { passive: true });
+      const observer = new IntersectionObserver(([entry]) => {
+        stickySection.style.display = entry.isIntersecting ? 'none' : '';
+      }, { threshold: 0 });
+      observer.observe(isiTarget);
     }
   }
 }
