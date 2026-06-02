@@ -1,15 +1,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <script>
-    let brandCode = [...document.head.querySelectorAll(`meta[name="brand"]`)]
+    const brandCode = [...document.head.querySelectorAll(`meta[name="brand"]`)]
       .map((m) => m.content)
       .join(', ');
-    // Fallback: detect brand from URL path when meta not yet in head
-    if (!brandCode) {
-      const path = window.location.pathname;
-      const brands = ['linzess', 'rinvoq-hcp', 'rinvoq', 'skyrizi-hcp', 'venclexta', 'mavyret'];
-      const match = brands.find((b) => path.startsWith(`/${b}/`) || path.startsWith(`/content/${b}/`));
-      if (match) brandCode = match;
-    }
     const themeCode = [...document.head.querySelectorAll(`meta[name="theme"]`)]
       .map((m) => m.content)
       .join(', ');
