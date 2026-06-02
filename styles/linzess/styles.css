@@ -11,9 +11,8 @@ main > .section {
   margin-bottom: 0;
 }
 
-/* Transcript section — identified by containing an H1 */
-.section.transcript,
-.section:has(h1) {
+/* Section: transcript — white arc container for transcript content */
+.section.transcript {
   background-color: #fff;
   border-radius: var(--spacing-40) var(--spacing-40) 0 0;
   position: relative;
@@ -21,13 +20,11 @@ main > .section {
   padding: 0 var(--spacing-20) var(--spacing-100);
 }
 
-.section.transcript + .section,
-.section:has(h1) + .section {
+.section.transcript + .section {
   border-radius: 0;
 }
 
-.section.transcript h1,
-.section:has(h1) h1 {
+.section.transcript h1 {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1);
   font-weight: 400;
@@ -38,8 +35,7 @@ main > .section {
   margin: 0;
 }
 
-.section.transcript h1::before,
-.section:has(h1) h1::before {
+.section.transcript h1::before {
   content: '';
   display: block;
   width: var(--spacing-64);
@@ -50,8 +46,7 @@ main > .section {
   margin: 0 auto var(--spacing-10);
 }
 
-.section.transcript .default-content-wrapper p,
-.section:has(h1) .default-content-wrapper p {
+.section.transcript .default-content-wrapper p {
   font-family: var(--body-font-family);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
@@ -60,29 +55,24 @@ main > .section {
 }
 
 .section.transcript .default-content-wrapper strong,
-.section.transcript .default-content-wrapper b,
-.section:has(h1) .default-content-wrapper strong,
-.section:has(h1) .default-content-wrapper b {
+.section.transcript .default-content-wrapper b {
   color: var(--text-color);
   font-weight: 700;
 }
 
-.section.transcript .default-content-wrapper p:has(> strong:only-child),
-.section:has(h1) .default-content-wrapper p:has(> strong:only-child) {
+.section.transcript .default-content-wrapper p:has(> strong:only-child) {
   color: var(--color-text-heading);
   margin-top: var(--spacing-40);
 }
 
-/* ISI section — identified by containing H3 but no H1, no safety-bar */
-.section.isi,
-.section:has(h3):not(:has(h1)):not(.safety-bar-container) {
+/* Section: isi — inline Important Safety Information */
+.section.isi {
   background-color: #fff;
   position: relative;
   padding: 0 var(--spacing-20) var(--spacing-80);
 }
 
-.section.isi h3,
-.section:has(h3):not(:has(h1)):not(.safety-bar-container) h3 {
+.section.isi h3 {
   font-family: var(--font-family-legal-bold);
   font-size: var(--font-size-legal-large);
   font-weight: 400;
@@ -92,9 +82,7 @@ main > .section {
 }
 
 .section.isi p,
-.section.isi li,
-.section:has(h3):not(:has(h1)):not(.safety-bar-container) p,
-.section:has(h3):not(:has(h1)):not(.safety-bar-container) li {
+.section.isi li {
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
@@ -103,42 +91,35 @@ main > .section {
 }
 
 .section.isi strong,
-.section.isi b,
-.section:has(h3):not(:has(h1)):not(.safety-bar-container) strong,
-.section:has(h3):not(:has(h1)):not(.safety-bar-container) b {
+.section.isi b {
   font-family: var(--font-family-legal-bold);
   color: var(--color-text-muted);
   font-weight: normal;
 }
 
-.section.isi a,
-.section:has(h3):not(:has(h1)):not(.safety-bar-container) a {
+.section.isi a {
   color: var(--color-text-heading);
   text-decoration: underline;
 }
 
 @media (width >= 744px) {
-  .section.transcript,
-  .section:has(h1) {
+  .section.transcript {
     padding: 0 var(--spacing-40) var(--spacing-100);
   }
 
-  .section.isi,
-  .section:has(h3):not(:has(h1)):not(.safety-bar-container) {
+  .section.isi {
     padding: 0 var(--spacing-40) var(--spacing-80);
   }
 }
 
 @media (width >= 1024px) {
-  .section.transcript,
-  .section:has(h1) {
+  .section.transcript {
     padding: 0 var(--spacing-80) var(--spacing-100);
     max-width: var(--spacing-960, 96rem);
     margin: 0 auto;
   }
 
-  .section.isi,
-  .section:has(h3):not(:has(h1)):not(.safety-bar-container) {
+  .section.isi {
     padding: 0 var(--spacing-80) var(--spacing-80);
     max-width: var(--spacing-960, 96rem);
     margin: 0 auto;
