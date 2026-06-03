@@ -1205,74 +1205,102 @@ body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapp
   text-decoration: underline;
 }
 
-/* Stats cards: only in the dark section (has carousel sibling) */
+/* Stats cards: full-width stacked, short height, circle overlaps top */
 
-.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2,
-body main .section.dark .cards-grid .abbv-flex-item-v2 {
+.carousel-video-playlist-container .cards-grid .savings-card-cards,
+body main .section.dark .cards-grid .savings-card-cards {
+  flex-direction: column;
+  gap: 60px;
+  margin-top: 80px;
+}
+
+.carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2,
+body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2 {
+  width: 100%;
+}
+
+.carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-flex-item-v2,
+body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2 {
   background-color: var(--linz-light-purple);
   border-radius: var(--linz-rounded-corner);
   text-align: center;
-  padding: 0 24px 40px;
-  margin-top: 120px;
+  padding: 5px 16px 24px;
   overflow: visible;
+  width: 100%;
 }
 
-.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2.background-dark-purple,
-body main .section.dark .cards-grid .abbv-flex-item-v2.background-dark-purple {
+.carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-flex-item-v2.background-dark-purple,
+body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2.background-dark-purple {
   background-color: var(--linz-light-purple);
 }
 
-/* Stats circle: only in dark/carousel section */
+/* Stats circle: 96px, centered, overlaps card top by 50px */
 
-.carousel-video-playlist-container .cards-grid .heading-2,
-body main .section.dark .cards-grid .heading-2 {
-  display: block;
-  width: 220px;
-  height: 220px;
-  margin: -120px auto 16px;
+.carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2,
+body main .section.dark .cards-grid .savings-card-cards .heading-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 96px;
+  height: 96px;
+  margin: -50px auto 0;
   border-radius: 50%;
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
   font-family: var(--body-font-family);
-  font-size: 24px;
+  font-size: 17px;
   font-weight: 400;
   text-align: center;
-  line-height: 1;
+  line-height: 1.2;
   word-spacing: 100vw;
-  padding-top: 60px;
-  box-sizing: border-box;
 }
 
-.carousel-video-playlist-container .cards-grid .heading-2::first-line,
-body main .section.dark .cards-grid .heading-2::first-line {
-  font-size: 64px;
+.carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2::first-line,
+body main .section.dark .cards-grid .savings-card-cards .heading-2::first-line {
+  font-size: 33px;
   font-weight: 700;
 }
 
 /* Description text in stats section */
 
-.carousel-video-playlist-container .cards-grid .abbv-stretched-card-body p:not(.heading-2),
-body main .section.dark .cards-grid .abbv-stretched-card-body p:not(.heading-2) {
+.carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2),
+body main .section.dark .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2) {
   color: var(--linz-dark-purple);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1.4;
 }
 
 /* Override white text class for stats cards */
 
-.carousel-video-playlist-container .cards-grid .c-linz-white,
-.carousel-video-playlist-container .cards-grid .c-linz-white p,
-body main .section.dark .cards-grid .c-linz-white,
-body main .section.dark .cards-grid .c-linz-white p {
+.carousel-video-playlist-container .cards-grid .savings-card-cards .c-linz-white,
+.carousel-video-playlist-container .cards-grid .savings-card-cards .c-linz-white p,
+body main .section.dark .cards-grid .savings-card-cards .c-linz-white,
+body main .section.dark .cards-grid .savings-card-cards .c-linz-white p {
   color: var(--linz-dark-purple);
 }
 
 /* Hide Sign up buttons in stats section */
 
-.carousel-video-playlist-container .cards-grid .cta,
-body main .section.dark .cards-grid .cta {
+.carousel-video-playlist-container .cards-grid .savings-card-cards .cta,
+body main .section.dark .cards-grid .savings-card-cards .cta {
   display: none;
+}
+
+/* Desktop: 3 cards in a row */
+
+@media (width >= 986px) {
+  .carousel-video-playlist-container .cards-grid .savings-card-cards,
+  body main .section.dark .cards-grid .savings-card-cards {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2,
+  body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2 {
+    flex: 1;
+  }
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
