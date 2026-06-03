@@ -1154,27 +1154,26 @@
   text-decoration: underline;
 }
 
-/* Stats cards: all light purple, no alternating dark */
-
-.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2.background-dark-purple {
-  background-color: var(--linz-light-purple);
-}
+/* Stats cards: remove card backgrounds — content sits on dark purple directly */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2 {
+  background-color: transparent;
+  border-radius: 0;
   text-align: center;
+  padding: 0;
 }
 
-/* Stats circle: large, centered above card content */
+/* Stats circle: large, centered */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
-  height: 160px;
-  margin: -60px auto 16px;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 24px;
   border-radius: 50%;
-  background-color: var(--linz-off-white);
+  background-color: rgb(244 246 251 / 90%);
   color: var(--linz-dark-purple);
   font-size: 33px;
   font-weight: 700;
@@ -1183,16 +1182,23 @@
   flex-direction: column;
 }
 
+/* Description text below circles */
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-stretched-card-body p:not(.heading-2) {
+  color: var(--linz-white);
+}
+
 /* Hide Sign up buttons in stats section */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .cta {
   display: none;
 }
 
-/* White text for description in dark-purple cards */
+/* Fix white text class overrides */
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white {
-  color: var(--linz-dark-purple);
+.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white,
+.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white p {
+  color: var(--linz-white);
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
