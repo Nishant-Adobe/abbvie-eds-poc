@@ -1116,26 +1116,7 @@
   max-width: 100%;
 }
 
-/* Stats circle: "11.5 million" in off-white circle overlapping card top
-   Only applies to the stats section (inside the dark section with carousel) */
-
-.cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 96px;
-  height: 96px;
-  margin: -50px auto 0;
-  border-radius: 50%;
-  background-color: var(--linz-off-white);
-  color: var(--linz-dark-purple);
-  font-size: 17px;
-  font-weight: 700;
-  text-align: center;
-  line-height: 1.2;
-}
-
-/* Section dark background for stats — fallback when section-metadata missing */
+/* Section dark background for stats */
 
 .cards-grid-container.carousel-video-playlist-container {
   background-color: var(--linz-dark-purple);
@@ -1144,11 +1125,23 @@
   padding-bottom: 48px;
 }
 
+/* Section heading: uppercase, centered, Bebas Neue */
+
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper {
   color: var(--linz-white);
+  text-align: center;
 }
 
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p strong {
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h1-hero);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--linz-white);
+  letter-spacing: 0.02em;
+}
+
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p {
   color: var(--linz-white);
 }
 
@@ -1158,6 +1151,48 @@
 
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a:not(.button) {
   color: var(--linz-white);
+  text-decoration: underline;
+}
+
+/* Stats cards: all light purple, no alternating dark */
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2.background-dark-purple {
+  background-color: var(--linz-light-purple);
+}
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2 {
+  text-align: center;
+}
+
+/* Stats circle: large, centered above card content */
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  margin: -60px auto 16px;
+  border-radius: 50%;
+  background-color: var(--linz-off-white);
+  color: var(--linz-dark-purple);
+  font-size: 33px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+  flex-direction: column;
+}
+
+/* Hide Sign up buttons in stats section */
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .cta {
+  display: none;
+}
+
+/* White text for description in dark-purple cards */
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white {
+  color: var(--linz-dark-purple);
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
