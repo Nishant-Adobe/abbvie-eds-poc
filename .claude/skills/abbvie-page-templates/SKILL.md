@@ -502,8 +502,9 @@ When a known archetype evolves (e.g. discover a 6th canonical section in
 homepage that we missed):
 
 1. Update the archetype in place.
-2. If the change breaks already-migrated pages, document in fix-registry
-   (`aemcoder-migration-orchestrator/fix-registry.json`).
+2. If the change breaks already-migrated pages, document the failure
+   pattern + prevention rule in the Anti-patterns section of the most
+   relevant skill (orchestrator, section-fix-loop, or this skill).
 
 ---
 

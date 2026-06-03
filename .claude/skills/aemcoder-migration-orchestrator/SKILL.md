@@ -143,20 +143,22 @@ class + brand global CSS rule over creating a new brand block override
 8. For section divergences, follow aemcoder-section-fix-loop workflow
 ```
 
-## The fix-registry
+## AEMCODER-XXX failure-pattern IDs
 
-`fix-registry.json` is the running log of every aemcoder failure mode
-observed. Currently 13 entries (AEMCODER-001 through AEMCODER-013), all
-incorporated into one of the four new skills.
+Throughout this skill and its siblings, you'll see references like
+"AEMCODER-013" or "AEMCODER-018". These are historical labels for
+specific failure patterns observed during prior migrations. The
+prevention for each is encoded as a rule inside the relevant skill
+(see Anti-patterns sections and the rules cross-referenced by ID).
 
-**Workflow:**
-- Load `fix-registry.json` at session start so aemcoder sees known failure modes.
-- When a NEW failure mode is observed, append entry with status: `pending`.
-- Encode prevention in the appropriate skill; flip status to `incorporated-in-skill`.
-
-This is the same pattern as the reference team's `fix-forward pipeline` —
-each bug becomes a registry entry that MUST be prevented upstream before
-the next migration.
+**When a NEW failure mode is discovered:**
+- Add a one-line entry in the "Anti-patterns" section of the most
+  relevant skill, with a short description and the prevention rule.
+- Optionally cite a new AEMCODER-XXX ID (next available number) for
+  consistency with existing references — git history preserves the
+  date.
+- Do NOT recreate a JSON registry file — prevention rules live in
+  skill prose, not in a separate machine-readable file.
 
 ## Cross-page regression protection (mandatory gate)
 
@@ -304,7 +306,7 @@ accidental commits of unrelated changes, and break PR isolation.
 ## Stop conditions
 
 - User has not approved current phase: do not advance.
-- A NEW failure mode encountered: log to fix-registry, ask user how to
+- A NEW failure mode encountered: add to relevant skill's Anti-patterns section, ask user how to
   proceed (extend a skill? add a rule? accept as known limitation?).
 - 3 rounds of back-and-forth on the same section without progress: stop,
   invoke aemcoder-section-fix-loop with stricter parameters or escalate to
