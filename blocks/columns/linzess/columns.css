@@ -1,10 +1,6 @@
-@import '../columns.css';
-@import '../../../styles/linzess/tokens.css';
-
 /* ============================================================
-   LINZESS — Columns brand overrides
+   LINZESS — Columns brand override
    Tout pattern: rounded image + vertically-centered content
-   Dark-purple section: white headings + white CTA buttons
    ============================================================ */
 
 .columns,
@@ -36,7 +32,7 @@
   }
 }
 
-/* ── Image column — rounded corners, full bleed within card ── */
+/* Image column — rounded corners */
 .columns > .columns-item > .columns-item-image {
   border-radius: var(--linz-rounded-corner);
   overflow: hidden;
@@ -49,7 +45,7 @@
   display: block;
 }
 
-/* Image caption (e.g. "Actor Portrayal") */
+/* Image caption */
 .columns > .columns-item > .columns-item-image em {
   display: block;
   position: relative;
@@ -62,7 +58,7 @@
   font-style: normal;
 }
 
-/* ── Content column — text styling ── */
+/* Content column */
 .columns > .columns-item > .columns-item-content {
   padding: 2.4rem;
 }
@@ -82,31 +78,26 @@
   margin-bottom: 1.6rem;
 }
 
-.columns > .columns-item > .columns-item-content a.button:any-link {
-  display: inline-block;
-  margin-top: 0.8rem;
-}
-
-/* ── Dark-purple section overrides ── */
-.section.dark-purple .columns > .columns-item {
+/* Dark-purple section: white text and inverted buttons */
+.section.find-relief-dark-purple .columns > .columns-item {
   background: transparent;
   border-radius: 0;
 }
 
-.section.dark-purple .columns > .columns-item > .columns-item-content h2 {
+.section.find-relief-dark-purple .columns > .columns-item > .columns-item-content h2 {
   color: var(--color-text-on-dark);
 }
 
-.section.dark-purple .columns > .columns-item > .columns-item-content p {
+.section.find-relief-dark-purple .columns > .columns-item > .columns-item-content p {
   color: var(--color-text-on-dark);
 }
 
-.section.dark-purple .columns > .columns-item > .columns-item-content a.button:any-link {
-  background-color: var(--color-text-on-dark);
+.section.find-relief-dark-purple .columns > .columns-item > .columns-item-content a.button:any-link {
+  background-color: var(--color-brand-accent);
   color: var(--color-brand-primary);
 }
 
-.section.dark-purple .columns > .columns-item > .columns-item-content a.button:hover {
+.section.find-relief-dark-purple .columns > .columns-item > .columns-item-content a.button:hover {
   background-color: var(--linz-light-purple);
   color: var(--color-brand-primary);
 }

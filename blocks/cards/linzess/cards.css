@@ -1,8 +1,7 @@
 /* ============================================================
-   LINZESS — Cards brand overrides
-   Live: linzess.com/find-relief
-   Pattern: Light purple card bg, dark purple icon circles,
-   centered layout, Bebas Neue titles, CTA arrows
+   LINZESS — Cards brand override
+   Pattern: centered icon cards with purple circle + light purple bg
+   Used on: Find Relief (Already Prescribed, Savings Cards)
    ============================================================ */
 
 .cards > ul {
@@ -11,7 +10,7 @@
   justify-content: center;
   gap: 2.4rem;
   list-style: none;
-  padding: 0;
+  padding: 6rem 0 0;
   margin: 2.4rem 0;
   border: none;
 }
@@ -23,27 +22,25 @@
   text-align: center;
   flex: 1 1 28rem;
   max-width: 36rem;
-  padding: 3.2rem 2.4rem 4rem;
+  padding: 0 2.4rem 4rem;
   background-color: var(--linz-light-purple);
   border: none;
   border-radius: var(--linz-rounded-corner);
   position: relative;
 }
 
-/* Icon circles — dark purple with white icon */
+/* Icon circles — dark purple bg, white icon */
 .cards > ul > li > .cards-card-image {
   width: 12rem;
   height: 12rem;
-  margin-bottom: 2rem;
   margin-top: -6rem;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--color-brand-primary);
   border-radius: 50%;
   padding: 2.4rem;
-  position: relative;
-  z-index: 1;
 }
 
 .cards > ul > li > .cards-card-image img {
@@ -61,14 +58,13 @@
   gap: 0.8rem;
 }
 
-/* Card title — Bebas Neue, larger */
+/* Card title — Bebas Neue */
 .cards > ul > li > .cards-card-body p:first-child {
   font-family: var(--heading-font-family);
   font-size: 2.4rem;
   font-weight: 400;
   color: var(--color-brand-primary);
   margin-bottom: 0.8rem;
-  text-transform: capitalize;
 }
 
 /* Card body text */
@@ -78,7 +74,7 @@
   color: var(--text-color);
 }
 
-/* CTA button */
+/* CTA buttons inside cards */
 .cards > ul > li > .cards-card-body a.button:any-link {
   display: inline-block;
   margin-top: 1.6rem;
@@ -110,9 +106,4 @@
 .cards > ul > li > .cards-card-body a.button:hover {
   background-color: var(--button-primary-hover-bg);
   color: var(--button-primary-hover-color);
-}
-
-/* Spacing fix — first card needs top margin for icon overflow */
-.cards > ul {
-  padding-top: 6rem;
 }
