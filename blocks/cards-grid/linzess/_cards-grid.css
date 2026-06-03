@@ -399,4 +399,46 @@
   max-width: 100%;
 }
 
+/* Stats circle: "11.5 million" in off-white circle overlapping card top
+   Only applies to the stats section (inside the dark section with carousel) */
+.cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin: -50px auto 0;
+  border-radius: 50%;
+  background-color: var(--linz-off-white);
+  color: var(--linz-dark-purple);
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Section dark background for stats — fallback when section-metadata missing */
+.cards-grid-container.carousel-video-playlist-container {
+  background-color: var(--linz-dark-purple);
+  color: var(--linz-white);
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper {
+  color: var(--linz-white);
+}
+
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p strong {
+  color: var(--linz-white);
+}
+
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2 {
+  color: var(--linz-white);
+}
+
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a:not(.button) {
+  color: var(--linz-white);
+}
+
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
