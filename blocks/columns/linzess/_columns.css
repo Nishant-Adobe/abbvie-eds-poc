@@ -37,9 +37,43 @@
   text-align: left;
 }
 
+/* When a single columns-item has both image + text, lay them out side by side */
+.linzess .columns-container .columns > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 32px;
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+.linzess .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image {
+  flex: 1 1 40%;
+  min-width: 200px;
+}
+
+.linzess .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-content {
+  flex: 1 1 50%;
+  min-width: 200px;
+}
+
+.linzess .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-content:empty {
+  display: none;
+}
+
 .linzess .columns-container .columns .columns-item-image img {
   max-width: 100%;
   height: auto;
+}
+
+@media (width >= 768px) {
+  .linzess .columns-container .columns > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+    flex-wrap: nowrap;
+  }
+
+  .linzess .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image {
+    order: -1;
+  }
 }
 
 .linzess .columns-container .columns .columns-item-content p strong {
