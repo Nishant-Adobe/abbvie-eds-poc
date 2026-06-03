@@ -1169,13 +1169,10 @@
   background-color: var(--linz-light-purple);
 }
 
-/* Stats circle: overlaps card top */
+/* Stats circle: overlaps card top, number large + "million" small */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  display: block;
   width: 200px;
   height: 200px;
   margin: -100px auto 16px;
@@ -1183,11 +1180,18 @@
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
   font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1;
+  word-spacing: 100vw;
+  padding-top: 55px;
+  box-sizing: border-box;
+}
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2::first-line {
   font-size: 56px;
   font-weight: 700;
-  text-align: center;
-  line-height: 1.1;
-  word-spacing: 200px;
 }
 
 /* Description text: dark purple on light card */
