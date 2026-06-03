@@ -1154,44 +1154,48 @@
   text-decoration: underline;
 }
 
-/* Stats cards: light purple cards with circle overlapping top */
+/* Stats cards: light purple rounded cards */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2 {
   background-color: var(--linz-light-purple);
   border-radius: var(--linz-rounded-corner);
   text-align: center;
   padding: 0 24px 40px;
-  margin-top: 80px;
+  margin-top: 100px;
+  overflow: visible;
 }
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2.background-dark-purple {
   background-color: var(--linz-light-purple);
 }
 
-/* Stats circle: overlaps card top, large with number + "million" */
+/* Stats circle: overlaps card top */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 180px;
-  height: 180px;
-  margin: -80px auto 24px;
+  width: 200px;
+  height: 200px;
+  margin: -100px auto 16px;
   border-radius: 50%;
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
-  font-size: 54px;
+  font-family: var(--body-font-family);
+  font-size: 56px;
   font-weight: 700;
   text-align: center;
-  line-height: 1;
+  line-height: 1.1;
+  word-spacing: 200px;
 }
 
-/* Description text: dark on light card */
+/* Description text: dark purple on light card */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-stretched-card-body p:not(.heading-2) {
   color: var(--linz-dark-purple);
   font-size: 16px;
+  line-height: 1.4;
 }
 
 /* Override white text class for stats cards */
