@@ -116,8 +116,14 @@ main > .section.highlight p {
   color: var(--color-text-on-dark);
 }
 
-/* ── Section dark-purple variant — bottom CTA section ── */
-main > .section.dark-purple {
+/* ══════════════════════════════════════════════════════════════
+   FIND-RELIEF PAGE — Scoped styles using unique section classes
+   Section-metadata style classes: find-relief-*
+   These ONLY affect sections with the matching class.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── find-relief-dark-purple: Bottom CTA section ── */
+main > .section.find-relief-dark-purple {
   background-color: var(--color-brand-primary);
   color: var(--color-text-on-dark);
   padding: 6.4rem 2.4rem 8rem;
@@ -125,7 +131,7 @@ main > .section.dark-purple {
   position: relative;
 }
 
-main > .section.dark-purple::before {
+main > .section.find-relief-dark-purple::before {
   content: '';
   position: absolute;
   top: -4rem;
@@ -136,29 +142,29 @@ main > .section.dark-purple::before {
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
-main > .section.dark-purple h2,
-main > .section.dark-purple h3,
-main > .section.dark-purple p {
+main > .section.find-relief-dark-purple h2,
+main > .section.find-relief-dark-purple h3,
+main > .section.find-relief-dark-purple p {
   color: var(--color-text-on-dark);
 }
 
-main > .section.dark-purple a.button:any-link {
+main > .section.find-relief-dark-purple a.button:any-link {
   background-color: var(--color-text-on-dark);
   color: var(--color-brand-primary);
 }
 
-main > .section.dark-purple a.button:hover {
+main > .section.find-relief-dark-purple a.button:hover {
   background-color: var(--linz-light-purple);
   color: var(--color-brand-primary);
 }
 
-/* ── Section off-white variant ── */
-main > .section.off-white {
+/* ── find-relief-off-white: How-to-Take + Storage sections ── */
+main > .section.find-relief-off-white {
   background-color: var(--color-background-light);
   position: relative;
 }
 
-main > .section.off-white::before {
+main > .section.find-relief-off-white::before {
   content: '';
   position: absolute;
   top: -4rem;
@@ -169,52 +175,8 @@ main > .section.off-white::before {
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
-/* ── Hero section — min-height for behind-nav hero ── */
-main > .section:first-of-type {
-  position: relative;
-  min-height: var(--hero-behind-nav-min-height);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 4rem 2.4rem;
-  overflow: hidden;
-}
-
-/* ── Default content: Centered section headings ── */
-main > .section:not(:first-of-type) > .default-content-wrapper > p:first-child {
-  font-family: var(--heading-font-family);
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-brand-primary);
-  text-align: center;
-  margin-bottom: 0.4rem;
-}
-
-main > .section:not(:first-of-type) > .default-content-wrapper > h2 {
-  font-family: var(--heading-font-family);
-  font-size: 32px;
-  color: var(--color-brand-primary);
-  text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 1.6rem;
-}
-
-main > .section:not(:first-of-type) > .default-content-wrapper > p + h2 + p {
-  text-align: center;
-}
-
-/* ── Default content: HR divider (orange short line) ── */
-main > .section > .default-content-wrapper > hr {
-  border: none;
-  width: 4rem;
-  height: 3px;
-  background-color: var(--color-brand-accent);
-  margin: 1.6rem auto;
-}
-
-/* ── Default content: Checklist (purple box with orange checkmarks, 2-col grid) ── */
-main > .section > .default-content-wrapper > ul {
+/* ── find-relief-checklist: Purple box with orange checkmarks (2-col grid) ── */
+.section.find-relief-checklist .default-content-wrapper > ul {
   background-color: var(--color-brand-primary);
   border-radius: var(--linz-rounded-corner);
   padding: 3.2rem 2.4rem;
@@ -226,20 +188,20 @@ main > .section > .default-content-wrapper > ul {
 }
 
 @media (width >= 768px) {
-  main > .section > .default-content-wrapper > ul {
+  .section.find-relief-checklist .default-content-wrapper > ul {
     grid-template-columns: 1fr 1fr;
     padding: 4.8rem 4rem;
   }
 }
 
-main > .section > .default-content-wrapper > ul > li {
+.section.find-relief-checklist .default-content-wrapper > ul > li {
   position: relative;
   padding-left: 3.6rem;
   margin-bottom: 0;
   color: var(--color-text-on-dark);
 }
 
-main > .section > .default-content-wrapper > ul > li::before {
+.section.find-relief-checklist .default-content-wrapper > ul > li::before {
   content: '';
   position: absolute;
   left: 0;
@@ -251,7 +213,7 @@ main > .section > .default-content-wrapper > ul > li::before {
   background-repeat: no-repeat;
 }
 
-main > .section > .default-content-wrapper > ul > li > p:first-child {
+.section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
   font-family: var(--heading-font-family);
   font-size: 1.8rem;
   font-weight: var(--font-weight-bold);
@@ -260,21 +222,73 @@ main > .section > .default-content-wrapper > ul > li > p:first-child {
   margin-bottom: 0.4rem;
 }
 
-main > .section > .default-content-wrapper > ul > li > p:nth-child(2) {
+.section.find-relief-checklist .default-content-wrapper > ul > li > p:nth-child(2) {
   font-size: var(--font-size-body);
   color: var(--color-text-on-dark);
   line-height: 1.5;
   opacity: 0.9;
 }
 
-main > .section > .default-content-wrapper > ul > li a {
+.section.find-relief-checklist .default-content-wrapper > ul > li a {
   color: var(--color-text-on-dark);
   text-decoration: underline;
 }
 
-/* ── Default content: Footnotes / disclaimer text ── */
-main > .section > .default-content-wrapper > p:has(sup:first-child),
-main > .section > .default-content-wrapper > p:last-child:has(a[href*="savings"]) {
+/* ── find-relief-checklist: Centered eyebrow + heading ── */
+.section.find-relief-checklist > .default-content-wrapper > p:first-child {
+  font-family: var(--heading-font-family);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-brand-primary);
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.section.find-relief-checklist > .default-content-wrapper > h2 {
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.section.find-relief-checklist > .default-content-wrapper > p:nth-of-type(2) {
+  text-align: center;
+}
+
+/* ── find-relief-off-white: Centered headings in how-to-take section ── */
+.section.find-relief-off-white > .default-content-wrapper > p:first-child {
+  font-family: var(--heading-font-family);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-brand-primary);
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.section.find-relief-off-white > .default-content-wrapper > h2 {
+  text-align: center;
+}
+
+.section.find-relief-off-white > .default-content-wrapper > h2 + p {
+  text-align: center;
+}
+
+/* ── find-relief-checklist: HR divider (orange short line) ── */
+.section.find-relief-checklist > .default-content-wrapper > hr,
+.section.find-relief-off-white > .default-content-wrapper > hr {
+  border: none;
+  width: 4rem;
+  height: 3px;
+  background-color: var(--color-brand-accent);
+  margin: 1.6rem auto;
+}
+
+/* ── find-relief-off-white: Footnotes / disclaimer text ── */
+.section.find-relief-off-white > .default-content-wrapper > p:has(sup:first-child) {
   font-size: var(--font-size-body-small);
   line-height: 1.4;
   color: var(--text-color);
