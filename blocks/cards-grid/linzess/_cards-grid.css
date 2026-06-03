@@ -363,49 +363,51 @@
   height: auto;
 }
 
-/* Content cards (NOT in carousel section): proper card styling */
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .icon-image-card.abbv-flex-item-v2 {
+/* ═══════════════════════════════════════════════════════════════════
+   HOMEPAGE CONTENT CARDS — variant: cards-grid-homepage-content
+   ═══════════════════════════════════════════════════════════════════ */
+.cards-grid.cards-grid-homepage-content .icon-image-card.abbv-flex-item-v2 {
   padding: 0 24px 40px;
   margin-top: 50px;
   overflow: visible;
 }
 
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2 {
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2 {
   overflow: visible;
 }
 
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .margin-top-110 {
+.cards-grid.cards-grid-homepage-content .margin-top-110 {
   margin-top: 110px;
 }
 
 /* Card 1: dark purple bg, white text */
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .abbv-flex-item-v2 {
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:first-child .abbv-flex-item-v2 {
   background-color: var(--linz-dark-purple);
 }
 
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .heading-2,
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .abbv-stretched-card-body p {
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:first-child .heading-2,
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:first-child .abbv-stretched-card-body p {
   color: var(--linz-white);
 }
 
 /* Card 1 button: secondary (white bg, purple text) */
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .cta a {
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:first-child .cta a {
   background-color: var(--linz-white);
   color: var(--linz-dark-purple);
 }
 
 /* Card 2: light purple bg, dark purple text */
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
   background-color: var(--linz-light-purple);
 }
 
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .heading-2,
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .abbv-stretched-card-body p {
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:nth-child(2) .heading-2,
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:nth-child(2) .abbv-stretched-card-body p {
   color: var(--linz-dark-purple);
 }
 
 /* Card 2 button: primary (dark purple bg, white text) */
-.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .cta a {
+.cards-grid.cards-grid-homepage-content .flexboxitem-v2:nth-child(2) .cta a {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
 }
@@ -553,6 +555,7 @@ body main .section.cards-grid-container.carousel-video-playlist-container > .def
 }
 
 /* Stats cards: stacked by default, row on desktop */
+.cards-grid.cards-grid-homepage-stats .savings-card-cards,
 .carousel-video-playlist-container .cards-grid .savings-card-cards,
 body main .section.dark .cards-grid .savings-card-cards {
   flex-direction: column;
@@ -561,12 +564,14 @@ body main .section.dark .cards-grid .savings-card-cards {
   align-items: center;
 }
 
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .flexboxitem-v2,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2,
 body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2 {
   width: 100%;
   max-width: 600px;
 }
 
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .abbv-flex-item-v2,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-flex-item-v2,
 body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2 {
   background-color: var(--linz-light-purple);
@@ -580,22 +585,26 @@ body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2 {
 }
 
 /* Middle card (2nd): off-white bg + light purple circle */
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2,
 body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
   background-color: var(--linz-off-white);
 }
 
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .flexboxitem-v2:nth-child(2) .heading-2,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2:nth-child(2) .heading-2,
 body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2:nth-child(2) .heading-2 {
   background-color: var(--linz-light-purple);
 }
 
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .abbv-flex-item-v2.background-dark-purple,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-flex-item-v2.background-dark-purple,
 body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2.background-dark-purple {
   background-color: var(--linz-light-purple);
 }
 
 /* Stats circle: centered, overlaps card top by ~50% */
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .heading-2,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2,
 body main .section.dark .cards-grid .savings-card-cards .heading-2,
 .carousel-video-playlist-container :is(.cards-grid.cards-grid-icon-image-card) .abbv-image-text-display-v2 p.heading-2,
@@ -619,6 +628,7 @@ body main .section.dark :is(.cards-grid.cards-grid-icon-image-card) .abbv-image-
 }
 
 /* Description text in stats section */
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .abbv-stretched-card-body p:not(.heading-2),
 .carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2),
 body main .section.dark .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2) {
   color: var(--linz-dark-purple);
@@ -628,6 +638,8 @@ body main .section.dark .cards-grid .savings-card-cards .abbv-stretched-card-bod
 }
 
 /* Override white text class for stats cards */
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .c-linz-white,
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .c-linz-white p,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .c-linz-white,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .c-linz-white p,
 body main .section.dark .cards-grid .savings-card-cards .c-linz-white,
@@ -636,6 +648,7 @@ body main .section.dark .cards-grid .savings-card-cards .c-linz-white p {
 }
 
 /* Hide Sign up buttons in stats section */
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .cta,
 .carousel-video-playlist-container .cards-grid .savings-card-cards .cta,
 body main .section.dark .cards-grid .savings-card-cards .cta {
   display: none;
