@@ -1121,15 +1121,39 @@
 body main .section:has(.cards-grid.cards-grid-icon-image-card .savings-card-cards) {
   background-color: #422e83;
   color: #fff;
-  padding-top: 48px;
+  padding-top: 80px;
   padding-bottom: 48px;
+  position: relative;
+}
+
+body main .section:has(.cards-grid.cards-grid-icon-image-card .savings-card-cards)::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -5%;
+  right: -5%;
+  height: 80px;
+  background: #422e83;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
 .cards-grid-container.carousel-video-playlist-container {
   background-color: #422e83;
   color: #fff;
-  padding-top: 48px;
+  padding-top: 80px;
   padding-bottom: 48px;
+  position: relative;
+}
+
+.cards-grid-container.carousel-video-playlist-container::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -5%;
+  right: -5%;
+  height: 80px;
+  background: #422e83;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
 /* Section heading: uppercase, centered, Bebas Neue */
@@ -1140,14 +1164,29 @@ body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapp
   text-align: center;
 }
 
-body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p strong,
-.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p strong {
+body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p:first-child strong,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1-hero);
   font-weight: 400;
   text-transform: uppercase;
   color: #fff;
   letter-spacing: 0.02em;
+  display: block;
+  text-align: center;
+}
+
+/* Orange accent line above heading */
+
+body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p:first-child strong::before,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--linz-orange);
+  margin: 0 auto 24px;
+  border-radius: 2px;
 }
 
 body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p,
