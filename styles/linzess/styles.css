@@ -128,3 +128,43 @@
   background-color: var(--linz-light-purple);
   color: var(--color-brand-primary);
 }
+
+/* ── find-relief: Video embed container with title bar ── */
+.section.find-relief-checklist .embed-wrapper,
+.section.find-relief-off-white .embed-wrapper {
+  border: 2px solid var(--linz-light-purple);
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+  max-width: 620px;
+  margin: 2.4rem auto;
+}
+
+.section.find-relief-checklist .embed-wrapper + .default-content-wrapper > p:first-child,
+.section.find-relief-off-white .embed-wrapper + .default-content-wrapper > p:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--linz-light-purple);
+  padding: 12px 20px;
+  border-radius: 0 0 var(--linz-rounded-corner) var(--linz-rounded-corner);
+  max-width: 620px;
+  margin: -2.4rem auto 2.4rem;
+  font-size: 16px;
+}
+
+.section.find-relief-checklist .embed-wrapper + .default-content-wrapper > p:first-child strong,
+.section.find-relief-off-white .embed-wrapper + .default-content-wrapper > p:first-child strong {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+}
+
+.section.find-relief-checklist .embed-wrapper + .default-content-wrapper > p:first-child a,
+.section.find-relief-off-white .embed-wrapper + .default-content-wrapper > p:first-child a {
+  font-size: 14px;
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  font-weight: 400;
+}
