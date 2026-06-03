@@ -363,6 +363,45 @@
   height: auto;
 }
 
+/* Content cards (NOT in carousel section): proper card styling */
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .icon-image-card.abbv-flex-item-v2 {
+  padding: 0 32px 40px;
+  margin-top: 60px;
+  overflow: visible;
+}
+
+/* Card 1: dark purple bg, white text */
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .abbv-flex-item-v2 {
+  background-color: var(--linz-dark-purple);
+}
+
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .heading-2,
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .abbv-stretched-card-body p {
+  color: var(--linz-white);
+}
+
+/* Card 1 button: secondary (white bg, purple text) */
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:first-child .cta a {
+  background-color: var(--linz-white);
+  color: var(--linz-dark-purple);
+}
+
+/* Card 2: light purple bg, dark purple text */
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
+  background-color: var(--linz-light-purple);
+}
+
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .heading-2,
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .abbv-stretched-card-body p {
+  color: var(--linz-dark-purple);
+}
+
+/* Card 2 button: primary (dark purple bg, white text) */
+.cards-grid-container:not(.carousel-video-playlist-container) .cards-grid .flexboxitem-v2:nth-child(2) .cta a {
+  background-color: var(--linz-dark-purple);
+  color: var(--linz-white);
+}
+
 .cards-grid.cards-grid-article-cards .flexbox-cards.flexbox-article-cards .flexboxitem-v2 .abbv-flex-item-v2 {
   padding: 0;
   margin: 0;
