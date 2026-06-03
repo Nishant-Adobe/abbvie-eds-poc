@@ -2,3 +2,129 @@
 @import 'fonts.css';
 
 /* LINZESS DTC — Brand-specific style overrides */
+
+/* ══════════════════════════════════════════════════════════════
+   FIND-RELIEF PAGE — Scoped styles (find-relief-* classes)
+   These ONLY affect sections with the matching style class.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── find-relief-checklist: Purple box with orange checkmarks ── */
+.section.find-relief-checklist .default-content-wrapper > ul {
+  background-color: var(--color-brand-primary);
+  border-radius: var(--linz-rounded-corner);
+  padding: 40px 40px 0;
+  list-style: none;
+  margin: 16px auto;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 998px;
+  font-size: 16px;
+  grid-column: 1 / -1;
+}
+
+.section.find-relief-checklist .default-content-wrapper > ul > li {
+  position: relative;
+  padding-left: 32px;
+  padding-right: 20px;
+  margin-bottom: 40px;
+  color: var(--color-text-on-dark);
+  flex: 0 0 50%;
+  box-sizing: border-box;
+}
+
+@media (width < 768px) {
+  .section.find-relief-checklist .default-content-wrapper > ul > li {
+    flex: 0 0 100%;
+  }
+}
+
+.section.find-relief-checklist .default-content-wrapper > ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23faa633'/%3E%3Cpath d='M10 15.17l-3.17-3.17-1.42 1.42L10 18l8-8-1.41-1.41L10 15.17z' fill='%23fff'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section.find-relief-checklist .default-content-wrapper > ul > li > p {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
+  font-family: var(--heading-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-on-dark);
+  margin-bottom: 4px;
+}
+
+.section.find-relief-checklist .default-content-wrapper > ul > li > p:nth-child(2) {
+  font-size: 16px;
+  color: var(--color-text-on-dark);
+  line-height: 1.5;
+}
+
+.section.find-relief-checklist .default-content-wrapper > ul > li a {
+  color: var(--color-text-on-dark);
+  text-decoration: underline;
+}
+
+/* ── find-relief-off-white: Off-white background with arc ── */
+.section.find-relief-off-white {
+  background-color: var(--color-background-light);
+  position: relative;
+}
+
+.section.find-relief-off-white::before {
+  content: '';
+  position: absolute;
+  top: -4rem;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background-color: var(--color-background-light);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+/* ── find-relief-dark-purple: Bottom CTA section ── */
+.section.find-relief-dark-purple {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  padding: 6.4rem 2.4rem 8rem;
+  text-align: center;
+  position: relative;
+}
+
+.section.find-relief-dark-purple::before {
+  content: '';
+  position: absolute;
+  top: -4rem;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  background-color: var(--color-brand-primary);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.section.find-relief-dark-purple h2,
+.section.find-relief-dark-purple p {
+  color: var(--color-text-on-dark);
+}
+
+.section.find-relief-dark-purple a.button:any-link {
+  background-color: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+}
+
+.section.find-relief-dark-purple a.button:hover {
+  background-color: var(--linz-light-purple);
+  color: var(--color-brand-primary);
+}
