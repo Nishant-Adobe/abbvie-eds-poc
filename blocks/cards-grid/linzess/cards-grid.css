@@ -1154,51 +1154,57 @@
   text-decoration: underline;
 }
 
-/* Stats cards: remove card backgrounds — content sits on dark purple directly */
+/* Stats cards: light purple cards with circle overlapping top */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2 {
-  background-color: transparent;
-  border-radius: 0;
+  background-color: var(--linz-light-purple);
+  border-radius: var(--linz-rounded-corner);
   text-align: center;
-  padding: 0;
+  padding: 0 24px 40px;
+  margin-top: 80px;
 }
 
-/* Stats circle: large, centered */
+.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2.background-dark-purple {
+  background-color: var(--linz-light-purple);
+}
+
+/* Stats circle: overlaps card top, large with number + "million" */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   width: 180px;
   height: 180px;
-  margin: 0 auto 24px;
+  margin: -80px auto 24px;
   border-radius: 50%;
-  background-color: rgb(244 246 251 / 90%);
+  background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
-  font-size: 33px;
+  font-size: 54px;
   font-weight: 700;
   text-align: center;
-  line-height: 1.2;
-  flex-direction: column;
+  line-height: 1;
 }
 
-/* Description text below circles */
+/* Description text: dark on light card */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-stretched-card-body p:not(.heading-2) {
-  color: var(--linz-white);
+  color: var(--linz-dark-purple);
+  font-size: 16px;
+}
+
+/* Override white text class for stats cards */
+
+.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white,
+.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white p {
+  color: var(--linz-dark-purple);
 }
 
 /* Hide Sign up buttons in stats section */
 
 .cards-grid-container.carousel-video-playlist-container .cards-grid .cta {
   display: none;
-}
-
-/* Fix white text class overrides */
-
-.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white,
-.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white p {
-  color: var(--linz-white);
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
