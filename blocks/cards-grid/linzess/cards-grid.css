@@ -1116,66 +1116,78 @@
   max-width: 100%;
 }
 
-/* Section dark background for stats */
+/* Section dark background for stats — use !important to override base navy */
+
+body main .section:has(.cards-grid.cards-grid-icon-image-card .savings-card-cards) {
+  background-color: #422e83;
+  color: #fff;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
 
 .cards-grid-container.carousel-video-playlist-container {
-  background-color: var(--linz-dark-purple);
-  color: var(--linz-white);
+  background-color: #422e83;
+  color: #fff;
   padding-top: 48px;
   padding-bottom: 48px;
 }
 
 /* Section heading: uppercase, centered, Bebas Neue */
 
+body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper {
-  color: var(--linz-white);
+  color: #fff;
   text-align: center;
 }
 
+body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p strong,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p strong {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1-hero);
   font-weight: 400;
   text-transform: uppercase;
-  color: var(--linz-white);
+  color: #fff;
   letter-spacing: 0.02em;
 }
 
+body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p {
-  color: var(--linz-white);
+  color: #fff;
 }
 
+body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper h2,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2 {
-  color: var(--linz-white);
+  color: #fff;
 }
 
+body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper a:not(.button),
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a:not(.button) {
-  color: var(--linz-white);
+  color: #fff;
   text-decoration: underline;
 }
 
 /* Stats cards: light purple rounded cards */
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2 {
+.cards-grid .savings-card-cards .abbv-flex-item-v2 {
   background-color: var(--linz-light-purple);
   border-radius: var(--linz-rounded-corner);
   text-align: center;
   padding: 0 24px 40px;
-  margin-top: 100px;
+  margin-top: 120px;
   overflow: visible;
 }
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-flex-item-v2.background-dark-purple {
+.cards-grid .savings-card-cards .abbv-flex-item-v2.background-dark-purple {
   background-color: var(--linz-light-purple);
 }
 
 /* Stats circle: overlaps card top, number large + "million" small */
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2 {
+.cards-grid .savings-card-cards .heading-2 {
   display: block;
-  width: 200px;
-  height: 200px;
-  margin: -100px auto 16px;
+  width: 220px;
+  height: 220px;
+  margin: -120px auto 16px;
   border-radius: 50%;
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
@@ -1185,33 +1197,34 @@
   text-align: center;
   line-height: 1;
   word-spacing: 100vw;
-  padding-top: 55px;
+  padding-top: 60px;
   box-sizing: border-box;
 }
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .heading-2::first-line {
-  font-size: 56px;
+.cards-grid .savings-card-cards .heading-2::first-line {
+  font-size: 64px;
   font-weight: 700;
 }
 
 /* Description text: dark purple on light card */
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .abbv-stretched-card-body p:not(.heading-2) {
+.cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2) {
   color: var(--linz-dark-purple);
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 700;
   line-height: 1.4;
 }
 
 /* Override white text class for stats cards */
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white,
-.cards-grid-container.carousel-video-playlist-container .cards-grid .c-linz-white p {
+.cards-grid .savings-card-cards .c-linz-white,
+.cards-grid .savings-card-cards .c-linz-white p {
   color: var(--linz-dark-purple);
 }
 
 /* Hide Sign up buttons in stats section */
 
-.cards-grid-container.carousel-video-playlist-container .cards-grid .cta {
+.cards-grid .savings-card-cards .cta {
   display: none;
 }
 
