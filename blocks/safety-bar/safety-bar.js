@@ -114,8 +114,10 @@ export default function decorate(block) {
   const brand = document.querySelector('meta[name="brand"]')?.content;
   if (brand === 'linzess') {
     const isiSection = document.querySelector('.rich-text-wrapper ~ .default-content-wrapper')
-      || document.querySelector('.section.isi');
-    const triggerEl = isiSection?.querySelector('h3') || isiSection;
+      || document.querySelector('.section.isi')
+      || document.querySelector('.section.dian-test-isi');
+    const allH3s = isiSection?.querySelectorAll('h3');
+    const triggerEl = (allH3s && allH3s.length > 1 ? allH3s[1] : allH3s?.[0]) || isiSection;
 
     if (triggerEl) {
       const triggerTop = triggerEl.getBoundingClientRect().top + window.scrollY;

@@ -7,6 +7,12 @@
    Typography: BasicCommercialLT-Black headings, BasicCommercialLT-Roman body
    Toggle: purple icon color, no filled background */
 
+/* Section wrapper — full viewport width */
+.safety-bar-section {
+  width: 100vw;
+  max-width: 100%;
+}
+
 /* Container */
 .safety-bar {
   background-color: var(--background-color);
@@ -186,7 +192,8 @@
 
 /* Maximized height override */
 .safety-bar.is-expanded .safety-bar-full {
-  max-height: calc(100vh - var(--spacing-192, 19.2rem));
+  max-height: calc(100vh - 215px);
+  overflow-y: auto;
 }
 
 /* Mobile: single column, hide USES (col1), show only IRI (col2) with first bullet only */
