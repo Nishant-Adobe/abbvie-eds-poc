@@ -5,6 +5,39 @@
 
 /* ============ Transcript Content Section ============ */
 
+/* Arc/curve — white ellipse overlapping purple body */
+.section.transcript::before {
+  content: "";
+  position: absolute;
+  top: -6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 7.5rem;
+  background-color: #fff;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+/* H2: PART 1, PART 2 headers — purple, Lato 16px */
+.rich-text.transcript h2 {
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-legal-large, 1.6rem);
+  font-weight: 400;
+  color: var(--color-text-heading, #422e83);
+  text-align: left;
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: var(--spacing-16, 1.6rem) 0;
+  padding: 0;
+}
+
+.rich-text.transcript h2:first-of-type {
+  margin: var(--spacing-40, 4rem) 0 var(--spacing-16, 1.6rem);
+}
+
 /* H1: NAN Transcript */
 .rich-text.transcript h1 {
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
@@ -51,17 +84,7 @@
   color: var(--text-color, #4d4d4f);
 }
 
-/* PART 1 header: purple, 40px top margin (first bold-only paragraph after h1) */
 /* stylelint-disable no-descending-specificity */
-.rich-text.transcript h1 + p:has(> strong:only-child) {
-  color: var(--color-text-heading, #422e83);
-  margin: var(--spacing-40, 4rem) 0 var(--spacing-14, 1.4rem);
-}
-
-.rich-text.transcript h1 + p:has(> strong:only-child) strong {
-  color: var(--color-text-heading, #422e83);
-  font-weight: 700;
-}
 
 /* Emphasis/italic: dark grey */
 .rich-text.transcript em {

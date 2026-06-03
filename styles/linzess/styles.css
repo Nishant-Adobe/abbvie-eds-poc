@@ -96,9 +96,20 @@ main > .section {
   font-weight: 700;
 }
 
-.section.transcript .default-content-wrapper p:has(> strong:only-child),
-.section:first-of-type .default-content-wrapper p:has(> strong:only-child) {
+.section.transcript .default-content-wrapper h2,
+.section:first-of-type .default-content-wrapper h2 {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
   color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: var(--spacing-16) 0;
+}
+
+.section.transcript .default-content-wrapper h2:first-of-type,
+.section:first-of-type .default-content-wrapper h2:first-of-type {
   margin: var(--spacing-40) 0 var(--spacing-16);
 }
 
