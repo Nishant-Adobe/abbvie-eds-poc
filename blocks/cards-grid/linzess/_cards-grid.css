@@ -485,17 +485,19 @@ body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapp
   text-decoration: underline;
 }
 
-/* Stats cards: full-width stacked, short height, circle overlaps top */
+/* Stats cards: stacked by default, row on desktop */
 .carousel-video-playlist-container .cards-grid .savings-card-cards,
 body main .section.dark .cards-grid .savings-card-cards {
   flex-direction: column;
-  gap: 60px;
+  gap: 80px;
   margin-top: 80px;
+  align-items: center;
 }
 
 .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2,
 body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2 {
   width: 100%;
+  max-width: 600px;
 }
 
 .carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-flex-item-v2,
@@ -588,16 +590,18 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
 }
 
 /* Desktop: 3 cards in a row */
-@media (width >= 986px) {
+@media (width >= 1100px) {
   .carousel-video-playlist-container .cards-grid .savings-card-cards,
   body main .section.dark .cards-grid .savings-card-cards {
     flex-direction: row;
     gap: 24px;
+    align-items: flex-start;
   }
 
   .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2,
   body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2 {
     flex: 1;
+    max-width: none;
   }
 }
 
