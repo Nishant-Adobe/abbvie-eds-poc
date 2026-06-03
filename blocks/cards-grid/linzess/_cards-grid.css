@@ -415,8 +415,8 @@
   max-width: 100%;
 }
 
-/* Section dark background for stats — use !important to override base navy */
-body main .section:has(.cards-grid.cards-grid-icon-image-card .savings-card-cards) {
+/* Section dark background for stats — only the section with carousel sibling */
+body main .section.cards-grid-container.carousel-video-playlist-container {
   background-color: #422e83;
   color: #fff;
   padding-top: 80px;
@@ -424,7 +424,7 @@ body main .section:has(.cards-grid.cards-grid-icon-image-card .savings-card-card
   position: relative;
 }
 
-body main .section:has(.cards-grid.cards-grid-icon-image-card .savings-card-cards)::before {
+body main .section.cards-grid-container.carousel-video-playlist-container::before {
   content: '';
   position: absolute;
   top: -60px;
@@ -455,13 +455,13 @@ body main .section:has(.cards-grid.cards-grid-icon-image-card .savings-card-card
 }
 
 /* Section heading: uppercase, centered, Bebas Neue */
-body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper,
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper {
   color: #fff;
   text-align: center;
 }
 
-body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p:first-child strong,
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1-hero);
@@ -474,7 +474,7 @@ body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapp
 }
 
 /* Orange accent line above heading */
-body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p:first-child strong::before,
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong::before,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong::before {
   content: '';
   display: block;
@@ -485,17 +485,17 @@ body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapp
   border-radius: 2px;
 }
 
-body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper p,
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p {
   color: #fff;
 }
 
-body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper h2,
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2 {
   color: #fff;
 }
 
-body main .section:has(.cards-grid .savings-card-cards) > .default-content-wrapper a:not(.button),
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a:not(.button),
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a:not(.button) {
   color: #fff;
   text-decoration: underline;
