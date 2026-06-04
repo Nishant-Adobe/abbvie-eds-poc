@@ -12,10 +12,8 @@ not matching, follow the 9-step loop below. The prompt template in
 `../aemcoder-migration-orchestrator/templates/section-fix-prompt.md`
 is your internal checklist, not output for another tool.
 
----
-
-Per-section repair workflow for any block on a migrated page
-that diverges from live source. Replaces the ad-hoc iterate-on-screenshot
+Per-section repair workflow for any block on a migrated page that
+diverges from live source. Replaces the ad-hoc iterate-on-screenshot
 pattern with a structured 9-step loop:
 
 ```
@@ -25,8 +23,35 @@ pattern with a structured 9-step loop:
 7. Apply (1 at a time) → 8. Cross-page regression sweep
 ```
 
-The loop has hard stop conditions (≥90% match per viewport, 3-round cap,
-escalation triggers) so we don't churn forever.
+Hard stop conditions (≥90% match per viewport, 3-round cap, escalation
+triggers) so we don't churn forever.
+
+## Related skills
+
+- **aemcoder-migration-orchestrator** — Parent skill governing the
+  end-to-end migration phases. This fix-loop is invoked from Phase B/C/D
+  when a section diverges.
+- **pharma-content-fidelity** — Auto-triggers when the section is
+  safety-bar, ISI, references, dosing, or any other regulated-copy
+  block. Content diff precedes visual diff for those blocks.
+- **abbvie-block-analysis** — Per-block field/Row Mapping + md2jcr rules.
+  Consult before deciding whether a divergence is authoring, CSS, or
+  base-block.
+- **building-brand-blocks** — Reference for editing brand block CSS
+  partials AND the pre-read-existing-CSS rule (AEMCODER-021).
+- **abbvie-design-tokens** — Reference for token values when root-cause
+  is brand-wide token divergence.
+
+## When to use this skill
+
+Trigger this skill on any of:
+- "{section-name} is not matching live" (hero, cards-grid, header, etc.)
+- "pixel diff for {section}"
+- "regression on {page} after fixing {other-thing}"
+- "mobile breakpoint broken for {section}"
+- "desktop view broken after mobile fix"
+- "fix {section} with aemcoder"
+- All trigger phrases in this skill's description (aggressive auto-invoke)
 
 ## Step 0 — Live + local computed-style and screenshot dump (HARD GATE — AEMCODER-014, AEMCODER-015)
 
@@ -40,8 +65,8 @@ in question. Skipping this step is the #1 cause of back-and-forth thrash
 
 ### Required dump (do BEFORE proposing any fix)
 
-1. **Live screenshot** — Playwright (or browser) screenshot of the section
-   on the live URL at 1440px AND 390px. Save to a known location.
+1. **Live screenshot** — Playwright (or browser) screenshot of the
+   section on the live URL at 1440px AND 390px. Save to a known location.
 2. **Local screenshot** — same section on the local preview URL at
    1440px AND 390px.
 3. **Live computed styles** — for every DOM descendant in the section,
@@ -52,15 +77,16 @@ in question. Skipping this step is the #1 cause of back-and-forth thrash
    background-position, border, border-radius, box-shadow, transform,
    z-index`. Plus pseudo-elements (`::before`, `::after`).
 4. **Local computed styles** — same set on the local DOM.
-5. **Delta table** — single side-by-side table, one row per DOM descendant,
-   columns: [selector | property | live value | local value | match/diff].
+5. **Delta table** — single side-by-side table, one row per DOM
+   descendant, columns: [selector | property | live value | local value
+   | match/diff].
 
 ### After the dump
 
 - Identify ALL differences in one pass. Do NOT cherry-pick one delta to
   fix at a time.
 - Write ONE consolidated CSS replacement that addresses ALL deltas,
-  scoped per AEMCODER-018 selector-scope rule.
+  scoped per the CSS Selector Scope Check (AEMCODER-018) in the orchestrator.
 - Only then proceed to Step 5 (root-cause tag) and Step 6 (fix proposal).
 
 ### Three-round circuit breaker
@@ -76,40 +102,18 @@ The /access migration burned ~30 turns on the formulary section because
 each CSS edit was reactive to one user comment without re-reading the
 full live computed-style block. Step 0 collapses that pattern.
 
-## Related skills
-
-- **aemcoder-migration-orchestrator** — Parent skill governing the
-  end-to-end migration phases. This fix-loop is invoked from Phase B/C/D
-  when a section diverges.
-- **pharma-content-fidelity** — Auto-triggers when the section is safety-bar,
-  ISI, references, dosing, or any other regulated-copy block. Content diff
-  precedes visual diff for those blocks.
-- **building-brand-blocks** — Reference for editing brand block CSS
-  partials (the most common fix target).
-- **abbvie-design-tokens** — Reference for token values when root-cause is
-  brand-wide token divergence.
-
-## When to use this skill
-
-Trigger this skill on any of:
-- "{section-name} is not matching live" (hero, cards-grid, header, etc.)
-- "pixel diff for {section}"
-- "regression on {page} after fixing {other-thing}"
-- "mobile breakpoint broken for {section}"
-- "desktop view broken after mobile fix"
-- "fix {section} with aemcoder"
-
-## The 10-category root-cause taxonomy
+## The 12-category root-cause taxonomy (Step 5)
 
 Every delta gets tagged with exactly one root cause. This is the most
-important constraint in the skill — without categorizing, aemcoder defaults
-to editing block CSS for what's actually an authoring issue (or vice versa).
+important constraint in the skill — without categorizing, aemcoder
+defaults to editing block CSS for what's actually an authoring issue
+(or vice versa).
 
 | # | Category | Fix scope | File path |
 |---|---|---|---|
 | 1 | **Author content** | UE field value | UE / `.plain.html` row |
 | 2 | **Token** | Brand-wide value | `styles/{brand}/_tokens.css` (with approval) |
-| 3 | **Custom class + brand global** | One-off section variant | `classes_commonCustomClass` + `styles/{brand}/_styles.css` |
+| 3 | **Custom class + brand global** | One-off section variant | `style_customDynamicClass` on Section Metadata (NOT `classes_*` — AEMCODER-023) + `styles/{brand}/_styles.css` scoped under that style class. For block-level one-off: `classes_commonCustomClass` on the block. |
 | 4 | **Brand block CSS partial** | Recurring block pattern | `blocks/{block}/{brand}/_{block}.css` |
 | 5 | **Section style variant** | Section-wrapper variant missing | `models/_section.json` + `styles/{brand}/_styles.css` |
 | 6 | **Variant** | Recurring block variant | `blocks/{block}/block-config.js` `variations` array |
@@ -127,7 +131,7 @@ Never skip levels. Apply at the lowest level that resolves the delta:
 ```
 1. Author content / fields      (most reversible)
 2. Token                        (brand-wide; requires approval)
-3. Custom class + brand global  (page-specific)
+3. Custom class + brand global  (page-specific via section-metadata)
 4. Brand block CSS partial      (brand-recurring pattern)
 5. Section variant              (cross-section pattern)
 6. Block variant + JS module    (cross-block pattern)
@@ -139,31 +143,29 @@ If the agent reaches for level 7 without checking 1–6, push back.
 
 ## Hard rules
 
-These apply to every section, every viewport, every fix:
-
-1. **No class renaming.** Class names diverge between Platform-C `abbv-*`
-   and our EDS naming — do not rename local classes to match live. Match
-   the *visual and behavioral outcome* only.
+1. **No class renaming.** Class names diverge between Platform-C
+   `abbv-*` and our EDS naming — do not rename local classes to match
+   live. Match the *visual and behavioral outcome* only.
 2. **Verbatim content.** Especially for safety / clinical / dosing /
    reference / footnote / job-code copy. Zero paraphrase. (See
    **pharma-content-fidelity** for the full ruleset.)
-3. **No `!important`.** Per project convention. If you reach for it, the
-   specificity strategy is wrong — escalate.
+3. **No `!important`.** Per project convention. If you reach for it,
+   the specificity strategy is wrong — escalate.
 4. **No base block edits.** Use brand override path. Missing
-   `blocks/{block}/{brand}/` folder means inheritance is intentional, NOT
-   a gap — don't auto-create unless a real visual delta needs it.
+   `blocks/{block}/{brand}/` folder means inheritance is intentional —
+   don't auto-create unless a real visual delta needs it.
 5. **Mobile-first cascade.** `@media (min-width: 600px)` and
    `@media (min-width: 900px)` for progressive enhancement. Avoid
    `max-width` retrofits unless mobile-first restructure would require
    base-block edits.
 6. **Project root font-size is 10px.** `0.9rem` = 9px. Use absolute px
    when matching live's `14px`, `16px`, etc.
+7. **Section-metadata FIRST** (AEMCODER-019): every custom section
+   needs a `style` class authored before any CSS selectors targeting it.
 
-## The 8-step loop
+## The 9-step loop summary
 
-The exact prompt template is in
-`../aemcoder-migration-orchestrator/templates/section-fix-prompt.md`.
-Summary:
+Full template in `../aemcoder-migration-orchestrator/templates/section-fix-prompt.md`.
 
 ### Step 1 — Confirm preconditions
 - Is `brand: {brand-key}` set in page metadata?
@@ -176,9 +178,7 @@ Snapshot at 1440px AND 1200px (breakpoint edge — often where bugs hide).
 Save before any edit. Diff after EACH fix.
 
 ### Step 3 — Side-by-side content + visual diff (no edits)
-Capture both at 1440px AND 390px. Table with categories: Layout,
-Background/Decoration, Typography, Color, Spacing, Image/Asset, CTA,
-Responsive transition, Count/Order, Footnotes/References. Severity per row.
+Already done in Step 0 if auto-invoked. Otherwise, run it now.
 
 ### Step 4 — Behavior diff (interactive sections only)
 Headers (hamburger), accordions, modals, safety-bar expand, carousels.
@@ -186,8 +186,7 @@ Capture: initial state, open/close triggers, animation, scroll behavior,
 focus management, keyboard nav, ARIA attributes.
 
 ### Step 5 — Root-cause tag per delta
-From the 12-category taxonomy above. Mandatory — every delta gets exactly
-one tag.
+From the 12-category taxonomy above. Mandatory.
 
 ### Step 6 — Fix proposal (do not apply)
 Ordered list per fix:
@@ -209,12 +208,9 @@ Ordered list per fix:
 
 ### Step 8 — Cross-page regression sweep (MECHANICAL — AEMCODER-013)
 
-**Enumerate every previously approved page in the active batch** (ask the
-user or check session history if uncertain). For example, in the active
-Rinvoq HCP batch as of 2026-06-02: homepage + /dermatology.
-
-For each approved page:
-- Re-snapshot the page at 1440px AND 390px.
+Enumerate every previously approved page in the active batch (ask the
+user or check session history if uncertain). For each:
+- Re-snapshot at 1440px AND 390px.
 - Diff against the pre-edit baseline you captured in Step 2 — OR if no
   pre-edit baseline exists for this page, diff against the user's
   last-approved visual state.
@@ -222,7 +218,7 @@ For each approved page:
 
 **If ANY approved page shows unintended change:**
 - Identify which file edit triggered it (see Shared-File Inventory in
-  `aemcoder-migration-orchestrator/SKILL.md`).
+  orchestrator SKILL.md).
 - REVERT that edit.
 - Narrow the fix scope — typically swap a brand-wide rule for a
   custom-class + scoped rule that only affects the in-progress page.
@@ -239,8 +235,8 @@ Shared-File Inventory:
 
 | File pattern | Triggers regression check on |
 |---|---|
-| `styles/{brand}/_tokens.css` | ALL approved pages |
-| `styles/{brand}/_styles.css` | ALL approved pages |
+| `styles/{brand}/_tokens.css` | ALL approved pages in batch |
+| `styles/{brand}/_styles.css` | ALL approved pages in batch |
 | `blocks/{block}/{brand}/_{block}.css` | All approved pages using that block + brand |
 | Fragment docs | All approved pages referencing the fragment |
 | Block-config.js (base or brand) | All approved pages using that block |
@@ -251,8 +247,8 @@ approved pages BEFORE the edit, not just the in-progress page.
 
 ## Stop conditions
 
-- ≥90% match per viewport AND zero desktop regression AND zero cross-page
-  regression: stop, await approval.
+- ≥90% match per viewport AND zero desktop regression AND zero
+  cross-page regression: stop, await approval.
 - Any base block change required: STOP and ask.
 - Any token change affecting >1 page or >1 section: ASK before applying.
 - 3 fix rounds and still below threshold: STOP, summarize blockers.
@@ -260,33 +256,31 @@ approved pages BEFORE the edit, not just the in-progress page.
 
 ## Common section types and their dominant root causes
 
-Track these from prior failure patterns so you anchor the diff in the
-right place:
-
 | Section type | Most common root causes | Default fix path |
 |---|---|---|
 | **Hero** | Author content (wrong image asset), Brand block CSS (mobile layout), Asset (missing SVG) | Author + brand CSS partial |
-| **Cards-grid (brush card variant)** | Author custom class missing, Asset (brush SVG), Brand block CSS (gold accent) | Custom class + brand global |
+| **Cards-grid (brush card variant)** | Author custom class missing, Asset (brush SVG), Brand block CSS (gold accent) | Custom class + brand global (under section-metadata) |
 | **Header** | Fragment content (per-section nav not authored), Fragment not referenced, Brand block-config (active state per URL) | Fragment + brand block-config |
 | **Safety bar** | Fragment content (paraphrased ISI), Pharma-fidelity rules, Brand block CSS (expand state) | Pharma-fidelity + fragment edit |
 | **Brand explorer** | Base block JS (hoist logic), Author content (label text), Brand block CSS (bar bg color) | Author + brand CSS (escalate JS) |
 | **Section with brushstroke/gradient** | Section style variant missing, Asset (SVG not downloaded), Custom class | Custom class + section variant + asset download |
 | **Footer** | Fragment content, Brand block CSS (link colors) | Fragment + brand CSS |
 | **Mobile breakpoint regression** | Missing mobile-first base in brand CSS, `!important` in section CSS, image hidden but container still has height | Mobile-first restructure in brand CSS |
+| **Formulary-lookup decorations** | Double-decoration over brand block CSS (AEMCODER-021) | Pre-read existing brand CSS; don't duplicate |
 
 ## Anti-patterns to call out in aemcoder prompts
 
-Carry these into the section-fix prompt verbatim:
 - "Do NOT rename `safety-bar-full-content` → `safety-bar-maximized` to match live"
 - "If reaching for `!important`, specificity strategy is wrong — escalate"
 - "Author content first, brand CSS last (before base)"
 - "Capture baseline BEFORE any edit"
 - "Per-fix isolation, never batch"
 - "If proposing base-block edit, STOP — escalate"
+- "Section-metadata `style` class FIRST, then CSS using `.section.<style-class>`"
+- "Read existing brand block CSS BEFORE adding `::before`/`::after` decorations"
 
 ## When the loop hits 3 rounds without progress
 
-Common escalation paths:
 1. **Wrong block selected for section** — Re-do block fit analysis; the
    section may need a different library block.
 2. **Author content fundamentally wrong** — Source content may have a

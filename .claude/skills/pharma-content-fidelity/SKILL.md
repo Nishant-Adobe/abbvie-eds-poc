@@ -12,7 +12,7 @@ defect, not just a polish issue.
 
 This skill auto-triggers whenever the current work touches a block or
 section carrying regulated pharma content. The first-prompt for any
-aemcoder migration should include these rules verbatim (see
+aemcoder migration includes these rules verbatim (see
 `aemcoder-migration-orchestrator/templates/first-prompt.md`).
 
 ## Related skills
@@ -25,6 +25,8 @@ aemcoder migration should include these rules verbatim (see
 - **abbvie-isi-migration** — Architecture for the 3-layer ISI (inline
   ISI section, floating safety bar, header safety line). This skill
   enforces the content rules within that architecture.
+- **abbvie-block-analysis** — md2jcr publish rules for the text-container
+  boxed-warning variant and references variant.
 
 ## When this skill applies
 
@@ -33,7 +35,7 @@ This skill is mandatory whenever any of these blocks/sections are in scope:
 | Block / pattern | Why pharma content |
 |---|---|
 | `safety-bar` | Floating ISI (Important Safety Information) |
-| `text-container.boxed-warning` / `rinvoq-isi-black-bg` | FDA Boxed Warning |
+| `text-container.boxed-warning` / `*-isi-black-bg` | FDA Boxed Warning |
 | `text-container.indication` | Drug indication statement |
 | `text-container.contraindications` | Regulatory must-include |
 | `text-container.warnings-precautions` | Regulatory must-include |
@@ -80,7 +82,7 @@ This skill is mandatory whenever any of these blocks/sections are in scope:
 - Reference text verbatim (author names, journal, volume, year, page).
 
 ### 4. Job code, approval date, expiration date metadata
-- Pharma pages carry codes like `US-RNQ-250017` or `AbbVie_USJC_...`.
+- Pharma pages carry codes like `US-RNQ-250017`, `US-LNZ-XXXXXX`, `US-SKZ-XXXXXX`.
 - These appear in footer / legal text and MUST be preserved verbatim.
 - Approval date (e.g. "Approved 03/2024") and expiration date should be
   preserved if present in live source.
@@ -158,7 +160,7 @@ These apply to every regulated content block:
 - **References as ordered list.** `<ol>` not `<p>` with line breaks.
   Each reference is a separate `<li>` for screen-reader nav.
 
-## Anti-patterns observed in chat history (2026-05-21 → 05-29)
+## Anti-patterns observed in migration history
 
 1. **Abbreviated indications list** — dropped PsA + pJIA from RINVOQ
    indication. Required full verbatim restore from live DOM.
@@ -172,19 +174,14 @@ These apply to every regulated content block:
    ADVERSE REACTIONS — all dropped in initial migration.
 5. **"INDICATIONS" subheading missing** — heading text gone, body kept.
 6. **Used `<em>` arbitrarily** — drug names sometimes need italic per
-   FDA convention, but `<em>` semantic ≠ italic visual. **Note:** Only
-   flag this when live source explicitly uses a different element (e.g.
-   live uses `<i>` but migration used `<em>`). If live uses `<em>`,
-   preserve `<em>`. Don't second-guess the source.
+   FDA convention, but `<em>` semantic ≠ italic visual.
 7. **Used `<strong>` for emphasis** when live used `<span class="bold">`
-   or `<b>` — semantic difference matters for assistive tech. **Note:**
-   Only flag when live source explicitly uses a different element. If
-   live uses `<strong>`, preserve `<strong>`.
+   or `<b>` — semantic difference matters for assistive tech.
 8. **`<sup>` reference markers wrapping awkwardly on mobile** —
    superscript markers must stay attached to preceding word; use
    `white-space: nowrap` on the parent inline.
 9. **Mavyret-style alternative-therapy clauses dropped** — non-applicable
-   in this brand but documented as a recurring pattern across brands.
+   in some brands but documented as a recurring pattern across brands.
 
 ## Required first-prompt section for aemcoder
 

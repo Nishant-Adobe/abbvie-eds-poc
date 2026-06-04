@@ -22,14 +22,13 @@ Before doing anything, read and acknowledge:
 
 1. **Repo:** https://github.com/Nishant-Adobe/abbvie-eds-poc
    (default: `develop`)
-2. **Key docs (root):** README.md, CLAUDE.md, PROMPTS.md, DOCUMENTATION.md,
-   agents.md
+2. **Key docs (root):** README.md, CLAUDE.md, PROMPTS.md, DOCUMENTATION.md
 3. **Existing brand assets to reuse — do NOT recreate:**
    - `brand-config.json` — `{{BRAND_KEY}}` is registered
    - `styles/{{BRAND_KEY}}/_tokens.css` — brand colors, named palette
    - `styles/{{BRAND_KEY}}/_fonts.css` — brand font family
    - `styles/{{BRAND_KEY}}/_styles.css`, `_themes.css` — brand globals
-4. **Block library (65 blocks under `/blocks/`):** {{BLOCK_LIST_OR_REFER_TO_REPO}}.
+4. **Block library (68 blocks under `/blocks/`):** {{BLOCK_LIST_OR_REFER_TO_REPO}}.
    Blocks with `{{BRAND_KEY}}` brand override CSS already in place:
    {{BRAND_CUSTOMIZED_BLOCKS}}.
    Other blocks inherit base styling — **that is by design** (loader
@@ -75,7 +74,8 @@ approved. Today's scope is page {{N}}: {{TARGET_URL}}.
 ### B. Scope / where to edit (lowest specificity first, never skip levels)
 1. **Author content field** — fix in UE / `.plain.html` row.
 2. **Custom class on section/block + brand global rule** —
-   `styles/{{BRAND_KEY}}/_styles.css`. One-off variants live here.
+   `styles/{{BRAND_KEY}}/_styles.css` SCOPED UNDER a section-metadata
+   `style` class (see rule C below). One-off variants live here.
 3. **Brand block CSS partial** —
    `blocks/{block}/{{BRAND_KEY}}/_{block}.css`, then
    `npm run scaffold:build:block --block-name X --brand-name {{BRAND_KEY}}`.
@@ -87,14 +87,78 @@ approved. Today's scope is page {{N}}: {{TARGET_URL}}.
 7. **Brand override is OPT-IN** — missing `blocks/{block}/{{BRAND_KEY}}/`
    means inheritance is intentional. Don't auto-create.
 
-### C. Regression protection (MECHANICAL — AEMCODER-013)
+### C. Section-metadata FIRST, then CSS (AEMCODER-019, AEMCODER-023 — critical)
 
-**Enumerate every previously approved page in the active batch.** If you
-don't know the list, ASK the user before any shared-file edit. Don't
-rely on memory for the page list.
+For every non-standard section, author section-metadata BEFORE writing
+any CSS. **Section uses `style_*`, blocks use `classes_*` — DO NOT
+confuse these (AEMCODER-023).**
 
-**Shared-File Inventory** — these files trigger cross-page regression
-risk. Editing any of them MUST follow the pre-edit gate below.
+#### PRIMARY form — `style_customDynamicClass` (dynamic-picklist)
+
+```
+<div class="section-metadata">
+  <div><div>style_customDynamicClass</div><div>content-wide,medium-radius</div></div>
+</div>
+```
+
+**Value rules:**
+- Comma-separated, **NO SPACES** — `a,b,c` not `a, b, c`
+- Works for single or multiple classes
+- Per reviewer convention: this is the PRIMARY form for section
+  styling. Use this by default, not the `style` multiselect.
+
+#### REQUIRED form for non-default sections (grid-section, grid-container)
+
+All 5 rows required for ANY non-default section model:
+
+```
+<div class="section-metadata">
+  <div><div>blockModelId</div><div>grid-section</div></div>
+  <div><div>style_container</div><div>grid-section</div></div>
+  <div><div>name</div><div>Grid Section</div></div>
+  <div><div>style_customDynamicClass</div><div>grid-section,grid-cols-8</div></div>
+  <div><div>language</div><div>none</div></div>
+</div>
+```
+
+Without `blockModelId`, md2jcr defaults to the plain `section` model
+and grid-specific fields won't be emitted. Confirmed via smoke test.
+
+#### Secondary form — `style` (multiselect, predefined options only)
+
+Only use when authoring with a fixed picklist:
+
+```
+<div class="section-metadata">
+  <div><div>style</div><div>highlight</div></div>
+</div>
+```
+
+Less flexible than `style_customDynamicClass` — multiselect requires
+the option to be in the model's predefined list. Prefer the
+dynamic-picklist form.
+
+This emits `<div class="section {style-class-values}">`. Then write CSS
+scoped to `.section.{style-class} .{block-class}` in
+`styles/{{BRAND_KEY}}/_styles.css`.
+
+**FORBIDDEN section-metadata property names:**
+- `classes` / `classes_*` for SECTION metadata — md2jcr silently ignores
+  these for section. Use `style_customDynamicClass` (primary) or `style`
+  (multiselect) instead.
+
+**FORBIDDEN selectors:**
+- `:has()` on block classes
+- `body:has(...)` selectors
+- Bare block selectors — `.cards-grid ...`, `.text-container ...`, etc.
+- Auto-generated section classes like `.section.hero-container ...`
+
+### D. Regression protection (MECHANICAL — AEMCODER-013)
+
+Enumerate every previously approved page in the active batch. If
+uncertain, ASK the user before any shared-file edit.
+
+**Shared-File Inventory** — these files trigger cross-page regression:
 
 | File pattern | Affects |
 |---|---|
@@ -103,7 +167,7 @@ risk. Editing any of them MUST follow the pre-edit gate below.
 | `styles/{brand}/_styles.css` | ALL pages w/ `brand: {brand}` |
 | `blocks/{block}/{brand}/_{block}.css` | All pages using that block + brand |
 | `blocks/{block}/block-config.js` (base OR brand) | All pages using that block |
-| Fragment docs (`/nav`, `/footer`, `/safety-bar`, etc.) | All pages referencing |
+| Fragment docs (`/nav`, `/footer`, `/safety-bar`) | All pages referencing |
 | `models/_*.json` partials | All pages using affected block |
 | `component-{models,definition,filters}.json` | NEVER edit manually |
 
@@ -114,40 +178,18 @@ risk. Editing any of them MUST follow the pre-edit gate below.
 3. Apply the edit. Run `npm run scaffold:build:block --block-name X
    --brand-name {{BRAND_KEY}}` if CSS partials touched.
 4. AFTER editing, re-snapshot EACH approved page at 1440 + 390.
-5. Diff against the pre-edit baseline. ANY unintended visual change on
+5. Diff against pre-edit baseline. ANY unintended visual change on
    ANY approved page = REGRESSION.
 
 **On regression:**
 - REVERT the edit immediately.
 - Narrow scope: prefer `classes_commonCustomClass` value on the section
-  + a tightly-scoped rule in `styles/{{BRAND_KEY}}/_styles.css` over
-  brand-wide changes.
+  + a tightly-scoped rule under a section-metadata `style` class.
 - Re-attempt with the narrower fix; repeat the gate.
-
-**On approval gate (before declaring "done"):**
-- Re-snapshot every previously approved page at 1440 + 390.
-- Confirm zero unintended changes.
-- Then ask for user approval.
-
-**When the user approves the current in-progress page:**
-- Add it to your working list of approved pages for the rest of the
-  session, so future edits guard regression against it too.
-
-### D. Page structure / metadata / fragments
-1. First, identify header fragment, footer fragment, safety-bar
-   fragment, nav fragment. Pharma sites often have *per-condition* nav
-   and indication text — **verify whether shared or sectioned** before
-   assuming.
-2. Page metadata required: `brand: {{BRAND_KEY}}`, `nav: /...`,
-   `footer: /...`, title, description, OG image.
-3. `.plain.html` in `content/` is **gitignored local-only preview**.
-   AEM / UE / JCR is separate. Never confuse the two.
 
 ### E. Responsive
 1. **Mobile-first.** Use `@media (min-width: 600px)` and
-   `@media (min-width: 900px)` for progressive enhancement. Avoid
-   `max-width` overrides unless mobile-first restructure requires
-   base-block edits.
+   `@media (min-width: 900px)` for progressive enhancement.
 2. **Project root font-size is 10px** — `0.9rem` = 9px. Use absolute
    px when matching live's `14px`, `16px`, etc.
 3. Hide images on mobile via `picture/srcset` or `display: none` on the
@@ -162,14 +204,25 @@ risk. Editing any of them MUST follow the pre-edit gate below.
 2. Fonts: live `font-family: "Graphik Medium"` ≠ regular Graphik +
    `font-weight: 500`. Match the *family name* the live site declares.
 
-### G. Pixel diff workflow (per section)
-1. **Inspect live DOM and computed styles at desktop AND mobile in
-   DevTools BEFORE writing any CSS.** Paste live values into proposal.
-2. Tag every delta with one of: Author content / Token / Brand CSS /
-   Custom class / Variant / Asset / Base block CSS / Base block JS /
-   A11y / Fragment / Fragment-not-referenced.
-3. Apply fix at lowest level; re-measure; report deltas.
-4. Stop at ≥90% per viewport OR after 3 rounds (escalate).
+### G. Pixel-fix workflow — Step 0 HARD GATE (AEMCODER-014, AEMCODER-015)
+
+If ANY section diverges from live after initial author, BEFORE writing
+ANY CSS:
+
+1. **Live screenshot** at 1440 + 390.
+2. **Local screenshot** at 1440 + 390.
+3. **Live `getComputedStyle()`** for every DOM descendant in the
+   section — required properties: display, position, width, max-width,
+   padding, margin, gap, font-*, color, background, border, transform,
+   z-index, plus `::before`/`::after`.
+4. **Local `getComputedStyle()`** same.
+5. **Single delta table** — live vs local per descendant per property.
+6. Write ONE consolidated CSS replacement scoped under a section-metadata
+   `style` class.
+
+No cherry-picking single properties. Three-round circuit breaker: if a
+section needs >3 corrective prompts from me, STOP and re-dump from
+scratch.
 
 ### H. Approval gates (CRITICAL)
 1. **Never `git add` / `commit` / `push` without explicit user approval.**
@@ -177,52 +230,49 @@ risk. Editing any of them MUST follow the pre-edit gate below.
    screenshots at 1440 / 768 / 390, (b) regression check on other
    approved pages.
 
-### I. xwalk / md2jcr content format
-1. Parent block: one `<div><div>value</div></div>` row per non-tab,
-   non-`classes_*` model field, in model order. Empty rows for empty fields.
-2. Item rows: one `<div>` with one `<div>` cell per non-tab,
-   non-`classes_*` item-model field, in model order.
-3. `classes_*` fields (including `classes`, `classes_commonCustomClass`,
-   `classes_iconType`, etc.) are NEVER rows/cells — they live in the
-   block element's class attribute.
-4. `blockId` → row with value `id:value`. `language` → row with value
-   `lang:value`. These ARE rows (they're not `classes_*` prefixed).
-5. Alt text fields (`logoAlt`, `imageAlt`, etc.) ARE regular rows/cells
-   for blocks with a `commonProperties` tab. Validate against working
-   test content (accordion-test.plain.html, cta-button-test.plain.html).
-6. Before publishing, validate: parent row count = non-tab non-classes_*
-   field count; item cell count = non-tab non-classes_* item-field count.
+### I. xwalk / md2jcr content format (refined per AEMCODER-022)
+
+1. **Row count = FieldGroup count, NOT raw field count.** After
+   md2jcr's `_groupFields()` runs, multiple fields can collapse into
+   one group. See `abbvie-block-analysis` md2jcr-publish-rules section
+   for the per-block group count reference.
+2. Parent block: one `<div><div>value</div></div>` row per FieldGroup,
+   in declared order. Empty rows for empty groups.
+3. Item rows: one `<div>` with one `<div>` cell per item-FieldGroup.
+4. `classes_*` fields (including `classes`, `classes_commonCustomClass`,
+   `classes_iconType`, etc.) group by prefix → ONE FieldGroup named
+   "classes" → applied to block element's `class` attribute.
+5. `blockId` → row with value `id:VALUE`. `language` → row with value
+   `lang:VALUE`. `analytics_id` → analytics FieldGroup.
+6. **Suffix collapsing:** fields ending in `Alt`, `MimeType`, `Type`,
+   `Text`, `Title` collapse into matching base field (one cell holds
+   `<img alt="..." src="...png">` populating image + imageAlt +
+   imageMimeType from one cell).
+7. **Orphan-suffix bug:** if a field ends with one of those suffixes
+   but no matching base field exists in the same model, md2jcr drops
+   it. RENAME the field to avoid the suffix (e.g. `overlayTitle` →
+   `overlayHeading`).
+8. **For image fields in container item blocks:** use `component: reference`,
+   NEVER `aem-content`. The latter triggers md2jcr "Cannot read
+   properties of undefined (reading 'fields')" (AEMCODER-016).
+9. **Field hints `<!-- field:name -->`** OVERRIDE sequential resolution.
+   Use them to break greedy richtext.
 
 ### J. Analytics & tracking attribute preservation
 1. **Preserve verbatim** any of these attributes from live source DOM:
-   - `data-cmp-data-layer` (Adobe Experience Cloud data layer payloads)
-   - `data-track-*` (e.g. `data-track-pageload`, `data-track-link`,
-     `data-track-cta`) — used by AbbVie marketing analytics
-   - `data-analytics-*` (generic analytics tagging)
-   - `data-gtm-*` (Google Tag Manager hooks)
-   - `data-cmp-*` (Adobe Component data attributes beyond data-layer)
-2. **Where they live:** in the block's authored content (`.plain.html` row
-   values can include attributes when inline HTML is used) OR added at the
-   block-decoration JS layer (brand `block-config.js`, not base).
-3. **Do NOT silently drop** these attributes when migrating. They are
-   invisible to pixel diff but business-critical — marketing teams
-   instrument conversion funnels, A/B tests, and attribution against them.
-4. **Validation:** for any migrated section, grep the rendered DOM for
-   `data-cmp-`, `data-track-`, `data-analytics-`, `data-gtm-` and compare
-   counts vs live source. Counts must match. Any missing attribute is a
-   defect (silent but high-impact).
-5. **JSON payloads in `data-cmp-data-layer`** must be byte-for-byte
-   identical — even whitespace and key ordering can break downstream
-   parsers. Copy verbatim.
+   `data-cmp-data-layer` (Adobe Experience Cloud data layer payloads),
+   `data-track-*` (AbbVie marketing analytics), `data-analytics-*`,
+   `data-gtm-*` (Google Tag Manager hooks), `data-cmp-*`.
+2. JSON payloads in `data-cmp-data-layer` must be byte-for-byte identical.
+3. Validation: for any migrated section, grep the rendered DOM for these
+   prefixes and compare counts vs live source. Counts must match.
 
 ---
 
 ## 3. Workflow — follow phases in order, do not skip or combine
 
 ### Phase A — Site-wide design audit (skip if previously done for this brand)
-1. Scrape live homepage + 1 deeper page to extract design system
-   (colors, type scale, spacing, shadows, radii, breakpoints, footnote
-   styles, table/chart conventions).
+1. Scrape live homepage + 1 deeper page to extract design system.
 2. **Diff against `styles/{{BRAND_KEY}}/_tokens.css`.** Report any
    mismatches. Do NOT modify tokens unless I approve each delta.
 3. Confirm `_fonts.css` covers all weights/styles used by live.
@@ -233,13 +283,17 @@ risk. Editing any of them MUST follow the pre-edit gate below.
    content sequence per section.
 2. For each section, map to best-fit block. **Prefer reuse.** No new
    blocks. If block is missing, STOP and ask.
-3. Generate UE authoring tree: per-block field values matching
-   `_{block-name}.json` model.
-4. Apply `brand: {{BRAND_KEY}}` page metadata.
-5. Render locally (`aem up`); pixel diff vs live at 1440 + 390. Report
+3. **Author section-metadata `style` classes FIRST** for non-standard
+   sections (Rule C).
+4. Generate UE authoring tree: per-block field values matching
+   `_{block-name}.json` model. Use FieldGroup count, not field count
+   (Rule I.1).
+5. Apply `brand: {{BRAND_KEY}}` page metadata.
+6. Render locally (`aem up`); pixel diff vs live at 1440 + 390. Report
    % match per section.
-6. Iterate on author content (not block code) until ≥90% match.
-7. **Output:** page authored + diff report. Wait for approval.
+7. Iterate on author content (not block code) until ≥90% match. For
+   stubborn sections, run Step 0 hard gate (Rule G).
+8. **Output:** page authored + diff report. Wait for approval.
 
 ### Phase C — Cross-page reuse (for pages 2..N of a batch)
 {{ONLY_IF_BATCH_MIGRATION}}
@@ -252,8 +306,7 @@ pages. Categorize each section: **REUSE** (1:1 author swap) /
 - Per-section pixel match table at 1440 / 768 / 390.
 - Confirm previously approved pages unregressed.
 - Verify safety-bar fragment unchanged across all pages.
-- Verify shared assets (`_styles.css`, `_tokens.css`, fragments) unchanged
-  unless explicitly approved.
+- Verify shared assets unchanged unless explicitly approved.
 
 ---
 
@@ -276,25 +329,20 @@ Do not begin Phase A until I confirm the answers.
 
 | Placeholder | Example |
 |---|---|
-| `{{BRAND_NAME}}` | Rinvoq HCP, Skyrizi HCP, Linzess, Mavyret, Venclexta, Botox |
-| `{{BRAND_KEY}}` | `rinvoq-hcp`, `skyrizi-hcp`, `linzess`, `mavyret`, `venclexta`, `botox`, `abbvie`, `rinvoq`, `rinvoq-dtc` |
+| `{{BRAND_NAME}}` | Rinvoq HCP, Skyrizi HCP, Linzess, Mavyret, Venclexta, Rinvoq DTC |
+| `{{BRAND_KEY}}` | `rinvoq-hcp`, `skyrizi-hcp`, `linzess`, `mavyret`, `venclexta`, `rinvoq-dtc` |
 | `{{LIVE_HOMEPAGE_URL}}` | https://www.rinvoqhcp.com |
 | `{{TARGET_URL}}` | https://www.rinvoqhcp.com/dermatology/dosing-lab-monitoring |
 | `{{N}}` | 3 (page sequence number in batch) |
 | `{{FULL_SCOPE_TABLE_IF_PART_OF_A_LARGER_BATCH}}` | Markdown table of all pages with execution order |
-| `{{BRAND_CUSTOMIZED_BLOCKS}}` | Run `ls -d blocks/*/{{BRAND_KEY}}/ \| sed 's\|blocks/\|\|;s\|/{{BRAND_KEY}}/\|\|'` to enumerate (substitute actual brand key) |
-| `{{BLOCK_LIST_OR_REFER_TO_REPO}}` | Inline list of 65 blocks OR "see `/blocks/` directory" |
+| `{{BRAND_CUSTOMIZED_BLOCKS}}` | Run `ls -d blocks/*/{{BRAND_KEY}}/ \| sed 's\|blocks/\|\|;s\|/{{BRAND_KEY}}/\|\|'` to enumerate |
+| `{{BLOCK_LIST_OR_REFER_TO_REPO}}` | Inline list of 68 blocks OR "see `/blocks/` directory" |
 | `{{ONLY_IF_BATCH_MIGRATION}}` | Remove section entirely if migrating one standalone page |
 
 ## How to use this template
 
-1. Read the fenced block above as your internal instructions.
-2. Fill in `{{...}}` placeholders from the user's request context.
-3. Skip sections that don't apply (Phase A if already done for the brand,
-   Phase C if standalone page, batch table if standalone).
-4. Execute the workflow directly — present your summary + clarifying
-   questions to the user before beginning.
-5. After user answers, begin Phase A (or Phase B if A was previously done).
-
-For per-section repairs after the initial scaffolding, follow the
-companion `aemcoder-section-fix-loop` skill workflow.
+1. Copy the entire fenced block above.
+2. Replace all `{{...}}` placeholders.
+3. Remove sections that don't apply (Phase A if done, batch table if standalone).
+4. Use as your internal kickoff checklist.
+5. Ask the clarifying questions in Section 4 before starting Phase A.

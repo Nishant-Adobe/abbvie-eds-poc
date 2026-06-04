@@ -128,8 +128,8 @@ The `_block.css` partials always start with `@import '../{block-name}.css';` (or
 1. `blocks/{block-name}/{block-name}.css` (base)
 2. `blocks/{block-name}/{brand}/_{block-name}.css` (brand override, if exists)
 
-And inventory ALL existing pseudo-elements + decorative rules for that
-block. THEN decide whether to:
+Inventory ALL existing pseudo-elements and decorative rules for that block.
+THEN decide whether to:
 
 - **Override existing rule** via CSS variables (preferred — if the brand
   block exposes them, e.g. `--cards-grid-arrow-color`, `--cta-icon-content`).
@@ -147,7 +147,7 @@ block. THEN decide whether to:
   a chevron via `background-image` on the element itself.
 - Adding plum-circle decoration in page CSS when brand block already has
   it as `::before` (AEMCODER-021: filter dropdown had a duplicated
-  plum circle for this reason).
+  plum circle).
 
 ### Detection checklist before writing the rule
 

@@ -33,7 +33,7 @@ Do NOT edit anything yet. Investigate, propose, await approval.
    / reference / footnote / job-code copy. Zero paraphrase.
 3. **No `!important`.** No base block edits.
 4. **Lowest specificity first** (Step 5 below).
-5. **Desktop regression protection** — capture baseline at Step 1
+5. **Desktop regression protection** — capture baseline at Step 2
    before any change at Step 6.
 
 ## Step 1 — Confirm preconditions (1-liner each)
@@ -53,9 +53,20 @@ at 1440px desktop AND 1200px (breakpoint edge — often where bugs hide).
 Save as baseline. Diff at 1440 + 1200 AFTER each fix. Any unintended
 desktop change is regression unless approved.
 
-## Step 3 — Side-by-side content + visual diff (no edits)
+## Step 3 — Live + local computed-style dump (HARD GATE)
 
-Capture both at 1440px desktop AND 390px mobile.
+**No CSS edit may be written before this step completes.**
+
+1. **Live screenshot** of the section at 1440px AND 390px.
+2. **Local screenshot** same viewports.
+3. **Live computed styles** for every DOM descendant in the section.
+   Required properties: display, position, width, max-width, min-width,
+   padding, margin, gap, font-family, font-size, font-weight, line-height,
+   color, background, background-image, background-size, background-position,
+   border, border-radius, box-shadow, transform, z-index, plus `::before`
+   and `::after`.
+4. **Local computed styles** same descendants, same properties.
+5. **Delta table** — one row per (descendant, property) where live ≠ local.
 
 | Category | Live source | Local render | Severity (H/M/L) |
 |---|---|---|---|
@@ -95,7 +106,7 @@ root cause:
    brand-wide. Get approval before changing.
 3. **Custom class + brand global CSS** — one-off variant for this
    section only. Add `classes_commonCustomClass` value + scoped rule
-   in `styles/{{BRAND_KEY}}/_styles.css`.
+   in `styles/{{BRAND_KEY}}/_styles.css` under section-metadata `style` class.
 4. **Brand block CSS partial** — recurring pattern needs brand-level
    block rule. Edit `blocks/{block}/{{BRAND_KEY}}/_{block}.css` then
    `npm run scaffold:build:block --block-name X --brand-name {{BRAND_KEY}}`.
@@ -145,7 +156,7 @@ For each approved fix:
 ## Step 8 — Cross-page regression sweep
 
 After all approved fixes applied, snapshot at 390 + 1440:
-- Every previously approved page (use existing baselines).
+- Every previously approved page in the active batch.
 - Confirm no shared-asset regression on:
   - Homepage (always)
   - Any page sharing the fragment edited (if Step 5 tagged Fragment)
@@ -177,7 +188,7 @@ Begin with Step 1. Do not edit anything yet.
 | `{{LIVE_PAGE_URL}}` | https://www.rinvoqhcp.com/dermatology |
 | `{{LOCAL_PAGE_URL}}` | https://preview-aemcoder.adobe.io/content/rinvoq-hcp/dermatology/ |
 | `{{BLOCK_NAME}}` | hero, cards-grid, safety-bar, header, brand-explorer |
-| `{{BRAND_KEY}}` | rinvoq-hcp, skyrizi-hcp, etc. |
+| `{{BRAND_KEY}}` | rinvoq-hcp, skyrizi-hcp, linzess, mavyret, venclexta, rinvoq-dtc |
 | `{{MATCH_THRESHOLD}}` | 90 (default), 95 for header / safety-bar |
 
 ## Conditional sections to remove if not applicable
@@ -188,13 +199,3 @@ Begin with Step 1. Do not edit anything yet.
   headers (hamburger), accordions, modals, safety-bar expand, carousels.
 - `{{IF_RELEVANT}}` — keep live-class capture only when class-name
   divergence is part of the user-reported delta.
-
-## When to use which template variant
-
-| Situation | Template |
-|---|---|
-| Brand override exists (e.g. hero, cards-grid, safety-bar) | Keep "Brand override path" block |
-| No brand override yet (e.g. accordion w/o brand folder on this brand) | Use "no brand override" block; default to author + global CSS levers |
-| Interactive component (header drawer, accordion, modal, safety-bar expand) | Keep Step 4 Behavior diff |
-| Static section (hero, cards-grid, glacier bg) | Drop Step 4 |
-| Mobile-only or desktop-only diff | Note in the opening line; keep both viewports in Step 3 anyway (regression protection) |
