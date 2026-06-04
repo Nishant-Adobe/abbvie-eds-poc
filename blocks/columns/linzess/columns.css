@@ -772,33 +772,33 @@
 
 /* stylelint-disable no-descending-specificity */
 
-/* Linzess — Savings Tout Cards (light purple card style)
-   Applies to both: savings promo after hero + savings card before footer
-   Live site: light purple bg, 16px radius, image left + text right */
+/* Linzess — Savings $30 Card (columns before footer)
+   Live site: off-white bg, 998px wide, 309px tall, image left fills column */
 
 .linzess .columns-container .columns {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   background-color: var(--linz-off-white);
   border-radius: var(--linz-rounded-corner);
   padding: 0;
-  max-width: 1220px;
+  max-width: 998px;
   margin: 0 auto;
-  align-items: center;
+  align-items: stretch;
   overflow: hidden;
 }
 
-/* Savings Promo Card (first columns after hero) */
+/* ═══ PROMO CARD: "Are You Eligible" (after hero) ═══ */
 
 .linzess .hero-container + .columns-container .columns {
   background-color: var(--linz-light-purple);
-  max-width: 1100px;
+  max-width: 802px;
   padding: 0;
   gap: 0;
   display: flex;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: stretch;
   overflow: hidden;
+  height: 173px;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item {
@@ -810,11 +810,8 @@
   display: none;
 }
 
-/* Image column — no background, image fills space */
-
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  flex: 0 0 50%;
-  padding: 32px;
+  flex: 0 0 40%;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image),
@@ -827,24 +824,21 @@
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
   width: 100%;
-  max-width: 400px;
   height: auto;
   display: block;
-  margin: 0 auto;
+  margin-top: -30px;
 }
-
-/* Text column */
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
-  padding: 32px 48px 32px 0;
+  padding: 0 32px 0 40px;
   display: flex;
   align-items: center;
 }
 
 .linzess .hero-container + .columns-container .columns .columns-item-content p strong {
   font-family: var(--body-font-family);
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--linz-dark-purple);
   text-transform: none;
@@ -860,12 +854,15 @@
   .linzess .hero-container + .columns-container .columns {
     max-width: 100%;
     flex-wrap: wrap;
-    padding: 24px;
+    height: auto;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
-    padding: 16px;
+  }
+
+  .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+    margin-top: 0;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
