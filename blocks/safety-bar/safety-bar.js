@@ -52,6 +52,14 @@ function extractContentFields(block, isSplit) {
 }
 
 export default function decorate(block) {
+  // Remove common-property rows and placeholders before extracting content
+  [...block.querySelectorAll(':scope > div')].forEach((row) => {
+    const text = row.textContent.trim();
+    if (text.startsWith('id:') || text.startsWith('lang:') || text === '-' || text === 'none') {
+      row.remove();
+    }
+  });
+
   const isSplit = block.classList.contains('split');
   const { collapsed, collapsedCol2, expanded } = extractContentFields(block, isSplit);
 
