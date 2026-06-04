@@ -21,12 +21,13 @@
 /* Savings Promo Card (first columns after hero): light purple bg, compact */
 .linzess .hero-container + .columns-container .columns {
   background-color: var(--linz-light-purple);
-  max-width: 900px;
+  max-width: 802px;
   padding: 0;
-  align-items: center;
   gap: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  overflow: hidden;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item {
@@ -39,22 +40,23 @@
   display: none;
 }
 
-/* Image column */
+/* Image column: fixed width, image fills and bleeds */
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 0 0 40%;
+  overflow: hidden;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  display: block;
+  margin-top: -30px;
 }
 
-/* Text column */
+/* Text column: vertically centered, left padding */
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
-  padding: 24px 40px;
+  flex: 1;
+  padding: 24px 32px 24px 40px;
   display: flex;
   align-items: center;
 }
@@ -76,12 +78,21 @@
 @media (width < 768px) {
   .linzess .hero-container + .columns-container .columns {
     max-width: 100%;
-    grid-template-columns: 1fr;
+    flex-wrap: wrap;
+  }
+
+  .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+  }
+
+  .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+    margin-top: 0;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
     padding: 16px;
     text-align: center;
+    flex: 1 1 100%;
   }
 }
 
