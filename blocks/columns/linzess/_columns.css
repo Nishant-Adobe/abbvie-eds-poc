@@ -18,25 +18,35 @@
   overflow: hidden;
 }
 
-/* Savings Promo Card (first columns after hero): light purple bg */
+/* Savings Promo Card (first columns after hero): light purple bg, compact */
 .linzess .hero-container + .columns-container .columns {
   background-color: var(--linz-light-purple);
   max-width: 802px;
+  padding: 0;
+  align-items: stretch;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
   flex: 0 0 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image {
+  background: none;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content) {
-  padding: 24px 32px 24px 40px;
+  padding: 24px 32px;
   display: flex;
   align-items: center;
 }
 
 .linzess .hero-container + .columns-container .columns .columns-item-content p strong {
   font-family: var(--body-font-family);
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--linz-dark-purple);
   text-transform: none;
@@ -51,6 +61,7 @@
 @media (width < 600px) {
   .linzess .hero-container + .columns-container .columns {
     max-width: 100%;
+    flex-direction: column;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
