@@ -91,12 +91,18 @@
   color: #404040;
 }
 
-/* Venclexta section spacing */
+/* Venclexta section spacing and content width */
 .section {
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.section:not(.gray-bg):not(.hero-container) {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 20px;
 }
 
 .section.hero-container {
