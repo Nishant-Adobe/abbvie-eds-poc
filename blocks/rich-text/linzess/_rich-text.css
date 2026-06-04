@@ -258,11 +258,11 @@
   color: var(--color-text-muted, #555);
 }
 
-.section.isi p:has(> strong:only-child) {
+.section.isi p:has(> strong:only-child:not(:has(a))) {
   color: var(--color-text-heading, #422e83);
 }
 
-.section.isi p:has(> strong:only-child) strong {
+.section.isi p:has(> strong:only-child:not(:has(a))) strong {
   color: var(--color-text-heading, #422e83);
 }
 
