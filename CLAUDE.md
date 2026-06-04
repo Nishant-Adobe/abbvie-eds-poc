@@ -106,3 +106,4 @@
 | "ISI", "safety bar", "safety information", "black box" | `abbvie-isi-migration` | 3-layer ISI architecture, brand-specific safety patterns |
 | "Design tokens", "brand colors", "typography", "button style" | `abbvie-design-tokens` | Color, font, spacing tokens across 6 brands |
 | "Migrate page", "import page", "convert to EDS" | `abbvie-page-migration` | End-to-end AEM Platform C to EDS page migration |
+
