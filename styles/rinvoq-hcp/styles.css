@@ -2,3 +2,1992 @@
 @import 'fonts.css';
 
 /* RINVOQ HCP — Brand-specific style overrides */
+
+/* Section: glacier — matches live site resource-container--gold + section-bg-brushstroke + gradient--white-glacier */
+.section.glacier {
+  position: relative;
+  padding: 48px 0 220px;
+  overflow: visible;
+  max-width: none;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section.glacier::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50px;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  pointer-events: none;
+}
+
+.section.glacier::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% + 12px);
+  background-image: url('/content/dam/abbvie-eds-poc/stroke--section-back.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+}
+
+.section.glacier > * {
+  position: relative;
+  z-index: 1;
+}
+
+.section.glacier .default-content-wrapper h2 {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: var(--color-charcoal, #25282a);
+  text-align: center;
+  margin: 0 0 16px;
+  position: relative;
+  display: inline-block;
+}
+
+.section.glacier .default-content-wrapper {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 20px;
+}
+
+.section.glacier .default-content-wrapper:last-of-type {
+  text-align: left;
+  width: 100%;
+  max-width: 1180px;
+  margin: 4px auto 0;
+  padding: 0 20px;
+}
+
+.section.glacier .default-content-wrapper:last-of-type p {
+  font-size: 14px;
+  font-style: normal;
+  margin: 0;
+}
+
+.section.glacier .default-content-wrapper h2::after {
+  content: '';
+  display: block;
+  position: relative;
+  margin-top: 8px;
+  width: 100%;
+  height: 6px;
+  background-image: url('/content/dam/abbvie-eds-poc/section-title-underline-stroke-black.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+@media (min-width: 986px) {
+  .section.glacier {
+    margin: 32px 0;
+    padding: 32px 0 64px;
+  }
+
+  .section.glacier::before {
+    top: 35px;
+    bottom: -35px;
+  }
+
+  .section.glacier::after {
+    height: 100%;
+    background-size: 100% 110%;
+    background-position: center;
+  }
+
+  .section.glacier .default-content-wrapper h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .section.glacier .default-content-wrapper {
+    padding: 0;
+  }
+}
+
+/* Section: text-container — full-width so block controls its own centering */
+.section.text-container-container {
+  max-width: none;
+  width: 100%;
+  margin-bottom: 0;
+  background-color: var(--color-glacier, #f5f5f5);
+  padding-top: 24px;
+  padding-bottom: 24px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section.text-container-container + .section.text-container-container {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Hero: brushstroke underline on TREATMENT GOALS (strong after em) */
+.hero.no-padding h1 strong {
+  position: relative;
+  display: inline-block;
+}
+
+.hero.no-padding h1 strong::after {
+  content: '';
+  position: absolute;
+  bottom: var(--hero-stroke-bottom-offset, -15px);
+  left: 0;
+  width: 100%;
+  height: var(--hero-stroke-height, 22px);
+  background-image: url('/icons/stroke.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+/* Hero homepage: constrain height and position bg absolutely */
+.hero.no-padding {
+  position: relative;
+  overflow: hidden;
+  min-height: 340px;
+}
+
+.hero.no-padding > div:first-child {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero.no-padding > div:first-child img {
+  width: 3100px;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Hero homepage: inner content flex row — text left, badge right */
+.hero.no-padding .hero-text-container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero.no-padding .hero-text-container .cmp-container-x-large {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 340px;
+  padding: 20px 20px 0;
+  max-width: 1220px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Hero: H1 line-height fix for mobile parity */
+.hero.no-padding h1 {
+  line-height: var(--hero-h1-line-height, 0.9);
+}
+
+/* Hero: expansion badge — hidden below 986px, visible on desktop right */
+.hero.no-padding .hero-badge {
+  display: none;
+  margin: 0;
+}
+
+@media (min-width: 986px) {
+  .hero.no-padding .hero-badge {
+    display: block;
+    flex-shrink: 0;
+    margin-left: 40px;
+  }
+
+  .hero.no-padding .hero-badge img {
+    width: 220px;
+    height: auto;
+  }
+}
+
+/* Dermatology hero: half-split section with ::before background */
+.section:has(.hero.half-split-heading) {
+  position: relative;
+  overflow: hidden;
+}
+
+.section:has(.hero.half-split-heading)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 692px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/hero-gastro-large.png');
+  background-size: 3100px 692px;
+  background-position: top center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+/* First hero: heading only */
+.hero.half-split-heading {
+  position: relative;
+  z-index: 1;
+  min-height: 400px;
+  display: flex;
+  align-items: flex-end;
+  background: none;
+  overflow: visible;
+}
+
+.hero.half-split-heading h1 {
+  font-size: 26px;
+  line-height: 1.0625;
+  font-weight: 600;
+  font-style: normal;
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  color: var(--color-charcoal, #25282a);
+}
+
+.hero.half-split-heading h1 br {
+  line-height: 0;
+}
+
+.hero.half-split-heading h1 em {
+  font-family: 'Upa Handwriting', serif;
+  font-style: normal;
+  font-size: 58px;
+  line-height: 0.9;
+  display: block;
+  color: var(--color-gold, #ffd100);
+  margin: -5px 0 -10px;
+}
+
+.hero.half-split-heading h1 strong {
+  font-size: 22px;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+
+.hero.half-split-heading h1 strong::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 100%;
+  height: 22px;
+  background-image: url('/icons/stroke.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+/* Second hero: CTA area with background image */
+.hero.half-split-cta {
+  position: relative;
+  z-index: 1;
+  min-height: auto;
+  background: none;
+  overflow: visible;
+  margin: 0 auto;
+}
+
+.hero.half-split-cta > div:first-child {
+  overflow: hidden;
+}
+
+.hero.half-split-cta .hero-text-container ~ div:first-of-type,
+.hero.half-split-cta > div:first-child {
+  position: relative;
+  z-index: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.hero.half-split-cta > div:not(:first-child):not(.hero-text-container) {
+  display: none;
+}
+
+.hero.half-split-cta img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: none;
+}
+
+.hero.half-split-cta .hero-text-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1;
+}
+
+.hero.half-split-cta .cmp-container-x-large {
+  padding: 20px;
+}
+
+
+.hero.half-split-cta h3 {
+  font-size: 24px;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  color: #fff;
+  line-height: 0.5;
+  margin: 0;
+}
+
+.hero.half-split-cta h3 em {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.hero.half-split-cta p {
+  margin: 8px 0 0;
+}
+
+.hero.half-split-cta a.button {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-brand-primary, #90124a);
+  color: #fff;
+  padding: 16px 47px 16px 32px;
+  border-radius: 100px;
+  font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  position: relative;
+}
+
+.hero.half-split-cta a.button:hover {
+  background: var(--color-brand-primary, #90124a);
+  background-image: radial-gradient(#d66d92 0%, var(--color-brand-primary, #90124a) 157%);
+  background-position: 100% 50%;
+  background-size: 400% 100%;
+  color: #fff;
+  transform: scale(1.0125);
+  animation: shine 1s linear forwards;
+}
+
+@keyframes shine {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero.half-split-cta a.button::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-right-white.svg') no-repeat center;
+  background-size: contain;
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 900px) {
+  .section:has(.hero.half-split-heading) {
+    min-height: auto;
+  }
+
+  .hero.half-split-heading {
+    min-height: auto;
+  }
+
+  .hero.half-split-heading .hero-text-container {
+    min-height: 320px;
+  }
+
+  .hero.half-split-heading h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .hero.half-split-heading h1 em {
+    font-size: 100px;
+  }
+
+  .hero.half-split-heading h1 strong {
+    font-size: 40px;
+  }
+
+  .hero.half-split-heading .cmp-container-x-large {
+    padding-top: 64px;
+    max-width: 1180px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero.half-split-cta {
+    max-width: 1180px;
+    aspect-ratio: 2274 / 542;
+  }
+
+  .hero.half-split-cta .cmp-container-x-large {
+    padding: 85px 32px;
+    margin-left: -100px;
+  }
+}
+
+@media (max-width: 899px) {
+
+  .section:has(.hero.half-split-heading)::before {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/background--hero-grey-sm.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: top center;
+    content: '';
+  }
+
+  .hero.half-split-heading {
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .hero.half-split-heading .hero-text-container {
+    position: static;
+    display: block;
+  }
+
+  .hero.half-split-heading .cmp-container-x-large {
+    padding: 0 46px 42px;
+  }
+
+  .hero.half-split-heading h1 em {
+    line-height: 1.2;
+  }
+
+  .hero.half-split-heading h1 strong {
+    line-height: 1.5;
+  }
+
+  .hero.half-split-heading > div:not(.hero-text-container) {
+    display: none;
+  }
+
+  .section.hero-container:has(.hero.half-split-heading) {
+    display: flex;
+    flex-direction: column;
+    padding: 64px 20px 0;
+    overflow: visible;
+  }
+
+  .hero.half-split-cta {
+    overflow: visible;
+    aspect-ratio: auto;
+    border-radius: 0;
+    max-width: none;
+    margin-bottom: 48px;
+  }
+
+  .hero.half-split-cta a.button::after {
+    right: 15px;
+  }
+
+  .hero.half-split-cta > div:first-child {
+    overflow: hidden;
+    height: 230px;
+  }
+
+  .hero.half-split-cta img {
+    width: 100%;
+    height: 230px;
+    border-radius: 0;
+    object-fit: fill;
+  }
+
+  .hero.half-split-cta .hero-text-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .hero.half-split-cta .cmp-container-x-large {
+    padding: 45px 20px 20px;
+    margin-left: 0;
+  }
+
+  .hero.half-split-cta h3 {
+    color: var(--color-charcoal, #25282a);
+    font-size: 20px;
+    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-weight: 600;
+    line-height: 25px;
+    margin: 0;
+  }
+
+  .hero.half-split-cta h3 em {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17.5px;
+    display: inline;
+    margin-bottom: 0;
+  }
+
+  .hero.half-split-cta p {
+    margin: 0;
+  }
+
+  .hero.half-split-cta a.button {
+    margin-top: 12px;
+    font-size: 16px;
+    font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-weight: 700;
+    padding: 12px 40px 12px 24px;
+  }
+}
+
+
+main > .section {
+  margin-bottom: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+  .safety-bar.split .safety-bar-abbreviated {
+    padding: 10px 16px;
+    max-width: 100%;
+    overflow-x: hidden;
+    word-wrap: break-word;
+  }
+}
+
+@media (max-width: 985px) {
+  .hero-container {
+    padding-top: 20px;
+    padding-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+
+  .cards-grid-container .cards-grid.cards-grid-cta-card {
+    gap: var(--spacing-50, 50px);
+  }
+
+  .hero.no-padding {
+    min-height: auto;
+    overflow: visible;
+    position: relative;
+  }
+
+  .hero.no-padding > div:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: -1;
+    max-width: 100vw;
+  }
+
+  .hero.no-padding > div:first-child img {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: static;
+    transform: none;
+    content: url('/content/dam/rinvoqhcpivy/images/backgrounds/background--hero-grey-sm.png');
+  }
+
+  .hero.no-padding .hero-text-container .cmp-container-x-large {
+    flex-direction: column;
+    min-height: auto;
+    padding: 0;
+    align-items: flex-start;
+  }
+}
+
+/* === /dermatology/access page styles === */
+
+.section.access-hero-section {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.hero.access-hero {
+  position: relative;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.hero.access-hero .hero-text-container {
+  position: relative;
+  z-index: 1;
+  padding: 225px 20px 140px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/hero-grey-brushstroke-mobile.png');
+  background-size: cover;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+}
+
+.hero.access-hero .hero-text-container h1 {
+  font-family: 'Upa Handwriting', serif;
+  font-size: 58px;
+  font-weight: 300;
+  color: rgb(255, 209, 0);
+  line-height: 0.8;
+}
+
+.hero.access-hero .hero-text-container h1 em {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, sans-serif;
+  font-style: normal;
+  font-size: 22px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  display: inline-block;
+  position: relative;
+  margin-top: 4px;
+  line-height: 1.2;
+}
+
+.hero.access-hero .hero-text-container h1 em::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 100%;
+  height: 22px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--page-hero-tall.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 899px) {
+  .section.access-hero-section {
+    display: block;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .section.access-hero-section::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 340px;
+    min-height: 340px;
+    background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/hero-derm-access-skateboarder-mobile.png');
+    background-size: 506px;
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  .section.access-hero-section > .hero-wrapper {
+    margin-top: -341px;
+    position: relative;
+  }
+
+  .hero.access-hero .hero-text-container {
+    z-index: -2;
+  }
+
+  .hero.access-hero .hero-text-container .cmp-container-x-large {
+    position: relative;
+    z-index: 4;
+  }
+}
+
+@media (min-width: 900px) {
+  .hero.access-hero .hero-text-container .cmp-container-x-large {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .hero.access-hero .hero-text-container {
+    padding-left: 0;
+    background-image: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .section.access-hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/hero-derm-access-skateboarder-large.jpg');
+    background-size: 1440px;
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .hero.access-hero {
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    padding: 0 110px;
+    margin-top: 0;
+  }
+
+  .hero.access-hero .hero-text-container {
+    padding: 64px 20px;
+  }
+
+  .hero.access-hero .hero-text-container h1 {
+    font-family: 'Upa Handwriting', serif;
+    font-size: 100px;
+    font-weight: 300;
+    color: rgb(255, 209, 0);
+    line-height: 80px;
+  }
+
+  .hero.access-hero .hero-text-container h1 em {
+    font-family: 'Graphik Bold', 'Helvetica Neue', arial, sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: rgb(37, 40, 42);
+    line-height: 36px;
+    display: inline-block;
+    margin-top: 0;
+  }
+}
+
+/* Access page: download forms section (scoped via adjacent hero) */
+.section.access-hero-section + .section {
+  max-width: 1220px;
+  margin: 48px auto 24px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.section.access-hero-section + .section .default-content-wrapper > h3 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  color: rgb(70, 72, 74);
+  line-height: 30px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.section.access-hero-section + .section {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.section.access-hero-section + .section .default-content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 0;
+  margin: 0;
+  padding-top: 48px;
+}
+
+
+.section.access-hero-section + .section .default-content-wrapper .button-container {
+  margin: 0;
+}
+
+.section.access-hero-section + .section .default-content-wrapper .button-container a {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgb(144, 18, 74);
+  color: #fff;
+  padding: 16px 54px 16px 32px;
+  border-radius: 100px;
+  font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+}
+
+.section.access-hero-section + .section .default-content-wrapper .button-container a::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-download-white.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 899px) {
+  .section.access-hero-section + .section .default-content-wrapper > h3 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .section.access-hero-section + .section .default-content-wrapper {
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 32px;
+  }
+
+  .section.access-hero-section + .section .default-content-wrapper .button-container a {
+    white-space: normal;
+  }
+}
+
+/* Access page: glacier image-text section */
+.section.glacier.image-text-container {
+  background-color: rgb(245, 245, 245);
+  padding: 96px 0 48px;
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .section.glacier .image-text {
+    grid-template-columns: 300px 770px;
+    gap: 24px;
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+}
+
+.section.glacier .image-text .image-text-image-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 0;
+}
+
+.section.glacier .image-text .image-text-image-col img {
+  width: 275px;
+  max-width: 275px;
+  height: 275px;
+}
+
+@media (min-width: 900px) {
+  .section.glacier .image-text {
+    position: relative;
+  }
+
+  .section.glacier .image-text .image-text-content-col > .image-text-content > p:first-child {
+    position: absolute;
+    left: 20px;
+    top: 290px;
+    width: 240px;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(70, 72, 74);
+    text-align: left;
+    line-height: 20px;
+    margin: 0;
+  }
+}
+
+.section.glacier .image-text .image-text-content-col > .image-text-content > p:first-child {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  text-align: left;
+  line-height: 21px;
+  margin-bottom: 24px;
+}
+
+.section.glacier .image-text .image-text-content-col > .image-text-content > p:first-child strong {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.section.glacier .image-text .image-text-content-col h2 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 12px 32px;
+  margin: 0 0 8px -32px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+.section.glacier .image-text .image-text-content-col h2 img {
+  width: 294px;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.section.glacier .image-text .image-text-content-col h3:first-of-type {
+  margin-top: 4px;
+}
+
+.section.glacier .image-text .image-text-content-col h3 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  color: rgb(70, 72, 74);
+  line-height: 30px;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section.glacier .image-text .image-text-content-col h3 img {
+  width: 73px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.section.glacier .image-text .image-text-content-col p {
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
+  margin: 0;
+}
+
+.section.glacier .image-text .image-text-content-col p:last-child {
+  font-size: 12px;
+  line-height: 18px;
+  margin-top: 12px;
+}
+
+
+@media (max-width: 899px) {
+  .section.glacier.image-text-container {
+    padding: 48px 20px 0;
+  }
+
+  .section.glacier .image-text {
+    padding: 0 20px;
+  }
+
+  .section.glacier .image-text .image-text-image-col {
+    align-items: center;
+    text-align: center;
+  }
+
+  .section.glacier .image-text .image-text-image-col picture,
+  .section.glacier .image-text .image-text-image-col img {
+    width: auto;
+  }
+
+  .section.glacier .image-text .image-text-content-col h2 {
+    display: block;
+    font-size: 24px;
+    line-height: 30px;
+    padding: 24px 32px;
+    margin: 0 0 47px -18px;
+  }
+
+  .section.glacier .image-text .image-text-content-col h2 img {
+    display: inline-block;
+    width: 195px;
+    margin-left: 6px;
+    margin-top: 0;
+    vertical-align: middle;
+  }
+
+  .section.glacier .image-text .image-text-content-col h3 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .section.glacier .image-text .image-text-content-col p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .section.glacier .image-text .image-text-content-col p:last-child {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .section.glacier .image-text .image-text-content-col h3 img {
+    width: 55px;
+  }
+}
+
+/* Access page: brushstroke resources CTA section */
+.section.brushstroke-glacier-white {
+  position: relative;
+  padding: 80px 24px;
+  text-align: center;
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(-50vw + 50%);
+}
+
+.section.brushstroke-glacier-white::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgb(245, 245, 245), rgb(255, 255, 255));
+  z-index: -2;
+}
+
+.section.brushstroke-glacier-white::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--section-back.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.section.brushstroke-glacier-white .default-content-wrapper img {
+  width: 70px;
+  height: auto;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+.section.brushstroke-glacier-white h2 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 40px;
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 16px;
+}
+
+.section.brushstroke-glacier-white a {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgb(144, 18, 74);
+  color: #fff;
+  padding: 16px 54px 16px 32px;
+  border-radius: 100px;
+  font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  position: relative;
+}
+
+.section.brushstroke-glacier-white a::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-right-white.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Access page: formulary section (scoped via preceding glacier section) */
+.section.glacier.image-text-container + .section.formulary-lookup-container {
+  background-color: rgb(245, 245, 245);
+  padding: 24px 20px 48px;
+  margin: 0;
+  max-width: none;
+  width: 100%;
+  text-align: center;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup-wrapper {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup {
+  background-color: rgb(255, 255, 255);
+  padding: 24px;
+  margin: 24px auto;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 2px 1px 8px 0px;
+  text-align: center;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-heading {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-heading h3 {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 30px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-heading h3::before {
+  content: '';
+  display: block;
+  width: 50px;
+  min-width: 50px;
+  height: 75px;
+  margin: 0 12px 0 0;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-location.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup {
+  --formulary-form-max-width: 390px;
+  --formulary-input-max-width: 388px;
+  --formulary-text-align: center;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-zip-form {
+  max-width: 390px;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-zip-form .formulary-lookup-submit {
+  align-self: center;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-input-group,
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter {
+  margin: 0 0 16px;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-anchor {
+  width: 100%;
+  height: 50px;
+  border: 1px solid rgb(135, 137, 138);
+  border-radius: 10px;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  background: transparent;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-clear {
+  display: none;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-anchor::before {
+  display: none;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-anchor[aria-expanded="true"]::after {
+  transform: rotate(180deg);
+}
+
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter {
+  position: relative;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgb(135, 137, 138);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 8px 12px;
+  z-index: 10;
+  text-align: left;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-panel label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  cursor: pointer;
+  border-bottom: none;
+  background: transparent;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-panel input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 1px solid rgb(194, 194, 194);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-panel input[type="checkbox"]:checked {
+  background-color: rgb(144, 18, 74);
+  border-color: rgb(144, 18, 74);
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-panel input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 7px;
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications-heading {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+  text-align: left;
+  margin: 16px 0 0;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications {
+  align-self: flex-start;
+  width: 100%;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications-group {
+  display: flex;
+  text-align: left;
+  margin-top: 0;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications-group label {
+  display: inline-block;
+  position: relative;
+  padding-left: 28px;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+  cursor: pointer;
+  line-height: 24px;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications-group input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications-group label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgb(194, 194, 194);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications-group label:has(input:checked)::before {
+  border-color: rgb(144, 18, 74);
+  background-color: rgb(144, 18, 74);
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-indications-group label:has(input:checked)::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-submit {
+  display: block;
+  padding: 15px 66px 15px 32px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background-color: rgb(144, 18, 74);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  margin: 20px 0;
+  min-width: 215px;
+  position: relative;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-submit::after {
+  width: 20px;
+  height: 20px;
+  right: 32px;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-recaptcha-notice,
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-recaptcha-notice p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  text-align: center;
+  margin: 10px auto;
+  line-height: 17px;
+  max-width: 390px;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-recaptcha-notice a {
+  font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 11px;
+  color: rgb(144, 18, 74);
+  text-decoration: underline;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-status:empty,
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-results:empty {
+  display: none;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-disclaimer {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-disclaimer p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  text-align: center;
+  margin: 2px 0 0;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-disclaimer strong {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-panel label {
+  position: relative;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-filter-panel label:has(input:checked)::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: -4px;
+  transform: translateY(-50%);
+  width: calc(100% + 8px);
+  height: 32px;
+  background-color: rgb(255, 209, 0);
+  border-radius: 5px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-zip-input {
+  width: 100%;
+  height: 44px;
+  padding: 12px;
+  border: 1px solid rgb(135, 137, 138);
+  border-radius: 10px;
+  font-size: 16px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-input-group {
+  position: relative;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-label {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  padding: 0 4px;
+  font-size: 12px;
+  color: rgb(70, 72, 74);
+  margin-bottom: -8px;
+  margin-left: 0;
+  display: inline-block;
+  text-align: left;
+}
+
+.section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 60px;
+  right: 0;
+  margin: 0 auto;
+  width: 580px;
+  max-width: calc(100% - 60px);
+  height: 12px;
+  background-color: transparent;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke-yellow-underline-formulary.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 899px) {
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-heading h3 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-heading h3::before {
+    width: 26px;
+    min-width: 26px;
+    height: 40px;
+    margin: 0 8px 0 0;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container {
+    padding: 0 28px 48px;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup {
+    --formulary-form-max-width: 100%;
+    --formulary-input-max-width: 100%;
+    padding: 16px;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup-wrapper {
+    padding: 0;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-heading {
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-label {
+    margin-bottom: 0;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-disclaimer {
+    padding: 0;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-disclaimer p {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 0;
+  }
+
+  .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-zip-form .formulary-lookup-submit {
+    min-width: auto;
+    width: auto;
+    align-self: center;
+    margin: 12px auto;
+  }
+
+
+  .section.brushstroke-glacier-white {
+    padding: 60px 20px;
+  }
+
+  .section.brushstroke-glacier-white h2 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+}
+
+/* Access page: footnotes legal section (scoped to pages with access-hero) */
+body:has(.access-hero-section) .section.text-container-container .text-container.legal .text-container-text p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgb(37, 40, 42);
+  padding-left: 20px;
+  text-indent: -20px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 899px) {
+  .section.brushstroke-glacier-white + .section.text-container-container .text-container.legal p {
+    font-size: 14px !important;
+    line-height: 1.5;
+  }
+}
+
+/* === /dermatology/dosing-lab-monitoring page styles === */
+
+/* Dosing hero — banner-style, not full-page */
+.section.dosing-hero {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.section.dosing-hero .hero.no-padding {
+  min-height: 340px;
+  overflow: visible;
+}
+
+.section.dosing-hero .hero.no-padding > div:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: visible;
+}
+
+.section.dosing-hero .hero.no-padding > div:first-child img {
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.section.dosing-hero .hero-image-caption {
+  position: absolute;
+  bottom: 5px;
+  right: 16%;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  color: rgb(70, 72, 74);
+  text-align: left;
+  z-index: 3;
+  max-width: 300px;
+}
+
+
+.section.dosing-hero .hero-text-container .cmp-container-x-large h1::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 22px;
+  margin-top: -4px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--page-hero-tall.svg');
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Dosing hero — section-nav overlaps into hero area */
+.section.dosing-hero {
+  display: block;
+  padding: 0;
+  background-color: transparent;
+}
+
+.section.dosing-hero .hero-wrapper {
+  margin-bottom: 0;
+  position: relative;
+  z-index: 0;
+}
+
+
+.section.dosing-hero .hero.no-padding .hero-text-container {
+  padding: 0;
+  padding-top: 20px;
+}
+
+/* Dosing hero — section-nav positioned under hero text */
+.section.dosing-hero {
+  row-gap: 0;
+}
+
+.section.dosing-hero .section-nav-wrapper {
+  position: relative;
+  top: -125px;
+  padding: 0 20px;
+  background: transparent;
+}
+
+.section.dosing-hero .section-nav-wrapper .section-nav {
+  background: transparent;
+}
+
+.section.dosing-hero .section-nav-wrapper .section-nav.is-stuck {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 100;
+  padding: 0 20px;
+}
+
+.section.dosing-hero .section-nav nav::before {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+}
+
+/* Dosing indication — grey bg with left border */
+.section.dosing-indication {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section.dosing-indication .default-content-wrapper {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(201, 201, 202);
+  border-radius: 10px;
+  padding: 24px 96px 24px 24px;
+}
+
+.section.dosing-indication p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  line-height: 24px;
+  margin: 12px 0 0;
+}
+
+.section.dosing-indication p:first-child {
+  margin-top: 0;
+}
+
+.section.dosing-indication p strong {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 400;
+}
+
+/* Dosing header — h2 with brushstroke */
+.section.dosing-header {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 48px 20px 0;
+}
+
+.section.dosing-header h2 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 40px;
+  margin: 0 0 16px;
+  padding: 12px 32px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  margin-left: -32px;
+}
+
+.section.dosing-header h3 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+  line-height: 25px;
+  margin: 0;
+}
+
+/* Dosing details — subsection headings underlined */
+.section.dosing-details {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+.section.dosing-details p strong u {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+  text-decoration: underline;
+}
+
+.section.dosing-details ul {
+  padding-left: 20px;
+  margin: 12px 0 24px;
+}
+
+.section.dosing-details ul li {
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
+  margin-bottom: 8px;
+}
+
+.section.dosing-details > .default-content-wrapper > p:last-child {
+  font-size: 12px;
+  color: rgb(70, 72, 74);
+  line-height: 18px;
+  margin-top: 24px;
+}
+
+/* Dosing ISI callout */
+.section.dosing-isi-callout {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  border-top: 1px solid rgb(201, 201, 202);
+}
+
+.section.dosing-isi-callout p {
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 21px;
+}
+
+.section.dosing-isi-callout a {
+  color: rgb(144, 18, 74);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Dosing lab monitoring */
+.section.dosing-lab-monitoring {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.section.dosing-lab-monitoring h2 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 40px;
+  margin: 0 0 16px;
+  padding: 12px 32px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-left: -32px;
+}
+
+.section.dosing-lab-monitoring h3 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+  line-height: 30px;
+  margin: 32px 0 12px;
+}
+
+.section.dosing-lab-monitoring table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 24px;
+}
+
+.section.dosing-lab-monitoring table th,
+.section.dosing-lab-monitoring table td {
+  padding: 10px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  border-bottom: 1px solid rgb(201, 201, 202);
+}
+
+.section.dosing-lab-monitoring table th {
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+}
+
+.section.dosing-lab-monitoring table td {
+  color: rgb(70, 72, 74);
+}
+
+/* Dosing lab data table */
+.section.dosing-lab-data {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 48px 20px;
+  border-top: 1px solid rgb(201, 201, 202);
+}
+
+.section.dosing-lab-data h3 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 30px;
+  margin: 0 0 8px;
+}
+
+.section.dosing-lab-data table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 24px;
+}
+
+.section.dosing-lab-data table th,
+.section.dosing-lab-data table td {
+  padding: 10px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  border-bottom: 1px solid rgb(201, 201, 202);
+}
+
+.section.dosing-lab-data table th[scope="col"] {
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  background-color: rgb(245, 245, 245);
+}
+
+.section.dosing-lab-data table th[scope="row"] {
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+}
+
+.section.dosing-lab-data table td {
+  color: rgb(70, 72, 74);
+}
+
+/* Dosing CTA section */
+.section.dosing-cta {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  text-align: center;
+  border-top: 1px solid rgb(201, 201, 202);
+}
+
+.section.dosing-cta h2 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 40px;
+  margin: 0 0 24px;
+}
+
+.section.dosing-cta a {
+  display: inline-flex;
+  align-items: center;
+  background-color: rgb(144, 18, 74);
+  color: #fff;
+  padding: 16px 54px 16px 32px;
+  border-radius: 100px;
+  font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  position: relative;
+}
+
+.section.dosing-cta a::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-document.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Mobile overrides for dosing page */
+@media (max-width: 899px) {
+
+  .section.dosing-indication .default-content-wrapper {
+    padding: 16px 20px;
+  }
+
+  .section.dosing-header {
+    padding: 32px 20px 0;
+  }
+
+  .section.dosing-header h2 {
+    font-size: 24px;
+    line-height: 30px;
+    padding: 10px 20px;
+    margin-left: -20px;
+  }
+
+  .section.dosing-header h3 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .section.dosing-details p strong u {
+    font-size: 20px;
+  }
+
+  .section.dosing-lab-monitoring h2 {
+    font-size: 24px;
+    line-height: 30px;
+    padding: 10px 20px;
+    margin-left: -20px;
+  }
+
+  .section.dosing-lab-monitoring table,
+  .section.dosing-lab-data table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .section.dosing-cta h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
