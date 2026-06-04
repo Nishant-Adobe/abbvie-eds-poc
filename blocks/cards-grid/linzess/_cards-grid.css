@@ -554,6 +554,38 @@ body main .section.cards-grid-container.carousel-video-playlist-container > .def
   text-decoration: underline;
 }
 
+/* "See All Patient Videos" CTA — secondary button (white bg, purple text) */
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a.button,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a.button {
+  background-color: var(--linz-white);
+  color: var(--linz-dark-purple);
+  border-radius: var(--linz-rounded-corner);
+  padding: 16px 59px 16px 32px;
+  font-weight: 800;
+  font-size: 14.4px;
+  font-family: var(--body-font-family);
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+}
+
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a.button::after,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a.button::after {
+  content: '\203A';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 21px;
+}
+
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a.button:hover,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a.button:hover {
+  background-color: var(--linz-light-purple);
+  color: var(--linz-dark-purple);
+}
+
 /* Stats cards: stacked by default, row on desktop */
 .cards-grid.cards-grid-homepage-stats .savings-card-cards,
 .carousel-video-playlist-container .cards-grid .savings-card-cards,
