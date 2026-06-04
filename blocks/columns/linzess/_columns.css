@@ -22,21 +22,16 @@
 .linzess .hero-container + .columns-container .columns {
   background-color: var(--linz-light-purple);
   max-width: 802px;
-  height: auto;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
   flex: 0 0 40%;
-  max-width: 322px;
-}
-
-.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-  margin-top: -30px;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content) {
   padding: 24px 32px 24px 40px;
-  align-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .linzess .hero-container + .columns-container .columns .columns-item-content p strong {
@@ -53,25 +48,13 @@
   display: none;
 }
 
-@media (width >= 1100px) {
-  .linzess .hero-container + .columns-container .columns {
-    height: 173px;
-  }
-}
-
 @media (width < 600px) {
   .linzess .hero-container + .columns-container .columns {
-    height: auto;
     max-width: 100%;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-    max-width: 100%;
     flex: 1 1 100%;
-  }
-
-  .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-    margin-top: 0;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content) {
