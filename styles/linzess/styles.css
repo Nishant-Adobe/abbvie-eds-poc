@@ -198,13 +198,25 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
   text-decoration: underline;
 }
 
-/* Desktop — arc grows larger */
+/* Desktop — arc grows larger + font-size 16px */
 @media (min-width: 900px) {
   .section.transcript::before,
   main > .section:first-of-type:not(.hero-container)::before {
     top: -60px;
     width: 130%;
     height: 75px;
+  }
+
+  .section.transcript .default-content-wrapper p,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+    font-size: 16px;
+    margin: 16px 0;
+  }
+
+  .section.transcript .default-content-wrapper h2,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+    font-size: 16px;
+    margin: 16px 0;
   }
 }
 

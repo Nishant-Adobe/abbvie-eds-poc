@@ -4,13 +4,10 @@
 }
 
 .rich-text.align-left { text-align: left; }
-
 .rich-text.align-center { text-align: center; }
-
 .rich-text.align-right { text-align: right; }
 
 .rich-text.theme-light { color: var(--text-color); }
-
 .rich-text.theme-dark { color: var(--light-color); }
 
 .rich-text.small {
@@ -235,13 +232,13 @@
   margin-bottom: var(--spacing-08);
 }
 
+
 /* Linzess transcript page — scoped via .rich-text.transcript variant
    Shared across all 7 transcript pages. Won't affect other rich-text blocks. */
 
 /* ============ Transcript Content Section ============ */
 
 /* Arc/curve — white ellipse overlapping purple body */
-
 .section.transcript::before {
   content: "";
   position: absolute;
@@ -257,7 +254,6 @@
 }
 
 /* H2: PART 1, PART 2 headers — purple, Lato 16px */
-
 .rich-text.transcript h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: var(--font-size-legal-large, 1.6rem);
@@ -276,7 +272,6 @@
 }
 
 /* H1: NAN Transcript */
-
 .rich-text.transcript h1 {
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
   font-size: var(--heading-font-size-s, 3.2rem);
@@ -290,7 +285,6 @@
 }
 
 /* Divider above H1 */
-
 .rich-text.transcript h1::before {
   content: '';
   display: block;
@@ -303,7 +297,6 @@
 }
 
 /* Paragraphs: Lato 16px, dark grey */
-
 .rich-text.transcript p {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: var(--font-size-body, 1.4rem);
@@ -316,7 +309,6 @@
 }
 
 /* Bold speaker names: Lato 14px bold, dark grey */
-
 .rich-text.transcript p strong,
 .rich-text.transcript p b {
   font-family: var(--body-font-family, 'Lato', sans-serif);
@@ -328,14 +320,12 @@
 /* stylelint-disable no-descending-specificity */
 
 /* Emphasis/italic: dark grey */
-
 .rich-text.transcript em {
   font-style: italic;
   color: var(--text-color, #4d4d4f);
 }
 
 /* Links in transcript: dark grey, underline */
-
 .rich-text.transcript a {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: var(--font-size-body, 1.4rem);
@@ -344,7 +334,6 @@
 }
 
 /* Superscript ® */
-
 .rich-text.transcript sup {
   font-size: 1.33rem;
   font-weight: 400;
@@ -352,7 +341,6 @@
 }
 
 /* Lists */
-
 .rich-text.transcript ul {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: var(--font-size-body, 1.4rem);
@@ -374,7 +362,6 @@
 /* ============ Inline ISI Section (after H3) ============ */
 
 /* H3: USES, IMPORTANT RISK INFORMATION */
-
 .rich-text.transcript h3 {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal-large, 1.6rem);
@@ -388,7 +375,6 @@
 }
 
 /* ISI paragraphs after H3 */
-
 .rich-text.transcript h3 ~ p {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
@@ -400,7 +386,6 @@
 }
 
 /* ISI bold text after H3 */
-
 .rich-text.transcript h3 ~ p strong,
 .rich-text.transcript h3 ~ p b {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
@@ -411,7 +396,6 @@
 }
 
 /* ISI subtitle paragraphs ("Before you take LINZESS...", "Side Effects") — same as ISI body */
-
 .rich-text.transcript h3 ~ p:has(> strong:only-child) {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
@@ -426,7 +410,6 @@
 }
 
 /* ISI list */
-
 .rich-text.transcript h3 ~ ul {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal-large, 1.6rem);
@@ -437,7 +420,6 @@
 }
 
 /* ISI list items */
-
 .rich-text.transcript h3 ~ ul li {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
@@ -449,7 +431,6 @@
 }
 
 /* ISI list item bold */
-
 .rich-text.transcript h3 ~ ul li strong {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
@@ -458,7 +439,6 @@
 }
 
 /* ISI superscript ® */
-
 .rich-text.transcript h3 ~ p sup,
 .rich-text.transcript h3 ~ ul sup {
   font-size: 1rem;
@@ -468,7 +448,6 @@
 }
 
 /* ISI links */
-
 .rich-text.transcript h3 ~ p a {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
@@ -476,11 +455,9 @@
   color: var(--color-text-heading, #422e83);
   text-decoration: underline;
 }
-
 /* stylelint-enable no-descending-specificity */
 
 /* ============ ISI Section — rich-text.isi variant ============ */
-
 /* stylelint-disable no-descending-specificity */
 
 .section.isi h3,
@@ -511,7 +488,7 @@
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
   font-weight: 400;
-  color: var(--color-text-muted, #555);
+  color: var(--color-text-heading, #422e83);
 }
 
 .section.isi p:has(> strong:only-child) {
@@ -543,7 +520,7 @@
 .section.isi li strong {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-weight: 400;
-  color: var(--color-text-muted, #555);
+  color: var(--color-text-heading, #422e83);
 }
 
 .section.isi p a {
@@ -560,7 +537,6 @@
 }
 
 /* Mobile adjustments */
-
 @media (width <= 744px) {
   .rich-text.transcript {
     padding: 0 var(--spacing-16, 1.6rem);
@@ -571,5 +547,4 @@
     font-size: var(--font-size-legal, 1.4rem);
   }
 }
-
 /* stylelint-enable no-descending-specificity */
