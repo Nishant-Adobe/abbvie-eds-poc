@@ -1,1 +1,30 @@
 @import '../columns.css';
+
+/* Venclexta — Columns in teal-bg section (nav cards) */
+.section.teal-bg .columns > div {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.section.teal-bg .columns > div > div {
+  flex: 1;
+  text-align: center;
+}
+
+/* Venclexta — Columns stat section (VENCLEXTA is the #1) */
+.columns > div {
+  align-items: center;
+}
+
+.columns > div > div img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (width < 744px) {
+  .section.teal-bg .columns > div {
+    flex-direction: column;
+  }
+}
