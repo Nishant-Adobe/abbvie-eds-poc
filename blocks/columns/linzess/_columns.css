@@ -117,12 +117,17 @@ body.linzess main .hero-container + .columns-container .columns > .columns-item:
 
 /* ═══════════════════════════════════════════════════════════════════
    SAVINGS $30 CARD: "YOU COULD PAY AS LITTLE AS $30"
-   Last columns before footer — off-white, 998px
+   Last columns before footer — off-white, 998px, image LEFT text RIGHT
    ═══════════════════════════════════════════════════════════════════ */
 .linzess .columns-container:not(.hero-container + .columns-container) .columns {
   background-color: var(--linz-off-white);
   max-width: 998px;
   align-items: stretch;
+}
+
+/* Image must be on the LEFT (order -1) */
+.linzess .columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) {
+  order: -1;
 }
 
 .linzess .columns-container:not(.hero-container + .columns-container) .columns .columns-item-image img {
