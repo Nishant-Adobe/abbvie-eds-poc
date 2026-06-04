@@ -2410,3 +2410,23 @@ color: inherit;
 .hero.full :where(a).button:hover {
   background: var(--color-background-light);
 }
+/* Mobile/Tablet: hero padding and CTA stacking */
+@media (width < 1024px) {
+  .hero.full>.hero-content-stack {
+    padding: 20px;
+  }
+
+  .hero.full .button-container {
+    display: block;
+    margin: 0 0 var(--spacing-08);
+  }
+
+  .hero.full :where(a).button {
+    display: block;
+    width: 100%;
+  }
+
+  .hero.full .cmp-container-x-large {
+    max-width: 100%;
+  }
+}
