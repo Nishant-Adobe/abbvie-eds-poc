@@ -788,16 +788,17 @@
   overflow: hidden;
 }
 
-/* Savings Promo Card (first columns after hero): light purple bg, compact */
+/* Savings Promo Card (first columns after hero) */
 
 .linzess .hero-container + .columns-container .columns {
   background-color: var(--linz-light-purple);
   max-width: 1100px;
-  padding: 32px 48px;
-  gap: 32px;
+  padding: 0;
+  gap: 0;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  overflow: hidden;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item {
@@ -805,36 +806,38 @@
   grid-column: auto;
 }
 
-/* Hide empty columns-items (only if no image either) */
-
 .linzess .hero-container + .columns-container .columns > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
-/* Image column */
+/* Image column — no background, image fills space */
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  flex: 0 0 45%;
+  flex: 0 0 50%;
+  padding: 32px;
 }
 
-.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image,
-.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  background: transparent !important;
-  background-color: transparent !important;
+.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image),
+.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) > * {
+  background: none;
   border: none;
   box-shadow: none;
+  border-radius: 0;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
   width: 100%;
+  max-width: 400px;
   height: auto;
   display: block;
+  margin: 0 auto;
 }
 
-/* Text column: vertically centered */
+/* Text column */
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
+  padding: 32px 48px 32px 0;
   display: flex;
   align-items: center;
 }
@@ -862,11 +865,13 @@
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
+    padding: 16px;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
     text-align: center;
     flex: 1 1 100%;
+    padding: 16px;
   }
 }
 
