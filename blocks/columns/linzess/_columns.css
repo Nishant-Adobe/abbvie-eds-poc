@@ -329,21 +329,48 @@
   display: none;
 }
 
-/* Image on LEFT */
-.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) {
+/* When image + text are in SAME columns-item */
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+  display: flex;
+  flex-wrap: nowrap;
+  flex: 1 1 100%;
+  align-items: stretch;
+}
+
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) .columns-item-image {
   flex: 0 0 50%;
   order: -1;
 }
 
-.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) img {
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) .columns-item-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-/* Text on RIGHT */
-.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-content:not(:empty)) {
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) .columns-item-content {
+  flex: 1;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* When image + text are in SEPARATE columns-items */
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) {
+  flex: 0 0 50%;
+  order: -1;
+}
+
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)) {
   flex: 1;
   padding: 40px 48px;
   display: flex;
