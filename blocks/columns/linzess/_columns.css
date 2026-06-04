@@ -34,8 +34,8 @@
   grid-column: auto;
 }
 
-/* Hide empty columns-items */
-.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:empty) {
+/* Hide empty columns-items (only if no image either) */
+.linzess .hero-container + .columns-container .columns > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
