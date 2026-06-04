@@ -135,14 +135,28 @@ with `classes_customDynamicClass: foo` is dropped or routed wrong.
 **Authoring contract:**
 
 ```
-SECTION METADATA — must use style / style_*:
-  | style | content-wide |
-  | style_customDynamicClass | content-wide,medium-radius |
-  | style_container | grid-container |
+SECTION METADATA — primary form (dynamic-picklist):
+  | style_customDynamicClass | content-wide,medium-radius |   ← PRIMARY (comma-separated, NO SPACES)
+
+SECTION METADATA — non-default section types (REQUIRED 5 rows):
+  | blockModelId             | grid-section                |
+  | style_container          | grid-section                |
+  | name                     | Grid Section                |
+  | style_customDynamicClass | grid-section,grid-cols-8    |
+  | language                 | none                        |
+
+SECTION METADATA — secondary form (multiselect):
+  | style | highlight |       ← Only when authoring with predefined picklist
 
 BLOCK FIELDS — use classes_*:
   classes_textAlign, classes_iconType, classes_customClass, classes_*
 ```
+
+**Field component types in our section model:**
+- `style` — `multiselect` (fixed options array)
+- `style_customDynamicClass` — `dynamic-picklist` (source from picklist-config node)
+- Other `style_*` — `select` (with options)
+- `style_customClass` — `text` (free-form single class)
 
 ### Rule 2: Fields ending with suffix → collapsed into base field
 
@@ -831,25 +845,15 @@ mechanism. Each page would have its own copy — regulatory single-source-of-tru
   or routed to the wrong destination.
 - **Symptom:** Page renders without the intended section custom class.
   CSS selectors targeting `.section.<custom-class>` fail to match.
-  Debugging is non-obvious because the markdown looks correct but the
-  rendered DOM is missing the class.
-- **Fix at authoring layer:** Use `style` (single class) or `style_*`
-  (multiple keys) for Section Metadata rows. Section Metadata table
-  must look like:
-
-  ```
-  | style | content-wide |
-  ```
-  OR
-  ```
-  | style_customDynamicClass | content-wide,medium-radius |
-  | style_container          | grid-container             |
-  ```
-- **Fix at model layer:** Rename section-level model fields in
-  `models/_section.json` from `classes_*` to `style_*`. Required across
-  `section`, `grid-section`, `hero-section`, `grid-container` and any
-  other section model. Recompile `component-models.json` via
-  `npm run scaffold:build` after rename.
+- **Fix at authoring layer:**
+  - PRIMARY form: `style_customDynamicClass: a,b,c` (comma-separated, NO SPACES)
+  - For non-default section types (grid-section, grid-container): ALL 5
+    rows required (`blockModelId`, `style_container`, `name`,
+    `style_customDynamicClass`, `language`)
+  - Secondary form: `style: x` (multiselect, only when picklist option exists)
+- **Fix at model layer:** Section model fields use `style_*` prefix
+  (renamed from `classes_*` in commit 9e409c43). The `style` field is
+  `multiselect`; `style_customDynamicClass` is `dynamic-picklist`.
 - **Distinction recap:** `classes_*` is correct for BLOCK fields
   (inside a block table); `style_*` is correct for SECTION fields
   (inside the Section Metadata table). Don't conflate.

@@ -61,71 +61,109 @@ Sections and blocks have DIFFERENT property-name conventions for md2jcr:
 
 | Layer | Property name prefix | Example |
 |---|---|---|
-| **Section** (Section Metadata block) | `style` / `style_*` | `style_customDynamicClass`, `style_container` |
+| **Section** (Section Metadata block) | `style` (multiselect) / `style_*` (dynamic-picklist, etc.) | `style_customDynamicClass`, `style_container` |
 | **Block** (in a block's model fields) | `classes_*` | `classes_textAlign`, `classes_customClass`, `classes_iconType` |
 
 Using `classes_*` for SECTION fields → md2jcr does NOT apply the class to
 the `<section>` wrapper. This is the root cause of pages where custom
 section classes "didn't take effect" silently.
 
-### Workflow — single style class
+### Primary recommended form: `style_customDynamicClass`
 
-For one section style class:
-
-```
-+----------------------------------+
-| Section Metadata                 |
-+--------+-------------------------+
-| style  | {page-slug}-{purpose}   |
-+--------+-------------------------+
-```
-
-In `.plain.html` div-table form:
-
-```html
-<div class="section-metadata">
-  <div><div>style</div><div>access-hero-section</div></div>
-</div>
-```
-
-This emits a class on the `<div class="section">` wrapper at render time
-(e.g. `<div class="section access-hero-section">`).
-
-### Workflow — multiple style classes (comma-separated)
-
-For multiple classes via `style_customDynamicClass`:
+**Use `style_customDynamicClass` (dynamic-picklist) as the PRIMARY form**
+for section class authoring. This is the canonical reviewer-approved
+pattern matching the reference JCR convention.
 
 ```
-+----------------------------------------------------------------+
++---------------------------+------------------------------------+
 | Section Metadata                                               |
 +---------------------------+------------------------------------+
 | style_customDynamicClass  | content-wide,medium-radius         |
 +---------------------------+------------------------------------+
 ```
 
-### Workflow — custom section with multiple style fields
+In `.plain.html` div-table form:
 
-For custom sections with multiple style-* fields (e.g. grid containers):
+```html
+<div class="section-metadata">
+  <div><div>style_customDynamicClass</div><div>content-wide,medium-radius</div></div>
+</div>
+```
+
+**Hard rules for the value:**
+- **Comma-separated, NO SPACES.** `content-wide,medium-radius` ✓.
+  `content-wide, medium-radius` (with spaces) is wrong — md2jcr stores
+  the literal string, so spaces become part of class names.
+- Works for any number of classes (1, 2, 3+) — single class also works
+  via this form.
+
+### Secondary form: `style` (multiselect)
+
+The section model also has a `style` field (multiselect with predefined
+options). Use this when authoring with a fixed picklist via UE:
 
 ```
-+--------------------------------------------------------------------------+
++----------------------------------+
+| Section Metadata                 |
++--------+-------------------------+
+| style  | highlight               |
++--------+-------------------------+
+```
+
+⚠️ The reviewer convention is to prefer `style_customDynamicClass` over
+`style` because the dynamic-picklist accepts project-specific class
+names that won't be in the fixed multiselect options.
+
+### REQUIRED: `blockModelId` for non-default section types
+
+For ANY non-default section model (`grid-section`, `grid-container`,
+or any custom section type beyond the basic `section` model), the
+Section Metadata MUST include ALL 5 of these rows:
+
+```
++---------------------------+----------------------------------------------+
 | Section Metadata                                                         |
 +---------------------------+----------------------------------------------+
-| blockModelId              | grid-container                               |
+| blockModelId              | grid-section                                 |
 +---------------------------+----------------------------------------------+
-| style_container           | grid-container                               |
+| style_container           | grid-section                                 |
 +---------------------------+----------------------------------------------+
-| name                      | Grid Container                               |
+| name                      | Grid Section                                 |
 +---------------------------+----------------------------------------------+
-| style_customDynamicClass  | grid-container,content-regular,light-grey    |
+| style_customDynamicClass  | grid-section,grid-cols-8                     |
 +---------------------------+----------------------------------------------+
 | language                  | none                                         |
 +---------------------------+----------------------------------------------+
 ```
 
-Each `style_*` value gets appended to the `<section>` class attribute.
-Plain string values become single class names; comma-separated values
-in `style_customDynamicClass` become multiple classes.
+Without `blockModelId`, md2jcr uses the default `section` model — even
+if you're authoring a grid-section, the JCR output will lack the
+grid-specific fields. Confirmed by smoke test against md2jcr CLI:
+omitting `blockModelId` produces `model="section"` instead of
+`model="grid-section"`.
+
+All 5 rows required:
+- **`blockModelId`** — names the section model (e.g. `grid-section`,
+  `grid-container`)
+- **`style_container`** — typically same as `blockModelId`; carries
+  forward as a section class
+- **`name`** — display name (e.g. `Grid Section`)
+- **`style_customDynamicClass`** — comma-separated section classes
+  (NO SPACES)
+- **`language`** — locale, often `none` for cross-locale sections
+
+### For the default `section` model
+
+If you're using the plain `section` model (not grid-* or any custom),
+`blockModelId` is optional. The minimal form is just:
+
+```
++---------------------------+------------------------------------+
+| Section Metadata                                               |
++---------------------------+------------------------------------+
+| style_customDynamicClass  | hero-section,content-wide          |
++---------------------------+------------------------------------+
+```
 
 ### Then write CSS
 

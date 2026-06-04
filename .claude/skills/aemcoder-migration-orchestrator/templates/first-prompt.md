@@ -89,19 +89,11 @@ approved. Today's scope is page {{N}}: {{TARGET_URL}}.
 
 ### C. Section-metadata FIRST, then CSS (AEMCODER-019, AEMCODER-023 — critical)
 
-For every non-standard section, author section-metadata `style` (single
-class) or `style_*` (multiple) BEFORE writing any CSS. **Section uses
-`style_*`, blocks use `classes_*` — DO NOT confuse these (AEMCODER-023).**
+For every non-standard section, author section-metadata BEFORE writing
+any CSS. **Section uses `style_*`, blocks use `classes_*` — DO NOT
+confuse these (AEMCODER-023).**
 
-Single-class form:
-
-```
-<div class="section-metadata">
-  <div><div>style</div><div>{page-slug}-{section-purpose}</div></div>
-</div>
-```
-
-Multi-class form (comma-separated values under `style_customDynamicClass`):
+#### PRIMARY form — `style_customDynamicClass` (dynamic-picklist)
 
 ```
 <div class="section-metadata">
@@ -109,15 +101,42 @@ Multi-class form (comma-separated values under `style_customDynamicClass`):
 </div>
 ```
 
-Custom section with multiple style-* fields:
+**Value rules:**
+- Comma-separated, **NO SPACES** — `a,b,c` not `a, b, c`
+- Works for single or multiple classes
+- Per reviewer convention: this is the PRIMARY form for section
+  styling. Use this by default, not the `style` multiselect.
+
+#### REQUIRED form for non-default sections (grid-section, grid-container)
+
+All 5 rows required for ANY non-default section model:
 
 ```
 <div class="section-metadata">
-  <div><div>blockModelId</div><div>grid-container</div></div>
-  <div><div>style_container</div><div>grid-container</div></div>
-  <div><div>style_customDynamicClass</div><div>grid-container,content-regular,light-grey</div></div>
+  <div><div>blockModelId</div><div>grid-section</div></div>
+  <div><div>style_container</div><div>grid-section</div></div>
+  <div><div>name</div><div>Grid Section</div></div>
+  <div><div>style_customDynamicClass</div><div>grid-section,grid-cols-8</div></div>
+  <div><div>language</div><div>none</div></div>
 </div>
 ```
+
+Without `blockModelId`, md2jcr defaults to the plain `section` model
+and grid-specific fields won't be emitted. Confirmed via smoke test.
+
+#### Secondary form — `style` (multiselect, predefined options only)
+
+Only use when authoring with a fixed picklist:
+
+```
+<div class="section-metadata">
+  <div><div>style</div><div>highlight</div></div>
+</div>
+```
+
+Less flexible than `style_customDynamicClass` — multiselect requires
+the option to be in the model's predefined list. Prefer the
+dynamic-picklist form.
 
 This emits `<div class="section {style-class-values}">`. Then write CSS
 scoped to `.section.{style-class} .{block-class}` in
@@ -125,7 +144,8 @@ scoped to `.section.{style-class} .{block-class}` in
 
 **FORBIDDEN section-metadata property names:**
 - `classes` / `classes_*` for SECTION metadata — md2jcr silently ignores
-  these for section. Use `style` / `style_*` instead.
+  these for section. Use `style_customDynamicClass` (primary) or `style`
+  (multiselect) instead.
 
 **FORBIDDEN selectors:**
 - `:has()` on block classes
