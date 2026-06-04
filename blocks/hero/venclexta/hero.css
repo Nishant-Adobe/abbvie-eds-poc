@@ -2109,6 +2109,9 @@ color: inherit;
   height: 100%;
   object-fit: cover;
 }
+.hero.full::after {
+  background: var(--hero-overlay-gradient-full);
+}
 .hero.full> :where(div):has(> div:empty) {
   display: none;
 }
@@ -2299,13 +2302,17 @@ color: inherit;
    VENCLEXTA — Custom hero overrides
    These rules take cascade priority over all base rules above.
    ============================================================ */
-/* Full hero: constrain content stack, content-driven height */
+/* Full hero: constrain content stack to 1180px max width, vertically center */
 .hero.full>.hero-content-stack {
   max-width: var(--cdp-max-width);
   width: 100%;
-  padding: 20px 0;
+  padding: 20px 20px 30px;
   margin: 0 auto;
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 349px;
 }
 /* No-padding hero: remove fixed min-height */
 .hero.no-padding:not(.full, .profile, .landing, .video, .compact, .split, .solid, .centered) {
