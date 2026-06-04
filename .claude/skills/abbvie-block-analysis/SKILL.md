@@ -313,7 +313,7 @@ Always verify against the actual `_{block-name}.json`. Approximate counts:
 | columns | 1 | 1 (classes) | **0** | children = arbitrary blocks |
 | cta | 16 | 2 (classes + classes_common*) | **~12** | — |
 | rich-text | varies | classes_* | **~1** (just content) | — |
-| text-container | varies | tabs + classes_* | **~3** (id + lang + content) | — |
+| text-container | 15 | 2 tabs + classes_* | **4** parent (classes, blockId, lang, analytics) | child items (text or image) |
 | brand-explorer | 13 | 2 (tabs + classes_*) | **~9** parent | **8** cells per nav item |
 | formulary-lookup | varies | tabs + classes_* | **~6** | — |
 | carousel-video-playlist | varies | tabs + classes_* | **~5** parent | per video item |
@@ -475,8 +475,17 @@ referenced from page metadata (`nav: /...`, `footer: /...`).
 
 Five top-20 blocks call `applyCommonProps(block)` from `scripts/utils.js`:
 `accordion`, `cta`, `text-container`, `brand-explorer`, `fact-card`.
-These end with the 4-row common-properties tail (classes, blockId,
-language, analytics).
+
+Common properties (from `models/_common-properties.json`) add these fields:
+- `blockId` (text, format: `id:value`)
+- `classes_commonCustomClass` (text → joins the `classes` FieldGroup)
+- `language` (select, format: `lang:value`)
+
+For blocks with `analytics_id`, it creates an additional FieldGroup entry.
+
+**In plain.html:** These fields contribute to parent row count. The
+`classes_commonCustomClass` merges into the existing `classes` group (no
+extra row), while `blockId`, `language`, and `analytics_id` each get a row.
 
 ## `renderBlock` (multi-theme loader) blocks
 
@@ -701,9 +710,49 @@ Critical for ISI / Boxed Warning / regulated copy. Uses `applyCommonProps`.
 - **Brand overrides:** abbvie, botox, rinvoq (3 — others inherit base)
 - **Variants:** `boxed-warning`, `indication`, `references`, `legal`, etc.
 
+### Model Structure (parent + child)
+
+**Parent model** (text-container): 15 fields, 2 tabs → FieldGroup = 4 groups:
+- Group 1: `classes` (classes_customDynamicClass, classes_textWidth, classes_textTopSpacing, classes_textBottomSpacing, classes_textAlignment, classes_textDirection, classes_theme, classes_textVariant, classes_columns, classes_commonCustomClass)
+- Group 2: `blockId`
+- Group 3: `language`
+- Group 4: `analytics` (analytics_id)
+
+**Filter:** `["text-container-text", "text-container-image"]`
+- `text-container-text` is FIRST = default fallback (1 field: `text` richtext)
+- `text-container-image` (2 fields: `image` reference, `imageAlt` text)
+
+### Row Mapping (plain.html)
+
+```
+Row 0: classes group → variant name(s) or '-'
+Row 1: blockId → '-' (placeholder)
+Row 2: language → 'none'
+Row 3: analytics_id → '-' (placeholder)
+Row 4: item → <div>richtext content</div> (text-container-text)
+```
+
+**Example:**
+```html
+<div class="text-container legal">
+    <div><div>legal</div></div>
+    <div><div>-</div></div>
+    <div><div>none</div></div>
+    <div><div>-</div></div>
+    <div><div><div><p>Content here.</p></div></div></div>
+</div>
+```
+
+**Critical rules:**
+- 4 parent rows REQUIRED before item row
+- Use `-` or `none` as placeholders (empty rows collapse in html2md)
+- Item row content wrapped in extra `<div>` (signals child component)
+- No component ID prefix needed (text-container-text is first in filter)
+- Variant name in both CSS class attr AND classes row value
+
 ### Variant: Boxed Warning
 
-`classes` includes `boxed-warning` → class `text-container-boxed-warning` →
+`classes` includes `boxed-warning` → class `text-container boxed-warning` →
 brand CSS applies regulatory visual treatment (border, background, weight).
 Live source may use `rinvoq-isi-black-bg` or `*-isi-black-bg`; map to our
 `boxed-warning` variant.
