@@ -452,6 +452,15 @@ function processLocalMetadata() {
 async function loadEager(doc) {
   processLocalMetadata();
   document.documentElement.lang = 'en';
+  const brand = getMetadata('brand')?.trim();
+  if (brand) {
+    const hasTokens = [...document.querySelectorAll('link[rel="stylesheet"]')]
+      .some((l) => l.href.includes(`/styles/${brand}/`));
+    if (!hasTokens) {
+      loadCSS(`${window.hlx.codeBasePath}/styles/${brand}/tokens.css`);
+      loadCSS(`${window.hlx.codeBasePath}/styles/${brand}/styles.css`);
+    }
+  }
   loadCSS(`${window.hlx.codeBasePath}/styles/section.css`);
 
   const brand = getMetadata('brand')?.trim();
