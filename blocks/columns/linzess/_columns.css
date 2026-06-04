@@ -21,10 +21,10 @@
 /* Savings Promo Card (first columns after hero): light purple bg, compact */
 .linzess .hero-container + .columns-container .columns {
   background-color: var(--linz-light-purple);
-  max-width: 802px;
+  max-width: 900px;
   padding: 0;
-  height: 173px;
-  align-items: stretch;
+  align-items: center;
+  gap: 0;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item {
@@ -32,26 +32,24 @@
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  flex: 0 0 40%;
-  max-width: 322px;
+  flex: 0 0 45%;
+  background: transparent;
 }
 
-.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-top: -30px;
+.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image {
+  background: transparent;
+  padding: 24px;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content) {
-  padding: 0 32px 0 40px;
+  padding: 24px 40px;
   display: flex;
   align-items: center;
 }
 
 .linzess .hero-container + .columns-container .columns .columns-item-content p strong {
   font-family: var(--body-font-family);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--linz-dark-purple);
   text-transform: none;
@@ -66,17 +64,11 @@
 @media (width < 768px) {
   .linzess .hero-container + .columns-container .columns {
     max-width: 100%;
-    height: auto;
     flex-direction: column;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-    max-width: 100%;
     flex: 1 1 100%;
-  }
-
-  .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-    margin-top: 0;
   }
 
   .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content) {
