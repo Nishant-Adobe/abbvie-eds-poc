@@ -9,14 +9,13 @@
 .linzess .columns-container .columns {
   display: flex;
   flex-wrap: wrap;
-  background-color: var(--linz-light-purple);
+  background-color: var(--linz-off-white);
   border-radius: var(--linz-rounded-corner);
-  padding: 48px 32px;
+  padding: 0;
   max-width: 1220px;
   margin: 0 auto;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
+  overflow: hidden;
 }
 
 .linzess .columns-container .columns > .columns-item {
@@ -28,13 +27,13 @@
 }
 
 .linzess .columns-container .columns > .columns-item:has(.columns-item-image) {
-  flex: 0 1 auto;
-  max-width: 50%;
+  flex: 0 0 45%;
 }
 
 .linzess .columns-container .columns > .columns-item:has(.columns-item-content) {
   flex: 1 1 auto;
   text-align: left;
+  padding: 32px;
 }
 
 /* When a single columns-item has both image + text, lay them out side by side */
@@ -42,19 +41,19 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 32px;
   flex: 1 1 100%;
   max-width: 100%;
 }
 
 .linzess .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image {
-  flex: 1 1 40%;
+  flex: 0 0 45%;
   min-width: 200px;
 }
 
 .linzess .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-content {
   flex: 1 1 50%;
   min-width: 200px;
+  padding: 32px;
 }
 
 .linzess .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-content:empty {
@@ -62,8 +61,10 @@
 }
 
 .linzess .columns-container .columns .columns-item-image img {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 @media (width >= 768px) {
@@ -148,7 +149,6 @@
 @media (width >= 768px) {
   .linzess .columns-container .columns {
     flex-wrap: nowrap;
-    padding: 40px 48px;
   }
 }
 
