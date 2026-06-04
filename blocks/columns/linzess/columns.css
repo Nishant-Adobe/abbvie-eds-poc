@@ -817,8 +817,12 @@
   flex: 0 0 45%;
 }
 
-.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image {
-  background: transparent;
+.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image,
+.linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none;
+  box-shadow: none;
 }
 
 .linzess .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
