@@ -773,65 +773,67 @@
 /* stylelint-disable no-descending-specificity */
 
 /* ═══════════════════════════════════════════════════════════════════
-   LINZESS COLUMNS — Shared base for all columns blocks
-   Both cards: rounded, no padding, overflow hidden, flex row
+   PROMO CARD: "Are You Eligible to Save on LINZESS?"
+   Variant: columns-homepage-promo
+   Live site: light purple, 802px, 173px, image left, text right
    ═══════════════════════════════════════════════════════════════════ */
 
-.linzess .columns-container .columns {
+.columns.columns-homepage-promo {
   display: flex;
   flex-wrap: nowrap;
+  background-color: var(--linz-light-purple);
   border-radius: var(--linz-rounded-corner);
-  padding: 0;
+  max-width: 802px;
   margin: 0 auto;
+  padding: 0;
   overflow: hidden;
+  align-items: stretch;
   gap: 0;
 }
 
-/* Hide empty columns-items */
-
-.linzess .columns-container .columns > .columns-item {
-  grid-column: unset;
+.columns.columns-homepage-promo > .columns-item {
   padding: 0;
+  grid-column: auto;
 }
 
-.linzess .columns-container .columns > .columns-item:not(:has(img, strong, a)) {
+.columns.columns-homepage-promo > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
-/* Image column base */
-
-.linzess .columns-container .columns > .columns-item:has(.columns-item-image) {
-  flex: 0 0 45%;
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-image) {
+  flex: 0 0 40%;
 }
 
-.linzess .columns-container .columns .columns-item-image img {
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-image) .columns-item-image {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: auto;
   display: block;
+  margin-top: -30px;
 }
 
-/* Text column base */
-
-.linzess .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
+  padding: 0 32px 0 40px;
   display: flex;
   align-items: center;
-  padding: 24px 32px;
 }
 
-/* Heading */
-
-.linzess .columns-container .columns .columns-item-content p strong {
+.columns.columns-homepage-promo .columns-item-content p strong {
   font-family: var(--body-font-family);
   font-size: 24px;
   font-weight: 700;
   color: var(--linz-dark-purple);
-  line-height: 1.3;
 }
 
-/* Button */
-
-.linzess .columns-container .columns .button-container a.button {
+.columns.columns-homepage-promo .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -844,7 +846,7 @@
   position: relative;
 }
 
-.linzess .columns-container .columns .button-container a.button::after {
+.columns.columns-homepage-promo .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -853,74 +855,120 @@
   font-size: 21px;
 }
 
-.linzess .columns-container .columns .button-container a.button:hover {
-  background-color: var(--linz-off-white);
-  color: var(--linz-dark-purple);
-}
+@media (width < 768px) {
+  .columns.columns-homepage-promo {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════
-   PROMO CARD: "Are You Eligible to Save on LINZESS?"
-   First columns after hero — light purple, 802px, 173px tall
-   ═══════════════════════════════════════════════════════════════════ */
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+  }
 
-body.linzess main .hero-container + .columns-container .columns {
-  background-color: var(--linz-light-purple);
-  max-width: 802px;
-  align-items: stretch;
-}
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img {
+    margin-top: 0;
+  }
 
-body.linzess main .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  flex: 0 0 40%;
-}
-
-/* Remove any background on image column and ALL descendants */
-
-body.linzess main .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image),
-body.linzess main .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) .columns-item-image {
-  background: transparent;
-  background-color: transparent;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-}
-
-body.linzess main .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-  margin-top: -30px;
-}
-
-body.linzess main .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
-  padding: 0 32px 0 40px;
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1 1 100%;
+    padding: 16px;
+    text-align: center;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
    SAVINGS $30 CARD: "YOU COULD PAY AS LITTLE AS $30"
-   Last columns before footer — off-white, 998px, image LEFT text RIGHT
+   Variant: columns-homepage-savings
+   Live site: off-white, 998px, image LEFT text RIGHT
    ═══════════════════════════════════════════════════════════════════ */
 
-.linzess .columns-container:not(.hero-container + .columns-container) .columns {
+.columns.columns-homepage-savings {
+  display: flex;
+  flex-wrap: nowrap;
   background-color: var(--linz-off-white);
+  border-radius: var(--linz-rounded-corner);
   max-width: 998px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
   align-items: stretch;
+  gap: 0;
 }
 
-/* Image must be on the LEFT (order -1) */
+.columns.columns-homepage-savings > .columns-item {
+  padding: 0;
+  grid-column: auto;
+}
 
-.linzess .columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) {
+.columns.columns-homepage-savings > .columns-item:not(:has(img, strong, a)) {
+  display: none;
+}
+
+/* Image on LEFT */
+
+.columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+  flex: 0 0 45%;
   order: -1;
 }
 
-.linzess .columns-container:not(.hero-container + .columns-container) .columns .columns-item-image img {
+.columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-/* Section heading above savings $30 card */
+/* Text on RIGHT */
 
-.linzess .columns-container > .default-content-wrapper {
+.columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
+  flex: 1;
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+}
+
+.columns.columns-homepage-savings .columns-item-content p strong {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--linz-dark-purple);
+  line-height: 1.3;
+}
+
+.columns.columns-homepage-savings .button-container a.button {
+  background-color: var(--linz-dark-purple);
+  color: var(--linz-white);
+  border-radius: var(--linz-rounded-corner);
+  padding: 16px 59px 16px 24px;
+  font-weight: 800;
+  font-size: 14.4px;
+  font-family: var(--body-font-family);
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+}
+
+.columns.columns-homepage-savings .button-container a.button::after {
+  content: '\203A';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 21px;
+}
+
+.columns.columns-homepage-savings .button-container a.button:hover {
+  background-color: var(--linz-off-white);
+  color: var(--linz-dark-purple);
+}
+
+/* Section heading "YOU COULD PAY AS LITTLE AS $30" */
+
+.columns-homepage-savings-container > .default-content-wrapper {
   text-align: center;
 }
 
-.linzess .columns-container > .default-content-wrapper p strong {
+.columns-homepage-savings-container > .default-content-wrapper p strong {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1-hero);
   font-weight: 400;
@@ -930,9 +978,9 @@ body.linzess main .hero-container + .columns-container .columns > .columns-item:
   display: block;
 }
 
-/* Orange divider arc above heading */
+/* Orange divider arc */
 
-.linzess .columns-container > .default-content-wrapper p:first-child strong::before {
+.columns-homepage-savings-container > .default-content-wrapper p:first-child strong::before {
   content: '';
   display: block;
   width: 64px;
@@ -944,38 +992,28 @@ body.linzess main .hero-container + .columns-container .columns > .columns-item:
 
 /* Disclaimer text */
 
-.linzess .columns-container > .default-content-wrapper:last-child {
+.columns-homepage-savings-container > .default-content-wrapper:last-child {
   font-size: var(--font-size-body-small);
   color: var(--linz-grey);
   margin-top: 24px;
   text-align: left;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   MOBILE
-   ═══════════════════════════════════════════════════════════════════ */
-
 @media (width < 768px) {
-  .linzess .columns-container .columns {
+  .columns.columns-homepage-savings {
     flex-wrap: wrap;
-  }
-
-  .linzess .columns-container .columns > .columns-item:has(.columns-item-image) {
-    flex: 1 1 100%;
-  }
-
-  .linzess .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
-    flex: 1 1 100%;
-    padding: 16px;
-    text-align: center;
-  }
-
-  body.linzess main .hero-container + .columns-container .columns {
     max-width: 100%;
   }
 
-  body.linzess main .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-    margin-top: 0;
+  .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1 1 100%;
+    padding: 16px;
+    text-align: center;
   }
 }
 
