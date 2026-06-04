@@ -47,6 +47,20 @@
   border-radius: 0;
 }
 
+/* Image visually on LEFT (order -1) */
+.columns.columns-homepage-promo > .columns-item .columns-item-image,
+.hero-container + .columns-container .columns > .columns-item .columns-item-image {
+  order: -1;
+}
+
+/* Make the columns-item a flex row when it has both image + content */
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
+.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
 .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
   width: 100%;
