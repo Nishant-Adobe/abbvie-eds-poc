@@ -257,16 +257,150 @@ models.forEach(model => {
 
 **Row count in `.plain.html` = number of FieldGroup entries after `_groupFields()`.**
 
-Steps to compute:
-1. Take the model's `fields` array.
-2. Filter OUT `tab` fields.
-3. Filter OUT the literal `classes` field (multiselect).
-4. Group remaining fields per Rule 1 (underscore prefix) and Rule 2
-   (suffix collapsing).
-5. Count the resulting groups. That's your row count.
+### Explicit formulas
 
-For item-row cell counts: same algorithm applied to the item model
-(`models[1].fields` typically).
+```
+PARENT row count = (total model fields)
+                 − (tab fields)
+                 − (literal `classes` multiselect field, if present)
+                 − (classes_* prefixed fields → all collapse to 1 group via Rule 1)
+                 − (suffix-collapsed fields: *Alt, *MimeType, *Type, *Text, *Title
+                    when matching base field exists)
+                 + (1 if classes_* family present → adds the single "classes" group)
+                 + (1 if analytics_* family present → adds the single "analytics" group)
+
+ITEM cell count = (item model fields)
+                − (tab fields in item model)
+                − (classes_* prefixed fields in item model)
+                − (suffix-collapsed fields in item model)
+```
+
+### Worked example — Hero block (14 model fields → 8 rows)
+
+| # | Field | Component | Row? | Reason |
+|---|---|---|---|---|
+| 1 | `classes` | multiselect | NO | → block element class attribute (Rule 3) |
+| 2 | `image` | reference | **Row 1** | base field |
+| 3 | `imageAlt` | text | NO | collapses into `image` (Rule 2 suffix) |
+| 4 | `mobileImage` | reference | **Row 2** | base field |
+| 5 | `mobileImageAlt` | text | NO | collapses into `mobileImage` (Rule 2) |
+| 6 | `eyebrow` | text | **Row 3** | |
+| 7 | `indication` | richtext | **Row 4** | |
+| 8 | `text` | richtext | **Row 5** | |
+| 9 | `layers` | richtext | **Row 6** | |
+| 10 | `video` | reference | **Row 7** | |
+| 11 | `imageCaption` | text | **Row 8** | |
+| 12 | `classes_textAlign` | select | NO | → class attr (Rule 1) |
+| 13 | `classes_textColor` | select | NO | → class attr (Rule 1) |
+| 14 | `classes_customClass` | text | NO | → class attr (Rule 1) |
+
+**Total: 14 fields → 8 rows** (4 suffix-collapsed/multiselect/classes_* excluded).
+
+### Quick-reference cheat sheet (top blocks)
+
+Always verify against the actual `_{block-name}.json`. Approximate counts:
+
+| Block | Model fields | Excluded (tabs/classes/suffix) | **Parent rows** | Item cells |
+|---|---|---|---|---|
+| hero | 14 | 6 (1 classes + 3 classes_* + 2 Alt) | **8** | — (no items) |
+| cards-grid | 1 | 1 (classes) | **0** parent | **6** (link, image, line1-4) |
+| accordion | 20+ | tabs + classes_* | **~17** | ~8 cells per item |
+| safety-bar | varies | tabs + classes_* | **~5** | — |
+| header | (fragment-loaded) | n/a | n/a | n/a |
+| footer | (fragment-loaded) | n/a | n/a | n/a |
+| tabs | varies | tabs + classes_* | **~5** | per tab item |
+| modal | varies | tabs + classes_* | **~8** | — |
+| columns | 1 | 1 (classes) | **0** | children = arbitrary blocks |
+| cta | 16 | 2 (classes + classes_common*) | **~12** | — |
+| rich-text | varies | classes_* | **~1** (just content) | — |
+| text-container | varies | tabs + classes_* | **~3** (id + lang + content) | — |
+| brand-explorer | 13 | 2 (tabs + classes_*) | **~9** parent | **8** cells per nav item |
+| formulary-lookup | varies | tabs + classes_* | **~6** | — |
+| carousel-video-playlist | varies | tabs + classes_* | **~5** parent | per video item |
+| fact-card | varies | tabs + classes_* | **~5** | — |
+| info-tree | varies | classes_* | **~3** parent | per node |
+| image-compare | ~8 | 2 (classes_*) | **~6** (collapsed alts) | — |
+| story-cards | varies | tabs + classes_* | **~3** parent | per patient story |
+| brightcove-video | varies | classes_* | **~10** | — |
+
+The ~ values are approximate — for production-quality migration, run the
+FieldGroup algorithm on the actual model file. The cheat-sheet exists for
+rapid block-fit sanity-checks ("does this section need 5 rows or 10?")
+
+## Empty fields STILL need their `.plain.html` row
+
+Critical rule: every FieldGroup needs its row in the block table, EVEN
+if the value is empty. Skipping an empty row shifts ALL subsequent
+field mappings → silent content misrouting.
+
+**Wrong (10 fields, only 8 rows authored):**
+```html
+<div class="hero">
+  <div><div><picture><img src="hero.jpg" alt="Hero"></picture></div></div>
+  <!-- skipped mobileImage row → CONTENT WILL MISMAP -->
+  <div><div>Eyebrow text</div></div>
+  ...
+</div>
+```
+
+**Right (10 fields, 10 rows including empty ones):**
+```html
+<div class="hero">
+  <div><div><picture><img src="hero.jpg" alt="Hero"></picture></div></div>
+  <div><div></div></div>                                  <!-- empty mobileImage -->
+  <div><div>Eyebrow text</div></div>
+  ...
+</div>
+```
+
+Empty rows preserve order alignment. Md2jcr maps row N to FieldGroup N
+sequentially — gaps break the contract.
+
+Same rule for item rows: every item cell present, empty if no value.
+
+## Page Metadata block (page-level, distinct from Section Metadata)
+
+Page Metadata is authored as the LAST section in the document. It sets
+page-level JCR properties (vs Section Metadata which sets section-level
+class attributes).
+
+### Format
+
+```html
+<div class="metadata">
+  <div><div>brand</div><div>rinvoq-hcp</div></div>
+  <div><div>nav</div><div>/rinvoq-hcp/header-dermatology</div></div>
+  <div><div>footer</div><div>/rinvoq-hcp/footer</div></div>
+  <div><div>title</div><div>Dermatology — Dosing & Lab Monitoring</div></div>
+  <div><div>description</div><div>Verbatim from live <head> meta description</div></div>
+  <div><div>og:image</div><div>/content/dam/.../hero-image.jpg</div></div>
+  <div><div>job-code</div><div>US-RNQ-XXXXXX</div></div>
+</div>
+```
+
+### Key-to-JCR mappings (from helix-md2jcr conversion rules)
+
+| Markdown key | JCR property | Notes |
+|---|---|---|
+| `title` | `jcr:title` | Required for SEO |
+| `description` | `jcr:description` | Required for SEO |
+| `canonical` | `cq:canonicalUrl` | If different from default |
+| `robots` | `cq:robotsTags` | `noindex,nofollow` etc. |
+| `brand` | (custom — read by scripts.js) | Drives brand CSS cascade |
+| `nav` | (custom — read by header block) | Per-condition header fragment path |
+| `footer` | (custom — read by footer block) | Usually shared |
+| `og:image`, `og:title`, etc. | OpenGraph meta tags | Social-share previews |
+| Any other key | Same-named JCR property | Custom metadata |
+
+### Rules
+
+- Page Metadata block goes at the END of the document (after content sections).
+- Use `class="metadata"` on the wrapping div (NOT `section-metadata`).
+- Image values → child `<image>` node with `fileReference` in JCR.
+- Link values → href extracted, stored as string.
+- `multiselect` / `aem-tag` fields → array format: `"[tag1,tag2]"`.
+- Page Metadata is page-level; Section Metadata is section-level.
+  Don't confuse the two.
 
 ## Common-properties tail (4 rows on EVERY block using _common-properties)
 
