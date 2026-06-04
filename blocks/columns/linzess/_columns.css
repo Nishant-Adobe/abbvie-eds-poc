@@ -39,7 +39,21 @@
   align-content: center;
 }
 
-@media (width >= 900px) {
+.linzess .hero-container + .columns-container .columns .columns-item-content p strong {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--linz-dark-purple);
+  text-transform: none;
+  letter-spacing: normal;
+  display: inline;
+}
+
+.linzess .hero-container + .columns-container .columns .columns-item-content p strong::before {
+  display: none;
+}
+
+@media (width >= 1100px) {
   .linzess .hero-container + .columns-container .columns {
     height: 173px;
   }
