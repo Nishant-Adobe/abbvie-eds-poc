@@ -1,0 +1,84 @@
+@import '../columns.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* ============================================================
+   LINZESS — Columns brand override
+   Tout pattern: rounded image + vertically-centered content
+   Scoped to find-relief page sections via parent class
+   ============================================================ */
+
+.columns,
+.columns > .columns-item,
+.columns > .columns-item > div {
+  grid-column: auto;
+}
+
+.columns > .columns-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  align-items: center;
+  background-color: var(--color-background-light, #f4f6fb);
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+}
+
+@media (width >= 768px) {
+  .columns > .columns-item {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.columns > .columns-item > .columns-item-image {
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+}
+
+.columns > .columns-item > .columns-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.columns > .columns-item > .columns-item-image em {
+  display: block;
+  position: relative;
+  margin-top: -3rem;
+  padding: 0.8rem 1.6rem;
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-on-dark);
+  text-align: right;
+  font-style: normal;
+}
+
+.columns > .columns-item > .columns-item-content {
+  padding: 2.4rem;
+}
+
+.columns > .columns-item > .columns-item-content h2 {
+  font-size: var(--font-size-h2-hero);
+  color: var(--color-text-heading);
+  margin-bottom: 1.2rem;
+}
+
+.columns > .columns-item > .columns-item-content p {
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  color: var(--text-color);
+  margin-bottom: 1.6rem;
+}
+
+/* Dark-purple section columns */
+.section.find-relief-dark-purple .columns > .columns-item {
+  background: transparent;
+  border-radius: 0;
+}
+
+.section.find-relief-dark-purple .columns > .columns-item > .columns-item-content h2 {
+  color: var(--color-text-on-dark);
+}
+
+.section.find-relief-dark-purple .columns > .columns-item > .columns-item-content p {
+  color: var(--color-text-on-dark);
+}

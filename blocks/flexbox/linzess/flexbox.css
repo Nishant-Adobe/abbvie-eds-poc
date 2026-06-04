@@ -1,90 +1,59 @@
-/* Flexbox Layout Block — mobile-first */
+@import '../flexbox.css';
+@import '../../../styles/linzess/tokens.css';
 
-.flexbox {
+/* ============================================================
+   LINZESS — Flexbox brand override
+   Column variant: icon-left items for tab panel dosing instructions
+   ============================================================ */
+
+.flexbox.column {
+  flex-direction: column;
+  gap: 0;
+}
+
+.flexbox.column .flexbox-item {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1.6rem;
+  align-items: start;
+  padding: 2.4rem 0;
+  border-bottom: 1px solid var(--color-border-default, #c2c2c2);
+}
+
+.flexbox.column .flexbox-item:last-child {
+  border-bottom: none;
+}
+
+.flexbox.column .flexbox-item .flexbox-item-image {
+  width: 6rem;
+  height: 6rem;
   display: flex;
-  flex-flow: column wrap;
-  gap: var(--flexbox-gap, var(--spacing-16, 16px));
-}
-
-/* Flex items — base (mobile: full width stack) */
-
-.flexbox .flexbox-item {
-  flex: 1 1 100%;
-  min-width: 0;
-}
-
-.flexbox .flexbox-item-image picture,
-.flexbox .flexbox-item-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.flexbox .flexbox-item-content {
-  padding: var(--flexbox-item-padding, 0);
-}
-
-/* Desktop: enable flex row */
-
-@media (width >= 744px) {
-  .flexbox:not(.column, .column-reverse) {
-    flex-direction: row;
-  }
-
-  .flexbox.row-reverse {
-    flex-direction: row-reverse;
-  }
-
-  .flexbox .flexbox-item {
-    flex: 1;
-  }
-
-  /* Per-item width classes */
-  .flexbox .flexbox-item[data-width="full"] { flex: 0 0 100%; }
-  .flexbox .flexbox-item[data-width="half"] { flex: 0 0 calc(50% - var(--flexbox-gap, var(--spacing-16, 16px)) / 2); }
-  .flexbox .flexbox-item[data-width="third"] { flex: 0 0 calc(33.333% - var(--flexbox-gap, var(--spacing-16, 16px)) * 2 / 3); }
-  .flexbox .flexbox-item[data-width="quarter"] { flex: 0 0 calc(25% - var(--flexbox-gap, var(--spacing-16, 16px)) * 3 / 4); }
-}
-
-/* Direction variants */
-
-.flexbox.column { flex-direction: column; }
-
-.flexbox.column-reverse { flex-direction: column-reverse; }
-
-/* Justify-content variants */
-
-.flexbox.center {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
-.flexbox.space-between { justify-content: space-between; }
+.flexbox.column .flexbox-item .flexbox-item-image img {
+  width: 4.8rem;
+  height: 4.8rem;
+  object-fit: contain;
+}
 
-.flexbox.space-around { justify-content: space-around; }
+.flexbox.column .flexbox-item .flexbox-item-content p:first-child {
+  font-family: var(--heading-font-family);
+  font-size: 1.8rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  margin-bottom: 0.8rem;
+}
 
-.flexbox.space-evenly { justify-content: space-evenly; }
+.flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  color: var(--text-color);
+  margin-bottom: 0.4rem;
+}
 
-/* Align-items variants */
-
-.flexbox.align-stretch { align-items: stretch; }
-
-.flexbox.align-top { align-items: flex-start; }
-
-.flexbox.align-bottom { align-items: flex-end; }
-
-.flexbox.align-center { align-items: center; }
-
-.flexbox.align-baseline { align-items: baseline; }
-
-/* Align-content variants (multi-row) */
-
-.flexbox.content-space-between { align-content: space-between; }
-
-/* Wrap variant */
-
-.flexbox.no-wrap { flex-wrap: nowrap; }
-
-/* No-wrap: don't stack on mobile */
-
-.flexbox.no-wrap .flexbox-item { flex: 1; }
+.flexbox.column .flexbox-item .flexbox-item-content em {
+  font-size: var(--font-size-body-small);
+  color: var(--text-color);
+}
