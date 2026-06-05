@@ -31,13 +31,56 @@
 .tabs-panel {
   border: 1px solid #ccc;
   border-top: none;
-  padding: 30px;
+  padding: 30px 30px 30px 30px;
   background: #fff;
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.tabs-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.tabs-panel:first-of-type::after,
+.tabs-panel[id*="1"]::after {
+  background-image: url('https://www.venclexta.com/content/dam/venclexta/images/callouts/couple-reading-ipad_desktop.jpg');
+}
+
+.tabs-panel:nth-of-type(2)::after,
+.tabs-panel[id*="2"]::after {
+  background-image: url('https://www.venclexta.com/content/dam/venclexta/images/callouts/woman-and-girl-hug_desktop.jpg');
 }
 
 .tabs-panel .section {
-  max-width: none;
+  max-width: 50%;
   padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.tabs-panel .section .rich-text-wrapper,
+.tabs-panel .section .cta-wrapper {
+  max-width: 100%;
+}
+
+@media (width < 768px) {
+  .tabs-panel::after {
+    display: none;
+  }
+
+  .tabs-panel .section {
+    max-width: 100%;
+  }
 }
 
 /* Genentech logo in tab panels */
