@@ -2507,4 +2507,49 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   .section.dosing-cta::after {
     background-size: cover;
   }
+
+  .section.dosing-hero .hero.no-padding {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section.dosing-hero .hero.no-padding > div:first-child {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    order: -1;
+  }
+
+  .section.dosing-hero .hero.no-padding > div:first-child img {
+    display: none;
+  }
+
+  .section.dosing-hero .hero.no-padding > div:first-child::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 240px;
+    background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/hero-derm-dosing-monitor-mobile.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .section.dosing-hero .hero.no-padding .hero-text-container {
+    position: relative;
+    z-index: 1;
+    padding: 16px 20px 0;
+  }
+
+  .section.dosing-hero .section-nav-wrapper {
+    top: 0;
+  }
+
+  .section.dosing-hero .hero-image-caption {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    padding: 8px 20px;
+  }
 }
