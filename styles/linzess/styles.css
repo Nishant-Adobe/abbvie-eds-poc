@@ -129,17 +129,19 @@ main > .section.find-relief-dark-purple {
   padding: 6.4rem 2.4rem 8rem;
   text-align: center;
   position: relative;
+  margin-top: 4rem;
 }
 
 main > .section.find-relief-dark-purple::before {
   content: '';
   position: absolute;
-  top: -4rem;
+  top: 0;
   left: 0;
   right: 0;
   height: 4rem;
   background-color: var(--color-brand-primary);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transform: translateY(-100%);
 }
 
 main > .section.find-relief-dark-purple h2,
@@ -162,17 +164,20 @@ main > .section.find-relief-dark-purple a.button:hover {
 main > .section.find-relief-off-white {
   background-color: var(--color-background-light);
   position: relative;
+  margin-top: 4rem;
+  padding-bottom: 4rem;
 }
 
 main > .section.find-relief-off-white::before {
   content: '';
   position: absolute;
-  top: -4rem;
+  top: 0;
   left: 0;
   right: 0;
   height: 4rem;
   background-color: var(--color-background-light);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transform: translateY(-100%);
 }
 
 /* ── find-relief-checklist: Purple box with orange checkmarks (2-col grid) ── */
@@ -439,6 +444,74 @@ main > .section.find-relief-off-white::before {
 }
 
 /* Flexbox column variant: styled via blocks/flexbox/linzess/flexbox.css */
+
+/* ── HOW TO STORE section: centered text + savings card tout ── */
+.section.find-relief-off-white.columns-container > .default-content-wrapper {
+  text-align: center;
+  max-width: 998px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2 {
+  font-size: 32px;
+  font-family: var(--heading-font-family);
+  color: var(--color-brand-primary);
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > p {
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: var(--body-font-family);
+  text-transform: none;
+}
+
+.section.find-relief-off-white.columns-container > .columns-wrapper {
+  max-width: 998px;
+  margin: 2.4rem auto;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Savings card heading — NOT Bebas, use body font */
+.section.find-relief-off-white.columns-container .columns h2 {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: none;
+  color: var(--color-brand-primary);
+  letter-spacing: normal;
+}
+
+/* Savings card button — purple, not orange */
+.section.find-relief-off-white.columns-container .columns a.button:any-link {
+  background-color: var(--color-brand-primary);
+  color: #fff;
+  border-radius: var(--border-radius-button-primary);
+}
+
+/* Footnote disclaimer below savings card */
+.section.find-relief-off-white.columns-container > .columns-wrapper + .default-content-wrapper {
+  max-width: 998px;
+  margin: 1rem auto 0;
+}
+
+.section.find-relief-off-white.columns-container > .columns-wrapper + .default-content-wrapper > p {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-color);
+  text-align: left;
+  font-family: var(--body-font-family);
+  text-transform: none;
+  font-weight: 400;
+  letter-spacing: normal;
+}
 
 @media (width >= 900px) {
   main > .section:first-of-type {
