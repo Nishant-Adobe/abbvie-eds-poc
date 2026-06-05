@@ -314,7 +314,7 @@ Always verify against the actual `_{block-name}.json`. Approximate counts:
 | cta | 16 | 2 (classes + classes_common*) | **~12** | — |
 | rich-text | varies | classes_* | **~1** (just content) | — |
 | text-container | 15 | 2 tabs + classes_* | **4** parent (classes, blockId, lang, analytics) | child items (text or image) |
-| brand-explorer | 13 | 2 (tabs + classes_*) | **~9** parent | **8** cells per nav item |
+| brand-explorer | 13 | 2 (tabs) + classes_* group | **12** parent | **8** cells per brand item |
 | formulary-lookup | varies | tabs + classes_* | **~6** | — |
 | carousel-video-playlist | varies | tabs + classes_* | **~5** parent | per video item |
 | fact-card | varies | tabs + classes_* | **~5** | — |
@@ -402,16 +402,32 @@ class attributes).
 - Page Metadata is page-level; Section Metadata is section-level.
   Don't confuse the two.
 
-## Common-properties tail (4 rows on EVERY block using _common-properties)
+## Common-properties tail (3 rows on blocks using _common-properties)
 
-Blocks that use `applyCommonProps` end with 4 FieldGroups:
+Blocks that include `_common-properties.json` get 3 FieldGroups from it:
+
+```
+[N-2] blockId        (row format: id:VALUE)
+[N-1] classes        (classes_commonCustomClass → 1 group)
+[N  ] language       (row format: lang:VALUE)
+```
+
+If the block ALSO declares its own `classes_*` fields (e.g. `classes_customDynamicClass`
+in text-container), they merge into the same `classes` group — still 1 row.
+
+If the block declares `analytics_id` (currently only `text-container`), it
+adds a 4th group:
 
 ```
 [N-3] classes        (classes_customDynamicClass + classes_commonCustomClass → 1 group)
-[N-2] blockId        (row format: id:value)
-[N-1] language       (row format: lang:value)
+[N-2] blockId
+[N-1] language
 [N  ] analytics      (analytics_id → 1 group)
 ```
+
+**Don't assume 4 rows for all blocks** — verify with the FieldGroup script.
+`brand-explorer` has 3 common-prop rows (no analytics_id); `text-container`
+has 4 (has analytics_id).
 
 ## `aem-content` vs `reference` for image fields (AEMCODER-016)
 
@@ -768,24 +784,54 @@ Live source may use `rinvoq-isi-black-bg` or `*-isi-black-bg`; map to our
 
 ## 13. Brand Explorer (`brand-explorer`)
 
-HCP sites only. Uses `applyCommonProps`. Has hoist logic in JS.
+HCP sites only. Uses `applyCommonProps`. Has hoist logic in JS (hoists
+section before `<header>` so it renders above the nav).
 
 - **Brand overrides:** abbvie, botox, rinvoq-hcp, skyrizi-hcp (4)
 
-### Fields
+### Parent model fields → 12 rows
 
-`classes` (variant select), `anchorId`, `barLabel`, `projectNumber`,
-item rows for nav links.
+FieldGroup algorithm gives 12 parent rows (tabs excluded, classes_* grouped):
 
-### Item fields (per nav link)
+| Row | Field | Notes |
+|-----|-------|-------|
+| 1 | `anchorId` | deep-link anchor |
+| 2 | `barLabel` | e.g. "Immunology Therapies" |
+| 3 | `projectNumber` | regulatory number at bottom of panel |
+| 4 | `navLink1Label` | nav link 1 text (renamed from `navLink1Text`) |
+| 5 | `navLink1Url` | nav link 1 URL |
+| 6 | `navLink2Label` | nav link 2 text (renamed from `navLink2Text`) |
+| 7 | `navLink2Url` | nav link 2 URL |
+| 8 | `navLink3Label` | nav link 3 text (renamed from `navLink3Text`) |
+| 9 | `navLink3Url` | nav link 3 URL |
+| 10 | `blockId` | from common-properties, format: `id:VALUE` |
+| 11 | `classes` group | `classes_commonCustomClass` → empty group row |
+| 12 | `language` | from common-properties, format: `lang:VALUE` |
 
-`label`, `link`, `target` (per md2jcr publish rules: image fields here
-MUST use `component: reference`, not `aem-content`).
+### Item model fields (brand-explorer-item) → 8 cells per item
+
+| Cell | Field | Type | Notes |
+|------|-------|------|-------|
+| 1 | `logo` | reference | Brand logo image (`component: reference`, NOT `aem-content`) |
+| 2 | `logoAccessibleName` | text | Alt description — NOT collapsed with logo ("Name" ≠ suffix) |
+| 3 | `brandName` | text | Brand display name |
+| 4 | `therapeuticArea` | text | Filter category (Immunology, Dermatology, etc.) |
+| 5 | `description` | richtext | Brand short description |
+| 6 | `brandUrl` | text | Link to brand site |
+| 7 | `safetyContent` | richtext | Safety disclaimer (renamed from `safetyText`) |
+| 8 | `indications` | text | One per line: `Name\|URL\|severity` |
+
+**Why 8 cells (was 7):** `logoAlt` (old) collapsed with `logo` into 1 cell
+(via Alt suffix rule). `logoAccessibleName` (new) is NOT a suffix → stays
+as its own separate cell. `safetyText` (old) was an orphan suffix field and
+was DROPPED by md2jcr. `safetyContent` (new) is not a suffix → now reaches JCR.
 
 ### Authoring rules
 
-- `barLabel` verbatim from live
-- Bar background must match the header bar color
+- `barLabel` verbatim from live (e.g. "Immunology Therapies", not "Explore AbbVie")
+- Bar background must match the header/nav bar color
+- Logo field MUST use `component: reference`, not `aem-content` (AEMCODER-016)
+- Block JS hoists the section before `<header>` — author it as the FIRST section
 
 ## 14. Formulary Lookup (`formulary-lookup`)
 
