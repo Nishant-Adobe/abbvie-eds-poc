@@ -549,14 +549,11 @@
     padding: 32px 16px;
   }
 
-  /* Mobile: horizontal scroll carousel */
+  /* Mobile: stack vertically */
   .carousel-video-playlist.grid .cvp-grid {
     display: flex;
+    flex-direction: column;
     grid-template-columns: unset;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
     gap: 16px;
     padding-bottom: 8px;
   }
@@ -566,8 +563,8 @@
   }
 
   .carousel-video-playlist.grid .cvp-card {
-    flex: 0 0 82%;
-    scroll-snap-align: start;
+    flex: 1 1 auto;
+    width: 100%;
   }
 
   .carousel-video-playlist.featured {
