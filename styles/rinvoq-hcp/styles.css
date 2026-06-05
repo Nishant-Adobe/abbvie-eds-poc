@@ -2312,9 +2312,31 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 .section.dosing-cta {
   max-width: 1220px;
   margin: 0 auto;
-  padding: 32px 20px 64px;
+  padding: 48px 20px 64px;
   text-align: center;
-  border-top: 1px solid rgb(201, 201, 202);
+  position: relative;
+  background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(241, 248, 252));
+}
+
+.section.dosing-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1220px;
+  height: 100%;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--section-back.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section.dosing-cta > .default-content-wrapper {
+  position: relative;
+  z-index: 1;
 }
 
 .section.dosing-cta h2 {
@@ -2351,6 +2373,23 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-document.svg');
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.section.dosing-cta .button-container:last-child a,
+.section.dosing-cta .button-container:last-child a.button {
+  background: none;
+  color: rgb(70, 72, 74);
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 0;
+  border-radius: 0;
+  text-decoration: none;
+  position: static;
+}
+
+.section.dosing-cta .button-container:last-child a::after {
+  display: none;
 }
 
 /* Mobile overrides for dosing page */
