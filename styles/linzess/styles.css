@@ -126,25 +126,33 @@ main > .section.highlight p {
 main > .section.find-relief-dark-purple {
   background-color: #422e83;
   color: #fff;
-  padding: 80px 24px 140px;
+  padding: 80px 20px;
   text-align: center;
   position: relative;
+  overflow: hidden;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  margin-right: 0;
   margin-top: 0;
-  overflow: hidden;
+}
+
+main > .section.find-relief-dark-purple::before,
+main > .section.find-relief-dark-purple::after {
+  content: '';
+  position: absolute;
+  left: -5%;
+  width: 110%;
+  height: 120px;
+  background: #f4f6fb;
+  border-radius: 50%;
+  z-index: 0;
 }
 
 main > .section.find-relief-dark-purple::before {
-  content: '';
-  position: absolute;
-  top: -40px;
-  left: -5%;
-  width: 110%;
-  height: 80px;
-  background-color: #422e83;
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  top: -80px;
+}
+
+main > .section.find-relief-dark-purple::after {
+  bottom: -80px;
 }
 
 main > .section.find-relief-dark-purple h2,
@@ -161,28 +169,81 @@ main > .section.find-relief-dark-purple h2 {
   letter-spacing: normal;
 }
 
-main > .section.find-relief-dark-purple .columns {
+main > .section.find-relief-dark-purple .columns-wrapper {
   position: relative;
   z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+main > .section.find-relief-dark-purple .columns {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 40px;
 }
 
 main > .section.find-relief-dark-purple .columns > .columns-item:first-child {
-  border-right: 1px solid rgb(148, 142, 190);
+  display: none;
+}
+
+main > .section.find-relief-dark-purple .columns > .columns-item:last-child {
+  display: contents;
+}
+
+main > .section.find-relief-dark-purple .columns .columns-item-content {
+  text-align: center;
+}
+
+main > .section.find-relief-dark-purple .columns .columns-item-content:first-child::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+main > .section.find-relief-dark-purple .columns .columns-item-content {
+  position: relative;
 }
 
 main > .section.find-relief-dark-purple a.button:any-link {
-  background-color: #faa633;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f5a623;
   color: #422e83;
-  border-radius: 16px;
-  padding: 16px 59px 16px 24px;
+  border-radius: 30px;
+  padding: 14px 28px;
   font-size: 14.4px;
   font-weight: 700;
   border: none;
+  text-decoration: none;
 }
 
 main > .section.find-relief-dark-purple a.button:hover {
   background-color: #e89520;
   color: #422e83;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  main > .section.find-relief-dark-purple {
+    padding: 60px 16px;
+  }
+
+  main > .section.find-relief-dark-purple .columns {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  main > .section.find-relief-dark-purple .columns .columns-item-content:first-child::after {
+    display: none;
+  }
 }
 
 /* ── find-relief-off-white: How-to-Take + Storage sections ── */
