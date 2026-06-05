@@ -52,30 +52,129 @@ For any new page:
 ## Procedural rule P1: section-metadata FIRST, then CSS (AEMCODER-019)
 
 **For every Custom/Hybrid page section and every non-standard section in any
-archetype:** introduce a section-metadata `style` class BEFORE writing any
-CSS. This is a hard procedural rule that was missing — and its absence cost
-~10 selectors to be rewritten during the /access migration.
+archetype:** introduce a section-metadata `style` or `style_*` class BEFORE
+writing any CSS. This is a hard procedural rule.
 
-### Workflow
+### CRITICAL: section uses `style_*`, blocks use `classes_*` (AEMCODER-023)
 
-1. **Author the section-metadata block in the page content**:
-   ```
-   <div class="section-metadata">
-     <div><div>style</div><div>access-hero-section</div></div>
-   </div>
-   ```
-   This emits a class on the `<div class="section">` wrapper at render time
-   (e.g. `<div class="section access-hero-section">`).
-2. **Pick a unique style-class name** that includes the page slug:
-   `{page-slug}-{section-purpose}-section` — e.g. `access-hero-section`,
-   `dosing-lab-monitoring-table-section`, `real-patients-quote-section`.
-3. **THEN write CSS** in `styles/{brand}/_styles.css`, scoped to that class:
-   ```css
-   .section.access-hero-section .hero { ... }
-   .section.access-hero-section .cards-grid { ... }
-   ```
-4. Run `npm run scaffold:build:block --block-name X --brand-name {brand}`
-   (single block, single brand — never the unscoped `scaffold:build`).
+Sections and blocks have DIFFERENT property-name conventions for md2jcr:
+
+| Layer | Property name prefix | Example |
+|---|---|---|
+| **Section** (Section Metadata block) | `style` (multiselect) / `style_*` (dynamic-picklist, etc.) | `style_customDynamicClass`, `style_container` |
+| **Block** (in a block's model fields) | `classes_*` | `classes_textAlign`, `classes_customClass`, `classes_iconType` |
+
+Using `classes_*` for SECTION fields → md2jcr does NOT apply the class to
+the `<section>` wrapper. This is the root cause of pages where custom
+section classes "didn't take effect" silently.
+
+### Primary recommended form: `style_customDynamicClass`
+
+**Use `style_customDynamicClass` (dynamic-picklist) as the PRIMARY form**
+for section class authoring. This is the canonical reviewer-approved
+pattern matching the reference JCR convention.
+
+```
++---------------------------+------------------------------------+
+| Section Metadata                                               |
++---------------------------+------------------------------------+
+| style_customDynamicClass  | content-wide,medium-radius         |
++---------------------------+------------------------------------+
+```
+
+In `.plain.html` div-table form:
+
+```html
+<div class="section-metadata">
+  <div><div>style_customDynamicClass</div><div>content-wide,medium-radius</div></div>
+</div>
+```
+
+**Hard rules for the value:**
+- **Comma-separated, NO SPACES.** `content-wide,medium-radius` ✓.
+  `content-wide, medium-radius` (with spaces) is wrong — md2jcr stores
+  the literal string, so spaces become part of class names.
+- Works for any number of classes (1, 2, 3+) — single class also works
+  via this form.
+
+### Secondary form: `style` (multiselect)
+
+The section model also has a `style` field (multiselect with predefined
+options). Use this when authoring with a fixed picklist via UE:
+
+```
++----------------------------------+
+| Section Metadata                 |
++--------+-------------------------+
+| style  | highlight               |
++--------+-------------------------+
+```
+
+⚠️ The reviewer convention is to prefer `style_customDynamicClass` over
+`style` because the dynamic-picklist accepts project-specific class
+names that won't be in the fixed multiselect options.
+
+### REQUIRED: `blockModelId` for non-default section types
+
+For ANY non-default section model (`grid-section`, `grid-container`,
+or any custom section type beyond the basic `section` model), the
+Section Metadata MUST include ALL 5 of these rows:
+
+```
++---------------------------+----------------------------------------------+
+| Section Metadata                                                         |
++---------------------------+----------------------------------------------+
+| blockModelId              | grid-section                                 |
++---------------------------+----------------------------------------------+
+| style_container           | grid-section                                 |
++---------------------------+----------------------------------------------+
+| name                      | Grid Section                                 |
++---------------------------+----------------------------------------------+
+| style_customDynamicClass  | grid-section,grid-cols-8                     |
++---------------------------+----------------------------------------------+
+| language                  | none                                         |
++---------------------------+----------------------------------------------+
+```
+
+Without `blockModelId`, md2jcr uses the default `section` model — even
+if you're authoring a grid-section, the JCR output will lack the
+grid-specific fields. Confirmed by smoke test against md2jcr CLI:
+omitting `blockModelId` produces `model="section"` instead of
+`model="grid-section"`.
+
+All 5 rows required:
+- **`blockModelId`** — names the section model (e.g. `grid-section`,
+  `grid-container`)
+- **`style_container`** — typically same as `blockModelId`; carries
+  forward as a section class
+- **`name`** — display name (e.g. `Grid Section`)
+- **`style_customDynamicClass`** — comma-separated section classes
+  (NO SPACES)
+- **`language`** — locale, often `none` for cross-locale sections
+
+### For the default `section` model
+
+If you're using the plain `section` model (not grid-* or any custom),
+`blockModelId` is optional. The minimal form is just:
+
+```
++---------------------------+------------------------------------+
+| Section Metadata                                               |
++---------------------------+------------------------------------+
+| style_customDynamicClass  | hero-section,content-wide          |
++---------------------------+------------------------------------+
+```
+
+### Then write CSS
+
+```css
+.section.access-hero-section .hero { ... }
+.section.access-hero-section .cards-grid { ... }
+.section.grid-container.content-regular.light-grey { ... }
+```
+
+Run `npm run scaffold:build:block --block-name X --brand-name {brand}`
+(single block, single brand — never the unscoped `scaffold:build`).
 
 ### Forbidden selectors in `styles/{brand}/_styles.css`
 
@@ -98,18 +197,36 @@ CSS. This is a hard procedural rule that was missing — and its absence cost
 - `body.page-<slug> ...` — only when section-metadata isn't possible
   (rare; section-metadata should cover ~all cases).
 
-### Why this is mandatory now
-
-The /access migration started with `:has()` selectors and bare block
-selectors. ~20 hours in, the user asked "are you applying section
-metadata or targeting `.section-wrapper` classes directly?" — at that
-point ~10 selectors had to be rewritten. Section-metadata is the
-EDS-native pattern; the others are workarounds that compound regression
-risk on every shared block they touch.
-
 This rule is also enforced by the orchestrator's CSS Selector Scope Check
 (AEMCODER-018 prevention) — generic block selectors are refused at
 edit time.
+
+## AEMCODER-023: Section custom class must use `style_*` not `classes_*`
+
+**The failure:** Authored a section with `classes_customDynamicClass` in
+the Section Metadata block. md2jcr did NOT apply the class to the
+`<section>` wrapper. Page rendered without the intended section styling.
+
+**Root cause:** md2jcr treats Section Metadata as a special block that
+maps to section-level properties. The canonical property name prefix for
+section styling is `style_*` (not `classes_*`). Section Metadata rows
+with `classes_*` keys are silently ignored or routed to the wrong place.
+
+**Distinction:**
+- **BLOCK fields** (inside a `<div class="block">` table) — use `classes_*`.
+  These map to the BLOCK element's class attribute (e.g. `<div class="hero
+  classes_textAlign-center">`).
+- **SECTION fields** (inside the `<div class="section-metadata">` table)
+  — use `style` (single) or `style_*` (multiple keys). These map to the
+  `<section>` wrapper's class attribute.
+
+**Prevention:**
+- All section-level custom class fields in `models/_section.json` should
+  be named `style_*` not `classes_*`.
+- Authored Section Metadata tables should use `style` / `style_customDynamicClass`
+  / `style_container` etc., never `classes_*`.
+- When asking aemcoder to author a section style class, specify the
+  property as `style` or `style_*` in the prompt.
 
 ---
 
@@ -130,13 +247,13 @@ key indications, primary CTAs, support resources.
 
 | # | Block | Section variant / classes | Purpose |
 |---|---|---|---|
-| 1 | brand-explorer (HCP only) | `abbv-container`-equivalent | Cross-condition switcher bar above header |
+| 1 | brand-explorer (HCP only) | — | Cross-condition switcher bar above header |
 | 2 | header (fragment) | — | Site nav — fragment ref via `nav: /...` metadata |
 | 3 | hero | full-width, brand-customized | LCP element, indication preview, primary CTA |
 | 4 | cards-grid | `classes` = indication-link variant | 2–4 indication cards (text + chevron, NOT pill buttons) |
 | 5 | cards-grid (or columns + cta) | brand variant for value props | 3-up value proposition cards |
 | 6 | rich-text or text-container | brand variant `indication` | Indication paragraph (verbatim from live) |
-| 7 | cards-grid (glacier / support variant) | `classes` = pill-button variant + `section-bg-brushstroke gradient--white-glacier` section style | Patient/HCP support resources with pill CTAs |
+| 7 | cards-grid (glacier / support variant) | section-metadata `style: {brand}-support-section` + `section-bg-brushstroke gradient--white-glacier` | Patient/HCP support resources with pill CTAs |
 | 8 | footer (fragment) | — | Footer fragment ref via `footer: /...` metadata |
 | 9 | safety-bar (fragment) | sticky bottom | ISI / safety information — shared across all pages |
 
@@ -150,29 +267,17 @@ key indications, primary CTAs, support resources.
 | title | from live `<title>` | Verbatim |
 | description | from live meta description | Verbatim |
 | og:image | hero image asset | Same image as hero block |
-| job-code | from live footer / legal | Brand-specific format (e.g. `US-RNQ-XXXXXX` for Rinvoq, `US-SKZ-XXXXXX` for Skyrizi, `US-LNZ-XXXXXX` for Linzess) |
+| job-code | from live footer / legal | Brand-specific format (`US-RNQ-`, `US-SKZ-`, `US-LNZ-`, etc.) |
 
 ## Key composition rules
 
 - **brand-explorer** is HCP only — DTC homepages skip it
 - **Hero is the LCP** — keep it eager, don't lazy-load the image
-- **Indication-link cards** (block 4) have text + chevron pattern; do NOT
-  use pill-button variant (that's for support cards in block 7)
-- **Glacier section** (block 7) needs `section-bg-brushstroke` +
-  `gradient--white-glacier` section style classes + the brushstroke SVG
-  asset downloaded to `/content/dam/abbvie-eds-poc/`
-- **Single H1** — author it inside the hero `text` field
+- **Indication-link cards** have text + chevron; do NOT use pill-button variant
+- **Glacier section** needs section-metadata style class + downloaded
+  brushstroke SVG asset
+- **Single H1** — author it inside hero `text` field
 - **Safety-bar fragment** is shared across ALL pages in the brand section
-
-## Common pitfalls (from chat history)
-
-- Using `cards-grid-cta-card` variant for indication cards in block 4 →
-  produces pill buttons where text+chevron is needed
-- Simulating the brushstroke with CSS gradient instead of downloading SVG
-- Treating brand-explorer as plain section (it has hoist logic — moves
-  above header at runtime)
-- Forgetting to set `nav` page metadata → defaults to homepage nav even
-  on other pages
 
 ---
 
@@ -186,8 +291,7 @@ key indications, primary CTAs, support resources.
 - linzess.com/ibs-c, /cic
 
 **Purpose:** Condition-specific entry. Different header than homepage
-(condition nav), condition-focused hero, sub-section nav, condition-relevant
-cards.
+(condition nav), condition-focused hero, sub-section nav.
 
 ## Canonical section sequence
 
@@ -204,32 +308,12 @@ cards.
 | 9 | footer (fragment) | — | Shared brand footer |
 | 10 | safety-bar (fragment) | sticky | Shared ISI fragment |
 
-## Page metadata required
-
-Same as Homepage, **except:**
-- `nav` MUST point to the per-condition header fragment (not the homepage
-  one)
-- Active-state styling on the nav is brand-block-config driven, not
-  authored content
-
 ## Key composition rules
 
-- **Per-condition header** is the #1 difference from homepage — verify the
-  live page uses a different nav than homepage before assuming
-- **Active nav state** for the current condition is set via brand
-  `block-config.js` reading URL path (`/dermatology/*` triggers active
-  state for "Dermatology" nav item)
-- **Indication block** (block 6 / 7) is condition-specific (e.g.
-  Dermatology indication ≠ Rheumatology indication)
-- **section-nav block** lets users jump within the long condition landing
-  page; ensure target `id` attrs on each section
-
-## Common pitfalls (from chat history)
-
-- Reusing homepage header fragment → wrong nav items shown for condition
-- Active nav state hardcoded in fragment content → breaks if user navigates
-  to other condition pages
-- Indication text not condition-specific → shows wrong indication
+- **Per-condition header** is the #1 difference from homepage — verify
+- **Active nav state** for current condition via brand `block-config.js`
+- **Indication block** is condition-specific
+- **section-nav** with anchor IDs for jumps
 
 ---
 
@@ -242,55 +326,36 @@ Same as Homepage, **except:**
 - mavyret.com/dosing-and-administration
 - linzess.com/hcp/dosing
 
-**Purpose:** Clinical reference page. Dosing schedules, lab monitoring
-guidance, dose adjustments, contraindications detail. Information-dense,
-table-heavy, footnote-heavy.
+**Purpose:** Clinical reference. Dosing schedules, lab monitoring,
+dose adjustments. Information-dense, table-heavy, footnote-heavy.
 
 ## Canonical section sequence
 
-| # | Block | Section variant / classes | Purpose |
+| # | Block | Section-metadata `style` class | Purpose |
 |---|---|---|---|
 | 1 | brand-explorer (HCP only) | — | Same as homepage |
 | 2 | header (fragment) | Per-condition | Same as condition landing |
-| 3 | hero | smaller / banner variant | Often a banner-style hero, not full-page |
+| 3 | hero | smaller / banner variant — `style: dosing-hero` | Banner hero |
 | 4 | section-nav | — | Anchor nav for clinical sub-sections |
-| 5 | text-container (boxed-warning variant) | brand `boxed-warning` style | Boxed Warning if applicable (top of clinical content) |
-| 6 | clinical-data-panel | (mavyret, skyrizi-hcp brands) | Structured dosing presentation |
-| 7 | table | brand variant for clinical tables | Dosing schedule table with `<th scope>` semantics |
-| 8 | accordion | brand variant | Adjustments / special populations grouped |
-| 9 | tabs | brand variant | If page has multiple dose regimens |
-| 10 | fact-card or info-tree | — | Key dosing/lab thresholds |
-| 11 | tooltip (inline) | — | Footnote markers (¹, ², †) on dosing numbers |
-| 12 | text-container (references variant) | `<ol>` numbered list | Reference list, MUST round-trip with body markers |
-| 13 | footer (fragment) | — | Shared |
-| 14 | safety-bar (fragment) | sticky | Shared |
-
-## Page metadata required
-
-Same as Condition Landing.
+| 5 | text-container (boxed-warning variant) | `style: dosing-boxed-warning` | **BOXED WARNING** — visually distinct, regulatory |
+| 6 | clinical-data-panel | `style: dosing-data-panel` | Structured dosing presentation |
+| 7 | table | `style: dosing-schedule-table` | Dosing schedule — REQUIRES `<th scope>` semantics |
+| 8 | accordion | `style: dosing-special-populations` | Special populations / dose adjustments |
+| 9 | tabs | `style: dosing-regimen-tabs` | Multi-regimen presentation |
+| 10 | fact-card or info-tree | `style: dosing-lab-thresholds` | Key thresholds |
+| 11 | tooltip (inline) | — | Footnote markers (¹, ², †) on dosing values |
+| 12 | text-container (references variant) | `style: dosing-references` | `<ol>` numbered list — **MUST round-trip** with body markers |
+| 13 | text-container (legal variant) | `style: dosing-legal` | Job code, approval/expiration date |
+| 14 | footer (fragment) | — | Shared |
+| 15 | safety-bar (fragment) | sticky | Shared |
 
 ## Key composition rules
 
-- **Clinical accuracy is paramount** — every dose number, lab threshold,
-  adverse event percent must be byte-for-byte verbatim from live source.
-  See `pharma-content-fidelity`.
-- **Tables** need semantic `<th scope="row">` / `<th scope="col">` — base
-  `table` block handles this; verify in rendered DOM
-- **Footnotes round-trip mandatory** — every superscript in dosing/lab
-  values must have a matching reference entry in block 12
-- **Boxed Warning at top** (block 5) — must be visually distinct, not just
-  text-distinct (regulatory)
-- **Anchor IDs on each section** — for the section-nav block's links to
-  jump correctly
-
-## Common pitfalls (predicted from chat history patterns)
-
-- Dosing numbers paraphrased / typo-fixed → compliance defect
-- Footnote markers stripped to "fix" wrapping on mobile → references
-  orphaned
-- Boxed Warning treated as plain rich-text → loses regulatory visual
-  treatment
-- Clinical tables rendered as `<div>` grids → loses screen-reader semantics
+- **Clinical accuracy is paramount** — verbatim dosing numbers, lab values
+- **Tables need `<th scope="row">` / `<th scope="col">`** — accessibility
+- **Footnotes round-trip mandatory** — every superscript ↔ reference entry
+- **Boxed Warning is regulatory visual treatment** — see pharma-content-fidelity
+- **Anchor IDs on each section** — for section-nav links
 
 ---
 
@@ -313,39 +378,21 @@ consent disclaimer prominent.
 | 2 | header (fragment) | Per-condition | Atopic-dermatitis nav (may differ from /dermatology) |
 | 3 | hero | testimonial banner variant | Patient-introduction hero |
 | 4 | text-container (disclaimer variant) | — | Consent / model-release disclaimer (verbatim) |
-| 5 | story-cards | grid layout | Patient testimonial cards (3-up or 4-up) |
-| 6 | brightcove-video OR carousel-video-playlist | brand variant | Patient testimonial videos (Brightcove) |
+| 5 | story-cards | grid layout | Patient testimonial cards |
+| 6 | brightcove-video OR carousel-video-playlist | brand variant | Patient testimonial videos |
 | 7 | quote | brand variant | Pull quote from featured patient |
-| 8 | cards-grid (support variant) | brush section style | "Hear from real patients" support resources |
-| 9 | text-container (legal/disclaimer) | — | Patient ID, paid testimonial disclosure (verbatim) |
+| 8 | cards-grid (support variant) | brush section style | Support resources |
+| 9 | text-container (legal/disclaimer) | — | Patient ID, paid testimonial disclosure |
 | 10 | footer (fragment) | — | Shared |
 | 11 | safety-bar (fragment) | sticky | Shared |
 
-## Page metadata required
-
-Same as Condition Landing. Plus:
-- **`og:image`** should be a patient testimonial still (with consent)
-
 ## Key composition rules
 
-- **Brightcove integration** — use `brightcove-video` block (single video)
-  or `carousel-video-playlist` (multiple videos). Account ID + video ID
-  pulled verbatim from live source DOM. Do NOT fabricate.
-- **Delayed loading** for Brightcove — third-party script loads in
-  `delayed.js`, not eager. Don't preload.
-- **Transcripts mandatory** for all patient videos (WCAG / Section 508 +
-  pharma compliance)
-- **Consent disclaimer** (block 4) is regulated copy — verbatim from live
-- **"Actor portrayal" vs "Real patient"** labels preserved verbatim where
-  source uses them
-- **Image alt text** describes patient context, not "person smiling"
-
-## Common pitfalls (predicted)
-
-- Fabricating Brightcove video IDs → broken player
-- Dropping consent disclaimer → compliance defect
-- Missing transcripts → a11y + Section 508 violation
-- Eager-loading Brightcove → LCP regression
+- **Brightcove integration** — accountId + videoId verbatim from live DOM
+- **Delayed loading** for Brightcove third-party script
+- **Transcripts mandatory** for all patient videos (a11y)
+- **Consent disclaimer** is regulated copy
+- **"Actor portrayal" vs "Real patient"** labels preserved verbatim
 
 ---
 
@@ -359,17 +406,17 @@ Same as Condition Landing. Plus:
 - mavyret.com/efficacy (single-arm SVR data)
 
 **Purpose:** Head-to-head efficacy comparison. Chart-heavy, table-heavy,
-footnote-heavy, statistical-significance markers, study design references.
+statistical-significance markers, study design references.
 
 ## Canonical section sequence
 
-| # | Block | Section variant / classes | Purpose |
+| # | Block | Section-metadata `style` class | Purpose |
 |---|---|---|---|
 | 1 | brand-explorer (HCP only) | — | Same |
 | 2 | header (fragment) | Per-condition | Same as condition landing |
 | 3 | hero | comparison banner | "X vs Y" hero with drug name comparison |
 | 4 | section-nav | — | Anchor nav: Primary endpoint / Secondary / Safety / Study design |
-| 5 | text-container (disclaimer / study limitations) | — | Verbatim limitations / "non-superiority not tested" / etc. |
+| 5 | text-container (disclaimer / study limitations) | — | Verbatim limitations / "non-superiority not tested" |
 | 6 | chart | brand variant | Primary endpoint comparison (bar / forest plot) |
 | 7 | clinical-data-panel | — | Statistical detail (p-value, CI, n) |
 | 8 | tabs | brand variant | Subgroup breakdowns (week 4 / week 12 / week 24) |
@@ -377,46 +424,26 @@ footnote-heavy, statistical-significance markers, study design references.
 | 10 | table | brand variant for AE table | Adverse events comparison |
 | 11 | tooltip (inline) | — | Footnote markers on every chart axis / data point |
 | 12 | accordion | brand variant | Study design / methodology grouped |
-| 13 | text-container (references variant) | `<ol>` | Reference list — round-trip with ALL chart/table footnote markers |
+| 13 | text-container (references variant) | `<ol>` | Reference list — round-trip ALL footnote markers |
 | 14 | footer (fragment) | — | Shared |
 | 15 | safety-bar (fragment) | sticky | Shared |
 
-## Page metadata required
-
-Same as Condition Landing. Plus consider:
-- **Comparator-drug name** in title (e.g. "RINVOQ® vs DUPIXENT®")
-- **Job code** unique to this comparison piece
-
 ## Key composition rules
 
-- **Chart fidelity is paramount** — axis labels, legends, error bars,
-  statistical-significance markers (* p<0.05, ** p<0.01, etc.), endpoint
-  labels. ALL verbatim from live source.
-- **Footnote markers everywhere** — chart axes, table cells, body copy.
-  Every marker MUST round-trip in the references block.
-- **Static SVG/PNG vs inline chart** — verify how live source renders the
-  chart. If SVG/PNG export, download to DAM and reference. If inline
-  chart-data, use `chart` block with verbatim data values.
-- **Comparator drug name** uses registered trademark — preserve `®` / `™`
-  verbatim
+- **Chart fidelity paramount** — axis labels, legends, error bars,
+  statistical-significance markers, footnote anchors. Verbatim.
+- **Footnote markers EVERYWHERE** — chart axes, table cells, body copy.
+  Every marker must round-trip in the references block.
+- **Trademark symbols** (`®`, `™`) preserved verbatim
 - **Study limitations / non-inferiority disclaimers** are regulated copy
-- **Mobile chart fallback** — charts often illegible at <600px; may need
-  alternative table presentation. Check live source.
-
-## Common pitfalls (predicted)
-
-- Chart data approximated / rounded → compliance issue
-- Footnote markers stripped to "clean up" the chart axis → references
-  orphaned
-- Trademark symbols dropped → regulatory issue
-- Forest plot rendered as bar chart → misrepresents confidence intervals
+- **Mobile chart fallback** — verify live source's mobile pattern
 
 ---
 
 # Page archetype 6: Custom / Hybrid
 
 For pages that don't match any of the 5 above (e.g. site-map page, contact
-page, MOA animation page, copay/savings page):
+page, MOA animation page, copay/savings page, transcript pages, access/coverage):
 
 ## Recipe
 
@@ -437,20 +464,26 @@ page, MOA animation page, copay/savings page):
 
 ## Hybrid example: Coverage & Access page
 
-`rinvoqhcp.com/dermatology/access` (condition-specific access page). Likely
-composition:
-- Condition Landing recipe sections 1–3 (brand-explorer, **per-condition
-  header**, hero) — uses Dermatology header fragment, NOT homepage nav
-- `section-nav` for in-page anchors (savings, insurance, support)
-- `formulary-lookup` (block 14 in block-analysis) — coverage tool
+`rinvoqhcp.com/dermatology/access` doesn't fit cleanly. Likely composition:
+- Condition Landing recipe sections 1–4 (brand-explorer, header, hero,
+  section-nav)
+- Insert `formulary-lookup` (block from library) — coverage tool
 - `accordion` for plan-by-plan breakdown
 - `info-tree` for support program tiers
 - `cards-grid` (support variant) for patient resources
 - Standard footer + safety-bar
 
-Note: This is a CONDITION-SPECIFIC access page (under `/dermatology/`), not
-a brand-wide one. It uses the per-condition header, same as the Condition
-Landing archetype.
+## Hybrid example: Patient transcript page
+
+`linzess.com/why-linzess/linzess-patient-stories/nan-transcripts`:
+- Real Patients recipe sections 1–3 + 4 (header, hero, consent disclaimer)
+- `brightcove-video` for video reference
+- `section-nav` for transcript chapters
+- Multiple `text-container` instances (variant `transcript`) with
+  section-metadata `style: nan-transcript-{section}`
+- `quote` for pull quote
+- `cards-grid` (related stories variant)
+- Standard footer + safety-bar
 
 ---
 
@@ -479,32 +512,9 @@ These hold for EVERY page archetype:
 - Mid-page CTAs and resource cards
 
 ## Always verify against live source
-- Whether per-condition nav exists (`/dermatology` may have different nav
-  than `/atopic-dermatitis`)
+- Whether per-condition nav exists
 - Whether safety-bar content differs by indication (rarely does, but verify)
-- Whether the page has a Boxed Warning section (regulatory — must match
-  live)
-
----
-
-# How to extend this skill
-
-When you migrate a page that doesn't match the 5 templates AND you'll
-migrate 3+ similar pages:
-
-1. Document the composition in a new archetype section (numbered 7+).
-2. Use the same section structure (canonical sequence + metadata + rules +
-   pitfalls).
-3. Update the description / trigger phrases at top.
-4. Add a one-line example URL.
-
-When a known archetype evolves (e.g. discover a 6th canonical section in
-homepage that we missed):
-
-1. Update the archetype in place.
-2. If the change breaks already-migrated pages, document the failure
-   pattern + prevention rule in the Anti-patterns section of the most
-   relevant skill (orchestrator, section-fix-loop, or this skill).
+- Whether the page has a Boxed Warning section (regulatory — must match live)
 
 ---
 
@@ -517,7 +527,7 @@ homepage that we missed):
 | `/{condition}/dosing*` | 3 — Dosing & Lab | 14 | clinical-data-panel, table, accordion, references |
 | `/{condition}/*/real-patients` | 4 — Real Patients | 11 | story-cards, brightcove-video, quote |
 | `/{condition}/*/efficacy/X-vs-Y*` | 5 — H2H Comparison | 15 | chart, clinical-data-panel, table, references |
-| Coverage / contact / sitemap | 6 — Custom / Hybrid | varies | Walk Phase B fresh |
+| Coverage / contact / sitemap / transcript | 6 — Custom / Hybrid | varies | Walk Phase B fresh |
 
 For each: pair the recipe with `pharma-content-fidelity` always, and invoke
 `aemcoder-migration-orchestrator` to drive the migration.
