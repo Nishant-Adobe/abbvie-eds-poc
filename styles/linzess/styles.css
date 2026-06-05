@@ -127,33 +127,36 @@ main > .section.find-relief-dark-purple {
   position: relative;
   background: #4b2e83;
   overflow: hidden;
-  padding: 160px 20px;
+  padding: 140px 20px;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-top: 0;
   margin-right: 0;
+  max-width: none;
 }
 
 main > .section.find-relief-dark-purple::before,
 main > .section.find-relief-dark-purple::after {
   content: '';
   position: absolute;
-  left: -5%;
-  width: 110%;
+  left: -10%;
+  width: 120%;
   background: #f4f6fb;
   z-index: 1;
 }
 
 main > .section.find-relief-dark-purple::before {
-  top: -240px;
-  height: 320px;
-  border-radius: 0 0 50% 50%;
+  top: -180px;
+  height: 260px;
+  border-bottom-left-radius: 60% 100%;
+  border-bottom-right-radius: 60% 100%;
 }
 
 main > .section.find-relief-dark-purple::after {
-  bottom: -240px;
-  height: 320px;
-  border-radius: 50% 50% 0 0;
+  bottom: -180px;
+  height: 260px;
+  border-top-left-radius: 60% 100%;
+  border-top-right-radius: 60% 100%;
 }
 
 main > .section.find-relief-dark-purple h2,
@@ -165,10 +168,10 @@ main > .section.find-relief-dark-purple p {
 main > .section.find-relief-dark-purple h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: none;
   letter-spacing: normal;
-  margin-bottom: 24px;
+  margin-bottom: 48px;
 }
 
 main > .section.find-relief-dark-purple .columns-wrapper {
@@ -176,6 +179,7 @@ main > .section.find-relief-dark-purple .columns-wrapper {
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0;
 }
 
 main > .section.find-relief-dark-purple .columns {
@@ -200,20 +204,24 @@ main > .section.find-relief-dark-purple .columns .columns-item-content {
 main > .section.find-relief-dark-purple .columns .columns-item-content:first-child::after {
   content: '';
   width: 1px;
-  height: 140px;
+  height: 130px;
   background: rgba(255, 255, 255, 0.4);
+}
+
+main > .section.find-relief-dark-purple .columns .columns-item-content:first-child .button {
+  background: #e6d2b5;
+  color: #2d2484;
 }
 
 main > .section.find-relief-dark-purple a.button:any-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-width: 200px;
-  height: 56px;
+  min-width: 250px;
+  height: 68px;
   padding: 0 30px;
-  border-radius: 30px;
-  font-size: 16px;
+  border-radius: 40px;
+  font-size: 20px;
   font-weight: 700;
   text-decoration: none;
   background: #f5a623;
@@ -224,13 +232,13 @@ main > .section.find-relief-dark-purple a.button:any-link {
 
 main > .section.find-relief-dark-purple a.button::after {
   content: '›';
+  margin-left: 10px;
   font-size: 20px;
   transition: transform 0.2s ease;
 }
 
 main > .section.find-relief-dark-purple a.button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 main > .section.find-relief-dark-purple a.button:hover::after {
@@ -239,12 +247,12 @@ main > .section.find-relief-dark-purple a.button:hover::after {
 
 @media (max-width: 768px) {
   main > .section.find-relief-dark-purple {
-    padding: 120px 20px;
+    padding: 100px 20px;
   }
 
   main > .section.find-relief-dark-purple .columns {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 60px;
   }
 
   main > .section.find-relief-dark-purple .columns .columns-item-content:first-child::after {
@@ -253,6 +261,13 @@ main > .section.find-relief-dark-purple a.button:hover::after {
 
   main > .section.find-relief-dark-purple h2 {
     font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  main > .section.find-relief-dark-purple a.button:any-link {
+    min-width: 220px;
+    height: 60px;
+    font-size: 18px;
   }
 }
 
