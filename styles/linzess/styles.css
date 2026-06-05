@@ -639,3 +639,27 @@ main > .section.find-relief-off-white::before {
     padding: 8rem 4rem;
   }
 }
+
+/* ── gutcheck-quiz-arc: White arc overlapping hero bottom ── */
+main > .section.gutcheck-quiz-arc {
+  position: relative;
+  background: #fff;
+}
+
+main > .section.gutcheck-quiz-arc::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130vw;
+  height: 225px;
+  background: #fff;
+  border-radius: 100% 100% 0 0;
+  z-index: 1;
+}
+
+main > .section.gutcheck-quiz-arc > * {
+  position: relative;
+  z-index: 2;
+}
