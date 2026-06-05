@@ -37,33 +37,30 @@
 }
 
 /* ── Column variant: dosing instruction cards ──
-   Match live site: flex-row, icon 96px left, text right
-   Off-white container with rounded corners
-   Cards separated by bottom border ── */
+   Live site: off-white rounded container, flex-row cards,
+   icon overlaps left edge by ~50px creating half-overlap effect ── */
 .flexbox.column {
   background-color: #f4f6fb;
   border-radius: 16px;
-  padding: 24px;
+  padding: 24px 24px 24px 55px;
   flex-direction: column;
   gap: 0;
+  overflow: visible;
 }
 
 .flexbox.column .flexbox-item {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  padding: 16px 0 !important;
-  gap: 16px !important;
-  border-bottom: 1px solid #e8e5f0 !important;
+  padding: 12px 0 !important;
+  gap: 0 !important;
+  border-bottom: none !important;
   background: none !important;
   border-left: none !important;
   border-radius: 0 !important;
   grid-column: unset !important;
   grid-template-columns: unset !important;
-}
-
-.flexbox.column .flexbox-item:last-child {
-  border-bottom: none !important;
+  position: relative !important;
 }
 
 .flexbox.column .flexbox-item > div {
@@ -71,41 +68,42 @@
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 96px !important;
-  min-width: 96px !important;
-  height: 96px !important;
-  min-height: 96px !important;
+  width: 55px !important;
+  min-width: 55px !important;
+  height: auto !important;
+  min-height: unset !important;
   flex-shrink: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  overflow: visible !important;
+  display: block !important;
   background-color: transparent !important;
   border-radius: 0 !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 96px !important;
-  height: 96px !important;
-  max-width: 96px !important;
+  width: 105px !important;
+  height: 104px !important;
+  max-width: none !important;
+  margin-left: -50px !important;
   object-fit: contain !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content {
   flex: 1 !important;
   grid-column: unset !important;
+  padding: 0 85px 0 33px !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
-  font-style: italic;
+  font-style: normal;
   color: #422e83;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
-  font-size: 14.4px;
+  font-size: 16px;
   line-height: 1.5;
   color: #4d4d4f;
   margin-bottom: 4px;
