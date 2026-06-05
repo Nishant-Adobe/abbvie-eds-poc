@@ -1895,15 +1895,16 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   background-color: rgb(245, 245, 245);
   padding: 24px;
   border-radius: 10px;
-  columns: 2;
+  columns: 2 380px;
   column-gap: 24px;
   overflow: visible;
 }
 
 .section.dosing-lab-monitoring > .default-content-wrapper > h2 {
   column-span: all;
-  background-color: transparent;
-  margin-bottom: 24px;
+  margin: -24px -24px 24px;
+  padding: 12px 32px;
+  background-color: rgb(255, 255, 255);
 }
 
 .section.dosing-lab-monitoring > .default-content-wrapper > p:first-of-type {
@@ -1924,7 +1925,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   background-color: rgb(255, 209, 0);
   padding: 5px 10px;
   border-radius: 10px 10px 0 0;
-  margin: 24px 0 0;
+  margin: 0;
 }
 
 .section.dosing-lab-monitoring > .default-content-wrapper > h3 {
@@ -1937,7 +1938,22 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   font-weight: 400;
   color: rgb(70, 72, 74);
   line-height: 26px;
-  margin: 0 0 8px;
+  margin: 0 0 4px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.section.dosing-lab-monitoring h3::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/copy-underline.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .section.dosing-lab-monitoring hr {
@@ -1950,24 +1966,33 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   width: 100%;
   border-collapse: collapse;
   margin: 0 0 24px;
+  break-inside: avoid;
 }
 
 .section.dosing-lab-monitoring table th,
 .section.dosing-lab-monitoring table td {
-  padding: 10px 16px;
-  font-size: 14px;
-  line-height: 20px;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 22px;
   text-align: left;
   border-bottom: 1px solid rgb(201, 201, 202);
 }
 
-.section.dosing-lab-monitoring table th {
-  font-weight: 600;
+.section.dosing-lab-monitoring table thead th {
+  padding: 16px 12px;
+  font-weight: 700;
   color: rgb(37, 40, 42);
+  background-color: rgb(255, 255, 255);
 }
 
-.section.dosing-lab-monitoring table td {
+.section.dosing-lab-monitoring table tbody td {
   color: rgb(70, 72, 74);
+  background-color: rgb(255, 255, 255);
+}
+
+.section.dosing-lab-monitoring table tbody th {
+  font-weight: 700;
+  color: rgb(37, 40, 42);
 }
 
 .section.dosing-lab-monitoring > .default-content-wrapper > p:last-child {
