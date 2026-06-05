@@ -1924,6 +1924,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 }
 
 .section.dosing-lab-content > .default-content-wrapper > p:nth-child(2) {
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: rgb(37, 40, 42);
@@ -1931,7 +1932,10 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   background-color: rgb(255, 209, 0);
   padding: 5px 10px;
   border-radius: 10px 10px 0 0;
-  margin: 0;
+  margin: 0 0 0 auto;
+  width: 40%;
+  min-width: 170px;
+  max-width: 500px;
   grid-column: 1;
 }
 
@@ -1945,6 +1949,25 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   font-size: 14px;
   color: rgb(70, 72, 74);
   line-height: 21px;
+}
+
+.section.dosing-lab-content > .default-content-wrapper > p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgb(70, 72, 74);
+}
+
+.section.dosing-lab-content > .default-content-wrapper > p:first-child {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.section.dosing-lab-content .lab-monitoring-right-col p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
 }
 
 .section.dosing-lab-content .columns.dosing-lab-columns {
@@ -1984,14 +2007,16 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 
 .section.dosing-lab-content table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 4px;
   margin: 0 0 24px;
   grid-column: 1;
 }
 
 .section.dosing-lab-content table th,
 .section.dosing-lab-content table td {
-  padding: 16px 12px;
+  padding: 12px 16px;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 16px;
   line-height: 24px;
   text-align: left;
@@ -2000,11 +2025,18 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 
 .section.dosing-lab-content table thead th:last-child {
   background-color: rgb(255, 255, 255);
+  border-radius: 0 10px 0 0;
+}
+
+.section.dosing-lab-content table thead th:first-child {
+  border-radius: 10px 0 0 0;
 }
 
 .section.dosing-lab-content table thead th {
   font-weight: 700;
   color: rgb(37, 40, 42);
+  padding: 16px;
+  border-bottom: 2px solid rgb(201, 201, 202);
 }
 
 .section.dosing-lab-content table tbody td {
@@ -2014,6 +2046,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 
 .section.dosing-lab-content table tbody th {
   font-weight: 700;
+  font-size: 16px;
   color: rgb(37, 40, 42);
 }
 
