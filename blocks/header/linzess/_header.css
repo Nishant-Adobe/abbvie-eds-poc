@@ -28,15 +28,20 @@ header .nav-eyebrow p { font-size: var(--font-size-11); }
 
 header .nav-eyebrow a { text-decoration: underline; }
 
-/* Nav wrapper — solid dark charcoal (prevents page bg bleed-through) */
+/* Nav wrapper — transparent (hero block CSS handles its own gradient via body:has(.hero)) */
 header .nav-wrapper {
-  background-color: var(--color-nav-dark);
+  background: transparent;
   position: relative;
+  transition: all 300ms ease-in-out;
 }
 
-header.has-utility-nav {
-  background: var(--color-nav-dark);
+header:has(.nav-utility ul) {
   height: auto;
+}
+
+/* Pages without hero — solid purple bg */
+header.no-hero .nav-wrapper {
+  background: var(--color-brand-primary);
 }
 
 /* Nav text — white */
@@ -50,7 +55,7 @@ header .nav-utility {
   border-bottom: var(--separator-height-1) solid var(--header-utility-border);
 }
 
-header.has-utility-nav .nav-utility {
+header .nav-utility:has(ul) {
   display: block;
 }
 
@@ -530,10 +535,10 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
   }
 
   /* Nav items — flex row, push CTA to far right */
-  header .nav-wrapper nav .nav-sections .default-content-wrapper > ul {
+  header nav .nav-sections .default-content-wrapper > ul {
     align-items: center;
     display: flex;
-    gap: 0;
+    gap: 0 !important;
     justify-content: flex-start;
     margin: 0;
   }
