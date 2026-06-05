@@ -462,10 +462,6 @@ async function loadEager(doc) {
     }
   }
   loadCSS(`${window.hlx.codeBasePath}/styles/section.css`);
-  const brand = getMetadata('brand')?.trim();
-  if (brand && /^[\w-]+$/.test(brand)) {
-    loadCSS(`${window.hlx.codeBasePath}/styles/${brand}/styles.css`).catch(() => {});
-  }
   decorateTemplateAndTheme();
   if (getMetadata('breadcrumbs').toLowerCase() === 'true') {
     doc.body.dataset.breadcrumbs = true;
