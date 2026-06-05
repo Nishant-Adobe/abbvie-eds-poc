@@ -1728,21 +1728,22 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   font-weight: 600;
   color: rgb(37, 40, 42);
   line-height: 40px;
-  margin: 0 0 16px;
+  margin: 0 0 48px;
   padding: 12px 32px;
   background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   margin-left: -32px;
+  display: inline-block;
 }
 
 .section.dosing-header h3 {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   color: rgb(70, 72, 74);
-  line-height: 25px;
+  line-height: 30px;
   margin: 0;
 }
 
@@ -1753,45 +1754,114 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   padding: 24px 20px 48px;
 }
 
+.section.dosing-details > .default-content-wrapper {
+  columns: 2;
+  column-gap: 24px;
+  overflow: visible;
+}
+
+.section.dosing-details > .default-content-wrapper > p:nth-child(6) {
+  break-before: column;
+}
+
+.section.dosing-details p {
+  margin: 0 0 0;
+}
+
 .section.dosing-details p strong u {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
   color: rgb(70, 72, 74);
-  text-decoration: underline;
+  text-decoration: none;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/copy-underline.svg');
+  background-size: 100% 6px;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  padding-bottom: 6px;
+}
+
+.section.dosing-details > .default-content-wrapper > p:has(+ ul) {
+  margin-bottom: 12px;
+}
+
+.section.dosing-details > .default-content-wrapper > ul + p {
+  margin-top: 24px;
 }
 
 .section.dosing-details ul {
-  padding-left: 20px;
-  margin: 12px 0 24px;
+  padding-left: 24px;
+  margin: 4px 0 0;
+  break-inside: avoid;
 }
 
 .section.dosing-details ul li {
   font-size: 16px;
-  line-height: 24px;
+  line-height: 22.4px;
   color: rgb(70, 72, 74);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .section.dosing-details > .default-content-wrapper > p:last-child {
-  font-size: 12px;
+  font-size: 14px;
   color: rgb(70, 72, 74);
   line-height: 18px;
-  margin-top: 24px;
+  margin-top: 4px;
 }
 
 /* Dosing ISI callout */
 .section.dosing-isi-callout {
   max-width: 1220px;
-  margin: 0 auto;
-  padding: 24px 20px;
-  border-top: 1px solid rgb(201, 201, 202);
+  margin: 24px auto;
+  padding: 0 20px;
 }
 
 .section.dosing-isi-callout p {
-  font-size: 14px;
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
   color: rgb(70, 72, 74);
-  line-height: 21px;
+  line-height: 24px;
+  margin: 0;
+}
+
+.section.dosing-isi-callout .button-container {
+  margin: 0;
+}
+
+.section.dosing-isi-callout a,
+.section.dosing-isi-callout a.button {
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(70, 72, 74);
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 12px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.section.dosing-isi-callout a::after,
+.section.dosing-isi-callout a.button::after {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-left: 8px;
+  vertical-align: middle;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-down-plum.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section.dosing-isi-callout a:hover,
+.section.dosing-isi-callout a.button:hover {
+  text-decoration: underline;
+  background: none;
+  color: rgb(70, 72, 74);
 }
 
 .section.dosing-isi-callout a {
@@ -1813,27 +1883,73 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   font-weight: 600;
   color: rgb(37, 40, 42);
   line-height: 40px;
-  margin: 0 0 16px;
+  margin: 0 0 48px -32px;
   padding: 12px 32px;
   background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  margin-left: -32px;
+  display: inline-block;
+}
+
+.section.dosing-lab-monitoring > .default-content-wrapper {
+  background-color: rgb(245, 245, 245);
+  padding: 24px;
+  border-radius: 10px;
+  columns: 2;
+  column-gap: 24px;
+  overflow: visible;
+}
+
+.section.dosing-lab-monitoring > .default-content-wrapper > h2 {
+  column-span: all;
+  background-color: transparent;
+  margin-bottom: 24px;
+}
+
+.section.dosing-lab-monitoring > .default-content-wrapper > p:first-of-type {
+  column-span: all;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: rgb(70, 72, 74);
+  margin: 0 0 24px;
+}
+
+.section.dosing-lab-monitoring > .default-content-wrapper > p:nth-of-type(2) {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(37, 40, 42);
+  text-align: center;
+  background-color: rgb(255, 209, 0);
+  padding: 5px 10px;
+  border-radius: 10px 10px 0 0;
+  margin: 24px 0 0;
+}
+
+.section.dosing-lab-monitoring > .default-content-wrapper > h3 {
+  break-before: column;
 }
 
 .section.dosing-lab-monitoring h3 {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 400;
   color: rgb(70, 72, 74);
-  line-height: 30px;
-  margin: 32px 0 12px;
+  line-height: 26px;
+  margin: 0 0 8px;
+}
+
+.section.dosing-lab-monitoring hr {
+  border: none;
+  border-top: 1px dashed rgb(70, 72, 74);
+  margin: 20px 0;
 }
 
 .section.dosing-lab-monitoring table {
   width: 100%;
   border-collapse: collapse;
-  margin: 16px 0 24px;
+  margin: 0 0 24px;
 }
 
 .section.dosing-lab-monitoring table th,
@@ -1852,6 +1968,12 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 
 .section.dosing-lab-monitoring table td {
   color: rgb(70, 72, 74);
+}
+
+.section.dosing-lab-monitoring > .default-content-wrapper > p:last-child {
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 21px;
 }
 
 /* Dosing lab data table */
@@ -1969,6 +2091,14 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     line-height: 20px;
   }
 
+  .section.dosing-details > .default-content-wrapper {
+    columns: 1;
+  }
+
+  .section.dosing-details > .default-content-wrapper > p:nth-child(6) {
+    break-before: auto;
+  }
+
   .section.dosing-details p strong u {
     font-size: 20px;
   }
@@ -1978,6 +2108,14 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     line-height: 30px;
     padding: 10px 20px;
     margin-left: -20px;
+  }
+
+  .section.dosing-lab-monitoring > .default-content-wrapper {
+    columns: 1;
+  }
+
+  .section.dosing-lab-monitoring > .default-content-wrapper > h3 {
+    break-before: auto;
   }
 
   .section.dosing-lab-monitoring table,
