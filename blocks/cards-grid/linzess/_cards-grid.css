@@ -475,10 +475,12 @@ body main .section.cards-grid-container.carousel-video-playlist-container {
   color: #fff;
   padding: 80px 24px 48px;
   position: relative;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  max-width: none;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left: max(24px, calc(50vw - 50% + 24px));
+  padding-right: max(24px, calc(50vw - 50% + 24px));
   box-sizing: border-box;
 }
 
