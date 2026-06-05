@@ -1909,10 +1909,12 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 
 .section.dosing-lab-content > .default-content-wrapper > * {
   grid-column: 1;
+  grid-row: auto;
 }
 
 .section.dosing-lab-content > .default-content-wrapper > p:first-child {
   grid-column: 1 / -1;
+  grid-row: 1;
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
@@ -1931,24 +1933,18 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   border-radius: 10px 10px 0 0;
   margin: 0;
   grid-column: 1;
-  grid-row: 2;
 }
 
-.section.dosing-lab-content > .default-content-wrapper > h3 {
+.section.dosing-lab-content > .default-content-wrapper > .lab-monitoring-right-col {
   grid-column: 2;
-  grid-row: 2 / 20;
+  grid-row: 2 / span 20;
+  align-self: start;
 }
 
-.section.dosing-lab-content > .default-content-wrapper > h3 ~ p,
-.section.dosing-lab-content > .default-content-wrapper > h3 ~ hr {
-  grid-column: 2;
-}
-
-.section.dosing-lab-content > .default-content-wrapper > p:last-child {
+.section.dosing-lab-content .lab-monitoring-right-col > p:last-child {
   font-size: 14px;
   color: rgb(70, 72, 74);
   line-height: 21px;
-  grid-column: 2;
 }
 
 .section.dosing-lab-content .columns.dosing-lab-columns {
@@ -2165,10 +2161,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     grid-template-columns: 1fr;
   }
 
-  .section.dosing-lab-content > .default-content-wrapper > *,
-  .section.dosing-lab-content > .default-content-wrapper > h3,
-  .section.dosing-lab-content > .default-content-wrapper > h3 ~ p,
-  .section.dosing-lab-content > .default-content-wrapper > h3 ~ hr {
+  .section.dosing-lab-content > .default-content-wrapper > .lab-monitoring-right-col {
     grid-column: 1;
     grid-row: auto;
   }
