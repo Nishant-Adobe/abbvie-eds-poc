@@ -18,28 +18,29 @@ body {
   line-height: var(--line-height-body);
 }
 
-h1, h2 {
+h1 {
   font-family: var(--heading-font-family);
   color: var(--color-text-heading);
-  font-weight: var(--font-weight-body);
-  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 30px;
+  text-transform: none;
   letter-spacing: 0.02em;
 }
 
-h1 {
-  font-size: var(--font-size-h1-hero);
-  line-height: var(--line-height-h1-hero);
-}
-
 h2 {
-  font-size: var(--font-size-h2-hero);
-  line-height: var(--line-height-h2-hero);
+  font-family: var(--body-font-family);
+  color: var(--color-text-heading);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 34.29px;
+  text-transform: none;
 }
 
 h3, h4, h5, h6 {
   font-family: var(--body-font-family);
   color: var(--color-text-heading);
-  font-weight: var(--font-weight-bold);
+  font-weight: 700;
 }
 
 h3 { font-size: var(--font-size-h3); }
@@ -127,14 +128,39 @@ footer a {
 
 /* ---- ISI / Legal Text ---- */
 .isi-container p,
+.isi p,
 .legal-text {
-  font-family: var(--font-family-legal);
-  font-size: var(--font-size-legal);
-  line-height: var(--line-height-legal);
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
+  font-size: 14px;
+  line-height: 16px;
+  color: #555;
 }
 
-.isi-container strong {
-  font-family: var(--font-family-legal-bold);
+.isi-container strong,
+.isi strong {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+}
+
+.isi h3 {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: #422e83;
+}
+
+.isi ul {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
+  font-size: 14px;
+  line-height: 16px;
+  color: #555;
+}
+
+.isi p:last-child,
+.disclaimer {
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  color: #4d4d4f;
+  line-height: 17.14px;
 }
 
 /* ---- Accordion (FAQ) ---- */

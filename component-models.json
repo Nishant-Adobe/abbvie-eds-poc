@@ -2388,6 +2388,35 @@
     ]
   },
   {
+    "id": "callout",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Style",
+        "valueType": "string",
+        "options": [
+          { "name": "Highlight (brand background)", "value": "highlight" }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Content",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon Image (optional)",
+        "multi": false
+      }
+    ]
+  },
+  {
     "id": "brand-explorer",
     "fields": [
       {
@@ -3781,6 +3810,38 @@
         "value": "",
         "label": "Video Caption",
         "description": "Caption for video"
+      }
+    ]
+  },
+  {
+    "id": "callout",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "value": "",
+        "label": "Style",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Highlight (brand background)",
+            "value": "highlight"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Content",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon Image (optional)",
+        "multi": false
       }
     ]
   },
@@ -9953,7 +10014,6 @@
         "component": "text",
         "name": "content_searchIcon",
         "label": "Search Icon",
-        "value": ":icon-search:",
         "condition": {
           "in": [
             {
@@ -10176,7 +10236,6 @@
         "component": "select",
         "name": "content_eyebrowPosition",
         "label": "Eyebrow Position",
-        "value": "top",
         "condition": {
           "in": [
             {
@@ -10232,7 +10291,6 @@
         "component": "text",
         "name": "content_floatingIsiExpandLabel",
         "label": "Expand button label",
-        "value": "See Full ISI",
         "condition": {
           "in": [
             {
@@ -10248,7 +10306,6 @@
         "component": "text",
         "name": "content_floatingIsiCollapseLabel",
         "label": "Collapse button label",
-        "value": "Collapse ISI",
         "condition": {
           "in": [
             {
