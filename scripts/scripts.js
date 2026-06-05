@@ -425,6 +425,22 @@ export function decorateMain(main) {
   decorateFragmentRotation(main);
   // add aria-label to links
   a11yLinks(main);
+  // Dosing lab-monitoring: wrap right-column content into a single container
+  const labContent = main.querySelector('.section.dosing-lab-content > .default-content-wrapper');
+  if (labContent) {
+    const h3 = labContent.querySelector('h3');
+    if (h3) {
+      const rightCol = document.createElement('div');
+      rightCol.className = 'lab-monitoring-right-col';
+      let sibling = h3;
+      while (sibling) {
+        const next = sibling.nextElementSibling;
+        rightCol.appendChild(sibling);
+        sibling = next;
+      }
+      labContent.appendChild(rightCol);
+    }
+  }
 }
 
 /**
