@@ -7,16 +7,14 @@ import {
 } from './aem.js';
 
 export function getBrandCode() {
-  return getMetadata('brand') || (document.body.classList.contains('sidekick-library') ? new URL(url).pathname.split('/')[1] : '');
+  return getMetadata('brand') || (document.body.classList.contains('sidekick-library') ? new URL(window.location.href).pathname.split('/')[1] : '');
 }
 
 let brandCode = getBrandCode();
- 
-if(brandCode == '' && document.body.classList.contains('sidekick-library')) {
-  brandCode = new URL(url).pathname. Split('/')[1];
-}
 
-const brandCode = getBrandCode();
+if (brandCode === '' && document.body.classList.contains('sidekick-library')) {
+  [, brandCode] = new URL(window.location.href).pathname.split('/');
+}
 
 export function getBrandPath() {
   if (brandCode) {
