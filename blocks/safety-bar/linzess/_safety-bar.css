@@ -11,6 +11,7 @@
 .safety-bar-section {
   width: 100vw;
   max-width: 100%;
+  z-index: 99999;
 }
 
 /* Dark overlay behind expanded safety bar (CSS-only via ::before) */
@@ -40,41 +41,42 @@
   font-family: var(--font-family-legal);
 }
 
-/* Toggle button: icon-font circle plus/minus, purple, no border */
+/* Toggle button: circle plus/minus, purple, no border */
 .safety-bar-toggle {
-  border: none;
+  border: 2px solid var(--color-brand-primary);
   background-color: transparent;
   color: var(--color-brand-primary);
-  font-family: var(--icon-font-family);
-  font-size: var(--spacing-20);
-  width: auto;
-  height: var(--spacing-24);
-  border-radius: 0;
-  top: var(--spacing-08);
-  right: 0;
-  padding: 0 var(--spacing-20);
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  top: var(--spacing-12);
+  right: var(--spacing-16);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .safety-bar-toggle[aria-expanded='true'] {
-  background-color: transparent;
-  border: none;
-  color: var(--color-brand-primary);
+  background-color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+  color: #fff;
 }
 
 .safety-bar-toggle::after {
-  content: '\e147';
-  font-family: var(--icon-font-family);
-  font-size: var(--spacing-20);
-  font-weight: normal;
-  font-style: normal;
+  content: '+';
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 700;
   color: var(--color-brand-primary);
   transform: none;
   display: inline-block;
 }
 
 .safety-bar-toggle[aria-expanded='true']::after {
-  content: '\e15c';
-  color: var(--color-brand-primary);
+  content: '−';
+  color: #fff;
   transform: none;
 }
 
