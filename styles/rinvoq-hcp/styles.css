@@ -2469,6 +2469,24 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     grid-row: auto;
   }
 
+  .section.dosing-lab-content > .default-content-wrapper > p:nth-child(2) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .section.dosing-lab-data > .default-content-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .section.dosing-lab-data > .default-content-wrapper > * {
+    grid-column: 1;
+  }
+
+  .section.dosing-lab-data > .default-content-wrapper > .lab-data-right-col {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
   .section.dosing-lab-content table,
   .section.dosing-lab-data table {
     display: block;
@@ -2478,5 +2496,15 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   .section.dosing-cta h2 {
     font-size: 24px;
     line-height: 30px;
+  }
+
+  .section.dosing-cta .button-container:first-of-type a,
+  .section.dosing-cta .button-container:first-of-type a.button {
+    padding: 14px 44px 14px 24px;
+    font-size: 14px;
+  }
+
+  .section.dosing-cta::after {
+    background-size: cover;
   }
 }
