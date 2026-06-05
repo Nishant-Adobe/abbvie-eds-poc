@@ -83,7 +83,11 @@
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
   --color-border: #e0e0e0;
+  --color-border-light: #ddd;
   --color-focus: var(--link-color);
+  --color-white-85: rgb(255 255 255 / 85%);
+  --color-shadow-sm: rgb(0 0 0 / 12%);
+  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -174,12 +178,15 @@
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
+  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
+  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
+  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -195,7 +202,9 @@
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
+  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
+  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -205,6 +214,7 @@
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
+  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
   --spacing-48: 4.8rem;
   --spacing-50: 5rem;
@@ -230,9 +240,11 @@
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
   --spacing-200: 20rem;
+  --spacing-225: 22.5rem;
   --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
+  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -277,6 +289,10 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-60: 60;
+
+  /* Opacity */
+  --opacity-full: 1;
   --z-index-anchor-nav: 100;
   --z-index-safety-bar: 500;
 
@@ -284,6 +300,7 @@
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
+  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -302,6 +319,7 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-900: 900;
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -327,6 +345,7 @@
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
+  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -336,6 +355,7 @@
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
+  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
   --line-height-relaxed: 1.5;
   --line-height-loose: 1.6;
@@ -343,6 +363,7 @@
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
   --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
@@ -704,6 +725,16 @@
   /* ---- Footer ---- */
   --footer-links-max-width: 33.5rem;
 
+  /* ---- Header block ---- */
+  --header-logo-width: 15rem;
+  --header-content-max-width: 115rem;
+  --header-submenu-width: 22rem;
+  --header-submenu-border-width: var(--spacing-03);
+  --header-nav-line-height: 1.3;
+  --header-search-pill-width: 36rem;
+  --header-search-pill-min-width: 20rem;
+  --header-wrapper-max-width: 122rem;
+  --header-nav-sections-height: 5.1rem;
   /* ---- Section Nav ---- */
   --shadow-section-nav-stuck: 0 2px 1em rgb(0 0 0 / 50%);
   --shadow-focus-plum: 0 0 var(--spacing-05) var(--spacing-05) var(--color-plum);
@@ -777,6 +808,194 @@
   .cards-grid.cards-grid-flex-row-cards .section-padding-right {
     padding-right: var(--spacing-48);
   }
+}
+
+/* CTA Card variant — 3-column grid on desktop */
+
+.cards-grid.cards-grid-cta-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-24, 24px);
+  justify-content: center;
+  padding: var(--spacing-24, 24px) 0;
+}
+
+.cards-grid.cards-grid-cta-card > .card-grid-item {
+  flex: 1 1 300px;
+  max-width: 380px;
+}
+
+.cards-grid.cards-grid-cta-card .grid-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  border: 1px solid var(--color-border-default, #c9c9ca);
+  border-radius: 10px;
+  box-shadow: var(--shadow-default, 0 4px 19px 0 rgb(0 0 0 / 7%));
+  text-decoration: none;
+  color: var(--text-color);
+  background: var(--background-color);
+  height: 100%;
+}
+
+.cards-grid.cards-grid-cta-card .grid-card:hover {
+  box-shadow: 0 8px 24px 0 rgb(0 0 0 / 12%);
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
+  font-family: var(--font-family-semibold);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  margin-bottom: var(--spacing-12, 12px);
+  padding: 12px 32px;
+  margin-top: -24px;
+  position: relative;
+  z-index: 1;
+  background-image: url('/content/dam/abbvie-eds-poc/stroke--heading-back.svg');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 {
+  font-size: var(--font-size-body);
+  color: var(--color-iron);
+  margin-bottom: var(--spacing-16, 16px);
+  padding: 0 24px 24px;
+}
+
+/* Default: plain text links with arrow (indication cards) */
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a {
+  display: inline-block;
+  color: var(--color-iron, #46484a);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  line-height: 24px;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a::after {
+  content: '';
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  background-image: url('/content/dam/abbvie-eds-poc/icon-circle-arrow-right-plum.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  margin-left: 10px;
+  position: relative;
+  top: 3px;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a:hover {
+  text-decoration: underline;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 p {
+  font-size: 16px;
+  font-family: var(--body-font-family);
+  color: var(--color-iron, #46484a);
+  margin: 0 0 12px;
+  line-height: 24px;
+}
+
+/* Glacier/support section — no card chrome, pill CTA */
+
+.section.glacier .cards-grid.cards-grid-cta-card {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 24px;
+}
+
+@media (min-width: 986px) {
+  .section.glacier .cards-grid.cards-grid-cta-card {
+    max-width: 75%;
+    padding: 0;
+  }
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .grid-card {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 20px;
+  padding: 24px;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .grid-card:hover {
+  box-shadow: none;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
+  background-image: none;
+  font-size: 0;
+  padding: 0;
+  margin: 0 0 12px;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-1 img {
+  width: 76px;
+  height: 75px;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-2 {
+  font-family: var(--font-family-semibold, 'Graphik Semibold', 'Helvetica Neue', arial, sans-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  color: var(--color-charcoal, #25282a);
+  margin: 0;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-charcoal, #25282a);
+  line-height: 24px;
+  margin: 0;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  background: var(--color-brand-primary, #90124a);
+  color: #fff;
+  padding: 16px 54px 16px 32px;
+  border-radius: 100px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/content/dam/abbvie-eds-poc/icon-circle-arrow-right-white.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a:hover {
+  background: var(--color-plum-dark, #6e0e3a);
+  text-decoration: none;
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */

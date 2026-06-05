@@ -1,0 +1,256 @@
+@import '../text-container.css';
+@import '../../../styles/rinvoq-hcp/tokens.css';
+
+/* stylelint-disable selector-class-pattern, no-descending-specificity */
+
+.text-container {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+.text-container h3 {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: var(--color-charcoal, #25282a);
+  margin: 24px 0 32px;
+}
+
+.text-container h4 {
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--color-charcoal, #25282a);
+  margin: 16px 0 8px;
+}
+
+.text-container p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--color-iron, #46484a);
+  margin: 0 0 16px;
+}
+
+.text-container strong,
+.text-container b {
+  font-family: var(--font-family-semibold, 'Graphik Semibold', 'Helvetica Neue', arial, sans-serif);
+  font-weight: 400;
+}
+
+.text-container ul {
+  list-style: disc;
+  padding: 0 0 0 24px;
+  margin: 4px 0 0;
+}
+
+.text-container ul > li::before {
+  display: none;
+}
+
+.text-container li {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--color-iron, #46484a);
+  margin: 0 0 4px;
+}
+
+.text-container li:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+.text-container a {
+  all: unset;
+  color: var(--color-brand-primary, #90124a);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.text-container a:hover {
+  background-size: 0;
+  color: var(--color-plum-dark, #6e0e3a);
+}
+
+.text-container.boxed-warning {
+  border: none;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.text-container.boxed-warning p {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.text-container.boxed-warning ul,
+.text-container.boxed-warning ol {
+  padding-left: 44px;
+  padding-right: 20px;
+}
+
+@media (width >= 986px) {
+  .text-container.boxed-warning p {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .text-container.boxed-warning ul,
+  .text-container.boxed-warning ol {
+    padding-left: 24px;
+    padding-right: 0;
+  }
+}
+
+.text-container.boxed-warning h3:first-of-type {
+  position: relative;
+  background: url('/content/dam/abbvie-eds-poc/stroke--cta-block.svg') center center / 100% no-repeat;
+  padding: 12px 24px 12px 20px;
+  display: block;
+  width: fit-content;
+  margin: 24px 0 32px;
+}
+
+@media (width >= 986px) {
+  .text-container.boxed-warning h3:first-of-type {
+    background: url('/content/dam/abbvie-eds-poc/stroke--heading.svg') center top / 100% no-repeat;
+    padding: 12px 24px;
+    margin-left: -24px;
+  }
+
+  .text-container.boxed-warning h3:first-of-type::after {
+    left: 24px;
+  }
+
+  .text-container.boxed-warning h3:nth-of-type(2) {
+    padding: 12px 24px;
+    margin-left: -24px;
+    background-size: contain;
+  }
+}
+
+.text-container.boxed-warning h3:first-of-type::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 75px;
+  height: 7px;
+  bottom: -20px;
+  left: 20px;
+  background-color: var(--color-iron, #46484a);
+}
+
+.text-container.boxed-warning h3:nth-of-type(2) {
+  background-image: url('/content/dam/abbvie-eds-poc/stroke--subheading.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 12px 24px 12px 20px;
+  display: inline-block;
+  margin-top: 0;
+}
+
+.text-container.legal {
+  padding: 0;
+}
+
+.text-container.legal h4 {
+  font-family: var(--body-font-family);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--color-brand-primary, #90124a);
+  background: none;
+  margin: 12px 0 4px;
+  padding: 0 0 0 20px;
+}
+
+@media (width >= 986px) {
+  .text-container.legal h4 {
+    padding-left: 0;
+  }
+}
+
+.text-container.legal h3:first-of-type {
+  background: url('/content/dam/abbvie-eds-poc/stroke--cta-block.svg') center center / 100% no-repeat;
+  padding: 12px 32px 16px 20px;
+  display: inline-block;
+  margin: 0;
+}
+
+@media (width >= 986px) {
+  .text-container.legal h3:first-of-type {
+    background: url('/content/dam/abbvie-eds-poc/stroke--heading.svg') center top / 100% no-repeat;
+    padding: 12px 32px 16px;
+    margin-left: -32px;
+  }
+}
+
+.text-container.legal p {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.text-container.legal ul,
+.text-container.legal ol {
+  padding-left: 44px;
+  padding-right: 20px;
+}
+
+@media (width >= 986px) {
+  .text-container.legal p {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .text-container.legal ul,
+  .text-container.legal ol {
+    padding-left: 24px;
+    padding-right: 0;
+  }
+}
+
+.text-container.references {
+  max-width: none;
+  padding: 24px 20px 48px;
+}
+
+.text-container.references p {
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-brand-primary, #90124a);
+  margin: 0;
+  padding: 0;
+}
+
+.text-container.references ol {
+  list-style: decimal;
+  padding: 0 0 0 18px;
+  margin: 16px 0;
+}
+
+.text-container.references li {
+  font-size: 16px;
+  font-family: var(--body-font-family);
+  color: var(--color-iron, #46484a);
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+}
+
+@media (width >= 986px) {
+  .text-container.references {
+    max-width: 1220px;
+    margin: 0 auto;
+    padding: 0 20px 48px;
+  }
+}
+
+/* stylelint-enable selector-class-pattern, no-descending-specificity */
