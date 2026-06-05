@@ -2348,7 +2348,23 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   margin: 0 0 24px;
 }
 
-.section.dosing-cta a {
+.section.dosing-cta .button-container:first-of-type {
+  margin-bottom: 8px;
+}
+
+.section.dosing-cta .button-container:first-of-type::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-document.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section.dosing-cta .button-container:first-of-type a,
+.section.dosing-cta .button-container:first-of-type a.button {
   display: inline-flex;
   align-items: center;
   background-color: rgb(144, 18, 74);
@@ -2362,7 +2378,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   position: relative;
 }
 
-.section.dosing-cta a::after {
+.section.dosing-cta .button-container:first-of-type a::after {
   content: '';
   position: absolute;
   right: 22px;
@@ -2370,7 +2386,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-document.svg');
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -2385,11 +2401,21 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   padding: 12px 0;
   border-radius: 0;
   text-decoration: none;
-  position: static;
+  position: relative;
 }
 
 .section.dosing-cta .button-container:last-child a::after {
-  display: none;
+  content: '';
+  position: relative;
+  top: 4px;
+  right: 0;
+  width: 19px;
+  height: 19px;
+  margin-left: 10px;
+  display: inline-block;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-right-plum.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Mobile overrides for dosing page */
