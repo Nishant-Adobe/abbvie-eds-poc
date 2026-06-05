@@ -2,3 +2,481 @@
 @import 'fonts.css';
 
 /* LINZESS DTC — Brand-specific style overrides */
+
+body.appear {
+  background-color: var(--color-brand-primary);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+main > .section {
+  margin-bottom: 0;
+}
+
+/* Transcript section — outer container */
+.section.transcript,
+main > .section:first-of-type:not(.hero-container) {
+  background-color: #fff;
+  position: relative;
+  overflow: visible;
+  padding: 0 0 var(--spacing-100);
+  margin: var(--spacing-80) 0 0;
+  max-width: none;
+  width: 100%;
+}
+
+/* Arc/curve — white ellipse overlapping purple body */
+.section.transcript::before,
+main > .section:first-of-type:not(.hero-container)::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+/* Transcript content wrapper — centered with 48px side padding */
+.section.transcript .rich-text-wrapper,
+main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-48);
+}
+
+.section.transcript + .section,
+main > .section:first-of-type:not(.hero-container) + .section {
+  border-radius: 0;
+}
+
+.section.transcript h1,
+main > .section .default-content-wrapper h1 {
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-text-heading);
+  text-align: center;
+  line-height: var(--spacing-30);
+  margin: 0;
+  padding: 0;
+}
+
+.section.transcript h1::before,
+main > .section .default-content-wrapper h1::before {
+  content: '';
+  display: block;
+  width: var(--spacing-64);
+  height: var(--spacing-05);
+  background-image: url('/icons/divider.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto var(--spacing-10);
+}
+
+.section.transcript .default-content-wrapper p,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-color);
+  margin: var(--spacing-16) 0;
+  padding: 0;
+}
+
+.section.transcript .default-content-wrapper strong,
+.section.transcript .default-content-wrapper b,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper strong,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper b {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.section.transcript .default-content-wrapper h2,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: var(--spacing-16) 0;
+}
+
+.section.transcript .default-content-wrapper h2:first-of-type,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2:first-of-type {
+  margin: var(--spacing-40) 0 var(--spacing-16);
+}
+
+.section.transcript .default-content-wrapper ul,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper ul {
+  margin: var(--spacing-16) 0;
+  padding: 0 0 0 var(--spacing-40);
+}
+
+.section.transcript .default-content-wrapper li,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper li {
+  margin: 0;
+  padding: 0;
+}
+
+/* ISI section */
+.section.isi,
+main > .section:nth-of-type(2):not(.safety-bar-container) {
+  background-color: #fff;
+  position: relative;
+  padding: 0 var(--spacing-20) var(--spacing-80);
+  margin: 0 0 var(--spacing-20);
+  max-width: 100%;
+  width: 100%;
+}
+
+.section.isi .default-content-wrapper,
+main > .section:nth-of-type(2):not(.safety-bar-container) .default-content-wrapper {
+  max-width: 124rem;
+  margin: 0 auto;
+}
+
+.section.isi h3,
+main > .section:nth-of-type(2):not(.safety-bar-container) h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  text-transform: none;
+  margin: var(--spacing-10) 0 0;
+  padding: 0;
+}
+
+.section.isi p,
+main > .section:nth-of-type(2):not(.safety-bar-container) p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi ul,
+main > .section:nth-of-type(2):not(.safety-bar-container) ul {
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+.section.isi li,
+main > .section:nth-of-type(2):not(.safety-bar-container) li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi strong,
+.section.isi b,
+main > .section:nth-of-type(2):not(.safety-bar-container) strong,
+main > .section:nth-of-type(2):not(.safety-bar-container) b {
+  font-family: var(--font-family-legal-bold);
+  color: var(--color-text-muted);
+  font-weight: normal;
+}
+
+.section.isi a,
+main > .section:nth-of-type(2):not(.safety-bar-container) a {
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+/* Desktop — arc grows larger + font-size 16px */
+@media (min-width: 900px) {
+  .section.transcript::before,
+  main > .section:first-of-type:not(.hero-container)::before {
+    top: -60px;
+    width: 130%;
+    height: 75px;
+  }
+
+  .section.transcript .default-content-wrapper p,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+    font-size: 16px;
+    margin: 16px 0;
+  }
+
+  .section.transcript .default-content-wrapper h2,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+    font-size: 16px;
+    margin: 16px 0;
+  }
+}
+
+/* Mobile — transcript and ISI padding adjustments */
+@media (width <= 744px) {
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    padding: 0 var(--spacing-16);
+  }
+
+  .section.isi h3,
+  main > .section:nth-of-type(2):not(.safety-bar-container) h3 {
+    font-size: var(--font-size-legal);
+  }
+}
+
+/* ============================================================
+   DIAN-TEST PAGE — Scoped to .section.dian-test-body / .section.dian-test-isi
+   Mobile-first: base = mobile, @media (min-width: 900px) = desktop
+   ============================================================ */
+
+/* --- Section: Transcript body --- */
+.section.dian-test-body.abbvie-container {
+  background-color: #fff;
+  position: relative;
+  overflow: visible;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  max-width: none;
+  width: 100%;
+}
+
+.section.dian-test-body.abbvie-container + .section {
+  margin-top: 0;
+}
+
+.section.dian-test-body .rich-text-wrapper {
+  padding: 0 20px;
+}
+
+.section.dian-test-body h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: #422e83;
+  text-align: center;
+  line-height: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body h1::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background-image: url('/icons/divider.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto 10px;
+}
+
+.section.dian-test-body h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #422e83;
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body h2:first-of-type {
+  margin-top: 40px;
+}
+
+.section.dian-test-body p {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4d4d4f;
+  line-height: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body strong {
+  font-weight: 700;
+  color: #4d4d4f;
+}
+
+.section.dian-test-body em {
+  font-style: italic;
+  color: #4d4d4f;
+}
+
+.section.dian-test-body ul {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: #4d4d4f;
+  margin: 16px 0;
+  padding: 0 0 0 40px;
+}
+
+.section.dian-test-body li {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: #4d4d4f;
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body a {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: #4d4d4f;
+  text-decoration: underline;
+}
+
+.section.dian-test-body sup {
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* Arc/curve ::before */
+.section.dian-test-body::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+/* --- Section: ISI --- */
+.section.dian-test-isi.abbvie-container {
+  background-color: #fff;
+  position: relative;
+  margin: 0 0 20px;
+  padding: 0 20px 80px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.section.dian-test-isi h3 {
+  font-family: 'BasicCommercialLT-Black', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #422e83;
+  line-height: normal;
+  text-transform: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.section.dian-test-isi p {
+  font-family: 'BasicCommercialLT-Roman', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #555;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.section.dian-test-isi strong,
+.section.dian-test-isi b {
+  font-family: 'BasicCommercialLT-Black', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #555;
+}
+
+.section.dian-test-isi a {
+  font-family: 'BasicCommercialLT-Roman', sans-serif;
+  font-size: 14px;
+  color: #422e83;
+  text-decoration: underline;
+}
+
+.section.dian-test-isi ul {
+  font-family: 'BasicCommercialLT-Roman', sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+  color: #555;
+  margin: 10px 0;
+  padding: 0 0 0 15px;
+}
+
+.section.dian-test-isi li {
+  font-family: 'BasicCommercialLT-Roman', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #555;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.section.dian-test-isi li strong {
+  font-family: 'BasicCommercialLT-Black', sans-serif;
+  font-weight: 400;
+  color: #555;
+}
+
+.section.dian-test-isi sup {
+  font-size: 0.7em;
+  color: #555;
+  line-height: 0;
+}
+
+/* --- Desktop (min-width: 900px) --- */
+@media (min-width: 900px) {
+  .section.dian-test-body.abbvie-container {
+    padding: 0 0 100px;
+    margin-top: 80px;
+  }
+
+  .section.dian-test-body::before {
+    top: -60px;
+    width: 130%;
+    height: 75px;
+  }
+
+  .section.dian-test-body h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .section.dian-test-body .rich-text-wrapper {
+    max-width: 998px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .section.dian-test-body h2 {
+    font-size: 16px;
+    margin: 16px 0;
+  }
+
+  .section.dian-test-body h2:first-of-type {
+    margin-top: 40px;
+  }
+
+  .section.dian-test-body p {
+    font-size: 16px;
+    margin: 16px 0;
+  }
+
+  .section.dian-test-isi .default-content-wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+}

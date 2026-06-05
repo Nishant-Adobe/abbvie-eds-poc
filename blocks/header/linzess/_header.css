@@ -28,13 +28,13 @@ header .nav-eyebrow p { font-size: var(--font-size-11); }
 
 header .nav-eyebrow a { text-decoration: underline; }
 
-/* Nav wrapper — dark charcoal */
+/* Nav wrapper — solid dark charcoal (prevents page bg bleed-through) */
 header .nav-wrapper {
-  background-color: transparent;
+  background-color: var(--color-nav-dark);
   position: relative;
 }
 
-header:has(.nav-utility ul) {
+header.has-utility-nav {
   background: var(--header-eyebrow-gradient);
   height: auto;
 }
@@ -50,7 +50,7 @@ header .nav-utility {
   border-bottom: var(--separator-height-1) solid var(--header-utility-border);
 }
 
-header .nav-utility:has(ul) {
+header.has-utility-nav .nav-utility {
   display: block;
 }
 
@@ -530,10 +530,10 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
   }
 
   /* Nav items — flex row, push CTA to far right */
-  header nav .nav-sections .default-content-wrapper > ul {
+  header .nav-wrapper nav .nav-sections .default-content-wrapper > ul {
     align-items: center;
     display: flex;
-    gap: 0 !important;
+    gap: 0;
     justify-content: flex-start;
     margin: 0;
   }

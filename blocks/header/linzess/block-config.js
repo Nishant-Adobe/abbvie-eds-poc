@@ -8,6 +8,10 @@ export default async function getBlockConfigs() {
       afterDecorate: (block) => {
         block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
 
+        if (block.querySelector('.nav-utility ul')) {
+          block.closest('header')?.classList.add('has-utility-nav');
+        }
+
         // Remove ISI trigger text ("top") injected into the eyebrow bar by buildEyebrows.
         const eyebrow = block.querySelector('.nav-eyebrow-top');
         if (eyebrow) {
