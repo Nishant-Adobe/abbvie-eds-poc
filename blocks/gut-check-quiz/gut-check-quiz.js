@@ -44,6 +44,11 @@ function buildQuizHTML(questions, emailConfig, recaptchaImg) {
           <span>Sign up for resources and support</span>
         </label>
       </div>
+      ${emailConfig.body ? `<div class="quiz-consent">
+        <div class="quiz-consent-text">${emailConfig.body}</div>
+        <button type="button" class="quiz-consent-toggle">+ Expand for more information</button>
+        <div class="quiz-consent-expanded" hidden></div>
+      </div>` : ''}
       ${recaptchaImg ? `<div class="quiz-recaptcha">${recaptchaImg}</div>` : ''}
       <button type="button" class="quiz-submit-btn">
         <span>Email My Results</span>
@@ -116,6 +121,17 @@ function initQuiz(block) {
       }
     });
   });
+
+  // Consent expandable toggle
+  const consentToggle = block.querySelector('.quiz-consent-toggle');
+  if (consentToggle) {
+    consentToggle.addEventListener('click', () => {
+      const expanded = block.querySelector('.quiz-consent-expanded');
+      const isHidden = expanded.hidden;
+      expanded.hidden = !isHidden;
+      consentToggle.textContent = isHidden ? '- Collapse information' : '+ Expand for more information';
+    });
+  }
 
   const submitBtn = block.querySelector('.quiz-submit-btn');
   if (submitBtn) {
