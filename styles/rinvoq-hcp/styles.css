@@ -2148,38 +2148,53 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 .section.dosing-lab-data {
   max-width: 1220px;
   margin: 0 auto;
-  padding: 48px 20px;
-  border-top: 1px solid rgb(201, 201, 202);
+  padding: 0 20px;
+}
+
+.section.dosing-lab-data > .default-content-wrapper {
+  background-color: rgb(245, 245, 245);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 24px 0;
 }
 
 .section.dosing-lab-data h3 {
-  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: rgb(37, 40, 42);
-  line-height: 30px;
-  margin: 0 0 8px;
+  color: rgb(70, 72, 74);
+  line-height: 28.8px;
+  margin: 0 0 4px;
+}
+
+.section.dosing-lab-data > .default-content-wrapper > p:first-of-type {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
+  margin: 0 0 16px;
 }
 
 .section.dosing-lab-data table {
   width: 100%;
   border-collapse: collapse;
-  margin: 16px 0 24px;
+  margin: 16px 0 8px;
 }
 
 .section.dosing-lab-data table th,
 .section.dosing-lab-data table td {
   padding: 10px 16px;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 14px;
   line-height: 20px;
   text-align: left;
-  border-bottom: 1px solid rgb(201, 201, 202);
+  border-bottom: 1px dashed rgb(201, 201, 202);
 }
 
 .section.dosing-lab-data table th[scope="col"] {
   font-weight: 600;
   color: rgb(37, 40, 42);
-  background-color: rgb(245, 245, 245);
 }
 
 .section.dosing-lab-data table th[scope="row"] {
@@ -2189,6 +2204,29 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 
 .section.dosing-lab-data table td {
   color: rgb(70, 72, 74);
+}
+
+.section.dosing-lab-data > .default-content-wrapper > p:nth-last-child(1),
+.section.dosing-lab-data > .default-content-wrapper > p:nth-last-child(2) {
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
+}
+
+.section.dosing-lab-data > .default-content-wrapper > p:last-child {
+  background-color: rgb(255, 209, 0);
+  padding: 12px;
+  border-radius: 10px;
+  margin: 16px 0;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.section.dosing-lab-data > .default-content-wrapper > table + p {
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  margin: 4px 0 0;
 }
 
 /* Dosing CTA section */
