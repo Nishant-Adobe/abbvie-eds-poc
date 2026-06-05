@@ -602,6 +602,7 @@
   /* Secondary link blue (e.g. nav preview tools column; legacy #0662BB) */
   --color-link-secondary: #0662BB;
   --background-color: #fff;
+  --color-black: #000;
   --highlight-background-color: #f1f3ff;
   --highlight-dark-background-color:#0066F5;
   --container-border-color: #a6b5e0;
@@ -626,9 +627,21 @@
   --overlay-navy: rgb(7 29 73 / 70%);
   --overlay-navy-medium: rgb(7 29 73 / 55%);
   --overlay-navy-light: rgb(7 29 73 / 50%);
+  --color-overlay-dark: rgb(0 0 0 / 60%);
+  --color-overlay-light: rgb(255 255 255 / 80%);
+  --color-charcoal: #25282a;
+  --color-text-compliance: #6c757d;
+  --color-border-tabs: #dde1e6;
+  --color-border: #e0e0e0;
+  --color-border-light: #ddd;
+  --color-focus: var(--link-color);
+  --color-white-85: rgb(255 255 255 / 85%);
+  --color-shadow-sm: rgb(0 0 0 / 12%);
+  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
+  --color-text-on-dark: #fff;
   --color-navy-dark: #071d49;
   --color-blue-light: #a6b5e0;
   --color-blue-very-light: #f1f3ff;
@@ -649,6 +662,8 @@
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
+  --color-warning-bg: #fff4c2;
+  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -715,12 +730,15 @@
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
+  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
+  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
+  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -736,7 +754,9 @@
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
+  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
+  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -746,7 +766,9 @@
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
+  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
+  --spacing-48: 4.8rem;
   --spacing-50: 5rem;
   --spacing-52: 5.2rem;
   --spacing-55: 5.5rem;
@@ -766,10 +788,15 @@
   --spacing-110: 11rem;
   --spacing-120: 12rem;
   --spacing-124: 12.4rem;
+  --spacing-155: 15.5rem;
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
+  --spacing-200: 20rem;
+  --spacing-225: 22.5rem;
+  --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
+  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -801,6 +828,12 @@
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
+  --border-radius-l: 1.6rem;
+
+  /* Border Width */
+  --border-width-thin: 1px;
+  --border-width-default: 2px;
+  --border-width-thick: 3px;
 
   /* z-index */
   --z-index-negative: -1;
@@ -809,11 +842,18 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-60: 60;
+
+  /* Opacity */
+  --opacity-full: 1;
+  --z-index-anchor-nav: 100;
+  --z-index-safety-bar: 500;
 
   /* Flex/Grid order */
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
+  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -821,6 +861,7 @@
   --content-max-width-narrow: 110rem;
   --content-max-width-medium: 90rem;
   --content-max-width-faq: 80rem;
+  --section-max-width: 120rem;
   --icon-size: 2.4rem;
 
   /* Font Weight */
@@ -831,8 +872,12 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-900: 900;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
 
   /* Gap */
   --gap-0: 0;
@@ -853,6 +898,7 @@
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
+  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -862,13 +908,20 @@
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
+  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
 
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --transition-easing-in-out: ease-in-out;
+  --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
+  --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
   --border-subtle: var(--separator-height-1) solid var(--container-border-color);
   --text-subtle: var(--color-gray-dark);
@@ -916,6 +969,52 @@
   --form-warning-color: #d32f2f;
 
   /* Form Fonts */
+
+  /* ---- Brand Explorer Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
+  --be-color-bg: var(--background-color);
+  --be-color-text: var(--text-color);
+  --be-color-text-light: #21406d;
+  --be-color-bar-bg: #25282a;
+  --be-color-bar-text: #fff;
+  --be-color-border: #d8d8d8;
+  --be-color-border-mobile: #e0e0e0;
+  --be-color-separator: #ccc;
+  --be-color-muted: #50535c;
+  --be-color-btn-hover: #1c2d49;
+  --be-color-btn-no-border: #555;
+  --be-color-btn-no-hover: #f5f5f5;
+  --be-color-overlay: rgb(0 0 0 / 60%);
+  --be-font-body: var(--body-font-family);
+  --be-font-size-body: 14px;
+  --be-font-size-small: 11px;
+  --be-font-size-bar: 0.9rem;
+  --be-font-weight-bold: var(--font-weight-700);
+  --be-font-weight-normal: var(--font-weight-400);
+  --be-line-height-body: 16px;
+  --be-line-height-small: 14px;
+
+  /* ---- Clinical Data Panel Block (defaults — brands override in styles/{brand}/tokens.css) ---- */
+  --cdp-color-text: var(--text-color);
+  --cdp-color-heading: var(--text-color);
+  --cdp-color-accent: var(--link-color);
+  --cdp-color-muted: var(--color-text-muted);
+  --cdp-color-border: var(--container-border-color);
+  --cdp-font-body: var(--body-font-family);
+  --cdp-font-heading: var(--heading-font-family);
+  --cdp-font-size-title: var(--font-size-22);
+  --cdp-font-size-callout: var(--font-size-26);
+  --cdp-font-size-body: var(--font-size-14);
+  --cdp-font-size-small: var(--font-size-13);
+  --cdp-font-weight-bold: var(--font-weight-700);
+  --cdp-font-weight-normal: var(--font-weight-400);
+  --cdp-line-height-callout: var(--line-height-30);
+  --cdp-line-height-body: 18px;
+  --cdp-line-height-default: var(--line-height-16);
+  --cdp-spacing-sm: var(--spacing-08);
+  --cdp-spacing-md: var(--spacing-16);
+  --cdp-spacing-lg: var(--spacing-24);
+  --cdp-max-width: 1180px;
+  --cdp-letter-spacing-title: 0.02em;
 }
 @media (--bp-tablet) {
   :root {
@@ -944,8 +1043,9 @@
   --color-brand-primary-light: #e8edef;
 
   /* ---- Color: Brand Accent ---- */
-  --color-brand-accent: #ffd100;
+  --color-brand-accent: #ffce00;
   --color-brand-accent-teal: #005272;
+  --color-accent-gold: #f6c741;
 
   /* ---- Color: Named Palette (shared AbbVie framework) ---- */
   --color-plum: #90124a;
@@ -960,23 +1060,27 @@
   --color-venclexta-navy: #071d49;
 
   /* ---- Color: Text ---- */
-  --text-color: #46484a;
-  --color-text-heading: #25282a;
+  --color-text-callout: #3f3f3f;
+  --text-color: #404040;
+  --color-text-heading: #005272;
   --color-text-heading-brand: #005272;
   --color-text-on-dark: #fff;
-  --color-text-link: #90124a;
+  --color-text-link: #005272;
   --color-text-legal: #404040;
+  /* Live venclexta.com renders footer link text in off-white (#e8edef) */
+  --color-text-footer-link: var(--color-brand-primary-light);
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
   --color-background-light: #f5f5f5;
-  --color-background-footer: #000;
-  --color-background-safety-bar: #f5f5f5;
+  /* Live venclexta.com footer bg is dark teal #003b52, not pure black */
+  --color-background-footer: var(--color-brand-primary-dark);
+  --color-background-safety-bar: #fff;
   --color-background-container: #003b52;
 
   /* ---- Color: Border ---- */
   --color-border-brand: #005272;
-  --color-border-safety: #ffd100;
+  --color-border-safety: #999;
   --color-border-default: #ccc;
 
   /* ---- Color: Shadow ---- */
@@ -985,10 +1089,10 @@
   --shadow-default: 0 4px 19px 0 rgba(0, 0, 0, 0.07);
 
   /* ---- Font: Family ---- */
-  --body-font-family: 'Graphik', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --heading-font-family-bold: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
-  --font-family-medium: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --body-font-family: 'Red Hat Display', sans-serif;
+  --heading-font-family: 'Red Hat Display', sans-serif;
+  --heading-font-family-bold: 'Red Hat Display', sans-serif;
+  --font-family-medium: 'Red Hat Display', sans-serif;
   --font-family-brand: 'Red Hat Display', sans-serif;
   --icon-font-family: 'abbv-iconFont';
 
@@ -996,10 +1100,12 @@
   --font-size-body: 16px;
   --font-size-body-small: 11px;
   --font-size-nav: 16px;
+  --font-size-nav-button: 1.44rem;
   --font-size-footer: 16px;
-  --font-size-h1: 26px;
-  --font-size-h2: 20px;
-  --font-size-h3: 14px;
+  --font-size-h1: 40px;
+  --font-size-h1-inner: 25px;
+  --font-size-h2: 24px;
+  --font-size-h3: 18.72px;
   --font-size-h4-brand: 16px;
   --font-size-h5-brand: 17.6px;
   --font-size-h-xl: 35.2px;
@@ -1007,7 +1113,7 @@
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
-  --font-weight-heading: 600;
+  --font-weight-heading: 700;
   --font-weight-button: 700;
   --font-weight-brand-heading: 700;
 
@@ -1020,17 +1126,131 @@
   --line-height-h-xl: 52.8px;
 
   /* ---- Border: Radius ---- */
-  --border-radius-button-primary: 100px;
+  --border-radius-button-primary: 8px;
+  --border-radius-button-secondary: 10px;
+  --border-radius-button-tertiary: 10px;
   --border-radius-card: 10px;
   --border-radius-card-corner: 14px;
 
   /* ---- Button: Primary ---- */
+  --button-primary-bg: #005570;
   --button-primary-color: #fff;
-  --button-primary-bg: #90124a;
-  --button-primary-padding: 16px 54px 16px 32px;
+  --button-primary-border: #005570;
+  --button-primary-padding: 10px 30px 10px 15px;
+  --button-primary-font-size: 18px;
+  --button-primary-font-weight: 400;
+  --button-primary-hover-bg: #003d50;
+  --button-primary-hover-color: #fff;
+
+  /* ---- Button: Secondary ---- */
+  --button-secondary-bg: #ffce00;
+  --button-secondary-color: #404040;
+  --button-secondary-border: transparent;
+  --button-secondary-padding: 12px 20px;
+  --button-secondary-hover-bg: #e6b900;
+  --button-secondary-hover-color: #404040;
+
+  /* ---- Button: Tertiary ---- */
+  --button-tertiary-bg: transparent;
+  --button-tertiary-color: #404040;
+  --button-tertiary-border: #555;
+  --button-tertiary-padding: 16px 70px 16px 24px;
+  --button-tertiary-font-size: 18px;
+  --button-tertiary-hover-bg: #005272;
+  --button-tertiary-hover-color: #fff;
+
+  /* ---- Button: Plain ---- */
+  --button-plain-color: #005272;
+  --button-plain-weight: 500;
+  --button-plain-hover-color: #008481;
+
+  /* ---- Toggle ---- */
+  --toggle-bg-off: #ccc;
+  --toggle-bg-on: #005272;
+  --toggle-thumb-color: #fff;
 
   /* ---- Link ---- */
-  --link-color: #90124a;
+  --link-color: #005272;
+
+  /* ---- Opacity ---- */
+  --opacity-hover: 0.85;
+  --opacity-muted: 0.5;
+
+  /* ---- Header block ---- */
+  --nav-height-mobile: var(--spacing-60);
+  --header-nav-item-height-mobile: 7.6rem;
+  --header-logo-width: 30rem;
+  --header-logo-width-mobile: 20rem;
+  --header-content-max-width: 118rem;
+  --header-submenu-width: 22rem;
+  --header-nav-line-height: 1.3;
+  --header-nav-separator: rgb(0 0 0 / 10%);
+  --header-nav-separator-on-dark: rgb(255 255 255 / 20%);
+  --header-mobile-nav-padding: var(--spacing-16) var(--spacing-20);
+  --icon-svg-plus-circle: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.5'><circle cx='12' cy='12' r='10'/><line x1='12' y1='7' x2='12' y2='17'/><line x1='7' y1='12' x2='17' y2='12'/></svg>");
+  --icon-svg-minus-circle: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.5'><circle cx='12' cy='12' r='10'/><line x1='7' y1='12' x2='17' y2='12'/></svg>");
+  --header-mobile-icon-size: var(--spacing-24);
+  --header-scroll-bg: rgb(255 255 255 / 92%);
+
+  /* ---- Header: Utility bar colors ---- */
+  --color-utility-link: #c4c1bf;
+  --color-accent-yellow: #ffce00;
+  --color-dropdown-hover-text: #404040;
+  --color-dropdown-hover-bg: #f2f2f2;
+
+  /* ---- Header: Nav submenu ---- */
+  --color-submenu-hover-bg: #fff4c4;
+  --color-nav-item-hover-bg: #ffce00;
+  --border-radius-submenu: 0.2rem;
+  --header-submenu-z-index: 102;
+  --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
+
+  /* ---- Header: Search panel ---- */
+  --header-search-panel-top: 45%;
+  --header-search-panel-left: 74%;
+  --header-search-panel-radius: 0.5rem;
+  --header-search-panel-min-height: 6.2rem;
+  --header-search-z-index: 99;
+  --header-search-input-min-width: 28rem;
+  /* ---- Hero: Venclexta-specific ---- */
+  --hero-full-min-height: 56rem;
+  --hero-full-min-height-tablet: 64rem;
+  --hero-full-min-height-mobile: 58rem;
+  --hero-full-text-max-width: 72rem;
+  --hero-full-text-max-width-tablet: 82rem;
+  --hero-full-text-max-width-desktop: 68rem;
+  --hero-full-text-margin-top: 15rem;
+  --hero-full-text-margin-top-tablet: 19.6rem;
+  --hero-full-content-max-width: 61rem;
+  --hero-full-content-max-width-desktop: 62rem;
+  --hero-full-text-padding: 0 2rem 5.6rem;
+  --hero-full-text-padding-tablet: 0 7rem 6.4rem;
+  --hero-overlay-gradient-full: linear-gradient(90deg,
+      rgb(0 0 0 / 96%) 0%,
+      rgb(0 0 0 / 86%) 22%,
+      rgb(0 0 0 / 58%) 46%,
+      rgb(0 0 0 / 12%) 72%,
+      rgb(0 0 0 / 0%) 100%);
+  --hero-overlay-gradient-full-mobile: linear-gradient(180deg,
+      rgb(0 0 0 / 55%) 0%,
+      rgb(0 0 0 / 45%) 24%,
+      rgb(0 0 0 / 88%) 100%);
+  --hero-no-padding-min-height: 56rem;
+  --hero-indication-bg: rgb(0 0 0 / 45%);
+  --hero-eyebrow-gap: 0.5em;
+  --hero-divider-width: 3px;
+  --hero-caret-width: 0.4rem;
+  --hero-caret-height: 2.6rem;
+  --hero-caption-bottom: 2rem;
+  --hero-h1-font-size: 2rem;
+  --hero-h1-line-height: 1.18;
+  --hero-h1-font-size-large: clamp(2rem, 2.8vw, 2.7rem);
+  --hero-h1-line-height-large: 1.08;
+  --hero-p-font-size: 1.8rem;
+  --hero-p-line-height: 1.28;
+  --hero-p-font-size-mobile: 1.7rem;
+  --hero-p-line-height-mobile: 1.24;
+  --hero-link-decoration-thickness: 0.12rem;
 }
 /* Venclexta DTC accordion — White BG variation matching venclexta.com */
 .accordion {

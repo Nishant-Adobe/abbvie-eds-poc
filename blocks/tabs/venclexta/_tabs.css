@@ -1,1 +1,48 @@
 @import './tabs.css';
+@import '../../../styles/venclexta/tokens.css';
+
+/* Venclexta — Tabs brand overrides */
+.tabs .tabs-list {
+  border-bottom: 2px solid #ccc;
+  gap: 0;
+}
+
+.tabs .tabs-list button {
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #005272;
+  background: #eaeaea;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding: 12px 20px;
+  margin-right: 4px;
+}
+
+.tabs .tabs-list button[aria-selected='true'] {
+  background: #fff;
+  color: #005272;
+  font-weight: 700;
+  border-bottom: 2px solid #fff;
+  margin-bottom: -2px;
+}
+
+.tabs-panel {
+  border: 1px solid #ccc;
+  border-top: none;
+  padding: 30px;
+  background: #fff;
+}
+
+.tabs-panel .section {
+  max-width: none;
+  padding: 0;
+}
+
+/* Genentech logo in tab panels */
+.tabs-panel .rich-text img,
+.section .rich-text img[alt="Genentech logo"] {
+  max-width: 250px;
+  height: auto;
+}

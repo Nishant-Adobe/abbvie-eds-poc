@@ -284,6 +284,12 @@
   color: #005272;
 }
 
+.rich-text img[alt="Genentech logo"] {
+  max-width: 250px;
+  height: auto;
+  margin: 40px 0 20px;
+}
+
 /* Phone CTA button - transparent bg, bordered, with arrow icon */
 
 .rich-text a[href^="tel:"] {
@@ -337,7 +343,7 @@
   padding-bottom: 0;
 }
 
-.section:not(.gray-bg, .hero-container) {
+.section:not(.gray-bg, .hero-container, .safety-bar-section) {
   max-width: 1180px;
   margin-inline: auto;
   padding-inline: 20px;
@@ -489,6 +495,21 @@
 }
 
 /* stylelint-enable no-descending-specificity */
+
+/* Nav card section: CTA row layout */
+
+.section:has(.rich-text + .cta.abbv-button-secondary) {
+  text-align: center;
+}
+
+.section:has(.rich-text + .cta.abbv-button-secondary) .cta-wrapper {
+  display: inline-flex;
+}
+
+.section .cta.abbv-button-secondary {
+  display: inline-block;
+  margin: 5px 10px;
+}
 
 /* Mobile/Tablet: stack CTA and text vertically */
 
