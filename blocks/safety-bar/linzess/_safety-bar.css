@@ -13,19 +13,21 @@
   max-width: 100%;
 }
 
-/* Dark overlay behind expanded safety bar */
-.safety-bar-overlay {
+/* Dark overlay behind expanded safety bar (CSS-only via ::before) */
+.safety-bar-section::before {
+  content: '';
   position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 50%);
-  z-index: -1;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
-.safety-bar-overlay.is-visible {
+.safety-bar-section:has(.is-expanded)::before {
   opacity: 1;
+  pointer-events: auto;
 }
 
 /* Container */
@@ -140,6 +142,21 @@
   line-height: normal;
   letter-spacing: -0.032rem;
   margin: var(--spacing-10) 0 0;
+}
+
+/* Expanded: h4/h5 purple subtitles (Side Effects, Before you take..., Call your doctor...) */
+.safety-bar.is-expanded .safety-bar-full h4,
+.safety-bar.is-expanded .safety-bar-full h5,
+.safety-bar h4,
+.safety-bar h5 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
 }
 
 /* Expanded: paragraphs */

@@ -33,15 +33,35 @@ main > .section:first-of-type:not(.hero-container) {
 main > .section:first-of-type:not(.hero-container)::before {
   content: "";
   position: absolute;
-  top: -30px;
+  top: -60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  height: 40px;
+  width: 120%;
+  height: 75px;
   background-color: #fff;
   border-top-left-radius: 100%;
   border-top-right-radius: 100%;
   z-index: -5;
+}
+
+/* Footer arc — purple curve above footer */
+footer::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 50px;
+  background-color: var(--color-brand-primary);
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+  z-index: 0;
+}
+
+footer {
+  position: relative;
+  overflow: visible;
 }
 
 /* Transcript content wrapper — centered with 20px side padding (matches live) */
