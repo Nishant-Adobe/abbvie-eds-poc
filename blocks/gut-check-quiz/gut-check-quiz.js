@@ -12,8 +12,8 @@ function buildQuizHTML(questions, emailConfig, recaptchaImg) {
         ${q.instruction ? `<p class="quiz-instruction">${q.instruction}</p>` : ''}
         <div class="quiz-options ${q.type}-group">
           ${q.options.map((opt, oi) => `
-            <button type="button" class="quiz-option" data-index="${oi}" aria-pressed="false">
-              <span class="option-indicator"></span>
+            <button type="button" class="quiz-option" data-index="${oi}" aria-pressed="false"${q.bristolImages ? ` style="background-image:url(${q.bristolImages[oi]});background-size:90px;background-position:center 10px;background-repeat:no-repeat;padding-top:108px"` : ''}>
+              <span class="option-indicator">${q.bristolImages ? oi + 1 : ''}</span>
               <span class="option-text">${opt}</span>
             </button>
           `).join('')}
@@ -206,6 +206,19 @@ export default async function decorate(block) {
           question.image = trailingImg.closest('picture')?.outerHTML || trailingImg.outerHTML;
           i += 1;
         }
+      }
+
+      // If Q3 (bowel movements) add Bristol images
+      if (question.title.includes('bowel movements')) {
+        question.bristolImages = [
+          '/content/dam/abbvie-eds-poc/linzess/images/bristol1.png',
+          '/content/dam/abbvie-eds-poc/linzess/images/bristol2.png',
+          '/content/dam/abbvie-eds-poc/linzess/images/bristol3.png',
+          '/content/dam/abbvie-eds-poc/linzess/images/bristol4.png',
+          '/content/dam/abbvie-eds-poc/linzess/images/bristol5.png',
+          '/content/dam/abbvie-eds-poc/linzess/images/bristol6.png',
+          '/content/dam/abbvie-eds-poc/linzess/images/bristol7.png',
+        ];
       }
 
       questions.push(question);
