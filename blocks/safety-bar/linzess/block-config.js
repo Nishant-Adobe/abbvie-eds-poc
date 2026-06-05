@@ -4,12 +4,14 @@ export default async function getBlockConfigs() {
     variations: [],
     decorations: {
       afterDecorate: () => {
-        const observer = new MutationObserver(() => {
+        const setup = () => {
           const section = document.querySelector('.safety-bar-section');
-          if (!section) return;
-          observer.disconnect();
+          if (!section) {
+            setTimeout(setup, 500);
+            return;
+          }
 
-          let overlay = document.createElement('div');
+          const overlay = document.createElement('div');
           overlay.className = 'safety-bar-overlay';
           section.prepend(overlay);
 
@@ -20,8 +22,8 @@ export default async function getBlockConfigs() {
             overlay.classList.toggle('is-visible', bar.classList.contains('is-expanded'));
           });
           mo.observe(bar, { attributes: true, attributeFilter: ['class'] });
-        });
-        observer.observe(document.body, { childList: true });
+        };
+        setup();
       },
     },
   };
