@@ -441,6 +441,23 @@ export function decorateMain(main) {
       labContent.appendChild(rightCol);
     }
   }
+  // Dosing lab-data: wrap abbreviations + factoid into right column
+  const labData = main.querySelector('.section.dosing-lab-data > .default-content-wrapper');
+  if (labData) {
+    const allP = labData.querySelectorAll('p');
+    const abbrP = Array.from(allP).find((p) => p.textContent.startsWith('ALC='));
+    if (abbrP) {
+      const rightCol = document.createElement('div');
+      rightCol.className = 'lab-data-right-col';
+      let sibling = abbrP;
+      while (sibling) {
+        const next = sibling.nextElementSibling;
+        rightCol.appendChild(sibling);
+        sibling = next;
+      }
+      labData.appendChild(rightCol);
+    }
+  }
 }
 
 /**
