@@ -804,13 +804,10 @@
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
 .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  flex: 0 0 40%;
-  background: var(--linz-white);
-  border-radius: var(--linz-rounded-corner);
-  margin: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 0 0 50%;
+  background: transparent;
+  padding: 0;
+  margin: 0;
   align-self: stretch;
 }
 
@@ -833,18 +830,18 @@
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
 .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  margin-top: -30px;
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
 .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
-  padding: 24px 32px;
+  padding: 0 16px;
   display: flex;
+  place-content: center;
   align-items: center;
-  justify-content: center;
   text-align: center;
 }
 
