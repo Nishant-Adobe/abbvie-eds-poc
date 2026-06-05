@@ -12,7 +12,7 @@ function buildQuizHTML(questions, emailConfig, recaptchaImg) {
         ${q.instruction ? `<p class="quiz-instruction">${q.instruction}</p>` : ''}
         <div class="quiz-options ${q.type}-group">
           ${q.options.map((opt, oi) => `
-            <button type="button" class="quiz-option" data-index="${oi}" aria-pressed="false"${q.bristolImages ? ` style="background-image:url(${q.bristolImages[oi]});background-size:90px;background-position:center 10px;background-repeat:no-repeat;padding-top:108px"` : ''}>
+            <button type="button" class="quiz-option" data-index="${oi}" aria-pressed="false">
               <span class="option-indicator">${q.bristolImages ? oi + 1 : ''}</span>
               <span class="option-text">${opt}</span>
             </button>
