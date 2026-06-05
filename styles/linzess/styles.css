@@ -305,6 +305,189 @@ main > .section.find-relief-off-white::before {
   margin-top: 1.6rem;
 }
 
+/* ── Video heading area: centered text + orange arc ── */
+.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper,
+.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper {
+  text-align: center;
+}
+
+.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper > h2,
+.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper > h2 {
+  text-align: center;
+  position: relative;
+  padding-top: 2rem;
+}
+
+.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper > h2::before,
+.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper > h2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem;
+  height: 3px;
+  background-color: var(--color-brand-accent);
+  border-radius: 2px;
+}
+
+.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper > p,
+.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper > p {
+  text-align: center;
+}
+
+/* ── Video embed card (border container) ── */
+.section.find-relief-checklist > .embed-wrapper,
+.section.find-relief-off-white > .embed-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 2rem auto 0;
+  border: 1px solid var(--linz-light-purple, #d9d7f9);
+  border-radius: 8px 8px 0 0;
+}
+
+/* ── Video caption bar (title + transcript link below embed) ── */
+.section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child,
+.section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--linz-light-purple, #d9d7f9);
+  padding: 16px 24px;
+  margin-top: -1px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid var(--linz-light-purple, #d9d7f9);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+.section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child strong,
+.section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child strong {
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+}
+
+.section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child a,
+.section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child a {
+  color: var(--color-brand-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+/* ── Tabs: centered tab list and "Take LINZESS" heading ── */
+.section.find-relief-off-white .tabs-wrapper {
+  max-width: 900px;
+  margin: 0 auto !important;
+  grid-column: 1 / -1 !important;
+}
+
+.section.find-relief-off-white .tabs-wrapper .tabs-list {
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Tab panel: white card container matching live site ── */
+.tabs-panel {
+  background-color: #fff;
+  border-radius: 16px;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 3rem 2rem;
+  border: 1px solid #e8e5f0;
+}
+
+.tabs-panel[aria-hidden="true"] {
+  display: none;
+}
+
+.tabs-panel .default-content-wrapper {
+  text-align: center;
+}
+
+.tabs-panel .default-content-wrapper p {
+  font-family: var(--heading-font-family);
+  font-size: 1.8rem;
+  color: var(--color-brand-primary);
+  margin-bottom: 0.5rem;
+}
+
+.tabs-panel .default-content-wrapper hr {
+  border: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.tabs-panel .flexbox-wrapper,
+.tabs-panel .flexbox {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tabs-panel .abbvie-container {
+  display: block !important;
+}
+
+.tabs-panel .abbvie-container div {
+  grid-column: unset !important;
+}
+
+/* ── Flexbox column items — force side-by-side layout with icon circles ── */
+main .flexbox.column .flexbox-item {
+  display: grid !important;
+  grid-template-columns: 8rem 1fr !important;
+  gap: 1.6rem !important;
+  align-items: center !important;
+  padding: 2rem !important;
+  border-left: 4px solid #d9d7f9 !important;
+  border-radius: 8px !important;
+  background-color: #f8f7fc !important;
+  margin-bottom: 1.2rem !important;
+  border-bottom: none !important;
+}
+
+main .flexbox.column .flexbox-item > div {
+  grid-column: auto !important;
+}
+
+main .flexbox.column .flexbox-item .flexbox-item-image {
+  width: 6.4rem !important;
+  height: 6.4rem !important;
+  min-width: 6.4rem !important;
+  min-height: 6.4rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #e8e5f5 !important;
+  border-radius: 50% !important;
+  grid-column: 1 !important;
+}
+
+main .flexbox.column .flexbox-item .flexbox-item-image img {
+  width: 4rem !important;
+  height: 4rem !important;
+  max-width: 4rem !important;
+  object-fit: contain !important;
+}
+
+main .flexbox.column .flexbox-item .flexbox-item-content {
+  grid-column: 2 !important;
+}
+
+main .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
+  font-size: 1.8rem !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+  color: var(--color-brand-primary, #422e83) !important;
+  margin-bottom: 0.8rem !important;
+}
+
 @media (width >= 900px) {
   main > .section:first-of-type {
     min-height: var(--hero-behind-nav-min-height-desktop);

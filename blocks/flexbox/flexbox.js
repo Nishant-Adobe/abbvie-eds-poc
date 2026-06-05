@@ -66,6 +66,25 @@ export default async function decorate(block) {
     items.forEach((item) => block.append(item));
   }
 
+  // Column variant: apply inline styles to ensure layout works inside .abbvie-container grid
+  if (block.classList.contains('column')) {
+    block.querySelectorAll('.flexbox-item').forEach((item) => {
+      item.style.cssText = 'display:grid!important;grid-template-columns:8rem 1fr!important;gap:1.6rem!important;align-items:center!important;padding:2rem!important;background-color:#f8f7fc!important;border-left:4px solid #d9d7f9!important;border-radius:8px!important;margin-bottom:1.2rem!important;';
+      const imgDiv = item.querySelector('.flexbox-item-image');
+      if (imgDiv) {
+        imgDiv.style.cssText = 'width:6.4rem!important;height:6.4rem!important;min-width:6.4rem!important;min-height:6.4rem!important;display:flex!important;align-items:center!important;justify-content:center!important;background-color:#e8e5f5!important;border-radius:50%!important;grid-column:1!important;';
+        const img = imgDiv.querySelector('img');
+        if (img) img.style.cssText = 'width:4rem!important;height:4rem!important;max-width:4rem!important;object-fit:contain!important;';
+      }
+      const contentDiv = item.querySelector('.flexbox-item-content');
+      if (contentDiv) {
+        contentDiv.style.cssText = 'grid-column:2!important;';
+        const firstP = contentDiv.querySelector('p:first-child');
+        if (firstP) firstP.style.cssText = 'font-size:1.8rem!important;font-weight:700!important;color:#422e83!important;margin-bottom:0.8rem!important;';
+      }
+    });
+  }
+
   try {
     await renderBlock(block);
   } catch {

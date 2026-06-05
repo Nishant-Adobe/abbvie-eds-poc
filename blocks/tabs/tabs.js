@@ -14,6 +14,7 @@ function normalize(value) {
 function getSectionIdentifier(section) {
   if (section.id) return section.id;
   if (section.dataset.aueLabel) return section.dataset.aueLabel;
+  if (section.dataset.tabName) return section.dataset.tabName;
 
   const meta = section.querySelector('.section-metadata');
   if (meta) {

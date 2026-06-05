@@ -1,13 +1,13 @@
 /* ============================================================
    LINZESS — Flexbox brand override
-   Adds icon-left item pattern for tab panel dosing instructions
+   Dosing instruction cards: icon-left, card background, left border
    ============================================================ */
 
 /* Base layout */
 .flexbox {
   display: flex;
   flex-flow: column wrap;
-  gap: var(--flexbox-gap, var(--spacing-16, 16px));
+  gap: 16px;
 }
 
 .flexbox .flexbox-item {
@@ -23,10 +23,9 @@
 }
 
 .flexbox .flexbox-item-content {
-  padding: var(--flexbox-item-padding, 0);
+  padding: 0;
 }
 
-/* Desktop: row direction */
 @media (width >= 744px) {
   .flexbox:not(.column, .column-reverse) {
     flex-direction: row;
@@ -37,58 +36,72 @@
   }
 }
 
-/* Column variant — stacked items with icon-left layout */
+/* ── Column variant: dosing instruction cards ── */
 .flexbox.column {
   flex-direction: column;
-  gap: 0;
+  gap: 1.2rem;
 }
 
 .flexbox.column .flexbox-item {
-  display: grid;
-  grid-template-columns: 6rem 1fr;
-  gap: 1.6rem;
-  align-items: start;
-  padding: 2.4rem 0;
-  border-bottom: 1px solid var(--color-border-default, #c2c2c2);
+  display: grid !important;
+  grid-template-columns: 8rem 1fr !important;
+  gap: 1.6rem !important;
+  align-items: center !important;
+  padding: 2rem 2rem 2rem 2rem !important;
+  background-color: #f8f7fc !important;
+  border-left: 4px solid #d9d7f9 !important;
+  border-radius: 8px !important;
+  border-bottom: none !important;
+  grid-column: 1 / -1 !important;
 }
 
-.flexbox.column .flexbox-item:last-child {
-  border-bottom: none;
+.flexbox.column .flexbox-item > div {
+  grid-column: auto !important;
 }
 
-/* Icon image in column variant */
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 6rem;
-  height: 6rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 6.4rem !important;
+  height: 6.4rem !important;
+  min-width: 6.4rem !important;
+  min-height: 6.4rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #e8e5f5 !important;
+  border-radius: 50% !important;
+  flex-shrink: 0;
+  grid-column: 1 !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 4.8rem;
-  height: 4.8rem;
-  object-fit: contain;
+  width: 4rem !important;
+  height: 4rem !important;
+  max-width: 4rem !important;
+  object-fit: contain !important;
 }
 
-/* Content in column variant */
+.flexbox.column .flexbox-item .flexbox-item-content {
+  grid-column: 2 !important;
+}
+
 .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
-  font-family: var(--heading-font-family);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: 1.8rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-brand-primary);
+  font-weight: 700;
+  font-style: normal;
+  color: #422e83;
   margin-bottom: 0.8rem;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
-  font-size: var(--font-size-body);
+  font-size: 1.4rem;
   line-height: 1.5;
-  color: var(--text-color);
+  color: #4d4d4f;
   margin-bottom: 0.4rem;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content em {
-  font-size: var(--font-size-body-small);
-  color: var(--text-color);
+  font-size: 1.2rem;
+  color: #4d4d4f;
   font-style: italic;
 }
