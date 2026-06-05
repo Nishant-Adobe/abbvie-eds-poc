@@ -88,13 +88,25 @@ a.button.secondary:hover {
 
 /* ---- Header ---- */
 header {
-  background-color: var(--background-color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
 }
 
 header nav a {
   font-family: var(--body-font-family);
   font-size: var(--font-size-nav);
-  color: var(--text-color);
+  color: var(--color-text-on-dark);
+}
+
+/* Hide ISI toggle controls in header (top/See Full ISI/Collapse ISI) */
+header .nav-isi-controls,
+header .navigation-content .isi-toggle-controls,
+.header-wrapper .navigation-content-wrapper p:is(:first-child, :nth-child(2), :nth-child(3)):not(:has(a, strong)) {
+  display: none;
 }
 
 /* ---- Footer ---- */
