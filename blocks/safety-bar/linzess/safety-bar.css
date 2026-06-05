@@ -973,12 +973,32 @@
 }
 
 
+/* Dark overlay behind expanded safety bar */
+
+
+.safety-bar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+
+.safety-bar-overlay.is-visible {
+  opacity: 1;
+}
+
+
 /* Container */
 
 
 .safety-bar {
   background-color: var(--background-color);
   border: none;
+  border-top: 3px solid var(--color-brand-primary);
   border-radius: var(--border-radius-safety-bar);
   box-shadow: var(--shadow-safety-bar);
   color: var(--text-color);
