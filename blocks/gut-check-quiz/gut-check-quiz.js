@@ -1,87 +1,13 @@
 import { renderBlock } from '../../scripts/multi-theme.js';
 
-export default async function decorate(block) {
-  const rows = [...block.children];
-  const questions = [];
-  let emailConfig = {};
-  let apiConfig = '';
-
-  // Parse authored rows into structured data
-  let i = 0;
-  while (i < rows.length) {
-    const cells = [...rows[i].children];
-    const firstCellText = cells[0]?.textContent?.trim() || '';
-
-    if (firstCellText.startsWith('type:')) {
-      const type = firstCellText.replace('type:', '').trim();
-      const titleRow = rows[i + 1];
-      const optionsRow = rows[i + 2];
-      const question = {
-        type,
-        title: titleRow?.children[0]?.innerHTML || '',
-        options: [],
-        instruction: '',
-        image: null,
-      };
-
-      // Check for instruction in title
-      const titleEl = titleRow?.children[0];
-      const instrEl = titleEl?.querySelector('p:nth-child(2), .instruction');
-      if (instrEl) {
-        question.instruction = instrEl.textContent.trim();
-      }
-
-      // Parse options from list
-      const list = optionsRow?.querySelector('ul, ol');
-      if (list) {
-        question.options = [...list.querySelectorAll('li')].map((li) => li.innerHTML.trim());
-      }
-
-      // Check for image in next row
-      if (rows[i + 3]) {
-        const imgCell = rows[i + 3].children[0];
-        const img = imgCell?.querySelector('img, picture');
-        if (img) {
-          question.image = img.closest('picture')?.outerHTML || img.outerHTML;
-          i += 1;
-        }
-      }
-
-      questions.push(question);
-      i += 3;
-    } else if (firstCellText.includes('email') || firstCellText.includes('Email') || cells[0]?.querySelector('h2, h3, strong')) {
-      emailConfig = {
-        heading: cells[0]?.innerHTML || '',
-        body: rows[i + 1]?.children[0]?.innerHTML || '',
-      };
-      i += 2;
-    } else if (firstCellText.startsWith('endpoint:') || firstCellText.startsWith('http')) {
-      apiConfig = firstCellText.replace('endpoint:', '').trim();
-      i += 1;
-    } else {
-      i += 1;
-    }
-  }
-
-  // Build quiz UI
-  block.textContent = '';
-  block.innerHTML = buildQuizHTML(questions, emailConfig, apiConfig);
-
-  // Initialize interactivity
-  initQuiz(block, questions, apiConfig);
-
-  try {
-    await renderBlock(block);
-  } catch { /* brand block-config optional */ }
-}
-
-function buildQuizHTML(questions, emailConfig) {
+function buildQuizHTML(questions, emailConfig, recaptchaImg) {
   const stepsHTML = questions.map((q, idx) => `
     <div class="quiz-step" data-step="${idx}" data-type="${q.type}">
       <div class="quiz-step-indicator">
         <span class="step-number">${idx + 1}</span>
       </div>
       <div class="quiz-step-content">
+        ${q.icon ? `<div class="quiz-step-icon">${q.icon}</div>` : ''}
         <div class="quiz-question-title">${q.title}</div>
         ${q.instruction ? `<p class="quiz-instruction">${q.instruction}</p>` : ''}
         <div class="quiz-options ${q.type}-group">
@@ -118,6 +44,7 @@ function buildQuizHTML(questions, emailConfig) {
           <span>Sign up for resources and support</span>
         </label>
       </div>
+      ${recaptchaImg ? `<div class="quiz-recaptcha">${recaptchaImg}</div>` : ''}
       <button type="button" class="quiz-submit-btn">
         <span>Email My Results</span>
         <span class="btn-arrow">›</span>
@@ -132,62 +59,6 @@ function buildQuizHTML(questions, emailConfig) {
       ${emailHTML}
     </div>
   `;
-}
-
-function initQuiz(block) {
-  const options = block.querySelectorAll('.quiz-option');
-
-  options.forEach((option) => {
-    option.addEventListener('click', () => {
-      const step = option.closest('.quiz-step');
-      const type = step.dataset.type;
-
-      if (type === 'radio') {
-        // Single select - deselect others
-        step.querySelectorAll('.quiz-option').forEach((o) => {
-          o.classList.remove('selected');
-          o.setAttribute('aria-pressed', 'false');
-        });
-        option.classList.add('selected');
-        option.setAttribute('aria-pressed', 'true');
-      } else {
-        // Multi select - toggle
-        option.classList.toggle('selected');
-        const isSelected = option.classList.contains('selected');
-        option.setAttribute('aria-pressed', String(isSelected));
-      }
-    });
-  });
-
-  // Submit button
-  const submitBtn = block.querySelector('.quiz-submit-btn');
-  if (submitBtn) {
-    submitBtn.addEventListener('click', () => {
-      const email = block.querySelector('#quiz-email')?.value;
-      const confirmEmail = block.querySelector('#quiz-email-confirm')?.value;
-
-      if (!email || !confirmEmail) {
-        showError(block, 'Please fill in all required fields.');
-        return;
-      }
-      if (email !== confirmEmail) {
-        showError(block, 'Email addresses do not match.');
-        return;
-      }
-
-      // Collect answers
-      const answers = collectAnswers(block);
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.disabled = true;
-
-      // POST to endpoint (placeholder - will use authored endpoint)
-      setTimeout(() => {
-        submitBtn.innerHTML = '<span>Email My Results</span><span class="btn-arrow">›</span>';
-        submitBtn.disabled = false;
-        showSuccess(block);
-      }, 1500);
-    });
-  }
 }
 
 function collectAnswers(block) {
@@ -221,4 +92,153 @@ function showSuccess(block) {
       </div>
     `;
   }
+}
+
+function initQuiz(block) {
+  const options = block.querySelectorAll('.quiz-option');
+
+  options.forEach((option) => {
+    option.addEventListener('click', () => {
+      const step = option.closest('.quiz-step');
+      const { type } = step.dataset;
+
+      if (type === 'radio') {
+        step.querySelectorAll('.quiz-option').forEach((o) => {
+          o.classList.remove('selected');
+          o.setAttribute('aria-pressed', 'false');
+        });
+        option.classList.add('selected');
+        option.setAttribute('aria-pressed', 'true');
+      } else {
+        option.classList.toggle('selected');
+        const isSelected = option.classList.contains('selected');
+        option.setAttribute('aria-pressed', String(isSelected));
+      }
+    });
+  });
+
+  const submitBtn = block.querySelector('.quiz-submit-btn');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+      const email = block.querySelector('#quiz-email')?.value;
+      const confirmEmail = block.querySelector('#quiz-email-confirm')?.value;
+
+      if (!email || !confirmEmail) {
+        showError(block, 'Please fill in all required fields.');
+        return;
+      }
+      if (email !== confirmEmail) {
+        showError(block, 'Email addresses do not match.');
+        return;
+      }
+
+      collectAnswers(block);
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        submitBtn.innerHTML = '<span>Email My Results</span><span class="btn-arrow">›</span>';
+        submitBtn.disabled = false;
+        showSuccess(block);
+      }, 1500);
+    });
+  }
+}
+
+export default async function decorate(block) {
+  const rows = [...block.children];
+  const questions = [];
+  let emailConfig = {};
+  let recaptchaImg = '';
+
+  let i = 0;
+  while (i < rows.length) {
+    const cells = [...rows[i].children];
+    const firstCellText = cells[0]?.textContent?.trim() || '';
+    const hasImage = cells[0]?.querySelector('img, picture');
+
+    if (firstCellText.startsWith('type:')) {
+      const type = firstCellText.replace('type:', '').trim();
+      const question = {
+        type,
+        icon: null,
+        title: '',
+        options: [],
+        instruction: '',
+        image: null,
+      };
+
+      i += 1;
+
+      // Check for icon image row (row after type)
+      if (rows[i]) {
+        const iconImg = rows[i].children[0]?.querySelector('img, picture');
+        if (iconImg) {
+          question.icon = iconImg.closest('picture')?.outerHTML || iconImg.outerHTML;
+          i += 1;
+        }
+      }
+
+      // Title row
+      if (rows[i]) {
+        question.title = rows[i].children[0]?.innerHTML || '';
+        const instrEl = rows[i].children[0]?.querySelector('p:nth-child(2)');
+        if (instrEl) {
+          question.instruction = instrEl.textContent.trim();
+        }
+        i += 1;
+      }
+
+      // Options row (has ul/ol)
+      if (rows[i]) {
+        const list = rows[i].children[0]?.querySelector('ul, ol');
+        if (list) {
+          question.options = [...list.querySelectorAll('li')].map((li) => li.innerHTML.trim());
+          i += 1;
+        }
+      }
+
+      // Check for trailing image (e.g., Bristol chart scale)
+      if (rows[i]) {
+        const trailingImg = rows[i].children[0]?.querySelector('img, picture');
+        const trailingText = rows[i].children[0]?.textContent?.trim() || '';
+        if (trailingImg && !trailingText.startsWith('type:') && !trailingText.startsWith('endpoint:')) {
+          question.image = trailingImg.closest('picture')?.outerHTML || trailingImg.outerHTML;
+          i += 1;
+        }
+      }
+
+      questions.push(question);
+    } else if (cells[0]?.querySelector('h2, h3, strong') || firstCellText.includes('Get your summary')) {
+      emailConfig = {
+        heading: cells[0]?.innerHTML || '',
+        body: '',
+      };
+      i += 1;
+      // Next row is consent text
+      if (rows[i] && !rows[i].children[0]?.textContent?.trim().startsWith('endpoint:')) {
+        emailConfig.body = rows[i].children[0]?.innerHTML || '';
+        i += 1;
+      }
+    } else if (hasImage && !firstCellText.startsWith('type:')) {
+      // reCAPTCHA image or other standalone image
+      const img = cells[0]?.querySelector('picture') || cells[0]?.querySelector('img');
+      if (img) {
+        recaptchaImg = img.closest('picture')?.outerHTML || img.outerHTML;
+      }
+      i += 1;
+    } else if (firstCellText.startsWith('endpoint:') || firstCellText.startsWith('http')) {
+      i += 1;
+    } else {
+      i += 1;
+    }
+  }
+
+  block.textContent = '';
+  block.innerHTML = buildQuizHTML(questions, emailConfig, recaptchaImg);
+  initQuiz(block);
+
+  try {
+    await renderBlock(block);
+  } catch { /* brand block-config optional */ }
 }
