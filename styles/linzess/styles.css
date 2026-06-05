@@ -125,38 +125,28 @@ main > .section.highlight p {
 /* ── find-relief-dark-purple: Bottom CTA section ── */
 main > .section.find-relief-dark-purple {
   position: relative;
-  background: #4b2e83;
-  overflow: hidden;
-  padding: 140px 20px;
+  background-color: #422e83;
+  padding: 20px 0 140px;
+  overflow: visible;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-top: 0;
   margin-right: 0;
   max-width: none;
-}
-
-main > .section.find-relief-dark-purple::before,
-main > .section.find-relief-dark-purple::after {
-  content: '';
-  position: absolute;
-  left: -10%;
-  width: 120%;
-  background: #eaeaea;
-  z-index: 1;
+  text-align: center;
 }
 
 main > .section.find-relief-dark-purple::before {
-  top: -180px;
-  height: 260px;
-  border-bottom-left-radius: 60% 100%;
-  border-bottom-right-radius: 60% 100%;
-}
-
-main > .section.find-relief-dark-purple::after {
-  bottom: -180px;
-  height: 260px;
-  border-top-left-radius: 60% 100%;
-  border-top-right-radius: 60% 100%;
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130vw;
+  height: 255px;
+  background-color: #422e83;
+  border-radius: 100% 100% 0 0;
+  z-index: -1;
 }
 
 main > .section.find-relief-dark-purple h2,
@@ -167,24 +157,22 @@ main > .section.find-relief-dark-purple p {
 
 main > .section.find-relief-dark-purple h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 42px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   text-transform: none;
   letter-spacing: normal;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 main > .section.find-relief-dark-purple .columns-wrapper {
-  position: relative;
-  z-index: 2;
-  max-width: 1100px;
+  max-width: 998px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 16px;
 }
 
 main > .section.find-relief-dark-purple .columns {
-  display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+  display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -193,79 +181,46 @@ main > .section.find-relief-dark-purple .columns > .columns-item:first-child {
 }
 
 main > .section.find-relief-dark-purple .columns > .columns-item:last-child {
-  display: contents;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
 }
 
 main > .section.find-relief-dark-purple .columns .columns-item-content {
+  flex: 1;
   text-align: center;
-  padding: 0 40px;
 }
 
-main > .section.find-relief-dark-purple .columns .columns-item-content:first-child::after {
-  content: '';
-  width: 1px;
-  height: 120px;
-  background: rgba(255, 255, 255, 0.4);
-}
-
-main > .section.find-relief-dark-purple .columns .columns-item-content:first-child a.button {
-  background: #e6d2b5;
-  color: #2d2484;
+main > .section.find-relief-dark-purple .columns .columns-item-content:first-child {
+  border-right: 1px solid #948ebe;
 }
 
 main > .section.find-relief-dark-purple a.button:any-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 240px;
-  height: 64px;
-  padding: 0 30px;
-  border-radius: 40px;
-  font-size: 18px;
-  font-weight: 600;
+  display: inline-block;
+  background-color: #faa633;
+  color: #422e83;
+  border-radius: 16px;
+  padding: 16px 59px 16px 32px;
+  font-size: 14.4px;
+  font-weight: 800;
   text-decoration: none;
-  background: #f5a623;
-  color: #2d2484;
   border: none;
-  transition: all 0.3s ease;
-}
-
-main > .section.find-relief-dark-purple a.button::after {
-  content: '›';
-  margin-left: 10px;
-  font-size: 18px;
-  transition: transform 0.2s ease;
 }
 
 main > .section.find-relief-dark-purple a.button:hover {
-  transform: translateY(-2px);
-}
-
-main > .section.find-relief-dark-purple a.button:hover::after {
-  transform: translateX(4px);
+  background-color: #e89520;
 }
 
 @media (max-width: 768px) {
-  main > .section.find-relief-dark-purple {
-    padding: 100px 20px;
+  main > .section.find-relief-dark-purple .columns > .columns-item:last-child {
+    flex-direction: column;
+    gap: 40px;
   }
 
-  main > .section.find-relief-dark-purple .columns {
-    grid-template-columns: 1fr;
-    gap: 50px;
-  }
-
-  main > .section.find-relief-dark-purple .columns .columns-item-content:first-child::after {
-    display: none;
-  }
-
-  main > .section.find-relief-dark-purple h2 {
-    font-size: 28px;
-  }
-
-  main > .section.find-relief-dark-purple a.button:any-link {
-    min-width: 200px;
-    height: 56px;
+  main > .section.find-relief-dark-purple .columns .columns-item-content:first-child {
+    border-right: none;
+    border-bottom: 1px solid #948ebe;
+    padding-bottom: 40px;
   }
 }
 
