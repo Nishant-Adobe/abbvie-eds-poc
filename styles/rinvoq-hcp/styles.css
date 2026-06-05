@@ -2008,12 +2008,36 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 }
 
 .section.dosing-lab-content table {
-  width: 90%;
-  margin-left: auto;
+  width: 100%;
   border-collapse: separate;
   border-spacing: 0 4px;
-  margin-bottom: 24px;
+  margin: 0 0 24px;
   grid-column: 1;
+}
+
+.section.dosing-lab-content table .vertical-label {
+  background-color: rgb(255, 209, 0);
+  width: 48px;
+  padding: 12px 4px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: none;
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.section.dosing-lab-content table .vertical-label div {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(37, 40, 42);
+  white-space: nowrap;
+}
+
+.section.dosing-lab-content table thead td:first-child {
+  width: 48px;
+  border-bottom: none;
 }
 
 .section.dosing-lab-content table th,
