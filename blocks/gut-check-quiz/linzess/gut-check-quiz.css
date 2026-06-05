@@ -1,91 +1,180 @@
-/* Gut Check Quiz — Linzess Brand Override */
+/* Gut Check Quiz — Linzess Brand Override
+   Matches live linzess.com/find-relief/gutcheck exactly */
+
 .gut-check-quiz {
   color: #4d4d4f;
+  font-family: var(--body-font-family, 'Lato', sans-serif);
 }
 
+/* Step indicator — circle with purple border */
 .quiz-step-indicator .step-number {
   color: #422e83;
   border-color: #422e83;
-}
-
-.quiz-question-title {
-  color: #422e83;
-  font-family: var(--body-font-family, 'Lato', sans-serif);
-}
-
-.quiz-instruction {
-  color: #4d4d4f;
-}
-
-/* Options — purple pill style */
-.quiz-option {
-  border-color: #948ebe;
-  border-radius: 24px;
   background: #fff;
-  color: #4d4d4f;
   font-family: var(--body-font-family, 'Lato', sans-serif);
+}
+
+/* Question title */
+.quiz-question-title {
+  color: #333;
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  text-align: center;
+}
+
+.quiz-question-title p:first-child {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Instruction text */
+.quiz-instruction {
+  color: #666;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Options — solid purple filled with white text */
+.quiz-option {
+  background: #422e83;
+  color: #fff;
+  border: 2px solid #422e83;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  min-height: 44px;
+  transition: all 0.2s ease;
 }
 
 .quiz-option:hover {
-  border-color: #422e83;
-  background: #f4f2fa;
+  background: #352370;
+  border-color: #352370;
 }
 
 .quiz-option.selected {
-  border-color: #422e83;
-  background: #422e83;
+  background: #2d1a6e;
+  border-color: #faa633;
+  box-shadow: 0 0 0 2px #faa633;
+}
+
+/* Hide the indicator circle on filled options */
+.quiz-option .option-indicator {
+  display: none;
+}
+
+.quiz-option .option-text {
   color: #fff;
 }
 
-.quiz-option.selected .option-indicator {
-  border-color: #fff;
-  background: #fff;
-}
-
-.quiz-option.selected .option-indicator::after {
+/* Radio options (Q2) — same filled purple style */
+.radio-group .quiz-option {
   background: #422e83;
+  color: #fff;
+  border-color: #422e83;
 }
 
-.option-indicator {
-  border-color: #948ebe;
+.radio-group .quiz-option .option-indicator {
+  display: none;
+}
+
+/* Step image (Bristol chart + scale) */
+.quiz-step-image {
+  margin-top: 16px;
+}
+
+.quiz-step-image img {
+  max-width: 100%;
 }
 
 /* Email section */
+.quiz-email-section {
+  text-align: center;
+}
+
 .quiz-email-heading {
   color: #422e83;
   font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.quiz-email-body {
+  color: #4d4d4f;
+  font-size: 14px;
+}
+
+.quiz-field label {
+  color: #333;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .quiz-field input {
-  border-color: #60579e;
+  border: 2px solid #60579e;
   background: #efedF5;
   border-radius: 16px;
+  font-size: 14px;
+  padding: 12px 16px;
 }
 
 .quiz-field input:focus {
   border-color: #422e83;
+  outline: none;
 }
 
-.quiz-field label {
-  color: #422e83;
+/* Signup checkbox */
+.quiz-checkbox-label {
+  font-size: 14px;
+  color: #333;
 }
 
-/* Submit button */
+.quiz-checkbox-label input[type="checkbox"] {
+  accent-color: #422e83;
+}
+
+/* Submit button — solid purple */
 .quiz-submit-btn {
   background: #422e83;
   color: #fff;
+  border-radius: 16px;
+  padding: 20px 26px;
+  font-size: 16px;
+  font-weight: 400;
+  height: 66px;
+  border: none;
 }
 
 .quiz-submit-btn:hover {
   background: #352370;
 }
 
-/* Checkbox custom */
-.quiz-checkbox-label input[type="checkbox"] {
-  accent-color: #422e83;
+.btn-arrow {
+  color: #fff;
 }
 
-/* Success state */
+/* Note text */
+.quiz-note {
+  color: #666;
+  font-size: 13px;
+}
+
+/* Error */
+.quiz-error {
+  color: #d32f2f;
+}
+
+/* Success */
 .quiz-success h3 {
   color: #422e83;
+}
+
+/* Section separator between questions */
+.quiz-step {
+  border-bottom: 1px solid #e8e5f0;
+}
+
+.quiz-step:last-child {
+  border-bottom: none;
 }
