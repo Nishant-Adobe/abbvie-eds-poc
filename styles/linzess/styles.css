@@ -2,3 +2,73 @@
 @import 'fonts.css';
 
 /* LINZESS DTC — Brand-specific style overrides */
+
+/* Section: dark-purple background */
+main .section.dark-purple {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: #fff;
+  padding: 8rem 3.5rem;
+  border-top-left-radius: 8rem;
+  border-bottom-right-radius: 8rem;
+  overflow: hidden;
+  max-width: var(--content-max-width-wide, 100%);
+  margin: 0 auto;
+}
+
+main .section.dark-purple h1,
+main .section.dark-purple h2,
+main .section.dark-purple h3,
+main .section.dark-purple p,
+main .section.dark-purple a:not(.button) {
+  color: #fff;
+}
+
+main .section.dark-purple h2 {
+  font-family: var(--body-font-family);
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: 1.5rem;
+}
+
+main .section.dark-purple a.button:any-link {
+  background-color: #f5a623;
+  color: #071d49;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem 2.4rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+main .section.dark-purple a.button:hover {
+  background-color: #e6951a;
+}
+
+/* Columns inside dark-purple: side by side with vertical divider */
+main .section.dark-purple .columns {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+}
+
+main .section.dark-purple .columns > .columns-item:first-child {
+  display: none;
+}
+
+main .section.dark-purple .columns > .columns-item {
+  flex: 1;
+  text-align: center;
+  padding: 2rem 3rem;
+  position: relative;
+}
+
+main .section.dark-purple .columns > .columns-item + .columns-item {
+  border-left: 1px solid rgba(255 255 255 / 30%);
+}
+
+main .section.dark-purple .columns .columns-item-content:empty {
+  display: none;
+}

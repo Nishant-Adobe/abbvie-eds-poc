@@ -1250,6 +1250,137 @@ main .section.centered {
   text-align: center;
 }
 
+main .section.centered picture {
+  display: inline-block;
+}
+
+main .section.centered img {
+  display: inline-block;
+}
+
+/* Section: dark-purple CTA background */
+main .section.dark-purple {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: #fff;
+  padding: 6rem 3.5rem 8rem;
+  margin: 4rem 0;
+  border-radius: 50% 50% 50% 50% / 3% 3% 3% 3%;
+  max-width: 100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+main .section.dark-purple h1,
+main .section.dark-purple h2,
+main .section.dark-purple h3,
+main .section.dark-purple p,
+main .section.dark-purple a:not(.button) {
+  color: #fff;
+}
+
+main .section.dark-purple h2 {
+  font-family: var(--body-font-family);
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: 1.5rem;
+}
+
+main .section.dark-purple a.button:any-link {
+  background-color: #faa633;
+  color: #422e83;
+  border: none;
+  border-radius: 16px;
+  padding: 16px 59px 16px 24px;
+  font-weight: 700;
+  font-size: 1rem;
+  position: relative;
+}
+
+main .section.dark-purple a.button::after {
+  content: "›";
+  position: absolute;
+  right: 24px;
+  font-size: 1.4rem;
+}
+
+main .section.dark-purple a.button:hover {
+  background-color: #e6951a;
+}
+
+main .section.dark-purple .columns {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+}
+
+main .section.dark-purple .columns > .columns-item:first-child:has(.columns-item-content:empty) {
+  display: none;
+}
+
+main .section.dark-purple .columns > .columns-item {
+  flex: 1;
+  text-align: center;
+  padding: 2rem 3rem;
+}
+
+main .section.dark-purple .columns > .columns-item:last-child {
+  border-left: 1px solid rgba(255 255 255 / 30%);
+}
+
+main .section.dark-purple .columns .columns-item-content:empty {
+  display: none;
+}
+
+/* ISI Section — matching live page font sizes and spacing */
+main .section.dark-purple + .section h3 {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 0 0 0;
+}
+
+main .section.dark-purple + .section h4 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 16px;
+  margin: 10px 0 4px;
+}
+
+main .section.dark-purple + .section p,
+main .section.dark-purple + .section li {
+  font-size: 14px;
+  color: rgb(85 85 85);
+  line-height: 16px;
+  margin: 0 0 10px;
+}
+
+main .section.dark-purple + .section ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+main .section.dark-purple + .section a {
+  color: rgb(66 46 131);
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+main .section.dark-purple + .section strong {
+  font-weight: 700;
+  color: inherit;
+}
+
 /* ========================================================================
    Section Border Radius Variants
    Maps AEM radius modifiers to EDS section-metadata styles.
