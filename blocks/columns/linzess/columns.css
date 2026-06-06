@@ -922,7 +922,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.columns-homepage-savings,
-.columns-container:not(.hero-container + .columns-container) .columns {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-off-white);
@@ -1242,6 +1242,30 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     padding: 16px;
     text-align: center;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   WHY LINZESS — Symptom cards override
+   ═══════════════════════════════════════════════════════════════════ */
+
+.columns.whylinzess-symptoms {
+  display: block;
+  background: transparent;
+  border-radius: 0;
+  max-width: 100%;
+  margin: 60px auto 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.columns.whylinzess-symptoms > .columns-item,
+.columns.whylinzess-symptoms > .columns-item:has(.columns-item-content) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 60px 0 0;
+  background: transparent;
+  align-items: stretch;
 }
 
 /* stylelint-enable no-descending-specificity */
