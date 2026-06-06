@@ -922,7 +922,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.columns-homepage-savings,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-off-white);
@@ -1266,6 +1266,129 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   padding: 60px 0 0;
   background: transparent;
   align-items: stretch;
+}
+
+/* WHY LINZESS — Mechanism cards (icon + text, stacked) */
+
+.columns.whylinzess-mechanism-card {
+  display: block;
+  background: transparent;
+  border-radius: 0;
+  max-width: 800px;
+  margin: 24px auto 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.columns.whylinzess-mechanism-card > .columns-item,
+.columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content) {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 32px 40px;
+  background-color: rgb(255 255 255 / 15%);
+  border-radius: var(--linz-rounded-corner);
+  backdrop-filter: blur(4px);
+}
+
+.columns.whylinzess-mechanism-card .columns-item-image {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 80px;
+  background-color: var(--linz-light-purple);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.columns.whylinzess-mechanism-card .columns-item-image img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.columns.whylinzess-mechanism-card .columns-item-content {
+  flex: 1;
+}
+
+.columns.whylinzess-mechanism-card .columns-item-content p {
+  color: var(--color-text-on-dark);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.columns.whylinzess-mechanism-card .columns-item-content ul {
+  list-style: disc;
+  padding-left: 20px;
+  color: var(--color-text-on-dark);
+  display: flex;
+  gap: 32px;
+}
+
+.columns.whylinzess-mechanism-card .columns-item-content li {
+  color: var(--color-text-on-dark);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+}
+
+/* WHY LINZESS — Timeline cards (same pattern as symptom cards) */
+
+.columns.whylinzess-timeline {
+  display: block;
+  background: transparent;
+  border-radius: 0;
+  max-width: 1030px;
+  margin: 40px auto 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.columns.whylinzess-timeline > .columns-item,
+.columns.whylinzess-timeline > .columns-item:has(.columns-item-content) {
+  display: flex;
+  gap: 32px;
+  padding: 60px 0 0;
+  background: transparent;
+  align-items: stretch;
+}
+
+.columns.whylinzess-timeline .columns-item-content {
+  flex: 1;
+  background-color: var(--linz-off-white);
+  border-radius: var(--linz-rounded-corner);
+  padding: 60px 32px 40px;
+  text-align: center;
+}
+
+.columns.whylinzess-timeline .columns-item-content:last-child {
+  background-color: var(--linz-light-purple);
+}
+
+.columns.whylinzess-timeline .columns-item-content p {
+  color: var(--color-brand-primary);
+  font-size: 16px;
+}
+
+.columns.whylinzess-timeline .columns-item-content > p:first-child strong {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  background-color: var(--linz-light-purple);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+  margin: -90px auto 24px;
+  display: block;
+  opacity: 0.7;
+}
+
+.columns.whylinzess-timeline .columns-item-content:last-child > p:first-child strong {
+  background-color: var(--linz-off-white);
 }
 
 /* stylelint-enable no-descending-specificity */
