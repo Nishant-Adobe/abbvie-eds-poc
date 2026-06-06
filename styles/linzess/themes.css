@@ -197,6 +197,177 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   text-align: left;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   WHY LINZESS PAGE — Section-specific styles
+   Scoped to section-metadata classes to prevent cross-page conflicts
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ---- "How LINZESS Can Help" Section ---- */
+.section.whylinzess-help {
+  text-align: center;
+  padding: 80px 24px 60px;
+  max-width: 928px;
+  margin: 0 auto;
+}
+
+.section.whylinzess-help > .default-content-wrapper > p:first-child {
+  font-family: var(--body-font-family);
+  font-size: var(--linz-card-footnote-size);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.section.whylinzess-help > .default-content-wrapper > p:first-child::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
+.section.whylinzess-help > .default-content-wrapper > p:nth-child(2) {
+  font-family: var(--heading-font-family);
+  font-size: var(--linz-section-heading-size);
+  font-weight: var(--font-weight-body);
+  color: var(--color-brand-primary);
+  margin-bottom: 24px;
+}
+
+.section.whylinzess-help > .default-content-wrapper > p:nth-child(n+3) {
+  font-family: var(--body-font-family);
+  font-size: var(--linz-card-body-size);
+  color: var(--linz-grey);
+  text-align: center;
+  margin-top: 20px;
+}
+
+.section.whylinzess-help > .default-content-wrapper > p:last-child a {
+  background-color: var(--color-brand-primary);
+  color: var(--linz-white);
+  border-radius: var(--linz-rounded-corner);
+  padding: 16px 59px 16px 24px;
+  font-weight: var(--font-weight-extra-bold);
+  font-size: 14.4px;
+  font-family: var(--body-font-family);
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  margin-top: 40px;
+}
+
+.section.whylinzess-help > .default-content-wrapper > p:last-child a::after {
+  content: '\203A';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 21px;
+}
+
+/* Symptom cards (columns block - two-column layout) */
+.section.whylinzess-help .columns.whylinzess-symptoms {
+  margin-top: 60px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/* Symptom cards — ONE outer card with two columns inside */
+body main .section.whylinzess-help .columns.whylinzess-symptoms > .columns-item {
+  display: flex;
+  gap: 0;
+  background-color: var(--linz-off-white);
+  border-radius: var(--linz-rounded-corner);
+  overflow: visible;
+  padding-top: 60px;
+}
+
+.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content {
+  flex: 1;
+  padding: 40px 32px;
+  text-align: left;
+  position: relative;
+}
+
+/* CIC column (right) gets purple bg with its own rounded corners */
+.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content:last-child {
+  background-color: var(--linz-light-purple);
+  border-radius: var(--linz-rounded-corner);
+}
+
+/* Circle badges — overlap the top of the outer card */
+.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content > p:first-child strong {
+  font-family: var(--body-font-family);
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  background-color: var(--linz-light-purple);
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+  margin: -80px auto 24px;
+  display: block;
+}
+
+.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content:last-child > p:first-child strong {
+  background-color: var(--linz-off-white);
+}
+
+/* Checkmark list items */
+.section.whylinzess-help .columns.whylinzess-symptoms ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 24px 0;
+}
+
+.section.whylinzess-help .columns.whylinzess-symptoms li {
+  font-family: var(--body-font-family);
+  font-size: var(--linz-card-body-size);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  margin-bottom: 16px;
+  line-height: 1.4;
+  padding-left: 36px;
+  position: relative;
+}
+
+.section.whylinzess-help .columns.whylinzess-symptoms li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-brand-primary);
+  color: var(--linz-white);
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Footnote */
+.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content > p:last-child {
+  font-size: var(--linz-card-footnote-size);
+  color: var(--linz-grey);
+  margin-top: 24px;
+  font-weight: var(--font-weight-body);
+}
+
+@media (max-width: 599px) {
+  body main .section.whylinzess-help .columns.whylinzess-symptoms > .columns-item {
+    flex-direction: column;
+  }
+}
+
 /* ---- Gradient Overlays ---- */
 .section.hero-container::after {
   background: var(--gradient-hero-overlay);
