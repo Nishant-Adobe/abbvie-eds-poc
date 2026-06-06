@@ -141,7 +141,7 @@
   background-color: var(--linz-off-white);
   border-radius: var(--linz-rounded-corner);
   max-width: 998px;
-  margin: 0 auto;
+  margin: 80px auto 0;
   padding: 0;
   overflow: hidden;
   align-items: stretch;
@@ -193,8 +193,11 @@
 /* When image + text are in SEPARATE columns-items */
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)),
 .columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) {
-  flex: 0 0 45%;
+  flex: 0 0 50%;
   background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
   padding: 0;
   align-self: stretch;
 }
@@ -207,14 +210,15 @@
   display: block;
 }
 
-/* Text-only column */
+/* Text-only column — center aligned */
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)),
 .columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)) {
   flex: 1;
-  padding: 0 18px 0 56px;
+  padding: 32px 40px;
   display: flex;
   align-items: center;
-  text-align: left;
+  justify-content: center;
+  text-align: center;
 }
 
 .columns.columns-homepage-savings .columns-item-content p strong,
