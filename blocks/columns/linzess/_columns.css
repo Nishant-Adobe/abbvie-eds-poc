@@ -55,6 +55,12 @@
   align-items: stretch;
 }
 
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-image) picture,
+.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) picture {
+  display: block;
+  height: 100%;
+}
+
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
 .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
   width: 100%;
@@ -76,7 +82,7 @@
 .columns.columns-homepage-promo .columns-item-content p strong,
 .hero-container + .columns-container .columns .columns-item-content p strong {
   font-family: var(--body-font-family);
-  font-size: 24px;
+  font-size: var(--linz-card-heading-size);
   font-weight: 700;
   color: var(--linz-dark-purple);
 }
@@ -133,6 +139,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    SAVINGS $30 CARD: "YOU COULD PAY AS LITTLE AS $30"
    Variant: columns-homepage-savings (fallback: last columns section)
+   Same approach as promo card — light purple bg, image cover, overflow hidden
    ═══════════════════════════════════════════════════════════════════ */
 .columns.columns-homepage-savings,
 .columns-container:not(.hero-container + .columns-container) .columns {
@@ -159,82 +166,63 @@
   display: none;
 }
 
-/* When image + text are in SAME columns-item: flex row with image first */
+.columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
+.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) {
+  flex: 0 0 55%;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  align-self: stretch;
+}
+
+/* Image visually on LEFT (order -1) */
+.columns.columns-homepage-savings > .columns-item .columns-item-image,
+.columns-container:not(.hero-container + .columns-container) .columns > .columns-item .columns-item-image {
+  order: -1;
+}
+
+/* Make the columns-item a flex row when it has both image + content */
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image):has(.columns-item-content),
 .columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image):has(.columns-item-content) {
   display: flex;
   flex-wrap: nowrap;
-  flex: 1 1 100%;
   align-items: stretch;
 }
 
-.columns.columns-homepage-savings > .columns-item:has(.columns-item-image) .columns-item-image,
-.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) .columns-item-image {
-  flex: 0 0 50%;
-  order: -1;
+.columns.columns-homepage-savings > .columns-item:has(.columns-item-image) picture,
+.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) picture {
+  display: block;
+  height: 100%;
 }
 
-.columns.columns-homepage-savings > .columns-item:has(.columns-item-image) .columns-item-image img,
-.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) .columns-item-image img {
+main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .columns.columns-homepage-savings > div > div:first-child img,
+.columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img,
+.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  margin-top: 0;
 }
 
-.columns.columns-homepage-savings > .columns-item:has(.columns-item-image) .columns-item-content,
-.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image) .columns-item-content {
+.columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
+.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 32px 40px;
   display: flex;
   align-items: center;
+  text-align: left;
+  font-size: var(--linz-card-body-size);
 }
 
-/* When image + text are in SEPARATE columns-items */
-.columns.columns-homepage-savings > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)),
-.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) {
-  flex: 0 0 50%;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 0;
-  align-self: stretch;
-}
-
-.columns.columns-homepage-savings > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) .columns-item-image,
-.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) .columns-item-image {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.columns.columns-homepage-savings > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) img,
-.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Text-only column — center aligned */
-.columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)),
-.columns-container:not(.hero-container + .columns-container) .columns > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)) {
-  flex: 1;
-  padding: 32px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.columns.columns-homepage-savings .columns-item-content p strong,
-.columns-container:not(.hero-container + .columns-container) .columns .columns-item-content p strong {
+.columns.columns-homepage-savings .columns-item-content p {
   font-family: var(--body-font-family);
-  font-size: 24px;
+  font-size: var(--linz-card-body-size);
+}
+
+.columns.columns-homepage-savings .columns-item-content p strong {
+  font-family: var(--body-font-family);
+  font-size: var(--linz-card-heading-size);
   font-weight: 700;
   color: var(--linz-dark-purple);
   line-height: 1.3;
@@ -272,14 +260,16 @@
 
 /* Section heading "YOU COULD PAY AS LITTLE AS $30" */
 .columns-homepage-savings-container > .default-content-wrapper,
-.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper {
+.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper,
+.section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper {
   text-align: center;
 }
 
 .columns-homepage-savings-container > .default-content-wrapper p strong,
-.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper p strong {
+.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper p strong,
+.section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper p strong {
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h1-hero);
+  font-size: var(--linz-section-heading-size);
   font-weight: 400;
   color: var(--linz-dark-purple);
   text-transform: uppercase;
@@ -289,7 +279,8 @@
 
 /* Orange divider arc */
 .columns-homepage-savings-container > .default-content-wrapper p:first-child strong::before,
-.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper p:first-child strong::before {
+.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper p:first-child strong::before,
+.section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper p:first-child strong::before {
   content: '';
   display: block;
   width: 64px;
@@ -301,8 +292,12 @@
 
 /* Disclaimer */
 .columns-homepage-savings-container > .default-content-wrapper:last-child,
-.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:last-child {
-  font-size: var(--font-size-body-small);
+.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:last-child,
+.section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper:last-child {
+  font-family: var(--body-font-family);
+  font-size: var(--linz-card-footnote-size);
+  font-weight: 400;
+  line-height: normal;
   color: var(--linz-grey);
   margin-top: 24px;
   text-align: left;
@@ -334,8 +329,8 @@
    Variant: columns-homepage-gutcheck
    Off-white bg, image left, text right, button disabled
    ═══════════════════════════════════════════════════════════════════ */
-.columns-homepage-gutcheck-container {
-  padding-bottom: 0;
+.columns-wrapper:has(.columns-homepage-gutcheck) {
+  padding-bottom: 155px;
 }
 
 .columns.columns-homepage-gutcheck {
@@ -410,7 +405,7 @@
 
 .columns.columns-homepage-gutcheck .columns-item-content p strong {
   font-family: var(--body-font-family);
-  font-size: 28px;
+  font-size: var(--linz-card-heading-size);
   font-weight: 700;
   color: var(--linz-dark-purple);
   line-height: 1.3;

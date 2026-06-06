@@ -680,6 +680,13 @@
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
 
+  /* ---- Homepage Card Tokens ---- */
+  --linz-card-heading-size: 18px;
+  --linz-card-body-size: 14px;
+  --linz-card-footnote-size: 12px;
+  --linz-section-heading-size: 32px;
+  --linz-section-heading-line-height: 30px;
+
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
   --hero-behind-nav-min-height-desktop: 62rem;
@@ -747,7 +754,7 @@
   font-family: var(--body-font-family);
   font-weight: 700;
   font-style: normal;
-  font-size: var(--linz-heading2-font-size);
+  font-size: var(--linz-card-heading-size);
 }
 
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .c-linz-dark-purple,
@@ -1067,7 +1074,7 @@
 /* Content cards: heading bold 24px, icon overlap */
 
 :is(.cards-grid.cards-grid-icon-image-card) .abbv-image-text-display-v2 .heading-2 {
-  font-size: 24px;
+  font-size: var(--linz-card-heading-size);
   font-weight: 700;
 }
 
@@ -1159,7 +1166,7 @@
   margin: 0;
   text-decoration: underline;
   text-underline-offset: 3px;
-  font-size: 12px;
+  font-size: var(--linz-card-footnote-size);
   font-weight: 800;
 }
 
@@ -1190,6 +1197,12 @@
   width: 100%;
   height: auto;
   max-width: 100%;
+}
+
+/* #1 cards section: extra top spacing to match live (110px gap from promo) */
+
+.section.cards-grid-container:not(.carousel-video-playlist-container) {
+  padding-top: 30px;
 }
 
 /* Section dark background for stats — full width edge to edge */
@@ -1250,7 +1263,7 @@ body main .section.cards-grid-container.carousel-video-playlist-container > .def
 body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper p:first-child strong {
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h1-hero);
+  font-size: var(--linz-section-heading-size);
   font-weight: 400;
   text-transform: uppercase;
   color: #fff;
@@ -1277,9 +1290,43 @@ body main .section.cards-grid-container.carousel-video-playlist-container > .def
   color: #fff;
 }
 
+/* Footnote: "*Estimated IBS-C/CIC..." — first p in the content wrapper with h2 */
+
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper:has(h2) > p:first-child,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper:has(h2) > p:first-child {
+  font-size: var(--linz-card-footnote-size);
+  line-height: normal;
+  margin-bottom: 80px;
+  text-align: center;
+}
+
 body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2,
 .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2 {
   color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: var(--linz-section-heading-size);
+  font-weight: 400;
+  line-height: var(--linz-section-heading-line-height);
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2::before,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper h2::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
+/* Subtitle after h2 ("Hear from real LINZESS patients...") */
+
+body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper:has(h2) > p:last-child,
+.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper:has(h2) > p:last-child {
+  font-size: var(--linz-card-body-size);
 }
 
 body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper a:not(.button),
@@ -1350,6 +1397,7 @@ body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2 {
   width: 100%;
   margin-top: 90px;
   position: relative;
+  min-height: 165px;
 }
 
 /* Middle card (2nd): off-white bg + light purple circle */
@@ -1403,8 +1451,8 @@ body main .section.dark :is(.cards-grid.cards-grid-icon-image-card) .abbv-image-
 .carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2),
 body main .section.dark .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2) {
   color: var(--linz-dark-purple);
-  font-size: 16px;
-  font-weight: 700;
+  font-size: var(--linz-card-body-size);
+  font-weight: 400;
   line-height: 1.4;
 }
 
