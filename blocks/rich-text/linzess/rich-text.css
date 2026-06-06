@@ -261,7 +261,7 @@
 .rich-text.transcript h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
-  font-weight: 400;
+  font-weight: 600;
   color: var(--color-text-heading, #422e83);
   text-align: left;
   line-height: normal;
@@ -302,16 +302,16 @@
   margin: 0 auto var(--spacing-10, 1rem);
 }
 
-/* Paragraphs: Lato 16px, dark grey */
+/* Paragraphs: Lato 14px, dark grey */
 
 .rich-text.transcript p {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 1.4rem);
+  font-size: 14px;
   font-weight: 400;
-  line-height: var(--line-height-body, normal);
-  color: var(--text-color, #4d4d4f);
+  line-height: normal;
+  color: #4d4d4f;
   text-align: left;
-  margin: var(--spacing-14, 1.4rem) 0;
+  margin: 14px 0;
   padding: 0;
 }
 
@@ -320,9 +320,9 @@
 .rich-text.transcript p strong,
 .rich-text.transcript p b {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 1.4rem);
+  font-size: 14px;
   font-weight: 700;
-  color: var(--text-color, #4d4d4f);
+  color: #4d4d4f;
 }
 
 /* stylelint-disable no-descending-specificity */
@@ -341,8 +341,8 @@
 
 .rich-text.transcript a {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 1.4rem);
-  color: var(--text-color, #4d4d4f);
+  font-size: 14px;
+  color: #4d4d4f;
   text-decoration: underline;
 }
 
@@ -358,27 +358,56 @@
 
 .rich-text.transcript ul {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 1.4rem);
-  color: var(--text-color, #4d4d4f);
-  margin: var(--spacing-14, 1.4rem) 0;
-  padding: 0 0 0 var(--spacing-40, 4rem);
+  font-size: 14px;
+  color: #4d4d4f;
+  margin: 14px 0;
+  padding: 0 0 0 40px;
 }
 
 .rich-text.transcript li {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-body, 1.4rem);
+  font-size: 14px;
   font-weight: 400;
-  line-height: var(--line-height-body, normal);
-  color: var(--text-color, #4d4d4f);
+  line-height: normal;
+  color: #4d4d4f;
   margin: 0;
   padding: 0;
 }
 
-/* ============ Inline ISI Section (after H3) ============ */
+/* ============ Inline ISI in PART 2 (isi-content variant) ============ */
 
-/* H3: USES, IMPORTANT RISK INFORMATION */
+/* H4: "Before you take LINZESS..." — Lato regular, dark (not bold on live) */
 
-.rich-text.transcript h3 {
+.rich-text.transcript.isi-content h4 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  color: #4d4d4f;
+  line-height: normal;
+  letter-spacing: normal;
+  margin: 14px 0;
+  text-transform: none;
+}
+
+/* H5: "Side Effects" — Lato bold, dark */
+
+.rich-text.transcript.isi-content h5 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  color: #4d4d4f;
+  line-height: normal;
+  letter-spacing: normal;
+  margin: 14px 0;
+  text-transform: none;
+  text-decoration: none;
+}
+
+/* ============ Inline ISI Section (after H3) — only for non-isi-content blocks ============ */
+
+/* H3: USES, IMPORTANT RISK INFORMATION (only in PART 1 / standalone, NOT PART 2 isi-content) */
+
+.rich-text.transcript:not(.isi-content) h3 {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal-large, 1.6rem);
   font-weight: 400;
@@ -390,9 +419,9 @@
   padding: 0;
 }
 
-/* ISI paragraphs after H3 */
+/* ISI paragraphs after H3 (not in isi-content) */
 
-.rich-text.transcript h3 ~ p {
+.rich-text.transcript:not(.isi-content) h3 ~ p {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
   font-weight: 400;
@@ -402,10 +431,10 @@
   padding: 0;
 }
 
-/* ISI bold text after H3 */
+/* ISI bold text after H3 (not in isi-content) */
 
-.rich-text.transcript h3 ~ p strong,
-.rich-text.transcript h3 ~ p b {
+.rich-text.transcript:not(.isi-content) h3 ~ p strong,
+.rich-text.transcript:not(.isi-content) h3 ~ p b {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
   font-weight: 400;
@@ -413,24 +442,9 @@
   color: var(--color-text-muted, #555);
 }
 
-/* ISI subtitle paragraphs ("Before you take LINZESS...", "Side Effects") — same as ISI body */
+/* ISI list (not in isi-content) */
 
-.rich-text.transcript h3 ~ p:has(> strong:only-child) {
-  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-size: var(--font-size-legal, 1.4rem);
-  font-weight: 400;
-  line-height: var(--line-height-legal, 1.6rem);
-  color: var(--color-text-muted, #555);
-  margin: var(--spacing-10, 1rem) 0;
-}
-
-.rich-text.transcript h3 ~ p:has(> strong:only-child) strong {
-  color: var(--color-text-muted, #555);
-}
-
-/* ISI list */
-
-.rich-text.transcript h3 ~ ul {
+.rich-text.transcript:not(.isi-content) h3 ~ ul {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal-large, 1.6rem);
   line-height: var(--spacing-20, 2rem);
@@ -439,9 +453,9 @@
   padding: 0 0 0 var(--spacing-15, 1.5rem);
 }
 
-/* ISI list items */
+/* ISI list items (not in isi-content) */
 
-.rich-text.transcript h3 ~ ul li {
+.rich-text.transcript:not(.isi-content) h3 ~ ul li {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
   font-weight: 400;
@@ -451,19 +465,19 @@
   padding: 0;
 }
 
-/* ISI list item bold */
+/* ISI list item bold (not in isi-content) */
 
-.rich-text.transcript h3 ~ ul li strong {
+.rich-text.transcript:not(.isi-content) h3 ~ ul li strong {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
   font-weight: 400;
   color: var(--color-text-muted, #555);
 }
 
-/* ISI superscript ® */
+/* ISI superscript ® (not in isi-content) */
 
-.rich-text.transcript h3 ~ p sup,
-.rich-text.transcript h3 ~ ul sup {
+.rich-text.transcript:not(.isi-content) h3 ~ p sup,
+.rich-text.transcript:not(.isi-content) h3 ~ ul sup {
   font-size: 1rem;
   font-weight: 400;
   color: var(--color-text-muted, #555);
@@ -500,32 +514,6 @@
   padding: 0;
 }
 
-.section.isi h4,
-.section.transcript h4,
-.rich-text.transcript h4 {
-  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--color-text-heading, #422e83);
-  line-height: 16px;
-  letter-spacing: -0.28px;
-  margin: var(--spacing-10, 1rem) 0;
-  text-transform: none;
-}
-
-.section.isi h5,
-.section.transcript h5,
-.rich-text.transcript h5 {
-  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--color-text-heading, #422e83);
-  line-height: 16px;
-  letter-spacing: -0.28px;
-  margin: var(--spacing-10, 1rem) 0;
-  text-transform: none;
-}
-
 .section.isi p {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
@@ -545,12 +533,29 @@
   letter-spacing: -0.28px;
 }
 
-.section.isi p:has(> strong:only-child:not(:has(a))) {
-  color: var(--color-text-heading, #422e83);
+/* ISI subtitle headings — purple, same size as body text */
+
+.section.isi h4 {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: #422e83;
+  line-height: 16px;
+  letter-spacing: -0.28px;
+  margin: 10px 0;
+  text-transform: none;
 }
 
-.section.isi p:has(> strong:only-child:not(:has(a))) strong {
-  color: var(--color-text-heading, #422e83);
+.section.isi h5 {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: #422e83;
+  line-height: 16px;
+  letter-spacing: -0.28px;
+  margin: 10px 0;
+  text-transform: none;
+  text-decoration: none;
 }
 
 .section.isi ul {

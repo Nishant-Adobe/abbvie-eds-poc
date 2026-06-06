@@ -129,4 +129,13 @@ export default function decorate(block) {
     });
     mo.observe(document.body, { childList: true });
   }
+
+  // Hide the bar when the inline ISI section enters the viewport.
+  const isiSection = document.querySelector('.section.isi');
+  if (isiSection) {
+    const isiObserver = new IntersectionObserver(([entry]) => {
+      stickySection.classList.toggle('is-hidden', entry.isIntersecting);
+    });
+    isiObserver.observe(isiSection);
+  }
 }

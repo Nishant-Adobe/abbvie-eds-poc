@@ -90,21 +90,15 @@ main > .section:first-of-type:not(.hero-container)::before {
 footer::before {
   content: "";
   position: absolute;
-  top: -60px;
+  top: -73px;
   left: 50%;
   transform: translateX(-50%);
   width: 130%;
   height: 75px;
-  background-color: var(--color-brand-primary);
+  background-color: #422e83;
   border-top-left-radius: 100%;
   border-top-right-radius: 100%;
-  z-index: -5;
-}
-
-@media (width >= 900px) {
-  footer::before {
-    height: 255px;
-  }
+  z-index: 1;
 }
 
 footer {
@@ -172,7 +166,7 @@ main > .section:first-of-type:not(.hero-container) .default-content-wrapper b {
 main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
-  font-weight: 400;
+  font-weight: 600;
   color: var(--color-text-heading);
   line-height: normal;
   text-transform: none;
@@ -273,6 +267,12 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
     top: -60px;
     width: 130%;
     height: 75px;
+  }
+
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    max-width: 1037px;
+    margin: 0 auto;
   }
 
   .section.transcript .default-content-wrapper p,

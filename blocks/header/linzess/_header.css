@@ -28,6 +28,12 @@ header .nav-eyebrow p { font-size: var(--font-size-11); }
 
 header .nav-eyebrow a { text-decoration: underline; }
 
+/* Hide ISI trigger text (top, Collapse ISI, See Full ISI) — block-config.js removes these but
+   CSS fallback ensures they don't show if JS hasn't executed */
+header .nav-eyebrow-top p {
+  display: none;
+}
+
 /* Nav wrapper — transparent (hero block CSS handles its own gradient via body:has(.hero)) */
 header .nav-wrapper {
   background: transparent;
