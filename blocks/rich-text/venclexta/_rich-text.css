@@ -296,7 +296,7 @@
 }
 
 /* Nav card section: CTA row layout — side by side 50/50 */
-.section:has(.rich-text-wrapper + .cta-wrapper) {
+.section.nav-cards {
   text-align: center;
   display: flex;
   flex-wrap: wrap;
@@ -304,14 +304,20 @@
   gap: 16px;
 }
 
-.section:has(.rich-text-wrapper + .cta-wrapper) .rich-text-wrapper {
+.section.nav-cards .rich-text-wrapper {
   width: 100%;
   flex: 0 0 100%;
 }
 
-.section:has(.rich-text-wrapper + .cta-wrapper) .cta-wrapper {
+.section.nav-cards .cta-wrapper {
   flex: 1 1 calc(50% - 16px);
   max-width: calc(50% - 8px);
+}
+
+.section.nav-cards .cta .abbv-cta {
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */

@@ -84,19 +84,51 @@
 
 /* Bone marrow images side by side in right column */
 .columns > .columns-item > .columns-item-image {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 8px 16px;
 }
 
+.columns > .columns-item > .columns-item-image h3:nth-of-type(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.columns > .columns-item > .columns-item-image p:nth-of-type(1) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.columns > .columns-item > .columns-item-image h3:nth-of-type(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.columns > .columns-item > .columns-item-image p:nth-of-type(2) {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.columns > .columns-item > .columns-item-image h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #005272;
+  margin: 0;
+  text-align: center;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
 .columns > .columns-item > .columns-item-image p {
-  flex: 1;
-  min-width: 120px;
+  margin: 0;
   text-align: center;
 }
 
 .columns > .columns-item > .columns-item-image img {
   border-radius: 8px;
+  width: 100%;
+  height: auto;
 }
 
 /* Mobile: stack columns */
