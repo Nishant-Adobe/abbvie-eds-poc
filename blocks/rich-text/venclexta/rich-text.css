@@ -535,19 +535,24 @@
   margin-top: 0;
 }
 
-/* Nav card section: CTA row layout */
+/* Nav card section: CTA row layout — side by side 50/50 */
 
-.section:has(.rich-text + .cta.abbv-button-secondary) {
+.section:has(.rich-text-wrapper + .cta-wrapper) {
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
 }
 
-.section:has(.rich-text + .cta.abbv-button-secondary) .cta-wrapper {
-  display: inline-block;
+.section:has(.rich-text-wrapper + .cta-wrapper) .rich-text-wrapper {
+  width: 100%;
+  flex: 0 0 100%;
 }
 
-.section .cta.abbv-button-secondary {
-  display: inline-block;
-  margin: 5px 10px;
+.section:has(.rich-text-wrapper + .cta-wrapper) .cta-wrapper {
+  flex: 1 1 calc(50% - 16px);
+  max-width: calc(50% - 8px);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */

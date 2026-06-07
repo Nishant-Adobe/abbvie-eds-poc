@@ -132,13 +132,25 @@
     display: none;
 }
 
-/* Icon row — inline images with text labels */
+/* Icon row — horizontal grid of icons with text labels */
 .accordion .accordion-item-body p img {
     display: inline-block;
     vertical-align: middle;
-    width: var(--spacing-40);
-    height: var(--spacing-40);
-    margin-right: var(--spacing-08);
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    margin-bottom: 4px;
+}
+
+.accordion .accordion-item-body p:has(img) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 32px;
+    margin: 24px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #404040;
 }
 
 /* Content cards — paragraphs with strong headings get card treatment */
