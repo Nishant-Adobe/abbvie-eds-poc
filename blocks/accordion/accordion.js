@@ -31,39 +31,32 @@ function getIconImage(row) {
  * 13: analyticsId (optional)
  */
 function gteConfigIcons(block) {
-  const firstRow = block.children[0];
-  const isXwalk = firstRow && firstRow.children.length > 1;
+  // Detect classes row offset: if row[1] has single cell with '-' or empty and
+  // row[2] looks like expandAllLabel text, offset by 1 for the classes field group row.
+  const row1Text = block.children[1]?.textContent?.trim() || '';
+  const row2Text = block.children[2]?.textContent?.trim() || '';
+  const hasClassesRow = (row1Text === '-' || row1Text === '') && row2Text && row2Text !== '-';
+  const o = hasClassesRow ? 1 : 0;
 
-  let cells;
-  let configRowCount;
-  if (isXwalk) {
-    cells = [...firstRow.children];
-    configRowCount = 1;
-  } else {
-    cells = [...block.children].slice(0, 14);
-    configRowCount = 14;
-  }
+  const headingText = block.children[0].textContent.trim();
+  const expandAllText = block.children[1 + o].textContent.trim();
+  const collapseAllText = block.children[2 + o].textContent.trim();
+  const expandAllIcon = `icon-${block.children[3 + o].textContent.trim()}`;
+  const collapseAllIcon = `icon-${block.children[4 + o].textContent.trim()}`;
+  const expandIcon = `item-icon-${block.children[5 + o].textContent.trim()}`;
+  const collapseIcon = `item-icon-${block.children[6 + o].textContent.trim()}`;
+  const expandAllIconImage = getIconImage(block.children[7 + o]);
+  const collapseAllIconImage = getIconImage(block.children[8 + o]);
+  const expandIconImage = getIconImage(block.children[9 + o]);
+  const collapseIconImage = getIconImage(block.children[10 + o]);
+  const ariaExpandAllLabel = block.children[11 + o].textContent.trim();
+  const ariaCollapseAllLabel = block.children[12 + o].textContent.trim();
+  const analyticsId = block.children[13 + o]?.textContent.trim() || '';
 
-  const cell = (i) => cells[i] || document.createElement('div');
-
-  const headingText = cell(0).textContent.trim();
-  const expandAllText = cell(1).textContent.trim();
-  const collapseAllText = cell(2).textContent.trim();
-  const expandAllIcon = `icon-${cell(3).textContent.trim()}`;
-  const collapseAllIcon = `icon-${cell(4).textContent.trim()}`;
-  const expandIcon = `item-icon-${cell(5).textContent.trim()}`;
-  const collapseIcon = `item-icon-${cell(6).textContent.trim()}`;
-  const expandAllIconImage = getIconImage(cell(7));
-  const collapseAllIconImage = getIconImage(cell(8));
-  const expandIconImage = getIconImage(cell(9));
-  const collapseIconImage = getIconImage(cell(10));
-  const ariaExpandAllLabel = cell(11).textContent.trim();
-  const ariaCollapseAllLabel = cell(12).textContent.trim();
-  const analyticsId = cell(13)?.textContent.trim() || '';
-
-  // clean config rows
+  // clean config rows (0 through 13+offset)
+  const configEnd = 13 + o;
   [...block.children].forEach((child, index) => {
-    if (index < configRowCount) {
+    if (index <= configEnd) {
       child.remove();
     }
   });
