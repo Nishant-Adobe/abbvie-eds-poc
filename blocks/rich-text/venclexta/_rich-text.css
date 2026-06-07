@@ -48,6 +48,11 @@
   color: #005272;
 }
 
+/* Hide unprocessed metadata section on aem.live (last section, no block wrappers) */
+main > .section.safety-bar-container ~ .section:not([class*="-container"]) {
+  display: none;
+}
+
 .rich-text img[alt="Genentech logo"] {
   max-width: 250px;
   height: auto;
