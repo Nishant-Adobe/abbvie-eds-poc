@@ -86,25 +86,6 @@ main > .section:first-of-type:not(.hero-container)::before {
   z-index: 1;
 }
 
-/* Footer arc — dark purple curve above footer */
-footer::before {
-  content: "";
-  position: absolute;
-  top: -73px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130%;
-  height: 75px;
-  background-color: #422e83;
-  border-top-left-radius: 100%;
-  border-top-right-radius: 100%;
-  z-index: 1;
-}
-
-footer {
-  position: relative;
-  overflow: visible;
-}
 
 /* Transcript content wrapper — centered with 20px side padding (matches live) */
 .section.transcript .rich-text-wrapper,
@@ -266,13 +247,19 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
   main > .section:first-of-type:not(.hero-container)::before {
     top: -60px;
     width: 130%;
-    height: 75px;
+    height: 255px;
   }
 
   .section.transcript .rich-text-wrapper,
   main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
     max-width: 1037px;
     margin: 0 auto;
+  }
+
+  .section.transcript h1,
+  main > .section .default-content-wrapper h1 {
+    font-size: 40px;
+    line-height: 36px;
   }
 
   .section.transcript .default-content-wrapper p,
