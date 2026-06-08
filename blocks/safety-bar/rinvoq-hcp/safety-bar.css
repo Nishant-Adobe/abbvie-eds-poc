@@ -318,7 +318,11 @@
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
   --color-border: #e0e0e0;
+  --color-border-light: #ddd;
   --color-focus: var(--link-color);
+  --color-white-85: rgb(255 255 255 / 85%);
+  --color-shadow-sm: rgb(0 0 0 / 12%);
+  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -343,6 +347,8 @@
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
+  --color-warning-bg: #fff4c2;
+  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -409,12 +415,15 @@
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
+  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
+  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
+  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -430,7 +439,9 @@
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
+  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
+  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -440,6 +451,7 @@
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
+  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
   --spacing-48: 4.8rem;
   --spacing-50: 5rem;
@@ -465,9 +477,11 @@
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
   --spacing-200: 20rem;
+  --spacing-225: 22.5rem;
   --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
+  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -499,6 +513,7 @@
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
+  --border-radius-l: 1.6rem;
 
   /* Border Width */
   --border-width-thin: 1px;
@@ -512,6 +527,10 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
+  --z-index-60: 60;
+
+  /* Opacity */
+  --opacity-full: 1;
   --z-index-anchor-nav: 100;
   --z-index-safety-bar: 500;
 
@@ -519,6 +538,7 @@
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
+  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -537,6 +557,7 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
+  --font-weight-900: 900;
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -562,6 +583,7 @@
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
+  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -571,6 +593,7 @@
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
+  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
   --line-height-relaxed: 1.5;
   --line-height-loose: 1.6;
@@ -578,8 +601,10 @@
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
+  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --transition-easing-in-out: ease-in-out;
   --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
@@ -854,7 +879,7 @@
   /* ---- Brand Explorer Block ---- */
   --be-color-text: #46484a;
   --be-color-text-light: #46484a;
-  --be-color-bar-bg: #25282a;
+  --be-color-bar-bg: #000;
   --be-color-rinvoq: #ffd41d;
   --be-color-rinvoq-hover: #b8860b;
   --be-color-skyrizi: #00a8e1;
@@ -943,6 +968,16 @@
   /* ---- Footer ---- */
   --footer-links-max-width: 33.5rem;
 
+  /* ---- Header block ---- */
+  --header-logo-width: 15rem;
+  --header-content-max-width: 115rem;
+  --header-submenu-width: 22rem;
+  --header-submenu-border-width: var(--spacing-03);
+  --header-nav-line-height: 1.3;
+  --header-search-pill-width: 36rem;
+  --header-search-pill-min-width: 20rem;
+  --header-wrapper-max-width: 122rem;
+  --header-nav-sections-height: 5.1rem;
   /* ---- Section Nav ---- */
   --shadow-section-nav-stuck: 0 2px 1em rgb(0 0 0 / 50%);
   --shadow-focus-plum: 0 0 var(--spacing-05) var(--spacing-05) var(--color-plum);
@@ -971,56 +1006,241 @@
 
 
 /* Rinvoq HCP — Safety Bar Brand Overrides
-   Collapsed: charcoal bg, gold top border, white text, gold toggle
+   Collapsed: glacier bg, gold top border, charcoal text
    Expanded:  white bg, brush-stroke h5, charcoal h4, plum h4.plum-strong
 */
 
 
+/* stylelint-disable no-descending-specificity */
+
+
 .safety-bar {
-  background-color: var(--color-charcoal);
+  background-color: var(--color-glacier, #f5f5f5);
   border-top: 4px solid var(--color-brand-accent);
-  color: var(--color-text-on-dark);
+  color: var(--color-charcoal, #25282a);
   font-family: var(--body-font-family);
+  font-size: 14px;
+  box-shadow: none;
 }
 
 
+.safety-bar p,
+.safety-bar strong {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-charcoal, #25282a);
+}
+
+
+.safety-bar strong {
+  font-family: var(--font-family-semibold, 'Graphik Semibold', 'Helvetica Neue', arial, sans-serif);
+}
+
+
+.safety-bar.split .safety-bar-abbreviated {
+  display: block;
+  grid-template-columns: none;
+  gap: 0;
+  text-align: center;
+  line-height: 20px;
+  padding: 10px 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+
+.safety-bar.split .safety-bar-col1,
+.safety-bar.split .safety-bar-col2,
+.safety-bar.split .safety-bar-col1 > div,
+.safety-bar.split .safety-bar-col2 > div {
+  display: inline;
+}
+
+
+.safety-bar.split .safety-bar-col1 p,
+.safety-bar.split .safety-bar-col2 p {
+  display: inline;
+  margin: 0;
+}
+
+
+.safety-bar.split .safety-bar-col1 strong {
+  position: relative;
+  padding-bottom: 4px;
+}
+
+
+.safety-bar.split .safety-bar-col1 strong::before {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background-image: url('/content/dam/abbvie-eds-poc/copy-underline.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+
+/* stylelint-enable no-descending-specificity */
+
+
 .safety-bar-toggle {
-  border-color: var(--color-brand-accent);
-  color: var(--color-brand-accent);
+  border: 1.5px solid #fff;
+  color: #fff;
+  background-color: var(--color-brand-primary, #90124a);
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  font-size: 14px;
+  line-height: 1;
+  top: 0px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+
+.safety-bar-toggle::after {
+  color: #fff;
 }
 
 
 .safety-bar.is-expanded {
-  background-color: var(--background-color);
-  color: var(--color-text-heading);
+  background-color: var(--color-glacier, #f5f5f5);
+  color: var(--color-charcoal, #25282a);
+}
+
+
+.safety-bar.is-expanded .safety-bar-full {
+  padding: 24px 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+
+.safety-bar.is-expanded .safety-bar-full p {
+  font-size: 16px;
+  font-family: var(--body-font-family);
+  color: var(--color-iron, #46484a);
+  line-height: 24px;
+  margin: 0 0 16px;
+}
+
+
+.safety-bar.is-expanded .safety-bar-full strong {
+  font-family: var(--font-family-semibold, 'Graphik Semibold', 'Helvetica Neue', arial, sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-iron, #46484a);
+}
+
+
+.safety-bar.is-expanded .safety-bar-full p:first-child {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: var(--body-font-family);
+  color: var(--color-charcoal, #25282a);
+  margin: 0 0 20px;
+  background: url('/content/dam/abbvie-eds-poc/stroke--cta-block.svg') center center / 100% no-repeat;
+  padding: 12px 24px;
+  display: block;
+  width: fit-content;
+  position: relative;
+}
+
+
+.safety-bar.is-expanded .safety-bar-full p:first-child::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 20px;
+  width: 75px;
+  height: 7px;
+  background-color: var(--color-iron, #46484a);
+}
+
+
+.safety-bar.is-expanded .safety-bar-full p:first-child strong {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: var(--body-font-family);
+  color: var(--color-charcoal, #25282a);
+}
+
+
+.safety-bar.is-expanded .safety-bar-full h3:first-of-type {
+  font-size: 22px;
+  font-weight: 600;
+  font-family: var(--body-font-family);
+  color: var(--color-charcoal, #25282a);
+  background: url('/content/dam/abbvie-eds-poc/stroke--subheading.svg') center center / contain no-repeat;
+  padding: 12px 24px;
+  display: inline-block;
+  width: auto;
+  margin: 0 0 8px;
+}
+
+
+.safety-bar.is-expanded .safety-bar-full h3:not(:first-of-type) {
+  font-size: 22px;
+  font-weight: 600;
+  font-family: var(--body-font-family);
+  color: var(--color-charcoal, #25282a);
+  background: url('/content/dam/abbvie-eds-poc/stroke--cta-block.svg') center center / 100% no-repeat;
+  padding: 12px 20px 16px;
+  display: inline-block;
+  width: auto;
+  margin: 24px 0 8px;
+}
+
+
+@media (width >= 986px) {
+  .safety-bar.is-expanded .safety-bar-full h3:not(:first-of-type) {
+    background: url('/content/dam/abbvie-eds-poc/stroke--heading.svg') center top / 100% auto no-repeat;
+  }
 }
 
 
 .safety-bar.is-expanded .safety-bar-full h4 {
-  color: var(--color-plum);
-  font-family: var(--heading-font-family);
-  font-size: 1.375rem;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: var(--body-font-family);
+  color: var(--color-brand-primary, #90124a);
+  margin: 16px 0 8px;
 }
 
 
-.safety-bar.is-expanded .safety-bar-full h4.plum-strong {
-  color: var(--color-plum);
+.safety-bar.is-expanded .safety-bar-full ul {
+  list-style: disc;
+  padding: 0 0 0 24px;
+  margin: 4px 0 16px;
 }
 
 
-.safety-bar.is-expanded .safety-bar-full h5 {
-  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading.svg');
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  color: var(--color-charcoal);
-  display: inline-block;
-  padding: 2px 32px 16px 48px;
+.safety-bar.is-expanded .safety-bar-full li {
+  font-size: 16px;
+  font-family: var(--body-font-family);
+  color: var(--color-iron, #46484a);
+  line-height: 24px;
+  margin: 0 0 4px;
 }
 
 
 .safety-bar.is-expanded .safety-bar-toggle {
-  background-color: var(--safety-bar-toggle-bg, #fff);
-  border-color: var(--color-text-heading);
-  color: var(--color-text-heading);
+  background-color: var(--color-brand-primary, #90124a);
+  border: 1.5px solid #fff;
+  color: #fff;
+}
+
+
+.safety-bar.is-expanded .safety-bar-toggle::after {
+  position: relative;
+  bottom: 1px;
 }
