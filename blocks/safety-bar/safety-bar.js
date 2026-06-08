@@ -130,17 +130,39 @@ export default function decorate(block) {
     mo.observe(document.body, { childList: true });
   }
 
-  // Hide the bar when the inline ISI section OR footer is visible.
+  // Hide the bar when inline ISI is 200px into viewport (matches live site logic).
+  // Throttled scroll check — same approach as live site's safetyBarScrollCheck.
   const isiSection = document.querySelector('.section.isi');
   if (isiSection) {
-    const isiObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
+    let ticking = false;
+    const scrollCheck = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const isiTop = isiSection.getBoundingClientRect().top + scrollTop;
+      const footerEl = document.querySelector('footer');
+      const footerTop = footerEl
+        ? footerEl.getBoundingClientRect().top + scrollTop
+        : Infinity;
+
+      const isiVisible = (scrollTop + windowHeight) > (isiTop + 200);
+      const footerVisible = (scrollTop + windowHeight) > footerTop;
+
+      if (isiVisible || footerVisible) {
         stickySection.classList.add('is-hidden');
-      } else if (!document.querySelector('footer')?.getBoundingClientRect()
-        || document.querySelector('footer').getBoundingClientRect().top > window.innerHeight) {
+      } else {
         stickySection.classList.remove('is-hidden');
       }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          scrollCheck();
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
-    isiObserver.observe(isiSection);
+    scrollCheck();
   }
 }
