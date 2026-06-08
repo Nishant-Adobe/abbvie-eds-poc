@@ -865,6 +865,8 @@
   color: var(--color-iron);
   margin-bottom: var(--spacing-16, 16px);
   padding: 0 24px 24px;
+  text-align: left;
+  width: 100%;
 }
 
 /* Default: plain text links with arrow (indication cards) */
@@ -877,6 +879,7 @@
   font-size: 16px;
   text-decoration: none;
   line-height: 24px;
+  max-width: calc(100% - 30px);
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a::after {
@@ -886,10 +889,9 @@
   height: 19px;
   background-image: url('/content/dam/abbvie-eds-poc/icon-circle-arrow-right-plum.svg');
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: contain;
   margin-left: 10px;
-  position: relative;
-  top: 3px;
+  vertical-align: middle;
 }
 
 .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a:hover {
