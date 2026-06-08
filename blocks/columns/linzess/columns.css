@@ -1,0 +1,199 @@
+/* Linzess: dark-purple CTA section with columns */
+
+/* Section background and shape */
+main .section.dark-purple {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: #fff;
+  padding: 5rem 3.5rem;
+  margin: 0;
+  border-radius: 50% / 6%;
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+}
+
+main .section.dark-purple h1,
+main .section.dark-purple h2,
+main .section.dark-purple h3,
+main .section.dark-purple p,
+main .section.dark-purple a:not(.button) {
+  color: #fff;
+}
+
+main .section.dark-purple h2 {
+  font-family: var(--body-font-family);
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-bottom: 1.5rem;
+}
+
+/* Gold CTA buttons */
+main .section.dark-purple a.button:any-link {
+  background-color: #faa633;
+  color: #422e83;
+  border: none;
+  border-radius: 24px;
+  padding: 16px 32px;
+  font-weight: 800;
+  font-size: 14.4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+}
+
+main .section.dark-purple a.button::after {
+  content: "❯";
+  font-size: 16px;
+  font-weight: 400;
+}
+
+main .section.dark-purple a.button:hover {
+  background-color: #e6951a;
+}
+
+/* Columns layout inside dark-purple */
+main .section.dark-purple .columns {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+}
+
+main .section.dark-purple .columns > .columns-item:first-child {
+  display: none;
+}
+
+main .section.dark-purple .columns > .columns-item {
+  flex: 1;
+  text-align: center;
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: center;
+  border: none !important;
+}
+
+main .section.dark-purple .columns > .columns-item:nth-child(3) {
+  border-left: 1px solid rgba(255 255 255 / 30%) !important;
+}
+
+main .section.dark-purple .columns .columns-item-content:empty {
+  display: none;
+}
+
+main .section.dark-purple .columns .columns-item-content {
+  border: none !important;
+}
+
+main .section.dark-purple .columns-wrapper,
+main .section.dark-purple .columns-wrapper * {
+  border-left: none !important;
+  border-right: none !important;
+}
+
+/* Responsive: mobile/tablet stack */
+@media (width < 768px) {
+  main .section.dark-purple {
+    padding: 4rem 2rem 6rem;
+    border-radius: 50% 50% 50% 50% / 2% 2% 2% 2%;
+  }
+
+  main .section.dark-purple .columns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  main .section.dark-purple .columns > .columns-item {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255 255 255 / 20%);
+  }
+
+  main .section.dark-purple .columns > .columns-item:last-child {
+    border-left: none !important;
+    border-bottom: none;
+  }
+
+  main .section.dark-purple .columns > .columns-item:nth-child(3) {
+    border-left: none !important;
+  }
+}
+
+/* ISI Section (follows dark-purple) */
+main .section.dark-purple + .section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
+main .section.dark-purple + .section h3 {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 0;
+}
+
+main .section.dark-purple + .section h4 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 16px;
+  margin: 10px 0 4px;
+}
+
+main .section.dark-purple + .section p,
+main .section.dark-purple + .section li {
+  font-size: 14px;
+  color: rgb(85 85 85);
+  line-height: 16px;
+  margin: 0 0 10px;
+}
+
+main .section.dark-purple + .section ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+main .section.dark-purple + .section a {
+  color: rgb(66 46 131);
+  text-decoration: underline;
+  font-weight: 400;
+}
+
+main .section.dark-purple + .section strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+/* Centered section: images + gold divider */
+main .section.centered picture {
+  display: inline-block;
+}
+
+main .section.centered img {
+  display: inline-block;
+}
+
+main .section.white.centered {
+  position: relative;
+  padding-top: 4rem;
+}
+
+main .section.white.centered::before {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 5px;
+  background-image: url("https://www.linzess.com/content/dam/linzess/images/divider.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0 auto 1.5rem;
+}
