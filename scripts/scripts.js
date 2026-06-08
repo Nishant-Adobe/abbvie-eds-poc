@@ -484,6 +484,10 @@ async function loadEager(doc) {
       // }
     }
 
+    if (!main.querySelector('.hero') && getMetadata('brand') === 'linzess') {
+      document.body.classList.add('no-hero');
+    }
+
     document.body.classList.add('appear');
     await loadSection(main.querySelector('.section'), waitForFirstImage);
   }
