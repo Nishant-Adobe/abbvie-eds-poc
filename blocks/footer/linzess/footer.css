@@ -1057,7 +1057,7 @@
    - Centering (1200px max-width) inherited from base
    ============================================================ */
 
-/* Brand token overrides + arc positioning */
+/* Brand token overrides */
 
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
@@ -1077,35 +1077,28 @@
   /* Arc top decoration height — matches live `.abbv-footer:before { height: 255px }`.
      Block-scoped raw value (precedent: `--footer-content-max-width: 1200px` in base). */
   --footer-arc-height: var(--spacing-255);
-
-  position: relative;
-  overflow: visible;
-  margin-top: -10px;
 }
 
-.footer-wrapper::before {
-  content: '';
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130%;
-  height: 75px;
-  background-color: var(--footer-color-bg);
-  border-top-left-radius: 100%;
-  border-top-right-radius: 100%;
-  z-index: 0;
-}
-
-@media (width >= 900px) {
-  .footer-wrapper::before {
-    height: 255px;
-  }
-}
+/* Curved arc top decoration — replicates the live `.abbv-footer:before`.
+   The pseudo expands beyond the footer's left/right edges so the rounded
+   top doesn't taper off awkwardly at the viewport edges. */
 
 .footer {
   overflow: visible;
-  padding-top: 0;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--spacing-60));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--footer-arc-height);
+  background-color: var(--footer-color-bg);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -1;
 }
 
 /* ── Heading-based grid — mobile + tablet 2 cols (matches live
