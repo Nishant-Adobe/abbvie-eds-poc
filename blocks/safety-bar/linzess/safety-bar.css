@@ -882,7 +882,7 @@
   /* ---- Gradient ---- */
   --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
   --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
-  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
 
@@ -1063,7 +1063,7 @@
 
 
 .safety-bar-abbreviated {
-  padding: 10px 25px 0;
+  padding: var(--spacing-10) var(--spacing-25, 25px) 0;
   margin: auto;
 }
 
@@ -1114,7 +1114,7 @@
 
 
 .safety-bar-col2 strong {
-  color: #422e83;
+  color: var(--color-text-heading);
 }
 
 
@@ -1163,12 +1163,12 @@
 
 .safety-bar h4 {
   font-family: var(--body-font-family);
-  font-size: 14px;
+  font-size: var(--font-size-legal);
   font-weight: 700;
-  color: #422e83;
+  color: var(--color-text-heading);
   line-height: normal;
   letter-spacing: normal;
-  margin: 14px 0;
+  margin: var(--spacing-14) 0;
   text-transform: none;
   text-decoration: none;
 }
@@ -1178,13 +1178,13 @@
 
 
 .safety-bar h5 {
-  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-size: 14px;
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
   font-weight: 400;
-  color: #422e83;
+  color: var(--color-text-heading);
   line-height: normal;
   letter-spacing: normal;
-  margin: 14px 0;
+  margin: var(--spacing-14) 0;
   text-transform: none;
   text-decoration: none;
 }
@@ -1197,10 +1197,10 @@
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   font-weight: 400;
-  color: #555;
+  color: var(--color-text-muted);
   line-height: var(--line-height-legal);
-  letter-spacing: -0.28px;
-  margin: 10px 0;
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
 }
 
 
@@ -1213,7 +1213,7 @@
   font-size: var(--font-size-legal);
   font-weight: 400;
   line-height: var(--line-height-legal);
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 
