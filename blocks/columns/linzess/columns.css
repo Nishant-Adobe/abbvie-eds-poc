@@ -754,3 +754,28 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
 
 /* stylelint-enable no-descending-specificity */
 
+/* Mobile: stack symptom cards and timeline cards vertically */
+@media (width < 768px) {
+  .columns.whylinzess-symptoms > .columns-item,
+  .columns.whylinzess-symptoms > .columns-item:has(.columns-item-content) {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .columns.whylinzess-timeline > .columns-item,
+  .columns.whylinzess-timeline > .columns-item:has(.columns-item-content) {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .columns.whylinzess-mechanism-card > .columns-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .columns.whylinzess-mechanism-card .columns-item-image {
+    margin-left: 0;
+    margin: 0 auto;
+  }
+}
+
