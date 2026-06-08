@@ -478,15 +478,18 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 /* Button: DISABLED state */
-.columns.columns-homepage-gutcheck .button-container a.button {
-  background-color: var(--linz-dark-purple);
-  color: var(--linz-white);
+.columns.columns-homepage-gutcheck .button-container a.button,
+.columns.columns-homepage-gutcheck .columns-item-content a {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
   border-radius: var(--linz-rounded-corner);
   padding: 16px 59px 16px 24px;
   font-weight: 800;
   font-size: 14.4px;
   font-family: var(--body-font-family);
   text-decoration: none;
+  display: inline-block;
+  position: relative;
   display: inline-block;
   position: relative;
   opacity: 0.5;
