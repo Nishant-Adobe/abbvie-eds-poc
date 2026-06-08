@@ -104,8 +104,12 @@ export default async function decorate(block) {
       wrapper.setAttribute('aria-labelledby', button.id);
       wrapper.setAttribute('aria-hidden', !shouldActivate);
 
-      const insertBefore = matched[0];
-      main.insertBefore(wrapper, insertBefore);
+      const insertRef = matched[0];
+      if (insertRef.parentNode === main) {
+        main.insertBefore(wrapper, insertRef);
+      } else {
+        main.append(wrapper);
+      }
       matched.forEach((section) => {
         section.dataset.tabsGrid = 'true';
         if (shouldActivate) section.style.display = '';
