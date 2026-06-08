@@ -17,9 +17,14 @@
   opacity: 1;
 }
 
-/* Hide the authored in-page safety bar source block at all times.
-   JS reads its content and renders the sticky clone separately. */
+/* Hide the authored in-page safety bar source block.
+   When safety-bar is the only block, hide the entire section.
+   The .safety-bar-wrapper is always hidden (content feeds the floating bar). */
 .safety-bar-container {
+  display: none;
+}
+
+.safety-bar-wrapper {
   display: none;
 }
 
