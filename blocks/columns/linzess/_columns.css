@@ -368,6 +368,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) .columns-item-image {
   flex: 0 0 50%;
   order: -1;
+  margin: 0;
+  padding: 0;
+}
+
+.columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) .columns-item-image picture {
+  display: block;
+  height: 100%;
+  margin: 0;
 }
 
 .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) .columns-item-image img {
@@ -375,6 +383,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   height: 100%;
   object-fit: cover;
   display: block;
+  margin: 0;
 }
 
 .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) .columns-item-content {
@@ -424,8 +433,6 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   font-size: 14.4px;
   font-family: var(--body-font-family);
   text-decoration: none;
-  display: inline-block;
-  position: relative;
   display: inline-block;
   position: relative;
   opacity: 0.5;
