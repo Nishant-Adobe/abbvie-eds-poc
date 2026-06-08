@@ -4,7 +4,7 @@
 /* LINZESS DTC — Brand-specific style overrides */
 
 body.appear {
-  background-color: #422e83;
+  background-color: var(--color-brand-primary, #422e83);
   overflow-x: hidden;
 }
 
@@ -24,7 +24,7 @@ main .section.abbvie-container.hero-container {
 /* Transcript section — outer container */
 .section.transcript,
 main > .section:first-of-type:not(.hero-container) {
-  background-color: #fff;
+  background-color: var(--color-background-primary, #fff);
   position: relative;
   overflow: visible;
   padding: 0 0 var(--spacing-100);
@@ -43,7 +43,7 @@ main > .section:first-of-type:not(.hero-container)::before {
   transform: translateX(-50%);
   width: 130%;
   height: 75px;
-  background-color: #fff;
+  background-color: var(--color-background-primary, #fff);
   border-top-left-radius: 100%;
   border-top-right-radius: 100%;
   z-index: -5;
@@ -66,7 +66,7 @@ main > .section:first-of-type:not(.hero-container)::before {
   transform: translateX(-50%);
   width: 130%;
   height: 75px;
-  background-color: #fff;
+  background-color: var(--color-background-primary, #fff);
   border-top-left-radius: 100%;
   border-top-right-radius: 100%;
   z-index: -5;
@@ -82,7 +82,7 @@ main > .section:first-of-type:not(.hero-container)::before {
 
 .section.isi {
   position: relative;
-  background: #fff;
+  background: var(--color-background-primary, #fff);
   z-index: 1;
 }
 
@@ -175,7 +175,7 @@ main > .section:first-of-type:not(.hero-container) .default-content-wrapper li {
 /* ISI section */
 .section.isi,
 main > .section:nth-of-type(2):not(.safety-bar-container) {
-  background-color: #fff;
+  background-color: var(--color-background-primary, #fff);
   position: relative;
   padding: 0 var(--spacing-20) var(--spacing-80);
   margin: 0 0 var(--spacing-20);
@@ -232,13 +232,38 @@ main > .section:nth-of-type(2):not(.safety-bar-container) strong,
 main > .section:nth-of-type(2):not(.safety-bar-container) b {
   font-family: var(--font-family-legal-bold);
   color: var(--color-text-muted);
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .section.isi a,
 main > .section:nth-of-type(2):not(.safety-bar-container) a {
   color: var(--color-text-heading);
   text-decoration: underline;
+}
+
+.section.isi h4,
+main > .section:nth-of-type(2):not(.safety-bar-container) h4 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
+}
+
+.section.isi h5,
+main > .section:nth-of-type(2):not(.safety-bar-container) h5 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
+  text-decoration: none;
 }
 
 /* Desktop — arc grows larger + font-size 16px */
@@ -252,27 +277,27 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
 
   .section.transcript .rich-text-wrapper,
   main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
-    max-width: 1037px;
+    max-width: var(--content-width-transcript, 998px);
     margin: 0 auto;
-    padding: 0 48px;
+    padding: 0;
   }
 
   .section.transcript h1,
   main > .section .default-content-wrapper h1 {
-    font-size: 40px;
-    line-height: 36px;
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
   }
 
   .section.transcript .default-content-wrapper p,
   main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
-    font-size: 16px;
-    margin: 16px 0;
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
   }
 
   .section.transcript .default-content-wrapper h2,
   main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
-    font-size: 16px;
-    margin: 16px 0;
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
   }
 }
 
@@ -296,7 +321,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
 
 /* --- Section: Transcript body --- */
 .section.dian-test-body.abbvie-container {
-  background-color: #fff;
+  background-color: var(--color-background-primary, #fff);
   position: relative;
   overflow: visible;
   margin: 0;
@@ -318,7 +343,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 32px;
   font-weight: 400;
-  color: #422e83;
+  color: var(--color-text-heading);
   text-align: center;
   line-height: 30px;
   margin: 0;
@@ -340,7 +365,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #422e83;
+  color: var(--color-text-heading);
   line-height: normal;
   text-transform: none;
   letter-spacing: normal;
@@ -356,7 +381,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
   font-family: 'Lato', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #4d4d4f;
+  color: var(--color-text-body, #4d4d4f);
   line-height: normal;
   margin: 14px 0;
   padding: 0;
@@ -364,18 +389,18 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
 
 .section.dian-test-body strong {
   font-weight: 700;
-  color: #4d4d4f;
+  color: var(--color-text-body, #4d4d4f);
 }
 
 .section.dian-test-body em {
   font-style: italic;
-  color: #4d4d4f;
+  color: var(--color-text-body, #4d4d4f);
 }
 
 .section.dian-test-body ul {
   font-family: 'Lato', sans-serif;
   font-size: 16px;
-  color: #4d4d4f;
+  color: var(--color-text-body, #4d4d4f);
   margin: 16px 0;
   padding: 0 0 0 40px;
 }
@@ -383,7 +408,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
 .section.dian-test-body li {
   font-family: 'Lato', sans-serif;
   font-size: 16px;
-  color: #4d4d4f;
+  color: var(--color-text-body, #4d4d4f);
   margin: 0;
   padding: 0;
 }
@@ -391,7 +416,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
 .section.dian-test-body a {
   font-family: 'Lato', sans-serif;
   font-size: 16px;
-  color: #4d4d4f;
+  color: var(--color-text-body, #4d4d4f);
   text-decoration: underline;
 }
 
@@ -410,7 +435,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
   transform: translateX(-50%);
   width: 100%;
   height: 40px;
-  background-color: #fff;
+  background-color: var(--color-background-primary, #fff);
   border-top-left-radius: 100%;
   border-top-right-radius: 100%;
   z-index: -5;
@@ -418,121 +443,121 @@ main > .section:nth-of-type(2):not(.safety-bar-container) a {
 
 /* --- Section: ISI --- */
 .section.dian-test-isi.abbvie-container {
-  background-color: #fff;
+  background-color: var(--color-background-primary, #fff);
   position: relative;
-  margin: 0 0 20px;
-  padding: 0 20px 80px;
+  margin: 0 0 var(--spacing-20);
+  padding: 0 var(--spacing-20) var(--spacing-80);
   max-width: 100%;
   width: 100%;
 }
 
 .section.dian-test-isi h3 {
-  font-family: 'BasicCommercialLT-Black', sans-serif;
-  font-size: 16px;
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
   font-weight: 400;
-  color: #422e83;
+  color: var(--color-text-heading);
   line-height: normal;
   text-transform: none;
-  margin: 10px 0 0;
+  margin: var(--spacing-10) 0 0;
   padding: 0;
 }
 
 .section.dian-test-isi p {
-  font-family: 'BasicCommercialLT-Roman', sans-serif;
-  font-size: 14px;
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
   font-weight: 400;
-  line-height: 16px;
-  color: #555;
-  margin: 10px 0;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
   padding: 0;
 }
 
 .section.dian-test-isi strong,
 .section.dian-test-isi b {
-  font-family: 'BasicCommercialLT-Black', sans-serif;
-  font-size: 14px;
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
   font-weight: 400;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .section.dian-test-isi a {
-  font-family: 'BasicCommercialLT-Roman', sans-serif;
-  font-size: 14px;
-  color: #422e83;
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  color: var(--color-text-heading);
   text-decoration: underline;
 }
 
 .section.dian-test-isi ul {
-  font-family: 'BasicCommercialLT-Roman', sans-serif;
-  font-size: 14px;
-  line-height: 16px;
-  color: #555;
-  margin: 10px 0;
-  padding: 0 0 0 15px;
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
 }
 
 .section.dian-test-isi li {
-  font-family: 'BasicCommercialLT-Roman', sans-serif;
-  font-size: 14px;
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
   font-weight: 400;
-  line-height: 16px;
-  color: #555;
-  margin: 10px 0;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
   padding: 0;
 }
 
 .section.dian-test-isi li strong {
-  font-family: 'BasicCommercialLT-Black', sans-serif;
+  font-family: var(--font-family-legal-bold);
   font-weight: 400;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .section.dian-test-isi sup {
   font-size: 0.7em;
-  color: #555;
+  color: var(--color-text-muted);
   line-height: 0;
 }
 
 /* --- Desktop (min-width: 900px) --- */
 @media (min-width: 900px) {
   .section.dian-test-body.abbvie-container {
-    padding: 0 0 100px;
-    margin-top: 80px;
+    padding: 0 0 var(--spacing-100, 10rem);
+    margin-top: var(--spacing-80);
   }
 
   .section.dian-test-body::before {
-    top: -60px;
+    top: calc(-1 * var(--spacing-60));
     width: 130%;
-    height: 75px;
+    height: var(--spacing-75, 7.5rem);
   }
 
   .section.dian-test-body h1 {
-    font-size: 40px;
-    line-height: 36px;
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
   }
 
   .section.dian-test-body .rich-text-wrapper {
-    max-width: 998px;
+    max-width: var(--content-width-transcript, 998px);
     margin: 0 auto;
-    padding: 0 48px;
+    padding: 0 var(--spacing-48, 4.8rem);
   }
 
   .section.dian-test-body h2 {
-    font-size: 16px;
-    margin: 16px 0;
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
   }
 
   .section.dian-test-body h2:first-of-type {
-    margin-top: 40px;
+    margin-top: var(--spacing-40);
   }
 
   .section.dian-test-body p {
-    font-size: 16px;
-    margin: 16px 0;
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
   }
 
   .section.dian-test-isi .default-content-wrapper {
-    max-width: 1240px;
+    max-width: var(--content-width-isi, 1240px);
     margin: 0 auto;
   }
 }

@@ -20,11 +20,11 @@
   z-index: -5;
 }
 
-/* H2: PART 1, PART 2 headers — purple, Lato 16px */
+/* H2: PART 1, PART 2 headers */
 .section.transcript .rich-text h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-text-heading, #422e83);
   text-align: left;
   line-height: normal;
@@ -47,6 +47,7 @@
   color: var(--color-text-heading, #422e83);
   text-align: center;
   line-height: var(--line-height-30, 3rem);
+  letter-spacing: normal;
   margin: 0;
   padding: 0;
 }
@@ -346,18 +347,24 @@
 
 /* Desktop — transcript body text */
 @media (width >= 900px) {
+  .section.transcript .rich-text h1 {
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
+    letter-spacing: normal;
+  }
+
   .section.transcript .rich-text p {
-    font-size: var(--font-size-body, 1.6rem);
+    font-size: var(--font-size-legal-large);
     margin: var(--spacing-16, 1.6rem) 0;
   }
 
   .section.transcript .rich-text p strong,
   .section.transcript .rich-text p b {
-    font-size: var(--font-size-body, 1.6rem);
+    font-size: var(--font-size-legal-large);
   }
 
   .section.transcript .rich-text h2 {
-    font-size: var(--font-size-body, 1.6rem);
+    font-size: var(--font-size-legal-large);
     margin: var(--spacing-16, 1.6rem) 0;
   }
 
@@ -366,20 +373,20 @@
   }
 
   .section.transcript .rich-text ul {
-    font-size: var(--font-size-body, 1.6rem);
+    font-size: var(--font-size-legal-large);
     margin: var(--spacing-16, 1.6rem) 0;
   }
 
   .section.transcript .rich-text li {
-    font-size: var(--font-size-body, 1.6rem);
+    font-size: var(--font-size-legal-large);
   }
 
   .section.transcript .rich-text a {
-    font-size: var(--font-size-body, 1.6rem);
+    font-size: var(--font-size-legal-large);
   }
 
   .section.transcript .rich-text em {
-    font-size: var(--font-size-body, 1.6rem);
+    font-size: var(--font-size-legal-large);
   }
 }
 
