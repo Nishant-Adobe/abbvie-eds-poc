@@ -15,7 +15,8 @@
   left: 0;
   z-index: var(--z-index-safety-bar);
   pointer-events: none;
-  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 1;
 }
 
 
@@ -30,6 +31,8 @@
 
 .safety-bar-section.is-hidden {
   transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 
@@ -1155,14 +1158,14 @@
 }
 
 
-/* h4 in safety-bar (collapsed + expanded) — dark bold */
+/* h4 in safety-bar (collapsed + expanded) — purple bold */
 
 
 .safety-bar h4 {
-  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-family: var(--body-font-family);
   font-size: 14px;
   font-weight: 700;
-  color: #4d4d4f;
+  color: #422e83;
   line-height: normal;
   letter-spacing: normal;
   margin: 14px 0;
@@ -1236,14 +1239,6 @@
 
 .safety-bar.is-expanded .safety-bar-full li::marker {
   color: var(--color-brand-primary);
-}
-
-
-/* Expanded: purple subtitle paragraphs (all-bold lines like "Before you take..." and "Side Effects") */
-
-
-.safety-bar.is-expanded .safety-bar-full p > strong:only-child {
-  color: var(--color-text-heading);
 }
 
 
