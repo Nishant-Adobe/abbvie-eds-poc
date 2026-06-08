@@ -211,6 +211,15 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   max-height: 768px;
 }
 
+/* Hero eyebrow — match source: 12px/800/uppercase with 24px margin-bottom */
+.section.hero-container .default-content-wrapper > p:first-child,
+.section.hero-container .hero p:first-of-type {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
 /* Section-nav overlaps bottom of hero */
 .section.section-nav-container {
   margin-top: -80px;
@@ -248,6 +257,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
 .section.whylinzess-help > .default-content-wrapper > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
+  line-height: 36px;
   font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
   margin-bottom: 24px;
@@ -473,7 +483,9 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
 .section.whylinzess-works > .default-content-wrapper:first-child > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
+  line-height: 36px;
   font-weight: var(--font-weight-body);
+  text-transform: uppercase;
   margin-bottom: 24px;
 }
 
@@ -510,7 +522,9 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
 .section.whylinzess-works h2 {
   font-family: var(--heading-font-family);
   font-size: 40px;
+  line-height: 36px;
   font-weight: var(--font-weight-body);
+  text-transform: uppercase;
   margin-top: 48px;
   margin-bottom: 16px;
 }
@@ -556,7 +570,7 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
 body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
-  line-height: 1.1;
+  line-height: 36px;
   font-weight: var(--font-weight-body);
   text-transform: uppercase;
   margin-top: 60px;
@@ -585,9 +599,10 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
   text-align: center;
 }
 
-/* ---- "Side Effects" Section (white bg, centered) ---- */
-.section.whylinzess-sideeffects {
-  background-color: var(--background-color);
+/* ---- "Side Effects" Section (off-white bg, centered) ---- */
+body main .section.whylinzess-sideeffects,
+main > .section.dark + .section.columns-container.whylinzess-sideeffects {
+  background-color: var(--color-background-light);
   padding: 80px 24px;
   text-align: center;
   max-width: none;
@@ -622,9 +637,10 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
 .section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
-  line-height: 1.1;
+  line-height: 36px;
   font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
+  text-transform: uppercase;
   margin-bottom: 24px;
 }
 
@@ -672,7 +688,7 @@ body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper 
 body main .section.whylinzess-works h2 {
   font-family: var(--heading-font-family);
   font-size: 40px;
-  line-height: 1.1;
+  line-height: 36px;
   font-weight: var(--font-weight-body);
   text-transform: uppercase;
   margin-top: 60px;

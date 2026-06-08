@@ -458,9 +458,9 @@
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
   .section-nav nav {
     background-color: var(--section-nav-bg);
-    border-radius: var(--section-nav-radius);
+    border-radius: 0 0 var(--section-nav-radius) var(--section-nav-radius);
     max-width: fit-content;
-    padding: 0 var(--spacing-08);
+    padding: 0;
   }
 
   /* Flatten top corners of pill when stuck — live-site pattern */
@@ -469,9 +469,11 @@
     border-top-right-radius: 0;
   }
 
-  /* Links: 600 base weight */
+  /* Links: 16px / 600 base weight / line-height 50px for vertical centering */
   .section-nav a {
+    font-size: 16px;
     font-weight: var(--font-weight-semibold);
+    line-height: 50px;
     opacity: 1;
   }
 
@@ -518,8 +520,10 @@
     border-bottom: none;
     color: var(--section-nav-text);
     display: inline-block;
+    font-size: 16px;
     font-weight: var(--font-weight-semibold);
-    padding: var(--spacing-12) var(--spacing-24);
+    line-height: 50px;
+    padding: 0 25px;
     text-align: unset;
     width: auto;
   }
