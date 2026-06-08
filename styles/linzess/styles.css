@@ -664,15 +664,19 @@ main > .section.gutcheck-quiz-arc > * {
   z-index: 2;
 }
 
-/* ── ISI text-container: Legal font styling ── */
+/* ── ISI text-container: Legal font styling (from live site) ── */
 .text-container {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
-  font-size: 14px;
-  line-height: 16px;
-  color: #555;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000;
   max-width: 100%;
   padding: 0 20px 80px;
   margin: 10px 0 20px;
+}
+
+.text-container > div {
+  margin: 0 80px;
 }
 
 .text-container h3 {
@@ -680,34 +684,56 @@ main > .section.gutcheck-quiz-arc > * {
   font-size: 16px;
   font-weight: 400;
   color: #422e83;
+  letter-spacing: -0.32px;
   margin: 10px 0 0;
   text-transform: none;
 }
 
 .text-container p {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: 14px;
   line-height: 16px;
+  letter-spacing: -0.28px;
   color: #555;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 .text-container ul {
   padding-left: 20px;
+  margin: 10px 0;
 }
 
 .text-container li {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   font-size: 14px;
   line-height: 16px;
+  letter-spacing: -0.28px;
   color: #555;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
 .text-container a {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
+  font-size: 14px;
   color: #422e83;
   text-decoration: underline;
+  letter-spacing: -0.28px;
 }
 
 .text-container strong {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-weight: 400;
+  color: #422e83;
+}
+
+.text-container u {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-weight: 400;
+  color: #422e83;
+  text-decoration: none;
+}
+
+.text-container sup {
+  font-size: 10px;
+  line-height: 0;
 }
