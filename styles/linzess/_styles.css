@@ -118,6 +118,7 @@ footer a {
   text-transform: uppercase;
 }
 
+
 /* ---- Safety Bar ---- */
 .isi-container {
   background-color: var(--background-color);
@@ -211,9 +212,10 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   max-height: 768px;
 }
 
-/* Hero eyebrow — match source: 12px/800/uppercase with 24px margin-bottom */
+/* Hero eyebrow — match source: 12px/800/uppercase with 24px margin-bottom
+   Scoped to editorial heroes only; homepage CTA hero uses 16px/400/none */
 .section.hero-container .default-content-wrapper > p:first-child,
-.section.hero-container .hero p:first-of-type {
+.section.hero-container .hero:not(.linzess-behind-nav-linzess-cta-hero) p:first-of-type {
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
