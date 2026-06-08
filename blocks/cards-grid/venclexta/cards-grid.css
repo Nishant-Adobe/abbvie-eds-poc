@@ -1225,6 +1225,22 @@
   align-items: center;
 }
 
+/* Reorder: h3 first (order 1), buttons after (order 2) */
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div > div:nth-child(3) {
+  order: 1;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div > div:nth-child(1) {
+  order: 2;
+  width: 100%;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div > div:nth-child(4) {
+  order: 2;
+  width: 100%;
+}
+
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div h3 {
   color: #404040 !important;
   font-size: 28px !important;
@@ -1233,19 +1249,20 @@
   text-align: center;
 }
 
-/* Buttons in one row after h3, equal width */
+/* Both button cells in a row */
 
-.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div .button-container,
-.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div > div:has(a) {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  margin-top: auto;
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div {
+  flex-wrap: wrap;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div > div:nth-child(1),
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div > div:nth-child(4) {
+  flex: 1 1 calc(50% - 5px);
+  max-width: calc(50% - 5px);
 }
 
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div .button-container a.button,
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div p a {
-  flex: 1;
   background: #fff !important;
   color: #005272 !important;
   border: 2px solid #005272 !important;
@@ -1256,10 +1273,10 @@
   text-decoration: none;
   text-align: center;
   display: block;
+  width: 100%;
 }
 
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div p a[href^="tel:"] {
-  flex: 1;
   background: #fff !important;
   color: #005272 !important;
   border: 2px solid #005272 !important;
@@ -1270,6 +1287,7 @@
   text-decoration: none;
   text-align: center;
   display: block;
+  width: 100%;
 }
 
 /* Disclaimer text */
