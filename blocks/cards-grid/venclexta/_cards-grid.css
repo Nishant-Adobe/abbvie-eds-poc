@@ -493,7 +493,7 @@
 
 .cards-grid:not(.cards-grid-callout-cards) > div:nth-child(2) p {
   color: #fff !important;
-  font-size: 22px !important;
+  font-size: 25px !important;
   max-width: 300px;
   text-align: left;
 }
@@ -702,9 +702,15 @@
 @media (width < 768px) {
   .cards-grid:not(.cards-grid-callout-cards) {
     grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
   }
 
-  .section:has(.rich-text + .cards-grid + .rich-text.disclaimer) .cards-grid {
+  .cards-grid:not(.cards-grid-callout-cards) > div {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid {
     grid-template-columns: 1fr !important;
   }
 }
