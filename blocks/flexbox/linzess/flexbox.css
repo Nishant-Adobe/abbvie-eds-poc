@@ -41,6 +41,7 @@
    icon overlaps left edge by ~50px creating half-overlap effect ── */
 .flexbox.column {
   background-color: #f4f6fb;
+  border: 1px solid #e8e5f0;
   border-radius: 16px;
   padding: 24px 24px 24px 55px;
   flex-direction: column;
@@ -52,16 +53,20 @@
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  padding: 12px 0 !important;
+  padding: 24px 0 !important;
   gap: 0 !important;
-  border-bottom: none !important;
+  border-bottom: 1px solid #e8e5f0 !important;
   background: none !important;
-  border-left: 4px solid #422e83 !important;
+  border-left: none !important;
   border-radius: 0 !important;
   grid-column: unset !important;
   grid-template-columns: unset !important;
   position: relative !important;
-  margin-bottom: 16px !important;
+  margin-bottom: 0 !important;
+}
+
+.flexbox.column .flexbox-item:last-child {
+  border-bottom: none !important;
 }
 
 .flexbox.column .flexbox-item > div {
