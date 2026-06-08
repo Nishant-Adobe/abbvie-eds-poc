@@ -92,7 +92,7 @@ export default function decorate(block) {
     if (isExpanded) {
       if (!fullEl) {
         fullEl = document.createElement('div');
-        fullEl.className = 'safety-bar-full abbv-safety-bar-content-maximized';
+        fullEl.className = 'safety-bar-full';
         fullEl.id = 'safety-bar-full-content';
         fullEl.innerHTML = expanded.innerHTML;
       }
