@@ -546,21 +546,28 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   text-transform: none;
 }
 
+/* stylelint-disable no-descending-specificity */
+
 /* Override the generic p rule that forces 12px/800/uppercase on eyebrow divs */
-.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container):not(:first-child):has(> div > p) p {
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container, :first-child):has(> div > p) p {
   font-size: 16px;
   font-weight: 400;
   text-transform: none;
 }
 
 /* Hide divider after eyebrow on CTA hero (live homepage has no divider on eyebrow) */
-.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container):not(:first-child):has(> div > p) p::after {
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container, :first-child):has(> div > p) p::after {
   display: none;
 }
 
 @media (width < 744px) {
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-eyebrow,
-  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container):not(:first-child):has(> div > p) p {
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container, :first-child):has(> div > p) p {
     font-size: 14px;
     font-weight: 400;
     text-transform: none;
