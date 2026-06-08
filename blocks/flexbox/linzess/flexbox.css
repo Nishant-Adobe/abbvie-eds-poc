@@ -1,7 +1,16 @@
 /* ============================================================
    LINZESS — Flexbox brand override
-   Column variant: icon-left items for tab panel dosing instructions
-   Reference: linzess-find-relief-v2 branch (Bhargavi)
+   Column variant: dosing instruction cards in tab panel
+   Reference: linzess.com/find-relief live site screenshots
+
+   Layout:
+   - Off-white (#f4f6fb) page background
+   - Each card: left purple border, icon overlaps left edge
+   - Icon: ~80px circle with lavender bg, overlaps the card left border
+   - Content area: has 3px left purple border
+   - Cards separated by vertical spacing (no hr lines)
+   - Title: Lato bold purple
+   - Desc: regular dark grey
    ============================================================ */
 
 .flexbox {
@@ -36,76 +45,91 @@
   }
 }
 
-/* ── Column variant: dosing instruction cards ── */
+/* ── Column variant ── */
 .flexbox.column {
   flex-direction: column;
-  gap: 0;
+  gap: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  overflow: visible;
 }
 
 .flexbox.column .flexbox-item {
-  display: grid !important;
-  grid-template-columns: 6rem 1fr !important;
-  gap: 1.6rem !important;
-  align-items: start !important;
-  padding: 2.4rem 0 !important;
-  border-bottom: 1px solid var(--color-border-default, #c2c2c2) !important;
-  background: none !important;
-  border-left: none !important;
-  border-radius: 0 !important;
-  margin: 0 !important;
-}
-
-.flexbox.column .flexbox-item:last-child {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  border: none !important;
   border-bottom: none !important;
+  background: none !important;
+  border-radius: 0 !important;
+  grid-column: unset !important;
+  grid-template-columns: unset !important;
+  position: relative !important;
+  margin: 0 !important;
+  overflow: visible !important;
 }
 
 .flexbox.column .flexbox-item > div {
   grid-column: unset !important;
 }
 
+/* Icon container — overlaps the content left border */
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 6rem !important;
-  height: 6rem !important;
-  min-width: unset !important;
+  width: 80px !important;
+  min-width: 80px !important;
+  height: 80px !important;
   min-height: unset !important;
+  flex-shrink: 0 !important;
+  overflow: visible !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  overflow: visible !important;
   background-color: transparent !important;
   border-radius: 0 !important;
+  margin-right: -40px !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 4.8rem !important;
-  height: 4.8rem !important;
+  width: 80px !important;
+  height: 80px !important;
   max-width: none !important;
-  margin-left: 0 !important;
+  margin: 0 !important;
   object-fit: contain !important;
 }
 
+/* Content area — has left purple border, padded */
 .flexbox.column .flexbox-item .flexbox-item-content {
-  flex: unset !important;
+  flex: 1 !important;
   grid-column: unset !important;
-  padding: 0 !important;
+  border-left: 3px solid #422e83 !important;
+  padding: 16px 24px 16px 56px !important;
+  min-height: 80px !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
-  font-family: var(--heading-font-family);
-  font-size: 1.8rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-brand-primary);
-  margin-bottom: 0.8rem;
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  font-style: normal;
+  color: #422e83;
+  margin: 0 0 6px;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
-  font-size: var(--font-size-body);
+  font-size: 14px;
   line-height: 1.5;
-  color: var(--text-color);
-  margin-bottom: 0.4rem;
+  color: #4d4d4f;
+  margin: 0 0 6px;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content em {
-  font-size: var(--font-size-body-small);
-  color: var(--text-color);
+  font-size: 11px;
+  color: #666;
+  font-style: italic;
 }

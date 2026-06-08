@@ -92,15 +92,13 @@
   border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
 }
 
-/* ── Panel wrapper ── */
+/* ── Panel wrapper — off-white bg matching live site ── */
 .tabs-panel {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-24);
-  background: var(--background-color);
+  display: block;
+  background: #f4f6fb;
   border: none;
   border-radius: 0;
-  padding: var(--spacing-30) var(--spacing-16);
+  padding: 48px 80px;
   margin: 0;
   max-width: none;
   position: relative;
@@ -131,19 +129,7 @@
   }
 
   .tabs-panel {
-    padding: var(--spacing-40) var(--spacing-24);
-  }
-
-  .tabs-panel:has(> .section:first-child:nth-last-child(2)) {
-    grid-template-columns: repeat(12, 1fr);
-  }
-
-  .tabs-panel > .section:first-child:nth-last-child(2) {
-    grid-column: span 6;
-  }
-
-  .tabs-panel > .section:first-child:nth-last-child(2) ~ .section {
-    grid-column: span 6;
+    padding: 48px 60px;
   }
 }
 
@@ -155,6 +141,6 @@
   }
 
   .tabs-panel {
-    padding: var(--spacing-48) var(--spacing-30);
+    padding: 48px 80px;
   }
 }
