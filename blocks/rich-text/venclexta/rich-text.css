@@ -290,29 +290,49 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 50px 20px;
-  max-width: 100vw !important;
-  width: 100vw;
-  margin-left: calc(50% - 50vw) !important;
-  min-height: 200px;
+  padding: 40px 20px;
+  max-width: 1180px !important;
+  margin-inline: auto !important;
+  min-height: 180px;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 20px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.section.ven-zone .rich-text-wrapper,
+.section.ven-zone .rich-text-wrapper {
+  flex: 1 1 50%;
+  position: relative;
+  z-index: 1;
+}
+
 .section.ven-zone .cta-wrapper {
+  flex: 0 0 auto;
   position: relative;
   z-index: 1;
 }
 
 .section.ven-zone .rich-text p {
   color: #fff;
-  font-size: 18px;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 16px;
   font-weight: 500;
+  line-height: 1.4;
   margin: 0;
+}
+
+.section.ven-zone .cta .abbv-cta {
+  background: #fff !important;
+  color: #000 !important;
+  border: none !important;
+  border-radius: 10px;
+  padding: 14px 30px;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 /* Hide unprocessed metadata section on aem.live (last section, no block wrappers) */
@@ -359,11 +379,15 @@ main > .section.safety-bar-container ~ .section:not([class*="-container"]) {
   border-top-color: #ccc;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
+
 .rich-text.footnote p {
   font-size: 11px;
   line-height: 16px;
   color: #404040;
 }
+
+/* stylelint-disable-next-line no-descending-specificity */
 
 .rich-text.legal p {
   font-size: 12px;
