@@ -101,8 +101,7 @@ main > .section:first-of-type:not(.hero-container) + .section {
 }
 
 .section.transcript h1,
-main > .section .default-content-wrapper h1,
-main > .section .rich-text-wrapper h1 {
+main > .section .default-content-wrapper h1 {
   font-family: var(--heading-font-family);
   font-size: var(--font-size-h1);
   font-weight: 400;
@@ -115,8 +114,7 @@ main > .section .rich-text-wrapper h1 {
 }
 
 .section.transcript h1::before,
-main > .section .default-content-wrapper h1::before,
-main > .section .rich-text-wrapper h1::before {
+main > .section .default-content-wrapper h1::before {
   content: '';
   display: block;
   width: var(--spacing-64);
@@ -128,9 +126,7 @@ main > .section .rich-text-wrapper h1::before {
 }
 
 .section.transcript .default-content-wrapper p,
-.section.transcript .rich-text-wrapper p,
-main > .section:first-of-type:not(.hero-container) .default-content-wrapper p,
-main > .section:first-of-type:not(.hero-container) .rich-text-wrapper p {
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
   font-family: var(--body-font-family);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
@@ -141,20 +137,14 @@ main > .section:first-of-type:not(.hero-container) .rich-text-wrapper p {
 
 .section.transcript .default-content-wrapper strong,
 .section.transcript .default-content-wrapper b,
-.section.transcript .rich-text-wrapper strong,
-.section.transcript .rich-text-wrapper b,
 main > .section:first-of-type:not(.hero-container) .default-content-wrapper strong,
-main > .section:first-of-type:not(.hero-container) .default-content-wrapper b,
-main > .section:first-of-type:not(.hero-container) .rich-text-wrapper strong,
-main > .section:first-of-type:not(.hero-container) .rich-text-wrapper b {
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper b {
   color: var(--text-color);
   font-weight: 700;
 }
 
 .section.transcript .default-content-wrapper h2,
-.section.transcript .rich-text-wrapper h2,
-main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2,
-main > .section:first-of-type:not(.hero-container) .rich-text-wrapper h2 {
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
   font-weight: 600;
@@ -166,24 +156,18 @@ main > .section:first-of-type:not(.hero-container) .rich-text-wrapper h2 {
 }
 
 .section.transcript .default-content-wrapper h2:first-of-type,
-.section.transcript .rich-text-wrapper h2:first-of-type,
-main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2:first-of-type,
-main > .section:first-of-type:not(.hero-container) .rich-text-wrapper h2:first-of-type {
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2:first-of-type {
   margin: var(--spacing-40) 0 var(--spacing-16);
 }
 
 .section.transcript .default-content-wrapper ul,
-.section.transcript .rich-text-wrapper ul,
-main > .section:first-of-type:not(.hero-container) .default-content-wrapper ul,
-main > .section:first-of-type:not(.hero-container) .rich-text-wrapper ul {
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper ul {
   margin: var(--spacing-16) 0;
   padding: 0 0 0 var(--spacing-40);
 }
 
 .section.transcript .default-content-wrapper li,
-.section.transcript .rich-text-wrapper li,
-main > .section:first-of-type:not(.hero-container) .default-content-wrapper li,
-main > .section:first-of-type:not(.hero-container) .rich-text-wrapper li {
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper li {
   margin: 0;
   padding: 0;
 }
@@ -255,33 +239,6 @@ main > .section:nth-of-type(2):not(.safety-bar-container) b {
 main > .section:nth-of-type(2):not(.safety-bar-container) a {
   color: var(--color-text-heading);
   text-decoration: underline;
-}
-
-/* ISI h4: "Before you take LINZESS..." — dark, Lato, not global heading */
-.section.isi h4,
-main > .section:nth-of-type(2):not(.safety-bar-container) h4 {
-  font-family: var(--body-font-family);
-  font-size: 14px;
-  font-weight: 400;
-  color: #4d4d4f;
-  line-height: normal;
-  letter-spacing: normal;
-  margin: 14px 0;
-  text-transform: none;
-}
-
-/* ISI h5: "Side Effects" — dark bold, Lato */
-.section.isi h5,
-main > .section:nth-of-type(2):not(.safety-bar-container) h5 {
-  font-family: var(--body-font-family);
-  font-size: 14px;
-  font-weight: 700;
-  color: #4d4d4f;
-  line-height: normal;
-  letter-spacing: normal;
-  margin: 14px 0;
-  text-transform: none;
-  text-decoration: none;
 }
 
 /* Desktop — arc grows larger + font-size 16px */
