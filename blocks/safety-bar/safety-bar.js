@@ -130,11 +130,16 @@ export default function decorate(block) {
     mo.observe(document.body, { childList: true });
   }
 
-  // Hide the bar when the inline ISI section enters the viewport.
+  // Hide the bar when the inline ISI section OR footer is visible.
   const isiSection = document.querySelector('.section.isi');
   if (isiSection) {
     const isiObserver = new IntersectionObserver(([entry]) => {
-      stickySection.classList.toggle('is-hidden', entry.isIntersecting);
+      if (entry.isIntersecting) {
+        stickySection.classList.add('is-hidden');
+      } else if (!document.querySelector('footer')?.getBoundingClientRect()
+        || document.querySelector('footer').getBoundingClientRect().top > window.innerHeight) {
+        stickySection.classList.remove('is-hidden');
+      }
     });
     isiObserver.observe(isiSection);
   }
