@@ -64,6 +64,7 @@ export default function decorate(block) {
     section.hidden = true;
   } else {
     block.closest('.safety-bar-wrapper')?.remove();
+    section.classList.remove('safety-bar-container');
   }
 
   // Build the sticky floating bar
