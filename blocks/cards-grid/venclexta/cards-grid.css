@@ -1102,14 +1102,15 @@
 /* Venclexta — Simple cards-grid (download materials / advocacy orgs) */
 
 .cards-grid:not(.cards-grid-callout-cards) {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
   gap: 20px;
   max-width: 1180px;
   margin: 20px auto 0;
 }
 
 .cards-grid:not(.cards-grid-callout-cards) > div {
+  grid-column: auto !important;
   background: #f5f5f5;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
