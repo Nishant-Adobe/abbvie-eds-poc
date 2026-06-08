@@ -1,16 +1,14 @@
 /* ============================================================
-   LINZESS — Flexbox brand override
-   Column variant: dosing instruction cards in tab panel
-   Reference: linzess.com/find-relief live site screenshots
+   LINZESS — Flexbox brand override (dosing cards)
+   EXACT values from linzess.com/find-relief computed styles:
 
-   Layout:
-   - Off-white (#f4f6fb) page background
-   - Each card: left purple border, icon overlaps left edge
-   - Icon: ~80px circle with lavender bg, overlaps the card left border
-   - Content area: has 3px left purple border
-   - Cards separated by vertical spacing (no hr lines)
-   - Title: Lato bold purple
-   - Desc: regular dark grey
+   Card: display:flex, row, align-items:center, width:837px, padding:12px 0
+   Image container: width:55px (img overflows to 105px)
+   Text: padding: 0 85px 0 33px
+   Title: Lato 24px/700 #422e83, margin:0 0 8px
+   Desc: 16px/400 #4d4d4f, margin:0 0 8px
+   Section bg: #f4f6fb
+   NO border-left, NO border-bottom on cards
    ============================================================ */
 
 .flexbox {
@@ -45,31 +43,35 @@
   }
 }
 
-/* ── Column variant ── */
+/* ── Column variant — exact live site values ── */
 .flexbox.column {
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
   padding: 0;
   background: none;
   border: none;
   border-radius: 0;
   overflow: visible;
+  max-width: 837px;
+  margin: 0 auto;
 }
 
 .flexbox.column .flexbox-item {
   display: flex !important;
   flex-direction: row !important;
-  align-items: flex-start !important;
-  padding: 0 !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 12px 0 !important;
+  margin: 0 !important;
   gap: 0 !important;
   border: none !important;
   border-bottom: none !important;
+  border-left: none !important;
   background: none !important;
   border-radius: 0 !important;
   grid-column: unset !important;
   grid-template-columns: unset !important;
   position: relative !important;
-  margin: 0 !important;
   overflow: visible !important;
 }
 
@@ -77,59 +79,54 @@
   grid-column: unset !important;
 }
 
-/* Icon container — overlaps the content left border */
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 80px !important;
-  min-width: 80px !important;
-  height: 80px !important;
+  width: 55px !important;
+  min-width: 55px !important;
+  height: auto !important;
   min-height: unset !important;
   flex-shrink: 0 !important;
   overflow: visible !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  display: block !important;
+  position: relative !important;
   background-color: transparent !important;
   border-radius: 0 !important;
-  margin-right: -40px !important;
-  position: relative !important;
-  z-index: 1 !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 80px !important;
-  height: 80px !important;
+  width: 105px !important;
+  height: auto !important;
   max-width: none !important;
   margin: 0 !important;
   object-fit: contain !important;
 }
 
-/* Content area — has left purple border, padded */
 .flexbox.column .flexbox-item .flexbox-item-content {
   flex: 1 !important;
   grid-column: unset !important;
-  border-left: 3px solid #422e83 !important;
-  padding: 16px 24px 16px 56px !important;
-  min-height: 80px !important;
+  padding: 0 85px 0 33px !important;
+  border-left: none !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
   font-style: normal;
   color: #422e83;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
+  line-height: normal;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
   color: #4d4d4f;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content em {
-  font-size: 11px;
-  color: #666;
+  font-size: 12px;
+  color: #4d4d4f;
   font-style: italic;
 }
