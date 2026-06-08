@@ -2,13 +2,13 @@
    LINZESS — Flexbox brand override (dosing cards in tabs)
    Source: linzess.com/find-relief "Take LINZESS" section
 
-   Layout from live site:
-   - Section background: #f4f6fb (off-white)
-   - No inner card/border — cards sit directly on the bg
-   - Each card: display:flex, position:relative, 837px wide, padding 12px 0
-   - Icon: 105px wide img with margin-left: -50px (overlaps left edge)
-   - Title: Lato 24px bold #422e83
-   - Separator: light line between items
+   From live screenshot:
+   - Each card has a 3px left purple (#422e83) border on content area
+   - Icon (105px circle) overlaps this border, sitting half-outside
+   - Cards separated by spacing (no horizontal line between them)
+   - Title: Lato ~18px bold #422e83
+   - Description: ~14px #4d4d4f
+   - Off-white page background behind everything
    ============================================================ */
 
 .flexbox {
@@ -48,11 +48,11 @@
   background: none;
   border: none;
   border-radius: 0;
-  padding: 0 0 0 50px;
+  padding: 0;
   flex-direction: column;
-  gap: 0;
+  gap: 24px;
   overflow: visible;
-  max-width: 837px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -60,21 +60,18 @@
   display: flex !important;
   flex-direction: row !important;
   align-items: flex-start !important;
-  padding: 20px 0 !important;
+  padding: 24px 32px 24px 0 !important;
   gap: 0 !important;
-  border-bottom: 1px solid #d9d7e8 !important;
+  border-bottom: none !important;
   background: none !important;
-  border-left: none !important;
+  border-left: 3px solid #422e83 !important;
   border-radius: 0 !important;
   grid-column: unset !important;
   grid-template-columns: unset !important;
   position: relative !important;
   margin-bottom: 0 !important;
+  margin-left: 50px !important;
   overflow: visible !important;
-}
-
-.flexbox.column .flexbox-item:last-child {
-  border-bottom: none !important;
 }
 
 .flexbox.column .flexbox-item > div {
@@ -82,49 +79,53 @@
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 55px !important;
-  min-width: 55px !important;
+  width: 70px !important;
+  min-width: 70px !important;
   height: auto !important;
   min-height: unset !important;
   flex-shrink: 0 !important;
   overflow: visible !important;
-  display: block !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
   background-color: transparent !important;
   border-radius: 0 !important;
+  margin-left: -52px !important;
+  margin-top: 4px !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 105px !important;
-  height: 105px !important;
+  width: 80px !important;
+  height: 80px !important;
   max-width: none !important;
-  margin-left: -50px !important;
+  margin-left: 0 !important;
   object-fit: contain !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content {
   flex: 1 !important;
   grid-column: unset !important;
-  padding: 0 0 0 20px !important;
+  padding: 0 0 0 16px !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
   font-style: normal;
   color: #422e83;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5;
   color: #4d4d4f;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content em {
-  font-size: 12px;
+  font-size: 11px;
   color: #4d4d4f;
   font-style: italic;
 }
