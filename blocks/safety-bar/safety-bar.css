@@ -19,13 +19,19 @@
 
 /* Hide the authored in-page safety bar source block.
    When safety-bar is the only block, hide the entire section.
-   The .safety-bar-wrapper is always hidden (content feeds the floating bar). */
+   The .safety-bar-wrapper is always hidden (content feeds the floating bar).
+   In Universal Editor (.adobe-ue-edit), keep visible for authoring. */
 .safety-bar-container {
   display: none;
 }
 
 .safety-bar-wrapper {
   display: none;
+}
+
+.adobe-ue-edit .safety-bar-container,
+.adobe-ue-edit .safety-bar-wrapper {
+  display: block;
 }
 
 .safety-bar-section.is-hidden {

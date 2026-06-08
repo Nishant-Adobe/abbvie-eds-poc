@@ -142,36 +142,37 @@ export default function decorate(block) {
   // Hide the bar when inline ISI is 200px into viewport (matches live site logic).
   // Throttled scroll check — same approach as live site's safetyBarScrollCheck.
   const isiSection = document.querySelector('.section.isi');
-  if (isiSection) {
-    let ticking = false;
-    const scrollCheck = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
+  let ticking = false;
+  const scrollCheck = () => {
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const footerEl = document.querySelector('footer');
+    const footerTop = footerEl
+      ? footerEl.getBoundingClientRect().top + scrollTop
+      : Infinity;
+    const footerVisible = (scrollTop + windowHeight) > footerTop;
+
+    let isiVisible = false;
+    if (isiSection) {
       const isiTop = isiSection.getBoundingClientRect().top + scrollTop;
-      const footerEl = document.querySelector('footer');
-      const footerTop = footerEl
-        ? footerEl.getBoundingClientRect().top + scrollTop
-        : Infinity;
+      isiVisible = (scrollTop + windowHeight) > (isiTop + 200);
+    }
 
-      const isiVisible = (scrollTop + windowHeight) > (isiTop + 200);
-      const footerVisible = (scrollTop + windowHeight) > footerTop;
+    if (isiVisible || footerVisible) {
+      stickySection.classList.add('is-hidden');
+    } else {
+      stickySection.classList.remove('is-hidden');
+    }
+  };
 
-      if (isiVisible || footerVisible) {
-        stickySection.classList.add('is-hidden');
-      } else {
-        stickySection.classList.remove('is-hidden');
-      }
-    };
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          scrollCheck();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-    scrollCheck();
-  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        scrollCheck();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+  scrollCheck();
 }
