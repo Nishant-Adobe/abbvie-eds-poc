@@ -468,48 +468,104 @@
   margin-top: 5px;
 }
 
+/* Advocacy orgs section — background, centered text */
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) {
+  background: #f2f2f2;
+  padding: 50px 20px 40px !important;
+  max-width: 100vw !important;
+  width: 100vw;
+  margin-left: calc(50% - 50vw) !important;
+  text-align: center;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .rich-text-wrapper,
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid-wrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .rich-text h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .rich-text p {
+  text-align: center;
+}
+
 /* Advocacy orgs — 3 cards per row, yellow border, white bg */
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid {
   grid-template-columns: 1fr 1fr 1fr !important;
+  gap: 20px;
+  margin-top: 30px;
 }
 
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div {
   background: #fff !important;
   border: 4px solid #ffce00 !important;
   border-radius: 10px;
-  padding: 30px 15px;
+  padding: 40px 15px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div h3 {
   color: #404040 !important;
   font-size: 28px !important;
-  margin-bottom: 20px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  text-align: center;
 }
 
-.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div .button-container {
-  display: inline-flex;
+/* Buttons in one row after h3, equal width */
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div .button-container,
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div > div:has(a) {
+  display: flex;
   gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
+  width: 100%;
+  margin-top: auto;
 }
 
-.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div .button-container a.button {
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div .button-container a.button,
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div p a {
+  flex: 1;
   background: #fff !important;
   color: #005272 !important;
   border: 2px solid #005272 !important;
   border-radius: 10px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  display: block;
 }
 
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div p a[href^="tel:"] {
+  flex: 1;
   background: #fff !important;
   color: #005272 !important;
   border: 2px solid #005272 !important;
   border-radius: 10px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 14px;
   font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+}
+
+/* Disclaimer text */
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) > .rich-text-wrapper:last-child {
+  max-width: 1180px;
+  margin: 30px auto 0;
+  text-align: left;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) > .rich-text-wrapper:last-child p {
+  font-size: 12px;
+  text-align: left;
 }
 
 @media (width < 768px) {
