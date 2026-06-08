@@ -50,4 +50,189 @@
   }
 }
 
+/* CTA Card variant — 3-column grid on desktop */
+.cards-grid.cards-grid-cta-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-24, 24px);
+  justify-content: center;
+  padding: var(--spacing-24, 24px) 0;
+}
+
+.cards-grid.cards-grid-cta-card > .card-grid-item {
+  flex: 1 1 300px;
+  max-width: 380px;
+}
+
+.cards-grid.cards-grid-cta-card .grid-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  border: 1px solid var(--color-border-default, #c9c9ca);
+  border-radius: 10px;
+  box-shadow: var(--shadow-default, 0 4px 19px 0 rgb(0 0 0 / 7%));
+  text-decoration: none;
+  color: var(--text-color);
+  background: var(--background-color);
+  height: 100%;
+}
+
+.cards-grid.cards-grid-cta-card .grid-card:hover {
+  box-shadow: 0 8px 24px 0 rgb(0 0 0 / 12%);
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
+  font-family: var(--font-family-semibold);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  margin-bottom: var(--spacing-12, 12px);
+  padding: 12px 32px;
+  margin-top: -24px;
+  position: relative;
+  z-index: 1;
+  background-image: url('/content/dam/abbvie-eds-poc/stroke--heading-back.svg');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 {
+  font-size: var(--font-size-body);
+  color: var(--color-iron);
+  margin-bottom: var(--spacing-16, 16px);
+  padding: 0 24px 24px;
+}
+
+/* Default: plain text links with arrow (indication cards) */
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a {
+  display: inline-block;
+  color: var(--color-iron, #46484a);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  line-height: 24px;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a::after {
+  content: '';
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  background-image: url('/content/dam/abbvie-eds-poc/icon-circle-arrow-right-plum.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  margin-left: 10px;
+  position: relative;
+  top: 3px;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 a:hover {
+  text-decoration: underline;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2 p {
+  font-size: 16px;
+  font-family: var(--body-font-family);
+  color: var(--color-iron, #46484a);
+  margin: 0 0 12px;
+  line-height: 24px;
+}
+
+/* Glacier/support section — no card chrome, pill CTA */
+.section.glacier .cards-grid.cards-grid-cta-card {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 24px;
+}
+
+@media (width >= 986px) {
+  .section.glacier .cards-grid.cards-grid-cta-card {
+    max-width: 75%;
+    padding: 0;
+  }
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .grid-card {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 20px;
+  padding: 24px;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .grid-card:hover {
+  box-shadow: none;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
+  background-image: none;
+  font-size: 0;
+  padding: 0;
+  margin: 0 0 12px;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-1 img {
+  width: 76px;
+  height: 75px;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-2 {
+  font-family: var(--font-family-semibold, 'Graphik Semibold', 'Helvetica Neue', arial, sans-serif);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  color: var(--color-charcoal, #25282a);
+  margin: 0;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-charcoal, #25282a);
+  line-height: 24px;
+  margin: 0;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  background: var(--color-brand-primary, #90124a);
+  color: #fff;
+  padding: 16px 54px 16px 32px;
+  border-radius: 100px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a::after {
+  content: '';
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url('/content/dam/abbvie-eds-poc/icon-circle-arrow-right-white.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a:hover {
+  background: var(--color-plum-dark, #6e0e3a);
+  text-decoration: none;
+}
+
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
