@@ -1057,7 +1057,7 @@
    - Centering (1200px max-width) inherited from base
    ============================================================ */
 
-/* Brand token overrides */
+/* Brand token overrides + arc positioning */
 
 .footer-wrapper {
   --footer-color-bg: var(--color-background-footer);
@@ -1077,13 +1077,7 @@
   /* Arc top decoration height — matches live `.abbv-footer:before { height: 255px }`.
      Block-scoped raw value (precedent: `--footer-content-max-width: 1200px` in base). */
   --footer-arc-height: var(--spacing-255);
-}
 
-/* Curved arc top decoration — replicates the live `.abbv-footer:before`.
-   The pseudo expands beyond the footer's left/right edges so the rounded
-   top doesn't taper off awkwardly at the viewport edges. */
-
-.footer-wrapper {
   position: relative;
   overflow: visible;
   margin-top: -10px;
