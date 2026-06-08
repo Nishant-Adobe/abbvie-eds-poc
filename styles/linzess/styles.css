@@ -231,6 +231,21 @@ main > .section.find-relief-off-white {
   position: relative;
   margin-top: 4rem;
   padding-bottom: 4rem;
+  max-width: none !important;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+  display: block !important;
+  text-align: center;
+}
+
+main > .section.find-relief-off-white > div {
+  max-width: 998px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  text-align: center;
 }
 
 main > .section.find-relief-off-white::before {
@@ -504,22 +519,38 @@ main > .section.find-relief-off-white::before {
   white-space: nowrap;
 }
 
-/* ── Tabs: centered tab list and "Take LINZESS" heading ── */
+/* ── Tabs section: centered white card ── */
+.section.tabs-container {
+  display: block !important;
+  max-width: 998px;
+  margin: 40px auto 0;
+  text-align: center;
+}
+
+.section.tabs-container > .default-content-wrapper {
+  text-align: center;
+}
+
 .section.find-relief-off-white .tabs-wrapper {
-  max-width: 900px;
+  max-width: 998px;
   margin: 0 auto !important;
-  grid-column: 1 / -1 !important;
 }
 
 .section.find-relief-off-white .tabs-wrapper .tabs-list {
   justify-content: center;
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
 }
 
 /* ── Tab panel overrides ── */
 .tabs-panel[aria-hidden="true"] {
   display: none;
+}
+
+.tabs-panel {
+  max-width: 998px;
+  margin: 0 auto;
+  padding: 40px 16px;
 }
 
 .tabs-panel .default-content-wrapper {
@@ -561,29 +592,45 @@ main > .section.find-relief-off-white::before {
 /* Flexbox column variant: styled via blocks/flexbox/linzess/flexbox.css */
 
 /* ── HOW TO STORE section: centered text + savings card tout ── */
-.section.find-relief-off-white.columns-container > .default-content-wrapper {
+.section.find-relief-off-white.columns-container > .default-content-wrapper,
+.section.columns-container > .default-content-wrapper:first-child {
   text-align: center;
   max-width: 998px;
   margin: 0 auto;
   padding: 0 16px;
 }
 
-.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2 {
-  font-size: 32px;
+.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2,
+.section.columns-container > .default-content-wrapper:first-child > h2 {
+  font-size: 40px;
   font-family: var(--heading-font-family);
+  font-weight: 400;
   color: var(--color-brand-primary);
   text-align: center;
-  margin-bottom: 1.6rem;
+  margin: 20px 0 0;
+  line-height: 36px;
 }
 
-.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > p {
+.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2::before,
+.section.columns-container > .default-content-wrapper:first-child > h2::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url('https://www.linzess.com/content/dam/linzess/images/divider.svg') no-repeat center / contain;
+  margin: 0 auto 16px;
+}
+
+.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > p,
+.section.columns-container > .default-content-wrapper:first-child > p {
   text-align: center;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 14px;
-  line-height: 1.5;
+  max-width: 928px;
+  margin: 20px auto 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
   font-family: var(--body-font-family);
+  color: #4d4d4f;
   text-transform: none;
 }
 
