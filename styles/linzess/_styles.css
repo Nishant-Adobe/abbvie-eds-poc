@@ -87,13 +87,14 @@ a.button.secondary:hover {
 
 /* ---- Header ---- */
 header {
-  background-color: var(--background-color);
+  background-color: var(--color-brand-primary);
+  position: relative;
 }
 
 header nav a {
   font-family: var(--body-font-family);
   font-size: var(--font-size-nav);
-  color: var(--text-color);
+  color: var(--color-text-on-dark);
 }
 
 /* ---- Footer ---- */
@@ -107,9 +108,11 @@ footer a {
   font-size: var(--font-size-footer);
 }
 
-/* ---- Hero Section ---- */
+/* ---- Hero Section — covers header arc ---- */
 .section.hero-container {
   position: relative;
+  z-index: 2;
+  margin-top: -60px;
 }
 
 .section.hero-container h1 {
@@ -729,20 +732,22 @@ body main .section.whylinzess-works .carousel-video-playlist {
 }
 
 /* ---- Header with arc (pages without hero) ---- */
-body main > .section:first-child:not(.hero-container) {
-  position: relative;
-  padding-top: 40px;
-}
-
-body main > .section:first-child:not(.hero-container)::before {
+header::after {
   content: '';
   position: absolute;
-  top: -60px;
+  bottom: -40px;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 60px;
   background-color: var(--color-brand-primary);
   border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  z-index: 0;
+}
+
+body main > .section:first-child:not(.hero-container) {
+  position: relative;
+  padding-top: 60px;
+  z-index: 1;
 }
 
 body main > .section:first-child:not(.hero-container) > .default-content-wrapper:first-child > h1 {
