@@ -1316,7 +1316,7 @@ main .section.dark-purple .columns {
   gap: 0;
 }
 
-main .section.dark-purple .columns > .columns-item:first-child:has(.columns-item-content:empty) {
+main .section.dark-purple .columns > .columns-item:first-child {
   display: none;
 }
 
@@ -1324,14 +1324,25 @@ main .section.dark-purple .columns > .columns-item {
   flex: 1;
   text-align: center;
   padding: 2rem 3rem;
-}
-
-main .section.dark-purple .columns > .columns-item:last-child {
-  border-left: 1px solid rgba(255 255 255 / 30%);
+  display: flex;
+  justify-content: center;
+  border: none !important;
+  border-left: none !important;
+  border-right: none !important;
 }
 
 main .section.dark-purple .columns .columns-item-content:empty {
   display: none;
+}
+
+main .section.dark-purple .columns .columns-item-content {
+  border: none !important;
+}
+
+main .section.dark-purple .columns-wrapper,
+main .section.dark-purple .columns-wrapper *  {
+  border-left: none !important;
+  border-right: none !important;
 }
 
 /* Dark-purple responsive: mobile/tablet stack */
@@ -1358,6 +1369,11 @@ main .section.dark-purple .columns .columns-item-content:empty {
 }
 
 /* ISI Section — matching live page font sizes and spacing */
+main .section.dark-purple + .section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
 main .section.dark-purple + .section h3 {
   font-family: var(--body-font-family);
   font-size: 16px;
