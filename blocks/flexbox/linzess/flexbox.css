@@ -43,7 +43,7 @@
   }
 }
 
-/* ── Column variant — exact live site values ── */
+/* ── Column variant — exact live site values + fixes ── */
 .flexbox.column {
   flex-direction: column;
   gap: 0;
@@ -61,7 +61,7 @@
   flex-direction: row !important;
   align-items: center !important;
   width: 100% !important;
-  padding: 12px 0 !important;
+  padding: 24px 0 !important;
   margin: 0 !important;
   gap: 0 !important;
   border: none !important;
@@ -80,21 +80,23 @@
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 55px !important;
-  min-width: 55px !important;
-  height: auto !important;
+  width: 100px !important;
+  min-width: 100px !important;
+  height: 100px !important;
   min-height: unset !important;
   flex-shrink: 0 !important;
   overflow: visible !important;
-  display: block !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   position: relative !important;
   background-color: transparent !important;
   border-radius: 0 !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 105px !important;
-  height: auto !important;
+  width: 100px !important;
+  height: 100px !important;
   max-width: none !important;
   margin: 0 !important;
   object-fit: contain !important;
@@ -103,7 +105,7 @@
 .flexbox.column .flexbox-item .flexbox-item-content {
   flex: 1 !important;
   grid-column: unset !important;
-  padding: 0 85px 0 33px !important;
+  padding: 0 40px 0 24px !important;
   border-left: none !important;
 }
 
