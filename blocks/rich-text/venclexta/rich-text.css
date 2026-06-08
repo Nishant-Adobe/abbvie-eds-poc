@@ -287,13 +287,13 @@
 /* VEN ZONE signup section with background image */
 
 .section.ven-zone {
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   padding: 40px 20px;
   max-width: 1180px !important;
   margin-inline: auto !important;
-  min-height: 180px;
+  min-height: auto;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
@@ -309,6 +309,10 @@
   z-index: 1;
 }
 
+.section.ven-zone .rich-text.block {
+  margin: 0;
+}
+
 .section.ven-zone .cta-wrapper {
   flex: 0 0 auto;
   position: relative;
@@ -318,10 +322,11 @@
 .section.ven-zone .rich-text p {
   color: #fff;
   font-family: 'Red Hat Display', sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.4;
   margin: 0;
+  margin-left: 60%;
 }
 
 .section.ven-zone .cta .abbv-cta {
@@ -329,10 +334,14 @@
   color: #000 !important;
   border: none !important;
   border-radius: 10px;
-  padding: 14px 30px;
+  width: 208px;
+  height: 64px;
   font-family: 'Red Hat Display', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Hide unprocessed metadata section on aem.live (last section, no block wrappers) */
