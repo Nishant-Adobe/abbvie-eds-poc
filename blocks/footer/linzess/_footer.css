@@ -38,13 +38,13 @@
 /* Curved arc top decoration — replicates the live `.abbv-footer:before`.
    The pseudo expands beyond the footer's left/right edges so the rounded
    top doesn't taper off awkwardly at the viewport edges. */
-.footer {
+.footer-wrapper {
+  position: relative;
   overflow: visible;
-  padding-top: 0;
   margin-top: -10px;
 }
 
-.footer::before {
+.footer-wrapper::before {
   content: '';
   position: absolute;
   top: -60px;
@@ -55,13 +55,18 @@
   background-color: var(--footer-color-bg);
   border-top-left-radius: 100%;
   border-top-right-radius: 100%;
-  z-index: -1;
+  z-index: 0;
 }
 
 @media (width >= 900px) {
-  .footer::before {
+  .footer-wrapper::before {
     height: 255px;
   }
+}
+
+.footer {
+  overflow: visible;
+  padding-top: 0;
 }
 
 /* ── Heading-based grid — mobile + tablet 2 cols (matches live
