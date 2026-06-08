@@ -4037,3 +4037,40 @@ body main .section.whylinzess-works .carousel-video-playlist {
   --heading-font-family-bold: 'Bebas Neue', sans-serif;
 }
 
+/* ---- Header with arc (pages without hero) ---- */
+body main > .section:first-child:not(.hero-container) {
+  position: relative;
+  padding-top: 40px;
+}
+
+body main > .section:first-child:not(.hero-container)::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: var(--color-brand-primary);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
+body main > .section:first-child:not(.hero-container) > .default-content-wrapper:first-child > h1 {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  line-height: 36px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-brand-primary);
+  margin-bottom: 40px;
+}
+
+body main > .section:first-child:not(.hero-container) > .default-content-wrapper:first-child > h1::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
