@@ -1,6 +1,7 @@
 /* ============================================================
    LINZESS — Flexbox brand override
-   Dosing instruction cards: icon-left, card background, left border
+   Dosing instruction cards inside tabs: icon overlaps inner card left edge
+   Reference: linzess.com/find-relief "Take LINZESS" section
    ============================================================ */
 
 /* Base layout */
@@ -37,25 +38,33 @@
 }
 
 /* ── Column variant: dosing instruction cards ──
-   Live site: off-white rounded container, flex-row cards,
-   icon overlaps left edge by ~50px creating half-overlap effect ── */
+   Live site structure:
+   - Outer tab-panel: white bg, rounded 16px, border
+   - "Take LINZESS" centered heading above inner card
+   - Inner card: off-white #f4f6fb bg, rounded 8px, border
+   - Icons: 100px with lavender circle bg, overlap inner card left edge
+   - Items separated by 1px light line
+   ============================================================ */
+
 .flexbox.column {
   background-color: #f4f6fb;
-  border: 1px solid #e8e5f0;
-  border-radius: 16px;
-  padding: 24px 24px 24px 55px;
+  border: 1px solid #e0dce8;
+  border-radius: 8px;
+  padding: 32px 40px 32px 80px;
   flex-direction: column;
   gap: 0;
   overflow: visible;
+  margin: 0 auto;
+  max-width: 840px;
 }
 
 .flexbox.column .flexbox-item {
   display: flex !important;
   flex-direction: row !important;
-  align-items: center !important;
-  padding: 24px 0 !important;
+  align-items: flex-start !important;
+  padding: 28px 0 !important;
   gap: 0 !important;
-  border-bottom: 1px solid #e8e5f0 !important;
+  border-bottom: 1px solid #ddd8e8 !important;
   background: none !important;
   border-left: none !important;
   border-radius: 0 !important;
@@ -74,34 +83,37 @@
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 55px !important;
-  min-width: 55px !important;
+  width: 60px !important;
+  min-width: 60px !important;
   height: auto !important;
   min-height: unset !important;
   flex-shrink: 0 !important;
   overflow: visible !important;
-  display: block !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   background-color: transparent !important;
   border-radius: 0 !important;
+  margin-left: -60px !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 105px !important;
-  height: 104px !important;
+  width: 100px !important;
+  height: 100px !important;
   max-width: none !important;
-  margin-left: -50px !important;
+  margin-left: 0 !important;
   object-fit: contain !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content {
   flex: 1 !important;
   grid-column: unset !important;
-  padding: 0 85px 0 33px !important;
+  padding: 0 24px 0 24px !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   font-style: normal;
   color: #422e83;
@@ -109,14 +121,14 @@
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.6;
   color: #4d4d4f;
   margin-bottom: 4px;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content em {
-  font-size: 12px;
+  font-size: 11px;
   color: #4d4d4f;
   font-style: italic;
 }
