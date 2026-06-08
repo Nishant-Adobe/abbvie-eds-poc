@@ -119,25 +119,9 @@ export default function decorate(block) {
   stickySection.append(stickyBlock);
   document.body.append(stickySection);
 
-  // Hide the bar when the footer is visible; reveal it when footer scrolls away.
-  // Footer loads async in EDS, so fall back to a MutationObserver if not yet in DOM.
-  const footerObserver = new IntersectionObserver(([entry]) => {
-    stickySection.classList.toggle('is-hidden', entry.isIntersecting);
-  });
-
-  const footer = document.querySelector('footer');
-  if (footer) {
-    footerObserver.observe(footer);
-  } else {
-    const mo = new MutationObserver(() => {
-      const el = document.querySelector('footer');
-      if (el) {
-        mo.disconnect();
-        footerObserver.observe(el);
-      }
-    });
-    mo.observe(document.body, { childList: true });
-  }
+  // Footer visibility is handled by the scroll-based check below.
+  // No separate IntersectionObserver needed (it conflicts with scrollCheck
+  // by hiding the bar on initial load when footer is in viewport).
 
   // Hide the bar when inline ISI is 200px into viewport (matches live site logic).
   // Throttled scroll check — same approach as live site's safetyBarScrollCheck.
