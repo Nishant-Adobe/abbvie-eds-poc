@@ -1,9 +1,7 @@
 /* Root variables */
 
 /** TODO  - Fix ESlint Issue */
-
 /* stylelint-disable */
-
 :root {
   --nav-logo-size-desk: 11rem;
   --nav-logo-size-mobile: 8.8rem;
@@ -78,7 +76,6 @@
    ────────────────────────────────────────── */
 
 /* Icon SVG data URIs (replaces icon font) */
-
 :root {
   --icon-svg-chevron-right: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDZMOC41OSA3LjQxIDEzLjE3IDEybC00LjU4IDQuNTlMMTAgMThsNi02eiIvPjwvc3ZnPg==");
   --icon-svg-chevron-down: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE2LjU5IDguNTlMMTIgMTMuMTcgNy40MSA4LjU5IDYgMTBsNiA2IDYtNnoiLz48L3N2Zz4=");
@@ -180,7 +177,6 @@ header .nav-utility button[aria-expanded="true"]::after {
 }
 
 /* Utility dropdown submenu */
-
 header .nav-utility ul[role="menu"] {
   display: none;
   position: absolute;
@@ -220,7 +216,6 @@ header .nav-utility ul[role="menu"] a:hover {
 }
 
 /* Desktop: show utility bar when authored; account for its height */
-
 @media (width >= 1024px) {
   header .nav-utility:has(ul) {
     display: block;
@@ -233,7 +228,6 @@ header .nav-utility ul[role="menu"] a:hover {
 }
 
 /* Header and nav layout */
-
 header .nav-wrapper {
   background-color: var(--nav-bar-bg, var(--background-color));
   width: 100%;
@@ -263,7 +257,6 @@ header nav[aria-expanded='true'] {
 }
 
 /* Hamburger */
-
 header nav .nav-hamburger {
   grid-area: hamburger;
   height: var(--nav-hamburger-height);
@@ -329,7 +322,6 @@ header nav[aria-expanded='true'] .nav-hamburger button>span:last-child {
 }
 
 /* Brand */
-
 header nav .nav-brand {
   grid-area: brand;
 }
@@ -349,7 +341,6 @@ header nav .nav-brand .icon.icon-abbvie-logo-header {
 }
 
 /* Sections */
-
 header nav .nav-sections {
   grid-area: sections;
   flex: 1 1 auto;
@@ -372,7 +363,6 @@ header nav .nav-sections .default-content-wrapper>ul>li>button span img {
 }
 
 /* Tools */
-
 header nav .nav-tools {
   grid-area: tools;
 }
@@ -393,14 +383,12 @@ header nav .nav-search .search-toggle[aria-expanded="false"] .icon-close,
 header nav .nav-search .search-toggle[aria-expanded="true"] .icon-search-white {
   display: none;
 }
-
 header nav .nav-search .search-toggle[aria-expanded="true"] .icon-close,
 header nav .nav-search .search-toggle[aria-expanded="false"] .icon-search-white {
   display: inline-flex;
 }
 
 /* Close (X) button — no default browser styling */
-
 header nav .nav-search .search-close {
   background: transparent;
   border: none;
@@ -416,7 +404,6 @@ header nav .nav-search .search-expanded:not([hidden]) {
   left: 0;
   display: block;
 }
-
 @media (width >= 1024px) {
   header nav .nav-search .search-expanded:not([hidden]) {
     align-items: center;
@@ -476,7 +463,6 @@ header nav .nav-tools .icon {
 } */
 
 /* Disabled scroll */
-
 html:has(header nav .nav-item-level-0 li[aria-expanded="true"]) {
   overflow: hidden;
 }
@@ -486,7 +472,6 @@ html:has(header nav .nav-item-level-0 li[aria-expanded="true"]) {
 }
 
 /* Search styles (common for all screens) */
-
 .nav-tools .search-main-wrapper {
   grid-template-columns: repeat(12, 1fr);
   display: grid;
@@ -726,7 +711,6 @@ header nav .external-link::after {
 }
 
 /* mega menu */
-
 .mega-menu-wrapper {
   display: grid;
   gap: var(--gap-20);
@@ -985,7 +969,6 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 }
 
 /* Large screen styles */
-
 @media (width >= 1440px) {
   header nav {
     max-width: var(--nav-max-width-lg);
@@ -1015,7 +998,6 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 }
 
 /* Desktop styles */
-
 @media (width >= 1024px) {
   header nav .nav-hamburger {
     display: none;
@@ -1376,7 +1358,6 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 }
 
 /* Tablet styles */
-
 @media (width <= 1023px) {
   header nav {
     grid-template:
@@ -1618,7 +1599,6 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 }
 
 /* Mobile style */
-
 @media (width <= 743px) {
   /* header nav {
     padding: var(--spacing-00) var(--spacing-35);
@@ -1743,9 +1723,7 @@ header nav .mega-menu-minimize .mega-menu-wrapper .mega-menu-card {
 }
 
 /* Top eyebrow stacks above the utility bar; bottom stacks below it */
-
 .nav-eyebrow-top { order: -1; }
-
 .nav-eyebrow-bottom { order: 0; }
 
 @media (width <= 1023px) {
@@ -1897,7 +1875,6 @@ header nav .nav-brand-indication img {
 }
 
 /* Body offset when floating ISI is visible — toggled via JS class on <body> */
-
 body.nav-isi-visible {
   padding-bottom: var(--nav-isi-collapsed-height);
 }
@@ -1907,7 +1884,6 @@ body.nav-isi-visible {
    ────────────────────────────────────────── */
 
 /* Lite: logo sits inline with nav sections in one bar row */
-
 .header-lite nav {
   grid-template:
     'brand sections tools hamburger' var(--nav-height)
@@ -1915,7 +1891,6 @@ body.nav-isi-visible {
 }
 
 /* Sections always visible in lite layout (no hamburger-driven show/hide) */
-
 @media (width >= 1024px) {
   .header-lite nav .nav-sections {
     display: flex;
@@ -1945,7 +1920,6 @@ body.nav-isi-visible {
    ────────────────────────────────────────── */
 
 /* Sticky: nav-wrapper stays fully visible on scroll (no hide-nav fade) */
-
 .header-sticky .nav-wrapper {
   opacity: 1;
 }
@@ -1960,7 +1934,6 @@ body.nav-isi-visible {
 }
 
 /* Sticky on scroll back to top — bar slides out when scrolling down, back in when scrolling up */
-
 header.has-sticky-scrollback.hide-nav .nav-wrapper {
   transform: translateY(-100%);
 }
@@ -1976,6 +1949,7 @@ header.has-sticky-scrollback.sticky-scrollback .header {
   top: 0;
   width: 100%;
 }
+@import '../header.css';
 
 /* ──────────────────────────────────────────
    LINZESS DTC — Header Brand Overrides
@@ -1991,7 +1965,6 @@ header.has-sticky-scrollback.sticky-scrollback .header {
 ────────────────────────────────────────── */
 
 /* Override eyebrow bg token — purple instead of inheriting dark utility bg */
-
 :root {
   --nav-eyebrow-bg: var(--header-eyebrow-bg);
   --nav-eyebrow-text: var(--color-text-on-dark);
@@ -2007,7 +1980,6 @@ header .nav-eyebrow p { font-size: var(--font-size-11); }
 header .nav-eyebrow a { text-decoration: underline; }
 
 /* Nav wrapper — dark charcoal */
-
 header .nav-wrapper {
   background-color: transparent;
   position: relative;
@@ -2019,13 +1991,11 @@ header:has(.nav-utility ul) {
 }
 
 /* Nav text — white */
-
 header nav {
   color: var(--color-text-on-dark);
 }
 
 /* Utility bar — dark bg, bottom border separator */
-
 header .nav-utility {
   background-color: transparent;
   border-bottom: var(--separator-height-1) solid var(--header-utility-border);
@@ -2036,7 +2006,6 @@ header .nav-utility:has(ul) {
 }
 
 /* Strip global a.button styles */
-
 header .nav-utility a,
 header .nav-utility a.button {
   background: none;
@@ -2055,22 +2024,18 @@ header .nav-utility a.button:hover {
 }
 
 /* Must precede more-specific hamburger button selector */
-
 header .nav-utility button {
   color: var(--color-text-on-dark);
   font-size: var(--font-size-body-small);
 }
 
 header .nav-utility ul[role="menubar"] { justify-content: center; }
-
 header .nav-utility li:nth-child(n+3) { display: none; }
 
 /* Pipe separator — hidden on Linzess */
-
 header .nav-utility li + li::before { display: none; }
 
 /* Hamburger — white bars on dark header */
-
 header nav .nav-hamburger button {
   background: transparent;
   border: none;
@@ -2090,7 +2055,6 @@ header nav .nav-hamburger button > span:nth-child(2) {
 }
 
 /* Logo — full-color, fixed width */
-
 header nav .nav-brand img {
   filter: var(--header-logo-filter);
   height: var(--header-logo-height);
@@ -2099,14 +2063,12 @@ header nav .nav-brand img {
 }
 
 /* Primary nav — dark bg, white text */
-
 header nav .nav-sections {
   background-color: var(--color-nav-dark);
   color: var(--color-text-on-dark);
 }
 
 /* Nav buttons — white uppercase small bold */
-
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > button {
   color: var(--color-text-on-dark);
   font-size: var(--font-size-body-small);
@@ -2118,11 +2080,9 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > butto
 }
 
 /* Nav tools — hide entirely (Linzess has no search block) */
-
 header nav .nav-tools { display: none; }
 
 /* Home nav item — show house icon, hide text */
-
 header nav .nav-sections .default-content-wrapper > ul > li.menu-home > a.nav-item-link {
   align-items: center;
   display: inline-flex;
@@ -2151,7 +2111,6 @@ header nav .nav-sections .default-content-wrapper > ul > li.menu-home > a.nav-it
 }
 
 /* "Check My Symptoms" CTA button — white bg, linzess-purple text, rounded */
-
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link,
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > button {
   background-color: var(--color-brand-primary-lighter);
@@ -2175,7 +2134,6 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-ch
 }
 
 /* Remove underline hover indicator for CTA button */
-
 header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms > a.nav-item-link::after {
   background-color: var(--color-brand-accent);
   content: "";
@@ -2189,7 +2147,6 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-ch
 }
 
 /* Submenu — white bg, dark text */
-
 header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1 {
   background: var(--color-background-light);
   border: none;
@@ -2232,21 +2189,17 @@ header nav .nav-item-level-0 .default-content-wrapper > ul > li .submenu-level-1
 header nav .nav-item-level-0 .default-content-wrapper > ul > li[aria-expanded="true"] .submenu-level-1 { display: block; }
 
 /* Nav separator — subtle white on dark */
-
 /* stylelint-disable-next-line no-descending-specificity */
-
 header nav .nav-sections .default-content-wrapper > ul > li {
   border-bottom-color: var(--header-nav-separator);
 }
 
 /* Mobile CTA clone — shown in header row on mobile (replaces CTA inside hidden nav-sections) */
-
 header nav .mobile-cta-clone {
   display: none;
 }
 
 /* Mobile utility clone — shown at bottom of open nav */
-
 header nav .nav-sections .mobile-utility-clone {
   display: none;
 }
@@ -2260,7 +2213,6 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-
 header.has-sticky-scrollback.show-nav.sticky-scrollback .header ul li a,
 /* stylelint-disable-next-line no-descending-specificity */
 header.has-sticky-scrollback.show-nav.sticky-scrollback .header ul li button {
@@ -2276,7 +2228,6 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
 }
 
 /* ── Mobile open state — white bg, dark purple text, full-color logo ── */
-
 @media (width < 1024px) {
   /* CTA clone — visible in header row on mobile */
   header nav .mobile-cta-clone {
@@ -2408,7 +2359,6 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
 }
 
 /* ── Desktop ── */
-
 @media (width >= 1024px) {
   /* Single-row flex layout — logo left, sections right */
 
@@ -2601,9 +2551,7 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
 }
 
 /* ── Header overlays hero ── */
-
 /* stylelint-disable-next-line no-descending-specificity */
-
 header {
   position: absolute;
   top: 0;
@@ -2614,13 +2562,33 @@ header {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-
 header nav a {
   color: var(--color-text-on-dark);
 }
 
 /* Hide ISI toggle controls (top/See Full ISI/Collapse ISI) */
-
 header .nav-indication {
   display: none;
 }
+
+/* Header purple background + arc for non-hero pages */
+header {
+  position: relative;
+}
+
+header .nav-wrapper {
+  background-color: var(--color-brand-primary);
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--color-brand-primary);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  z-index: 0;
+}
+
