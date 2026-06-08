@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity, no-duplicate-selectors */
 
 /* ============================================================
    LINZESS DTC — Theme Overrides
@@ -175,8 +176,12 @@ footer a {
 
 /* ---- Section Backgrounds ---- */
 .section.off-white-bg { background-color: var(--color-background-light); }
+
 .section.purple-bg,
-body main .section.dark { background-color: var(--color-brand-primary); color: var(--color-text-on-dark); }
+body main .section.dark {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+}
 
 .section.purple-bg h1, .section.purple-bg h2, .section.purple-bg h3,
 body main .section.dark h1, body main .section.dark h2, body main .section.dark h3,
@@ -387,7 +392,7 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
   font-weight: var(--font-weight-body);
 }
 
-@media (max-width: 599px) {
+@media (width <= 599px) {
   body main .section.whylinzess-help .columns.whylinzess-symptoms > .columns-item {
     flex-direction: column;
   }
@@ -578,4 +583,129 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
   font-weight: var(--font-weight-bold);
   margin-bottom: 40px;
   text-align: center;
+}
+
+/* ---- "Side Effects" Section (white bg, centered) ---- */
+.section.whylinzess-sideeffects {
+  background-color: var(--background-color);
+  padding: 80px 24px;
+  text-align: center;
+  max-width: none;
+}
+
+.section.whylinzess-sideeffects > .default-content-wrapper,
+.section.whylinzess-sideeffects > .columns-wrapper {
+  max-width: 928px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:first-child {
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:first-child::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
+.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:nth-child(2) {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: var(--font-weight-body);
+  color: var(--color-brand-primary);
+  margin-bottom: 24px;
+}
+
+.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:nth-child(3) {
+  font-size: 16px;
+  color: var(--linz-grey);
+  margin-bottom: 40px;
+}
+
+/* Side effects cards: 1st and 3rd = dark purple, 2nd = light purple */
+body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
+body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+  background: var(--color-brand-primary);
+}
+
+body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card p,
+body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card strong,
+body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card li {
+  color: var(--color-text-on-dark);
+}
+
+body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
+body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+  background: var(--linz-light-purple);
+}
+
+body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
+body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+  background: var(--color-brand-primary);
+}
+
+body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card p,
+body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card strong {
+  color: var(--color-text-on-dark);
+}
+
+/* FDA reporting paragraph */
+.section.whylinzess-sideeffects > .default-content-wrapper:last-child > p:last-child {
+  font-size: 14px;
+  color: var(--linz-grey);
+  margin-top: 40px;
+}
+
+/* "Hear from real patients" heading in How Works section */
+body main .section.whylinzess-works h2 {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: var(--font-weight-body);
+  text-transform: uppercase;
+  margin-top: 60px;
+  margin-bottom: 16px;
+  text-align: center;
+  color: var(--color-text-on-dark);
+}
+
+body main .section.whylinzess-works h2::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
+/* Center video playlist in How Works section */
+body main .section.whylinzess-works > .carousel-video-playlist-wrapper {
+  max-width: 928px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Center video items within the playlist */
+body main .section.whylinzess-works .carousel-video-playlist {
+  justify-content: center;
+}
+
+/* Force Linzess brand font tokens (override base styles.css) */
+:root {
+  --body-font-family: 'Lato', sans-serif;
+  --heading-font-family: 'Bebas Neue', sans-serif;
+  --heading-font-family-bold: 'Bebas Neue', sans-serif;
 }
