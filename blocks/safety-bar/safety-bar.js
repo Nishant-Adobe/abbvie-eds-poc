@@ -55,8 +55,16 @@ export default function decorate(block) {
   const isSplit = block.classList.contains('split');
   const { collapsed, collapsedCol2, expanded } = extractContentFields(block, isSplit);
 
-  // Hide the source section — it only feeds the sticky bar, not rendered in-page
-  block.closest('.section').hidden = true;
+  // Hide the source block — it only feeds the sticky bar, not rendered in-page.
+  // If safety-bar is the only block in its section, hide the entire section.
+  // Otherwise, hide only the block wrapper to avoid hiding sibling blocks.
+  const section = block.closest('.section');
+  const blockWrappers = section.querySelectorAll(':scope > div[class*="-wrapper"]');
+  if (blockWrappers.length <= 1) {
+    section.hidden = true;
+  } else {
+    block.closest('.safety-bar-wrapper')?.remove();
+  }
 
   // Build the sticky floating bar
   const stickySection = document.createElement('div');
