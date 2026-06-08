@@ -1,14 +1,7 @@
 /* ============================================================
-   LINZESS — Flexbox brand override (dosing cards in tabs)
-   Source: linzess.com/find-relief "Take LINZESS" section
-
-   From live screenshot:
-   - Each card has a 3px left purple (#422e83) border on content area
-   - Icon (105px circle) overlaps this border, sitting half-outside
-   - Cards separated by spacing (no horizontal line between them)
-   - Title: Lato ~18px bold #422e83
-   - Description: ~14px #4d4d4f
-   - Off-white page background behind everything
+   LINZESS — Flexbox brand override
+   Column variant: icon-left items for tab panel dosing instructions
+   Reference: linzess-find-relief-v2 branch (Bhargavi)
    ============================================================ */
 
 .flexbox {
@@ -43,35 +36,27 @@
   }
 }
 
-/* ── Column variant: dosing cards ── */
+/* ── Column variant: dosing instruction cards ── */
 .flexbox.column {
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
   flex-direction: column;
-  gap: 24px;
-  overflow: visible;
-  max-width: 900px;
-  margin: 0 auto;
+  gap: 0;
 }
 
 .flexbox.column .flexbox-item {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: flex-start !important;
-  padding: 24px 32px 24px 0 !important;
-  gap: 0 !important;
-  border-bottom: none !important;
+  display: grid !important;
+  grid-template-columns: 6rem 1fr !important;
+  gap: 1.6rem !important;
+  align-items: start !important;
+  padding: 2.4rem 0 !important;
+  border-bottom: 1px solid var(--color-border-default, #c2c2c2) !important;
   background: none !important;
-  border-left: 3px solid #422e83 !important;
+  border-left: none !important;
   border-radius: 0 !important;
-  grid-column: unset !important;
-  grid-template-columns: unset !important;
-  position: relative !important;
-  margin-bottom: 0 !important;
-  margin-left: 50px !important;
-  overflow: visible !important;
+  margin: 0 !important;
+}
+
+.flexbox.column .flexbox-item:last-child {
+  border-bottom: none !important;
 }
 
 .flexbox.column .flexbox-item > div {
@@ -79,53 +64,48 @@
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image {
-  width: 70px !important;
-  min-width: 70px !important;
-  height: auto !important;
+  width: 6rem !important;
+  height: 6rem !important;
+  min-width: unset !important;
   min-height: unset !important;
-  flex-shrink: 0 !important;
-  overflow: visible !important;
   display: flex !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   justify-content: center !important;
+  overflow: visible !important;
   background-color: transparent !important;
   border-radius: 0 !important;
-  margin-left: -52px !important;
-  margin-top: 4px !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-image img {
-  width: 80px !important;
-  height: 80px !important;
+  width: 4.8rem !important;
+  height: 4.8rem !important;
   max-width: none !important;
   margin-left: 0 !important;
   object-fit: contain !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content {
-  flex: 1 !important;
+  flex: unset !important;
   grid-column: unset !important;
-  padding: 0 0 0 16px !important;
+  padding: 0 !important;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
-  font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 18px;
-  font-weight: 700;
-  font-style: normal;
-  color: #422e83;
-  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: 1.8rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  margin-bottom: 0.8rem;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content p:nth-child(n+2) {
-  font-size: 14px;
+  font-size: var(--font-size-body);
   line-height: 1.5;
-  color: #4d4d4f;
-  margin: 0 0 6px;
+  color: var(--text-color);
+  margin-bottom: 0.4rem;
 }
 
 .flexbox.column .flexbox-item .flexbox-item-content em {
-  font-size: 11px;
-  color: #4d4d4f;
-  font-style: italic;
+  font-size: var(--font-size-body-small);
+  color: var(--text-color);
 }

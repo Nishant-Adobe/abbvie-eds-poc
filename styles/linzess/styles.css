@@ -517,29 +517,20 @@ main > .section.find-relief-off-white::before {
   margin: 0 auto;
 }
 
-/* ── Tab panel: off-white background matching live site (single container, no inner card) ── */
-.tabs-panel {
-  background-color: #f4f6fb;
-  border-radius: 0;
-  max-width: none;
-  margin: 0;
-  padding: 40px 55px;
-  border: none;
-}
-
+/* ── Tab panel overrides (defers to blocks/tabs/linzess/tabs.css for base) ── */
 .tabs-panel[aria-hidden="true"] {
   display: none;
 }
 
 .tabs-panel .default-content-wrapper {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 1.6rem;
 }
 
 .tabs-panel .default-content-wrapper p {
-  font-family: var(--body-font-family);
-  font-size: 24px;
-  font-weight: 700;
+  font-family: var(--heading-font-family);
+  font-size: 2.4rem;
+  font-weight: var(--font-weight-bold);
   color: var(--color-brand-primary);
   margin: 0;
 }
@@ -556,20 +547,14 @@ main > .section.find-relief-off-white::before {
   margin: 0;
 }
 
-.tabs-panel .flexbox {
-  max-width: none;
-  margin: 0;
-}
-
 .tabs-panel .abbvie-container {
   display: block !important;
   padding: 0 !important;
   margin: 0 !important;
   max-width: none !important;
-  width: 100% !important;
 }
 
-.tabs-panel .abbvie-container div {
+.tabs-panel .abbvie-container > div {
   grid-column: unset !important;
 }
 
