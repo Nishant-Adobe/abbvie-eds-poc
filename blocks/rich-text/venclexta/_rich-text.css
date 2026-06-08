@@ -112,7 +112,7 @@ main > .section.safety-bar-container ~ .section:not([class*="-container"]) {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.section:not(.gray-bg, .hero-container, .safety-bar-section) {
+.section:not(.gray-bg, .hero-container, .safety-bar-section, .brochure-cta) {
   max-width: 1180px;
   margin-inline: auto;
   padding-inline: 20px;
@@ -280,16 +280,18 @@ main > .section.safety-bar-container ~ .section:not([class*="-container"]) {
 
 .section.brochure-cta .rich-text-wrapper,
 .section.brochure-cta .cta-wrapper {
-  max-width: 1180px;
-  margin: 0 auto;
+  max-width: 408px;
+  min-width: 408px;
+  margin: 0;
+  margin-left: 40px;
   position: relative;
   z-index: 1;
 }
 
 .section.brochure-cta .rich-text h4 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  color: #005272;
+  color: #404040;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 5px;
@@ -297,9 +299,10 @@ main > .section.safety-bar-container ~ .section:not([class*="-container"]) {
 
 /* stylelint-disable-next-line no-descending-specificity */
 .section.brochure-cta .rich-text h2 {
-  font-size: 30px;
-  color: #005272;
+  font-size: 26px;
+  color: #404040;
   margin-top: 0;
+  font-weight: 700;
 }
 
 /* Nav card section: CTA row layout — side by side 50/50 */
