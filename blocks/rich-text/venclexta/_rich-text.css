@@ -48,6 +48,36 @@
   color: #005272;
 }
 
+/* VEN ZONE signup section with background image */
+.section.ven-zone {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 50px 20px;
+  max-width: 100vw !important;
+  width: 100vw;
+  margin-left: calc(50% - 50vw) !important;
+  min-height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.section.ven-zone .rich-text-wrapper,
+.section.ven-zone .cta-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.section.ven-zone .rich-text p {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+}
+
 /* Hide unprocessed metadata section on aem.live (last section, no block wrappers) */
 main > .section.safety-bar-container ~ .section:not([class*="-container"]) {
   display: none;
