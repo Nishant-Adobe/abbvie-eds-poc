@@ -1170,6 +1170,40 @@
   min-height: 200px;
 }
 
+/* Content order: image(2) → h3(3) → p(4) → button(1) → extras(5,6) */
+
+.cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(2) {
+  order: 1;
+}
+
+.cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(3) {
+  order: 2;
+}
+
+.cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(4) {
+  order: 3;
+}
+
+.cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(1) {
+  order: 4;
+}
+
+.cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(5) {
+  order: 5;
+}
+
+.cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(6) {
+  order: 6;
+}
+
+/* Icon/image sizing */
+
+.cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(2) img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
 .cards-grid:not(.cards-grid-callout-cards) > div:nth-child(2) h3 {
   color: #fff !important;
 }
