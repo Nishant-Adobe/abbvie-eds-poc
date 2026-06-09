@@ -815,7 +815,7 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   }
 }
 
-/* Mobile: promo card fix — hide image entirely, show text only (matches live mobile) */
+/* Mobile: promo card stacks — image on top, text below (matches live mobile) */
 @media (width < 768px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns {
@@ -824,7 +824,16 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
 
   .columns.columns-homepage-promo > .columns-item .columns-item-image,
   .hero-container + .columns-container .columns > .columns-item .columns-item-image {
-    display: none;
+    display: block;
+    order: -1;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
