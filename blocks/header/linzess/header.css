@@ -2263,6 +2263,23 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
     mask: var(--icon-svg-chevron-right) no-repeat center / contain;
     width: var(--header-chevron-size);
   }
+}
+
+/* Small phones — compact CTA so logo + CTA + hamburger fit */
+@media (width < 480px) {
+  header nav .mobile-cta-clone > a.nav-item-link,
+  header nav .mobile-cta-clone > button {
+    font-size: var(--font-size-11);
+    gap: var(--spacing-04);
+    padding: var(--spacing-08) var(--spacing-12);
+    margin-right: var(--spacing-08);
+  }
+
+  header nav .mobile-cta-clone > a.nav-item-link::after,
+  header nav .mobile-cta-clone > button::after {
+    height: var(--spacing-15);
+    width: var(--spacing-15);
+  }
 
   /* Utility clone — visible at bottom of open nav */
   header nav[aria-expanded='true'] .nav-sections .mobile-utility-clone {
