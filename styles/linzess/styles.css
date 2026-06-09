@@ -4174,3 +4174,49 @@ main > .section.carousel-video-playlist-container > .default-content-wrapper:fir
   text-transform: uppercase;
 }
 
+/* LINZESS DTC — Brand-specific style overrides */
+
+/* Non-hero pages: purple downward arc + H1 styling */
+body.no-hero main > .section:first-child {
+  position: relative;
+  padding-top: var(--no-hero-arc-height);
+}
+
+body.no-hero main > .section:first-child::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--no-hero-arc-height);
+  background-color: var(--color-brand-primary);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  z-index: 0;
+}
+
+body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
+  font-family: var(--heading-font-family);
+  font-size: var(--no-hero-h1-font-size);
+  line-height: var(--no-hero-h1-line-height);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-brand-primary);
+  margin-bottom: var(--no-hero-h1-margin-bottom);
+}
+
+body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1::before {
+  content: '';
+  display: block;
+  width: var(--no-hero-divider-width);
+  height: var(--no-hero-divider-height);
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto var(--no-hero-divider-margin-bottom);
+}
+
+@media (width < 768px) {
+  body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
+    font-size: var(--no-hero-h1-font-size-mobile);
+    line-height: var(--no-hero-h1-line-height-mobile);
+  }
+}
