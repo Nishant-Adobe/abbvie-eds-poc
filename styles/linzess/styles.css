@@ -525,8 +525,9 @@ main > .section.find-relief-off-white::before {
    Three parts: heading (TOP) + tabs-wrapper (MIDDLE) + panel (BOTTOM)
    ══════════════════════════════════════════════════════════════ */
 
-/* White card TOP — heading with orange divider */
-.section.find-relief-off-white > .default-content-wrapper:has(+ .tabs-wrapper) {
+/* White card TOP — heading with orange divider (only the wrapper with h2, not disclaimers) */
+.section.find-relief-off-white > .default-content-wrapper:has(h2#instructions-for-adults-children),
+.section.find-relief-off-white > .default-content-wrapper:has(h2#instructions-for-adults--children) {
   background: #fff;
   border-radius: 16px 16px 0 0;
   max-width: 998px;
@@ -536,7 +537,8 @@ main > .section.find-relief-off-white::before {
   box-shadow: 0 2px 8px rgba(66, 46, 131, 0.06);
 }
 
-.section.find-relief-off-white > .default-content-wrapper:has(+ .tabs-wrapper) h2 {
+.section.find-relief-off-white > .default-content-wrapper:has(h2#instructions-for-adults-children) h2,
+.section.find-relief-off-white > .default-content-wrapper:has(h2#instructions-for-adults--children) h2 {
   font-family: var(--heading-font-family);
   font-size: 40px;
   font-weight: 400;
@@ -545,7 +547,8 @@ main > .section.find-relief-off-white::before {
   line-height: 36px;
 }
 
-.section.find-relief-off-white > .default-content-wrapper:has(+ .tabs-wrapper) h2::before {
+.section.find-relief-off-white > .default-content-wrapper:has(h2#instructions-for-adults-children) h2::before,
+.section.find-relief-off-white > .default-content-wrapper:has(h2#instructions-for-adults--children) h2::before {
   content: '';
   display: block;
   width: 64px;
