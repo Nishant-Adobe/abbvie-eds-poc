@@ -2236,16 +2236,32 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
 
   header nav .mobile-cta-clone > a.nav-item-link,
   header nav .mobile-cta-clone > button {
+    align-items: center;
     background-color: var(--color-brand-primary-lighter);
     border-radius: var(--border-radius-button-primary);
     color: var(--color-brand-primary);
+    display: inline-flex;
     font-size: var(--font-size-body-small);
-    font-weight: var(--font-weight-600);
-    padding: var(--spacing-09) var(--spacing-24);
+    font-weight: var(--font-weight-extra-bold);
+    gap: var(--spacing-10);
+    padding: var(--spacing-12) var(--spacing-24);
     text-decoration: none;
-    text-transform: uppercase;
-    width: var(--header-mobile-cta-width);
+    text-transform: none;
     margin-right: var(--spacing-15);
+  }
+
+  /* Arrow on mobile CTA clone */
+  header nav .mobile-cta-clone > a.nav-item-link::after,
+  header nav .mobile-cta-clone > button::after {
+    background-color: var(--color-brand-primary);
+    content: "";
+    display: block;
+    flex-shrink: 0;
+    height: var(--header-chevron-size);
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-mask: var(--icon-svg-chevron-right) no-repeat center / contain;
+    mask: var(--icon-svg-chevron-right) no-repeat center / contain;
+    width: var(--header-chevron-size);
   }
 
   /* Utility clone — visible at bottom of open nav */
