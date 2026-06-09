@@ -1425,6 +1425,16 @@
   text-align: left;
 }
 
+/* Tablet: 2 cards per row for advocacy */
+
+@media (width < 1024px) and (width >= 768px) {
+  .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* Mobile: single column everything */
+
 @media (width < 768px) {
   .cards-grid:not(.cards-grid-callout-cards) {
     grid-template-columns: 1fr !important;
@@ -1438,5 +1448,18 @@
 
   .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid > div {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cards-grid:not(.cards-grid-callout-cards) > div:nth-child(2) {
+    align-items: center !important;
+  }
+
+  .cards-grid:not(.cards-grid-callout-cards) > div:nth-child(2) p {
+    max-width: 100%;
+    text-align: center;
   }
 }
