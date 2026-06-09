@@ -721,15 +721,18 @@
   display: none;
 }
 
-/* Hide Brightcove dock title overlays on poster */
+/* Hide all Brightcove dock/title overlays on poster */
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-text,
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-title,
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-description,
-.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-shelf {
+.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-shelf,
+.carousel-video-playlist.grid .cvp-player-wrap .vjs-title-bar,
+.carousel-video-playlist.grid .video-js.vjs-dock .vjs-dock-text {
   display: none !important;
   height: 0 !important;
   overflow: hidden !important;
   opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 /* Card footer — solid light purple bg */
