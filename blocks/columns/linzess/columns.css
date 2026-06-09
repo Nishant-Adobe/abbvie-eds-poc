@@ -217,3 +217,23 @@ main .section.dark-purple + .section strong {
   color: inherit;
 }
 
+
+/* Tablet: fix CTA button truncation */
+@media (width >= 768px) and (width < 1024px) {
+  main .section.dark-purple .columns {
+    gap: 1rem;
+  }
+
+  main .section.dark-purple .columns > .columns-item {
+    padding: 2rem 1.5rem;
+  }
+
+  main .section.dark-purple h2 {
+    font-size: 22px !important;
+  }
+
+  main .section.dark-purple a.button:any-link {
+    padding: 14px 24px !important;
+    font-size: 13px !important;
+  }
+}
