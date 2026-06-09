@@ -1343,3 +1343,33 @@ h1.heading-1 {
     font-size: 14px !important;
     color: var(--accordion-linzess-color-label) !important;
 }
+
+/* Mobile fixes — match live page */
+@media (width < 768px) {
+  /* Accordion items full width on mobile */
+  .accordion .accordion-item,
+  .accordion details.accordion-item,
+  .accordion details {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-radius: 12px !important;
+  }
+
+  /* Reduce section spacing on mobile */
+  .section.centered.accordion-container {
+    padding: 1.5rem 1rem !important;
+  }
+
+  /* Section headings smaller on mobile */
+  .section.centered.accordion-container .default-content-wrapper p,
+  .section.centered.accordion-container .default-content-wrapper h2 {
+    font-size: 1.8rem !important;
+    line-height: 1.8rem !important;
+    margin-top: 10px !important;
+  }
+
+  /* Reduce gap between heading and accordion */
+  .section.centered.accordion-container .default-content-wrapper {
+    margin-bottom: 0.5rem !important;
+  }
+}

@@ -95,7 +95,13 @@ main .section.dark-purple .columns > .columns-item {
 }
 
 main .section.dark-purple .columns > .columns-item:nth-child(3) {
-  border-left: none !important;
+  border-left: 1px solid rgba(255 255 255 / 30%) !important;
+}
+
+@media (width < 768px) {
+  main .section.dark-purple .columns > .columns-item:nth-child(3) {
+    border-left: none !important;
+  }
 }
 
 main .section.dark-purple .columns .columns-item-content:empty {
@@ -115,18 +121,24 @@ main .section.dark-purple .columns-wrapper * {
 /* Responsive: mobile/tablet stack */
 @media (width < 768px) {
   main .section.dark-purple {
-    padding: 4rem 2rem 6rem;
-    border-radius: 50% 50% 50% 50% / 2% 2% 2% 2%;
+    padding: 0 !important;
+  }
+
+  main .section.dark-purple .columns-wrapper {
+    padding: 3rem 1.5rem !important;
+    border-radius: 0 !important;
   }
 
   main .section.dark-purple .columns {
     flex-direction: column;
     align-items: center;
+    gap: 2rem;
   }
 
   main .section.dark-purple .columns > .columns-item {
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid rgba(255 255 255 / 20%);
+    padding: 1rem 2rem;
+    width: 100%;
+    border-bottom: none;
   }
 
   main .section.dark-purple .columns > .columns-item:last-child {
@@ -136,6 +148,16 @@ main .section.dark-purple .columns-wrapper * {
 
   main .section.dark-purple .columns > .columns-item:nth-child(3) {
     border-left: none !important;
+  }
+
+  main .section.dark-purple h2 {
+    font-size: 24px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  main .section.dark-purple a.button:any-link {
+    padding: 14px 28px !important;
+    font-size: 13px !important;
   }
 }
 
