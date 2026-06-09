@@ -4147,3 +4147,13 @@ body main .carousel-video-playlist .carousel-video-playlist-item-title {
   color: var(--color-brand-primary);
 }
 
+/* Hide raw metadata section (brand/nav/footer not consumed by framework) */
+main > .section[class="section abbvie-container"]:last-of-type {
+  display: none !important;
+}
+
+/* Savings card section spacing */
+main > .section:has(.columns-homepage-savings) {
+  padding-top: 48px;
+}
+
