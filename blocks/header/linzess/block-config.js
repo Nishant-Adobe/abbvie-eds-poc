@@ -6,6 +6,11 @@ export default async function getBlockConfigs() {
     variations: [],
     decorations: {
       afterDecorate: (block) => {
+        // Add no-hero class for non-hero pages (purple header + arc)
+        if (!document.querySelector('main .hero')) {
+          document.body.classList.add('no-hero');
+        }
+
         block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
 
         // Remove ISI trigger text ("top") injected into the eyebrow bar by buildEyebrows.

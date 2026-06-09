@@ -36,11 +36,19 @@ export default async function decorate(block) {
       }
     });
   } else {
+    const widthValues = ['full', 'sixty', 'half', 'third', 'thirty', 'quarter'];
     // Document authoring: rebuild DOM for clean markup, skip empty config rows
     const items = rows.filter((row) => row.textContent.trim() || row.querySelector('picture')).map((row) => {
       const cells = [...row.children];
       const item = document.createElement('div');
       item.className = 'flexbox-item';
+
+      const lastCell = cells[cells.length - 1];
+      const lastCellText = lastCell?.textContent?.trim().toLowerCase();
+      if (lastCell && widthValues.includes(lastCellText)) {
+        item.dataset.width = lastCellText;
+        cells.pop();
+      }
 
       cells.forEach((cell) => {
         const picture = cell.querySelector('picture');
