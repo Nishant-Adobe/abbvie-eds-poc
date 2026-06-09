@@ -2654,10 +2654,47 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 }
 
 /* Real Patients page: section centering */
-.section.real-patients-hero-section ~ .section {
+.section.real-patients-hero-section ~ .section:not(.brushstroke-glacier-white) {
   max-width: 1220px;
   margin: 0 auto;
   padding: 24px 20px;
+}
+
+.section.real-patients-hero-section ~ .section.text-container-container:has(> .text-container-wrapper > .text-container.boxed-warning),
+.section.real-patients-hero-section ~ .section.text-container-container:has(> .text-container-wrapper > .text-container.legal),
+.section.real-patients-hero-section ~ .section.text-container-container:has(> .text-container-wrapper > .text-container.references) {
+  max-width: none;
+  margin: 0;
+  padding: 24px 0;
+}
+
+.section.real-patients-hero-section ~ .section.text-container-container:has(> .text-container-wrapper > .text-container.legal),
+.section.real-patients-hero-section ~ .section.text-container-container:has(> .text-container-wrapper > .text-container.references) {
+  padding: 0 0 24px;
+}
+
+.section.real-patients-hero-section ~ .section.brushstroke-glacier-white h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: rgb(70, 72, 74);
+  max-width: none;
+}
+
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container.references .text-container-text > div > p {
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-brand-primary, #90124a);
+  margin: 0;
+}
+
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container.references .text-container-text > div > p:first-child strong {
+  font-weight: 700;
+  color: var(--color-brand-primary, #90124a);
+  text-decoration: none;
+  background-image: none !important;
+  background: none;
 }
 
 .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] {
@@ -2877,12 +2914,44 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   grid-column: span 1;
 }
 
+.text-container.text-two-columns.block .text-container-text > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.text-container.text-two-columns.block .text-container-text > div > p:first-child {
+  flex-basis: 100%;
+  margin: 0 0 8px;
+}
+
+.text-container.text-two-columns.block .text-container-text > div > p:nth-child(n+2) {
+  flex: 1;
+  margin: 0;
+}
+
 .text-container.text-two-columns.block .text-container-text > div > p {
-  margin: 20px 0;
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 14px;
   color: rgb(70, 72, 74);
   line-height: 1.5;
+}
+
+/* Efficacy footnotes and CTA paragraph */
+.section.real-patients-hero-section ~ .section.text-container-container > .default-content-wrapper:last-child p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 21px;
+  margin: 0 0 4px;
+}
+
+.section.real-patients-hero-section ~ .section.text-container-container > .default-content-wrapper:last-child p:last-child {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  margin-top: 24px;
 }
 
 .text-container.text-two-columns.block .text-container-text > div > p:first-child > strong,
@@ -2953,16 +3022,6 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 }
 
 
-.section.real-patients-hero-section ~ .section.glacier {
-  max-width: none;
-  background-color: rgb(245, 245, 245);
-  padding: 48px 20px;
-}
-
-.section.real-patients-hero-section ~ .section.glacier > .text-container-wrapper {
-  max-width: 1220px;
-  margin: 0 auto;
-}
 
 /* Real Patients page: description paragraph (below hero, in hero section) */
 .section.real-patients-hero-section .default-content-wrapper {
@@ -3070,21 +3129,6 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   margin: 0;
 }
 
-@media (max-width: 899px) {
-  .section.real-patients-hero-section::before {
-    background-image: url('/content/dam/abbvie-eds-poc/rinvoq-hcp/hero-ad-real-patients-mobile.png');
-    background-size: 100%;
-    background-position: 50% 0%;
-    height: 340px;
-    min-height: 340px;
-    position: relative;
-  }
-
-  .section.real-patients-hero-section .hero-wrapper {
-    margin-top: -340px;
-    position: relative;
-  }
-}
 
 .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
   font-family: 'Graphik Bold', 'Helvetica Neue', arial, sans-serif;
@@ -3141,5 +3185,176 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     padding: 64px 110px 40px;
     min-height: 340px;
     align-items: center;
+  }
+}
+
+@media (max-width: 899px) {
+  .section.real-patients-hero-section {
+    padding: 0;
+    display: block;
+  }
+
+  .section.real-patients-hero-section::before {
+    background-image: url('/content/dam/abbvie-eds-poc/rinvoq-hcp/hero-ad-real-patients-mobile.png');
+    background-size: 506px auto;
+    background-position: calc(50% - 20px) 50%;
+    height: 190px;
+    min-height: 190px;
+    position: relative;
+    display: block;
+    width: 100%;
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container {
+    position: static;
+    padding: 32px 0px 30px;
+    min-height: auto;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+    font-size: 26px;
+    line-height: 1.0625;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+    font-size: 58px;
+    line-height: 0.8;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large p {
+    position: absolute;
+    top: -30px;
+    right: 30px;
+    left: auto;
+    text-align: right;
+    color: rgb(255, 255, 255);
+    margin: 0;
+  }
+
+  .section.real-patients-hero-section .default-content-wrapper {
+    padding: 0 20px;
+  }
+
+  .section.real-patients-hero-section .dismiss-wrapper {
+    padding: 0 20px;
+  }
+
+  .section.real-patients-hero-section .dismiss {
+    padding: 24px 48px 24px 24px;
+  }
+
+  .section.real-patients-hero-section ~ .section.tabs-container {
+    padding: 24px 20px 0;
+  }
+
+  .section.real-patients-hero-section ~ .section.tabs-container .tabs-list[role="tablist"] {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"] {
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 42px;
+    padding: 12px 24px;
+    border-radius: 0;
+    border-bottom: none;
+    font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    color: rgb(70, 72, 74);
+  }
+
+  .section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"]:last-child {
+    border-bottom: 1px solid rgb(201, 201, 202);
+  }
+
+  .section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"][aria-selected="true"] {
+    padding: 12px 24px;
+    font-family: 'Graphik Black', 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    color: rgb(70, 72, 74);
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] {
+    margin: 0 20px;
+    padding: 24px;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section {
+    display: block;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:nth-child(2) .text-container {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .default-content-wrapper {
+    margin-top: 16px;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container.block {
+    padding: 0;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div {
+    display: flex;
+    width: 100%;
+    background-size: cover;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > h4 {
+    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    color: rgb(70, 72, 74);
+    text-transform: none;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > ul {
+    padding-left: 24px;
+    margin: 4px 0 0;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > ul li {
+    font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .section.real-patients-hero-section ~ .section .text-container.text-two-columns.block {
+    padding: 0;
+  }
+
+  .text-container.text-two-columns.block .text-container-text > div > p:nth-child(n+2) {
+    flex: 1 1 100%;
+  }
+
+  .section.real-patients-hero-section ~ .section .default-content-wrapper .button-container {
+    text-align: left;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel + .section > .default-content-wrapper p.button-container {
+    margin-top: 16px;
+  }
+
+  .section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"] {
+    display: inline;
+    text-align: left;
+  }
+
+  .section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"]::after {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
   }
 }
