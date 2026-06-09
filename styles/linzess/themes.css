@@ -184,6 +184,11 @@ body main .section.dark p, body main .section.dark strong,
 body main .section.dark a:not(.button) { color: var(--color-text-on-dark); }
 .section.light-purple-bg { background-color: var(--linz-light-purple); }
 
+/* Hide raw metadata section (brand/nav/footer not consumed by framework) */
+main > .section.abbvie-container:not([class*="-container"]):last-of-type {
+  display: none;
+}
+
 /* ---- Savings Card Disclaimer ---- */
 main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-child p {
   font-family: var(--body-font-family);
