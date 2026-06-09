@@ -9,9 +9,16 @@
 .hero h1 {
   color: var(--color-text-heading);
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h1-hero);
-  line-height: var(--line-height-h1-hero);
+  font-size: var(--font-size-h1-mobile);
+  line-height: var(--line-height-h1-mobile);
   text-transform: uppercase;
+}
+
+@media (width >= 744px) {
+  .hero h1 {
+    font-size: var(--font-size-h1-hero);
+    line-height: var(--line-height-h1-hero);
+  }
 }
 
 .hero h2,
