@@ -1133,7 +1133,7 @@
   margin-top: 16px;
 }
 
-/* Light purple variant cards (savings cards) */
+/* Light purple variant cards (savings cards + second prescribed card) */
 .cards-grid.cards-grid-icon-image-card .background-light-purple {
   background: #d9d7f9 !important;
 }
@@ -1148,6 +1148,30 @@
 }
 
 .cards-grid.cards-grid-icon-image-card .background-light-purple a {
+  background: #422e83;
+  color: #fff;
+}
+
+/* Second cards-grid instance (savings cards) — all light purple */
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card {
+  background: #d9d7f9 !important;
+}
+
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card h2,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card h2 {
+  color: #422e83 !important;
+}
+
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card p,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card p {
+  color: #4d4d4f;
+}
+
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card a,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card a {
   background: #422e83;
   color: #fff;
 }
