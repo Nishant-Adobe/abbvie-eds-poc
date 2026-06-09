@@ -7,7 +7,7 @@
 
 /* Body defaults — Linzess uses 16px base (matches live site) */
 body {
-  font-size: 16px;
+  font-size: var(--font-size-legal-large);
   line-height: normal;
   background-color: var(--color-background-light);
 }
@@ -19,8 +19,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: var(--font-size-h1);
-  line-height: var(--line-height-h1);
+  font-size: var(--font-size-h1-mobile);
+  line-height: var(--line-height-h1-mobile);
 }
 
 h2 {
@@ -31,10 +31,32 @@ h3 {
   font-size: var(--font-size-h3);
 }
 
-@media (width >= 900px) {
+/* Mobile-first body text: 14px at <744px */
+p, a, li, dd, dt {
+  font-size: var(--font-size-body);
+}
+
+@media (width >= 744px) {
+  p, a, li, dd, dt {
+    font-size: var(--body-font-size-s);
+  }
+
   h1 {
-    font-size: var(--font-size-h1-hero);
-    line-height: var(--line-height-h1-hero);
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  h2 {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+}
+
+@media (width >= 1024px) {
+  h1 {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+    letter-spacing: var(--letter-spacing-tight);
   }
 
   h2 {
@@ -52,7 +74,7 @@ a:any-link {
 a.button:any-link,
 button {
   border-radius: var(--border-radius-button-primary);
-  padding: var(--button-primary-padding);
+  padding: var(--button-primary-padding-mobile);
   font-size: var(--button-primary-font-size);
   font-weight: var(--button-primary-font-weight);
   background-color: var(--button-primary-bg);
@@ -60,6 +82,13 @@ button {
   border-color: var(--button-primary-border);
   transition: var(--transition-button);
   position: relative;
+}
+
+@media (width >= 744px) {
+  a.button:any-link,
+  button {
+    padding: var(--button-primary-padding);
+  }
 }
 
 a.button::after {
@@ -126,7 +155,7 @@ main > .section.highlight p {
 /* ── find-relief-dark-purple: Bottom CTA section ── */
 main > .section.find-relief-dark-purple {
   position: relative;
-  background-color: #422e83;
+  background-color: var(--color-brand-primary);
   padding: 20px 0 140px;
   overflow: visible;
   width: 100vw;
@@ -145,7 +174,7 @@ main > .section.find-relief-dark-purple::before {
   transform: translateX(-50%);
   width: 130vw;
   height: 255px;
-  background-color: #422e83;
+  background-color: var(--color-brand-primary);
   border-radius: 100% 100% 0 0;
   z-index: -1;
   pointer-events: none;
@@ -154,13 +183,13 @@ main > .section.find-relief-dark-purple::before {
 main > .section.find-relief-dark-purple h2,
 main > .section.find-relief-dark-purple h3,
 main > .section.find-relief-dark-purple p {
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 main > .section.find-relief-dark-purple h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--font-size-h3-section);
+  font-weight: var(--font-weight-bold);
   text-transform: none;
   letter-spacing: normal;
   margin-bottom: 24px;
@@ -194,23 +223,23 @@ main > .section.find-relief-dark-purple .columns .columns-item-content {
 }
 
 main > .section.find-relief-dark-purple .columns .columns-item-content:first-child {
-  border-right: 1px solid #948ebe;
+  border-right: 1px solid var(--color-border-purple);
 }
 
 main > .section.find-relief-dark-purple a.button:any-link {
   display: inline-block;
-  background-color: #faa633;
-  color: #422e83;
+  background-color: var(--color-brand-accent);
+  color: var(--color-brand-primary);
   border-radius: 16px;
   padding: 16px 59px 16px 32px;
-  font-size: 14.4px;
-  font-weight: 800;
+  font-size: var(--button-primary-font-size);
+  font-weight: var(--font-weight-extra-bold);
   text-decoration: none;
   border: none;
 }
 
 main > .section.find-relief-dark-purple a.button:hover {
-  background-color: #e89520;
+  background-color: var(--color-brand-accent-hover);
 }
 
 @media (max-width: 768px) {
@@ -221,7 +250,7 @@ main > .section.find-relief-dark-purple a.button:hover {
 
   main > .section.find-relief-dark-purple .columns .columns-item-content:first-child {
     border-right: none;
-    border-bottom: 1px solid #948ebe;
+    border-bottom: 1px solid var(--color-border-purple);
     padding-bottom: 40px;
   }
 }
@@ -229,7 +258,7 @@ main > .section.find-relief-dark-purple a.button:hover {
 /* ── Fallback: dark purple CTA when section-metadata isn't applied ── */
 main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) {
   position: relative;
-  background-color: #422e83;
+  background-color: var(--color-brand-primary);
   padding: 80px 0 140px;
   overflow: visible;
   width: 100vw;
@@ -248,7 +277,7 @@ main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white
   transform: translateX(-50%);
   width: 130vw;
   height: 255px;
-  background-color: #422e83;
+  background-color: var(--color-brand-primary);
   border-radius: 100% 100% 0 0;
   z-index: -1;
   pointer-events: none;
@@ -256,13 +285,13 @@ main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white
 
 main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2,
 main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) p {
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2 {
   font-family: var(--body-font-family);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--font-size-h3-section);
+  font-weight: var(--font-weight-bold);
   text-transform: none;
   letter-spacing: normal;
 }
@@ -275,12 +304,12 @@ main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white
 
 main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) a.button:any-link {
   display: inline-block;
-  background-color: #faa633;
-  color: #422e83;
+  background-color: var(--color-brand-accent);
+  color: var(--color-brand-primary);
   border-radius: 16px;
   padding: 16px 59px 16px 32px;
-  font-size: 14.4px;
-  font-weight: 800;
+  font-size: var(--button-primary-font-size);
+  font-weight: var(--font-weight-extra-bold);
   text-decoration: none;
   border: none;
 }
@@ -359,8 +388,8 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-checklist > .columns-wrapper .columns-item-content h2 {
   font-family: var(--body-font-family);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--font-size-h3-section);
+  font-weight: var(--font-weight-bold);
   color: var(--color-brand-primary);
   text-transform: none;
   letter-spacing: normal;
@@ -370,7 +399,7 @@ main > .section.find-relief-off-white::before {
 }
 
 .section.find-relief-checklist > .columns-wrapper .columns-item-content p {
-  font-size: 14px;
+  font-size: var(--font-size-legal);
   line-height: 1.5;
   color: var(--text-color);
   text-align: left;
@@ -379,7 +408,7 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-checklist > .columns-wrapper .columns-item-content a.button:any-link {
   background-color: var(--color-brand-primary);
-  color: #fff;
+  color: var(--color-text-on-dark);
   border-radius: var(--border-radius-button-primary);
   margin-top: 16px;
   display: inline-block;
@@ -395,7 +424,7 @@ main > .section.find-relief-off-white::before {
   display: flex;
   flex-wrap: wrap;
   max-width: 998px;
-  font-size: 16px;
+  font-size: var(--font-size-legal-large);
   grid-column: 1 / -1;
   text-align: left;
 }
@@ -437,8 +466,8 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
   font-family: var(--body-font-family);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
   text-transform: none;
   color: var(--color-text-on-dark);
   margin-bottom: 16px;
@@ -447,11 +476,17 @@ main > .section.find-relief-off-white::before {
   line-height: normal;
 }
 
+@media (width >= 744px) {
+  .section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
+    font-size: var(--font-size-h3-section);
+  }
+}
+
 .section.find-relief-checklist .default-content-wrapper > ul > li > p:nth-child(2) {
-  font-size: 16px;
+  font-size: var(--font-size-legal-large);
   color: var(--color-text-on-dark);
   line-height: normal;
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
 }
 
 .section.find-relief-checklist .default-content-wrapper > ul > li a {
@@ -467,8 +502,8 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-checklist > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
-  font-size: 12px;
-  font-weight: 800;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
   text-transform: uppercase;
   letter-spacing: normal;
   color: var(--color-brand-primary);
@@ -478,7 +513,7 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-checklist > .default-content-wrapper > h2 {
   font-family: var(--heading-font-family);
-  font-size: 40px;
+  font-size: var(--font-size-h2-hero);
   color: var(--color-brand-primary);
   text-transform: none;
   text-align: center;
@@ -493,7 +528,7 @@ main > .section.find-relief-off-white::before {
 /* ── find-relief-off-white: Centered headings in how-to-take section ── */
 .section.find-relief-off-white > .default-content-wrapper > p:first-child {
   font-family: var(--heading-font-family);
-  font-size: 14px;
+  font-size: var(--font-size-legal);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-brand-primary);
@@ -587,8 +622,9 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child strong,
 .section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child strong {
-  font-family: var(--heading-font-family);
-  font-size: 16px;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-bold);
   color: var(--color-brand-primary);
   text-transform: uppercase;
 }
@@ -596,7 +632,8 @@ main > .section.find-relief-off-white::before {
 .section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child a,
 .section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child a {
   color: var(--color-brand-primary);
-  font-weight: 700;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
   text-decoration: underline;
   white-space: nowrap;
 }
@@ -609,7 +646,7 @@ main > .section.find-relief-off-white::before {
 
 /* White card TOP — heading with orange divider */
 .section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child {
-  background: #fff;
+  background: var(--background-color);
   border-radius: 16px 16px 0 0;
   max-width: 998px;
   margin: 40px auto 0 !important;
@@ -620,8 +657,8 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child h2 {
   font-family: var(--heading-font-family);
-  font-size: 40px;
-  font-weight: 400;
+  font-size: var(--font-size-h2-hero);
+  font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
   margin: 20px 0 0;
   line-height: 36px;
@@ -638,7 +675,7 @@ main > .section.find-relief-off-white::before {
 
 /* White card MIDDLE — tabs wrapper */
 .section.find-relief-off-white .tabs-wrapper {
-  background: #fff !important;
+  background: var(--background-color) !important;
   max-width: 998px !important;
   margin: 0 auto !important;
   padding: 0 24px 24px !important;
@@ -647,7 +684,7 @@ main > .section.find-relief-off-white::before {
 
 /* White card BOTTOM — tab panels */
 .section.find-relief-off-white .tabs-panel {
-  background: #fff !important;
+  background: var(--background-color) !important;
   border-radius: 0 0 16px 16px !important;
   max-width: 998px !important;
   margin: 0 auto !important;
@@ -664,8 +701,8 @@ main > .section.find-relief-off-white::before {
 
 .section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper h2 {
   font-family: var(--heading-font-family);
-  font-size: 40px;
-  font-weight: 400;
+  font-size: var(--font-size-h2-hero);
+  font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
   margin: 20px 0 0;
   line-height: 36px;
@@ -694,8 +731,8 @@ main > .section.find-relief-off-white::before {
 .tabs-panel .default-content-wrapper p,
 .tabs-panel .tabs-panel-heading p {
   font-family: var(--body-font-family);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--font-size-h3-section);
+  font-weight: var(--font-weight-bold);
   color: var(--color-brand-primary);
   margin: 0;
   line-height: normal;
@@ -738,9 +775,9 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2,
 .section.columns-container > .default-content-wrapper:first-child > h2 {
-  font-size: 40px;
+  font-size: var(--font-size-h2-hero);
   font-family: var(--heading-font-family);
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
   text-align: center;
   margin: 20px 0 0;
@@ -762,11 +799,11 @@ main > .section.find-relief-off-white::before {
   text-align: center;
   max-width: 928px;
   margin: 20px auto 0;
-  font-size: 16px;
-  font-weight: 400;
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-body);
   line-height: normal;
   font-family: var(--body-font-family);
-  color: #4d4d4f;
+  color: var(--text-color);
   text-transform: none;
 }
 
@@ -780,8 +817,8 @@ main > .section.find-relief-off-white::before {
 /* Savings card heading — NOT Bebas, use body font */
 .section.find-relief-off-white.columns-container .columns h2 {
   font-family: var(--body-font-family);
-  font-size: 24px;
-  font-weight: 700;
+  font-size: var(--font-size-h3-section);
+  font-weight: var(--font-weight-bold);
   text-transform: none;
   color: var(--color-brand-primary);
   letter-spacing: normal;
@@ -790,7 +827,7 @@ main > .section.find-relief-off-white::before {
 /* Savings card button — purple, not orange */
 .section.find-relief-off-white.columns-container .columns a.button:any-link {
   background-color: var(--color-brand-primary);
-  color: #fff;
+  color: var(--color-text-on-dark);
   border-radius: var(--border-radius-button-primary);
 }
 
@@ -801,13 +838,13 @@ main > .section.find-relief-off-white::before {
 }
 
 .section.find-relief-off-white.columns-container > .columns-wrapper + .default-content-wrapper > p {
-  font-size: 12px;
+  font-size: var(--font-size-body-small);
   line-height: 1.4;
   color: var(--text-color);
   text-align: left;
   font-family: var(--body-font-family);
   text-transform: none;
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
   letter-spacing: normal;
 }
 
@@ -821,7 +858,7 @@ main > .section.find-relief-off-white::before {
 /* ── gutcheck-quiz-arc: White arc overlapping hero bottom ── */
 main > .section.gutcheck-quiz-arc {
   position: relative;
-  background: #fff;
+  background: var(--color-background-light);
 }
 
 main > .section.gutcheck-quiz-arc::before {
@@ -832,7 +869,7 @@ main > .section.gutcheck-quiz-arc::before {
   transform: translateX(-50%);
   width: 130vw;
   height: 225px;
-  background: #fff;
+  background: var(--background-color);
   border-radius: 100% 100% 0 0;
   z-index: 1;
 }
@@ -842,38 +879,109 @@ main > .section.gutcheck-quiz-arc > * {
   z-index: 2;
 }
 
+/* ── Gutcheck quiz: Full-bleed alternating backgrounds + centered layout ── */
+.gut-check-quiz .quiz-steps .quiz-step {
+  position: relative;
+  padding: 48px 0;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+}
+
+.gut-check-quiz .quiz-steps .quiz-step:nth-child(even) {
+  background-color: var(--color-background-light);
+}
+
+.gut-check-quiz .quiz-steps .quiz-step:nth-child(odd) {
+  background-color: var(--background-color);
+}
+
+/* Step number — top-left corner of content area, matching live site */
+.gut-check-quiz .quiz-step .quiz-step-indicator {
+  position: absolute;
+  left: calc(50% - 330px);
+  top: 20px;
+}
+
+/* Email section — off-white full-bleed background matching live site */
+.gut-check-quiz .quiz-email-section {
+  background-color: var(--color-background-light);
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 60px 0;
+  text-align: center;
+  max-width: none;
+  width: auto;
+}
+
+.gut-check-quiz .quiz-steps {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.gut-check-quiz .quiz-container {
+  background-color: var(--color-background-light);
+}
+
+.gut-check-quiz .quiz-email-section > * {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 /* ── ISI text-container: Legal font styling (from live site) ── */
+.section.text-container-container {
+  background-color: var(--background-color);
+  border-top: 3px solid var(--color-brand-primary);
+  padding-top: 24px;
+  margin-left: calc(-50vw + 50%) !important;
+  margin-right: calc(-50vw + 50%) !important;
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+  max-width: none !important;
+  width: auto !important;
+}
+
 .text-container {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
-  font-size: 16px;
-  line-height: 20px;
-  color: #000;
-  max-width: 100%;
-  padding: 0 20px 80px;
-  margin: 10px 0 20px;
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
 }
 
 .text-container > div {
-  margin: 0 80px;
+  margin: 0;
 }
 
 .text-container h3 {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-size: 16px;
-  font-weight: 400;
+  font-size: var(--font-size-legal);
+  font-weight: var(--font-weight-body);
   line-height: normal;
-  color: #422e83;
+  color: var(--color-brand-primary);
   letter-spacing: -0.32px;
   margin: 10px 0 0;
   text-transform: none;
 }
 
+@media (width >= 744px) {
+  .text-container h3 {
+    font-size: var(--font-size-legal-large);
+  }
+}
+
 .text-container p {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
-  font-size: 14px;
+  font-size: var(--font-size-legal);
   line-height: 16px;
   letter-spacing: -0.28px;
-  color: #555;
+  color: var(--color-text-muted);
   margin: 10px 0;
 }
 
@@ -884,17 +992,17 @@ main > .section.gutcheck-quiz-arc > * {
 
 .text-container li {
   font-family: 'BasicCommercialLT-Roman', sans-serif;
-  font-size: 14px;
+  font-size: var(--font-size-legal);
   line-height: 16px;
   letter-spacing: -0.28px;
-  color: #555;
+  color: var(--color-text-muted);
   margin: 10px 0;
 }
 
 .text-container a {
   font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
-  font-size: 14px;
-  color: #422e83;
+  font-size: var(--font-size-legal);
+  color: var(--color-brand-primary);
   text-decoration: underline;
   letter-spacing: -0.28px;
 }
@@ -903,13 +1011,13 @@ main > .section.gutcheck-quiz-arc > * {
 .text-container b {
   font-family: 'BasicCommercialLT-Black', sans-serif;
   font-weight: 900;
-  color: #422e83;
+  color: var(--color-brand-primary);
 }
 
 .text-container u {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-weight: 400;
-  color: #422e83;
+  font-weight: var(--font-weight-body);
+  color: var(--color-brand-primary);
   text-decoration: none;
 }
 

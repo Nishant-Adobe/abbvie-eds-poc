@@ -47,12 +47,12 @@
 
 /* ── Tab buttons (inactive) — transparent on purple bar ── */
 .tabs-container .tabs .tabs-list button.tabs-tab {
-  padding: 18px 24px;
-  background: transparent;
+  padding: 12px 16px;
+  background: var(--color-brand-primary-lighter);
   color: var(--color-text-heading);
   font-family: var(--body-font-family);
-  font-size: 16px;
-  font-weight: 800;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
   font-style: normal;
   border: none;
   border-radius: 0;
@@ -91,9 +91,9 @@
   z-index: var(--z-index-1);
 }
 
-/* If first tab is active — round left side instead */
+/* If first tab is active — still right-side radius only (matches live site) */
 .tabs-container .tabs .tabs-list button.tabs-tab:first-child[aria-selected='true'] {
-  border-radius: var(--linz-rounded-corner);
+  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
 }
 
 /* If last tab is active — round right side */
@@ -144,7 +144,7 @@
 /* ── Desktop (900px+) ── */
 @media (width >= 900px) {
   .tabs-container .tabs .tabs-list button.tabs-tab {
-    font-size: var(--font-size-18);
+    font-size: var(--font-size-legal-large);
     padding: var(--spacing-20) var(--spacing-40);
   }
 
