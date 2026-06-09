@@ -111,15 +111,6 @@
 .columns.columns-homepage-promo > .columns-item .columns-item-image,
 .hero-container + .columns-container .columns > .columns-item .columns-item-image {
   order: -1;
-  height: 100%;
-}
-
-/* Image-only column stretches to fill the fixed-height card */
-.columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
-  display: flex;
-  align-self: stretch;
-  height: auto;
 }
 
 /* Make the columns-item a flex row when it has both image + content */
@@ -139,7 +130,7 @@
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
 .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
   width: 100%;
-  height: 100%;
+  height: 180px;
   object-fit: cover;
   display: block;
 }
@@ -203,7 +194,6 @@
   .hero-container + .columns-container .columns {
     flex-wrap: wrap;
     max-width: 100%;
-    height: auto;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
@@ -214,7 +204,6 @@
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
   .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
     margin-top: 0;
-    height: 180px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
@@ -824,7 +813,7 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   }
 }
 
-/* Mobile: promo card stacks — image on top, text below (matches live mobile) */
+/* Mobile: promo card fix — hide image entirely, show text only (matches live mobile) */
 @media (width < 768px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns {
@@ -833,16 +822,7 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
 
   .columns.columns-homepage-promo > .columns-item .columns-item-image,
   .hero-container + .columns-container .columns > .columns-item .columns-item-image {
-    display: block;
-    order: -1;
-  }
-
-  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
+    display: none;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
