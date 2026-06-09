@@ -826,16 +826,42 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   }
 }
 
-/* Mobile: promo card fix — hide image entirely, show text only (matches live mobile) */
+/* Mobile: promo card stacks — image on top, text below (matches live mobile) */
 @media (width < 768px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns {
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: auto;
     margin-top: 24px;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+    flex: 1 1 auto;
+    width: 100%;
+    order: -1;
+    align-self: auto;
   }
 
   .columns.columns-homepage-promo > .columns-item .columns-item-image,
   .hero-container + .columns-container .columns > .columns-item .columns-item-image {
-    display: none;
+    display: block;
+    height: auto;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1 1 auto;
+    width: 100%;
+    text-align: center;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
