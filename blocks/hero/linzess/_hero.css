@@ -9,15 +9,15 @@
 .hero h1 {
   color: var(--color-text-heading);
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h1-mobile);
-  line-height: var(--line-height-h1-mobile);
+  font-size: var(--font-size-h1-mobile) !important;
+  line-height: var(--line-height-h1-mobile) !important;
   text-transform: uppercase;
 }
 
 @media (width >= 744px) {
   .hero h1 {
-    font-size: var(--font-size-h1-hero);
-    line-height: var(--line-height-h1-hero);
+    font-size: var(--font-size-h2-hero) !important;
+    line-height: var(--line-height-h2-hero) !important;
   }
 }
 
@@ -270,10 +270,17 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
-  font-size: var(--font-size-40);
-  line-height: 0.95;
+  font-size: var(--font-size-h1-mobile);
+  line-height: var(--line-height-h1-mobile);
   max-width: none;
   width: 100%;
+}
+
+@media (width >= 744px) {
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-40);
+    line-height: 0.95;
+  }
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {

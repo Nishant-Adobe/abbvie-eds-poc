@@ -18,9 +18,15 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-heading);
 }
 
-main h1 {
+main h1,
+main .hero h1 {
   font-size: var(--font-size-h1-mobile);
   line-height: var(--line-height-h1-mobile);
+}
+
+.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
+  font-size: var(--font-size-h1-mobile) !important;
+  line-height: var(--line-height-h1-mobile) !important;
 }
 
 h2 {
@@ -49,9 +55,11 @@ main dt {
     font-size: var(--body-font-size-s);
   }
 
-  main h1 {
-    font-size: var(--font-size-h2-hero);
-    line-height: var(--line-height-h2-hero);
+  main h1,
+  main .hero h1,
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-h2-hero) !important;
+    line-height: var(--line-height-h2-hero) !important;
   }
 
   h2 {
