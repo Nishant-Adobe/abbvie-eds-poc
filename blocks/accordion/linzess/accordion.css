@@ -180,12 +180,6 @@
 .accordion-dark .accordion-item-label h6 {
     color: var(--light-color);
 }
-.accordion-item-label.open .accordion-item-label-text,
-
-
-
-
-}
 .accordion summary::-webkit-details-marker {
     display: none;
 }
@@ -1083,6 +1077,12 @@
     flex-direction: column;
     gap: 24px;
 }
+/* Hide leftover md2jcr parent-config rows. Real items render as <details>;
+   the unconsumed single-cell config <div>s remain in the DOM and would add
+   flex gaps. A bare child-div selector never matches <details>, so items stay. */
+.accordion > div {
+    display: none !important;
+}
 /* Summary row */
 .accordion summary,
 .accordion .accordion-item-label {
@@ -1308,7 +1308,6 @@ details.accordion-item {
 
 .section.centered .default-content-wrapper + .accordion-wrapper {
     margin-top: 0 !important;
-}
 }
 
 /* Platform C utility classes for section headings */
