@@ -519,25 +519,48 @@ main > .section.find-relief-off-white::before {
   white-space: nowrap;
 }
 
-/* ── Tabs section: centered white card ── */
+/* ── Tabs section: white card top portion ── */
 .section.tabs-container {
   display: block !important;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
   max-width: 998px;
   margin: 40px auto 0;
+  padding: 60px 0 0;
   text-align: center;
 }
 
 .section.tabs-container > .default-content-wrapper {
   text-align: center;
+  padding: 0 16px;
+  margin: 0 auto 24px;
 }
 
-.section.find-relief-off-white .tabs-wrapper {
-  max-width: 998px;
-  margin: 0 auto !important;
+.section.tabs-container > .default-content-wrapper h2 {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--color-brand-primary);
+  margin: 20px 0 0;
+  line-height: 36px;
 }
 
-.section.find-relief-off-white .tabs-wrapper .tabs-list {
-  justify-content: center;
+.section.tabs-container > .default-content-wrapper h2::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url('https://www.linzess.com/content/dam/linzess/images/divider.svg') no-repeat center / contain;
+  margin: 0 auto 16px;
+}
+
+.section.tabs-container .tabs-wrapper {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.section.tabs-container .tabs-wrapper .tabs-list {
   max-width: none;
   margin: 0;
 }
@@ -547,13 +570,8 @@ main > .section.find-relief-off-white::before {
   display: none;
 }
 
-.tabs-panel {
-  max-width: 998px;
-  margin: 0 auto;
-  padding: 40px 16px;
-}
-
-.tabs-panel .default-content-wrapper {
+.tabs-panel .default-content-wrapper,
+.tabs-panel .tabs-panel-heading {
   text-align: center;
   margin-bottom: 32px;
 }
