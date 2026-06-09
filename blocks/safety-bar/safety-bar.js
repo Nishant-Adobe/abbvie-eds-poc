@@ -78,7 +78,7 @@ export default function decorate(block) {
   const syncExpandedContent = (isExpanded) => {
     if (!expanded) return;
 
-    const overlayEl = stickySection.querySelector('.safety-bar-overlay');
+    const overlayEl = document.querySelector('.safety-bar-overlay');
 
     if (isExpanded) {
       if (!fullEl) {
@@ -126,7 +126,7 @@ export default function decorate(block) {
 
   const overlay = document.createElement('div');
   overlay.className = 'safety-bar-overlay';
-  stickySection.prepend(overlay);
+  document.body.append(overlay);
 
   overlay.addEventListener('click', () => {
     stickyBlock.classList.remove('is-expanded');
