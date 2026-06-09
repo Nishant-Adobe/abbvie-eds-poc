@@ -706,9 +706,13 @@
 .carousel-video-playlist.grid .cvp-card {
   display: flex;
   flex-direction: column;
+  overflow: visible;
+  grid-column: auto;
+}
+
+.carousel-video-playlist.grid .cvp-card .cvp-player-wrap {
   border-radius: 16px;
   overflow: hidden;
-  grid-column: auto;
 }
 
 /* Show name banner overlay on video thumbnail in grid mode */
@@ -730,19 +734,18 @@
   overflow: hidden !important;
 }
 
-/* Card footer — white bg, dark text, matching site */
+/* Card footer — transparent bg, white text on dark section */
 .carousel-video-playlist.grid .cvp-card-footer {
-  background: var(--linz-white, #fff);
-  padding: 12px 16px;
+  background: transparent;
+  padding: 12px 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  gap: 16px;
   min-height: 44px;
 }
 
 .carousel-video-playlist.grid .cvp-title {
-  color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-bold, 700);
   font-size: 14px;
@@ -751,7 +754,7 @@
 }
 
 .carousel-video-playlist.grid .cvp-transcript-toggle {
-  color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small, 12px);
   font-weight: var(--font-weight-extra-bold, 800);
