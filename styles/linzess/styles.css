@@ -519,14 +519,24 @@ main > .section.find-relief-off-white::before {
   white-space: nowrap;
 }
 
-/* ── Tabs section: heading + divider styling ── */
-.section.tabs-container > .default-content-wrapper {
+/* ══════════════════════════════════════════════════════════════
+   TABS WHITE CARD — inside off-white section
+   Creates a visible white rounded card on the #f4f6fb background.
+   Three parts: heading (TOP) + tabs-wrapper (MIDDLE) + panel (BOTTOM)
+   ══════════════════════════════════════════════════════════════ */
+
+/* White card TOP — heading with orange divider */
+.section.find-relief-off-white > .default-content-wrapper:has(+ .tabs-wrapper) {
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  max-width: 998px;
+  margin: 40px auto 0 !important;
+  padding: 60px 24px 24px;
   text-align: center;
-  padding: 0 16px;
-  margin: 0 auto 24px;
+  box-shadow: 0 2px 8px rgba(66, 46, 131, 0.06);
 }
 
-.section.tabs-container > .default-content-wrapper h2 {
+.section.find-relief-off-white > .default-content-wrapper:has(+ .tabs-wrapper) h2 {
   font-family: var(--heading-font-family);
   font-size: 40px;
   font-weight: 400;
@@ -535,7 +545,7 @@ main > .section.find-relief-off-white::before {
   line-height: 36px;
 }
 
-.section.tabs-container > .default-content-wrapper h2::before {
+.section.find-relief-off-white > .default-content-wrapper:has(+ .tabs-wrapper) h2::before {
   content: '';
   display: block;
   width: 64px;
@@ -544,12 +554,55 @@ main > .section.find-relief-off-white::before {
   margin: 0 auto 16px;
 }
 
-/* ── Tab panel overrides ── */
+/* White card MIDDLE — tabs wrapper */
+.section.find-relief-off-white .tabs-wrapper {
+  background: #fff !important;
+  max-width: 998px !important;
+  margin: 0 auto !important;
+  padding: 0 24px 24px !important;
+  box-shadow: 0 2px 8px rgba(66, 46, 131, 0.06);
+}
+
+/* White card BOTTOM — tab panels */
+.section.find-relief-off-white .tabs-panel {
+  background: #fff !important;
+  border-radius: 0 0 16px 16px !important;
+  max-width: 998px !important;
+  margin: 0 auto !important;
+  padding: 24px 40px 48px !important;
+  box-shadow: 0 4px 12px rgba(66, 46, 131, 0.08);
+}
+
+/* Fallback: standalone tabs-container heading styling */
+.section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper {
+  text-align: center;
+  padding: 0 16px;
+  margin: 0 auto 24px;
+}
+
+.section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper h2 {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  font-weight: 400;
+  color: var(--color-brand-primary);
+  margin: 20px 0 0;
+  line-height: 36px;
+}
+
+.section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper h2::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url('https://www.linzess.com/content/dam/linzess/images/divider.svg') no-repeat center / contain;
+  margin: 0 auto 16px;
+}
+
+/* ── Tab panel content styling ── */
 .tabs-panel[aria-hidden="true"] {
   display: none;
 }
 
-.tabs-panel .default-content-wrapper,
 .tabs-panel .default-content-wrapper,
 .tabs-panel .tabs-panel-heading {
   text-align: center;
@@ -574,8 +627,9 @@ main > .section.find-relief-off-white::before {
 }
 
 .tabs-panel .flexbox-wrapper {
-  max-width: 900px;
+  max-width: 837px;
   margin: 0 auto;
+  padding-left: 40px;
 }
 
 .tabs-panel .abbvie-container {
