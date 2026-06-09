@@ -184,6 +184,24 @@
 }
 
 /* ============================================================
+   Overlay (dark dimmer behind expanded safety bar)
+   ============================================================ */
+.safety-bar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--safety-bar-overlay-z-index, 499);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.safety-bar-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
    Responsive breakpoints
    ============================================================ */
 @media (width <= 744px) {

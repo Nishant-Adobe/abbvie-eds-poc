@@ -78,6 +78,8 @@ export default function decorate(block) {
   const syncExpandedContent = (isExpanded) => {
     if (!expanded) return;
 
+    const overlayEl = stickySection.querySelector('.safety-bar-overlay');
+
     if (isExpanded) {
       if (!fullEl) {
         fullEl = document.createElement('div');
@@ -89,10 +91,14 @@ export default function decorate(block) {
       if (!stickyBlock.contains(fullEl)) {
         stickyBlock.append(fullEl);
       }
+      overlayEl?.classList.add('is-visible');
+      document.body.style.overflow = 'hidden';
       return;
     }
 
     fullEl?.remove();
+    overlayEl?.classList.remove('is-visible');
+    document.body.style.overflow = '';
   };
 
   const abbrevEl = document.createElement('div');
@@ -117,6 +123,20 @@ export default function decorate(block) {
   stickyBlock.append(buildToggle(stickyBlock, syncExpandedContent));
 
   stickySection.append(stickyBlock);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'safety-bar-overlay';
+  stickySection.prepend(overlay);
+
+  overlay.addEventListener('click', () => {
+    stickyBlock.classList.remove('is-expanded');
+    overlay.classList.remove('is-visible');
+    document.body.style.overflow = '';
+    syncExpandedContent(false);
+    const toggle = stickyBlock.querySelector('.safety-bar-toggle');
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  });
+
   document.body.append(stickySection);
 
   // Footer visibility is handled by the scroll-based check below.
