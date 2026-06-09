@@ -102,8 +102,7 @@ export default async function decorate(block) {
       wrapper.setAttribute('aria-labelledby', button.id);
       wrapper.setAttribute('aria-hidden', !shouldActivate);
 
-      const insertBefore = matched[0];
-      main.insertBefore(wrapper, insertBefore);
+      blockSection.appendChild(wrapper);
       matched.forEach((section) => {
         section.dataset.tabsGrid = 'true';
         if (shouldActivate) section.style.display = '';
@@ -115,7 +114,7 @@ export default async function decorate(block) {
 
     button.addEventListener('click', () => {
       // Hide all panels
-      main.querySelectorAll(`.tabs-panel[id^="tab-panel-${tabBlockCnt}"]`).forEach((p) => {
+      blockSection.querySelectorAll(`.tabs-panel[id^="tab-panel-${tabBlockCnt}"]`).forEach((p) => {
         p.setAttribute('aria-hidden', true);
       });
       tablist.querySelectorAll('button').forEach((btn) => {

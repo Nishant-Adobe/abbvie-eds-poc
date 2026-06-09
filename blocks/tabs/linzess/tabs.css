@@ -7,19 +7,26 @@
    Style: Dark purple active, light purple inactive, rounded bar
    ============================================================ */
 
-/* ── Tab container ── */
+/* ── Tab container — white card wrapping heading + tabs + panels ── */
 .section.tabs-container {
-  margin-bottom: 0;
-  padding-bottom: 0;
+  display: block !important;
+  background: #fff;
+  border-radius: 16px;
+  max-width: 998px;
+  margin: 40px auto 0;
+  padding: 60px 0 0;
+  text-align: center;
 }
 
 /* ── Tab controls wrapper ── */
 .tabs-container .tabs-wrapper {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: stretch;
   position: relative;
   z-index: var(--z-index-1);
+  padding: 0;
+  width: 100%;
 }
 
 /* ── Tab list — light purple bg bar with rounded ends ── */
@@ -92,15 +99,14 @@
   border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
 }
 
-/* ── Panel wrapper — white card bottom portion ── */
+/* ── Panel wrapper — inside the white card section ── */
 .tabs-panel {
   display: block;
   background: #fff;
   border: none;
-  border-radius: 0 0 16px 16px;
+  border-radius: 0;
   padding: 40px 60px;
-  margin: 0 auto;
-  max-width: 998px;
+  margin: 0;
   position: relative;
 }
 
