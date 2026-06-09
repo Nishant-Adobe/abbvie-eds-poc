@@ -4152,9 +4152,11 @@ main > .section[class="section abbvie-container"]:last-of-type {
   display: none !important;
 }
 
-/* Reduce gap between content cards and gutcheck */
-main > .section:has(.cards-grid-homepage-content) {
-  margin-bottom: 24px !important;
+/* Remove section gaps on Linzess homepage to match live site (0px between sections) */
+main > .section.columns-container,
+main > .section.cards-grid-container {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
 }
 
 /* Savings card section spacing */
