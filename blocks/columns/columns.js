@@ -17,7 +17,10 @@ function applyMobileImageSource(cell) {
   const mobileImg = mobilePicture.querySelector('img');
   if (!mobileImg) return;
 
-  const mobileSrcset = mobileImg.getAttribute('src');
+  // Prefer an optimized <source> srcset (AEM-processed images) and fall back
+  // to the <img> src (plain content) so the mobile artwork resolves either way.
+  const mobileSource = mobilePicture.querySelector('source[srcset]');
+  const mobileSrcset = mobileSource?.getAttribute('srcset') || mobileImg.getAttribute('src');
   if (mobileSrcset) {
     const source = document.createElement('source');
     source.setAttribute('media', MOBILE_IMAGE_MEDIA);
