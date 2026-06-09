@@ -1,3 +1,4 @@
+/* rinvoq-hcp brand styles */
 @import 'tokens.css';
 @import 'fonts.css';
 
@@ -169,8 +170,34 @@
 }
 
 .hero.no-padding > div:first-child img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: none;
+}
+
+.section.hero-container:not(.dosing-hero) .hero.no-padding {
+  overflow: visible;
+}
+
+.section.hero-container:not(.dosing-hero) .hero.no-padding > div:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 900px;
+  overflow: visible;
+  z-index: -1;
+}
+
+.section.hero-container:not(.dosing-hero) .hero.no-padding > div:first-child img {
   width: 3100px;
+  max-width: none;
   height: auto;
+  object-fit: unset;
   position: absolute;
   top: 0;
   left: 50%;
@@ -578,6 +605,10 @@ body {
   overflow-x: hidden;
 }
 
+.safety-bar.split .safety-bar-col2 p {
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+}
+
 @media (max-width: 600px) {
   .safety-bar.split .safety-bar-abbreviated {
     padding: 10px 16px;
@@ -592,7 +623,7 @@ body {
     padding-top: 20px;
     padding-bottom: 40px;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
   }
 
 
@@ -600,34 +631,34 @@ body {
     gap: var(--spacing-50, 50px);
   }
 
-  .hero.no-padding {
+  .section.hero-container:not(.dosing-hero) .hero.no-padding {
     min-height: auto;
     overflow: visible;
     position: relative;
   }
 
-  .hero.no-padding > div:first-child {
+  .section.hero-container:not(.dosing-hero) .hero.no-padding > div:first-child {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden;
+    overflow: visible;
     z-index: -1;
-    max-width: 100vw;
   }
 
-  .hero.no-padding > div:first-child img {
+  .section.hero-container:not(.dosing-hero) .hero.no-padding > div:first-child img {
     width: 100%;
-    max-width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: static;
+    max-width: none;
+    height: auto;
+    position: absolute;
+    top: -80px;
+    left: 0;
     transform: none;
     content: url('/content/dam/rinvoqhcpivy/images/backgrounds/background--hero-grey-sm.png');
   }
 
-  .hero.no-padding .hero-text-container .cmp-container-x-large {
+  .section.hero-container:not(.dosing-hero) .hero.no-padding .hero-text-container .cmp-container-x-large {
     flex-direction: column;
     min-height: auto;
     padding: 0;
@@ -1473,7 +1504,7 @@ body {
   padding: 0 4px;
   font-size: 12px;
   color: rgb(70, 72, 74);
-  margin-bottom: -8px;
+  margin-bottom: -2px;
   margin-left: 0;
   display: inline-block;
   text-align: left;
@@ -1601,11 +1632,13 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 }
 
 .section.dosing-hero .hero.no-padding > div:first-child img {
-  width: 100%;
-  max-width: 1440px;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  width: 1440px;
+  max-width: none;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .section.dosing-hero .hero-image-caption {
@@ -1669,6 +1702,10 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   background: transparent;
 }
 
+.section.dosing-hero .section-nav nav ul li {
+  cursor: pointer;
+}
+
 .section.dosing-hero .section-nav-wrapper .section-nav.is-stuck {
   position: fixed;
   top: 0;
@@ -1728,21 +1765,22 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   font-weight: 600;
   color: rgb(37, 40, 42);
   line-height: 40px;
-  margin: 0 0 16px;
+  margin: 0 0 48px;
   padding: 12px 32px;
   background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   margin-left: -32px;
+  display: inline-block;
 }
 
 .section.dosing-header h3 {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   color: rgb(70, 72, 74);
-  line-height: 25px;
+  line-height: 30px;
   margin: 0;
 }
 
@@ -1753,45 +1791,122 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   padding: 24px 20px 48px;
 }
 
+.section.dosing-details > .default-content-wrapper {
+  columns: 2;
+  column-gap: 24px;
+  overflow: visible;
+}
+
+.section.dosing-details > .default-content-wrapper > p:nth-child(6) {
+  break-before: column;
+}
+
+.section.dosing-details p {
+  margin: 0 0 0;
+}
+
 .section.dosing-details p strong u {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
   color: rgb(70, 72, 74);
-  text-decoration: underline;
+  text-decoration: none;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/copy-underline.svg');
+  background-size: 100% 6px;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  padding-bottom: 6px;
+}
+
+.section.dosing-details > .default-content-wrapper > p:has(+ ul) {
+  margin-bottom: 12px;
+}
+
+.section.dosing-details > .default-content-wrapper > ul + p {
+  margin-top: 24px;
 }
 
 .section.dosing-details ul {
-  padding-left: 20px;
-  margin: 12px 0 24px;
+  padding-left: 24px;
+  margin: 4px 0 0;
+  break-inside: avoid;
 }
 
 .section.dosing-details ul li {
   font-size: 16px;
-  line-height: 24px;
+  line-height: 22.4px;
   color: rgb(70, 72, 74);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .section.dosing-details > .default-content-wrapper > p:last-child {
-  font-size: 12px;
+  font-size: 14px;
   color: rgb(70, 72, 74);
   line-height: 18px;
-  margin-top: 24px;
+  margin-top: 4px;
 }
 
 /* Dosing ISI callout */
 .section.dosing-isi-callout {
   max-width: 1220px;
-  margin: 0 auto;
-  padding: 24px 20px;
-  border-top: 1px solid rgb(201, 201, 202);
+  margin: 24px auto;
+  padding: 0 20px;
 }
 
 .section.dosing-isi-callout p {
-  font-size: 14px;
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
   color: rgb(70, 72, 74);
-  line-height: 21px;
+  line-height: 24px;
+  margin: 0;
+}
+
+.section.dosing-isi-callout > .default-content-wrapper {
+  padding: 12px 0;
+}
+
+.section.dosing-isi-callout .button-container {
+  margin: 12px 0 0;
+}
+
+.section.dosing-isi-callout a,
+.section.dosing-isi-callout a.button {
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(70, 72, 74);
+  text-decoration: none;
+  display: inline;
+  margin-top: 12px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  max-width: none;
+}
+
+.section.dosing-isi-callout a::after,
+.section.dosing-isi-callout a.button::after {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-left: 8px;
+  vertical-align: middle;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-down-plum.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section.dosing-isi-callout a:hover,
+.section.dosing-isi-callout a.button:hover {
+  text-decoration: underline;
+  background: none;
+  color: rgb(70, 72, 74);
 }
 
 .section.dosing-isi-callout a {
@@ -1800,114 +1915,446 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   text-decoration: underline;
 }
 
-/* Dosing lab monitoring */
-.section.dosing-lab-monitoring {
+/* Dosing lab monitoring — heading section */
+.section.dosing-lab-heading {
   max-width: 1220px;
   margin: 0 auto;
-  padding: 48px 20px;
+  padding: 48px 20px 0;
 }
 
-.section.dosing-lab-monitoring h2 {
+.section.dosing-lab-heading h2 {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 32px;
   font-weight: 600;
   color: rgb(37, 40, 42);
   line-height: 40px;
-  margin: 0 0 16px;
+  margin: 0 0 0 -32px;
   padding: 12px 32px;
   background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  margin-left: -32px;
+  display: inline-block;
 }
 
-.section.dosing-lab-monitoring h3 {
+/* Dosing lab monitoring — content section (glacier bg with two-column layout) */
+.section.dosing-lab-content {
+  max-width: 1220px;
+  margin: 24px auto 0;
+  padding: 0 20px;
+}
+
+.section.dosing-lab-content > .default-content-wrapper {
+  background-color: rgb(245, 245, 245);
+  border-radius: 10px 10px 0 0;
+  padding: 24px 24px 0;
+}
+
+.section.dosing-lab-content > .default-content-wrapper > p:first-child {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: rgb(70, 72, 74);
   line-height: 30px;
-  margin: 32px 0 12px;
+  color: rgb(70, 72, 74);
+  margin: 0 0 24px;
 }
 
-.section.dosing-lab-monitoring table {
+.section.dosing-lab-content .flexbox-item[data-width="sixty"] .flexbox-item-content > p:first-child {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(37, 40, 42);
+  text-align: center;
+  background-color: rgb(255, 209, 0);
+  padding: 5px 10px;
+  border-radius: 10px 10px 0 0;
+  margin: 0 0 0 auto;
+  width: 40%;
+  min-width: 170px;
+  max-width: 500px;
+}
+
+.section.dosing-lab-content .flexbox-item[data-width="sixty"] .flexbox-item-content > p:first-child strong {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.section.dosing-lab-content > .flexbox-wrapper {
+  background-color: rgb(245, 245, 245);
+  border-radius: 0 0 10px 10px;
+  padding: 0 24px 24px;
+}
+
+.section.dosing-lab-content .flexbox {
+  gap: 32px;
+}
+
+.section.dosing-lab-content .flexbox-item-content p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgb(70, 72, 74);
+  margin: 0 0 4px;
+}
+
+.section.dosing-lab-content .flexbox-item-content p > a,
+.section.dosing-lab-content .flexbox-item-content p > a.button {
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(70, 72, 74);
+  text-decoration: none;
+  display: inline-block;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 16px;
+}
+
+.section.dosing-lab-content .flexbox-item-content p > a::after,
+.section.dosing-lab-content .flexbox-item-content p > a.button::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  background-color: rgb(144, 18, 74);
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 1v10M1 6h10' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+.section.dosing-lab-content .flexbox-item-content p > strong {
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 400;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.section.dosing-lab-content .flexbox-item-content table + p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.section.dosing-lab-content .flexbox-item-content p:has(strong) {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.section.dosing-lab-content .flexbox-item-content table + p + p + p {
+  margin-top: 32px;
+}
+
+.section.dosing-lab-content .flexbox-item-content p:has(strong) + p:has(a) {
+  margin-top: 24px;
+}
+
+.section.dosing-lab-content .flexbox-item[data-width="thirty"] .flexbox-item-content p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
+}
+
+.section.dosing-lab-content .flexbox-item[data-width="thirty"] .flexbox-item-content p strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.section.dosing-lab-content .flexbox-item[data-width="thirty"] .flexbox-item-content p:last-child {
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 21px;
+}
+
+.section.dosing-lab-content h3 {
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  line-height: 24px;
+  margin: 0;
+  position: relative;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.section.dosing-lab-content h3::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/copy-underline.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.section.dosing-lab-content hr {
+  border: none;
+  border-top: 1px dashed rgb(70, 72, 74);
+  margin: 20px 0;
+}
+
+.section.dosing-lab-content table {
   width: 100%;
   border-collapse: collapse;
-  margin: 16px 0 24px;
 }
 
-.section.dosing-lab-monitoring table th,
-.section.dosing-lab-monitoring table td {
-  padding: 10px 16px;
-  font-size: 14px;
-  line-height: 20px;
-  text-align: left;
-  border-bottom: 1px solid rgb(201, 201, 202);
+.section.dosing-lab-content table .vertical-label {
+  background-color: rgb(255, 209, 0);
+  width: 48px;
+  padding: 12px 4px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: none;
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
 }
 
-.section.dosing-lab-monitoring table th {
-  font-weight: 600;
+.section.dosing-lab-content table .vertical-label div {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
   color: rgb(37, 40, 42);
+  white-space: nowrap;
 }
 
-.section.dosing-lab-monitoring table td {
-  color: rgb(70, 72, 74);
+.section.dosing-lab-content table thead td:first-child {
+  width: 48px;
+  border-bottom: none;
+}
+
+.section.dosing-lab-content table th,
+.section.dosing-lab-content table td {
+  padding: 12px 16px;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: left;
+  border-bottom: 1px dashed rgb(201, 201, 202);
+}
+
+.section.dosing-lab-content table thead th:last-child {
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px 10px 0 0;
+  width: 55%;
+}
+
+.section.dosing-lab-content table thead th {
+  font-weight: 700;
+  color: rgb(37, 40, 42);
+  padding: 16px;
+  border-bottom: 1px dashed rgb(170, 170, 170);
+  border-bottom-width: 1px;
+}
+
+.section.dosing-lab-content table tbody td {
+  color: rgb(37, 40, 42);
+  font-weight: 400;
+  background-color: rgb(255, 255, 255);
+}
+
+.section.dosing-lab-content table tbody th {
+  font-weight: 700;
+  font-size: 16px;
+  color: rgb(37, 40, 42);
 }
 
 /* Dosing lab data table */
 .section.dosing-lab-data {
   max-width: 1220px;
   margin: 0 auto;
-  padding: 48px 20px;
-  border-top: 1px solid rgb(201, 201, 202);
+  padding: 0 20px;
+}
+
+.section.dosing-lab-data > .default-content-wrapper {
+  background-color: rgb(245, 245, 245);
+  border-radius: 10px 10px 0 0;
+  padding: 24px 24px 0;
+  margin: 24px 0 0;
+}
+
+.section.dosing-lab-data > .flexbox-wrapper {
+  background-color: rgb(245, 245, 245);
+  border-radius: 0 0 10px 10px;
+  padding: 0 24px 24px;
+  margin: 0 0 24px;
+}
+
+.section.dosing-lab-data .flexbox {
+  gap: 24px;
 }
 
 .section.dosing-lab-data h3 {
-  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 24px;
   font-weight: 600;
-  color: rgb(37, 40, 42);
-  line-height: 30px;
-  margin: 0 0 8px;
+  color: rgb(70, 72, 74);
+  line-height: 28.8px;
+  margin: 0 0 4px;
+}
+
+.section.dosing-lab-data > .default-content-wrapper > p {
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
+  margin: 0 0 16px;
+}
+
+.section.dosing-lab-data .flexbox-item[data-width="sixty"] .flexbox-item-content p {
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  margin: 4px 0 0;
+}
+
+.section.dosing-lab-data .flexbox-item[data-width="thirty"] .flexbox-item-content p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(70, 72, 74);
+  margin: 0 0 16px;
+}
+
+.section.dosing-lab-data .flexbox-item[data-width="thirty"] .flexbox-item-content p:last-child {
+  background-color: rgb(255, 209, 0);
+  padding: 12px;
+  border-radius: 10px;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
 }
 
 .section.dosing-lab-data table {
   width: 100%;
   border-collapse: collapse;
-  margin: 16px 0 24px;
+  margin: 16px 0 8px;
 }
 
 .section.dosing-lab-data table th,
 .section.dosing-lab-data table td {
-  padding: 10px 16px;
-  font-size: 14px;
-  line-height: 20px;
+  padding: 10px 12px;
+  font-family: 'Graphik Semibold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 22px;
   text-align: left;
-  border-bottom: 1px solid rgb(201, 201, 202);
+  border-bottom: 1px dashed rgb(201, 201, 202);
+  vertical-align: top;
 }
 
-.section.dosing-lab-data table th[scope="col"] {
-  font-weight: 600;
+.section.dosing-lab-data table thead td {
+  border-bottom: none;
+}
+
+.section.dosing-lab-data table thead th {
+  font-weight: 700;
   color: rgb(37, 40, 42);
-  background-color: rgb(245, 245, 245);
+  text-align: center;
 }
 
-.section.dosing-lab-data table th[scope="row"] {
+.section.dosing-lab-data table thead tr:first-child th {
+  border-bottom: 1em solid transparent;
+  background-color: rgb(245, 245, 245);
+  box-shadow: inset 0 -2px rgb(170, 170, 170);
+}
+
+.section.dosing-lab-data table thead tr:nth-child(2) th,
+.section.dosing-lab-data table thead tr:nth-child(2) td {
+  border-bottom: 1px dashed rgb(201, 201, 202);
+}
+
+.section.dosing-lab-data table thead tr:nth-child(2) th:nth-child(3) {
+  background-color: rgb(227, 227, 227);
+  border-radius: 10px 10px 0 0;
+}
+
+.section.dosing-lab-data table thead tr:nth-child(2) th:nth-child(4) {
+  background-color: rgb(255, 209, 0);
+  border-radius: 10px 10px 0 0;
+}
+
+.section.dosing-lab-data table thead tr:nth-child(2) th:nth-child(5) {
+  background-color: rgb(255, 241, 179);
+  border-radius: 10px 10px 0 0;
+}
+
+.section.dosing-lab-data table thead tr:nth-child(2) th:first-of-type {
+  text-align: left;
+}
+
+.section.dosing-lab-data table thead span {
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.section.dosing-lab-data table tbody th {
   font-weight: 600;
   color: rgb(70, 72, 74);
+  text-align: left;
 }
 
-.section.dosing-lab-data table td {
+.section.dosing-lab-data table tbody td {
   color: rgb(70, 72, 74);
+  text-align: center;
+}
+
+.section.dosing-lab-data table tbody td:nth-child(2) {
+  text-align: center;
+}
+
+.section.dosing-lab-data table th:nth-child(3),
+.section.dosing-lab-data table td:nth-child(3) {
+  background-color: rgb(227, 227, 227);
+}
+
+.section.dosing-lab-data table th:nth-child(4),
+.section.dosing-lab-data table td:nth-child(4) {
+  background-color: rgb(255, 209, 0);
+}
+
+.section.dosing-lab-data table th:nth-child(5),
+.section.dosing-lab-data table td:nth-child(5) {
+  background-color: rgb(255, 241, 179);
 }
 
 /* Dosing CTA section */
 .section.dosing-cta {
   max-width: 1220px;
   margin: 0 auto;
-  padding: 32px 20px 64px;
+  padding: 48px 20px 64px;
   text-align: center;
-  border-top: 1px solid rgb(201, 201, 202);
+  position: relative;
+  background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(241, 248, 252));
+}
+
+.section.dosing-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1220px;
+  height: 100%;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--section-back.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section.dosing-cta > .default-content-wrapper {
+  position: relative;
+  z-index: 1;
 }
 
 .section.dosing-cta h2 {
@@ -1919,7 +2366,23 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   margin: 0 0 24px;
 }
 
-.section.dosing-cta a {
+.section.dosing-cta h2::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-document.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.section.dosing-cta .button-container:first-of-type {
+  margin-bottom: 8px;
+}
+
+.section.dosing-cta .button-container:first-of-type a,
+.section.dosing-cta .button-container:first-of-type a.button {
   display: inline-flex;
   align-items: center;
   background-color: rgb(144, 18, 74);
@@ -1933,7 +2396,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   position: relative;
 }
 
-.section.dosing-cta a::after {
+.section.dosing-cta .button-container:first-of-type a::after {
   content: '';
   position: absolute;
   right: 22px;
@@ -1941,9 +2404,36 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-document.svg');
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/%3E%3C/svg%3E");
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+.section.dosing-cta .button-container:last-child a,
+.section.dosing-cta .button-container:last-child a.button {
+  background: none;
+  color: rgb(70, 72, 74);
+  font-family: 'Graphik Bold', Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 0;
+  border-radius: 0;
+  text-decoration: none;
+  position: relative;
+}
+
+.section.dosing-cta .button-container:last-child a::after {
+  content: '';
+  position: relative;
+  top: 4px;
+  right: 0;
+  width: 19px;
+  height: 19px;
+  margin-left: 10px;
+  display: inline-block;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-right-plum.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 /* Mobile overrides for dosing page */
@@ -1962,6 +2452,7 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     line-height: 30px;
     padding: 10px 20px;
     margin-left: -20px;
+    width: calc(100% + 40px);
   }
 
   .section.dosing-header h3 {
@@ -1969,18 +2460,32 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     line-height: 20px;
   }
 
+  .section.dosing-details > .default-content-wrapper {
+    columns: 1;
+  }
+
+  .section.dosing-details > .default-content-wrapper > p:nth-child(6) {
+    break-before: auto;
+  }
+
   .section.dosing-details p strong u {
     font-size: 20px;
   }
 
-  .section.dosing-lab-monitoring h2 {
+  .section.dosing-lab-heading h2 {
     font-size: 24px;
     line-height: 30px;
     padding: 10px 20px;
     margin-left: -20px;
+    width: calc(100% + 40px);
   }
 
-  .section.dosing-lab-monitoring table,
+  .section.dosing-lab-content > .default-content-wrapper > p:nth-child(2) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .section.dosing-lab-content table,
   .section.dosing-lab-data table {
     display: block;
     overflow-x: auto;
@@ -1989,5 +2494,652 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   .section.dosing-cta h2 {
     font-size: 24px;
     line-height: 30px;
+  }
+
+  .section.dosing-cta .button-container:first-of-type a,
+  .section.dosing-cta .button-container:first-of-type a.button {
+    padding: 14px 44px 14px 24px;
+    font-size: 14px;
+  }
+
+  .section.dosing-cta::after {
+    background-size: cover;
+  }
+
+  .section.dosing-hero .hero.no-padding {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section.dosing-hero .hero.no-padding > div:first-child {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    order: -1;
+    text-align: center;
+  }
+
+  .section.dosing-hero .hero.no-padding > div:first-child img {
+    display: none;
+  }
+
+  .section.dosing-hero .hero.no-padding > div:first-child::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 240px;
+    background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/hero-derm-dosing-monitor-mobile.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .section.dosing-hero .hero.no-padding .hero-text-container {
+    position: relative;
+    z-index: 1;
+    padding: 15px 20px;
+  }
+
+  .section.dosing-hero .hero.no-padding .hero-text-container .cmp-container-x-large {
+    min-height: auto;
+  }
+
+  .section.dosing-hero .section-nav-wrapper {
+    top: 0;
+    margin: 16px 0;
+  }
+
+  .section.dosing-hero .hero-image-caption {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    max-width: 100%;
+    padding: 4px 20px;
+    font-size: 14px;
+  }
+
+  .section.dosing-lab-heading {
+    padding: 0 20px;
+  }
+
+  .section.dosing-lab-heading h2 {
+    font-size: 24px;
+    line-height: 30px;
+    padding: 12px 20px;
+    margin-left: -20px;
+    margin-bottom: 24px;
+    width: calc(100% + 40px);
+  }
+
+  .section.dosing-lab-content {
+    padding: 0;
+  }
+
+  .section.dosing-lab-content > .default-content-wrapper {
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .section.dosing-lab-content > .default-content-wrapper > p:first-child {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .section.dosing-lab-content table th,
+  .section.dosing-lab-content table td {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 10px 8px;
+  }
+
+  .section.dosing-lab-content table thead th {
+    padding: 12px 8px;
+  }
+
+  .section.dosing-lab-content .flexbox-item[data-width="sixty"] .flexbox-item-content > p:first-child {
+    font-size: 11px;
+    line-height: 16px;
+    padding: 4px 8px;
+  }
+
+  .section.dosing-lab-content .flexbox-item-content p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .section.dosing-lab-content .flexbox-item-content p:has(strong) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .section.dosing-lab-data table th,
+  .section.dosing-lab-data table td {
+    font-size: 12px;
+    line-height: 18px;
+    padding: 8px 6px;
+  }
+
+  .section.dosing-lab-data table thead th {
+    padding: 10px 6px;
+  }
+
+  .section.dosing-lab-content > .flexbox-wrapper {
+    padding: 0 20px 20px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .section.dosing-lab-content table,
+  .section.dosing-lab-data table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .section.dosing-lab-data {
+    padding: 0;
+  }
+
+  .section.dosing-lab-data > .default-content-wrapper {
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    margin: 24px 0 0;
+  }
+
+  .section.dosing-lab-data > .flexbox-wrapper {
+    padding: 0 20px 20px;
+    border-radius: 0 0 10px 10px;
+    margin: 0;
+  }
+}
+
+/* Real Patients page: section centering */
+.section.real-patients-hero-section ~ .section {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(201, 201, 202);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-sizing: border-box;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:first-child {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .default-content-wrapper {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: start;
+  margin-top: -10px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .default-content-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 20px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/patient-profile-title.svg');
+  background-size: cover;
+  background-position: 100% 0%;
+  background-repeat: no-repeat;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h3 {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 0;
+  position: relative;
+  padding-right: 24px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h3::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 8px;
+  width: 1px;
+  height: 40px;
+  background: rgb(0, 0, 0);
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h3 span {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h4 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 0;
+  padding-left: 16px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container {
+  display: flex;
+  gap: 24px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div {
+  flex: 1;
+  padding: 16px 0;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > h4 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(37, 40, 42);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > ul li {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+/* Efficacy data section — no bg color */
+.section.real-patients-hero-section ~ .section.text-container-container:has(> .default-content-wrapper > h3) {
+  background-color: transparent;
+}
+
+/* Efficacy data section — 2x2 grid */
+.section.real-patients-hero-section ~ .section > .default-content-wrapper > h3 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 0 0 24px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding: 12px 20px;
+  display: inline-block;
+}
+
+
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container .text-container-text > div > p:first-child strong {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container .text-container-text > div > p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 1.5;
+  margin: 8px 0;
+}
+
+/* Safety info paragraph section (after tabs) */
+.section.real-patients-hero-section ~ .tabs-panel + .section > .default-content-wrapper:first-child p {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  line-height: 24px;
+  margin: 0;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"] {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  border-radius: 0;
+  padding: 12px 0;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
+  margin: 0;
+  white-space: normal;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"]:hover,
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"] {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"]::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-down-plum.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"]:hover {
+  text-decoration: underline;
+  color: rgb(144, 18, 74);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Efficacy data — force 2-column grid items */
+.text-container.text-two-columns.block > div {
+  grid-column: span 1;
+}
+
+.text-container.text-two-columns.block .text-container-text > div > p {
+  margin: 20px 0;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 1.5;
+}
+
+.text-container.text-two-columns.block .text-container-text > div > p:first-child > strong,
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container .text-container-text > div > p:first-child strong {
+  text-decoration: none;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--underline.svg');
+  background-size: 100% 8px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  padding-bottom: 6px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container .text-container-text > div > h4:nth-of-type(n+2) {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 24px 0 8px;
+  text-transform: uppercase;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container .text-container-text > div > ul {
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container .text-container-text > div > ul li {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container {
+  padding: 24px 0 0;
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container .tabs-list[role="tablist"] {
+  flex-wrap: nowrap;
+  border: none;
+  padding: 0;
+  gap: 8px;
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"] {
+  white-space: normal;
+  flex: 1 1 0%;
+  text-align: center;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  border: 1px solid rgb(201, 201, 202);
+  border-radius: 8px 8px 0 0;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  background-color: rgb(227, 227, 227);
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"][aria-selected="true"] {
+  background-color: rgb(245, 245, 245);
+  border-bottom-color: rgb(245, 245, 245);
+  font-family: 'Graphik Black', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 600;
+  padding: 20px 24px;
+  transform: none;
+}
+
+
+.section.real-patients-hero-section ~ .section.glacier {
+  max-width: none;
+  background-color: rgb(245, 245, 245);
+  padding: 48px 20px;
+}
+
+.section.real-patients-hero-section ~ .section.glacier > .text-container-wrapper {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+/* Real Patients page: description paragraph (below hero, in hero section) */
+.section.real-patients-hero-section .default-content-wrapper {
+  max-width: 1220px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.section.real-patients-hero-section .default-content-wrapper p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+  line-height: 1.2;
+  margin: 0;
+  text-align: left;
+}
+
+/* Real Patients page: dismiss block */
+.section.real-patients-hero-section .dismiss-wrapper {
+  max-width: 1220px;
+  width: 100%;
+  margin: 24px auto 0;
+  padding: 0;
+}
+
+.section.real-patients-hero-section .dismiss {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(201, 201, 202);
+  border-radius: 10px;
+  padding: 24px 96px 24px 24px;
+  position: relative;
+}
+
+.section.real-patients-hero-section .dismiss > div:first-child p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  line-height: 24px;
+  margin: 12px 0 0;
+}
+
+.section.real-patients-hero-section .dismiss > div:first-child p:first-child {
+  margin-top: 0;
+}
+
+.section.real-patients-hero-section .dismiss > div:first-child p strong {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.section.real-patients-hero-section .dismiss .dismiss-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  cursor: pointer;
+}
+
+/* Real Patients page: hero section */
+.section.real-patients-hero-section {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.section.real-patients-hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 368px;
+  background-image: url('/content/dam/abbvie-eds-poc/rinvoq-hcp/hero-ad-real-patients-large.png');
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.section.real-patients-hero-section .hero.no-padding {
+  position: relative;
+  max-width: 1220px;
+  min-height: 340px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+}
+
+.section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container {
+  position: relative;
+  z-index: 1;
+  padding: 64px 0 0;
+  margin: 0;
+  min-height: 340px;
+  max-width: none;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container .cmp-container-x-large {
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 899px) {
+  .section.real-patients-hero-section::before {
+    background-image: url('/content/dam/abbvie-eds-poc/rinvoq-hcp/hero-ad-real-patients-mobile.png');
+    background-size: 100%;
+    background-position: 50% 0%;
+    height: 340px;
+    min-height: 340px;
+    position: relative;
+  }
+
+  .section.real-patients-hero-section .hero-wrapper {
+    margin-top: -340px;
+    position: relative;
+  }
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 1.1;
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+  font-family: 'Upa Handwriting', serif;
+  font-style: normal;
+  font-size: 58px;
+  font-weight: 300;
+  color: rgb(255, 209, 0);
+  line-height: 0.8;
+  display: block;
+  margin-top: 4px;
+}
+
+.section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container {
+  position: static;
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large {
+  position: static;
+  z-index: 1;
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large p {
+  position: absolute;
+  top: 235px;
+  right: 100px;
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgb(255, 255, 255);
+  margin: 0;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+    font-size: 100px;
+    line-height: 80px;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container {
+    padding: 64px 110px 40px;
+    min-height: 340px;
+    align-items: center;
   }
 }
