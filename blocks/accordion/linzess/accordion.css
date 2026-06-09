@@ -1057,7 +1057,7 @@
 /* Card-per-item — no bottom border, gap between cards */
 .accordion .accordion-item {
     border-bottom: none;
-    background: var(--accordion-linzess-bg-item);
+    background: #422e83;
     border-radius: var(--accordion-linzess-radius);
     overflow: hidden;
     margin-bottom: var(--accordion-linzess-gap);
@@ -1065,13 +1065,15 @@
 /* Summary row */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: var(--spacing-20) var(--spacing-24);
+    padding: 20px 40px 20px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-16);
-    background: var(--accordion-linzess-bg-item);
-    color: var(--accordion-linzess-color-label);
+    background: #422e83;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
     cursor: pointer;
 }
 /* Focus */
@@ -1087,9 +1089,9 @@
 .accordion .accordion-item-label h4,
 .accordion .accordion-item-label h5,
 .accordion .accordion-item-label h6 {
-    color: var(--accordion-linzess-color-label);
-    font-family: var(--body-font-family);
-    font-size: var(--body-font-size-m);
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
     font-weight: var(--font-weight-bold);
     text-transform: none;
     letter-spacing: normal;
@@ -1118,8 +1120,8 @@
 }
 /* Hover — darker purple, keep text unchanged */
 .accordion .accordion-item:hover summary {
-    background: var(--accordion-linzess-bg-item-hover);
-    color: var(--accordion-linzess-color-label);
+    background: #422e83;
+    color: #fff;
 }
 .accordion .accordion-item:hover .accordion-item-label p,
 .accordion .accordion-item:hover .accordion-item-label h2,
@@ -1141,7 +1143,7 @@
 }
 /* Open state — keep brand purple on header */
 .accordion .accordion-item[open] summary {
-    background: var(--accordion-linzess-bg-item);
+    background: #422e83;
 }
 /* Body — light greyish-purple background, padded */
 .accordion .accordion-item-body {
