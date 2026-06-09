@@ -2652,3 +2652,494 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     margin: 0;
   }
 }
+
+/* Real Patients page: section centering */
+.section.real-patients-hero-section ~ .section {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(201, 201, 202);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-sizing: border-box;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:first-child {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .default-content-wrapper {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: start;
+  margin-top: -10px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .default-content-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 20px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/patient-profile-title.svg');
+  background-size: cover;
+  background-position: 100% 0%;
+  background-repeat: no-repeat;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h3 {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 0;
+  position: relative;
+  padding-right: 24px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h3::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 8px;
+  width: 1px;
+  height: 40px;
+  background: rgb(0, 0, 0);
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h3 span {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container .text-container-text > div > h4 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 0;
+  padding-left: 16px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container {
+  display: flex;
+  gap: 24px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div {
+  flex: 1;
+  padding: 16px 0;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > h4 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(37, 40, 42);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container .text-container-text > div > ul li {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+/* Efficacy data section — no bg color */
+.section.real-patients-hero-section ~ .section.text-container-container:has(> .default-content-wrapper > h3) {
+  background-color: transparent;
+}
+
+/* Efficacy data section — 2x2 grid */
+.section.real-patients-hero-section ~ .section > .default-content-wrapper > h3 {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 0 0 24px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--heading-back.svg');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding: 12px 20px;
+  display: inline-block;
+}
+
+
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container .text-container-text > div > p:first-child strong {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container .text-container-text > div > p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 1.5;
+  margin: 8px 0;
+}
+
+/* Safety info paragraph section (after tabs) */
+.section.real-patients-hero-section ~ .tabs-panel + .section > .default-content-wrapper:first-child p {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(70, 72, 74);
+  line-height: 24px;
+  margin: 0;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"] {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  background-color: transparent;
+  background-image: none;
+  border: none;
+  border-radius: 0;
+  padding: 12px 0;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
+  margin: 0;
+  white-space: normal;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"]:hover,
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"] {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"]::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-down-plum.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.section.real-patients-hero-section ~ .section .default-content-wrapper .button-container a.button[href="#abbv_use_statement"]:hover {
+  text-decoration: underline;
+  color: rgb(144, 18, 74);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Efficacy data — force 2-column grid items */
+.text-container.text-two-columns.block > div {
+  grid-column: span 1;
+}
+
+.text-container.text-two-columns.block .text-container-text > div > p {
+  margin: 20px 0;
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 14px;
+  color: rgb(70, 72, 74);
+  line-height: 1.5;
+}
+
+.text-container.text-two-columns.block .text-container-text > div > p:first-child > strong,
+.section.real-patients-hero-section ~ .section > .text-container-wrapper > .text-container .text-container-text > div > p:first-child strong {
+  text-decoration: none;
+  background-image: url('/content/dam/rinvoqhcpivy/images/brushstrokes/stroke--underline.svg');
+  background-size: 100% 8px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  padding-bottom: 6px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container .text-container-text > div > h4:nth-of-type(n+2) {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  margin: 24px 0 8px;
+  text-transform: uppercase;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container .text-container-text > div > ul {
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container .text-container-text > div > ul li {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container {
+  padding: 24px 0 0;
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container .tabs-list[role="tablist"] {
+  flex-wrap: nowrap;
+  border: none;
+  padding: 0;
+  gap: 8px;
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"] {
+  white-space: normal;
+  flex: 1 1 0%;
+  text-align: center;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  border: 1px solid rgb(201, 201, 202);
+  border-radius: 8px 8px 0 0;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  background-color: rgb(227, 227, 227);
+}
+
+.section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"][aria-selected="true"] {
+  background-color: rgb(245, 245, 245);
+  border-bottom-color: rgb(245, 245, 245);
+  font-family: 'Graphik Black', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 600;
+  padding: 20px 24px;
+  transform: none;
+}
+
+
+.section.real-patients-hero-section ~ .section.glacier {
+  max-width: none;
+  background-color: rgb(245, 245, 245);
+  padding: 48px 20px;
+}
+
+.section.real-patients-hero-section ~ .section.glacier > .text-container-wrapper {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+/* Real Patients page: description paragraph (below hero, in hero section) */
+.section.real-patients-hero-section .default-content-wrapper {
+  max-width: 1220px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.section.real-patients-hero-section .default-content-wrapper p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(70, 72, 74);
+  line-height: 1.2;
+  margin: 0;
+  text-align: left;
+}
+
+/* Real Patients page: dismiss block */
+.section.real-patients-hero-section .dismiss-wrapper {
+  max-width: 1220px;
+  width: 100%;
+  margin: 24px auto 0;
+  padding: 0;
+}
+
+.section.real-patients-hero-section .dismiss {
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(201, 201, 202);
+  border-radius: 10px;
+  padding: 24px 96px 24px 24px;
+  position: relative;
+}
+
+.section.real-patients-hero-section .dismiss > div:first-child p {
+  font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 16px;
+  color: rgb(70, 72, 74);
+  line-height: 24px;
+  margin: 12px 0 0;
+}
+
+.section.real-patients-hero-section .dismiss > div:first-child p:first-child {
+  margin-top: 0;
+}
+
+.section.real-patients-hero-section .dismiss > div:first-child p strong {
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.section.real-patients-hero-section .dismiss .dismiss-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  cursor: pointer;
+}
+
+/* Real Patients page: hero section */
+.section.real-patients-hero-section {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.section.real-patients-hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 368px;
+  background-image: url('/content/dam/abbvie-eds-poc/rinvoq-hcp/hero-ad-real-patients-large.png');
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.section.real-patients-hero-section .hero.no-padding {
+  position: relative;
+  max-width: 1220px;
+  min-height: 340px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+}
+
+.section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container {
+  position: relative;
+  z-index: 1;
+  padding: 64px 0 0;
+  margin: 0;
+  min-height: 340px;
+  max-width: none;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container .cmp-container-x-large {
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 899px) {
+  .section.real-patients-hero-section::before {
+    background-image: url('/content/dam/abbvie-eds-poc/rinvoq-hcp/hero-ad-real-patients-mobile.png');
+    background-size: 100%;
+    background-position: 50% 0%;
+    height: 340px;
+    min-height: 340px;
+    position: relative;
+  }
+
+  .section.real-patients-hero-section .hero-wrapper {
+    margin-top: -340px;
+    position: relative;
+  }
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+  line-height: 1.1;
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+  font-family: 'Upa Handwriting', serif;
+  font-style: normal;
+  font-size: 58px;
+  font-weight: 300;
+  color: rgb(255, 209, 0);
+  line-height: 0.8;
+  display: block;
+  margin-top: 4px;
+}
+
+.section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container {
+  position: static;
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large {
+  position: static;
+  z-index: 1;
+}
+
+.section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large p {
+  position: absolute;
+  top: 235px;
+  right: 100px;
+  font-family: 'Graphik Semibold', 'Helvetica Neue', arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgb(255, 255, 255);
+  margin: 0;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+    font-size: 100px;
+    line-height: 80px;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container {
+    padding: 64px 110px 40px;
+    min-height: 340px;
+    align-items: center;
+  }
+}
