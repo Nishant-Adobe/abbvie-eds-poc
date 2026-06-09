@@ -1262,6 +1262,9 @@
 .accordion-wrapper,
 .accordion.block,
 .section .accordion-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
     border-radius: 0 !important;
     overflow: visible !important;
 }
@@ -1293,6 +1296,8 @@ details.accordion-item {
 
 /* Reduce gap between section heading and first accordion item */
 .section.centered .accordion-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
     margin-top: 0 !important;
     padding-top: 0 !important;
 }
@@ -1352,12 +1357,14 @@ h1.heading-1 {
   .accordion details {
     margin-left: 0 !important;
     margin-right: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
     border-radius: 12px !important;
   }
 
   /* Reduce section spacing on mobile */
   .section.centered.accordion-container {
-    padding: 1.5rem 1rem !important;
+    padding: 1.5rem 0.5rem !important;
   }
 
   /* Section headings smaller on mobile */
