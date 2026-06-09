@@ -121,13 +121,15 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   display: none;
 }
 
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child {
-  position: relative;
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > div:first-child {
+  position: absolute;
   inset: 0;
   min-height: 100%;
   margin: 0;
   padding: 0;
   z-index: 0;
+  overflow: hidden;
+  height: auto;
 }
 
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child picture,
@@ -249,6 +251,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
   min-height: var(--hero-cta-min-height);
+  aspect-ratio: 2.343 / 1;
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
@@ -356,10 +359,19 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   min-height: auto;
   padding: 0;
   margin-inline: auto;
-  margin-bottom: var(--spacing-40);
-  font-size: var(--font-size-legal-large);
-  font-weight: var(--font-weight-body);
+  margin-bottom: 24px;
+  font-size: 12px;
+  font-weight: 800;
   text-transform: uppercase;
+}
+
+.hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  line-height: 36px;
+  margin: 0;
+}
+
+.hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+  padding: 50px 20px 20px;
 }
 
 .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
@@ -372,6 +384,10 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 @media (width < 744px) {
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
+    aspect-ratio: 3 / 4;
+  }
+
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) picture img {
     min-height: var(--hero-mobile-min-height);
   }
@@ -498,9 +514,9 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     min-height: auto;
     padding: 0;
     margin-inline: auto;
-    margin-bottom: var(--spacing-40);
-    font-size: var(--font-size-legal-large);
-    font-weight: var(--font-weight-body);
+    margin-bottom: 24px;
+    font-size: 12px;
+    font-weight: 800;
     text-transform: uppercase;
   }
 

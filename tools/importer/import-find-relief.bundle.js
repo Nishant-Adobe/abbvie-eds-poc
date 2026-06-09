@@ -1,26 +1,8 @@
-/* eslint-disable */
 var CustomImportScript = (() => {
   var __defProp = Object.defineProperty;
-  var __defProps = Object.defineProperties;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
   var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __propIsEnum = Object.prototype.propertyIsEnumerable;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-  var __spreadValues = (a, b) => {
-    for (var prop in b || (b = {}))
-      if (__hasOwnProp.call(b, prop))
-        __defNormalProp(a, prop, b[prop]);
-    if (__getOwnPropSymbols)
-      for (var prop of __getOwnPropSymbols(b)) {
-        if (__propIsEnum.call(b, prop))
-          __defNormalProp(a, prop, b[prop]);
-      }
-    return a;
-  };
-  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -49,18 +31,17 @@ var CustomImportScript = (() => {
   var LINZESS_ACCOUNT_ID = "1029485116001";
   var DEFAULT_PLAYER_ID = "Mcp9TXMkPT";
   function parse(element, { document: document2 }) {
-    var _a, _b, _c;
     const contentArea = element.querySelector(".abbv-video-content");
     const dockTitle = element.querySelector(".vjs-dock-title");
-    const contentH3 = contentArea == null ? void 0 : contentArea.querySelector("h3");
+    const contentH3 = contentArea?.querySelector("h3");
     const titleEl = contentH3 && contentH3.textContent.trim() ? contentH3 : dockTitle;
-    const overlayTitle = ((_a = titleEl == null ? void 0 : titleEl.textContent) == null ? void 0 : _a.trim()) || "";
+    const overlayTitle = titleEl?.textContent?.trim() || "";
     const dockDesc = element.querySelector(".vjs-dock-description");
-    const contentP = contentArea == null ? void 0 : contentArea.querySelector("p");
+    const contentP = contentArea?.querySelector("p");
     const descEl = contentP && contentP.textContent.trim() ? contentP : dockDesc;
-    const overlayDescription = ((_b = descEl == null ? void 0 : descEl.textContent) == null ? void 0 : _b.trim()) || "";
+    const overlayDescription = descEl?.textContent?.trim() || "";
     const posterImg = element.querySelector(".vjs-poster img");
-    const posterSrc = (posterImg == null ? void 0 : posterImg.getAttribute("src")) || "";
+    const posterSrc = posterImg?.getAttribute("src") || "";
     const videoJs = element.querySelector("video-js");
     let playerId = DEFAULT_PLAYER_ID;
     if (videoJs) {
@@ -78,8 +59,8 @@ var CustomImportScript = (() => {
       else if (contentContainer.classList.contains("content-bottom")) videoContentLayout = "bottom";
     }
     const transcriptLinkEl = element.querySelector("a.transcript-link");
-    const transcriptHref = (transcriptLinkEl == null ? void 0 : transcriptLinkEl.getAttribute("href")) || "";
-    const transcriptLabel = ((_c = transcriptLinkEl == null ? void 0 : transcriptLinkEl.textContent) == null ? void 0 : _c.trim()) || "";
+    const transcriptHref = transcriptLinkEl?.getAttribute("href") || "";
+    const transcriptLabel = transcriptLinkEl?.textContent?.trim() || "";
     const hasTranscript = !!transcriptHref;
     const videoId = VIDEO_ID_MAP[overlayTitle] || "";
     function hintedCell(fieldName, value) {
@@ -354,8 +335,87 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/tabs.js
+  // tools/importer/parsers/hero.js
   function parse5(element, { document: document2 }) {
+    const img = element.querySelector(".abbv-image-content-container-v2 img");
+    const imgSrc = img?.getAttribute("src") || "";
+    const imgAlt = img?.getAttribute("alt") || "";
+    const eyebrowEl = element.querySelector(".eyebrow, .eyebrow--white");
+    const eyebrow = eyebrowEl?.textContent?.trim() || "";
+    const headingEl = element.querySelector("h1, .heading-1");
+    const headingText = headingEl?.textContent?.trim() || "";
+    const captionEl = element.querySelector(".tout-overlay");
+    const imageCaption = captionEl?.textContent?.trim() || "";
+    const classes = [];
+    if (element.classList.contains("uppercase")) classes.push("no-padding");
+    const contentContainer = element.querySelector(".abbv-image-text-content-container-v2");
+    if (contentContainer) {
+      if (contentContainer.classList.contains("middle-left")) classes.push("text-left");
+      else if (contentContainer.classList.contains("middle-center")) classes.push("text-center");
+      else if (contentContainer.classList.contains("middle-right")) classes.push("text-right");
+    }
+    const blockName = classes.length > 0 ? `hero (${classes.join(", ")})` : "hero";
+    const imageEl = document2.createElement("img");
+    imageEl.src = imgSrc;
+    if (imgAlt) imageEl.alt = imgAlt;
+    const h1 = document2.createElement("h1");
+    h1.textContent = headingText;
+    const cells = [
+      [imageEl],
+      // image
+      [""],
+      // mobileImage (not available in source)
+      [eyebrow],
+      // eyebrow
+      [""],
+      // indication (not used on this page)
+      [h1],
+      // text (heading & body)
+      [""],
+      // layers (not used)
+      [""],
+      // video (not used)
+      [imageCaption]
+      // imageCaption
+    ];
+    const block = WebImporter.Blocks.createBlock(document2, { name: blockName, cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/section-nav.js
+  var SUBPAGE_ANCHOR_MAP = {
+    "find-relief-talk-to-a-doctor": {
+      "#talktoadoctor": "#talktoadoctor",
+      "#howtotake": "/find-relief/how-to-take-linzess"
+    },
+    "find-relief-how-to-take-linzess": {
+      "#talktoadoctor": "/find-relief/talk-to-a-doctor",
+      "#howtotake": "#howtotake"
+    }
+  };
+  function parse6(element, { document: document2, params }) {
+    const navItems = element.querySelectorAll(".section-navigation-list li a");
+    if (!navItems.length) return;
+    const subpageName = params?.subpageName || "";
+    const anchorMap = SUBPAGE_ANCHOR_MAP[subpageName] || null;
+    const cells = [];
+    navItems.forEach((link) => {
+      const label = link.textContent.trim();
+      let href = link.getAttribute("href") || "";
+      if (anchorMap && anchorMap[href]) {
+        href = anchorMap[href];
+      }
+      const a = document2.createElement("a");
+      a.href = href;
+      a.textContent = label;
+      cells.push([label, a]);
+    });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "section-nav", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/tabs.js
+  function parse7(element, { document: document2 }) {
     const tabControls = element.querySelectorAll(".abbv-tabs-controls .abbv-tab-control");
     const cells = [];
     tabControls.forEach((control) => {
@@ -378,6 +438,36 @@ var CustomImportScript = (() => {
       WebImporter.DOMUtils.remove(element, [
         ".abbv-modal"
       ]);
+      WebImporter.DOMUtils.remove(element, [
+        ".vjs-control-bar",
+        ".vjs-modal-dialog",
+        ".vjs-text-track-settings",
+        ".vjs-error-display",
+        ".vjs-player-info-modal",
+        ".vjs-loading-spinner",
+        ".vjs-text-track-display",
+        ".vjs-dock-shelf"
+      ]);
+      const selects = element.querySelectorAll("video-js select, video-js fieldset");
+      selects.forEach((el) => el.remove());
+      const allImgs = element.querySelectorAll("img");
+      const trackingDomains = ["metrics.brightcove.com", "dpm.demdex.net", "adservice.google.com", "gstatic.com/recaptcha"];
+      allImgs.forEach((img) => {
+        const src = img.getAttribute("src") || "";
+        if (trackingDomains.some((domain) => src.includes(domain))) {
+          img.remove();
+        }
+      });
+      WebImporter.DOMUtils.remove(element, [
+        '[class*="onetrust"]',
+        '[id*="onetrust"]',
+        '[class*="optanon"]',
+        "#ot-sdk-btn-floating"
+      ]);
+      WebImporter.DOMUtils.remove(element, [
+        "script",
+        "style"
+      ]);
     }
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, [
@@ -387,6 +477,7 @@ var CustomImportScript = (() => {
         ".header-v2.parbase",
         ".footer.parbase",
         ".safety-bar.parbase",
+        ".abbv-safety-bar",
         ".abbv-skip-to-main-content",
         ".abbv-sticky-anchor"
       ]);
@@ -399,21 +490,88 @@ var CustomImportScript = (() => {
         "link",
         "iframe"
       ]);
+      const modalLinks = element.querySelectorAll("a.abbv-modal-open");
+      modalLinks.forEach((link) => link.remove());
+      const presentationalBrs = element.querySelectorAll("br.desktop-only, br.mobile-only");
+      presentationalBrs.forEach((br) => {
+        br.replaceWith(document.createTextNode(" "));
+      });
+      const emptyDivs = element.querySelectorAll(".vjs-dock-shelf, .abbv-inline-miscisi");
+      emptyDivs.forEach((div) => {
+        if (!div.textContent.trim() && !div.querySelector("img")) {
+          div.remove();
+        }
+      });
+    }
+  }
+
+  // tools/importer/transformers/linzess-subpage-splitter.js
+  var TransformHook2 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
+  var SUBPAGE_CONFIG = {
+    "find-relief-talk-to-a-doctor": {
+      keepAnchor: "talktoadoctor",
+      removeAnchor: "howtotake",
+      heroTitle: "Talk to a Doctor"
+    },
+    "find-relief-how-to-take-linzess": {
+      keepAnchor: "howtotake",
+      removeAnchor: "talktoadoctor",
+      heroTitle: "How to Take LINZESS"
+    }
+  };
+  function transform2(hookName, element, payload) {
+    if (hookName !== TransformHook2.beforeTransform) return;
+    const { template } = payload;
+    if (!template) return;
+    const config = SUBPAGE_CONFIG[template.name];
+    if (!config) return;
+    const removeAnchor = element.querySelector(`a[id="${config.removeAnchor}"]`);
+    if (removeAnchor) {
+      const containerToRemove = removeAnchor.closest(".container.parbase");
+      if (containerToRemove) {
+        containerToRemove.remove();
+      }
+    }
+    const heroContainer = element.querySelector(".hero-container.abbv-image-text-v2");
+    if (heroContainer) {
+      const h1 = heroContainer.querySelector("h1");
+      if (h1) {
+        h1.textContent = config.heroTitle;
+      }
     }
   }
 
   // tools/importer/transformers/linzess-sections.js
-  var TransformHook2 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
+  var TransformHook3 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function findSectionElement(element, selector) {
     const selectors = Array.isArray(selector) ? selector : [selector];
     for (const sel of selectors) {
-      const el = element.querySelector(sel);
-      if (el) return el;
+      try {
+        const el = element.querySelector(sel);
+        if (el) {
+          if (el.tagName === "A" && !el.href && el.id) {
+            const parent = el.closest('.abbv-container, .container.parbase, section, [class*="container"]');
+            if (parent) return parent;
+            return el.parentElement;
+          }
+          return el;
+        }
+      } catch (e) {
+      }
+      if (sel.startsWith("#")) {
+        const anchorId = sel.substring(1);
+        const anchor = element.querySelector(`a[id="${anchorId}"]`);
+        if (anchor) {
+          const parent = anchor.closest('.abbv-container, .container.parbase, section, [class*="container"]');
+          if (parent) return parent;
+          return anchor.parentElement;
+        }
+      }
     }
     return null;
   }
-  function transform2(hookName, element, payload) {
-    if (hookName === TransformHook2.afterTransform) {
+  function transform3(hookName, element, payload) {
+    if (hookName === TransformHook3.afterTransform) {
       const { template } = payload;
       if (!template || !template.sections || template.sections.length < 2) return;
       const doc = element.ownerDocument || document;
@@ -422,16 +580,29 @@ var CustomImportScript = (() => {
         const section = sections[i];
         const sectionEl = findSectionElement(element, section.selector);
         if (!sectionEl) continue;
-        if (section.style) {
+        const hasMeta = section.style || section.anchorId;
+        if (hasMeta) {
+          const metaCells = {};
+          if (section.style) {
+            metaCells.style = section.style;
+          }
+          if (section.anchorId) {
+            metaCells.anchorId = section.anchorId;
+          }
           const sectionMetadata = WebImporter.Blocks.createBlock(doc, {
             name: "Section Metadata",
-            cells: { style: section.style }
+            cells: metaCells
           });
           sectionEl.after(sectionMetadata);
         }
         if (i > 0) {
           const hr = doc.createElement("hr");
-          sectionEl.before(hr);
+          const prevAnchor = sectionEl.previousElementSibling;
+          if (prevAnchor && prevAnchor.tagName === "A" && prevAnchor.id && !prevAnchor.href) {
+            prevAnchor.before(hr);
+          } else {
+            sectionEl.before(hr);
+          }
         }
       }
     }
@@ -443,102 +614,93 @@ var CustomImportScript = (() => {
     "cards": parse2,
     "columns": parse3,
     "fragment": parse4,
-    "tabs": parse5
+    "hero": parse5,
+    "section-nav": parse6,
+    "tabs": parse7
   };
-  var PAGE_TEMPLATE = {
-    name: "find-relief",
-    description: "Linzess Find Relief page - Talk to a Doctor, How to Take LINZESS sections with videos, cards, tabs",
-    urls: [
-      "https://www.linzess.com/find-relief"
-    ],
-    blocks: [
-      {
-        name: "section-nav",
-        instances: [".abbv-section-navigation"]
-      },
-      {
-        name: "columns",
-        instances: [".image-outside-container-v3.abbv-image-text-v2", ".abbv-row-container.savings-card-tout", ".abbv-container.background-dark-purple-gradient .abbv-image-text-v2"]
-      },
-      {
-        name: "brightcove-video",
-        instances: [".abbv-video-player"]
-      },
-      {
-        name: "cards",
-        instances: [".abbv-flex-container-v2:has(.icon-image-card)", ".savings-card-cards"]
-      },
-      {
-        name: "tabs",
-        instances: [".abbv-tabs"]
-      },
-      {
-        name: "fragment",
-        instances: [".abbv-inline-use-isi"]
-      }
-    ],
-    sections: [
-      {
-        id: "hero",
-        name: "Hero",
-        selector: ".hero-container.abbv-image-text-v2",
-        style: null,
-        blocks: [],
-        defaultContent: [".abbv-image-text-content-v2 .heading-1", ".abbv-image-text-content-v2 p"]
-      },
-      {
-        id: "section-nav",
-        name: "Section Navigation",
-        selector: ".section-navigation.parbase",
-        style: null,
-        blocks: ["section-nav"],
-        defaultContent: []
-      },
-      {
-        id: "talk-to-a-doctor",
-        name: "Talk to a Doctor",
-        selector: ["#talktoadoctor", ".abbv-container.background-white.background-white-arc"],
-        style: "find-relief-checklist",
-        blocks: ["columns", "brightcove-video"],
-        defaultContent: [".abbv-rich-text.text-align-center.narrow-spacing", ".checkmark-list"]
-      },
-      {
-        id: "how-to-take",
-        name: "How to Take LINZESS",
-        selector: ["#howtotake", ".abbv-container.background-off-white"],
-        style: "find-relief-off-white",
-        blocks: ["brightcove-video", "cards", "tabs", "columns"],
-        defaultContent: [".abbv-rich-text.text-align-center"]
-      },
-      {
-        id: "bottom-cta",
-        name: "Bottom Navigation CTA",
-        selector: ".abbv-container.background-dark-purple.bottom-nav",
-        style: "find-relief-dark-purple",
-        blocks: ["columns"],
-        defaultContent: []
-      },
-      {
-        id: "isi",
-        name: "ISI",
-        selector: ".abbv-inline-use-isi",
-        style: null,
-        blocks: ["fragment"],
-        defaultContent: []
-      }
-    ]
+  var PAGE_TEMPLATES = {
+    "find-relief": {
+      name: "find-relief",
+      description: "Linzess Find Relief page - Talk to a Doctor, How to Take LINZESS sections with videos, cards, tabs",
+      documentPath: "/linzess/find-relief/index",
+      urls: ["https://www.linzess.com/find-relief"],
+      blocks: [
+        { name: "hero", instances: [".hero-container.abbv-image-text-v2"] },
+        { name: "section-nav", instances: [".abbv-section-navigation"] },
+        { name: "columns", instances: [".image-outside-container-v3.abbv-image-text-v2", ".abbv-row-container.savings-card-tout", ".abbv-container.background-dark-purple-gradient .abbv-image-text-v2"] },
+        { name: "brightcove-video", instances: [".abbv-video-player"] },
+        { name: "cards", instances: [".abbv-flex-container-v2:has(.icon-image-card)", ".savings-card-cards"] },
+        { name: "tabs", instances: [".abbv-tabs"] },
+        { name: "fragment", instances: [".abbv-inline-use-isi"] }
+      ],
+      sections: [
+        { id: "hero", name: "Hero", selector: ".hero-container.abbv-image-text-v2", style: null, anchorId: null, blocks: ["hero"], defaultContent: [] },
+        { id: "section-nav", name: "Section Navigation", selector: ".section-navigation.parbase", style: null, anchorId: null, blocks: ["section-nav"], defaultContent: [] },
+        { id: "talk-to-a-doctor", name: "Talk to a Doctor", selector: ["#talktoadoctor", ".abbv-container.background-white.background-white-arc"], style: "find-relief-checklist", anchorId: "talktoadoctor", blocks: ["columns", "brightcove-video"], defaultContent: [".abbv-rich-text.text-align-center.narrow-spacing", ".checkmark-list"] },
+        { id: "how-to-take", name: "How to Take LINZESS", selector: ["#howtotake", ".abbv-container.background-off-white"], style: "find-relief-off-white", anchorId: "howtotake", blocks: ["brightcove-video", "cards", "tabs", "columns"], defaultContent: [".abbv-rich-text.text-align-center"] },
+        { id: "bottom-cta", name: "Bottom Navigation CTA", selector: ".abbv-container.background-dark-purple.bottom-nav", style: "find-relief-dark-purple", anchorId: null, blocks: ["columns"], defaultContent: [] },
+        { id: "isi", name: "ISI", selector: ".abbv-inline-use-isi", style: null, anchorId: null, blocks: ["fragment"], defaultContent: [] }
+      ]
+    },
+    "find-relief-talk-to-a-doctor": {
+      name: "find-relief-talk-to-a-doctor",
+      description: "Linzess Find Relief subpage - Talk to a Doctor section",
+      documentPath: "/linzess/find-relief/talk-to-a-doctor",
+      urls: ["https://www.linzess.com/find-relief"],
+      blocks: [
+        { name: "hero", instances: [".hero-container.abbv-image-text-v2"] },
+        { name: "section-nav", instances: [".abbv-section-navigation"] },
+        { name: "columns", instances: [".image-outside-container-v3.abbv-image-text-v2"] },
+        { name: "brightcove-video", instances: [".abbv-video-player"] },
+        { name: "fragment", instances: [".abbv-inline-use-isi"] }
+      ],
+      sections: [
+        { id: "hero", name: "Hero", selector: ".hero-container.abbv-image-text-v2", style: null, anchorId: null, blocks: ["hero"], defaultContent: [] },
+        { id: "section-nav", name: "Section Navigation", selector: ".section-navigation.parbase", style: null, anchorId: null, blocks: ["section-nav"], defaultContent: [] },
+        { id: "talk-to-a-doctor", name: "Talk to a Doctor", selector: ["#talktoadoctor", ".abbv-container.background-white.background-white-arc"], style: "find-relief-checklist", anchorId: "talktoadoctor", blocks: ["columns", "brightcove-video"], defaultContent: [".abbv-rich-text.text-align-center.narrow-spacing", ".checkmark-list"] },
+        { id: "bottom-cta", name: "Bottom Navigation CTA", selector: ".abbv-container.background-dark-purple.bottom-nav", style: "find-relief-dark-purple", anchorId: null, blocks: ["columns"], defaultContent: [] },
+        { id: "isi", name: "ISI", selector: ".abbv-inline-use-isi", style: null, anchorId: null, blocks: ["fragment"], defaultContent: [] }
+      ]
+    },
+    "find-relief-how-to-take-linzess": {
+      name: "find-relief-how-to-take-linzess",
+      description: "Linzess Find Relief subpage - How to Take LINZESS",
+      documentPath: "/linzess/find-relief/how-to-take-linzess",
+      urls: ["https://www.linzess.com/find-relief"],
+      blocks: [
+        { name: "hero", instances: [".hero-container.abbv-image-text-v2"] },
+        { name: "section-nav", instances: [".abbv-section-navigation"] },
+        { name: "columns", instances: [".abbv-row-container.savings-card-tout", ".abbv-container.background-dark-purple-gradient .abbv-image-text-v2"] },
+        { name: "brightcove-video", instances: [".abbv-video-player"] },
+        { name: "cards", instances: [".abbv-flex-container-v2:has(.icon-image-card)", ".savings-card-cards"] },
+        { name: "tabs", instances: [".abbv-tabs"] },
+        { name: "fragment", instances: [".abbv-inline-use-isi"] }
+      ],
+      sections: [
+        { id: "hero", name: "Hero", selector: ".hero-container.abbv-image-text-v2", style: null, anchorId: null, blocks: ["hero"], defaultContent: [] },
+        { id: "section-nav", name: "Section Navigation", selector: ".section-navigation.parbase", style: null, anchorId: null, blocks: ["section-nav"], defaultContent: [] },
+        { id: "how-to-take", name: "How to Take LINZESS", selector: ["#howtotake", ".abbv-container.background-off-white"], style: "find-relief-off-white", anchorId: "howtotake", blocks: ["brightcove-video", "cards", "tabs", "columns"], defaultContent: [".abbv-rich-text.text-align-center"] },
+        { id: "bottom-cta", name: "Bottom Navigation CTA", selector: ".abbv-container.background-dark-purple.bottom-nav", style: "find-relief-dark-purple", anchorId: null, blocks: ["columns"], defaultContent: [] },
+        { id: "isi", name: "ISI", selector: ".abbv-inline-use-isi", style: null, anchorId: null, blocks: ["fragment"], defaultContent: [] }
+      ]
+    }
   };
+  function resolveTemplate(params) {
+    const subpageName = params?.subpageName || "";
+    if (subpageName && PAGE_TEMPLATES[subpageName]) {
+      return PAGE_TEMPLATES[subpageName];
+    }
+    return PAGE_TEMPLATES["find-relief"];
+  }
   var transformers = [
     transform,
-    ...PAGE_TEMPLATE.sections && PAGE_TEMPLATE.sections.length > 1 ? [transform2] : []
+    transform2,
+    transform3
   ];
   function executeTransformers(hookName, element, payload) {
-    const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
-      template: PAGE_TEMPLATE
-    });
     transformers.forEach((transformerFn) => {
       try {
-        transformerFn.call(null, hookName, element, enhancedPayload);
+        transformerFn.call(null, hookName, element, payload);
       } catch (e) {
         console.error(`Transformer failed at ${hookName}:`, e);
       }
@@ -547,20 +709,20 @@ var CustomImportScript = (() => {
   function findBlocksOnPage(document2, template) {
     const pageBlocks = [];
     template.blocks.forEach((blockDef) => {
-      if (blockDef.name.startsWith("section-")) return;
       blockDef.instances.forEach((selector) => {
-        const elements = document2.querySelectorAll(selector);
-        if (elements.length === 0) {
-          console.warn(`Block "${blockDef.name}" selector not found: ${selector}`);
-        }
-        elements.forEach((element) => {
-          pageBlocks.push({
-            name: blockDef.name,
-            selector,
-            element,
-            section: blockDef.section || null
+        try {
+          const elements = document2.querySelectorAll(selector);
+          elements.forEach((element) => {
+            pageBlocks.push({
+              name: blockDef.name,
+              selector,
+              element,
+              section: blockDef.section || null
+            });
           });
-        });
+        } catch (e) {
+          console.warn(`Block "${blockDef.name}" selector failed: ${selector}`, e.message);
+        }
       });
     });
     console.log(`Found ${pageBlocks.length} block instances on page`);
@@ -570,8 +732,10 @@ var CustomImportScript = (() => {
     transform: (payload) => {
       const { document: document2, url, html, params } = payload;
       const main = document2.body;
-      executeTransformers("beforeTransform", main, payload);
-      const pageBlocks = findBlocksOnPage(document2, PAGE_TEMPLATE);
+      const template = resolveTemplate(params);
+      const enhancedPayload = { ...payload, template };
+      executeTransformers("beforeTransform", main, enhancedPayload);
+      const pageBlocks = findBlocksOnPage(document2, template);
       pageBlocks.forEach((block) => {
         const parser = parsers[block.name];
         if (parser) {
@@ -584,13 +748,13 @@ var CustomImportScript = (() => {
           console.warn(`No parser found for block: ${block.name}`);
         }
       });
-      executeTransformers("afterTransform", main, payload);
+      executeTransformers("afterTransform", main, enhancedPayload);
       const hr = document2.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
-      const path = WebImporter.FileUtils.sanitizePath(
+      const path = template.documentPath || WebImporter.FileUtils.sanitizePath(
         new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html$/, "")
       );
       return [{
@@ -598,7 +762,7 @@ var CustomImportScript = (() => {
         path,
         report: {
           title: document2.title,
-          template: PAGE_TEMPLATE.name,
+          template: template.name,
           blocks: pageBlocks.map((b) => b.name)
         }
       }];

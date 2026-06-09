@@ -8,6 +8,23 @@
    Source:         linzess.com/find-relief section-navigation pattern
 */
 
+/* ── Section-level positioning: overlap hero bottom curve ─────────────── */
+
+.section-nav-container .section-nav-wrapper {
+  position: relative;
+  z-index: 3;
+  margin-top: -72px;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+/* Override --header-height for section-nav sticky calculations.
+   Linzess section-nav sticks at top:0 (header scrolls away), not below the header. */
+.section-nav-container {
+  --header-height: 0px;
+}
+
 /* ── Block-scoped tokens ─────────────────────────────────────────────── */
 
 .section-nav {
@@ -24,6 +41,13 @@
   margin: 0 auto;
   overflow: visible;
   width: var(--section-nav-mobile-width);
+  height: 50px;
+}
+
+/* ── Nav inner: vertically center links ──────────────────────────────── */
+
+.section-nav nav {
+  align-items: center;
 }
 
 /* ── Links (mobile base) ─────────────────────────────────────────────── */
@@ -31,9 +55,13 @@
 .section-nav a {
   color: var(--section-nav-text);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  font-weight: 600;
   text-decoration: none;
+  border-bottom: none;
+  padding: 0 24px;
+  line-height: 50px;
+  white-space: nowrap;
 }
 
 .section-nav a:hover {
@@ -51,7 +79,7 @@
 .section-nav a.is-active {
   border-bottom: none;
   color: var(--section-nav-text);
-  font-weight: var(--font-weight-extra-bold);
+  font-weight: 800;
   text-decoration: none;
 }
 
@@ -59,14 +87,20 @@
 
 /* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
    Override to keep the pill at --section-nav-mobile-width, centred. */
+.section-nav.sticky,
+.section-nav.sticky.is-stuck {
+  position: sticky;
+  top: 0;
+  left: auto;
+  right: auto;
+  transform: none;
+  z-index: 100;
+}
+
 .section-nav.sticky.is-stuck {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   box-shadow: var(--shadow-section-nav-stuck);
-  left: 50%;
-  right: auto;
-  transform: translateX(-50%);
-  width: var(--section-nav-mobile-width);
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -202,12 +236,18 @@
     width: 100%;
   }
 
-  /* Restore base full-width stuck behaviour (undo mobile transform/width) */
+  .section-nav.sticky,
   .section-nav.sticky.is-stuck {
-    left: 0;
-    right: 0;
+    position: sticky;
+    top: 0;
+    left: auto;
+    right: auto;
     transform: none;
     width: 100%;
+  }
+
+  .section-nav.sticky.is-stuck {
+    box-shadow: var(--shadow-section-nav-stuck);
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
