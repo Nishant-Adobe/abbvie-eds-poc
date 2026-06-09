@@ -80,7 +80,7 @@
 
 /* Collapsed: abbreviated content padding — matches live site */
 .safety-bar-abbreviated {
-  padding: 10px 25px 0;
+  padding: var(--spacing-10) var(--spacing-25, 25px) 0;
   margin: auto;
 }
 
@@ -118,9 +118,14 @@
   color: var(--color-text-muted);
 }
 
-/* Collapsed col2: bold text purple */
-.safety-bar-col2 strong {
-  color: #422e83;
+/* Collapsed col2: subtitle bold text purple (not list item bold) */
+.safety-bar-col2 p strong,
+.safety-bar-col2 h4 {
+  color: var(--color-text-heading);
+}
+
+.safety-bar-col2 li strong {
+  color: var(--color-text-muted);
 }
 
 /* Collapsed: list items */
@@ -158,25 +163,25 @@
 /* h4 in safety-bar (collapsed + expanded) — purple bold */
 .safety-bar h4 {
   font-family: var(--body-font-family);
-  font-size: 14px;
+  font-size: var(--font-size-legal);
   font-weight: 700;
-  color: #422e83;
+  color: var(--color-text-heading);
   line-height: normal;
   letter-spacing: normal;
-  margin: 14px 0;
+  margin: var(--spacing-14) 0;
   text-transform: none;
   text-decoration: none;
 }
 
 /* h5 "Side Effects" in safety-bar — purple */
 .safety-bar h5 {
-  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-size: 14px;
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
   font-weight: 400;
-  color: #422e83;
+  color: var(--color-text-heading);
   line-height: normal;
   letter-spacing: normal;
-  margin: 14px 0;
+  margin: var(--spacing-14) 0;
   text-transform: none;
   text-decoration: none;
 }
@@ -186,10 +191,10 @@
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   font-weight: 400;
-  color: #555;
+  color: var(--color-text-muted);
   line-height: var(--line-height-legal);
-  letter-spacing: -0.28px;
-  margin: 10px 0;
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
 }
 
 /* Expanded: bold text — dark, not purple */
@@ -199,7 +204,7 @@
   font-size: var(--font-size-legal);
   font-weight: 400;
   line-height: var(--line-height-legal);
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 /* Expanded: list items */

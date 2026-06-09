@@ -17,10 +17,15 @@
   opacity: 1;
 }
 
-/* Hide the authored in-page safety bar source block at all times.
-   JS reads its content and renders the sticky clone separately. */
-.safety-bar-container {
+/* Hide the safety-bar wrapper (content feeds the floating bar, never rendered).
+   The section hiding is handled by JS (section.hidden = true) when safety-bar
+   is the only block. CSS only hides the wrapper to prevent CLS. */
+.safety-bar-wrapper {
   display: none;
+}
+
+.adobe-ue-edit .safety-bar-wrapper {
+  display: block;
 }
 
 .safety-bar-section.is-hidden {
@@ -176,6 +181,24 @@
 
 .safety-bar.split.is-expanded .safety-bar-abbreviated {
   display: none;
+}
+
+/* ============================================================
+   Overlay (dark dimmer behind expanded safety bar)
+   ============================================================ */
+.safety-bar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--safety-bar-overlay-z-index, 499);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.safety-bar-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ============================================================
