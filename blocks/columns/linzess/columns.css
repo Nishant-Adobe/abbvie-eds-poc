@@ -111,6 +111,15 @@
 .columns.columns-homepage-promo > .columns-item .columns-item-image,
 .hero-container + .columns-container .columns > .columns-item .columns-item-image {
   order: -1;
+  height: 100%;
+}
+
+/* Image-only column stretches to fill the fixed-height card */
+.columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
+.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+  display: flex;
+  align-self: stretch;
+  height: auto;
 }
 
 /* Make the columns-item a flex row when it has both image + content */
