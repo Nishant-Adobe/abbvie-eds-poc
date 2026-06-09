@@ -1061,17 +1061,93 @@
 
 /* ── Linzess find-relief: centered icon-image cards ── */
 .cards-grid.cards-grid-icon-image-card > .demo-wrap {
-  max-width: 998px;
+  max-width: 998px !important;
   margin: 0 auto;
-  padding: 0 16px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
+  padding: 24px 16px !important;
 }
 
-.cards-grid.cards-grid-icon-image-card > .demo-wrap > div {
+.cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 998px;
+  margin: 0 auto;
+}
+
+.cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
   flex: 1;
-  min-width: 200px;
-  max-width: 320px;
+  min-width: 0;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card {
+  background: #422e83 !important;
+  border-radius: 16px !important;
+  padding: 40px 32px 32px !important;
+  text-align: center;
+  height: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 {
+  position: relative;
+  margin: -60px auto 16px;
+  width: 80px;
+  height: 80px;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
+.cards-grid.cards-grid-icon-image-card .icon-image-card h2 {
+  font-family: var(--body-font-family) !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  margin: 0 0 12px !important;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  line-height: normal;
+  margin: 0 0 16px;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card a {
+  display: inline-block;
+  background: #fff;
+  color: #422e83;
+  border-radius: 16px;
+  padding: 12px 40px 12px 24px;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
+/* Light purple variant cards (savings cards) */
+.cards-grid.cards-grid-icon-image-card .background-light-purple {
+  background: #d9d7f9 !important;
+}
+
+.cards-grid.cards-grid-icon-image-card .background-light-purple .heading-2,
+.cards-grid.cards-grid-icon-image-card .background-light-purple h2 {
+  color: #422e83 !important;
+}
+
+.cards-grid.cards-grid-icon-image-card .background-light-purple p {
+  color: #4d4d4f;
+}
+
+.cards-grid.cards-grid-icon-image-card .background-light-purple a {
+  background: #422e83;
+  color: #fff;
 }
