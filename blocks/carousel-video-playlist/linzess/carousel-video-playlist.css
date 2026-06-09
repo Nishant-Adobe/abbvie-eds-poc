@@ -572,15 +572,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgb(217 215 249 / 80%);
-  color: var(--color-brand-primary);
+  background: var(--color-brand-primary);
+  color: var(--linz-white);
   font-family: var(--heading-font-family);
   font-weight: var(--font-weight-bold, 700);
-  font-size: 20px;
+  font-size: var(--font-size-body-small, 12px);
   text-transform: uppercase;
-  padding: 10px 16px;
+  padding: 6px 12px;
   line-height: 1.2;
-  letter-spacing: 0.02em;
   pointer-events: none;
   z-index: 1;
 }
@@ -711,9 +710,9 @@
   grid-column: auto;
 }
 
-/* Show name banner on thumbnail in grid mode */
+/* Hide name banner in grid mode — footer already shows the title */
 .carousel-video-playlist.grid .cvp-card .cvp-name-banner {
-  display: block;
+  display: none;
 }
 
 /* Only show player-wrap and card-footer — hide any other direct children of card */
@@ -721,23 +720,18 @@
   display: none;
 }
 
-/* Hide all Brightcove dock/title overlays on poster */
+/* Hide Brightcove dock title that shows below poster — stronger selector */
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-text,
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-title,
-.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-description,
-.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-shelf,
-.carousel-video-playlist.grid .cvp-player-wrap .vjs-title-bar,
-.carousel-video-playlist.grid .video-js.vjs-dock .vjs-dock-text {
+.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-description {
   display: none !important;
   height: 0 !important;
   overflow: hidden !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
 }
 
-/* Card footer — solid light purple bg */
+/* Card footer — white bg, dark text, matching site */
 .carousel-video-playlist.grid .cvp-card-footer {
-  background: var(--color-brand-primary-lighter, #d9d7f9);
+  background: var(--linz-white, #fff);
   padding: 12px 16px;
   display: flex;
   align-items: center;
