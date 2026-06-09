@@ -8,11 +8,6 @@ export default async function getBlockConfigs() {
       afterDecorate: (block) => {
         block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
 
-        const hasHero = document.querySelector('main .hero, main .hero-container');
-        if (!hasHero) {
-          block.closest('header')?.classList.add('no-hero');
-        }
-
         // Remove ISI trigger text ("top") injected into the eyebrow bar by buildEyebrows.
         const eyebrow = block.querySelector('.nav-eyebrow-top');
         if (eyebrow) {
