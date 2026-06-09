@@ -414,6 +414,18 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     padding: 24px 16px;
     text-align: center;
   }
+
+  /* Collapse desktop paragraph margins so gap controls spacing and the card
+     height matches the live mobile proportions. */
+  .columns.columns-homepage-savings .columns-item-content {
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .columns.columns-homepage-savings .columns-item-content > * {
+    margin: 0;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -557,8 +569,20 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 
   .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
-    padding: 16px;
+    padding: 24px 16px;
     text-align: center;
+  }
+
+  /* Collapse desktop paragraph margins so gap controls spacing and the card
+     height matches the live mobile proportions. */
+  .columns.columns-homepage-gutcheck .columns-item-content {
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .columns.columns-homepage-gutcheck .columns-item-content > * {
+    margin: 0;
   }
 }
 
