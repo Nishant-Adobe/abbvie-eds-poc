@@ -1402,3 +1402,19 @@ h1.heading-1 {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* Fallback: hide non-item children in accordion (for browsers without :has() support) */
+.accordion > div:not(.accordion-item):not(details) {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure actual accordion items remain visible */
+.accordion > details,
+.accordion > .accordion-item,
+.accordion > details.accordion-item {
+  display: flex !important;
+}
