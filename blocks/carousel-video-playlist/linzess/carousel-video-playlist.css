@@ -576,10 +576,11 @@
   color: var(--linz-white);
   font-family: var(--heading-font-family);
   font-weight: var(--font-weight-bold, 700);
-  font-size: var(--font-size-body-small, 12px);
+  font-size: 20px;
   text-transform: uppercase;
-  padding: 6px 12px;
+  padding: 10px 16px;
   line-height: 1.2;
+  letter-spacing: 0.02em;
   pointer-events: none;
   z-index: 1;
 }
@@ -710,9 +711,9 @@
   grid-column: auto;
 }
 
-/* Hide name banner in grid mode — footer already shows the title */
+/* Show name banner overlay on video thumbnail in grid mode */
 .carousel-video-playlist.grid .cvp-card .cvp-name-banner {
-  display: none;
+  display: block;
 }
 
 /* Only show player-wrap and card-footer — hide any other direct children of card */
