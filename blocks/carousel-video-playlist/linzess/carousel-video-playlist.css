@@ -706,13 +706,9 @@
 .carousel-video-playlist.grid .cvp-card {
   display: flex;
   flex-direction: column;
-  overflow: visible;
-  grid-column: auto;
-}
-
-.carousel-video-playlist.grid .cvp-card .cvp-player-wrap {
   border-radius: 16px;
   overflow: hidden;
+  grid-column: auto;
 }
 
 /* Show name banner overlay on video thumbnail in grid mode */
@@ -725,27 +721,32 @@
   display: none;
 }
 
-/* Hide Brightcove dock title that shows below poster — stronger selector */
+/* Hide all Brightcove dock/title overlays on poster */
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-text,
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-title,
-.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-description {
+.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-description,
+.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-shelf,
+.carousel-video-playlist.grid .cvp-player-wrap .vjs-title-bar,
+.carousel-video-playlist.grid .cvp-player-wrap .vjs-dock {
   display: none !important;
   height: 0 !important;
   overflow: hidden !important;
+  opacity: 0 !important;
 }
 
-/* Card footer — transparent bg, white text on dark section */
+/* Card footer — solid light purple bg, dark purple text */
 .carousel-video-playlist.grid .cvp-card-footer {
-  background: transparent;
-  padding: 12px 0;
+  background: var(--color-brand-primary-lighter, #d9d7f9);
+  padding: 12px 16px;
   display: flex;
   align-items: center;
   gap: 16px;
   min-height: 44px;
+  border-radius: 0 0 16px 16px;
 }
 
 .carousel-video-playlist.grid .cvp-title {
-  color: var(--color-text-on-dark);
+  color: var(--color-brand-primary);
   font-family: var(--body-font-family);
   font-weight: var(--font-weight-bold, 700);
   font-size: 14px;
@@ -754,7 +755,7 @@
 }
 
 .carousel-video-playlist.grid .cvp-transcript-toggle {
-  color: var(--color-text-on-dark);
+  color: var(--color-brand-primary);
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small, 12px);
   font-weight: var(--font-weight-extra-bold, 800);
