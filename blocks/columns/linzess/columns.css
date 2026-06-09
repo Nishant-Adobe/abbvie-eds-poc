@@ -858,14 +858,28 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 0 0 auto;
     width: 100%;
-    padding: 16px;
+    min-height: 129px;
+    padding: 24px 16px;
     text-align: center;
   }
 
   .columns.columns-homepage-promo .columns-item-content,
   .hero-container + .columns-container .columns .columns-item-content {
-    gap: 12px;
+    gap: 16px;
     align-items: center;
+    justify-content: center;
+  }
+
+  /* Collapse desktop margins so gap controls spacing and the card height
+     matches the live mobile proportions (heading + button only). */
+  .columns.columns-homepage-promo .columns-item-content > *,
+  .hero-container + .columns-container .columns .columns-item-content > * {
+    margin: 0;
+  }
+
+  .columns.columns-homepage-promo .columns-item-content .button,
+  .hero-container + .columns-container .columns .columns-item-content .button {
+    margin: 0;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
