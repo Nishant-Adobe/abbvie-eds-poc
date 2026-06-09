@@ -93,12 +93,14 @@ export default function decorate(block) {
       }
       overlayEl?.classList.add('is-visible');
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       return;
     }
 
     fullEl?.remove();
     overlayEl?.classList.remove('is-visible');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   };
 
   const abbrevEl = document.createElement('div');
@@ -132,6 +134,7 @@ export default function decorate(block) {
     stickyBlock.classList.remove('is-expanded');
     overlay.classList.remove('is-visible');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     syncExpandedContent(false);
     const toggle = stickyBlock.querySelector('.safety-bar-toggle');
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
