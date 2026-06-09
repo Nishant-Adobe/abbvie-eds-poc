@@ -237,3 +237,217 @@ main .section.dark-purple + .section strong {
     font-size: 13px !important;
   }
 }
+
+/* ====================================================
+   Linzess: Image + Text Touts (savings-card-tout, doctor-tout)
+   2-column layout: image one side, text/CTA the other,
+   rounded-corner card. Matches linzess.com savings page.
+   ==================================================== */
+
+.columns.savings-card-tout,
+.columns.doctor-tout {
+  display: flex;
+  align-items: stretch;
+  max-width: 998px;
+  margin: 24px auto 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.columns.savings-card-tout {
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
+.columns.doctor-tout {
+  background-color: var(--linz-white, #fff);
+  box-shadow: 0 2px 12px rgba(0 0 0 / 8%);
+}
+
+/* Hide the empty anchorId config row (first columns-item) */
+.columns.savings-card-tout > .columns-item:first-child:has(.columns-item-content:empty),
+.columns.doctor-tout > .columns-item:first-child:has(.columns-item-content:empty) {
+  display: none;
+}
+
+/* The single content item holds both image + text cells */
+.columns.savings-card-tout > .columns-item:not(:first-child),
+.columns.doctor-tout > .columns-item:not(:first-child) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 0;
+}
+
+.columns.savings-card-tout .columns-item-image,
+.columns.doctor-tout .columns-item-image {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.columns.savings-card-tout .columns-item-image img,
+.columns.doctor-tout .columns-item-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.columns.savings-card-tout .columns-item-content,
+.columns.doctor-tout .columns-item-content {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  text-align: left;
+}
+
+.columns.savings-card-tout .columns-item-content p,
+.columns.doctor-tout .columns-item-content p {
+  color: var(--linz-grey, #4d4d4f);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+.columns.savings-card-tout .columns-item-content h2,
+.columns.doctor-tout .columns-item-content h2 {
+  color: var(--linz-dark-purple, #422e83);
+  font-family: var(--body-font-family);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0 0 0.75rem;
+}
+
+/* Gold CTA button inside touts */
+.columns.savings-card-tout a.button:any-link,
+.columns.doctor-tout a.button:any-link {
+  background-color: var(--linz-orange, #faa633);
+  color: var(--linz-dark-purple, #422e83);
+  border: none;
+  border-radius: 16px;
+  padding: 16px 32px;
+  font-weight: 800;
+  font-size: 14.4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.columns.savings-card-tout a.button::after,
+.columns.doctor-tout a.button::after {
+  content: "❯";
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.columns.savings-card-tout a.button:hover,
+.columns.doctor-tout a.button:hover {
+  background-color: #e6951a;
+}
+
+/* Plain text link (Activate now) */
+.columns.savings-card-tout .columns-item-content a:not(.button) {
+  color: var(--linz-dark-purple, #422e83);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Mobile: stack image above text */
+@media (width < 768px) {
+  .columns.savings-card-tout > .columns-item,
+  .columns.doctor-tout > .columns-item {
+    flex-direction: column;
+  }
+
+  .columns.savings-card-tout .columns-item-image,
+  .columns.doctor-tout .columns-item-image {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .columns.savings-card-tout .columns-item-content,
+  .columns.doctor-tout .columns-item-content {
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+}
+
+/* ====================================================
+   Linzess Homepage: Savings banner strip
+   Off-white rounded bar — heading left, gold CTA right.
+   ==================================================== */
+
+.columns.savings-banner {
+  max-width: 998px;
+  margin: 0 auto;
+  background-color: var(--linz-light-purple, #d9d7f9);
+  border-radius: 16px;
+}
+
+.columns.savings-banner > .columns-item:first-child:has(.columns-item-content:empty) {
+  display: none;
+}
+
+.columns.savings-banner > .columns-item:not(:first-child) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.5rem 2.5rem;
+}
+
+.columns.savings-banner .columns-item-content {
+  flex: 0 1 auto;
+}
+
+.columns.savings-banner h2 {
+  color: var(--linz-dark-purple, #422e83);
+  font-family: var(--body-font-family);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+.columns.savings-banner a.button:any-link {
+  background-color: var(--linz-orange, #faa633);
+  color: var(--linz-dark-purple, #422e83);
+  border: none;
+  border-radius: 16px;
+  padding: 14px 28px;
+  font-weight: 800;
+  font-size: 14.4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.columns.savings-banner a.button::after {
+  content: "❯";
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.columns.savings-banner a.button:hover {
+  background-color: #e6951a;
+}
+
+@media (width < 768px) {
+  .columns.savings-banner > .columns-item:not(:first-child) {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .columns.savings-banner h2 {
+    font-size: 1.25rem;
+  }
+}
