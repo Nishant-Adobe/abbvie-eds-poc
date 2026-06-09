@@ -712,10 +712,20 @@
   text-align: left;
 }
 
-/* Tablet: 2 cards per row for advocacy */
+/* Tablet: advocacy 2 cards per row, download materials single column */
 @media (width < 1024px) and (width >= 768px) {
   .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid {
     grid-template-columns: 1fr 1fr !important;
+  }
+
+  .cards-grid:not(.cards-grid-callout-cards).download-materials {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+  }
+
+  .cards-grid:not(.cards-grid-callout-cards).download-materials > div {
+    grid-column: auto !important;
+    grid-row: auto !important;
   }
 }
 

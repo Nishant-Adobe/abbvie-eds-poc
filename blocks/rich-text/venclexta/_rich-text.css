@@ -445,30 +445,60 @@ main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .v
   }
 }
 
-@media (width < 768px) {
+@media (width < 1024px) {
   .section.nav-cards .cta-wrapper {
     flex: 0 0 100%;
     max-width: 100%;
   }
 
   .section.ven-zone {
-    flex-wrap: wrap;
-    padding: 30px 20px;
+    flex-flow: column wrap;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 16px;
+    width: 100vw;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-inline: 0 !important;
+    padding: 38% 34px 35px;
+    border-radius: 0;
+    background-image: url('https://www.venclexta.com/content/dam/venclexta/images/homepage/previously-untreated-cll/about-cll-sll/what-is-cll-sll/global-venzone-2x_r4_mobile.png') !important;
+    background-size: 100% 100%;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+
+  /* Override the higher-specificity [data-background] contain rule */
+  main .section[data-background].ven-zone {
+    background-size: 100% 100%;
   }
 
   .section.ven-zone .rich-text-wrapper {
-    flex: 0 0 100%;
+    flex: 0 0 auto;
+    width: 100%;
   }
 
   .section.ven-zone .rich-text p {
-    margin-left: 0;
+    margin: 0;
+    padding-left: 0;
     font-size: 16px;
-    text-align: center;
+    text-align: left;
+    color: #fff;
   }
 
   .section.ven-zone .cta-wrapper {
-    flex: 0 0 100%;
-    text-align: center;
+    flex: 0 0 auto;
+    width: 100%;
+    text-align: left;
+  }
+
+  .section.ven-zone .cta .abbv-cta {
+    width: 240px;
+    height: auto;
+    padding: 10px 20px;
+    border-radius: 9px;
+    font-size: 18px;
+    color: #444 !important;
   }
 
   .section.brochure-cta {
