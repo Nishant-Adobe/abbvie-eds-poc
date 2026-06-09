@@ -2013,9 +2013,17 @@ header .nav-wrapper {
   position: relative;
 }
 
+/* No-hero pages: solid purple header (matches live .header-no-gradient) */
+
 header:has(.nav-utility ul) {
-  background: var(--header-eyebrow-gradient);
+  background: var(--color-brand-primary);
   height: auto;
+}
+
+/* Hero pages: dark eyebrow gradient overlays the hero image */
+
+body:has(main > .section.hero-container) header:has(.nav-utility ul) {
+  background: var(--header-eyebrow-gradient);
 }
 
 /* Nav text — white */
@@ -2068,6 +2076,10 @@ header .nav-utility li:nth-child(n+3) { display: none; }
 /* Pipe separator — hidden on Linzess */
 
 header .nav-utility li + li::before { display: none; }
+
+/* Hide ISI toggle controls (top / See Full ISI / Collapse ISI) leaked into utility bar */
+
+header .nav-indication { display: none; }
 
 /* Hamburger — white bars on dark header */
 
