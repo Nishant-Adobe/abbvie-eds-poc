@@ -138,11 +138,18 @@
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
 .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
-  padding: 0 16px;
+  padding: 0 24px;
   display: flex;
-  place-content: center;
   align-items: center;
-  text-align: center;
+}
+
+.columns.columns-homepage-promo .columns-item-content,
+.hero-container + .columns-container .columns .columns-item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .columns.columns-homepage-promo .columns-item-content p strong,
