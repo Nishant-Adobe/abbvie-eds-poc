@@ -252,16 +252,20 @@
   font-size: 24px;
   line-height: normal;
   letter-spacing: normal;
+  margin-bottom: 0;
 }
 
 .rich-text h3 {
   font-size: 18.72px;
   line-height: normal;
+  margin-bottom: 0;
 }
 
 .rich-text h4 {
   font-size: 16px;
   line-height: normal;
+  margin-bottom: 0;
+  padding-top: 10px;
 }
 
 .rich-text p,
@@ -270,6 +274,14 @@
   font-size: 16px;
   line-height: normal;
   color: #404040;
+}
+
+.rich-text p {
+  margin: 16px 0;
+}
+
+.rich-text li {
+  margin: 0;
 }
 
 .rich-text strong {
@@ -341,7 +353,7 @@ main .section[data-background].ven-zone {
   width: 208px;
   height: 64px;
   font-family: 'Red Hat Display', sans-serif;
-  font-size: 18px;
+  font-size: 14.4px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -351,7 +363,7 @@ main .section[data-background].ven-zone {
 /* Hide unprocessed metadata section on aem.live (last section, no block wrappers) */
 
 main > .section.safety-bar-container ~ .section:not([class*="-container"]),
-main > .section:last-of-type:not([class*="-container"]):not(.nav-cards):not(.gray-bg):not(.ven-zone) > .default-content-wrapper:only-child {
+main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .ven-zone) > .default-content-wrapper:only-child {
   display: none;
 }
 
@@ -404,8 +416,9 @@ main > .section:last-of-type:not([class*="-container"]):not(.nav-cards):not(.gra
 /* stylelint-disable-next-line no-descending-specificity */
 
 .rich-text.legal p {
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: normal;
+  margin: 16px 0;
   color: #404040;
 }
 
@@ -655,7 +668,7 @@ main > .section:last-of-type:not([class*="-container"]):not(.nav-cards):not(.gra
   border-left: 4px solid #ffce00;
   border-radius: 0;
   padding: 18px 50px 18px 20px;
-  font-size: 14.4px;
+  font-size: 16px;
   font-weight: 500;
   min-width: 250px;
   text-align: center;
