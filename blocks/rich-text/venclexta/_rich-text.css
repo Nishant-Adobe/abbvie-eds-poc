@@ -112,7 +112,8 @@ main .section[data-background].ven-zone {
 }
 
 /* Hide unprocessed metadata section on aem.live (last section, no block wrappers) */
-main > .section.safety-bar-container ~ .section:not([class*="-container"]) {
+main > .section.safety-bar-container ~ .section:not([class*="-container"]),
+main > .section:last-of-type:not([class*="-container"]):not(.nav-cards):not(.gray-bg):not(.ven-zone) > .default-content-wrapper:only-child {
   display: none;
 }
 
