@@ -1063,7 +1063,8 @@
 .cards-grid.cards-grid-icon-image-card > .demo-wrap {
   max-width: 998px !important;
   margin: 0 auto;
-  padding: 24px 16px !important;
+  padding: 40px 16px 24px !important;
+  overflow: visible;
 }
 
 .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
@@ -1083,23 +1084,27 @@
 .cards-grid.cards-grid-icon-image-card .icon-image-card {
   background: #422e83 !important;
   border-radius: 16px !important;
-  padding: 40px 32px 32px !important;
+  padding: 48px 32px 32px !important;
   text-align: center;
   height: 100%;
   position: relative;
   overflow: visible;
+  margin-top: 40px;
 }
 
 .cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 {
-  position: relative;
-  margin: -60px auto 16px;
-  width: 80px;
-  height: 80px;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  z-index: 1;
 }
 
 .cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 img {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
 }
 
