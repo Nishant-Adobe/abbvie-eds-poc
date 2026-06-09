@@ -607,3 +607,32 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     line-height: var(--no-hero-h1-line-height-mobile);
   }
 }
+
+/* Transcript/ISI pages keep the white upward arc, not develop's purple downward arc.
+   Equal specificity to body.no-hero rule but declared later, so this wins. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section.isi,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: 0;
+}
+
+body.no-hero main > .section.transcript::before,
+body.no-hero main > .section.isi::before,
+body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+  top: -60px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  body.no-hero main > .section.transcript::before,
+  body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
