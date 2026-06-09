@@ -225,6 +225,65 @@ main > .section.find-relief-dark-purple a.button:hover {
   }
 }
 
+/* ── Fallback: dark purple CTA when section-metadata isn't applied ── */
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) {
+  position: relative;
+  background-color: #422e83;
+  padding: 80px 0 140px;
+  overflow: visible;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: 60px;
+  max-width: none !important;
+  text-align: center;
+  display: block !important;
+}
+
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist)::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130vw;
+  height: 255px;
+  background-color: #422e83;
+  border-radius: 100% 100% 0 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2,
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) p {
+  color: #fff;
+}
+
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2 {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) .columns-wrapper {
+  max-width: 998px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) a.button:any-link {
+  display: inline-block;
+  background-color: #faa633;
+  color: #422e83;
+  border-radius: 16px;
+  padding: 16px 59px 16px 32px;
+  font-size: 14.4px;
+  font-weight: 800;
+  text-decoration: none;
+  border: none;
+}
+
 /* ── find-relief-off-white: How-to-Take + Storage sections ── */
 main > .section.find-relief-off-white {
   background-color: var(--color-background-light);
