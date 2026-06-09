@@ -1140,7 +1140,7 @@
 
 .section:not(:has(.cards-grid-wrapper + .rich-text-wrapper)) .cards-grid:not(.cards-grid-callout-cards) > div:nth-child(2) p {
   color: #fff !important;
-  font-size: 20px !important;
+  font-size: 20px;
 }
 
 .section:not(:has(.cards-grid-wrapper + .rich-text-wrapper)) .cards-grid:not(.cards-grid-callout-cards) > div:nth-child(2) .button-container a.button {
@@ -1199,8 +1199,8 @@
 /* Icon/image sizing */
 
 .cards-grid:not(.cards-grid-callout-cards) > div > div:nth-child(2) img {
-  width: 80px;
-  height: auto;
+  width: auto;
+  height: 80px;
   margin-bottom: 15px;
 }
 
@@ -1305,7 +1305,7 @@
 
 .section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) {
   background: #f2f2f2;
-  padding: 50px 20px 40px !important;
+  padding: 50px 20px 40px;
   max-width: 100vw !important;
   width: 100vw;
   margin-left: calc(50% - 50vw) !important;
@@ -1471,3 +1471,74 @@
     text-align: center;
   }
 }
+
+.section .advocacy-orgs.cards-grid div div p:not(.button-container) {
+  font-size: 24px;
+  color: #404040;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+  max-width: none;
+  padding-inline: 15px;
+  line-height: 27px;
+}
+
+.section:has(.advocacy-orgs).abbvie-container.rich-text-container.cards-grid-container .rich-text-wrapper:last-child p {
+  font-size: 16px;
+  color: #404040;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .rich-text h2 {
+  margin-bottom: 16px;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) .cards-grid {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.section:has(.rich-text-wrapper + .cards-grid-wrapper + .rich-text-wrapper) {
+  padding: 40px 20px 30px;
+}
+
+.section .cta.abbv-button-secondary .abbv-cta {
+  font-weight: 700;
+  color: #444;
+  font-size: 17.6px;
+}
+
+.section .cta.abbv-button-secondary .abbv-cta {
+  border-left: 10px solid #ffce00;
+}
+
+.cards-grid:not(.cards-grid-callout-cards) > div .button-container a.button {
+  max-width: 300px;
+}
+
+.section:not(:has(.cards-grid-wrapper + .rich-text-wrapper)) .cards-grid:not(.cards-grid-callout-cards).download-materials  > div:nth-child(2) p {
+  font-size: 25px;
+  line-height: 30px;
+  width: 262px;
+}
+
+.cards-grid:not(.cards-grid-callout-cards).download-materials > div {
+  padding: 20px 30px;
+  margin:0;
+  justify-content: flex-start;
+}
+
+.cards-grid.download-materials > div h3 {
+  margin-block: 10px;
+  padding: 0 0 5px;
+  line-height: 1;
+}
+
+.cards-grid.download-materials > div p:has(a),
+.cards-grid.download-materials > div p a {
+  margin: 0;
+}
+
+.cards-grid.download-materials > div > div:nth-child(5) {
+  margin-top: 40px;
+}
+
