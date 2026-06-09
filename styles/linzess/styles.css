@@ -5,10 +5,11 @@
    Tokens handle most brand differentiation via CSS custom properties.
    This file adds overrides that tokens alone cannot express. */
 
-/* Body defaults — Linzess uses 14px base */
+/* Body defaults — Linzess uses 16px base (matches live site) */
 body {
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
+  font-size: 16px;
+  line-height: normal;
+  background-color: var(--color-background-light);
 }
 
 /* Headings — Linzess uses Bebas Neue display font */
@@ -436,20 +437,20 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
   font-family: var(--body-font-family);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   text-transform: none;
   color: var(--color-text-on-dark);
-  margin-bottom: 12px;
-  margin-top: 2px;
+  margin-bottom: 16px;
+  margin-top: 0;
   letter-spacing: normal;
-  line-height: 1.2;
+  line-height: normal;
 }
 
 .section.find-relief-checklist .default-content-wrapper > ul > li > p:nth-child(2) {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-text-on-dark);
-  line-height: 1.6;
+  line-height: normal;
   font-weight: 400;
 }
 
@@ -469,19 +470,19 @@ main > .section.find-relief-off-white::before {
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0;
+  letter-spacing: normal;
   color: var(--color-brand-primary);
   text-align: center;
-  margin-bottom: 0;
-  margin-top: 40px;
+  margin: 20px 0 24px;
 }
 
 .section.find-relief-checklist > .default-content-wrapper > h2 {
   font-family: var(--heading-font-family);
-  font-size: 32px;
+  font-size: 40px;
   color: var(--color-brand-primary);
-  text-transform: uppercase;
+  text-transform: none;
   text-align: center;
+  letter-spacing: normal;
   margin-bottom: 1.6rem;
 }
 
@@ -631,7 +632,7 @@ main > .section.find-relief-off-white::before {
   display: block;
   width: 64px;
   height: 5px;
-  background: url('https://www.linzess.com/content/dam/linzess/images/divider.svg') no-repeat center / contain;
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMjgwMDMgNC4yMzk5N1Y0LjIxMDMyQzEuMjgwMDMgNC4yMTAzMiAxNS45NSAxLjcxOTk3IDMyIDEuNzE5OTdDNDguMDggMS43MTk5NyA2Mi43MiA0LjIxMDMyIDYyLjcyIDQuMjEwMzJWNC4yMzk5NyIgc3Ryb2tlPSIjRkFBNjMzIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / contain;
   margin: 0 auto 16px;
 }
 
@@ -675,7 +676,7 @@ main > .section.find-relief-off-white::before {
   display: block;
   width: 64px;
   height: 5px;
-  background: url('https://www.linzess.com/content/dam/linzess/images/divider.svg') no-repeat center / contain;
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMjgwMDMgNC4yMzk5N1Y0LjIxMDMyQzEuMjgwMDMgNC4yMTAzMiAxNS45NSAxLjcxOTk3IDMyIDEuNzE5OTdDNDguMDggMS43MTk5NyA2Mi43MiA0LjIxMDMyIDYyLjcyIDQuMjEwMzJWNC4yMzk5NyIgc3Ryb2tlPSIjRkFBNjMzIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / contain;
   margin: 0 auto 16px;
 }
 
@@ -752,7 +753,7 @@ main > .section.find-relief-off-white::before {
   display: block;
   width: 64px;
   height: 5px;
-  background: url('https://www.linzess.com/content/dam/linzess/images/divider.svg') no-repeat center / contain;
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMjgwMDMgNC4yMzk5N1Y0LjIxMDMyQzEuMjgwMDMgNC4yMTAzMiAxNS45NSAxLjcxOTk3IDMyIDEuNzE5OTdDNDguMDggMS43MTk5NyA2Mi43MiA0LjIxMDMyIDYyLjcyIDQuMjEwMzJWNC4yMzk5NyIgc3Ryb2tlPSIjRkFBNjMzIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / contain;
   margin: 0 auto 16px;
 }
 
@@ -860,6 +861,7 @@ main > .section.gutcheck-quiz-arc > * {
   font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: 16px;
   font-weight: 400;
+  line-height: normal;
   color: #422e83;
   letter-spacing: -0.32px;
   margin: 10px 0 0;
