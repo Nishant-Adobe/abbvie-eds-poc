@@ -3592,25 +3592,50 @@ main > .section.white-arc .button-container a.button.secondary:hover {
   }
 }
 
-/* ---- Form section columns: 60/40 split ---- */
+/* ---- Form section columns ---- */
+/* MOBILE (320–767px): single column, form on top, image below */
 main > .section.white-arc .columns.columns-offset {
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr;
   align-items: start;
 }
 
 main > .section.white-arc .columns.columns-offset .columns-item-image {
-  position: sticky;
-  top: 2rem;
+  position: static;
 }
 
-/* Savings card image sizing */
+/* Savings card image sizing — fluid on mobile */
 main > .section.white-arc .columns-item-image picture img {
   cursor: default;
-  width: 435px;
-  max-width: none;
+  width: 100%;
+  max-width: 435px;
   height: auto;
-  margin: 16px 12px 0 5px;
-  padding-left: 20px;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+/* TABLET (768px+): two columns side-by-side */
+@media (width >= 768px) {
+  main > .section.white-arc .columns.columns-offset {
+    grid-template-columns: 3fr 2fr;
+  }
+
+  main > .section.white-arc .columns.columns-offset .columns-item-image {
+    position: sticky;
+    top: 2rem;
+  }
+
+  main > .section.white-arc .columns-item-image picture img {
+    margin: 16px 12px 0 5px;
+    padding-left: 20px;
+  }
+}
+
+/* DESKTOP (1440px+): allow image to render at full fixed width */
+@media (width >= 1440px) {
+  main > .section.white-arc .columns-item-image picture img {
+    width: 435px;
+    max-width: none;
+  }
 }
 
 /* Image column prescribing-info text — normal weight, 16px Lato */
