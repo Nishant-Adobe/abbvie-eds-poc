@@ -27,7 +27,7 @@
   gap: 20px;
 }
 
-.safety-bar .safety-bar-abbreviated > div {
+.safety-bar .safety-bar-abbreviated>div {
   flex: 1;
 }
 
@@ -93,11 +93,18 @@
   .safety-bar.split .safety-bar-abbreviated {
     grid-template-columns: 1fr;
   }
+
   .safety-bar-col1 {
     display: none;
   }
 
   .safety-bar.split.block {
     padding: 0 15px;
+  }
+}
+
+@media (width >=1024px) {
+  .safety-bar.split .safety-bar-abbreviated {
+    max-height: 140px;
   }
 }
