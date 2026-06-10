@@ -390,9 +390,11 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   text-align: left;
 }
 
-@media (width < 768px) {
+/* Savings card stacks below 992px to match live (keeps the side-by-side
+   desktop layout in split-view widths down to ~992px). */
+@media (width < 992px) {
   .columns.columns-homepage-savings,
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .columns-homepage-gutcheck) {
     flex-direction: column;
     flex-wrap: wrap;
     max-width: 100%;
@@ -401,7 +403,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-image) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .columns-homepage-gutcheck) > .columns-item:has(.columns-item-image) {
     flex: 1 1 auto;
     width: 100%;
     order: -1;
@@ -409,14 +411,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img,
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-image) img {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .columns-homepage-gutcheck) > .columns-item:has(.columns-item-image) img {
     width: 100%;
     height: auto;
     object-fit: contain;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .columns-homepage-gutcheck) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 auto;
     width: 100%;
     padding: 24px 16px;
@@ -564,8 +566,11 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   font-size: 21px;
 }
 
-@media (width < 768px) {
+/* Gut check stacks below 600px to match live (keeps the side-by-side desktop
+   layout in split-view widths down to 600px). */
+@media (width < 600px) {
   .columns.columns-homepage-gutcheck {
+    flex-direction: column;
     flex-wrap: wrap;
     max-width: 100%;
   }
