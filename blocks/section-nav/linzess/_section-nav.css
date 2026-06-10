@@ -83,24 +83,18 @@
   text-decoration: none;
 }
 
-/* ── Sticky stuck ────────────────────────────────────────────────────── */
+/* ── Sticky disabled — causes flicker on Linzess pages ──────────────── */
 
-/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
-   Override to keep the pill at --section-nav-mobile-width, centred. */
 .section-nav.sticky,
 .section-nav.sticky.is-stuck {
-  position: sticky;
-  top: 0;
+  position: relative;
+  top: auto;
   left: auto;
   right: auto;
   transform: none;
-  z-index: 100;
-}
-
-.section-nav.sticky.is-stuck {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  box-shadow: var(--shadow-section-nav-stuck);
+  z-index: 3;
+  box-shadow: none;
+  border-radius: var(--section-nav-radius);
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -238,16 +232,14 @@
 
   .section-nav.sticky,
   .section-nav.sticky.is-stuck {
-    position: sticky;
-    top: 0;
+    position: relative;
+    top: auto;
     left: auto;
     right: auto;
     transform: none;
     width: 100%;
-  }
-
-  .section-nav.sticky.is-stuck {
-    box-shadow: var(--shadow-section-nav-stuck);
+    box-shadow: none;
+    border-radius: var(--section-nav-radius);
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
@@ -258,11 +250,7 @@
     padding: 0;
   }
 
-  /* Flatten top corners of pill when stuck — live-site pattern */
-  .section-nav.sticky.is-stuck nav {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
+  /* Sticky disabled — no corner flattening needed */
 
   /* Links: 600 base, 800 on active/hover */
   .section-nav a {
