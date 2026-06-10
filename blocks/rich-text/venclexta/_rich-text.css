@@ -549,3 +549,9 @@ main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .v
   margin: 0;
   padding-inline: 59px;
 }
+
+@media (width < 1024px) {
+    .section.gray-bg .rich-text:first-child > p:nth-last-of-type(2) {
+        max-width: revert-rule;
+    }
+}
