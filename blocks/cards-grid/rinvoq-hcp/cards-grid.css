@@ -825,6 +825,13 @@
   max-width: 380px;
 }
 
+/* The item's content is wrapped in a single <p>; stretch it to the full item
+   height so the inner .grid-card (height:100%) fills equal-height columns. */
+.cards-grid.cards-grid-cta-card > .card-grid-item > p {
+  height: 100%;
+  margin: 0;
+}
+
 .cards-grid.cards-grid-cta-card .grid-card {
   display: flex;
   flex-direction: column;
