@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" jcr:primaryType="cq:Page">
+  <jcr:content cq:template="/libs/core/franklin/templates/page" sling:resourceType="core/franklin/components/page/v1/page" jcr:primaryType="cq:PageContent">
+    <root jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/root/v1/root">
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 0: Hero + Section Nav
+           ═══════════════════════════════════════════════════════════════ -->
+      <section sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]">
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Hero"
+          model="hero"
+          modelFields="[image,imageAlt,mobileImage,mobileImageAlt,eyebrow,indication,text,layers,video,imageCaption,classes_textAlign,classes_textColor,classes_customClass]"
+          image="/content/dam/abbvie-eds-poc/linzess/images/FIndRelief-Hero-Desktop.jpg"
+          imageAlt=""
+          eyebrow="Find Relief"
+          text="&lt;p&gt;&lt;h1&gt;CHRONIC CONSTIPATION CALLS FOR A CONVERSATION&lt;/h1&gt;&lt;/p&gt;"
+          classes_customClass="no-padding text-left linzess-behind-nav-linzess-editorial-hero"
+          classes_textAlign="left"/>
+
+        <block_1 sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Section Nav"
+          model="section-nav"
+          modelFields="[classes_customClass]"
+          classes_customClass="sticky mobile-menu">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Section Nav Item"
+            model="section-nav-item"
+            modelFields="[label,url]"
+            label="Talk to a Doctor"
+            url="#what-to-talk-about-at-your-visit"/>
+          <item_1 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Section Nav Item"
+            model="section-nav-item"
+            modelFields="[label,url]"
+            label="How to Take LINZESS"
+            url="#what-to-know-before-starting-linzess"/>
+        </block_1>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 1: Talk to a Doctor (checklist section)
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_1 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        sectionId="talktoadoctor"
+        classes_customClass="find-relief-checklist">
+
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;&lt;a id=&quot;talktoadoctor&quot;&gt;&lt;/a&gt;Talk to a Doctor&lt;/p&gt;&lt;hr&gt;&lt;h2 id=&quot;what-to-talk-about-at-your-visit&quot;&gt;What To Talk About At Your Visit&lt;/h2&gt;&lt;p&gt;You know your symptoms best and helping your doctor understand them will help you find a treatment that can help.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;p&gt;Discuss Your Symptoms&lt;/p&gt;&lt;p&gt;When it comes to your symptoms, you'll want to hit on &lt;strong&gt;severity&lt;/strong&gt;, &lt;strong&gt;frequency&lt;/strong&gt;, and &lt;strong&gt;impact.&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;List Out What You've Tried&lt;/p&gt;&lt;p&gt;Tell them about everything you've tried—from diet and exercise to other remedies you've used to manage symptoms.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;Have a Plan&lt;/p&gt;&lt;p&gt;Be prepared to cover everything you want to discuss.&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;Learn More About LINZESS&lt;/p&gt;&lt;p&gt;See &lt;strong&gt;&lt;a href=&quot;/why-linzess#howlinzesscanhelp&quot;&gt;how LINZESS can help&lt;/a&gt;&lt;/strong&gt; people with IBS-C and CIC find relief.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;"/>
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Columns"
+          model="columns"
+          modelFields="[]"
+          filter="columns">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Columns Row"
+            model="columns-row"
+            modelFields="[col1,col2]"
+            col1="&lt;p&gt;&lt;picture&gt;&lt;img src=&quot;/content/dam/abbvie-eds-poc/linzess/images/FindRelief-GutCheck-Tout-Desktop.png&quot; alt=&quot;&quot;&gt;&lt;/picture&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Actor Portrayal&lt;/em&gt;&lt;/p&gt;"
+            col2="&lt;h2&gt;Prepare for Your Visit With the Gut Check&lt;/h2&gt;&lt;p&gt;By answering 5 quick questions, you'll be ready to better describe your symptoms at your next doctor's appointment.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;/find-relief/gutcheck&quot;&gt;Get My Discussion Guide&lt;/a&gt;&lt;/p&gt;"/>
+        </block>
+
+        <text_1 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;hr&gt;&lt;h2 id=&quot;why-finding-the-right-doctor-is-important&quot;&gt;Why Finding The Right Doctor Is Important&lt;/h2&gt;&lt;p&gt;Talking about your gut issues can be challenging. Our panel is joined by Gastroenterologist, Dr. Susan Lucak, who details some ways to have a more productive conversation with your doctor.&lt;/p&gt;"/>
+
+        <block_1 sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Embed"
+          model="embed"
+          modelFields="[poster,url]"
+          poster="/content/dam/abbvie-eds-poc/v1/static/1029485116001/fdc6ae46-88c8-4739-af48-63dc33e58085/2e05570a-c70c-4d39-9525-b53f3aa2538b/1280x720/match/image.jpg"
+          posterAlt="GETTING ON THE SAME PAGE"
+          url="https://players.brightcove.net/1029485116001/Mcp9TXMkPT_default/index.html?videoId=6391879132112"/>
+
+        <text_2 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;&lt;strong&gt;GETTING ON THE SAME PAGE&lt;/strong&gt; &lt;a href=&quot;/why-linzess/linzess-patient-experiences/getting-on-same-page-transcripts&quot;&gt;View Transcript&lt;/a&gt;&lt;/p&gt;"/>
+
+      </section_1>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 2: How to Take Linzess (off-white bg)
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_2 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="find-relief-off-white">
+
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;&lt;a id=&quot;howtotake&quot;&gt;&lt;/a&gt;How to Take Linzess&lt;/p&gt;&lt;hr&gt;&lt;h2 id=&quot;what-to-know-before-starting-linzess&quot;&gt;What to Know Before Starting LINZESS&lt;/h2&gt;&lt;p&gt;Want to get off to the right start with LINZESS? Watch this short video where Dr. Darren Brenner, Northwestern University Feinberg School of Medicine, shares 4 key points about &lt;strong&gt;how to take LINZESS&lt;/strong&gt; and &lt;strong&gt;what to expect&lt;/strong&gt; in terms of symptom relief and common side effects.&lt;/p&gt;"/>
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Embed"
+          model="embed"
+          modelFields="[poster,url]"
+          poster="/content/dam/abbvie-eds-poc/v1/static/1029485116001/f3685a9e-6c64-4959-8703-ffd857750ea7/e933a380-0c58-41ee-8158-9fffd7b1e5ac/1280x720/match/image.jpg"
+          posterAlt="WHAT TO KNOW BEFORE STARTING LINZESS"
+          url="https://players.brightcove.net/1029485116001/Mcp9TXMkPT_default/index.html?videoId=6337642986112"/>
+
+        <text_1 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;&lt;strong&gt;WHAT TO KNOW BEFORE STARTING LINZESS&lt;/strong&gt; &lt;a href=&quot;/why-linzess/linzess-patient-experiences/setting-expectations-transcripts&quot;&gt;View Transcript&lt;/a&gt;&lt;/p&gt;&lt;hr&gt;&lt;h2 id=&quot;already-been-prescribed-linzess&quot;&gt;Already Been Prescribed LINZESS?&lt;/h2&gt;"/>
+
+        <block_1 sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Cards Grid"
+          model="cards-grid"
+          modelFields="[]"
+          filter="cards-grid"
+          classes="cards-grid-icon-image-card">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Grid Card" model="grid-card" modelFields="[link,image,line1,line2,line3,line4]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-pill-bottle.svg"
+            line1="Refill on Time"
+            line2="Your local pharmacy may offer refill reminders—ask your pharmacist about signing up. Can't make it to the pharmacy for a while? Notify your doctor or pharmacist to ensure you have enough medication. You may also want to check if your pharmacy offers delivery services."/>
+          <item_1 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Grid Card" model="grid-card" modelFields="[link,image,line1,line2,line3,line4]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-stethoscope.svg"
+            line1="Keep Your Doctor Updated"
+            line2="It's important to keep your doctor informed about how LINZESS is working for you. Let them know how it may be helping to manage your IBS-C or CIC symptoms and if you're experiencing any side effects."/>
+        </block_1>
+
+        <text_2 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;hr&gt;&lt;h2 id=&quot;need-a-savings-card&quot;&gt;Need A Savings Card?*&lt;/h2&gt;&lt;p&gt;Choose how you want to sign up:&lt;/p&gt;"/>
+
+        <block_2 sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Cards Grid"
+          model="cards-grid"
+          modelFields="[]"
+          filter="cards-grid"
+          classes="cards-grid-icon-image-card">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Grid Card" model="grid-card" modelFields="[link,image,line1,line2,line3,line4]"
+            link="sms:59257"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-text-msg.svg"
+            line1="Text"
+            line2="&lt;p&gt;&quot;&lt;strong&gt;LINZESS&lt;/strong&gt;&quot; to &lt;strong&gt;59257&lt;/strong&gt; to sign up and add your card to your phone.†&lt;/p&gt;"
+            line3="Text to Sign Up"/>
+          <item_1 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Grid Card" model="grid-card" modelFields="[link,image,line1,line2,line3,line4]"
+            link="tel:1-855-859-5614"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-daily-reminders.svg"
+            line1="Call"
+            line2="1-855-859-5614 and we'll help you sign up and mail out your card."
+            line3="Call to Sign Up"/>
+          <item_2 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Grid Card" model="grid-card" modelFields="[link,image,line1,line2,line3,line4]"
+            link="/savings-card"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-web-click.svg"
+            line1="Click"
+            line2="to sign up online and download your card."
+            line3="Sign Up Online"/>
+        </block_2>
+
+        <text_3 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;Already have a savings card? &lt;strong&gt;&lt;a href=&quot;/savings-card&quot;&gt;Activate now&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;*Maximum savings limit applies; patient out-of-pocket expense may vary. This offer is available to patients with commercial insurance coverage and a valid LINZESS prescription. Offer not valid for patients enrolled in Medicare, Medicaid, or other federal or state healthcare programs. This offer is not valid for cash-paying patients. Please see &lt;a href=&quot;/savings-and-support#expand&quot;&gt;Program Terms, Conditions, Privacy Notice, and Eligibility Criteria&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;†By texting LINZESS to 59257, you will receive your activated savings card. 10 msgs. per enrollment activation. Message and data rates apply. Reply HELP for help; reply STOP to cancel. Consent to receiving SMS messages is not a condition of purchase of goods or services. Please see full &lt;a href=&quot;https://smsterms.copaysavingsprogram.com/Linzess&quot;&gt;Terms&lt;/a&gt; and &lt;a href=&quot;https://smsprivacy.copaysavingsprogram.com/Linzess&quot;&gt;Privacy Policy&lt;/a&gt;.&lt;/p&gt;"/>
+
+      </section_2>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 3: Tabs (Instructions for Adults & Children)
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_3 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="find-relief-off-white">
+
+        <title sling:resourceType="core/franklin/components/title/v1/title" jcr:primaryType="nt:unstructured"
+          title="Instructions For Adults &amp; Children"
+          titleType="h2"/>
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Tabs"
+          model="tabs"
+          modelFields="[]"
+          filter="tabs">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Tab" model="tab-item" modelFields="[label]"
+            label="Adults with IBS-C or CIC"/>
+          <item_1 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Tab" model="tab-item" modelFields="[label]"
+            label="Pediatric Functional Constipation (6–17 years of age)"/>
+        </block>
+
+      </section_3>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 4: Tab Panel 1 - Adults with IBS-C or CIC
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_4 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        name="Adults with IBS-C or CIC">
+
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;Take LINZESS&lt;/p&gt;&lt;hr&gt;"/>
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Flexbox"
+          model="flexbox"
+          modelFields="[]"
+          classes="column">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-pill-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;Every Day&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;For LINZESS to work best, take it every day. This is different from over-the-counter laxatives, which are often taken as needed.&lt;/p&gt;&lt;p&gt;When taken daily, constipation relief is typically felt in about 1 week.&lt;/p&gt;&lt;p&gt;Adult IBS-C patients may begin to experience relief of belly pain and overall abdominal symptoms‡ (pain, discomfort, and bloating) in about 1 week, with symptoms typically improving over 12 weeks.&lt;/p&gt;&lt;p&gt;&lt;em&gt;‡Abdominal symptoms were studied in combination, not individually.&lt;/em&gt;&lt;/p&gt;"/>
+          <item_1 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-calendar-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;Once a Day&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;If you miss a dose, take your dose as usual the following day. Do not take 2 doses at the same time to make up for a missed dose.&lt;/p&gt;"/>
+          <item_2 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-stomach-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;On an Empty Stomach&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Take your pill, as prescribed by your doctor, at least 30 minutes before a meal at about the same time of day.&lt;/p&gt;"/>
+          <item_3 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-glass-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;With Applesauce or Water, if Necessary&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;If you have trouble swallowing capsules, carefully open the LINZESS capsule and sprinkle all of the LINZESS beads onto applesauce or into 1 oz. (30mL) of water.&lt;/p&gt;"/>
+        </block>
+
+      </section_4>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 5: Tab Panel 2 - Pediatric
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_5 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        name="Pediatric Functional Constipation (6–17 years of age)">
+
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;Take LINZESS&lt;/p&gt;&lt;hr&gt;"/>
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Flexbox"
+          model="flexbox"
+          modelFields="[]"
+          classes="column">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-pill-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;Every Day&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;For LINZESS to work best, your child should take it every day at about the same time. This is different from over-the-counter laxatives, which are often taken as needed.&lt;/p&gt;"/>
+          <item_1 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-calendar-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;Once a Day&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;If your child misses a dose, skip the missed dose. The next dose should be taken as usual the following day. Two doses should not be taken at the same time to make up for a missed dose.&lt;/p&gt;"/>
+          <item_2 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-stomach-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;On an Empty Stomach&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;You should give your child LINZESS at least 30 minutes before a meal at about the same time of day. Be sure to follow any other instructions prescribed by a doctor.&lt;/p&gt;"/>
+          <item_3 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Flexbox Item" model="flexbox-item" modelFields="[image,text]"
+            image="/content/dam/abbvie-eds-poc/linzess/images/icon-glass-blue.svg"
+            text="&lt;p&gt;&lt;strong&gt;With Applesauce or Water, if Necessary&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;If your child has trouble swallowing capsules, you can carefully open the LINZESS capsule and sprinkle all of the LINZESS beads onto applesauce or into 1 oz. (30mL) of water.&lt;/p&gt;"/>
+        </block>
+
+      </section_5>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 6: How to Store + Savings Promo (off-white)
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_6 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="find-relief-off-white">
+
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;hr&gt;&lt;h2 id=&quot;how-to-store-linzess&quot;&gt;HOW TO STORE LINZESS&lt;/h2&gt;&lt;p&gt;Remember to store LINZESS at room temperature (68°F–77°F). It's important to keep LINZESS in the bottle it comes in. Keep the LINZESS bottle tightly closed, in a dry place, and leave the desiccant (the drying agent that looks like a small cloth packet) in the bottle. &lt;strong&gt;Keep LINZESS out of the reach of children&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Please see &lt;strong&gt;&lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf#page=26&quot;&gt;Medication Guide&lt;/a&gt;&lt;/strong&gt; for full instructions.&lt;/p&gt;"/>
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Columns"
+          model="columns"
+          modelFields="[]"
+          filter="columns">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Columns Row" model="columns-row" modelFields="[col1,col2]"
+            col1="&lt;p&gt;&lt;picture&gt;&lt;img src=&quot;/content/dam/abbvie-eds-poc/linzess/images/SavingsCard-Tout-Asterisk_Desktop.png&quot; alt=&quot;You may be eligible to get 90 days for 30 dollars&quot;&gt;&lt;/picture&gt;&lt;/p&gt;"
+            col2="&lt;h2&gt;You Could Pay as Little as $30 for a 30‑day or 90‑day Prescription*&lt;/h2&gt;&lt;p&gt;The LINZESS savings card enables many eligible, commercially insured patients to pay as little as $30 for a 30-day or 90-day prescription.*&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;/savings-card&quot;&gt;Sign Up Now&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Already have a savings card? &lt;strong&gt;&lt;a href=&quot;/savings-card&quot;&gt;Activate now&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;"/>
+        </block>
+
+        <text_1 sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;*Maximum savings limit applies; patient out-of-pocket expense may vary. This offer is available to patients with commercial insurance coverage and a valid LINZESS prescription. Offer not valid for patients enrolled in Medicare, Medicaid, or other federal or state healthcare programs. This offer is not valid for cash-paying patients. Please see &lt;strong&gt;&lt;a href=&quot;/savings-and-support#expand&quot;&gt;Program Terms, Conditions, Privacy Notice, and Eligibility Criteria&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;"/>
+
+      </section_6>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 7: Bottom CTA Cards (dark purple)
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_7 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="find-relief-dark-purple">
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Columns"
+          model="columns"
+          modelFields="[]"
+          filter="columns">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Columns Row" model="columns-row" modelFields="[col1,col2]"
+            col1="&lt;h2&gt;Check My Symptoms&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;/find-relief/gutcheck&quot;&gt;Learn More&lt;/a&gt;&lt;/p&gt;"
+            col2="&lt;h2&gt;See Resources&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;/resources&quot;&gt;Learn More&lt;/a&gt;&lt;/p&gt;"/>
+        </block>
+
+      </section_7>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 8: ISI Text Container
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_8 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]">
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Text Container"
+          model="text-container"
+          modelFields="[classes_customDynamicClass,classes_textWidth,classes_textTopSpacing,classes_textBottomSpacing,classes_textAlignment,classes_textDirection,classes_theme,classes_textVariant,classes_columns,blockId,classes_commonCustomClass,language,analytics_id]"
+          filter="text-container"
+          classes_customDynamicClass="-"
+          blockId="id:linzess-find-relief-isi"
+          classes_commonCustomClass="-"
+          language="lang:none"
+          analytics_id="-">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Text Container Text"
+            model="text-container-text"
+            modelFields="[text]"
+            text="&lt;p&gt;&lt;h3&gt;USES&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;LINZESS® (linaclotide) is a prescription medication used to treat irritable bowel syndrome with constipation (IBS-C) in adults and in children and adolescents 7 years of age and older, chronic idiopathic constipation (CIC) in adults, and functional constipation (FC) in children and adolescents 6 years of age and older. &quot;Idiopathic&quot; means the cause of the constipation is unknown. &lt;strong&gt;It is not known if LINZESS is safe and effective in children with functional constipation less than 6 years of age or in children with IBS-C less than 7 years of age.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;IMPORTANT RISK INFORMATION&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Do not give LINZESS to children who are less than 2 years of age. It may harm them.&lt;/strong&gt; LINZESS can cause severe diarrhea and your child could get severe dehydration (loss of a large amount of body water and salt).&lt;/li&gt;&lt;li&gt;Do not take LINZESS if a doctor has told you that you have a bowel blockage (intestinal obstruction).&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Before you take LINZESS, tell your doctor about your medical conditions, including if you are:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;Pregnant or plan to become pregnant. It is not known if LINZESS will harm your unborn baby.&lt;/li&gt;&lt;li&gt;Breastfeeding or plan to breastfeed. You and your doctor should decide if you will take LINZESS and breastfeed.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Tell your doctor about all the medicines you take,&lt;/strong&gt; including prescription and over-the-counter medicines, vitamins, and herbal supplements.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Side Effects&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;LINZESS can cause serious side effects, including diarrhea, which is the most common side effect and can sometimes be severe.&lt;/strong&gt; Diarrhea often begins within the first 2 weeks of LINZESS treatment. &lt;strong&gt;Stop taking LINZESS and call your doctor right away if you get severe diarrhea during treatment with LINZESS.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Other common side effects of LINZESS in people with IBS-C and CIC include gas, stomach-area (abdomen) pain, and swelling, or a feeling of fullness or pressure in your abdomen (distention).&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Call your doctor or go to the nearest hospital emergency room right away if you develop unusual or severe stomach-area (abdomen) pain, especially if you also have bright red, bloody stools or black stools that look like tar.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;These are not all the possible side effects of LINZESS. For more information, ask your doctor or pharmacist.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;You are encouraged to report negative side effects of prescription drugs to the FDA. Visit &lt;a href=&quot;https://www.fda.gov/medwatch&quot;&gt;www.fda.gov/medwatch&lt;/a&gt; or call &lt;a href=&quot;tel:18003321088&quot;&gt;1-800-FDA-1088&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;If you are having difficulty paying for your medicine, AbbVie and Ironwood may be able to help. Visit &lt;a href=&quot;https://www.abbvie.com/patients/patient-support.html&quot;&gt;AbbVie.com/PatientAccessSupport&lt;/a&gt; to learn more.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please see full &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf&quot;&gt;Prescribing Information&lt;/a&gt;, including Boxed Warning, and &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf#page=26&quot;&gt;Medication Guide&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;US-LIN-250121&lt;/p&gt;"/>
+        </block>
+
+      </section_8>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 9: Safety Bar
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_9 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]">
+
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Safety Bar"
+          model="safety-bar"
+          modelFields="[collapsedContent,collapsedContentCol2,expandedContent,classes_variant,blockId,classes_commonCustomClass,language]"
+          collapsedContent="&lt;p&gt;&lt;h3&gt;USES&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;LINZESS® (linaclotide) is a prescription medication used to treat irritable bowel syndrome with constipation (IBS-C) in adults and in children and adolescents 7 years of age and older, chronic idiopathic constipation (CIC) in adults, and functional constipation (FC) in children and adolescents 6 years of age and older. &quot;Idiopathic&quot; means the cause of the constipation is unknown. &lt;strong&gt;It is not known if LINZESS is safe and effective in children with functional constipation less than 6 years of age or in children with IBS-C less than 7 years of age.&lt;/strong&gt;&lt;/p&gt;"
+          collapsedContentCol2="&lt;p&gt;&lt;h3&gt;IMPORTANT RISK INFORMATION&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Do not give LINZESS to children who are less than 2 years of age. It may harm them.&lt;/strong&gt; LINZESS can cause severe diarrhea and your child could get severe dehydration (loss of a large amount of body water and salt).&lt;/li&gt;&lt;li&gt;Do not take LINZESS if a doctor has told you that you have a bowel blockage (intestinal obstruction).&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Before you take LINZESS, tell your doctor about your medical conditions, including if you are:&lt;/strong&gt;&lt;/p&gt;"
+          expandedContent="&lt;p&gt;&lt;h3&gt;USES&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;LINZESS® (linaclotide) is a prescription medication used to treat irritable bowel syndrome with constipation (IBS-C) in adults and in children and adolescents 7 years of age and older, chronic idiopathic constipation (CIC) in adults, and functional constipation (FC) in children and adolescents 6 years of age and older. &quot;Idiopathic&quot; means the cause of the constipation is unknown. It is not known if LINZESS is safe and effective in children with functional constipation less than 6 years of age or in children with IBS-C less than 7 years of age.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;IMPORTANT RISK INFORMATION&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Do not give LINZESS to children who are less than 2 years of age. It may harm them.&lt;/strong&gt; LINZESS can cause severe diarrhea and your child could get severe dehydration (loss of a large amount of body water and salt).&lt;/li&gt;&lt;li&gt;Do not take LINZESS if a doctor has told you that you have a bowel blockage (intestinal obstruction).&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Before you take LINZESS, tell your doctor about your medical conditions, including if you are:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;Pregnant or plan to become pregnant. It is not known if LINZESS will harm your unborn baby.&lt;/li&gt;&lt;li&gt;Breastfeeding or plan to breastfeed. You and your doctor should decide if you will take LINZESS and breastfeed.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Tell your doctor about all the medicines you take,&lt;/strong&gt; including prescription and over-the-counter medicines, vitamins, and herbal supplements.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Side Effects&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;LINZESS can cause serious side effects, including diarrhea, which is the most common side effect and can sometimes be severe.&lt;/strong&gt; Diarrhea often begins within the first 2 weeks of LINZESS treatment. &lt;strong&gt;Stop taking LINZESS and call your doctor right away if you get severe diarrhea during treatment with LINZESS.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Other common side effects of LINZESS in people with IBS-C and CIC include gas, stomach-area (abdomen) pain, and swelling, or a feeling of fullness or pressure in your abdomen (distention).&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Call your doctor or go to the nearest hospital emergency room right away if you develop unusual or severe stomach-area (abdomen) pain, especially if you also have bright red, bloody stools or black stools that look like tar.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;These are not all the possible side effects of LINZESS. For more information, ask your doctor or pharmacist.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;You are encouraged to report negative side effects of prescription drugs to the FDA. Visit &lt;a href=&quot;https://www.fda.gov/medwatch&quot;&gt;www.fda.gov/medwatch&lt;/a&gt; or call &lt;a href=&quot;tel:18003321088&quot;&gt;1-800-FDA-1088&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;If you are having difficulty paying for your medicine, AbbVie and Ironwood may be able to help. Visit &lt;a href=&quot;https://www.abbvie.com/patients/patient-support.html&quot;&gt;AbbVie.com/PatientAccessSupport&lt;/a&gt; to learn more.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please see full &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf&quot;&gt;Prescribing Information&lt;/a&gt;, including Boxed Warning, and &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf#page=26&quot;&gt;Medication Guide&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;US-LIN-250121&lt;/p&gt;"
+          classes_variant="split"
+          blockId="id:linzess-find-relief-safety"
+          classes_commonCustomClass=""
+          language="lang:none"/>
+
+      </section_9>
+
+      <!-- ═══════════════════════════════════════════════════════════════
+           SECTION 10: Metadata
+           ═══════════════════════════════════════════════════════════════ -->
+      <section_10 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section"
+        modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]">
+
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;brand&lt;/p&gt;&lt;p&gt;linzess&lt;/p&gt;&lt;p&gt;nav&lt;/p&gt;&lt;p&gt;/linzess/nav&lt;/p&gt;&lt;p&gt;footer&lt;/p&gt;&lt;p&gt;/linzess/footer&lt;/p&gt;&lt;p&gt;title&lt;/p&gt;&lt;p&gt;Find Relief | LINZESS® (linaclotide)&lt;/p&gt;&lt;p&gt;description&lt;/p&gt;&lt;p&gt;Prepare for your doctor visit, get tips on how to take LINZESS, learn what to expect when starting treatment, and explore patient resources. See Important Risk Info and Boxed Warning.&lt;/p&gt;"/>
+
+      </section_10>
+
+    </root>
+  </jcr:content>
+</jcr:root>
