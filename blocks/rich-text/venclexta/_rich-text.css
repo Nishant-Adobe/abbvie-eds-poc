@@ -124,8 +124,8 @@ main .section[data-background].ven-zone {
 }
 
 /* Hide unprocessed metadata section on aem.live (last section, no block wrappers) */
-main > .section.safety-bar-container ~ .section:not([class*="-container"]),
-main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .ven-zone) > .default-content-wrapper:only-child {
+main>.section.safety-bar-container~.section:not([class*="-container"]),
+main>.section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .ven-zone)>.default-content-wrapper:only-child {
   display: none;
 }
 
@@ -315,25 +315,25 @@ main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .v
 }
 
 .section.gray-bg .rich-text:first-child h2,
-.section.gray-bg .rich-text:first-child > p:nth-of-type(1),
-.section.gray-bg .rich-text:first-child > p:nth-of-type(2),
-.section.gray-bg .rich-text:first-child > p:nth-of-type(3) {
+.section.gray-bg .rich-text:first-child>p:nth-of-type(1),
+.section.gray-bg .rich-text:first-child>p:nth-of-type(2),
+.section.gray-bg .rich-text:first-child>p:nth-of-type(3) {
   width: 100%;
 }
 
-.section.gray-bg .rich-text:first-child > p:nth-last-of-type(2) {
+.section.gray-bg .rich-text:first-child>p:nth-last-of-type(2) {
   flex: 0 0 auto;
   max-width: 400px;
   margin-bottom: 0;
 }
 
-.section.gray-bg .rich-text:first-child > p:last-of-type {
+.section.gray-bg .rich-text:first-child>p:last-of-type {
   flex: 0 0 auto;
   margin-left: auto;
   margin-bottom: 0;
 }
 
-.section.gray-bg .rich-text:first-child > p:has(a[href^="tel:"]) {
+.section.gray-bg .rich-text:first-child>p:has(a[href^="tel:"]) {
   flex: 0 0 auto;
   margin-left: 0;
   padding-left: 15px;
@@ -430,15 +430,15 @@ main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .v
 
 /* Mobile/Tablet: stack CTA and text vertically */
 @media (width < 1024px) {
-  .section.gray-bg .rich-text:first-child > p:nth-last-of-type(2) {
+  .section.gray-bg .rich-text:first-child>p:nth-last-of-type(2) {
     max-width: 100%;
   }
 
-  .section.gray-bg .rich-text:first-child > p:last-of-type {
+  .section.gray-bg .rich-text:first-child>p:last-of-type {
     margin-left: 0;
   }
 
-  .section.gray-bg .rich-text:first-child > p:has(a[href^="tel:"]) {
+  .section.gray-bg .rich-text:first-child>p:has(a[href^="tel:"]) {
     margin-left: 0;
     padding-left: 0;
     margin-top: 20px;
@@ -515,9 +515,9 @@ main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .v
 }
 
 .rich-text a {
-    color: #008481;
-    text-decoration: none;
-    font-size: 16px;
+  color: #008481;
+  text-decoration: none;
+  font-size: 16px;
 }
 
 @media (width < 974px) {
@@ -551,7 +551,37 @@ main > .section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .v
 }
 
 @media (width < 1024px) {
-    .section.gray-bg .rich-text:first-child > p:nth-last-of-type(2) {
-        max-width: revert-rule;
-    }
+  .section.gray-bg .rich-text:first-child>p:nth-last-of-type(2) {
+    max-width: revert-rule;
+  }
+
+  .section.abbvie-container.yellow-bg.flexbox-container {
+    max-height: fit-content;
+    margin: 0 35px;
+    width: auto;
+  }
+
+  .section.abbvie-container.yellow-bg.flexbox-container .flexbox.center.align-stretch.no-wrap.block {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .section.yellow-bg .flexbox .flexbox-item:nth-child(1) {
+    text-align: left;
+  }
+
+  .section.yellow-bg .flexbox .flexbox-item .flexbox-item-image img {
+    max-height: 146px;
+    transform: rotate(-90deg) translateY(-21px);
+    margin-top: -35px;
+  }
+
+  .section.yellow-bg .flexbox .flexbox-item:nth-child(3) {
+    margin-top: -28px;
+  }
+
+  .section.yellow-bg .flexbox .flexbox-item:nth-child(1) .flexbox-item-content p {
+    display: inline-block;
+  }
 }
