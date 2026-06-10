@@ -200,12 +200,18 @@
 /* ── Desktop ≥768px: horizontal flex list, toggle hidden ─────────────────── */
 
 @media (width >= 744px) {
+  /* Desktop: compact centred purple pill that hugs its links
+     (overrides the 70vw mobile width). Matches linzess.com jump-to bar. */
   .section-nav.mobile-menu {
-    overflow-x: auto;
+    overflow-x: visible;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
   }
 
   .section-nav.mobile-menu nav {
     flex-direction: row;
+    justify-content: center;
     padding: 0 var(--spacing-24);
   }
 

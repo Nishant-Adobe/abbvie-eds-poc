@@ -41,7 +41,7 @@ main .section.dark-purple a:not(.button) {
 
 main .section.dark-purple h2 {
   font-family: var(--body-font-family);
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 700;
   text-transform: none;
   letter-spacing: normal;
@@ -53,8 +53,8 @@ main .section.dark-purple a.button:any-link {
   background-color: #faa633;
   color: #422e83;
   border: none;
-  border-radius: 24px;
-  padding: 16px 32px;
+  border-radius: 16px;
+  padding: 16px 24px;
   font-weight: 800;
   font-size: 14.4px;
   display: inline-flex;
@@ -155,13 +155,13 @@ main .section.dark-purple .columns-wrapper * {
   }
 
   main .section.dark-purple h2 {
-    font-size: 24px !important;
+    font-size: 18px !important;
     margin-bottom: 1rem !important;
   }
 
   main .section.dark-purple a.button:any-link {
-    padding: 14px 28px !important;
-    font-size: 13px !important;
+    padding: 16px 24px !important;
+    font-size: 14.4px !important;
   }
 }
 
@@ -229,12 +229,12 @@ main .section.dark-purple + .section strong {
   }
 
   main .section.dark-purple h2 {
-    font-size: 22px !important;
+    font-size: 18px !important;
   }
 
   main .section.dark-purple a.button:any-link {
-    padding: 14px 24px !important;
-    font-size: 13px !important;
+    padding: 16px 24px !important;
+    font-size: 14.4px !important;
   }
 }
 
@@ -312,7 +312,7 @@ main .section.dark-purple + .section strong {
 .columns.doctor-tout .columns-item-content h2 {
   color: var(--linz-dark-purple, #422e83);
   font-family: var(--body-font-family);
-  font-size: 1.5rem;
+  font-size: 18px;
   font-weight: 700;
   text-transform: none;
   letter-spacing: normal;
@@ -322,11 +322,11 @@ main .section.dark-purple + .section strong {
 /* Gold CTA button inside touts */
 .columns.savings-card-tout a.button:any-link,
 .columns.doctor-tout a.button:any-link {
-  background-color: var(--linz-orange, #faa633);
-  color: var(--linz-dark-purple, #422e83);
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-white, #fff);
   border: none;
   border-radius: 16px;
-  padding: 16px 32px;
+  padding: 16px 24px;
   font-weight: 800;
   font-size: 14.4px;
   display: inline-flex;
@@ -344,7 +344,7 @@ main .section.dark-purple + .section strong {
 
 .columns.savings-card-tout a.button:hover,
 .columns.doctor-tout a.button:hover {
-  background-color: #e6951a;
+  background-color: var(--linz-purple, #60579e);
 }
 
 /* Plain text link (Activate now) */
@@ -416,11 +416,11 @@ main .section.dark-purple + .section strong {
 }
 
 .columns.savings-banner a.button:any-link {
-  background-color: var(--linz-orange, #faa633);
-  color: var(--linz-dark-purple, #422e83);
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-white, #fff);
   border: none;
   border-radius: 16px;
-  padding: 14px 28px;
+  padding: 16px 24px;
   font-weight: 800;
   font-size: 14.4px;
   display: inline-flex;
@@ -437,7 +437,7 @@ main .section.dark-purple + .section strong {
 }
 
 .columns.savings-banner a.button:hover {
-  background-color: #e6951a;
+  background-color: var(--linz-purple, #60579e);
 }
 
 @media (width < 768px) {
@@ -449,5 +449,359 @@ main .section.dark-purple + .section strong {
 
   .columns.savings-banner h2 {
     font-size: 1.25rem;
+  }
+}
+
+/* ====================================================
+   Linzess: Section heading + eyebrow for default-content
+   heading sections (savings-intro, signup-section).
+   These sections have no heading-bearing block of their own,
+   so the Platform-C utility classes (heading-1, eyebrow,
+   c-linz-dark-purple) are styled here, scoped to the section
+   style-class. Columns CSS reliably loads on these pages.
+   Matches linzess.com computed styles.
+   ==================================================== */
+
+main .section.savings-intro .eyebrow,
+main .section.signup-section .eyebrow {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  color: var(--linz-dark-purple, #422e83);
+  text-align: center;
+  margin: 0 0 1rem;
+}
+
+/* Gold divider under the eyebrow (matches accordion-section heading) */
+main .section.savings-intro .eyebrow::after,
+main .section.signup-section .eyebrow::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 5px;
+  margin: 0.75rem auto 0;
+  background: url("https://www.linzess.com/content/dam/linzess/images/divider.svg") center / contain no-repeat;
+}
+
+main .section.savings-intro .heading-1,
+main .section.signup-section .heading-1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 30px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--linz-dark-purple, #422e83);
+  text-align: center;
+  margin: 0 auto;
+}
+
+main .section.savings-intro .heading-2,
+main .section.signup-section .heading-2 {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+
+main .section.savings-intro .c-linz-dark-purple,
+main .section.signup-section .c-linz-dark-purple {
+  color: var(--linz-dark-purple, #422e83);
+}
+
+/* ====================================================
+   Linzess: From The Gut — logo + heading above the
+   sign-up form. Section style class is dropped on this
+   project, so scope via the contained ftgsignup block.
+   Logo ~179px; heading Bebas Neue 32px, centered.
+   ==================================================== */
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper {
+  text-align: center;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper img {
+  width: 179px;
+  height: auto;
+  margin: 0 auto;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 20px 0 1.5rem;
+}
+
+/* ====================================================
+   Linzess: From The Gut sign-up form (visual mockup)
+   columns.ftgsignup — labels with CSS-drawn input boxes,
+   radio chips, consent text, and Sign Up button.
+   Matches linzess.com/savings-and-support/from-the-gut.
+   Non-functional (no backend) — visual parity only.
+   ==================================================== */
+
+.columns.ftgsignup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Hide the anchor-id config row (first item) */
+.columns.ftgsignup > .columns-item:first-child {
+  display: none;
+}
+
+/* Each row of fields */
+.columns.ftgsignup > .columns-item {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+}
+
+.columns.ftgsignup > .columns-item > .columns-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Field label + CSS-drawn input box below it */
+.columns.ftgsignup .ftg-field {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup .ftg-field::after {
+  content: "";
+  display: block;
+  height: 56px;
+  margin-top: 10px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 16px;
+  background-color: #efedf5;
+}
+
+/* "Are you currently prescribed?" question label */
+.columns.ftgsignup .ftg-question {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0;
+}
+
+/* Radio options rendered as chips with a CSS circle */
+.columns.ftgsignup .ftg-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup .ftg-radio::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* Consent paragraph */
+.columns.ftgsignup .ftg-consent {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+  padding-left: 32px;
+  position: relative;
+  text-align: left;
+}
+
+/* CSS-drawn checkbox before the consent text */
+.columns.ftgsignup .ftg-consent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 4px;
+}
+
+.columns.ftgsignup .ftg-consent a {
+  color: var(--linz-dark-purple, #422e83);
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  font-weight: 400;
+}
+
+/* Sign Up button row — center the button within its full-width cell */
+.columns.ftgsignup > .columns-item:last-child .columns-item-content {
+  text-align: center;
+}
+
+/* Sign Up button — gold pill, matches live */
+.columns.ftgsignup a.button:any-link {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-white, #fff);
+  border: none;
+  border-radius: 16px;
+  padding: 14px 48px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-weight: 800;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin: 0.5rem 0 0;
+  min-width: 144px;
+}
+
+.columns.ftgsignup a.button:any-link::after {
+  content: "❯";
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 12px;
+}
+
+.columns.ftgsignup a.button:hover {
+  background-color: var(--linz-purple, #60579e);
+}
+
+/* reCAPTCHA badge — replicates the Google badge widget:
+   white logo cell on the left, blue box with text on the right.
+   "protected by reCAPTCHA" on line 1, "Privacy - Terms" on line 2. */
+.columns.ftgsignup > .columns-item:has(.ftg-recaptcha) {
+  justify-content: center;
+}
+
+.columns.ftgsignup > .columns-item:has(.ftg-recaptcha) .columns-item-content {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.columns.ftgsignup .ftg-recaptcha {
+  display: block;
+  width: 256px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 12px 10px 12px 70px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  font-family: Roboto, var(--body-font-family, "Lato", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #fff;
+  text-align: left;
+}
+
+/* White logo cell — separate square box on the left */
+.columns.ftgsignup .ftg-recaptcha::before {
+  content: "Privacy - Terms";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0 0 0 / 17%);
+  font-size: 7px;
+  color: #555;
+  white-space: nowrap;
+}
+
+/* Blue panel — separate box on the right, with a small gap from the white cell */
+.columns.ftgsignup .ftg-recaptcha::after {
+  content: "";
+  position: absolute;
+  left: 60px;
+  top: 0;
+  right: 0;
+  height: 60px;
+  background-color: #4a90e2;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0 0 0 / 17%);
+  z-index: -1;
+}
+
+/* The recycle logo, sitting in the upper part of the white cell */
+.columns.ftgsignup .ftg-recaptcha img {
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.columns.ftgsignup .ftg-recaptcha strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Force the Privacy / Terms links onto a second line in the blue panel */
+.columns.ftgsignup .ftg-recaptcha a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.columns.ftgsignup .ftg-recaptcha a:first-of-type::before {
+  content: "";
+  display: block;
+  margin-top: 2px;
+}
+
+.columns.ftgsignup .ftg-recaptcha a:hover {
+  text-decoration: underline;
+}
+
+/* The Sign Up row centers its button */
+.columns.ftgsignup > .columns-item:last-child {
+  justify-content: center;
+}
+
+/* Mobile: stack the two-up rows */
+@media (width < 600px) {
+  .columns.ftgsignup > .columns-item {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }
