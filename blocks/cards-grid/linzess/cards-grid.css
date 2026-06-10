@@ -1204,16 +1204,18 @@
   }
 }
 
-/* ── Tablet (744px–985px): 2 cards per row ── */
+/* ── Tablet (744px–985px): stack vertically (matches live site) ── */
 @media (min-width: 744px) and (max-width: 985px) {
   .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
     flex-wrap: wrap;
+    flex-direction: column;
     gap: 40px 16px;
+    align-items: center;
   }
 
   .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
-    flex: 1 1 calc(50% - 8px);
-    min-width: calc(50% - 8px);
-    max-width: calc(50% - 8px);
+    flex: 1 1 100%;
+    min-width: 100%;
+    max-width: 100%;
   }
 }
