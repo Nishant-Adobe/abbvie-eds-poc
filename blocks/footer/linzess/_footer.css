@@ -32,7 +32,12 @@
 
   /* Arc top decoration height — matches live `.abbv-footer:before { height: 255px }`.
      Block-scoped raw value (precedent: `--footer-content-max-width: 1200px` in base). */
-  --footer-arc-height: var(--spacing-255);
+  --footer-arc-height: 255px;
+
+  /* Negative top margin pulls the footer up beneath the arc so the curved
+     top sits flush against the preceding section — matches live
+     `.abbv-footer { margin-top: -10px }`. */
+  --footer-arc-overlap: 10px;
 }
 
 /* Curved arc top decoration — replicates the live `.abbv-footer:before`.
@@ -40,19 +45,19 @@
    top doesn't taper off awkwardly at the viewport edges. */
 .footer {
   overflow: visible;
+  margin-top: calc(-1 * var(--footer-arc-overlap));
 }
 
 .footer::before {
   content: '';
   position: absolute;
-  top: -60px;
+  top: calc(-1 * var(--spacing-60));
   left: 50%;
   transform: translateX(-50%);
-  width: 100.1%;
-  height: 75px;
+  width: 100vw;
+  height: var(--footer-arc-height);
   background-color: var(--footer-color-bg);
-  border-top-left-radius: 100%;
-  border-top-right-radius: 100%;
+  border-radius: 100% 100% 0 0;
   z-index: -1;
 }
 
