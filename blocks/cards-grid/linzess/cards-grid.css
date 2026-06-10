@@ -760,6 +760,18 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   display: none;
 }
 
+/* Below desktop: stack stat cards in a single vertical column (live stacks
+   them until the 3-up desktop layout). Without this the base row+wrap rule
+   lets two narrow cards sit side by side around the 480px range. */
+@media (width < 1100px) {
+  .carousel-video-playlist-container .cards-grid .savings-card-cards,
+  body main .section.dark .cards-grid .savings-card-cards {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+}
+
 /* Mobile: smaller circles, stacked cards */
 @media (width < 768px) {
   .carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2,
