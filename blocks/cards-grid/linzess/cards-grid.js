@@ -332,15 +332,11 @@ export default function decorate(block) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return false;
 
-    const row = document.createElement('div');
-    row.className = 'linz-stat-card-row';
-
     wrappers.forEach((wrapper) => {
-      row.append(buildLinzessStatCardColumn(wrapper));
+      block.append(buildLinzessStatCardColumn(wrapper));
       wrapper.remove();
     });
 
-    block.append(row);
     return true;
   }
 

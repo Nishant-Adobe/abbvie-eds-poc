@@ -771,24 +771,13 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
    Preserves the live design: off-white + light-purple panels, 136px
    circle headings, checkmark bullet lists, footnotes. */
 .cards-grid.cards-grid-stat-card {
-  display: block;
-  background: transparent;
-  padding: 0;
-}
-
-.cards-grid.cards-grid-stat-card .linz-stat-card-row {
   display: grid;
+  grid-column: 1 / span 12;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   padding: 60px 0 0;
   align-items: stretch;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.cards-grid.cards-grid-stat-card.whylinzess-timeline .linz-stat-card-row {
-  gap: 60px;
-  max-width: 1030px;
+  background: transparent;
 }
 
 .cards-grid.cards-grid-stat-card.whylinzess-symptoms {
@@ -796,11 +785,14 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
 }
 
 .cards-grid.cards-grid-stat-card.whylinzess-timeline {
+  gap: 60px;
+  max-width: 1030px;
   margin: 40px auto 0;
 }
 
 .cards-grid.cards-grid-stat-card .linz-stat-card {
   position: relative;
+  grid-column: auto;
   padding: 60px 32px 40px;
   text-align: left;
   border-radius: var(--linz-rounded-corner);
@@ -888,7 +880,7 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
 }
 
 @media (width < 768px) {
-  .cards-grid.cards-grid-stat-card .linz-stat-card-row {
+  .cards-grid.cards-grid-stat-card {
     grid-template-columns: 1fr;
     gap: 60px;
   }
