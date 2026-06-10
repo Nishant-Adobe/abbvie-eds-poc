@@ -663,9 +663,17 @@ body main .section.cards-grid-container.carousel-video-playlist-container > .def
 body main .section.dark .cards-grid .savings-card-cards {
   flex-direction: row;
   gap: 32px;
-  margin-top: 80px;
+  margin-top: 16px;
   align-items: stretch;
   justify-content: center;
+}
+
+/* Tighten the vertical gaps above/below the stat cards to match live:
+   the intro text→circle gap and the cards→footnote gap were inflated by the
+   container margin-top and the demo-wrap top/bottom padding. */
+.carousel-video-playlist-container .cards-grid .demo-wrap {
+  padding-top: 36px;
+  padding-bottom: 12px;
 }
 
 .cards-grid.cards-grid-homepage-stats .savings-card-cards .flexboxitem-v2,
