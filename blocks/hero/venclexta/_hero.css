@@ -127,22 +127,18 @@
 
 /* Landing gradient: dark teal left-to-right */
 .hero.landing::after {
-  background: linear-gradient(
-    to right,
-    var(--color-background-container) 0%,
-    color-mix(in srgb, var(--color-brand-primary-dark) 30%, transparent) 100%
-  );
+  background: linear-gradient(to right,
+      var(--color-background-container) 0%,
+      color-mix(in srgb, var(--color-brand-primary-dark) 30%, transparent) 100%);
 }
 
 /* Full/video overlay: teal gradient */
 .hero.full::after,
 .hero.video::after {
-  background: linear-gradient(
-    to right,
-    var(--color-background-container) 0%,
-    color-mix(in srgb, var(--color-brand-primary-dark) 25%, transparent) 60%,
-    transparent 100%
-  );
+  background: linear-gradient(to right,
+      var(--color-background-container) 0%,
+      color-mix(in srgb, var(--color-brand-primary-dark) 25%, transparent) 60%,
+      transparent 100%);
 }
 
 /* Solid background: light gray */
@@ -182,7 +178,7 @@
   align-items: stretch;
 }
 
-.hero.full > div:first-child {
+.hero.full>div:first-child {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -192,8 +188,8 @@
   z-index: 0;
 }
 
-.hero.full > div:first-child picture,
-.hero.full > div:first-child img {
+.hero.full>div:first-child picture,
+.hero.full>div:first-child img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -318,7 +314,7 @@
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.hero > div:first-child {
+.hero>div:first-child {
   min-height: unset;
 }
 
@@ -458,7 +454,7 @@
 }
 
 /* Full hero: bottom footnote/legal row — centered with right-aligned text */
-  .hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) {
   bottom: var(--hero-caption-bottom);
   width: 100%;
   display: flex;
@@ -473,7 +469,7 @@
   text-align: right;
 }
 
-.hero.full > div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) p {
+.hero.full>div:not(:first-child, .hero-text-container, .hero-indication, .hero-content-stack):has(> div > p) p {
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-brand-heading);
   max-width: var(--cdp-max-width);
@@ -586,9 +582,11 @@
   width: calc((100% - 30px) / 3);
   max-width: none;
 }
+
 /* stylelint-enable no-duplicate-selectors, no-descending-specificity */
 
 @media (width < 800px) {
+
   .hero.full p:last-child,
   .hero.full p:nth-last-child(2),
   .hero.full p:nth-last-child(3),
@@ -641,5 +639,18 @@
 
   .hero.full:has(.button-container) p:last-child {
     font-size: var(--font-size-16);
+  }
+}
+
+@media (width < 974px) {
+  .hero.full:has(.button-container) .button-container {
+    margin: 48px 0 25px;
+  }
+
+  .hero.full:has(.button-container) .button-container a {
+    font-family: 'Red Hat Display';
+    font-weight: 700;
+    color: black;
+    letter-spacing: 0px;
   }
 }
