@@ -45,6 +45,12 @@ body:has(main > .section.hero-container) header:has(.nav-utility ul) {
   background: var(--header-eyebrow-gradient);
 }
 
+/* No-hero pages: header sits in-flow (not a fixed overlay) so content follows it,
+   matching the live site. Lets the white arc curve up into the purple header. */
+body.no-hero header .nav-wrapper {
+  position: static;
+}
+
 /* Nav text — white */
 header nav {
   color: var(--color-text-on-dark);

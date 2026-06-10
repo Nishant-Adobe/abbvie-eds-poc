@@ -86,6 +86,13 @@ main > .section:first-of-type:not(.hero-container)::before {
   z-index: 1;
 }
 
+/* Footer must paint above the white ISI section (z-index: 1) so its purple
+   curved arc (.footer::before) shows instead of being hidden behind it. */
+.footer-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
 
 /* Transcript content wrapper — centered with 20px side padding (matches live) */
 .section.transcript .rich-text-wrapper,
@@ -609,22 +616,11 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
 }
 
 /* Transcript/ISI pages keep the white upward arc, not develop's purple downward arc.
-   Equal specificity to body.no-hero rule but declared later, so this wins.
-   The header is a fixed/absolute purple overlay (~152px mobile, ~176px desktop), so the
-   first section is pushed below it; the white arc curves up into the purple gap. */
+   Equal specificity to body.no-hero rule but declared later, so this wins. */
 body.no-hero main > .section.transcript,
 body.no-hero main > .section.isi,
 body.no-hero main > .section:first-of-type:not(.hero-container) {
   padding-top: 0;
-  margin-top: 210px;
-}
-
-@media (width >= 900px) {
-  body.no-hero main > .section.transcript,
-  body.no-hero main > .section.isi,
-  body.no-hero main > .section:first-of-type:not(.hero-container) {
-    margin-top: 250px;
-  }
 }
 
 body.no-hero main > .section.transcript::before,
