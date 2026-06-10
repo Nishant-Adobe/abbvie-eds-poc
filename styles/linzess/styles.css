@@ -4220,3 +4220,17 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     line-height: var(--no-hero-h1-line-height-mobile);
   }
 }
+
+/* Indication statement above the promo card (regulated copy): small, gray,
+   centered — matches the live site. Targets the loose paragraph that sits in
+   the promo section's content wrapper, before the columns block. */
+main .section.columns-container:has(.columns-homepage-promo) > .default-content-wrapper p,
+main .section p.linzess-indication {
+  margin: 12px auto;
+  max-width: 802px;
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 400;
+  text-align: center;
+  color: #4d4d4f;
+}
