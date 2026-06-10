@@ -1047,15 +1047,17 @@
     --accordion-linzess-bg-item-hover: var(--color-brand-primary);
     --accordion-linzess-color-label: var(--linz-white);
     --accordion-linzess-color-body: var(--text-color);
-    --accordion-linzess-radius: var(--linz-rounded-corner-sm);
+    --accordion-linzess-radius: 16px;
     --accordion-linzess-gap: var(--spacing-10);
     --footer-seperator-color: transparent;
     --highlight-dark-background-color: transparent;
 
     background: transparent;
+    margin-bottom: 24px;
 }
 /* Card-per-item — no bottom border, gap between cards */
-.accordion .accordion-item {
+.accordion .accordion-item,
+.accordion details {
     border-bottom: none;
     background: #422e83;
     border-radius: var(--accordion-linzess-radius);
@@ -1065,7 +1067,8 @@
 /* Summary row */
 .accordion summary,
 .accordion .accordion-item-label {
-    padding: 20px 40px 20px 30px;
+    margin: 0;
+    padding: 20px 40px 20px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1074,6 +1077,7 @@
     color: #fff;
     font-family: 'Lato', sans-serif;
     font-size: 16px;
+    line-height: 22.8571px;
     cursor: pointer;
 }
 /* Focus */
@@ -1092,6 +1096,7 @@
     color: #fff;
     font-family: 'Lato', sans-serif;
     font-size: 16px;
+    line-height: 22.8571px;
     font-weight: var(--font-weight-bold);
     text-transform: none;
     letter-spacing: normal;
@@ -1111,11 +1116,13 @@
 .accordion .accordion-item[open] summary::after {
     transform: rotate(180deg);
 }
-/* Hide any icon-font icons so they don't double up */
-.accordion .item-icon-plus::after,
-.accordion .item-icon-minus::after,
-.accordion-icon-font .item-icon-plus::after,
-.accordion-icon-font .item-icon-minus::after {
+/* Hide any icon-font icons so they don't double up.
+   Scope to descendants of summary so the summary's own ::after chevron
+   (summary carries item-icon-plus/minus) is not hidden. */
+.accordion summary .item-icon-plus::after,
+.accordion summary .item-icon-minus::after,
+.accordion-icon-font summary .item-icon-plus::after,
+.accordion-icon-font summary .item-icon-minus::after {
     display: none !important;
 }
 /* Hover — darker purple, keep text unchanged */
@@ -1151,10 +1158,14 @@
     padding: var(--spacing-16) var(--spacing-24) var(--spacing-24);
 }
 .accordion .accordion-item-body .accordion-item-body-text {
-    color: var(--accordion-linzess-color-body);
-    font-family: var(--body-font-family);
-    font-size: var(--body-font-size-s);
+    color: #4d4d4f;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
     line-height: 1.6;
+    text-align: left;
+}
+.accordion .accordion-item-body .accordion-item-body-text p {
+    margin: 14px 0;
 }
 /* Reset body link styles — base applies purple gradient */
 .accordion .accordion-item-body a,
