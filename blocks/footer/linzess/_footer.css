@@ -38,6 +38,12 @@
      top sits flush against the preceding section — matches live
      `.abbv-footer { margin-top: -10px }`. */
   --footer-arc-overlap: 10px;
+
+  /* How far the arc pseudo is lifted above the footer's top edge. At a
+     shallower offset most of the curve stays hidden behind the footer and
+     reads as a flat top; -140px exposes enough of the rounded top to read
+     as an arc. Block-scoped raw value (no matching spacing token). */
+  --footer-arc-offset: 140px;
 }
 
 /* Curved arc top decoration — replicates the live `.abbv-footer:before`.
@@ -58,7 +64,7 @@
 .footer::before {
   content: '';
   position: absolute;
-  top: calc(-1 * var(--spacing-60));
+  top: calc(-1 * var(--footer-arc-offset));
   left: 50%;
   transform: translateX(-50%);
   width: 126vw;
