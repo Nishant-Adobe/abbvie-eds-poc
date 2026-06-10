@@ -307,6 +307,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   line-height: 1.3;
 }
 
+/* Inline "Activate now" link (not the CTA button): bold + underlined to match
+   live. */
+.columns.columns-homepage-savings .columns-item-content p a:not(.button) {
+  font-weight: 800;
+  color: var(--linz-dark-purple);
+  text-decoration: underline;
+}
+
 .columns.columns-homepage-savings .button-container a.button,
 .columns-container:not(.hero-container + .columns-container) .columns .button-container a.button {
   background-color: var(--linz-dark-purple);
@@ -890,8 +898,10 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   .columns.columns-homepage-promo .columns-item-content,
   .hero-container + .columns-container .columns .columns-item-content {
     gap: 16px;
+    width: 100%;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
 
   /* Collapse desktop margins so gap controls spacing and the card height

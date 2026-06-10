@@ -436,6 +436,16 @@
     flex-direction: column;
   }
 
+  /* Tighten the gap above the first video card to match live (~41px): the
+     grid's top padding plus the empty header margin overshot it. */
+  .carousel-video-playlist.grid {
+    padding-top: 8px;
+  }
+
+  .carousel-video-playlist.grid .cvp-header:empty {
+    margin-bottom: 0;
+  }
+
   .carousel-video-playlist.cvp-layout-left .cvp-playlist,
   .carousel-video-playlist.cvp-layout-right .cvp-playlist {
     flex-direction: row;
