@@ -3358,10 +3358,11 @@ main > .section.page-title {
 
 /* ---- Terms & Conditions standalone fragment page ---- */
 main > .section.terms-content {
-  padding: calc(var(--nav-height, 88px) + 4rem) 16px 4rem;
+  padding: 4rem 16px;
 }
 
-/* No footer on the standalone terms fragment page */
+/* Standalone fragment page: no header or footer (matches live page) */
+body:has(main > .section.terms-content) header,
 body:has(main > .section.terms-content) footer {
   display: none;
 }
