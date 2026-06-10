@@ -4032,6 +4032,66 @@ body main .section.whylinzess-works .carousel-video-playlist {
   justify-content: center;
 }
 
+/* ───────────────────────────────────────────────────────────────────
+   WHY LINZESS — Patient Experiences section (white, centered eyebrow +
+   heading + body, then video carousel). Mirrors the help/sideeffects
+   section pattern, which was missing for this variant.
+   ─────────────────────────────────────────────────────────────────── */
+body main .section.whylinzess-patients {
+  background-color: var(--background-color);
+  padding: 80px 24px;
+  text-align: center;
+  max-width: none;
+}
+
+.section.whylinzess-patients > .default-content-wrapper,
+.section.whylinzess-patients > .carousel-video-playlist-wrapper {
+  max-width: 928px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section.whylinzess-patients > .default-content-wrapper:first-child > p:first-child {
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.section.whylinzess-patients > .default-content-wrapper:first-child > p:first-child::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
+.section.whylinzess-patients > .default-content-wrapper:first-child > p:nth-child(2) {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  line-height: 36px;
+  font-weight: var(--font-weight-body);
+  color: var(--color-brand-primary);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.section.whylinzess-patients > .default-content-wrapper:first-child > p:nth-child(n+3) {
+  font-size: 16px;
+  color: var(--linz-grey);
+  margin-bottom: 24px;
+}
+
+.section.whylinzess-patients > .default-content-wrapper:last-child > p {
+  font-size: 14px;
+  color: var(--linz-grey);
+  margin-top: 40px;
+}
+
 /* Force Linzess brand font tokens (override base styles.css) */
 :root {
   --body-font-family: 'Lato', sans-serif;
