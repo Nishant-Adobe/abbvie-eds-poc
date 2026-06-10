@@ -1186,3 +1186,34 @@
   background: #422e83;
   color: #fff;
 }
+
+/* ── Mobile (< 744px): stack icon cards vertically ── */
+@media (max-width: 743px) {
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
+    flex-wrap: wrap;
+    gap: 40px 16px;
+  }
+
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .cards-grid.cards-grid-icon-image-card .icon-image-card {
+    padding: 40px 24px 24px !important;
+  }
+}
+
+/* ── Tablet (744px–985px): 2 cards per row ── */
+@media (min-width: 744px) and (max-width: 985px) {
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
+    flex-wrap: wrap;
+    gap: 40px 16px;
+  }
+
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
+    flex: 1 1 calc(50% - 8px);
+    min-width: calc(50% - 8px);
+    max-width: calc(50% - 8px);
+  }
+}

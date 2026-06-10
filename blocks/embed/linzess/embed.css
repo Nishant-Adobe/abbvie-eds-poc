@@ -1,1 +1,90 @@
-/* Linzess — Embed block brand override (placeholder) */
+/* ============================================================
+   LINZESS — Embed block brand override
+   Style: Rounded corners, purple play button, centered layout
+   Source: linzess.com/find-relief video embeds
+   ============================================================ */
+
+.section.embed-container {
+  max-width: 998px;
+  margin: 0 auto 40px;
+  padding: 0 16px;
+}
+
+.embed {
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+}
+
+.embed .embed-placeholder {
+  border-radius: var(--linz-rounded-corner);
+}
+
+.embed .embed-placeholder-play button {
+  border-color: var(--linz-dark-purple);
+  color: var(--linz-dark-purple);
+  background: rgba(255, 255, 255, 0.85);
+  transform: scale(2.5);
+}
+
+.embed .embed-placeholder-play button::before {
+  border-left-color: var(--linz-dark-purple);
+}
+
+.embed .embed-placeholder-play button:hover {
+  background: var(--linz-dark-purple);
+  color: #fff;
+}
+
+.embed .embed-placeholder-play button:hover::before {
+  border-left-color: #fff;
+}
+
+/* Overlay: transparent dark for Linzess videos */
+.embed .embed-placeholder:has(.embed-placeholder-overlay)::after {
+  background: rgba(66, 46, 131, 0.6);
+}
+
+.embed .embed-placeholder-title {
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-bold);
+}
+
+.embed .embed-placeholder-watch {
+  border-radius: var(--linz-rounded-corner);
+  border-color: #fff;
+}
+
+.embed .embed-placeholder-watch:hover {
+  background: #fff;
+  color: var(--linz-dark-purple);
+}
+
+.embed iframe {
+  border-radius: var(--linz-rounded-corner);
+}
+
+/* ── Mobile (< 600px) ── */
+@media (max-width: 599px) {
+  .section.embed-container {
+    margin-bottom: 24px;
+    padding: 0 16px;
+  }
+
+  .embed .embed-placeholder-play button {
+    transform: scale(2);
+  }
+}
+
+/* ── Tablet (600px+) ── */
+@media (width >= 600px) {
+  .section.embed-container {
+    margin-bottom: 40px;
+  }
+}
+
+/* ── Desktop (900px+) ── */
+@media (width >= 900px) {
+  .section.embed-container {
+    margin-bottom: 48px;
+  }
+}

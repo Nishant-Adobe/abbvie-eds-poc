@@ -20,6 +20,26 @@
   overflow: visible;
 }
 
+/* ── Tab container on off-white section — no card, blends into background ── */
+.section.tabs-container.find-relief-off-white {
+  display: block;
+  background: var(--linz-off-white);
+  max-width: 100%;
+  padding: 40px 16px 60px;
+  text-align: center;
+  overflow: visible;
+}
+
+.section.tabs-container.find-relief-off-white .default-content-wrapper {
+  max-width: 998px;
+  margin: 0 auto 24px;
+}
+
+.section.tabs-container.find-relief-off-white .tabs-wrapper {
+  max-width: 998px;
+  margin: 0 auto;
+}
+
 /* ── Tab controls wrapper ── */
 .tabs-container .tabs-wrapper {
   display: flex;
@@ -139,10 +159,19 @@
   .tabs-panel {
     padding: 40px 40px;
   }
+
+  .section.tabs-container.find-relief-off-white {
+    padding: 48px 40px 60px;
+  }
 }
 
 /* ── Desktop (900px+) ── */
 @media (width >= 900px) {
+  .tabs-container .tabs .tabs-list {
+    max-width: 902px;
+    margin: 0 auto;
+  }
+
   .tabs-container .tabs .tabs-list button.tabs-tab {
     font-size: var(--font-size-legal-large);
     padding: var(--spacing-20) var(--spacing-40);
@@ -150,5 +179,9 @@
 
   .tabs-panel {
     padding: 40px 60px;
+  }
+
+  .section.tabs-container.find-relief-off-white {
+    padding: 60px 60px 80px;
   }
 }
