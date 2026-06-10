@@ -1104,6 +1104,13 @@
 .footer {
   overflow: visible;
   margin-top: calc(-1 * var(--footer-arc-overlap));
+
+  /* Own stacking context so the arc's `z-index: -1` sits behind the footer's
+     own text but ABOVE the page's white content backdrop. Without this the
+     negative-z arc drops behind the white no-hero page background and the
+     curve is invisible (renders as a flat top edge). */
+  position: relative;
+  z-index: 0;
 }
 
 .footer::before {
@@ -1112,7 +1119,7 @@
   top: calc(-1 * var(--spacing-60));
   left: 50%;
   transform: translateX(-50%);
-  width: 100vw;
+  width: 126vw;
   height: var(--footer-arc-height);
   background-color: var(--footer-color-bg);
   border-radius: 100% 100% 0 0;
