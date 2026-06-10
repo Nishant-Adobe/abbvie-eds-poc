@@ -1460,14 +1460,33 @@ body main .section.dark :is(.cards-grid.cards-grid-icon-image-card) .abbv-image-
   word-spacing: 100vw;
 }
 
-/* Description text in stats section */
+/* When the number is split into an explicit span + <br>, the word-spacing
+   line-break hack is no longer needed (and would add a blank line). */
+
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .heading-2:has(.linz-stat-number),
+.carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2:has(.linz-stat-number),
+body main .section.dark .cards-grid .savings-card-cards .heading-2:has(.linz-stat-number) {
+  word-spacing: normal;
+}
+
+/* Large leading number inside the stats circle ("11.5") — live: 48px/700 */
+
+.cards-grid.cards-grid-homepage-stats .savings-card-cards .heading-2 .linz-stat-number,
+.carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2 .linz-stat-number,
+body main .section.dark .cards-grid .savings-card-cards .heading-2 .linz-stat-number {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Description text in stats section — live: Lato 16px/400 grey */
 
 .cards-grid.cards-grid-homepage-stats .savings-card-cards .abbv-stretched-card-body p:not(.heading-2),
 .carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2),
 body main .section.dark .cards-grid .savings-card-cards .abbv-stretched-card-body p:not(.heading-2) {
-  color: var(--linz-dark-purple);
-  font-size: var(--linz-card-body-size);
-  font-weight: 700;
+  color: var(--linz-grey);
+  font-size: 16px;
+  font-weight: 400;
   line-height: 1.4;
 }
 

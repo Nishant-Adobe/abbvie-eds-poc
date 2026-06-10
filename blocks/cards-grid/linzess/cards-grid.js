@@ -291,7 +291,19 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
     const h = document.createElement('p');
     h.className = headingClass;
     h.classList.add('text-align-center');
-    h.textContent = titleP.textContent?.trim() || '';
+    const titleText = titleP.textContent?.trim() || '';
+    // Stat cards render a large leading number + smaller unit ("11.5 million").
+    // Match live by wrapping the leading numeric token in a sized span.
+    const statMatch = titleText.match(/^([\d.,]+)\s+(.+)$/);
+    if (statMatch) {
+      const [, statNumber, statUnit] = statMatch;
+      const numSpan = document.createElement('span');
+      numSpan.className = 'linz-stat-number';
+      numSpan.textContent = statNumber;
+      h.append(numSpan, document.createElement('br'), document.createTextNode(statUnit));
+    } else {
+      h.textContent = titleText;
+    }
     bodyStretch.append(h);
   }
 
