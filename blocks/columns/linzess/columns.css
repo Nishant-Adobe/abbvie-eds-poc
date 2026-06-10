@@ -639,32 +639,34 @@ main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
   flex: 0 0 auto;
 }
 
-/* Consent paragraph */
+/* Consent paragraph — matches live: 16px grey, 20px line-height */
 .columns.ftgsignup .ftg-consent {
   font-family: var(--body-font-family, "Lato", sans-serif);
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
   color: var(--linz-grey, #4d4d4f);
-  margin: 0;
-  padding-left: 32px;
+  margin: 8px 0;
+  padding-left: 40px;
   position: relative;
   text-align: left;
 }
 
-/* CSS-drawn checkbox before the consent text */
+/* CSS-drawn checkbox before the consent text — 24x24, radius 8px */
 .columns.ftgsignup .ftg-consent::before {
   content: "";
   position: absolute;
   left: 0;
   top: 2px;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border: 2px solid var(--linz-purple, #60579e);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
+/* Consent links — grey + underlined (NOT purple), matches live */
 .columns.ftgsignup .ftg-consent a {
-  color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-grey, #4d4d4f);
   text-decoration: underline;
   font-size: inherit;
   font-family: inherit;
