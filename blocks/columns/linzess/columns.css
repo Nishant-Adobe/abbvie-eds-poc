@@ -462,7 +462,11 @@ main .section.dark-purple + .section strong {
    Matches linzess.com computed styles.
    ==================================================== */
 
+/* Eyebrow — class selector (preview, where class survives) +
+   positional fallback (published, where md2jcr strips the class):
+   savings-intro 1st paragraph is the eyebrow. */
 main .section.savings-intro .eyebrow,
+main .section.savings-intro .default-content-wrapper > p:first-child,
 main .section.signup-section .eyebrow {
   font-family: var(--body-font-family, "Lato", sans-serif);
   font-size: 12px;
@@ -476,6 +480,7 @@ main .section.signup-section .eyebrow {
 
 /* Gold divider under the eyebrow (matches accordion-section heading) */
 main .section.savings-intro .eyebrow::after,
+main .section.savings-intro .default-content-wrapper > p:first-child::after,
 main .section.signup-section .eyebrow::after {
   content: "";
   display: block;
@@ -485,7 +490,10 @@ main .section.signup-section .eyebrow::after {
   background: url("https://www.linzess.com/content/dam/linzess/images/divider.svg") center / contain no-repeat;
 }
 
+/* Heading-1 — class selector + positional fallback:
+   savings-intro 2nd paragraph is the heading. */
 main .section.savings-intro .heading-1,
+main .section.savings-intro .default-content-wrapper > p:nth-child(2),
 main .section.signup-section .heading-1 {
   font-family: "Bebas Neue", sans-serif;
   font-size: 32px;
@@ -499,8 +507,11 @@ main .section.signup-section .heading-1 {
   margin: 0 auto;
 }
 
+/* Heading-2 — class selector + positional fallback:
+   signup-section 1st paragraph is "Choose how you want to sign up:". */
 main .section.savings-intro .heading-2,
-main .section.signup-section .heading-2 {
+main .section.signup-section .heading-2,
+main .section.signup-section .default-content-wrapper > p:first-child {
   font-family: var(--body-font-family, "Lato", sans-serif);
   font-size: 18px;
   font-weight: 700;
