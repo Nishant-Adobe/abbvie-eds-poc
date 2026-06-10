@@ -57,6 +57,60 @@ const LINZESS_ARTICLE_FLEX_CONTAINER_CLASS = (
 
 const LINZESS_ARTICLE_FLEX_ITEM_CLASS = 'abbv-flex-item-v2 background-light-purple rounded-corners';
 
+function buildLinzessStatCardColumn(wrapper) {
+  // cells: [0]=link (unused), [1]=image (optional icon), [2]=heading, [3]=body
+  const directDivs = [...wrapper.children].filter((c) => c.tagName === 'DIV');
+  const [, imageDiv, headingDiv, bodyDiv] = directDivs.length >= 4
+    ? directDivs
+    : [null, null, directDivs[0], directDivs[1]];
+
+  const card = document.createElement('div');
+  card.className = 'linz-stat-card';
+
+  const picture = imageDiv?.querySelector('picture');
+  const loneImg = imageDiv?.querySelector(':scope > img');
+  if (picture || loneImg) {
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'linz-stat-card-icon';
+    imgWrap.append(picture || loneImg);
+    card.append(imgWrap);
+  }
+
+  const headingP = headingDiv?.querySelector('p') || headingDiv;
+  const headingText = headingP?.textContent?.trim();
+  if (headingText) {
+    const h = document.createElement('p');
+    h.className = 'linz-stat-card-heading';
+    const strong = document.createElement('strong');
+    strong.textContent = headingText;
+    h.append(strong);
+    card.append(h);
+  }
+
+  const body = document.createElement('div');
+  body.className = 'linz-stat-card-body';
+  if (bodyDiv) {
+    [...bodyDiv.children].forEach((node) => {
+      if (node.tagName === 'P' || node.tagName === 'UL' || node.tagName === 'OL') {
+        const clone = node.cloneNode(true);
+        if (clone.tagName === 'P') {
+          fixLinzessEncodedBoldInParagraph(clone);
+          fixEncodedSupInParagraph(clone);
+        } else {
+          clone.querySelectorAll('p').forEach((p) => {
+            fixLinzessEncodedBoldInParagraph(p);
+            fixEncodedSupInParagraph(p);
+          });
+        }
+        body.append(clone);
+      }
+    });
+  }
+  card.append(body);
+
+  return card;
+}
+
 function resolveLinzessArticleCta(ctaDiv) {
   if (!ctaDiv) return { href: '#', label: 'Read the article' };
   const a = ctaDiv.querySelector('a[href]');
@@ -274,6 +328,22 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
 }
 
 export default function decorate(block) {
+  if (block.classList.contains('cards-grid-stat-card')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return false;
+
+    const row = document.createElement('div');
+    row.className = 'linz-stat-card-row';
+
+    wrappers.forEach((wrapper) => {
+      row.append(buildLinzessStatCardColumn(wrapper));
+      wrapper.remove();
+    });
+
+    block.append(row);
+    return true;
+  }
+
   if (block.classList.contains('cards-grid-icon-image-card')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return false;
