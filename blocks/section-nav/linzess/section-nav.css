@@ -1058,9 +1058,42 @@
   text-decoration: none;
 }
 
-/* ── Desktop ≥744px ──────────────────────────────────────────────────── */
+/* ── Tablet override: keep mobile toggle visible between 744px–1023px ── */
+@media (width >= 744px) and (width < 1024px) {
+  .section-nav.mobile-menu .section-nav-toggle {
+    display: flex;
+  }
 
-@media (width >= 744px) {
+  .section-nav.mobile-menu nav ul {
+    display: none;
+  }
+
+  .section-nav.mobile-menu.is-open nav ul {
+    display: flex;
+  }
+
+  .section-nav.mobile-menu nav {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .section-nav.mobile-menu nav a {
+    display: block;
+    padding: var(--spacing-12) var(--spacing-24);
+    width: 100%;
+    text-align: center;
+    font-size: var(--font-size-nav);
+    line-height: normal;
+  }
+
+  .section-nav {
+    width: 50vw;
+  }
+}
+
+/* ── Desktop ≥1024px — live site keeps mobile toggle until ~1024px ──── */
+
+@media (width >= 1024px) {
   /* Outer wrapper: transparent, full-width — pill lives on the nav element */
   .section-nav {
     background-color: transparent;
