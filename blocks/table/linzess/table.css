@@ -4,6 +4,12 @@
    white right column (values), rounded corners.
    Matches linzess.com/savings-and-support#financialsupport
    Loaded in addition to base table.css (scripts.js loads both).
+
+   Delivered DOM uses md2jcr helper cells (required for the
+   2-column table to publish): the thead holds the
+   "table-2-columns" filter row, and the first cell of every
+   body row holds the "table-col-2" component id. Both are
+   hidden so only the real label/value columns show.
    ==================================================== */
 
 .table.linzess-insurance.block {
@@ -20,6 +26,7 @@
   box-shadow: 0 2px 12px rgba(0 0 0 / 8%);
   font-size: 14px;
   text-align: left;
+  width: 100%;
 }
 
 /* Reset base borders */
@@ -73,6 +80,14 @@
 .table.linzess-insurance.block table tbody td:last-child {
   background-color: var(--linz-white, #fff);
   color: var(--linz-grey, #4d4d4f);
+}
+
+.table.linzess-insurance.block table tbody td:last-child p {
+  margin: 0 0 8px;
+}
+
+.table.linzess-insurance.block table tbody td:last-child p:last-child {
+  margin-bottom: 0;
 }
 
 /* Purple emphasis inside value cells */
