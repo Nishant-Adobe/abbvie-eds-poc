@@ -850,14 +850,9 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
     gap: 60px;
   }
 
-  .columns.whylinzess-mechanism-card > .columns-item {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .columns.whylinzess-mechanism-card .columns-item-image {
-    margin: 0 auto;
-  }
+  /* Mechanism / side-effect cards keep their icon-left row layout on mobile
+     (live does NOT stack them to a centered column), so no flex-direction
+     override here. */
 }
 
 /* Mobile: promo card stacks — image on top, text below (matches live mobile).
