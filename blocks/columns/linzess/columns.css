@@ -189,7 +189,7 @@
   font-size: 21px;
 }
 
-@media (width < 768px) {
+@media (width < 600px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns {
     flex-wrap: wrap;
@@ -855,8 +855,10 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   }
 }
 
-/* Mobile: promo card stacks — image on top, text below (matches live mobile) */
-@media (width < 768px) {
+/* Mobile: promo card stacks — image on top, text below (matches live mobile).
+   Live keeps the side-by-side desktop layout down to 600px, so only stack
+   below that. */
+@media (width < 600px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns {
     flex-direction: column;
