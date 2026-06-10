@@ -3367,6 +3367,16 @@ body:has(main > .section.terms-content) footer {
   display: none;
 }
 
+/* Suppress the no-hero purple arc + its reserved padding on the standalone
+   terms fragment (the arc ::before would paint a purple bar at the top). */
+body.no-hero main > .section.terms-content:first-child {
+  padding-top: 4rem;
+}
+
+body.no-hero main > .section.terms-content:first-child::before {
+  content: none;
+}
+
 main > .section.terms-content .default-content-wrapper {
   max-width: 1025px;
   margin: 16px auto;
