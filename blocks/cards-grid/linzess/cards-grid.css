@@ -775,6 +775,19 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
     padding: 5px 16px 24px;
     margin-top: 50px;
   }
+
+  /* Widen stats cards to match live mobile (~338px): the dark section keeps
+     16px edge padding and the inner demo-wrap drops its horizontal padding so
+     the cards only inset by their own 10px margin. */
+  body main .section.cards-grid-container.carousel-video-playlist-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .carousel-video-playlist-container .cards-grid .demo-wrap {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 /* Desktop: 3 cards in a row */
