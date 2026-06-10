@@ -72,11 +72,11 @@
   padding-top: 50px;
 }
 
-.columns > div {
+.columns>div {
   align-items: center;
 }
 
-.columns > div > div img {
+.columns>div>div img {
   max-width: 100%;
   height: auto;
 }
@@ -89,7 +89,7 @@
   padding: 0;
 }
 
-.section.teal-bg .columns > div.columns-item {
+.section.teal-bg .columns>div.columns-item {
   flex: 1;
   margin: 10px 30px;
   padding: 5px;
@@ -98,16 +98,16 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 
-.section.teal-bg .columns > div.columns-item .columns-item-content p {
+.section.teal-bg .columns>div.columns-item .columns-item-content p {
   margin: 0;
 }
 
-.section.teal-bg .columns > div.columns-item .columns-item-content .button-container {
+.section.teal-bg .columns>div.columns-item .columns-item-content .button-container {
   margin-top: 0;
   padding: 0;
 }
 
-.section.teal-bg .columns > div.columns-item .columns-item-content a {
+.section.teal-bg .columns>div.columns-item .columns-item-content a {
   border: none;
   display: block;
   background: #ffce00;
@@ -125,7 +125,7 @@
   width: auto;
 }
 
-.section.teal-bg .columns > div.columns-item .columns-item-content a::after {
+.section.teal-bg .columns>div.columns-item .columns-item-content a::after {
   content: '';
   position: absolute;
   right: 16px;
@@ -137,8 +137,8 @@
   transform: translateY(-50%) rotate(45deg);
 }
 
-.section.teal-bg .columns > div.columns-item .columns-item-content h3 a,
-.section.teal-bg .columns > div.columns-item .columns-item-content p:first-child a {
+.section.teal-bg .columns>div.columns-item .columns-item-content h3 a,
+.section.teal-bg .columns>div.columns-item .columns-item-content p:first-child a {
   background: #fff;
   color: #005272;
   font-size: 22px;
@@ -149,14 +149,14 @@
   border-radius: 14px 14px 0 0;
 }
 
-.section.teal-bg .columns > div.columns-item .columns-item-content h3 a::after,
-.section.teal-bg .columns > div.columns-item .columns-item-content p:first-child a::after {
+.section.teal-bg .columns>div.columns-item .columns-item-content h3 a::after,
+.section.teal-bg .columns>div.columns-item .columns-item-content p:first-child a::after {
   display: none;
 }
 
 /* Bone marrow images side by side in right column */
 
-.columns > .columns-item > .columns-item-image {
+.columns>.columns-item>.columns-item-image {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
@@ -166,33 +166,33 @@
   border-radius: 8px;
 }
 
-.columns > .columns-item > .columns-item-image h3:nth-of-type(1) {
+.columns>.columns-item>.columns-item-image h3:nth-of-type(1) {
   grid-column: 1;
   grid-row: 1;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 
-.columns > .columns-item > .columns-item-image p:nth-of-type(1) {
+.columns>.columns-item>.columns-item-image p:nth-of-type(1) {
   grid-column: 1;
   grid-row: 2;
 }
 
-.columns > .columns-item > .columns-item-image h3:nth-of-type(2) {
+.columns>.columns-item>.columns-item-image h3:nth-of-type(2) {
   grid-column: 2;
   grid-row: 1;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 
-.columns > .columns-item > .columns-item-image p:nth-of-type(2) {
+.columns>.columns-item>.columns-item-image p:nth-of-type(2) {
   grid-column: 2;
   grid-row: 2;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 
-.columns > .columns-item > .columns-item-image h3 {
+.columns>.columns-item>.columns-item-image h3 {
   font-size: 18px;
   font-weight: 700;
   color: #005272;
@@ -202,12 +202,12 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 
-.columns > .columns-item > .columns-item-image p {
+.columns>.columns-item>.columns-item-image p {
   margin: 0;
   text-align: center;
 }
 
-.columns > .columns-item > .columns-item-image img {
+.columns>.columns-item>.columns-item-image img {
   border-radius: 8px;
   width: 100%;
   height: auto;
@@ -221,7 +221,17 @@
     padding: 0 20px;
   }
 
-  .section.teal-bg .columns > div.columns-item {
+  .section.teal-bg .columns>div.columns-item {
     margin: 10px 0;
   }
+}
+
+.section.teal-bg .columns-wrapper {
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section.teal-bg .columns-wrapper .columns.block {
+  gap: 0;
 }
