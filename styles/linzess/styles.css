@@ -12,6 +12,28 @@ body {
   background-color: var(--color-background-light);
 }
 
+/* ── Mobile viewport fixes: ensure content doesn't clip ── */
+@media (max-width: 743px) {
+  main > .section.abbvie-container {
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    margin-bottom: 32px;
+  }
+
+  main > .section.abbvie-container.hero-container,
+  main > .section.abbvie-container.section-nav-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  main > .section.abbvie-container .default-content-wrapper {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
 /* Headings — Linzess uses Bebas Neue display font */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading-font-family);
