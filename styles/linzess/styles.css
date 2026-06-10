@@ -4163,6 +4163,15 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     font-size: 28px;
     line-height: 30px;
   }
+
+  /* Stack the symptom cards on mobile. The section-level grid rule (0,4,1)
+     outranks the block-level mobile rule, so override it here at matching
+     specificity, otherwise the IBS-C/CIC cards stay side-by-side. */
+  body main .section.whylinzess-help .columns.whylinzess-symptoms > .columns-item,
+  body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
 }
 
 /* Video playlist cards in How Works section */
