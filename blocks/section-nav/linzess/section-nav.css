@@ -1,9 +1,10 @@
 .section-nav {
-  --section-nav-bg: var(--background-color);
-  --section-nav-border: var(--color-border);
-  --section-nav-link-color: var(--text-color);
-  --section-nav-link-hover: var(--link-color);
-  --section-nav-active-color: var(--link-color);
+  /* Linzess sticky sub-nav: dark-purple bar with white links (matches live). */
+  --section-nav-bg: var(--color-brand-primary);
+  --section-nav-border: transparent;
+  --section-nav-link-color: var(--linz-white);
+  --section-nav-link-hover: var(--linz-white);
+  --section-nav-active-color: var(--linz-orange);
 
   background-color: var(--section-nav-bg);
   border-bottom: var(--border-width-thin) solid var(--section-nav-border);
@@ -55,8 +56,9 @@
 .section-nav a {
   border-bottom: var(--border-width-default) solid transparent;
   color: var(--section-nav-link-color);
-  font-size: var(--body-font-size-s);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: var(--font-weight-extra-bold);
   padding: var(--spacing-12) var(--spacing-16);
   text-decoration: none;
   transition: border-color var(--transition-duration-fast) var(--transition-easing-standard),
