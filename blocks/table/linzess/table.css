@@ -1,15 +1,13 @@
 /* ====================================================
    Linzess: Insurance Information table
-   Purple header, light-purple left column (labels),
-   white right column (values), rounded corners.
+   Purple header row (thead), light-purple left column
+   (labels), white right column (values), rounded corners.
    Matches linzess.com/savings-and-support#financialsupport
    Loaded in addition to base table.css (scripts.js loads both).
 
-   Delivered DOM uses md2jcr helper cells (required for the
-   2-column table to publish): the thead holds the
-   "table-2-columns" filter row, and the first cell of every
-   body row holds the "table-col-2" component id. Both are
-   hidden so only the real label/value columns show.
+   Delivered DOM (2-column structure):
+     <thead><tr><th>If You Have:</th><th>You Could Pay:</th></tr></thead>
+     <tbody><tr><td>LABEL</td><td>VALUE</td></tr> ...</tbody>
    ==================================================== */
 
 .table.linzess-insurance.block {
@@ -35,18 +33,19 @@
   border: none;
 }
 
-/* Hide md2jcr helper cells (rendered as junk in EDS):
-   - thead holds the "table-2-columns" filter row
-   - first cell of every body row holds the "table-col-2" component id */
-.table.linzess-insurance.block table thead {
-  display: none;
+/* Header row (thead) — purple, white, bold, uppercase */
+.table.linzess-insurance.block table thead th {
+  background-color: var(--linz-purple, #60579e);
+  color: var(--linz-white, #fff);
+  font-weight: 800;
+  text-transform: uppercase;
+  vertical-align: middle;
+  padding: 16px 24px;
+  border: none;
+  line-height: 1.4;
 }
 
-.table.linzess-insurance.block table tbody td:first-child {
-  display: none;
-}
-
-/* Body cells (visible = 2nd & 3rd children after hiding helper cell) */
+/* Body cells */
 .table.linzess-insurance.block table tbody td {
   padding: 16px 24px;
   vertical-align: top;
@@ -55,28 +54,19 @@
   line-height: 1.5;
 }
 
-/* First visible row = header ("If You Have:" / "You Could Pay:") — purple */
-.table.linzess-insurance.block table tbody tr:first-child td {
-  background-color: var(--linz-purple, #60579e);
-  color: var(--linz-white, #fff);
-  font-weight: 800;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-
-/* Label column (2nd child) — light purple, purple, regular weight */
-.table.linzess-insurance.block table tbody td:nth-child(2) {
+/* Label column (first cell) — light purple bg, dark-purple text */
+.table.linzess-insurance.block table tbody td:first-child {
   background-color: var(--linz-light-purple, #d9d7f9);
   color: var(--linz-dark-purple, #422e83);
   font-weight: 400;
   width: 32%;
 }
 
-.table.linzess-insurance.block table tbody td:nth-child(2) strong {
+.table.linzess-insurance.block table tbody td:first-child strong {
   color: var(--linz-dark-purple, #422e83);
 }
 
-/* Value column (3rd child / last) — white */
+/* Value column (last cell) — white bg, grey text */
 .table.linzess-insurance.block table tbody td:last-child {
   background-color: var(--linz-white, #fff);
   color: var(--linz-grey, #4d4d4f);
@@ -115,12 +105,7 @@
     width: 100%;
   }
 
-  /* keep helper cell hidden */
-  .table.linzess-insurance.block table tbody td:first-child {
-    display: none;
-  }
-
-  .table.linzess-insurance.block table tbody td:nth-child(2),
+  .table.linzess-insurance.block table tbody td:first-child,
   .table.linzess-insurance.block table tbody td:last-child {
     display: block;
     width: 100% !important;
