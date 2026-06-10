@@ -2444,6 +2444,7 @@ color: inherit;
     max-width: 100%;
   }
 }
+/* stylelint-disable no-duplicate-selectors, no-descending-specificity -- intentional late cascade overrides */
 .hero.full::after,
 .hero.video::after {
   background: transparent;
@@ -2462,8 +2463,8 @@ color: inherit;
   width: calc((100% - 30px) / 3);
   max-width: none;
 }
+/* stylelint-enable no-duplicate-selectors, no-descending-specificity */
 @media (width < 800px) {
-
   .hero.full p:last-child,
   .hero.full p:nth-last-child(2),
   .hero.full p:nth-last-child(3),
@@ -2485,7 +2486,32 @@ color: inherit;
     min-height: auto;
   }
 }
+/* stylelint-disable-next-line no-duplicate-selectors -- intentional override of arrow color */
 .hero.full :where(a).button::after {
   border-right-color: black;
   border-bottom-color: black;
+}
+/* ============================================================
+   VENCLEXTA — Homepage hero (CTA pills) mobile fidelity
+   Scoped to :has(.button-container) so only the homepage hero is
+   affected — AML landing and other .hero.full pages are untouched.
+   ============================================================ */
+@media (width < 744px) {
+  .hero.full:has(.button-container) h1 {
+    font-size: var(--font-size-40);
+    line-height: normal;
+  }
+
+  .hero.full:has(.button-container) .button-container {
+    margin: var(--spacing-10) 0;
+  }
+
+  .hero.full:has(.button-container) :where(a).button {
+    font-weight: var(--font-weight-700);
+    border-radius: 0 5px 5px 0;
+  }
+
+  .hero.full:has(.button-container) p:last-child {
+    font-size: var(--font-size-16);
+  }
 }
