@@ -230,14 +230,14 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
 }
 
 /* ---- "How LINZESS Can Help" Section ---- */
-.section.whylinzess-help {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) {
   text-align: center;
   padding: 80px 24px 60px;
   max-width: 928px;
   margin: 0 auto;
 }
 
-.section.whylinzess-help > .default-content-wrapper:first-child > p:first-child {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
   font-size: var(--linz-card-footnote-size);
   font-weight: var(--font-weight-extra-bold);
@@ -246,7 +246,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin-bottom: 24px;
 }
 
-.section.whylinzess-help > .default-content-wrapper:first-child > p:first-child::before {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-child > p:first-child::before {
   content: '';
   display: block;
   width: 64px;
@@ -256,7 +256,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin: 0 auto 24px;
 }
 
-.section.whylinzess-help > .default-content-wrapper > p:nth-child(2) {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -265,7 +265,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin-bottom: 24px;
 }
 
-.section.whylinzess-help > .default-content-wrapper > p:nth-child(n+3) {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(n+3) {
   font-family: var(--body-font-family);
   font-size: 16px;
   color: var(--linz-grey);
@@ -273,7 +273,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin-top: 20px;
 }
 
-.section.whylinzess-help > .default-content-wrapper > p:last-child a {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:last-child a {
   background-color: var(--color-brand-primary);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -287,7 +287,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin-top: 40px;
 }
 
-.section.whylinzess-help > .default-content-wrapper > p:last-child a::after {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:last-child a::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -297,7 +297,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
 }
 
 /* Symptom cards (columns block - two-column layout) */
-.section.whylinzess-help .columns.whylinzess-symptoms {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms {
   margin-top: 60px;
   max-width: 800px;
   margin-left: auto;
@@ -306,7 +306,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
 }
 
 /* Symptom cards — reset homepage fallback + two separate cards */
-body main .section.whylinzess-help .columns.whylinzess-symptoms {
+body main .section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms {
   display: block;
   background-color: transparent;
   border-radius: 0;
@@ -316,8 +316,8 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms {
   overflow: visible;
 }
 
-body main .section.whylinzess-help .columns.whylinzess-symptoms > .columns-item,
-body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
+body main .section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms > .columns-item,
+body main .section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
@@ -328,7 +328,7 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
   align-items: stretch;
 }
 
-.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms .columns-item-content {
   padding: 60px 32px 40px;
   text-align: left;
   position: relative;
@@ -336,19 +336,19 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
 }
 
 /* IBS-C card (left) — off-white bg */
-.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content:first-child {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms .columns-item-content:first-child {
   background-color: var(--linz-off-white);
 }
 
 /* CIC card (right) — light purple bg, stretch to match IBS-C height */
-.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content:last-child {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms .columns-item-content:last-child {
   background-color: var(--linz-light-purple);
   align-self: stretch;
   min-height: 100%;
 }
 
 /* Circle badges — overlap the top of each card */
-.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content > p:first-child strong {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms .columns-item-content > p:first-child strong {
   font-family: var(--body-font-family);
   font-size: 24px;
   font-weight: var(--font-weight-bold);
@@ -363,18 +363,18 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
   display: block;
 }
 
-.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content:last-child > p:first-child strong {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms .columns-item-content:last-child > p:first-child strong {
   background-color: var(--linz-off-white);
 }
 
 /* Checkmark list items */
-.section.whylinzess-help .columns.whylinzess-symptoms ul {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms ul {
   list-style: none;
   padding-left: 0;
   margin: 24px 0;
 }
 
-.section.whylinzess-help .columns.whylinzess-symptoms li {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms li {
   font-family: var(--body-font-family);
   font-size: 16px;
   font-weight: var(--font-weight-bold);
@@ -385,7 +385,7 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
   position: relative;
 }
 
-.section.whylinzess-help .columns.whylinzess-symptoms li::before {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms li::before {
   content: '';
   position: absolute;
   left: 0;
@@ -397,7 +397,7 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
 }
 
 /* Footnote */
-.section.whylinzess-help .columns.whylinzess-symptoms .columns-item-content > p:last-child {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms .columns-item-content > p:last-child {
   font-size: var(--linz-card-footnote-size);
   color: var(--linz-grey);
   margin-top: 24px;
@@ -405,32 +405,32 @@ body main .section.whylinzess-help .columns.whylinzess-symptoms > div {
 }
 
 @media (width <= 599px) {
-  body main .section.whylinzess-help .columns.whylinzess-symptoms > .columns-item {
+  body main .section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whylinzess-symptoms > .columns-item {
     flex-direction: column;
   }
 }
 
 /* Mechanism card backgrounds — high specificity to override block CSS */
-body main .section.dark.whylinzess-works .columns-wrapper .columns.whylinzess-mechanism-card > div {
+body main .section:has(.whylinzess-timeline) .columns-wrapper .columns.whylinzess-mechanism-card > div {
   border-radius: var(--linz-rounded-corner);
   padding: 32px 40px;
 }
 
-body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card > div {
+body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card > div {
   background: var(--linz-off-white);
 }
 
-body main .section.dark.whylinzess-works .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > div {
+body main .section:has(.whylinzess-timeline) .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > div {
   background: var(--linz-light-purple);
 }
 
-body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card p,
-body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
+body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card p,
+body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card li {
   color: var(--color-brand-primary);
 }
 
 /* ---- "How LINZESS Works" Section (dark purple with arc) ---- */
-.section.whylinzess-works {
+.section:has(.whylinzess-timeline) {
   background-color: var(--color-brand-primary);
   color: var(--color-text-on-dark);
   padding: 80px 24px;
@@ -441,7 +441,7 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
   position: relative;
 }
 
-.section.whylinzess-works::before {
+.section:has(.whylinzess-timeline)::before {
   content: '';
   position: absolute;
   top: -60px;
@@ -453,20 +453,20 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
   z-index: 1;
 }
 
-.section.whylinzess-works > .default-content-wrapper,
-.section.whylinzess-works > .columns-wrapper {
+.section:has(.whylinzess-timeline) > .default-content-wrapper,
+.section:has(.whylinzess-timeline) > .columns-wrapper {
   max-width: 928px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.section.whylinzess-works p,
-.section.whylinzess-works li,
-.section.whylinzess-works h2 {
+.section:has(.whylinzess-timeline) p,
+.section:has(.whylinzess-timeline) li,
+.section:has(.whylinzess-timeline) h2 {
   color: var(--color-text-on-dark);
 }
 
-.section.whylinzess-works > .default-content-wrapper:first-child > p:first-child {
+.section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
   font-size: 12px;
   font-weight: var(--font-weight-extra-bold);
@@ -474,7 +474,7 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
   margin-bottom: 24px;
 }
 
-.section.whylinzess-works > .default-content-wrapper:first-child > p:first-child::before {
+.section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:first-child::before {
   content: '';
   display: block;
   width: 64px;
@@ -484,7 +484,7 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
   margin: 0 auto 24px;
 }
 
-.section.whylinzess-works > .default-content-wrapper:first-child > p:nth-child(2) {
+.section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -493,13 +493,13 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
   margin-bottom: 24px;
 }
 
-.section.whylinzess-works > .default-content-wrapper:first-child > p:nth-child(n+3) {
+.section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(n+3) {
   font-size: 16px;
   text-align: center;
   margin-top: 16px;
 }
 
-.section.whylinzess-works ul {
+.section:has(.whylinzess-timeline) ul {
   list-style: none;
   padding: 0;
   margin: 24px 0;
@@ -509,7 +509,7 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
   margin-right: auto;
 }
 
-.section.whylinzess-works li {
+.section:has(.whylinzess-timeline) li {
   font-size: 16px;
   font-weight: var(--font-weight-bold);
   margin-bottom: 12px;
@@ -517,13 +517,13 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
   position: relative;
 }
 
-.section.whylinzess-works li::before {
+.section:has(.whylinzess-timeline) li::before {
   content: '•';
   position: absolute;
   left: 0;
 }
 
-.section.whylinzess-works h2 {
+.section:has(.whylinzess-timeline) h2 {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -534,7 +534,7 @@ body main .section.dark.whylinzess-works .columns.whylinzess-mechanism-card li {
 }
 
 /* "When Can I Expect" sub-heading with divider — targets 2nd default-content-wrapper, 2nd child */
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
   font-weight: var(--font-weight-body);
@@ -544,7 +544,7 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
   text-align: center;
 }
 
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2)::before {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2)::before {
   content: '';
   display: block;
   width: 64px;
@@ -554,11 +554,11 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
   margin: 0 auto 24px;
 }
 
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) strong {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) strong {
   font-weight: var(--font-weight-body);
 }
 
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(3) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(3) {
   font-size: 24px;
   font-weight: var(--font-weight-bold);
   margin-bottom: 40px;
@@ -571,7 +571,7 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
 }
 
 /* Why LINZESS — "When Can I Expect" sub-heading */
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -582,7 +582,7 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
   text-align: center;
 }
 
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2)::before {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2)::before {
   content: '';
   display: block;
   width: 64px;
@@ -592,11 +592,11 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
   margin: 0 auto 24px;
 }
 
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) strong {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) strong {
   font-weight: var(--font-weight-body);
 }
 
-body main .section.whylinzess-works > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(3) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(3) {
   font-size: 24px;
   font-weight: var(--font-weight-bold);
   margin-bottom: 40px;
@@ -604,7 +604,7 @@ body main .section.whylinzess-works > .default-content-wrapper + .columns-wrappe
 }
 
 /* ---- "Side Effects" Section (off-white bg, centered) ---- */
-body main .section.whylinzess-sideeffects,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)),
 main > .section.dark + .section.columns-container.whylinzess-sideeffects {
   background-color: var(--color-background-light);
   padding: 80px 24px;
@@ -612,14 +612,14 @@ main > .section.dark + .section.columns-container.whylinzess-sideeffects {
   max-width: none;
 }
 
-.section.whylinzess-sideeffects > .default-content-wrapper,
-.section.whylinzess-sideeffects > .columns-wrapper {
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper,
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper {
   max-width: 928px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:first-child {
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
   font-size: 12px;
   font-weight: var(--font-weight-extra-bold);
@@ -628,7 +628,7 @@ main > .section.dark + .section.columns-container.whylinzess-sideeffects {
   margin-bottom: 24px;
 }
 
-.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:first-child::before {
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:first-child > p:first-child::before {
   content: '';
   display: block;
   width: 64px;
@@ -638,7 +638,7 @@ main > .section.dark + .section.columns-container.whylinzess-sideeffects {
   margin: 0 auto 24px;
 }
 
-.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:nth-child(2) {
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:first-child > p:nth-child(2) {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -648,48 +648,48 @@ main > .section.dark + .section.columns-container.whylinzess-sideeffects {
   margin-bottom: 24px;
 }
 
-.section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:nth-child(3) {
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:first-child > p:nth-child(3) {
   font-size: 16px;
   color: var(--linz-grey);
   margin-bottom: 40px;
 }
 
 /* Side effects cards: 1st and 3rd = dark purple, 2nd = light purple */
-body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
-body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
   background: var(--color-brand-primary);
 }
 
-body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card p,
-body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card strong,
-body main .section.whylinzess-sideeffects > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card li {
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card p,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card strong,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card li {
   color: var(--color-text-on-dark);
 }
 
-body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
-body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
   background: var(--linz-light-purple);
 }
 
-body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
-body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
   background: var(--color-brand-primary);
 }
 
-body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card p,
-body main .section.whylinzess-sideeffects > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card strong {
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card p,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card strong {
   color: var(--color-text-on-dark);
 }
 
 /* FDA reporting paragraph */
-.section.whylinzess-sideeffects > .default-content-wrapper:last-child > p:last-child {
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:last-child > p:last-child {
   font-size: 14px;
   color: var(--linz-grey);
   margin-top: 40px;
 }
 
 /* "Hear from real patients" heading in How Works section */
-body main .section.whylinzess-works h2 {
+body main .section:has(.whylinzess-timeline) h2 {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -701,7 +701,7 @@ body main .section.whylinzess-works h2 {
   color: var(--color-text-on-dark);
 }
 
-body main .section.whylinzess-works h2::before {
+body main .section:has(.whylinzess-timeline) h2::before {
   content: '';
   display: block;
   width: 64px;
@@ -712,14 +712,14 @@ body main .section.whylinzess-works h2::before {
 }
 
 /* Center video playlist in How Works section */
-body main .section.whylinzess-works > .carousel-video-playlist-wrapper {
+body main .section:has(.whylinzess-timeline) > .carousel-video-playlist-wrapper {
   max-width: 928px;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* Center video items within the playlist */
-body main .section.whylinzess-works .carousel-video-playlist {
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist {
   justify-content: center;
 }
 
@@ -774,42 +774,42 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
 
 /* Mobile responsive overrides */
 @media (width < 768px) {
-  .section.whylinzess-help > .default-content-wrapper > p:nth-child(2),
-  .section.whylinzess-works > .default-content-wrapper:first-child > p:nth-child(2),
+  .section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2),
+  .section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2),
   body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
     font-size: 28px;
     line-height: 30px;
   }
 
-  .section.whylinzess-works > .carousel-video-playlist-wrapper {
+  .section:has(.whylinzess-timeline) > .carousel-video-playlist-wrapper {
     max-width: 100%;
   }
 
-  body main .section.whylinzess-works .carousel-video-playlist {
+  body main .section:has(.whylinzess-timeline) .carousel-video-playlist {
     flex-direction: column;
     align-items: center;
   }
 
-  .section.whylinzess-sideeffects > .default-content-wrapper:first-child > p:nth-child(2) {
+  .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:first-child > p:nth-child(2) {
     font-size: 28px;
     line-height: 30px;
   }
 }
 
 /* Video playlist cards in How Works section */
-body main .section.whylinzess-works .carousel-video-playlist .carousel-video-playlist-item {
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist .carousel-video-playlist-item {
   border-radius: var(--linz-rounded-corner);
   overflow: hidden;
   max-width: 420px;
   flex: 1;
 }
 
-body main .section.whylinzess-works .carousel-video-playlist .carousel-video-playlist-item-meta {
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist .carousel-video-playlist-item-meta {
   padding: 16px 20px;
   background-color: var(--background-color);
 }
 
-body main .section.whylinzess-works .carousel-video-playlist .carousel-video-playlist-item-title {
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist .carousel-video-playlist-item-title {
   font-family: var(--body-font-family);
   font-size: 16px;
   font-weight: var(--font-weight-bold);
