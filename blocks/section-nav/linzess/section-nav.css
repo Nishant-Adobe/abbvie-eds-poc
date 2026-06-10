@@ -1060,6 +1060,15 @@
 
 /* ── Tablet override: keep mobile toggle visible between 744px–1023px ── */
 @media (width >= 744px) and (width < 1024px) {
+  .section-nav {
+    width: 50vw;
+    overflow: visible;
+  }
+
+  .section-nav.mobile-menu {
+    overflow: visible;
+  }
+
   .section-nav.mobile-menu .section-nav-toggle {
     display: flex;
   }
@@ -1070,11 +1079,26 @@
 
   .section-nav.mobile-menu.is-open nav ul {
     display: flex;
+    flex-direction: column;
   }
 
   .section-nav.mobile-menu nav {
     flex-direction: column;
     padding: 0;
+  }
+
+  .section-nav.mobile-menu nav ul {
+    flex-direction: column;
+    background-color: var(--background-color);
+    border-bottom-left-radius: var(--linz-rounded-corner);
+    border-bottom-right-radius: var(--linz-rounded-corner);
+    padding: var(--spacing-08) 0;
+    list-style: none;
+    width: 100%;
+  }
+
+  .section-nav.mobile-menu nav ul li {
+    border-bottom: none;
   }
 
   .section-nav.mobile-menu nav a {
@@ -1083,11 +1107,10 @@
     width: 100%;
     text-align: center;
     font-size: var(--font-size-nav);
+    font-weight: var(--font-weight-bold);
     line-height: normal;
-  }
-
-  .section-nav {
-    width: 50vw;
+    color: var(--linz-dark-purple);
+    border-bottom: none;
   }
 }
 
