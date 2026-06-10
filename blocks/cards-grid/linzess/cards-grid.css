@@ -793,8 +793,10 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   }
 }
 
-/* Mobile: smaller circles, stacked cards */
-@media (width < 768px) {
+/* Stacked (below the 992px row breakpoint): smaller circles that overlap the
+   card more deeply, with a slightly taller card — matches live across the
+   split-view tablet range, not just phones. */
+@media (width < 992px) {
   .carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2,
   body main .section.dark .cards-grid .savings-card-cards .heading-2,
   .carousel-video-playlist-container :is(.cards-grid.cards-grid-icon-image-card) .abbv-image-text-display-v2 p.heading-2,
@@ -802,14 +804,14 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
     width: 96px;
     height: 96px;
     font-size: 17px;
-    margin: -50px auto 8px;
+    margin: -58px auto 8px;
   }
 
   .carousel-video-playlist-container .cards-grid .savings-card-cards .abbv-flex-item-v2,
   body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2 {
-    padding: 5px 16px 0;
-    margin-top: 50px;
-    min-height: 0;
+    padding: 16px 16px 8px;
+    margin-top: 58px;
+    min-height: 110px;
   }
 
   /* Widen stats cards to match live mobile (~338px): the dark section keeps
