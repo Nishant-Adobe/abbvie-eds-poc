@@ -104,6 +104,15 @@ The super prompt pattern from the previous session defines:
 - Brightcove video carousel rendering
 - Mobile verification at 390px against the rendered page
 
+### KNOWN publish blocker on OTHER pages (deferred per user — fix when migrating)
+`understanding-constipation.plain.html` references 4 oversized SVGs that will
+fail AEM's 40KB validation when that page is published:
+- `icon-brain-purple.svg` — 109.8KB
+- `icon-legs-purple.svg` — 54.1KB
+- `icon-legs-white.svg` — 54.0KB
+- `icon-tummy-hands.svg` — 41.3KB
+Fix the same way: svgo-optimize → commit to `icons/` → repoint content to `/icons/`.
+
 ## Hard Rules
 
 1. **No new blocks** — only existing library
