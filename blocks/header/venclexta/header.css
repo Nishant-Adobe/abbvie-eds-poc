@@ -1995,6 +1995,14 @@ header.has-sticky-scrollback.sticky-scrollback .header {
   --nav-utility-link-hover: var(--color-text-on-dark);
 }
 
+/* Hide leaked floating-ISI / eyebrow config defaults ("top", "See Full ISI",
+   "Collapse ISI") that base header JS collects into .nav-indication. These are
+   config values, not display content, and are never shown on venclexta.com. */
+
+header nav .nav-indication {
+  display: none;
+}
+
 /* Nav wrapper — white */
 
 header .nav-wrapper {
