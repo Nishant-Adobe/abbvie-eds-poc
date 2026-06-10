@@ -3593,7 +3593,10 @@ main > .section.white-arc .button-container a.button.secondary:hover {
 }
 
 /* ---- Form section columns ---- */
-/* MOBILE (320–767px): single column, form on top, image below */
+/* MOBILE (320–767px): single column, image on top, form below.
+   DOM order is form-then-image (for desktop's form-left/image-right),
+   so on mobile we reorder via grid order to surface the image first,
+   matching the live page. */
 main > .section.white-arc .columns.columns-offset {
   grid-template-columns: 1fr;
   align-items: start;
@@ -3601,6 +3604,15 @@ main > .section.white-arc .columns.columns-offset {
 
 main > .section.white-arc .columns.columns-offset .columns-item-image {
   position: static;
+}
+
+/* On mobile, surface the image-containing column above the form column */
+main > .section.white-arc .columns.columns-offset .columns-item:has(.columns-item-image) {
+  order: -1;
+}
+
+main > .section.white-arc .columns.columns-offset .columns-item:has(.columns-item-content) {
+  order: 0;
 }
 
 /* Savings card image sizing — fluid on mobile */
@@ -3613,10 +3625,16 @@ main > .section.white-arc .columns-item-image picture img {
   padding: 0;
 }
 
-/* TABLET (768px+): two columns side-by-side */
+/* TABLET (768px+): two columns side-by-side, restore natural source order
+   (form-left / image-right) by clearing the mobile order overrides */
 @media (width >= 768px) {
   main > .section.white-arc .columns.columns-offset {
     grid-template-columns: 3fr 2fr;
+  }
+
+  main > .section.white-arc .columns.columns-offset .columns-item:has(.columns-item-image),
+  main > .section.white-arc .columns.columns-offset .columns-item:has(.columns-item-content) {
+    order: 0;
   }
 
   main > .section.white-arc .columns.columns-offset .columns-item-image {
