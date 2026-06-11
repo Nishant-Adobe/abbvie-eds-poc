@@ -4382,3 +4382,26 @@ main > .section:has(> .default-content-wrapper > h3:first-child) a {
 main:has(.whylinzess-timeline) p:not(.button-container):last-child {
   margin-bottom: 20px;
 }
+
+/* why-linzess pixel parity: Patient Experiences carousel section headings
+   ("Hear From Real Patients…" / "HEAR THE CONSTIPATION CONVERSATION") are
+   40px on live, not the 32px carousel default. */
+body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p:nth-child(2) strong {
+  font-size: 40px;
+}
+
+/* Savings card: title 24px, body 16px (live values). */
+main:has(.whylinzess-timeline) .columns.columns-homepage-savings .columns-item-content p strong {
+  font-size: 24px;
+}
+
+main:has(.whylinzess-timeline) .columns.columns-homepage-savings .columns-item-content > p:nth-child(n+3) {
+  font-size: 16px;
+}
+
+/* Explore cards (Check My Symptoms / Understanding Constipation): title 24px
+   white on live, not 18px purple. */
+main:has(.whylinzess-timeline) .cards-grid .abbv-stretched-card-body p.heading-2 {
+  font-size: 24px;
+  color: var(--linz-white);
+}
