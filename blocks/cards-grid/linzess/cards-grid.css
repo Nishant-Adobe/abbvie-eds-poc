@@ -1116,6 +1116,21 @@
   overflow: visible;
 }
 
+/* Mobile: widen the feature cards to match live (~16px gutters). The nested
+   demo-wrap padding + card side margin shrank them ~60px too narrow. */
+
+@media (width < 986px) {
+  .cards-grid.cards-grid-homepage-content .demo-wrap {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .cards-grid.cards-grid-homepage-content .flexbox-cards .flexboxitem-v2 .abbv-flex-item-v2 {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 .cards-grid.cards-grid-homepage-content .flexboxitem-v2 {
   overflow: visible;
 }
