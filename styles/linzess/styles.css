@@ -3769,17 +3769,8 @@ body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card 
   font-size: 12px;
   font-weight: var(--font-weight-extra-bold);
   text-transform: uppercase;
+  margin-top: 20px;
   margin-bottom: 24px;
-}
-
-.section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:first-child::before {
-  content: '';
-  display: block;
-  width: 64px;
-  height: 5px;
-  background: url("/icons/divider.svg") no-repeat center;
-  background-size: contain;
-  margin: 0 auto 24px;
 }
 
 .section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2) {
@@ -3789,6 +3780,17 @@ body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card 
   font-weight: var(--font-weight-body);
   text-transform: uppercase;
   margin-bottom: 24px;
+}
+
+/* Divider sits between the eyebrow and the "How LINZESS Works" heading. */
+.section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2)::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
 }
 
 .section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(n+3) {
