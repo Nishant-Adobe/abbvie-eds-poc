@@ -410,20 +410,9 @@ body main .section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whyli
   }
 }
 
-/* Mechanism card backgrounds — high specificity to override block CSS */
-body main .section:has(.whylinzess-timeline) .columns-wrapper .columns.whylinzess-mechanism-card > div {
-  border-radius: var(--linz-rounded-corner);
-  padding: 32px 40px;
-}
-
-body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card > div {
-  background: var(--linz-off-white);
-}
-
-body main .section:has(.whylinzess-timeline) .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > div {
-  background: var(--linz-light-purple);
-}
-
+/* Mechanism card text colour in the dark "How LINZESS Works" section.
+   Card background/radius/padding live on the block in columns.css; the
+   columns-item (> div) must stay padding-free so card height matches live. */
 body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card p,
 body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card li {
   color: var(--color-brand-primary);
