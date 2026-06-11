@@ -66,24 +66,33 @@ export default async function decorate(block) {
   // Match sections to tab names (case-insensitive)
   // Group multiple sections per tab name
   const tabPanelMap = new Map();
-  const allEmpty = tabNames.every((n) => !n);
 
-  if (allEmpty && panels.length >= tabNames.length) {
-    // Positional fallback: xwalk strips tab cell text — assign 1 section per tab
-    const perTab = Math.floor(panels.length / tabNames.length);
-    tabNames.forEach((name, i) => {
-      const start = i * perTab;
-      const end = i === tabNames.length - 1 ? panels.length : start + perTab;
-      tabPanelMap.set(name, panels.slice(start, end));
+  // Try name-matching first
+  tabNames.forEach((name) => {
+    if (!name) return;
+    const normalizedName = normalize(name);
+    const matched = panels.filter(
+      (section) => normalize(getSectionIdentifier(section)) === normalizedName,
+    );
+    if (matched.length > 0) tabPanelMap.set(name, matched);
+  });
+
+  // Positional fallback: when name-matching found nothing for ANY tab,
+  // assign plain sections (no style classes, no ISI/safety-bar) positionally.
+  if (tabPanelMap.size === 0 && panels.length >= tabNames.length) {
+    const plainPanels = panels.filter((s) => {
+      const hasStyle = [...s.classList].some((c) => c.startsWith('find-relief'));
+      const hasISI = s.querySelector('.text-container, .safety-bar');
+      return !hasStyle && !hasISI;
     });
-  } else {
-    tabNames.forEach((name) => {
-      const normalizedName = normalize(name);
-      const matched = panels.filter(
-        (section) => normalize(getSectionIdentifier(section)) === normalizedName,
-      );
-      if (matched.length > 0) tabPanelMap.set(name, matched);
-    });
+    if (plainPanels.length >= tabNames.length) {
+      const perTab = Math.floor(plainPanels.length / tabNames.length);
+      tabNames.forEach((name, i) => {
+        const start = i * perTab;
+        const end = i === tabNames.length - 1 ? plainPanels.length : start + perTab;
+        tabPanelMap.set(name, plainPanels.slice(start, end));
+      });
+    }
   }
 
   // Build tab buttons and wrap matched panels
