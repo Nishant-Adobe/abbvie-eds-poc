@@ -673,7 +673,7 @@ main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this
 }
 
 main > .section.cta-cards-section {
-  padding: var(--spacing-20) var(--spacing-20) var(--spacing-100);
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-140);
 }
 
 /* White sections */
@@ -876,9 +876,10 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .
   text-transform: uppercase;
 }
 
-/* More Like This heading bottom margin (live 20px 0 0); divider ::before keeps top space */
+/* More Like This heading — no bottom margin; columns margin-top provides the
+   ~40px gap to cards (matches live's 43px). Divider ::before keeps top space. */
 main > .section.more-like-this-section :is(.heading-1, h2) {
-  margin: 0 auto var(--spacing-20);
+  margin: 0 auto;
 }
 
 /* ---- Section 4: More Like This (3 article cards) ---- */
@@ -1001,7 +1002,7 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
   }
 
   main > .section.cta-cards-section {
-    padding: var(--spacing-20) var(--spacing-40) var(--spacing-100);
+    padding: var(--spacing-20) var(--spacing-40) var(--spacing-140);
   }
 
   main > .section.what-is-linzess-section .columns.what-is-linzess {
