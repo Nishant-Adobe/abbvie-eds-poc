@@ -112,6 +112,38 @@
   font-size: 21px;
 }
 
+/* Desktop: match live — left-aligned text, logo image contained (not stretched
+   to fill the card), and tighter content spacing so the card is ~173px tall
+   instead of being forced taller by cover-fit image + large margins. */
+@media (width >= 768px) {
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+    object-fit: contain;
+    max-height: 173px;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
+    place-content: center flex-start;
+    text-align: left;
+  }
+
+  .columns.columns-homepage-promo .columns-item-content,
+  .hero-container + .columns-container .columns .columns-item-content {
+    text-align: left;
+  }
+
+  .columns.columns-homepage-promo .columns-item-content > p,
+  .hero-container + .columns-container .columns .columns-item-content > p {
+    margin-bottom: 0;
+  }
+
+  .columns.columns-homepage-promo .columns-item-content > p:first-child,
+  .hero-container + .columns-container .columns .columns-item-content > p:first-child {
+    margin-bottom: 16px;
+  }
+}
+
 @media (width < 768px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns {
