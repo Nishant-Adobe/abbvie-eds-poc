@@ -523,10 +523,11 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(:h
   position: relative;
 }
 
-/* Tighten the gap from the arc to the eyebrow to match live (~40px), but
-   not on the why-linzess dark section which has its own spacing. */
+/* Match live's arc-to-eyebrow gap (~122px from arc crest). With the arc
+   crest 60px above the section, ~62px top padding lands the eyebrow at the
+   same offset. Scoped off the why-linzess dark section. */
 body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)) {
-  padding-top: 40px;
+  padding-top: 62px;
 }
 
 .cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::before {
