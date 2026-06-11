@@ -677,8 +677,10 @@ body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline
   margin-top: 40px;
 }
 
-/* "Hear from real patients" heading in How Works section */
-body main .section:has(.whylinzess-timeline) h2 {
+/* "Hear from real patients" heading in How Works section.
+   Extra container classes raise specificity above the competing global
+   desktop h2 size rule so 40px wins without !important. */
+body main .section.cards-grid-container.carousel-video-playlist-container:has(.whylinzess-timeline) h2 {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
