@@ -1392,6 +1392,15 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   background: var(--linz-light-purple);
 }
 
+/* Live parity: the last "How LINZESS Works" card (gut) gets 24px vertical
+   padding on desktop vs 15px on the others (.how-linz-works last-child). */
+
+@media (width >= 986px) {
+  body main .section:has(.whylinzess-timeline) .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+    padding: 24px 5px;
+  }
+}
+
 body main .section .columns.whylinzess-mechanism-card > .columns-item {
   padding: 0;
   background: transparent;
