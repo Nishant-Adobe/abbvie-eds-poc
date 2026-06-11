@@ -807,22 +807,26 @@ main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-i
 main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
-  line-height: 1.5;
+  line-height: normal;
   color: var(--color-text-on-dark);
 }
 
+main > .section.what-is-linzess-section .columns.what-is-linzess p {
+  margin: var(--spacing-16) 0;
+}
+
 main > .section.what-is-linzess-section .columns.what-is-linzess ul {
-  margin: 0 0 var(--spacing-16);
+  margin: var(--spacing-16) 0;
   padding-left: var(--spacing-20);
 }
 
 main > .section.what-is-linzess-section .columns.what-is-linzess li {
-  margin-bottom: var(--spacing-16);
+  margin-bottom: 0;
 }
 
 main > .section.what-is-linzess-section .columns.what-is-linzess a {
   display: inline-block;
-  margin-top: var(--spacing-16);
+  margin-top: 0;
   padding: 16px 59px 16px 32px;
   border-radius: var(--linz-rounded-corner);
   background: var(--color-background-primary, #fff);
@@ -905,6 +909,12 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item img
   display: block;
   width: 100%;
   margin: 0;
+}
+
+/* Compact card image — match live crop ratio (598:347) so cards stay short */
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  aspect-ratio: 598 / 347;
+  object-fit: cover;
 }
 
 /* Title + link text paragraphs sit below the image with card padding */
@@ -996,6 +1006,11 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
 
   main > .section.what-is-linzess-section .columns.what-is-linzess {
     gap: var(--spacing-48);
+  }
+
+  /* Vertical divider between the two CTA columns (live: 1px muted purple) */
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-right: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
   }
 }
 
