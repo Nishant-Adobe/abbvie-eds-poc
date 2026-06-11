@@ -25,6 +25,20 @@
   padding: 10px 50px 10px 20px;
   display: flex;
   gap: 20px;
+  position: relative;
+}
+
+/* Collapsed-state fade overlay — solid #f3f3f3 at bottom fading to
+   transparent at top, matching live venclexta.com floating safety bar. */
+.safety-bar:not(.is-expanded) .safety-bar-abbreviated::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+  background: linear-gradient(to top, #f3f3f3 0%, rgb(255 255 255 / 0%) 100%);
+  pointer-events: none;
 }
 
 .safety-bar .safety-bar-abbreviated>div {

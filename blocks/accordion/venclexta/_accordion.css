@@ -201,14 +201,14 @@
 /* ============================================================
    Fragment-loaded accordion content — icon lists + condition cards
    (what-is-aml symptoms / risk-factors / diagnosis fragments)
-   Matches live venclexta.com: icons stack vertically with bold
-   labels; conditions are transparent centered columns.
+   Matches live venclexta.com: icon+label pairs flow inline and wrap;
+   conditions are transparent centered columns.
    ============================================================ */
 .accordion .accordion-item-body .accordion-icon-list {
     list-style: none;
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 12px 32px;
     margin: 24px 0;
     padding: 0;
 }
@@ -216,7 +216,7 @@
 .accordion .accordion-item-body .accordion-icon-list li {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 12px;
     flex: 0 0 auto;
     font-size: 14.4px;
     font-weight: 700;
