@@ -3379,7 +3379,7 @@ body.no-hero main > .section.terms-content:first-child::before {
 
 main > .section.terms-content .default-content-wrapper {
   max-width: 964px;
-  margin: 16px auto;
+  margin: 8px;
   padding: 0 16px;
   font-family: 'Times New Roman', serif;
 }
@@ -3557,42 +3557,21 @@ main > .section.white-arc .columns-wrapper {
   margin: 0 auto;
 }
 
-/* Form section CTA buttons */
+/* Form section CTA links — plain text (matches AEM/EDS pipeline output) */
 main > .section.white-arc > .default-content-wrapper > .button-container {
-  display: flex;
-  justify-content: center;
-  gap: 1.6rem;
-  flex-wrap: wrap;
   margin: 3.2rem 0 2.4rem;
 }
 
-main > .section.white-arc .button-container a.button {
-  padding: var(--button-primary-padding, 16px 59px 16px 24px);
-  border-radius: var(--border-radius-button-primary, 16px);
-  background: var(--button-primary-bg, #422e83);
-  color: var(--button-primary-color, #fff);
-  font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--button-primary-font-size, 0.9rem);
-  font-weight: var(--button-primary-font-weight, 800);
-  text-transform: none;
-  text-decoration: none;
-  letter-spacing: 0;
-  transition: background 0.3s ease;
-}
-
-main > .section.white-arc .button-container a.button:hover {
-  background: var(--button-primary-hover-bg, #f4f6fb);
-  color: var(--button-primary-hover-color, #422e83);
-}
-
+main > .section.white-arc .button-container a.button,
 main > .section.white-arc .button-container a.button.secondary {
-  background: var(--button-secondary-bg, #fff);
-  color: var(--button-secondary-color, #422e83);
-  border: 2px solid var(--color-brand-primary, #422e83);
-}
-
-main > .section.white-arc .button-container a.button.secondary:hover {
-  background: var(--button-secondary-hover-bg, #d9d7f9);
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: var(--link-color, #422e83);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 1.6rem;
+  font-weight: 400;
 }
 
 @media (width >= 744px) {
@@ -3762,14 +3741,14 @@ main > .section.white-arc .form-radio::before {
   box-sizing: border-box;
 }
 
-/* ---- Marketing consent + checkbox ---- */
+/* ---- Marketing consent (square checkbox + label) ---- */
 main > .section.white-arc .form-consent {
+  position: relative;
+  padding-left: 4rem;
   font-size: 1.6rem;
   line-height: 1.5;
   color: var(--text-color, #4d4d4f);
   margin: 0 0 1.6rem;
-  padding-left: 4rem;
-  position: relative;
 }
 
 main > .section.white-arc .form-checkbox {
@@ -3832,47 +3811,6 @@ main > .section.white-arc .custom-recaptcha-logo {
 }
 
 /* ---- Fix CTA buttons: primary = solid navy, secondary = outlined ghost ---- */
-main > .section.white-arc .button-container a.button:not(.secondary) {
-  background: var(--linz-dark-purple, #422e83) !important;
-  color: #fff !important;
-  border: none;
-  padding: 10px 48px 10px 32px;
-  border-radius: 16px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  text-align: center;
-  min-height: 46px;
-  margin-right: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-main > .section.white-arc .button-container a.button:not(.secondary):hover {
-  background: var(--linz-purple, #60579e) !important;
-}
-
-main > .section.white-arc .button-container a.button.secondary {
-  background: var(--linz-dark-purple, #422e83) !important;
-  color: #fff !important;
-  border: none;
-  padding: 10px 48px 10px 32px;
-  border-radius: 16px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  text-align: center;
-  min-height: 46px;
-  margin-right: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-main > .section.white-arc .button-container a.button.secondary:hover {
-  background: var(--linz-purple, #60579e) !important;
-}
 
 /* ---- ISI Section: spacing + floating PDF icons ---- */
 main > .section.isi {
