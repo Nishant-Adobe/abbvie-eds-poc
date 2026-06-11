@@ -909,18 +909,13 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .
   max-width: 100rem;
 }
 
-/* Hero bottom curve: the editorial-hero default is a deep half-circle scoop
-   (radius 50% 50% 0 0 / 100% 100% 0 0, 12.8rem tall). Live uses a shallow,
-   wide ellipse (130% width, top radius 100% 100% 0 0, only ~6rem visible).
-   Flatten the OTC hero curve to match. */
+/* Hero bottom curve: the editorial-hero default draws a deep half-circle
+   scoop. Live's curve is actually the white intro section's arc painting up
+   over the hero (the .otc-intro-section::before, which already matches live:
+   130% wide, 255px tall, top radius 100% 100% 0 0). Remove the hero's
+   competing scoop so only the shallow intro arc shows. */
 main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::before {
-  left: 50%;
-  right: auto;
-  bottom: calc(-1 * var(--spacing-40));
-  width: 130%;
-  height: var(--spacing-60);
-  border-radius: 100% 100% 0 0;
-  transform: translateX(-50%);
+  content: none;
 }
 
 /* More Like This heading — no bottom margin; columns margin-top provides the
