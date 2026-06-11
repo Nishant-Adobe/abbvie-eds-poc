@@ -1995,6 +1995,7 @@ header.has-sticky-scrollback.sticky-scrollback .header {
 :root {
   --nav-eyebrow-bg: var(--header-eyebrow-bg);
   --nav-eyebrow-text: var(--color-text-on-dark);
+  --nav-eyebrow-height: 29px;
   --nav-utility-bg: var(--color-nav-dark);
   --nav-utility-text: var(--color-text-on-dark);
   --nav-utility-height: var(--header-utility-height);
@@ -2112,7 +2113,7 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li > butto
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-600);
   letter-spacing: var(--header-nav-letter-spacing);
-  padding: 0 var(--spacing-20);
+  padding: 0 25px;
   text-transform: capitalize;
   white-space: normal;
 }
@@ -2157,12 +2158,12 @@ header .nav-wrapper nav .nav-sections .default-content-wrapper > ul > li.menu-ch
   background-color: var(--color-brand-primary-lighter);
   border-radius: var(--border-radius-button-primary);
   color: var(--color-brand-primary);
-  font-size: var(--font-size-body-small);
-  font-weight: var(--font-weight-600);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
   letter-spacing: var(--header-nav-letter-spacing);
   line-height: var(--line-height-20);
   margin-top: var(--header-cta-margin-top);
-  padding: var(--spacing-12) var(--spacing-24);
+  padding: 16px 42px 16px 32px;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -2598,34 +2599,4 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
   }
 
   header.hide-nav .nav-wrapper:hover { background: var(--color-nav-dark); }
-}
-
-/* ── Header overlays hero ── */
-/* stylelint-disable-next-line no-descending-specificity */
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: var(--header-z-index);
-  background: var(--header-overlay-gradient);
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-header nav a {
-  color: var(--color-text-on-dark);
-}
-
-/* Hide ISI toggle controls (top/See Full ISI/Collapse ISI) */
-header .nav-indication {
-  display: none;
-}
-
-/* Non-hero pages: solid purple header background (linzess only) */
-body.no-hero header {
-  background-color: var(--color-brand-primary);
-}
-
-body.no-hero header .nav-wrapper {
-  background-color: var(--color-brand-primary);
 }
