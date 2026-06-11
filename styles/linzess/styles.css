@@ -696,7 +696,10 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section) {
   background-color: var(--color-brand-primary);
 }
 
-/* Arc — curved top edge sitting above the previous section */
+/* Arc — curved top edge sitting above the previous section.
+   z-index matches live (-5): with the hero overlapping the first arc, -1
+   stacked the white arc at the wrong depth and produced a hard-edged seam
+   over the hero photo. Live places all four section arcs at z-index -5. */
 main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
   content: "";
   position: absolute;
@@ -706,7 +709,7 @@ main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this
   width: 130%;
   height: var(--spacing-60);
   border-radius: 100% 100% 0 0;
-  z-index: -1;
+  z-index: -5;
 }
 
 main > .section:is(.otc-intro-section, .more-like-this-section)::before {
