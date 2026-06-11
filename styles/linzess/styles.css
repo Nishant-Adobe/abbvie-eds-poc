@@ -662,6 +662,13 @@ body:has(.section.otc-intro-section) {
   background-color: var(--color-background-primary, #fff);
 }
 
+/* navigation-content.css paints a debug grey background on .header-content for
+   its own preview; live header consumes those links into the eyebrow bar and
+   shows no grey. Neutralize the debug background. */
+body.linzess main .header-content {
+  background-color: transparent;
+}
+
 main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
   position: relative;
   z-index: 0;
