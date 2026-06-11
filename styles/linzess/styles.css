@@ -747,7 +747,7 @@ main > .section.otc-intro-section > .default-content-wrapper {
 
 main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1) {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-legal-large);
+  font-size: var(--font-size-article-body);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
 }
@@ -781,7 +781,7 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item p strong 
 
 main > .section.otc-intro-section .columns.how-they-work .columns-item p {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-legal-large);
+  font-size: var(--font-size-article-body);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
 }
@@ -806,7 +806,7 @@ main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-i
 
 main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-legal-large);
+  font-size: var(--font-size-article-body);
   line-height: normal;
   color: var(--color-text-on-dark);
 }
@@ -932,7 +932,7 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
 main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):first-of-type {
   padding-top: var(--spacing-16);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-legal-large);
+  font-size: var(--font-size-article-body);
   font-weight: var(--font-weight-body);
   color: var(--color-text-heading);
 }
@@ -1002,14 +1002,6 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
 }
 
 @media (width >= 768px) {
-  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
-    padding: 0 var(--spacing-40) var(--spacing-100);
-  }
-
-  main > .section.cta-cards-section {
-    padding: var(--spacing-20) var(--spacing-40) var(--spacing-140);
-  }
-
   main > .section.what-is-linzess-section .columns.what-is-linzess {
     gap: var(--spacing-48);
   }
@@ -1021,6 +1013,11 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
 }
 
 @media (width >= 900px) {
+  /* Desktop/laptop body text steps up to 16px (mobile + tablet stay 14px) */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+    --font-size-article-body: 16px;
+  }
+
   main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
     top: calc(-1 * var(--spacing-60));
     height: 255px;
