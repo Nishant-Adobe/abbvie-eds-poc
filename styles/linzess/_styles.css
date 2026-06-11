@@ -932,6 +932,11 @@ body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container >
    verbatim (982-wide, 55% image, 18px title, 14px body) — no why-linzess
    overrides, so it renders identically to the homepage card. */
 
+/* Tighten the gap between the body copy and the Sign Up CTA. */
+main:has(.whylinzess-timeline) .columns.columns-homepage-savings .columns-item-content > p:has(+ .button-container) {
+  margin-bottom: 8px;
+}
+
 /* Savings disclaimer footnote: EDS auto-converts this standalone link
    paragraph into a button. Revert it to plain grey legal text (matching
    the homepage disclaimer), since here the link has no surrounding copy. */
