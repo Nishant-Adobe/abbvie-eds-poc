@@ -1569,6 +1569,12 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
 /* Mobile: smaller circles, stacked cards */
 
 @media (width < 768px) {
+  /* Larger bottom padding on the dark section so the "See All Patient Videos"
+     CTA sits ~155px above the arc, matching live. */
+  body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)) {
+    padding-bottom: 109px;
+  }
+
   body main .cards-grid.cards-grid-homepage-stats .savings-card-cards .heading-2,
   .carousel-video-playlist-container .cards-grid .savings-card-cards .heading-2,
   body main .section.dark .cards-grid .savings-card-cards .heading-2,

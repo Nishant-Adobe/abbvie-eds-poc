@@ -331,6 +331,12 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     padding: 16px;
     text-align: center;
   }
+
+  /* Tighten the gap below the "Sign Up Now" button to the "Already have a
+     savings card?" line to match live (~14px). */
+  .section.columns-container:has(.columns-homepage-savings) .columns-item-content p.button-container:has(a[href*="savings-card"]) {
+    margin-bottom: 0;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
