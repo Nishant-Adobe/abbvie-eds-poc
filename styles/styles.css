@@ -3803,7 +3803,11 @@ main > .section.white-arc .form-recaptcha-badge {
   margin: 0 0 2.4rem;
 }
 
-main > .section.white-arc .custom-recaptcha-logo {
+/* Target the img directly: custom classes are stripped by md2jcr in EDS,
+   so match on the recaptcha src which always survives the pipeline */
+main > .section.white-arc .form-recaptcha-badge img,
+main > .section.white-arc .custom-recaptcha-logo,
+main > .section.white-arc img[src*="recaptcha"] {
   width: 256px;
   max-width: 100%;
   height: auto;
