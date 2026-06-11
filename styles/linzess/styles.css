@@ -527,8 +527,8 @@ main > .section.find-relief-off-white::before {
 }
 
 /* ── find-relief-checklist: Centered eyebrow + heading ── */
-/* Remove duplicate ::before divider when <hr> already provides it */
-.section.find-relief-checklist > .default-content-wrapper:first-child > hr + h2::before {
+/* Eyebrow's ::after already supplies the divider, so suppress the heading's ::before */
+.section.find-relief-checklist.columns-container > .default-content-wrapper:first-child > h2::before {
   display: none;
 }
 
@@ -562,8 +562,6 @@ main > .section > .default-content-wrapper > p:has(a[href=""])::after {
 }
 
 .section.find-relief-checklist > .default-content-wrapper > h2,
-main > .section > .default-content-wrapper > p:has(a[href=""]) + .default-content-wrapper > h2,
-main > .section > .default-content-wrapper:has(p:has(a[href=""])) + .default-content-wrapper > h2,
 main > .section > .default-content-wrapper > h2#what-to-talk-about-at-your-visit,
 main > .section > .default-content-wrapper > h2#what-to-know-before-starting-linzess,
 main > .section > .default-content-wrapper > h2#why-finding-the-right-doctor-is-important {
@@ -608,6 +606,11 @@ main > .section > .default-content-wrapper > h2#why-finding-the-right-doctor-is-
 
 .section.find-relief-off-white > .default-content-wrapper > h2 {
   text-align: center;
+}
+
+/* Clear the lavender cards overflow above the savings heading */
+.section.find-relief-off-white > .default-content-wrapper:has(> h2#need-a-savings-card) {
+  margin-top: 48px;
 }
 
 .section.find-relief-off-white > .default-content-wrapper > h2 + p {
