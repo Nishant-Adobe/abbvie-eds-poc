@@ -81,6 +81,7 @@ export default async function decorate(block) {
   // Assign sections with tabName to tabs in document order.
   if (tabPanelMap.size === 0) {
     const labeledPanels = panels.filter((s) => getSectionIdentifier(s));
+    console.log('[tabs] xwalk fallback:', { labeledCount: labeledPanels.length, tabCount: tabNames.length, panelCount: panels.length });
     if (labeledPanels.length >= tabNames.length) {
       const perTab = Math.floor(labeledPanels.length / tabNames.length);
       tabNames.forEach((name, i) => {
@@ -93,6 +94,7 @@ export default async function decorate(block) {
         }
         tabPanelMap.set(tabNames[i] || `tab-${i}`, assigned);
       });
+      console.log('[tabs] map populated:', { mapSize: tabPanelMap.size, keys: [...tabPanelMap.keys()] });
     }
   }
 
@@ -114,9 +116,11 @@ export default async function decorate(block) {
   }
 
   // Build tab buttons and wrap matched panels
+  console.log('[tabs] build loop start:', { tabNames: [...tabNames], mapSize: tabPanelMap.size, mapKeys: [...tabPanelMap.keys()] });
   let hasActiveTab = false;
   tabNames.forEach((name, i) => {
     const matched = tabPanelMap.get(name) || [];
+    console.log(`[tabs] tab ${i}:`, { name, matchedCount: matched.length, hasKey: tabPanelMap.has(name) });
     const panelId = `tab-panel-${tabBlockCnt}-${i + 1}`;
 
     const button = document.createElement('button');
