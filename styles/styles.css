@@ -3845,11 +3845,16 @@ main > .section.white-arc .form-recaptcha-badge {
   margin: 0 0 2.4rem;
 }
 
-/* Target the img directly: custom classes are stripped by md2jcr in EDS,
-   so match on the recaptcha src which always survives the pipeline */
+/* Target the img by alt text: in EDS the custom class is stripped and the
+   src is rewritten to an optimized path, but the alt survives the pipeline.
+   EDS also wraps the img in a <picture>, so constrain both. */
 main > .section.white-arc .form-recaptcha-badge img,
+main > .section.white-arc .form-recaptcha-badge picture,
 main > .section.white-arc .custom-recaptcha-logo,
-main > .section.white-arc img[src*="recaptcha"] {
+main > .section.white-arc img[src*="recaptcha"],
+main > .section.white-arc img[alt*="ecaptcha"],
+main > .section.white-arc picture:has(img[alt*="ecaptcha"]) {
+  display: block;
   width: 256px;
   max-width: 100%;
   height: auto;
