@@ -3657,11 +3657,11 @@ main > .section.white-arc .columns.columns-offset .columns-item:has(.columns-ite
   order: 0;
 }
 
-/* Savings card image sizing — fluid on mobile */
+/* Savings card image sizing — fluid on mobile (avoid horizontal overflow) */
 main > .section.white-arc .columns-item-image picture img {
   cursor: default;
   width: 435px;
-  max-width: unset;
+  max-width: 100%;
   height: auto;
   margin: 16px 0 0;
   padding: 0;
@@ -3686,6 +3686,8 @@ main > .section.white-arc .columns-item-image picture img {
   }
 
   main > .section.white-arc .columns-item-image picture img {
+    width: 435px;
+    max-width: unset;
     margin: 16px 12px 0 5px;
     padding-left: 20px;
   }
