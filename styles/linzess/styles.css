@@ -838,18 +838,30 @@ main > .section.what-is-linzess-section .columns.what-is-linzess a::after {
   margin-left: var(--spacing-10);
 }
 
-/* Footnotes */
+/* Footnotes — left-aligned, 12px white, matching live (Sources block) */
 main > .section.what-is-linzess-section .footnote {
   max-width: 99.8rem;
-  margin: var(--spacing-24) auto 0;
+  margin: var(--spacing-12, 12px) auto;
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body);
   line-height: 1.4;
   color: var(--color-text-on-dark);
+  text-align: left;
+}
+
+main > .section.what-is-linzess-section .footnote strong {
+  font-weight: var(--font-weight-body);
 }
 
 main > .section.what-is-linzess-section ol.footnote {
-  padding-left: var(--spacing-16);
+  padding-left: var(--spacing-10);
+  list-style-type: decimal;
+}
+
+main > .section.what-is-linzess-section ol.footnote li {
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-on-dark);
 }
 
 /* Hero eyebrow (live: Lato 12px/800, uppercase) */
