@@ -1089,6 +1089,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   margin: 0 auto 24px;
 }
 
+/* Gap between the "YOU COULD PAY..." eyebrow and the savings card (live ~47px). */
+
+.columns-homepage-savings-container > .default-content-wrapper:first-child,
+.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:first-child,
+.section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper:first-child {
+  margin-bottom: 27px;
+}
+
 /* Disclaimer */
 
 .columns-homepage-savings-container > .default-content-wrapper:last-child,

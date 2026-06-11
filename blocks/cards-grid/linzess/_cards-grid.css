@@ -515,6 +515,20 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(:h
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
+/* Concave inward arc at the dark section bottom: a white dome pokes up into
+   the dark band, carving the curved transition to the savings section. */
+body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: -30%;
+  right: -30%;
+  height: 80px;
+  background: #fff;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  z-index: 1;
+}
+
 .cards-grid-container.carousel-video-playlist-container {
   background-color: #422e83;
   color: #fff;
