@@ -69,13 +69,25 @@ function parseItems(block, isFeatured) {
       const cells = [...row.children];
       const getText = (i) => cells[i]?.textContent?.trim() ?? '';
 
-      // Grid schema: videoId | thumbnail | title | transcriptHref
+      // Grid schema, two authorings:
+      //  A) videoId | thumbnail(picture) | title | transcriptHref
+      //  B) videoId | title | transcriptLink(a) | ... (featured-style cells)
       if (!isFeatured) {
+        const hasThumb = !!cells[1]?.querySelector('picture, img');
+        if (hasThumb) {
+          return {
+            videoId: getText(0),
+            thumbnail: cells[1].querySelector('picture, img'),
+            nameBanner: getText(2),
+            transcriptHref: cells[3]?.querySelector('a')?.getAttribute('href') ?? getText(3),
+            transcript: null,
+          };
+        }
         return {
           videoId: getText(0),
-          thumbnail: cells[1]?.querySelector('picture, img') ?? null,
-          nameBanner: getText(2),
-          transcriptHref: cells[3]?.querySelector('a')?.getAttribute('href') ?? getText(3),
+          thumbnail: null,
+          nameBanner: getText(1),
+          transcriptHref: cells[2]?.querySelector('a')?.getAttribute('href') ?? getText(2),
           transcript: null,
         };
       }
