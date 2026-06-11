@@ -3615,15 +3615,22 @@ main > .section.white-arc .button-container a.button.secondary:hover {
   }
 }
 
+/* Tablet + desktop: stack the CTA buttons in a single column */
+@media (width >= 768px) {
+  main > .section.white-arc > .default-content-wrapper > .button-container {
+    gap: 0;
+    flex-direction: column;
+  }
+}
+
 @media (width >= 1024px) {
   main > .section.white-arc {
     border-top-left-radius: 8rem;
   }
 
-  /* Desktop: equal-width responsive pills that share the row */
+  /* Desktop: centered pill labels, fixed max width */
   main > .section.white-arc .button-container a.button,
   main > .section.white-arc .button-container a.button.secondary {
-    flex: 1 1 0;
     max-width: 32rem;
     justify-content: center;
     padding-left: 3.2rem;
