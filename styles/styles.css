@@ -3357,8 +3357,17 @@ main > .section.page-title {
 }
 
 /* ---- Terms & Conditions standalone fragment page ---- */
+
+/* Bare document layout: body carries the 8px default margin (matches live page) */
+body:has(main > .section.terms-content) {
+  display: block;
+  margin: 8px;
+}
+
 main > .section.terms-content {
-  padding: 4rem 16px;
+  margin: 0;
+  padding: 0;
+  max-width: none;
 }
 
 /* Standalone fragment page: no header or footer (matches live page) */
@@ -3370,7 +3379,7 @@ body:has(main > .section.terms-content) footer {
 /* Suppress the no-hero purple arc + its reserved padding on the standalone
    terms fragment (the arc ::before would paint a purple bar at the top). */
 body.no-hero main > .section.terms-content:first-child {
-  padding-top: 4rem;
+  padding-top: 0;
 }
 
 body.no-hero main > .section.terms-content:first-child::before {
@@ -3379,8 +3388,8 @@ body.no-hero main > .section.terms-content:first-child::before {
 
 main > .section.terms-content .default-content-wrapper {
   max-width: 964px;
-  margin: 8px;
-  padding: 0 16px;
+  margin: 0;
+  padding: 0;
   font-family: 'Times New Roman', serif;
 }
 
