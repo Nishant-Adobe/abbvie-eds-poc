@@ -5,19 +5,23 @@
  * class will be added to the block, and the row will be removed from the DOM.
  * Future enhancements may include support for other properties, such as "id:myid".
  */
-import { applyCommonProps } from '../../scripts/utils.js';
+import { applyCommonProps, shouldRunOutsideAuthorEdit } from '../../scripts/utils.js';
 
 export default function decorate(block) {
   applyCommonProps(block);
-  const rows = [...block.children];
-  const parentRowCount = 4;
-  for (let i = 0; i < Math.min(parentRowCount, rows.length); i += 1) {
-    const row = rows[i];
-    const innerDiv = row.querySelector(':scope > div');
-    const content = innerDiv || row;
-    const hasItemContent = content.querySelector('div, h1, h2, h3, h4, h5, h6, ul, ol, table, picture');
-    if (!hasItemContent) {
-      row.remove();
+  // In UE edit mode the leading rows are instrumented editable fields —
+  // removing them blanks the block in the editor. Only prune on delivery.
+  if (shouldRunOutsideAuthorEdit()) {
+    const rows = [...block.children];
+    const parentRowCount = 4;
+    for (let i = 0; i < Math.min(parentRowCount, rows.length); i += 1) {
+      const row = rows[i];
+      const innerDiv = row.querySelector(':scope > div');
+      const content = innerDiv || row;
+      const hasItemContent = content.querySelector('div, h1, h2, h3, h4, h5, h6, ul, ol, table, picture');
+      if (!hasItemContent) {
+        row.remove();
+      }
     }
   }
   // Unwrap extra div wrapper from each remaining row

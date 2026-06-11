@@ -1,3 +1,5 @@
+import { shouldRunOutsideAuthorEdit } from '../../scripts/utils.js';
+
 function buildToggle(stickyBlock, onToggle) {
   const toggle = document.createElement('button');
   toggle.className = 'safety-bar-toggle';
@@ -52,6 +54,13 @@ function extractContentFields(block, isSplit) {
 }
 
 export default function decorate(block) {
+  // In UE edit mode the block must stay inline and editable. Hiding it and
+  // relocating a clone to document.body removes the authoring instrumentation,
+  // so leave the source block untouched in the editor.
+  if (!shouldRunOutsideAuthorEdit()) {
+    return;
+  }
+
   const isSplit = block.classList.contains('split');
   const { collapsed, collapsedCol2, expanded } = extractContentFields(block, isSplit);
 
