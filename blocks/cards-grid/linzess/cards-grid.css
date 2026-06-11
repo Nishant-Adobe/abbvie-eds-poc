@@ -1175,6 +1175,21 @@
   color: var(--linz-white);
 }
 
+/* Desktop: promo card heading 24px / body 16px to match live (mobile keeps
+   the smaller 18px/14px which already matches live's mobile). */
+
+@media (width >= 768px) {
+  .cards-grid.cards-grid-homepage-content .abbv-image-text-display-v2 .heading-2 {
+    font-size: 24px;
+    line-height: normal;
+  }
+
+  .cards-grid.cards-grid-homepage-content .abbv-image-text-display-v2 .abbv-stretched-card-body p:not(.heading-2) {
+    font-size: 16px;
+    line-height: normal;
+  }
+}
+
 .cards-grid.cards-grid-article-cards .flexbox-cards.flexbox-article-cards .flexboxitem-v2 .abbv-flex-item-v2 {
   padding: 0;
   margin: 0;
