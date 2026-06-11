@@ -45,8 +45,27 @@ body:has(main > .section.hero-container) header:has(.nav-utility ul) {
   background: var(--header-eyebrow-gradient);
 }
 
+/* Hero pages: header overlays the hero image (live behavior) so the photo
+   shows through the eyebrow gradient instead of rendering as a flat band.
+   Scoped to hero pages only — no-hero/transcript headers stay in-flow. */
+/* stylelint-disable-next-line no-descending-specificity */
+body:has(main > .section.hero-container) header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--header-z-index, 10);
+  background: var(--header-overlay-gradient);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+body:has(main > .section.hero-container) header .nav-wrapper {
+  background-color: transparent;
+}
+
 /* No-hero pages: header sits in-flow (not a fixed overlay) so content follows it,
    matching the live site. Lets the white arc curve up into the purple header. */
+/* stylelint-disable-next-line no-descending-specificity */
 body.no-hero header .nav-wrapper {
   position: static;
 }
