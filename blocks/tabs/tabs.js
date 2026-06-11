@@ -87,11 +87,11 @@ export default async function decorate(block) {
         const start = i * perTab;
         const end = i === tabNames.length - 1 ? labeledPanels.length : start + perTab;
         const assigned = labeledPanels.slice(start, end);
-        tabPanelMap.set(name || `tab-${i}`, assigned);
         if (!name && assigned.length > 0) {
           const label = getSectionIdentifier(assigned[0]);
           if (label) tabNames[i] = label;
         }
+        tabPanelMap.set(tabNames[i] || `tab-${i}`, assigned);
       });
     }
   }
