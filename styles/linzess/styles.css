@@ -776,19 +776,27 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item {
   text-align: center;
 }
 
-/* Icons sized by height, preserving each image's aspect ratio. Live caps the
-   height at ~200px on desktop and ~234px on mobile; the widest icon (Fiber)
-   may hit the column width first, the others stay height-constrained. */
+/* Icons preserve aspect ratio. Live caps the height uniformly at 20rem on
+   desktop. On mobile the first icon (Fiber) fills the column width with no
+   height cap, while the narrower Stimulant & Stool icons stay capped at
+   23.4rem. display:block removes the inline whitespace gap below the icon. */
 main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+  display: block;
   width: auto;
   max-width: 100%;
-  max-height: 23.4rem;
   margin: 0 auto;
 }
 
 @media (width >= 744px) {
   main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
     max-height: 20rem;
+  }
+}
+
+@media (width < 744px) {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img,
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(3) .columns-item-image img {
+    max-height: 23.4rem;
   }
 }
 
