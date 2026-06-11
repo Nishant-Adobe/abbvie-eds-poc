@@ -1088,6 +1088,17 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
     font-size: var(--font-size-h2-hero);
     line-height: var(--line-height-h2-hero);
   }
+
+  /* Mobile: section headings shrink 40px -> 32px to match live */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2) {
+    font-size: var(--font-size-h2-hero);
+  }
+
+  /* Mobile: column labels (Fiber etc.) and CTA card titles shrink 24px -> 18px */
+  main > .section.otc-intro-section .columns.how-they-work .columns-item p strong,
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    font-size: var(--font-size-article-card-title);
+  }
 }
 
 @media (width >= 768px) {
