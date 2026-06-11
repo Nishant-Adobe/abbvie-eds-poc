@@ -1190,6 +1190,36 @@
   }
 }
 
+/* Desktop: match live card geometry & spacing for the #1/stethoscope cards.
+   - Narrow the container so each card is ~491px wide (was ~506px).
+   - Bottom-align both CTAs (card 1 has more body copy, pushing its CTA lower).
+   - Tighten the gap above the cards (promo -> cards ~110px) and below
+     (cards -> gut-check ~80px). */
+
+@media (width >= 986px) {
+  .cards-grid.cards-grid-homepage-content .demo-wrap {
+    max-width: 1070px;
+    padding-bottom: 50px;
+  }
+
+  .cards-grid.cards-grid-homepage-content .flexboxitem-v2 .abbv-flex-item-v2 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cards-grid.cards-grid-homepage-content .flexboxitem-v2 .abbv-flex-item-v2 > .cta {
+    margin-top: auto;
+  }
+
+  .cards-grid.cards-grid-homepage-content .flexbox-column-mobile.flexbox-cards {
+    margin-top: 30px;
+  }
+
+  .section.cards-grid-container:not(.carousel-video-playlist-container):has(.cards-grid-homepage-content) {
+    padding-top: 10px;
+  }
+}
+
 .cards-grid.cards-grid-article-cards .flexbox-cards.flexbox-article-cards .flexboxitem-v2 .abbv-flex-item-v2 {
   padding: 0;
   margin: 0;
@@ -1274,6 +1304,15 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(:h
   height: 80px;
   background: #422e83;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+/* Desktop: deeper top curve to match live's more pronounced dome. */
+
+@media (width >= 986px) {
+  body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::before {
+    top: -110px;
+    height: 140px;
+  }
 }
 
 /* Concave inward arc at the dark section bottom: a white dome pokes up into
