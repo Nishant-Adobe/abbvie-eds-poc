@@ -3906,6 +3906,12 @@ body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .colum
   text-align: center;
 }
 
+/* Footnote (*Abdominal symptoms… / †animal studies) above the "When Can I
+   Expect" heading is 12px on live, not the inherited 18px. */
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:first-child {
+  font-size: 12px;
+}
+
 /* ---- "Side Effects" Section (off-white bg, centered) ---- */
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)),
 main > .section.dark + .section.columns-container.whylinzess-sideeffects {
@@ -3988,8 +3994,8 @@ body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline
 
 /* FDA reporting paragraph */
 .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:last-child > p:last-child {
-  font-size: 14px;
-  color: var(--linz-grey);
+  font-size: 16px;
+  color: var(--color-brand-primary);
   margin-top: 40px;
 }
 
