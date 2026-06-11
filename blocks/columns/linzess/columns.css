@@ -1231,7 +1231,20 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   line-height: 1.3;
 }
 
-/* Button: DISABLED state */
+/* Tighten content spacing to match live (heading flush, body 24px, no
+   trailing gap after the CTA) so the card isn't over-tall. */
+
+.columns.columns-homepage-gutcheck .columns-item-content > p {
+  margin-bottom: 24px;
+}
+
+.columns.columns-homepage-gutcheck .columns-item-content > p:first-child {
+  margin-bottom: 16px;
+}
+
+.columns.columns-homepage-gutcheck .columns-item-content > p:last-child {
+  margin-bottom: 0;
+}
 
 .columns.columns-homepage-gutcheck .button-container a.button,
 .columns.columns-homepage-gutcheck .columns-item-content a {
@@ -1245,9 +1258,6 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   text-decoration: none;
   display: inline-block;
   position: relative;
-  opacity: 0.5;
-  pointer-events: none;
-  cursor: not-allowed;
 }
 
 .columns.columns-homepage-gutcheck .button-container a.button::after {
