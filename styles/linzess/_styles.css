@@ -937,6 +937,16 @@ main:has(.whylinzess-timeline) .columns.columns-homepage-savings .columns-item-c
   margin-bottom: 8px;
 }
 
+/* Reduce card height: the image column drives the row height, so cap it to
+   match live (~300px) rather than the taller default. */
+body main:has(.whylinzess-timeline) .section.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+  max-height: 300px;
+}
+
+body main:has(.whylinzess-timeline) .section.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img {
+  max-height: 300px;
+}
+
 /* Savings disclaimer footnote: EDS auto-converts this standalone link
    paragraph into a button. Revert it to plain grey legal text (matching
    the homepage disclaimer), since here the link has no surrounding copy. */
