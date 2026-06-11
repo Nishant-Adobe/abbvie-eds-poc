@@ -884,12 +884,18 @@ main > .section.what-is-linzess-section ol.footnote li {
   color: var(--color-text-on-dark);
 }
 
-/* Hero eyebrow (live: Lato 12px/800, uppercase) */
+/* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
 main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+  margin-bottom: var(--spacing-24);
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-extra-bold);
   text-transform: uppercase;
+}
+
+/* Hero H1 line-height (live: 36px, not the editorial-hero default 0.95) */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  line-height: var(--no-hero-h1-line-height, 36px);
 }
 
 /* More Like This heading — no bottom margin; columns margin-top provides the
