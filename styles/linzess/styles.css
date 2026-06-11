@@ -918,6 +918,22 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::
   content: none;
 }
 
+/* Mobile/tablet hero (<744px): live swaps to the near-square mobile image
+   (375x369) and sizes the band to its ratio so the full scene shows. The
+   block default (420px fixed + object-fit:cover) crops it. Match live's
+   fluid fit on small screens only; desktop keeps the block default. */
+@media (width < 744px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    aspect-ratio: 375 / 369;
+  }
+
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
 /* More Like This heading — no bottom margin; columns margin-top provides the
    ~40px gap to cards (matches live's 43px). Divider ::before keeps top space. */
 main > .section.more-like-this-section :is(.heading-1, h2) {
