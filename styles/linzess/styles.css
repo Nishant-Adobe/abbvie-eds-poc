@@ -873,13 +873,14 @@ main > .section.what-is-linzess-section .columns.what-is-linzess li {
 main > .section.what-is-linzess-section .columns.what-is-linzess a {
   display: inline-block;
   margin-top: 0;
-  padding: 16px 59px 16px 32px;
+  padding: 16px 59px 16px 24px;
   border-radius: var(--linz-rounded-corner);
   background: var(--color-background-primary, #fff);
   color: var(--color-brand-primary);
   font-family: var(--body-font-family);
   font-size: var(--font-size-button);
   font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
   text-decoration: none;
 }
 
@@ -998,6 +999,14 @@ main > .section.more-like-this-section .columns.more-like-this {
   gap: var(--spacing-16);
 }
 
+/* Mobile: live insets each stacked card ~6px per side within the content
+   column (373px wide at 425px viewport vs our 385px). */
+@media (width < 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    padding: 0 var(--spacing-06);
+  }
+}
+
 /* Live caps each card at 300px and centers the group within the 998px row.
    Mobile (<768px) keeps the base block's single-column stack. */
 @media (width >= 768px) {
@@ -1093,13 +1102,14 @@ main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)
 
 main > .section.cta-cards-section .columns.cta-cards a {
   display: inline-block;
-  padding: 16px 59px 16px 32px;
+  padding: 16px 59px 16px 24px;
   border-radius: var(--linz-rounded-corner);
   background: var(--color-brand-accent);
   color: var(--color-brand-primary);
   font-family: var(--body-font-family);
   font-size: var(--font-size-button);
   font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
   text-decoration: none;
 }
 
