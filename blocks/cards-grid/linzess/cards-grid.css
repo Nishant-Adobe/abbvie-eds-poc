@@ -1269,6 +1269,13 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(:h
   position: relative;
 }
 
+/* Tighten the gap from the arc to the eyebrow to match live (~40px), but
+   not on the why-linzess dark section which has its own spacing. */
+
+body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)) {
+  padding-top: 40px;
+}
+
 .cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::before {
   content: '';
   position: absolute;
