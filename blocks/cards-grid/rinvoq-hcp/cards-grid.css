@@ -825,6 +825,17 @@
   max-width: 380px;
 }
 
+/* Tablet (601–984px, matching the live AbbVie breakpoint): the indication
+   cards stack full content-width one per row (verified against the live site),
+   rather than wrapping to a narrow 380px column. Desktop (>=985px) keeps the
+   3-across layout; mobile (<=600px) is unchanged. */
+@media (min-width: 601px) and (max-width: 984px) {
+  .cards-grid.cards-grid-cta-card > .card-grid-item {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+
 /* The item's content is wrapped in a single <p>; stretch it to the full item
    height so the inner .grid-card (height:100%) fills equal-height columns. */
 .cards-grid.cards-grid-cta-card > .card-grid-item > p {
@@ -913,6 +924,74 @@
   line-height: 24px;
 }
 
+/* When the adult indication group (line-2) is followed by the combo logo
+   (line-3), drop line-2's bottom spacing so the list flows continuously into
+   the logo with one consistent gap (matches the live site). */
+.cards-grid.cards-grid-cta-card .card-grid-item-line-2:has(+ .card-grid-item-line-3) {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Indication card line-3: combo product logo placed mid-list (e.g. Rheumatology
+   RINVOQ + RINVOQ LQ logos between the adult and pediatric indication groups). */
+.cards-grid.cards-grid-cta-card .card-grid-item-line-3 {
+  width: 100%;
+  padding: 0 24px;
+  margin-bottom: var(--spacing-16, 16px);
+  text-align: left;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-3 img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Indication card line-4: pediatric indication group — same link/text treatment
+   as line-2 so it visually continues the indication list below the logo. */
+.cards-grid.cards-grid-cta-card .card-grid-item-line-4 {
+  font-size: var(--font-size-body);
+  color: var(--color-iron);
+  margin-bottom: var(--spacing-16, 16px);
+  padding: 0 24px 24px;
+  text-align: left;
+  width: 100%;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-4 a {
+  display: inline-block;
+  color: var(--color-iron, #46484a);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  line-height: 24px;
+  max-width: calc(100% - 30px);
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-4 a::after {
+  content: '';
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik05IDE4QzEzLjk3MDYgMTggMTggMTMuOTcwNiAxOCA5QzE4IDQuMDI5NDQgMTMuOTcwNiAwIDkgMEM0LjAyOTQ0IDAgMCA0LjAyOTQ0IDAgOUMwIDEzLjk3MDYgNC4wMjk0NCAxOCA5IDE4Wk0xMyA4Ljc1TDcuNTM5NzggMTRMNiAxMi41MTk1TDkuOTIwNDQgOC43NUw2IDQuOTgwNUw3LjUzOTc4IDMuNUwxMyA4Ljc1WiIgZmlsbD0iIzkwMTI0QSIvPgo8L3N2Zz4K');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-4 a:hover {
+  text-decoration: underline;
+}
+
+.cards-grid.cards-grid-cta-card .card-grid-item-line-4 p {
+  font-size: 16px;
+  font-family: var(--body-font-family);
+  color: var(--color-iron, #46484a);
+  margin: 0 0 12px;
+  line-height: 24px;
+}
+
 /* Glacier/support section — no card chrome, pill CTA */
 
 .section.glacier .cards-grid.cards-grid-cta-card {
@@ -926,6 +1005,57 @@
   .section.glacier .cards-grid.cards-grid-cta-card {
     max-width: 75%;
     padding: 0;
+  }
+
+  /* Each card fills its half of the 75% container (minus the gap), instead of
+     the base 380px cap that left large empty gutters. Matches live (~423px). */
+  .section.glacier .cards-grid.cards-grid-cta-card > .card-grid-item {
+    flex-basis: calc(50% - 12px);
+    max-width: calc(50% - 12px);
+  }
+}
+
+/* Tablet (601–984px): the global full-width tablet rule is meant for the
+   indication cards; the glacier Patient Support cards instead match live by
+   capping the grid container at 75% of the content width and centering it,
+   with each stacked card filling that container (matching live's structure:
+   546px container, 100% card). line-3 (description + CTA) is centered. */
+@media (min-width: 601px) and (max-width: 984px) {
+  .section.glacier .cards-grid.cards-grid-cta-card {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .section.glacier .cards-grid.cards-grid-cta-card > .card-grid-item {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  /* Trim the card to live's height: the trailing empty line-4 and the CTA's
+     oversized bottom margin add ~70px of dead space at tablet. */
+  .section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-4:empty {
+    display: none;
+  }
+
+  .section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 .button-container {
+    margin-bottom: 0;
+  }
+}
+
+/* Mobile (<=600px): same height trim as tablet (hide the empty line-4, drop the
+   CTA's oversized bottom margin). The CTA label is also allowed to wrap so it no
+   longer collides with the absolutely-positioned chevron icon on narrow cards. */
+@media (max-width: 600px) {
+  .section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-4:empty {
+    display: none;
+  }
+
+  .section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 .button-container {
+    margin-bottom: 0;
+  }
+
+  .section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a {
+    white-space: normal;
   }
 }
 
@@ -973,6 +1103,7 @@
   color: var(--color-charcoal, #25282a);
   line-height: 24px;
   margin: 0;
+  text-align: center;
 }
 
 .section.glacier .cards-grid.cards-grid-cta-card .card-grid-item-line-3 a {
@@ -983,7 +1114,7 @@
   color: #fff;
   padding: 16px 54px 16px 32px;
   border-radius: 100px;
-  font-family: var(--body-font-family);
+  font-family: var(--font-family-medium, 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif);
   font-size: 16px;
   font-weight: 700;
   text-decoration: none;

@@ -2142,3 +2142,18 @@ color: inherit;
     bottom: 0;
   }
 }
+/* Tablet: heading spans full content width (matches live) and uses semibold,
+   instead of shrinking to fit-content / extra-bold carried over from mobile.
+   Also drop the 368px min-height (only meaningful when the text container is
+   absolutely positioned over the image at desktop) so the banner collapses to
+   its content height instead of leaving a large empty gap above the cards. */
+@media (min-width: 601px) and (max-width: 984px) {
+  .hero.no-padding .hero-text-container {
+    min-height: auto;
+  }
+
+  .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+    width: 100%;
+    font-weight: var(--font-weight-600);
+  }
+}
