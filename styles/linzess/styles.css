@@ -4370,3 +4370,9 @@ main > .section:has(> .default-content-wrapper > h3:first-child) a {
   color: #422e83;
   text-decoration: underline;
 }
+
+/* why-linzess page only (identified by the How-LINZESS-Works timeline block):
+   last paragraph in each block gets a 20px bottom margin, except CTA buttons. */
+main:has(.whylinzess-timeline) p:not(.button-container):last-child {
+  margin-bottom: 20px;
+}
