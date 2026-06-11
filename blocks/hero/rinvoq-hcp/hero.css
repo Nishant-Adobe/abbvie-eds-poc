@@ -1356,6 +1356,8 @@ color: inherit;
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
+  --color-warning-bg: #fff4c2;
+  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -1520,6 +1522,7 @@ color: inherit;
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
+  --border-radius-l: 1.6rem;
 
   /* Border Width */
   --border-width-thin: 1px;
@@ -1610,6 +1613,7 @@ color: inherit;
   --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
+  --transition-easing-in-out: ease-in-out;
   --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);
@@ -1876,7 +1880,11 @@ color: inherit;
   /* ---- Brand Explorer Block ---- */
   --be-color-text: #46484a;
   --be-color-text-light: #46484a;
-  --be-color-bar-bg: #25282a;
+  --be-color-bar-bg: #000;
+  --be-bar-font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
+  --be-bar-font-weight: 600;
+  --be-bar-font-size: 1.3rem;
+  --be-bar-line-height: 1.728rem;
   --be-color-rinvoq: #ffd41d;
   --be-color-rinvoq-hover: #b8860b;
   --be-color-skyrizi: #00a8e1;
@@ -2140,50 +2148,5 @@ color: inherit;
     padding: var(--hero-text-padding);
     top: 0;
     bottom: 0;
-  }
-}
-/* Tablet: heading spans full content width (matches live) and uses semibold,
-   instead of shrinking to fit-content / extra-bold carried over from mobile.
-   Also drop the 368px min-height (only meaningful when the text container is
-   absolutely positioned over the image at desktop) so the banner collapses to
-   its content height instead of leaving a large empty gap above the cards. */
-@media (min-width: 601px) and (max-width: 984px) {
-  .hero.no-padding .hero-text-container {
-    min-height: auto;
-  }
-
-  .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
-    width: 100%;
-    font-weight: var(--font-weight-600);
-  }
-
-  /* half-split-heading is a text-only block whose text-container sits in normal
-     flow; the generic 368px min-height leaves a large empty gap below the
-     heading at tablet. Collapse it to content height to match live. */
-  .hero.half-split-heading .hero-text-container {
-    min-height: auto;
-  }
-
-  /* Tablet: the heading sits on the grey brushstroke background (rounded) and
-     the heading text is centered, matching live. */
-  .hero.half-split-heading .cmp-container-x-large {
-    background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/background--hero-grey-sm.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: var(--spacing-20, 20px);
-    text-align: center;
-  }
-
-  .hero.half-split-heading .cmp-container-x-large h1 {
-    text-align: center;
-  }
-
-  /* half-split-cta: the image fills its 368px banner (text overlays it) instead
-     of leaving a gap below a short 230px image. Live stretches the image
-     (object-fit: fill) so the full scene shows without cropping the subject. */
-  .hero.half-split-cta img {
-    height: 100%;
-    object-fit: fill;
   }
 }
