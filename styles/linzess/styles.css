@@ -776,15 +776,16 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item {
   text-align: center;
 }
 
+/* Icons sized by height, preserving each image's aspect ratio. Live caps the
+   height at ~200px on desktop and ~234px on mobile; the widest icon (Fiber)
+   may hit the column width first, the others stay height-constrained. */
 main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
   width: auto;
   max-width: 100%;
+  max-height: 23.4rem;
   margin: 0 auto;
 }
 
-/* Desktop/tablet: cap the icon height (~200px like live). Mobile (<744px)
-   has no cap so the icon scales up to fill the single-column width, matching
-   live's larger mobile icons. */
 @media (width >= 744px) {
   main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
     max-height: 20rem;
