@@ -871,6 +871,7 @@ main > .section.what-is-linzess-section .columns.what-is-linzess li {
 }
 
 main > .section.what-is-linzess-section .columns.what-is-linzess a {
+  position: relative;
   display: inline-block;
   margin-top: 0;
   padding: 16px 59px 16px 24px;
@@ -884,9 +885,17 @@ main > .section.what-is-linzess-section .columns.what-is-linzess a {
   text-decoration: none;
 }
 
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
 main > .section.what-is-linzess-section .columns.what-is-linzess a::after {
-  content: '\203A';
-  margin-left: var(--spacing-10);
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
 }
 
 /* Footnotes — left-aligned, 12px white, matching live (Sources block) */
@@ -1101,6 +1110,7 @@ main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)
 }
 
 main > .section.cta-cards-section .columns.cta-cards a {
+  position: relative;
   display: inline-block;
   padding: 16px 59px 16px 24px;
   border-radius: var(--linz-rounded-corner);
@@ -1113,9 +1123,17 @@ main > .section.cta-cards-section .columns.cta-cards a {
   text-decoration: none;
 }
 
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
 main > .section.cta-cards-section .columns.cta-cards a::after {
-  content: '\203A';
-  margin-left: var(--spacing-10);
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
 }
 
 @media (width < 744px) {
