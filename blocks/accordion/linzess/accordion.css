@@ -1049,7 +1049,7 @@
 /* Accordion container — no radius on wrapper */
 .accordion {
     border-radius: 0 !important;
-    --accordion-linzess-bg-item: var(--linz-purple);
+    --accordion-linzess-bg-item: var(--linz-dark-purple);
     --accordion-linzess-bg-item-hover: var(--color-brand-primary);
     --accordion-linzess-color-label: var(--linz-white);
     --accordion-linzess-color-body: var(--text-color);
@@ -1111,7 +1111,7 @@
 .accordion .accordion-item-label h6 {
     color: var(--accordion-linzess-color-label);
     font-family: "Lato", sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 800;
     text-transform: none;
     letter-spacing: normal;
@@ -1128,7 +1128,8 @@
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
     transition: transform 0.2s ease;
 }
-.accordion .accordion-item[open] summary::after {
+.accordion .accordion-item[open] summary::after,
+.accordion details[open] summary::after {
     transform: rotate(180deg);
 }
 /* Hide any icon-font icons so they don't double up */
@@ -1154,12 +1155,14 @@
 
 
 /* Open state — keep brand purple on header */
-.accordion .accordion-item[open] summary {
+.accordion .accordion-item[open] summary,
+.accordion details[open] summary {
     background: var(--accordion-linzess-bg-item);
 }
-/* Body — light greyish-purple background, padded */
+/* Body — light off-white panel with rounded corners (matches live) */
 .accordion .accordion-item-body {
-    background: var(--linz-off-white) !important;
+    background: var(--linz-off-white, #f4f6fb) !important;
+    border-radius: var(--linz-rounded-corner, 16px);
     padding: var(--spacing-16) var(--spacing-24) var(--spacing-24);
 }
 .accordion .accordion-item-body .accordion-item-body-text {
@@ -1204,14 +1207,14 @@
   text-align: center !important;
   color: var(--linz-dark-purple, #422e83) !important;
   font-family: "Bebas Neue", sans-serif !important;
-  font-size: 2.5rem !important;
+  font-size: 4rem !important;
   font-weight: 400 !important;
   font-style: normal !important;
-  line-height: 2.25rem !important;
+  line-height: 3.6rem !important;
   text-transform: uppercase !important;
   letter-spacing: normal !important;
   margin-top: 20px !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 3.8rem !important;
 }
 
 
@@ -1344,7 +1347,7 @@ h1.heading-1 {
 .accordion-item-label .accordion-item-label-text:hover {
     font-family: "Lato", sans-serif !important;
     font-weight: 800 !important;
-    font-size: 14px !important;
+    font-size: 16px !important;
     color: var(--accordion-linzess-color-label) !important;
 }
 
@@ -1369,8 +1372,8 @@ h1.heading-1 {
   /* Section headings smaller on mobile */
   .section.centered.accordion-container .default-content-wrapper p,
   .section.centered.accordion-container .default-content-wrapper h2 {
-    font-size: 1.8rem !important;
-    line-height: 1.8rem !important;
+    font-size: 3.2rem !important;
+    line-height: 3rem !important;
     margin-top: 10px !important;
   }
 
@@ -1388,7 +1391,7 @@ h1.heading-1 {
 
   .section.centered.accordion-container .default-content-wrapper p,
   .section.centered.accordion-container .default-content-wrapper h2 {
-    font-size: 2rem !important;
-    line-height: 2rem !important;
+    font-size: 3.6rem !important;
+    line-height: 3.3rem !important;
   }
 }

@@ -2223,6 +2223,27 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     min-height: var(--hero-mobile-min-height);
   }
 
+  /* Editorial hero mobile: match live (image ~369px, h1 32px/30px → 2 lines).
+     The 40px h1 wrapped to 3 lines and pushed copy up; the 420px box also
+     over-cropped the wide editorial image. */
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) picture img {
+    min-height: 369px;
+  }
+
+  /* The signup editorial image is a wide 2.34:1 desktop crop; in the ~1:1
+     mobile box object-fit:cover zooms onto the center and cuts the subjects.
+     Bias the crop toward the top so faces/scene are framed like live, which
+     serves a square mobile image. */
+  .hero.linzess-behind-nav-linzess-editorial-hero:has(picture img[src*="signup-hero"]) picture img,
+  .hero.linzess-editorial-hero:has(picture img[src*="signup-hero"]) picture img {
+    object-position: 50% 22%;
+  }
+
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-32);
+    line-height: 0.94;
+  }
+
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero),
   .hero-eyebrow,
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
@@ -2234,6 +2255,15 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     padding: var(--spacing-20);
     justify-content: center;
     height: 100%;
+  }
+
+  /* Editorial hero mobile: bottom-align copy so the eyebrow clears the logo
+     and the title sits in the lower portion (matches live). Centering lifted
+     the "FAQs" eyebrow up into the LINZESS logo. */
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: var(--spacing-20) var(--spacing-20) 40px;
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
@@ -2270,6 +2300,8 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
     width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: calc(var(--nav-height) + 6.2rem) 7rem 7rem;
   }
 
@@ -2332,6 +2364,18 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     max-width: var(--hero-cmp-max-width-cta);
   }
 
+  /* Editorial hero desktop/laptop: top-align the copy below the nav so the
+     eyebrow clears the LINZESS logo. The shared cta/editorial rule above
+     centers the text (align-items:center; padding:0), which on the shorter
+     editorial image lifts the "FAQs" eyebrow up over the logo and floats the
+     title with empty space beneath. Restore top alignment with nav clearance. */
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: none;
+    padding: calc(var(--nav-height) + 8.4rem) 5.5rem 7.2rem;
+  }
+
   .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
     position: relative;
     z-index: 2;
@@ -2339,10 +2383,10 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     flex-direction: column;
     inset: unset;
     width: 100%;
-    max-width: var(--hero-caption-max-width);
+    max-width: none;
     min-height: auto;
     padding: 0;
-    margin-inline: auto;
+    margin-inline: 0;
     margin-bottom: var(--spacing-40);
     font-size: var(--font-size-legal-large);
     font-weight: var(--font-weight-body);

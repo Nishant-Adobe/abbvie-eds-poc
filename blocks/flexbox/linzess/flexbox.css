@@ -96,12 +96,30 @@
    "Support Your Ongoing Treatment Plan" — Bebas Neue 32px.
    ==================================================== */
 
-/* White curved arc at the top of this section, curving up over the hero
-   bottom. z-index:-5 keeps it BEHIND the content (heading stays on top).
-   Matches live's .background-white-arc::before. */
+/* Full-bleed white background + curved arc cap for the cards section, matching
+   live's .background-white .background-white-arc. The section box is inside the
+   constrained .abbvie-container grid, so paint the colour with two full-viewport
+   pseudo-elements behind the content (same pattern as columns/linzess section
+   backgrounds): ::after = flat fill (100vw), ::before = curved cap (130vw).
+   z-index:-5/-6 keeps both behind the content. */
 main .section:has(.flexbox.column) {
   position: relative;
   z-index: 0;
+  overflow: visible;
+}
+
+/* Full-bleed flat white fill behind the cards */
+main .section:has(.flexbox.column)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  background: var(--linz-white, #fff);
+  z-index: -6;
+  pointer-events: none;
 }
 
 main .section:has(.flexbox.column)::before {
@@ -109,8 +127,8 @@ main .section:has(.flexbox.column)::before {
   position: absolute;
   top: -60px;
   left: 50%;
-  transform: translateX(-50%);
-  width: 130%;
+  margin-left: -65vw;
+  width: 130vw;
   height: 75px;
   background: var(--linz-white, #fff);
   border-top-left-radius: 100%;
@@ -131,13 +149,20 @@ main .section:has(.flexbox.column) .default-content-wrapper {
 
 main .section:has(.flexbox.column) .default-content-wrapper h2 {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 400;
-  line-height: 30px;
+  line-height: 36px;
   text-transform: none;
   letter-spacing: normal;
   color: var(--linz-dark-purple, #422e83);
   margin: 20px 0 0;
+}
+
+@media (width < 744px) {
+  main .section:has(.flexbox.column) .default-content-wrapper h2 {
+    font-size: 32px;
+    line-height: 30px;
+  }
 }
 
 /* Gold divider arc above the intro heading (matches live) */
@@ -155,7 +180,7 @@ main .section:has(.flexbox.column) .default-content-wrapper p {
   font-size: 16px;
   line-height: 1.5;
   color: var(--linz-grey, #4d4d4f);
-  margin: 1rem auto 0;
+  margin: 2rem auto 0;
   max-width: 760px;
 }
 
@@ -164,6 +189,12 @@ main .section:has(.flexbox.column) .default-content-wrapper p {
    Stacked full-width cards with icon left, text right,
    alternating dark/light purple backgrounds.
    ==================================================== */
+
+/* Breathing room between the intro copy and the first card (matches live;
+   the intro default-content-wrapper sits flush against the card stack). */
+main .section:has(.flexbox.column) .flexbox-wrapper {
+  margin-top: 2.5rem;
+}
 
 .flexbox.column .flexbox-item {
   display: flex;

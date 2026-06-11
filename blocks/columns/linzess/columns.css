@@ -12,25 +12,228 @@ body main {
   overflow-x: clip;
 }
 
-/* Section — no background here, let wrapper handle it */
+/* ---- Alternating section backgrounds + curved arc ----
+   Live linzess gives every content section a FULL-BLEED (edge-to-edge)
+   background colour plus a curved arc cap at its top that rises over the
+   section above. Content authors mark sections with `white` / `off-white`.
+
+   The migrated sections live inside `.abbvie-container`, a CSS grid that is
+   constrained to ~1330px with side margins (defined in the global styles.css we
+   must not edit). Setting a background directly on the section would stop short
+   of the viewport edges, leaving stripes of the body colour on the sides. So we
+   keep the section box transparent and paint the colour with two full-viewport
+   (100vw / 130vw) pseudo-elements positioned BEHIND the grid content
+   (z-index -5/-6) — this leaves the grid layout untouched while the colour goes
+   edge-to-edge. `margin-left:-50vw` + `left:50%` centres the 100vw layer; the
+   arc cap uses 130vw so its curved corners stay off-screen.
+
+   :not(:has(.flexbox.column)) avoids a double arc on from-the-gut, where the
+   flexbox section already draws its own arc (flexbox/linzess/flexbox.css). */
+main .section.white,
+main .section.off-white {
+  position: relative;
+  z-index: 0;
+  background-color: transparent;
+  margin-bottom: 24px;
+  padding-bottom: 100px;
+  overflow: visible;
+}
+
+/* Full-bleed flat fill behind the content */
+main .section.white:not(:has(.flexbox.column))::after,
+main .section.off-white:not(:has(.flexbox.column))::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  z-index: -6;
+  pointer-events: none;
+}
+
+/* Full-bleed curved arc cap rising above the section top */
+main .section.white:not(:has(.flexbox.column))::before,
+main .section.off-white:not(:has(.flexbox.column))::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  margin-left: -65vw;
+  width: 130vw;
+  height: 75px;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+  pointer-events: none;
+}
+
+main .section.white::before,
+main .section.white::after {
+  background-color: var(--linz-white, #fff);
+}
+
+main .section.off-white::before,
+main .section.off-white::after {
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
+@media screen and (width >= 900px) {
+  main .section.white:not(:has(.flexbox.column))::before,
+  main .section.off-white:not(:has(.flexbox.column))::before {
+    height: 255px;
+  }
+}
+
+/* The accordion brand CSS reduces section spacing to 2rem/0 for FAQ pages;
+   re-assert the live 24px gap + 100px bottom padding with matching specificity
+   (extra `main` + colour class beats `.section.centered.accordion-container`). */
+main .section.white.accordion-container,
+main .section.off-white.accordion-container {
+  margin-bottom: 24px;
+  padding-bottom: 100px;
+}
+
+/* The page body shows through the 24px inter-section gaps; live paints it
+   off-white. Scope to pages that actually use the alternating sections. */
+body:has(main .section.off-white),
+body:has(main .section.white) {
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
+/* Inline ISI section — live paints it solid white (.abbv-inline-use-isi),
+   not the off-white body colour. Full-bleed flat white fill behind the content
+   (no arc cap — the ISI sits flush, unlike the white/off-white content
+   sections). Section box stays transparent; ::before paints edge-to-edge. */
+/* ISI gets z-index:1 so its white ::before arc paints OVER the preceding
+   dark-purple CTA section (which establishes its own stacking context at
+   z-index:0) — this is what carves the curved white transition up into the
+   purple, matching live's .abbv-inline-use-isi:before. The pseudo-elements use
+   z-index:-1 so they sit behind the ISI's own text but the ISI's whole stacking
+   context still layers above the purple. The footer (a sibling OUTSIDE main) is
+   unaffected by this z-index, so its own arc still renders. */
+main .section.isi,
+main .section.dark-purple + .section.isi {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  margin-bottom: 0;
+  /* Live keeps the 80px breathing room below the ISI text INSIDE the white
+     block (padding, not margin) so the footer's purple arc rises over white,
+     not the off-white body. Match that here. */
+  padding-bottom: 80px;
+}
+
+/* Flat full-bleed white body fill */
+main .section.isi::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  background: var(--linz-white, #fff);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Curved white arc cap rising over the section above (matches live
+   .abbv-inline-use-isi:before). */
+main .section.isi::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background: var(--linz-white, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@media (min-width: 986px) {
+  main .section.isi::before {
+    height: 255px;
+    top: -80px;
+  }
+}
+
+/* The ISI section's z-index:1 escapes to the root stacking context (main is not
+   a stacking context), painting over the footer's own purple top-arc
+   (footer ::before, z-index:-1) and hiding it. Lift the footer into its own
+   stacking context above the page content so its arc renders again. This does
+   not modify the footer block — it only restores the original layering. */
+body:has(main .section.isi) footer .footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Dark-purple CTA section — same full-bleed background + curved arc cap as the
+   white/off-white sections (live: .background-dark-purple-arc). Section box stays
+   transparent; the purple is painted edge-to-edge by the ::after fill and the
+   curved ::before cap, both behind the content. overflow:visible so the arc that
+   rises above the section top (-60px) is not clipped. */
 main .section.dark-purple {
+  position: relative;
+  z-index: 0;
   background: none !important;
   padding: 0 !important;
   margin: 0 !important;
   border: none !important;
-  overflow: hidden !important;
+  overflow: visible !important;
   max-width: 100% !important;
 }
 
-/* Wrapper gets the purple background */
+main .section.dark-purple::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  background-color: var(--linz-dark-purple, #422e83);
+  z-index: -6;
+  pointer-events: none;
+}
+
+main .section.dark-purple::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  margin-left: -65vw;
+  width: 130vw;
+  height: 75px;
+  background-color: var(--linz-dark-purple, #422e83);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+  pointer-events: none;
+}
+
+@media screen and (width >= 900px) {
+  main .section.dark-purple::before {
+    height: 255px;
+  }
+}
+
+/* Content wrapper — transparent now that the section paints itself full-bleed.
+   Vertical padding matches live's .background-dark-purple-arc.bottom-nav
+   (padding: 20px top / 140px bottom) so the cards sit high under the top arc
+   with generous space above the bottom edge. */
 main .section.dark-purple .columns-wrapper {
-  background-color: var(--linz-dark-purple, #422e83) !important;
+  background-color: transparent !important;
   color: #fff;
-  padding: 5rem 3.5rem !important;
+  padding: 20px 3.5rem 140px !important;
   margin: 0 !important;
   border: none !important;
   max-width: 100% !important;
-  overflow: hidden !important;
   box-sizing: border-box !important;
 }
 
@@ -545,7 +748,10 @@ main .section.signup-section .c-linz-dark-purple {
    background via a 100vw ::before positioned behind the content. */
 main .section:has(.columns.ftgsignup) {
   position: relative;
-  z-index: 1;
+  /* z-index:0 (not 1) so this section's stacking context does not paint over
+     the following dark-purple CTA section's top arc (purple is z-index:0, arc
+     at -5). Its own ::before arc still layers correctly at z-index:-1. */
+  z-index: 0;
   padding-bottom: 100px;
   background-color: transparent;
 }
@@ -579,13 +785,20 @@ main .section:has(.columns.ftgsignup) .default-content-wrapper img {
 
 main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
   font-family: "Bebas Neue", sans-serif;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 36px;
   text-transform: none;
   letter-spacing: normal;
   color: var(--linz-dark-purple, #422e83);
   margin: 20px 0 1.5rem;
+}
+
+@media (width < 744px) {
+  main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
+    font-size: 32px;
+    line-height: 30px;
+  }
 }
 
 /* ====================================================
