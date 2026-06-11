@@ -67,7 +67,7 @@ export default async function decorate(block) {
   // Group multiple sections per tab name
   const tabPanelMap = new Map();
 
-  // Try name-matching first
+  // Try name-matching first (when tab cell text is available)
   tabNames.forEach((name) => {
     if (!name) return;
     const normalizedName = normalize(name);
@@ -77,8 +77,26 @@ export default async function decorate(block) {
     if (matched.length > 0) tabPanelMap.set(name, matched);
   });
 
-  // Positional fallback: when name-matching found nothing for ANY tab,
-  // assign plain sections (no style classes, no ISI/safety-bar) positionally.
+  // xwalk fallback: tab cells are empty but sections have data-tab-name.
+  // Assign sections with tabName to tabs in document order.
+  if (tabPanelMap.size === 0) {
+    const labeledPanels = panels.filter((s) => getSectionIdentifier(s));
+    if (labeledPanels.length >= tabNames.length) {
+      const perTab = Math.floor(labeledPanels.length / tabNames.length);
+      tabNames.forEach((name, i) => {
+        const start = i * perTab;
+        const end = i === tabNames.length - 1 ? labeledPanels.length : start + perTab;
+        const assigned = labeledPanels.slice(start, end);
+        tabPanelMap.set(name || `tab-${i}`, assigned);
+        if (!name && assigned.length > 0) {
+          const label = getSectionIdentifier(assigned[0]);
+          if (label) tabNames[i] = label;
+        }
+      });
+    }
+  }
+
+  // Final positional fallback: no labels anywhere — use plain sections.
   if (tabPanelMap.size === 0 && panels.length >= tabNames.length) {
     const plainPanels = panels.filter((s) => {
       const hasStyle = [...s.classList].some((c) => c.startsWith('find-relief'));
@@ -90,7 +108,7 @@ export default async function decorate(block) {
       tabNames.forEach((name, i) => {
         const start = i * perTab;
         const end = i === tabNames.length - 1 ? plainPanels.length : start + perTab;
-        tabPanelMap.set(name, plainPanels.slice(start, end));
+        tabPanelMap.set(name || `tab-${i}`, plainPanels.slice(start, end));
       });
     }
   }
