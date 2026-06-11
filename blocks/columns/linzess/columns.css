@@ -1216,6 +1216,16 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   display: block;
 }
 
+/* Desktop: cap the image so the row height matches live (~300px) rather
+   than stretching tall from the 55% image column. */
+
+@media (width >= 986px) {
+  .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image),
+  .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) img {
+    max-height: 300px;
+  }
+}
+
 .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)) {
   flex: 1;
   padding: 40px 48px;
