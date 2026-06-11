@@ -1441,6 +1441,7 @@ body main .section .columns.whylinzess-mechanism-card .columns-item-image img {
 .columns.whylinzess-mechanism-card .columns-item-content p {
   color: var(--color-brand-primary);
   font-size: 16px;
+  font-weight: var(--font-weight-bold);
   line-height: normal;
   margin-bottom: 8px;
   text-align: left;
@@ -1458,11 +1459,18 @@ body main .section .columns.whylinzess-mechanism-card .columns-item-image img {
 .columns.whylinzess-mechanism-card .columns-item-content li {
   color: var(--color-brand-primary);
   font-size: 14.4px;
-  font-weight: var(--font-weight-body);
+  font-weight: var(--font-weight-bold);
   line-height: normal;
   text-align: left;
   padding-left: 0;
   margin-left: 0;
+}
+
+/* Remove the duplicate ::before bullet — these list items already render a
+   native disc marker, so the dark-section li::before adds a second dot. */
+
+.columns.whylinzess-mechanism-card .columns-item-content li::before {
+  content: none;
 }
 
 /* WHY LINZESS — Timeline cards (same pattern as symptom cards) */
