@@ -707,15 +707,27 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section)::before {
   background-color: var(--color-brand-primary);
 }
 
-/* Section heading (Bebas Neue, 40px) */
+/* Section heading (Bebas Neue, 40px / line-height 36px) */
 main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2) {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
   font-weight: var(--font-weight-body);
-  line-height: 0.9;
+  line-height: var(--no-hero-h1-line-height, 36px);
   text-align: center;
   text-transform: none;
+}
+
+/* Divider line (64x5 divider.svg) centered above the heading.
+   Live shows it on otc-intro + what-is-linzess only (NOT more-like-this). */
+main > .section:is(.otc-intro-section, .what-is-linzess-section) :is(.heading-1, h2)::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
 }
 
 main > .section:is(.otc-intro-section, .more-like-this-section) :is(.heading-1, h2) {
@@ -735,7 +747,7 @@ main > .section.otc-intro-section > .default-content-wrapper {
 
 main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1) {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-legal-large);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
 }
@@ -762,14 +774,14 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item p strong 
   display: block;
   margin: var(--spacing-16) 0 var(--spacing-10);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-article-card-title);
+  font-size: var(--font-size-article-cta-title);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-heading);
 }
 
 main > .section.otc-intro-section .columns.how-they-work .columns-item p {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-legal-large);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
 }
@@ -794,7 +806,7 @@ main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-i
 
 main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-body);
+  font-size: var(--font-size-legal-large);
   line-height: 1.5;
   color: var(--color-text-on-dark);
 }
@@ -811,7 +823,7 @@ main > .section.what-is-linzess-section .columns.what-is-linzess li {
 main > .section.what-is-linzess-section .columns.what-is-linzess a {
   display: inline-block;
   margin-top: var(--spacing-16);
-  padding: 16px 59px 16px 24px;
+  padding: 16px 59px 16px 32px;
   border-radius: var(--linz-rounded-corner);
   background: var(--color-background-primary, #fff);
   color: var(--color-brand-primary);
