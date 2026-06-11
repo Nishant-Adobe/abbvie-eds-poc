@@ -343,6 +343,31 @@
   padding: 0 !important;
 }
 
+/* Tablet: inset the image banner with extra horizontal padding and give it a
+   little more height than the base. Overrides the padding:0 !important above. */
+@media (min-width: 601px) and (max-width: 984px) {
+  .hero.half-split-cta > div:first-child {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    min-height: 420px;
+  }
+
+  /* Vertically center the text overlay (h3 + CTA) within the taller banner and
+     shift it right so it sits inside the padded image instead of spilling onto
+     the grey gutter (the absolutely-positioned overlay ignores the banner's
+     40px padding, so the text needs ~60px left padding to clear the image edge). */
+  .hero.half-split-cta .hero-text-container {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .hero.half-split-cta .hero-text-container .cmp-container-x-large {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 60px;
+  }
+}
+
 .hero.half-split-cta > div:not(:first-child):not(.hero-text-container) {
   display: none;
 }

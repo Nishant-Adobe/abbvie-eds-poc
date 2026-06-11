@@ -2156,4 +2156,34 @@ color: inherit;
     width: 100%;
     font-weight: var(--font-weight-600);
   }
+
+  /* half-split-heading is a text-only block whose text-container sits in normal
+     flow; the generic 368px min-height leaves a large empty gap below the
+     heading at tablet. Collapse it to content height to match live. */
+  .hero.half-split-heading .hero-text-container {
+    min-height: auto;
+  }
+
+  /* Tablet: the heading sits on the grey brushstroke background (rounded) and
+     the heading text is centered, matching live. */
+  .hero.half-split-heading .cmp-container-x-large {
+    background-image: url('/content/dam/rinvoqhcpivy/images/backgrounds/background--hero-grey-sm.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--spacing-20, 20px);
+    text-align: center;
+  }
+
+  .hero.half-split-heading .cmp-container-x-large h1 {
+    text-align: center;
+  }
+
+  /* half-split-cta: the image fills its 368px banner (text overlays it) instead
+     of leaving a gap below a short 230px image. Live stretches the image
+     (object-fit: fill) so the full scene shows without cropping the subject. */
+  .hero.half-split-cta img {
+    height: 100%;
+    object-fit: fill;
+  }
 }
