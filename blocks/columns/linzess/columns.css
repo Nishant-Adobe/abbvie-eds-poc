@@ -1293,6 +1293,33 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   font-size: 21px;
 }
 
+/* Desktop: match live — promo/gut-check headings 24px, gut-check body 16px,
+   and the gut-check card height capped to ~299px (the shared homepage min-height
+   of 336.6px made it too tall). Mobile keeps the smaller sizes. */
+
+@media (width >= 768px) {
+  .hero-container + .columns-container .columns .columns-item-content p strong,
+  .columns.columns-homepage-promo .columns-item-content p strong,
+  .columns.columns-homepage-gutcheck .columns-item-content p strong {
+    font-size: 24px;
+  }
+
+  .columns.columns-homepage-gutcheck .columns-item-content > p:not(:first-child) {
+    font-size: 16px;
+  }
+}
+
+@media (width >= 986px) {
+  .columns-container:not(.hero-container + .columns-container) .columns.columns-homepage-gutcheck {
+    min-height: 299px;
+  }
+
+  .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image),
+  .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) img {
+    max-height: 299px;
+  }
+}
+
 @media (width < 768px) {
   .columns.columns-homepage-gutcheck {
     flex-wrap: wrap;
