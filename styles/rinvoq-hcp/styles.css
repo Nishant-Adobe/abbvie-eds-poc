@@ -933,7 +933,7 @@ body {
   margin: 0;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 985px) {
   .section.glacier .image-text {
     grid-template-columns: 300px 770px;
     gap: 24px;
@@ -957,7 +957,7 @@ body {
   height: 275px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 985px) {
   .section.glacier .image-text {
     position: relative;
   }
@@ -1008,12 +1008,17 @@ body {
   background-position: 50% 50%;
 }
 
-.section.glacier .image-text .image-text-content-col h2 img {
+.section.glacier .image-text .image-text-content-col h2 .logo-rinvoq-complete {
+  display: inline-block;
   width: 294px;
   max-width: 100%;
-  height: auto;
+  height: 28px;
   vertical-align: middle;
   margin-left: 8px;
+  background-image: url('/content/dam/rinvoqhcpivy/images/logo/rinvoq-complete.svg');
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
 }
 
 .section.glacier .image-text .image-text-content-col h3:first-of-type {
@@ -1053,17 +1058,29 @@ body {
 }
 
 
-@media (max-width: 899px) {
+@media (max-width: 984px) {
   .section.glacier.image-text-container {
     padding: 48px 20px 0;
   }
 
   .section.glacier .image-text {
+    grid-template-columns: 1fr;
     padding: 0 20px;
   }
 
   .section.glacier .image-text .image-text-image-col {
     align-items: center;
+    text-align: center;
+  }
+
+  /* Badge caption sits centered under the badge (not full width), matching
+     live — constrain it to roughly the badge width. */
+  .section.glacier .image-text .image-text-content-col > .image-text-content > p.badge-caption:first-child {
+    position: static;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
   }
 
@@ -1080,9 +1097,10 @@ body {
     margin: 0 0 47px -18px;
   }
 
-  .section.glacier .image-text .image-text-content-col h2 img {
+  .section.glacier .image-text .image-text-content-col h2 .logo-rinvoq-complete {
     display: inline-block;
     width: 195px;
+    height: 19px;
     margin-left: 6px;
     margin-top: 0;
     vertical-align: middle;
@@ -1592,7 +1610,7 @@ body {
   }
 
   .section.glacier.image-text-container + .section.formulary-lookup-container .formulary-lookup .formulary-lookup-disclaimer p {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 20px;
     padding: 0;
   }
@@ -1616,13 +1634,20 @@ body {
 }
 
 /* Access page: footnotes legal section (scoped to pages with access-hero) */
+/* First legal text-container (savings disclaimers, directly after the
+   brushstroke resources CTA) has no grey panel. The ISI legal block further
+   down, plus boxed-warning and references, keep their --color-glacier bg. */
+body:has(.access-hero-section) .section.brushstroke-glacier-white + .section.text-container-container:has(> .text-container-wrapper > .text-container.legal) {
+  background-color: transparent;
+}
+
 body:has(.access-hero-section) .section.text-container-container .text-container.legal .text-container-text p {
   font-size: 12px;
   line-height: 1.5;
   color: rgb(37, 40, 42);
   padding-left: 20px;
   text-indent: -20px;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
 
 @media (max-width: 899px) {
@@ -2778,6 +2803,19 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   .section.dosing-lab-content table thead th:last-child,
   .section.dosing-lab-content table tbody td {
     width: 50%;
+  }
+
+  /* Access page forms: live stacks the 3 download CTAs vertically (centered)
+     at tablet rather than wrapping them into a row. Stack the flex wrapper as a
+     centered column and drop the heading's forced line break. */
+  .section.access-hero-section + .section .default-content-wrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .section.access-hero-section + .section .default-content-wrapper .button-container {
+    margin: 0 0 16px;
   }
 }
 
