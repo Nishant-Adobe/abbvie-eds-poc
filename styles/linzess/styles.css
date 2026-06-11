@@ -898,6 +898,17 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h
   line-height: var(--no-hero-h1-line-height, 36px);
 }
 
+/* Hero text column: live's editorial-hero text container is ~100rem wide so
+   the H1 stays on one line. The base behind-nav hero caps it at 64rem and the
+   editorial cmp-container at 40rem, forcing a 2-line wrap. Widen for OTC. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+  width: min(100%, 100rem);
+}
+
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+  max-width: 100rem;
+}
+
 /* More Like This heading — no bottom margin; columns margin-top provides the
    ~40px gap to cards (matches live's 43px). Divider ::before keeps top space. */
 main > .section.more-like-this-section :is(.heading-1, h2) {
