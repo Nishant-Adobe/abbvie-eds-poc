@@ -3635,6 +3635,7 @@ main > .section.white-arc .button-container a.button.secondary:hover {
    so on mobile we reorder via grid order to surface the image first,
    matching the live page. */
 main > .section.white-arc .columns.columns-offset {
+  display: block;
   align-items: start;
   padding-left: 20px;
   padding-right: 20px;
@@ -3667,6 +3668,7 @@ main > .section.white-arc .columns-item-image picture img {
    (form-left / image-right) by clearing the mobile order overrides */
 @media (width >= 768px) {
   main > .section.white-arc .columns.columns-offset {
+    display: grid;
     grid-template-columns: 3fr 2fr;
   }
 
