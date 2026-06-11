@@ -928,18 +928,9 @@ body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container >
   font-size: 40px;
 }
 
-/* Savings card: title 24px, body 16px (live values). */
-main:has(.whylinzess-timeline) .columns.columns-homepage-savings .columns-item-content p strong {
-  font-size: 24px;
-}
-
-main:has(.whylinzess-timeline) .columns.columns-homepage-savings .columns-item-content > p:nth-child(n+3) {
-  font-size: 16px;
-}
-
-body main:has(.whylinzess-timeline) .section.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
-  padding-bottom: 0;
-}
+/* Savings card inherits the homepage columns-homepage-savings styling
+   verbatim (982-wide, 55% image, 18px title, 14px body) — no why-linzess
+   overrides, so it renders identically to the homepage card. */
 
 /* Savings disclaimer footnote: EDS auto-converts this standalone link
    paragraph into a button. Revert it to plain grey legal text (matching
