@@ -746,6 +746,7 @@ main > .section.otc-intro-section > .default-content-wrapper {
 }
 
 main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1) {
+  margin: var(--spacing-16) 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
   line-height: var(--line-height-body);
@@ -772,7 +773,7 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item-image img
 main > .section.otc-intro-section .columns.how-they-work .columns-item-content p:first-child strong,
 main > .section.otc-intro-section .columns.how-they-work .columns-item p strong {
   display: block;
-  margin: var(--spacing-16) 0 var(--spacing-10);
+  margin: 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-cta-title);
   font-weight: var(--font-weight-bold);
@@ -780,8 +781,9 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item p strong 
 }
 
 main > .section.otc-intro-section .columns.how-they-work .columns-item p {
+  margin: 0 0 var(--spacing-20);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-article-body);
+  font-size: var(--font-size-button);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
 }
@@ -811,8 +813,9 @@ main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
   color: var(--color-text-on-dark);
 }
 
-/* Footnote inside the text column stays 12px (live) */
+/* Footnote inside the text column stays 12px (live), tighter 12px margins */
 main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote {
+  margin: var(--spacing-12, 12px) 0;
   font-size: var(--font-size-body-small);
 }
 
@@ -822,7 +825,7 @@ main > .section.what-is-linzess-section .columns.what-is-linzess p {
 
 main > .section.what-is-linzess-section .columns.what-is-linzess ul {
   margin: var(--spacing-16) 0;
-  padding-left: var(--spacing-20);
+  padding-left: var(--spacing-16);
 }
 
 main > .section.what-is-linzess-section .columns.what-is-linzess li {
@@ -970,7 +973,7 @@ main > .section.cta-cards-section .columns.cta-cards {
 }
 
 main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
-  margin: 0 0 var(--spacing-16);
+  margin: var(--spacing-24) 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-cta-title);
   font-weight: var(--font-weight-bold);
