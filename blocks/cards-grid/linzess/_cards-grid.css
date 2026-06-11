@@ -400,3 +400,161 @@
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
+
+/* stylelint-disable selector-class-pattern, no-descending-specificity */
+
+/* ── Linzess find-relief: centered icon-image cards ── */
+.cards-grid.cards-grid-icon-image-card > .demo-wrap {
+  max-width: 998px !important;
+  margin: 0 auto;
+  padding: 40px 16px 24px !important;
+  overflow: visible;
+}
+
+.cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 998px;
+  margin: 0 auto;
+}
+
+.cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
+  flex: 1;
+  min-width: 0;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card {
+  background: var(--linz-dark-purple) !important;
+  border-radius: 16px !important;
+  padding: 48px 32px 32px !important;
+  text-align: center;
+  height: 100%;
+  position: relative;
+  overflow: visible;
+  margin-top: 40px;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
+.cards-grid.cards-grid-icon-image-card .icon-image-card h2 {
+  font-family: var(--body-font-family) !important;
+  font-size: var(--font-size-card-title) !important;
+  font-weight: 700 !important;
+  color: var(--linz-white) !important;
+  margin: 0 0 12px !important;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linz-white);
+  line-height: normal;
+  margin: 0 0 16px;
+}
+
+.cards-grid.cards-grid-icon-image-card .icon-image-card a {
+  display: inline-block;
+  background: var(--linz-white);
+  color: var(--linz-dark-purple);
+  border-radius: 16px;
+  padding: 16px 40px 16px 32px;
+  font-size: 14.4px;
+  font-weight: 800;
+  text-decoration: none;
+  margin-top: 16px;
+}
+
+/* Light purple variant cards (savings cards + second prescribed card) */
+.cards-grid.cards-grid-icon-image-card .background-light-purple {
+  background: var(--linz-light-purple) !important;
+}
+
+.cards-grid.cards-grid-icon-image-card .background-light-purple .heading-2,
+.cards-grid.cards-grid-icon-image-card .background-light-purple h2 {
+  color: var(--linz-dark-purple) !important;
+}
+
+.cards-grid.cards-grid-icon-image-card .background-light-purple p {
+  color: var(--linz-grey);
+}
+
+.cards-grid.cards-grid-icon-image-card .background-light-purple a {
+  background: var(--linz-dark-purple);
+  color: var(--linz-white);
+}
+
+/* Second cards-grid instance (savings cards) — all light purple */
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card {
+  background: var(--linz-light-purple) !important;
+}
+
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card h2,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card h2 {
+  color: var(--linz-dark-purple) !important;
+}
+
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card p,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card p {
+  color: var(--linz-grey);
+}
+
+.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card a,
+.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card a {
+  background: var(--linz-dark-purple);
+  color: var(--linz-white);
+}
+
+/* ── Mobile (< 744px): stack icon cards vertically ── */
+@media (width <= 743px) {
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
+    flex-wrap: wrap;
+    gap: 40px 16px;
+  }
+
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .cards-grid.cards-grid-icon-image-card .icon-image-card {
+    padding: 40px 24px 24px !important;
+  }
+}
+
+/* ── Tablet (744px–985px): stack vertically (matches live site) ── */
+@media (744px <= width <= 985px) {
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
+    flex-flow: column wrap;
+    gap: 40px 16px;
+    align-items: center;
+  }
+
+  .cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
+    flex: 1 1 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* stylelint-enable selector-class-pattern, no-descending-specificity */
