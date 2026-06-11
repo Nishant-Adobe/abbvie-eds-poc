@@ -4421,7 +4421,9 @@ main:has(.whylinzess-timeline) .cards-grid .abbv-stretched-card-body p.heading-2
   color: var(--linz-white);
 }
 
-/* why-linzess page: uniform 1.6rem line-height across all text. */
-main:has(.whylinzess-timeline) :is(p, li, h1, h2, h3, h4, h5, h6, strong, a, span) {
+/* why-linzess page: uniform 1.6rem line-height for body copy. Headings
+   (and their inline <strong>) keep their own larger line-height so the
+   40px multi-line titles don't overlap. */
+main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
   line-height: 1.6rem;
 }
