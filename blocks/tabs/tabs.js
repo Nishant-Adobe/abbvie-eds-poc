@@ -66,13 +66,25 @@ export default async function decorate(block) {
   // Match sections to tab names (case-insensitive)
   // Group multiple sections per tab name
   const tabPanelMap = new Map();
-  tabNames.forEach((name) => {
-    const normalizedName = normalize(name);
-    const matched = panels.filter(
-      (section) => normalize(getSectionIdentifier(section)) === normalizedName,
-    );
-    if (matched.length > 0) tabPanelMap.set(name, matched);
-  });
+  const allEmpty = tabNames.every((n) => !n);
+
+  if (allEmpty && panels.length >= tabNames.length) {
+    // Positional fallback: xwalk strips tab cell text — assign 1 section per tab
+    const perTab = Math.floor(panels.length / tabNames.length);
+    tabNames.forEach((name, i) => {
+      const start = i * perTab;
+      const end = i === tabNames.length - 1 ? panels.length : start + perTab;
+      tabPanelMap.set(name, panels.slice(start, end));
+    });
+  } else {
+    tabNames.forEach((name) => {
+      const normalizedName = normalize(name);
+      const matched = panels.filter(
+        (section) => normalize(getSectionIdentifier(section)) === normalizedName,
+      );
+      if (matched.length > 0) tabPanelMap.set(name, matched);
+    });
+  }
 
   // Build tab buttons and wrap matched panels
   let hasActiveTab = false;
@@ -183,5 +195,17 @@ export default async function decorate(block) {
   if (hash) {
     const targetButton = tablist.querySelector(`[aria-controls="${hash}"]`);
     if (targetButton) targetButton.click();
+  }
+
+  // Brand afterDecorate hook — injects real tab labels when xwalk empties cells
+  const brand = document.querySelector('meta[name="brand"]')?.content;
+  if (brand) {
+    try {
+      const { default: getBlockConfigs } = await import(`${window.hlx.codeBasePath}/blocks/tabs/${brand}/block-config.js`);
+      const config = await getBlockConfigs();
+      if (config?.decorations?.afterDecorate) {
+        config.decorations.afterDecorate(block, { tablist, tabNames, panels });
+      }
+    } catch (e) { /* no brand config */ }
   }
 }
