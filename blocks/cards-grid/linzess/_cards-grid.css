@@ -766,6 +766,13 @@ body main .section.dark .cards-grid .savings-card-cards .abbv-stretched-card-bod
   line-height: 1.4;
 }
 
+/* "support" inline link in the stats intro copy is bold + underlined on live. */
+.cards-grid-container.carousel-video-playlist-container:has(.cards-grid-homepage-stats) > .default-content-wrapper p a,
+body main .section.dark:has(.cards-grid-homepage-stats) > .default-content-wrapper p a {
+  font-weight: 800;
+  text-decoration: underline;
+}
+
 /* Override white text class for stats cards */
 .cards-grid.cards-grid-homepage-stats .savings-card-cards .c-linz-white,
 .cards-grid.cards-grid-homepage-stats .savings-card-cards .c-linz-white p,
@@ -797,6 +804,18 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   body main .section.dark .cards-grid .savings-card-cards .abbv-flex-item-v2 {
     padding: 5px 16px 24px;
     margin-top: 50px;
+  }
+
+  /* Widen stat cards to match live (~26px gutters): the nested demo-wrap
+     padding + card side margin shrank them too narrow. */
+  .cards-grid.cards-grid-homepage-stats .demo-wrap {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .cards-grid.cards-grid-homepage-stats .savings-card-cards .abbv-flex-item-v2 {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
