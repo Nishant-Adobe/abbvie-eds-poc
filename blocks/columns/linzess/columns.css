@@ -605,11 +605,6 @@ main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
   text-align: left;
 }
 
-/* Hide the anchor-id config row (first item) */
-.columns.ftgsignup > .columns-item:first-child {
-  display: none;
-}
-
 /* Each row of fields */
 .columns.ftgsignup > .columns-item {
   display: flex;
@@ -947,6 +942,98 @@ main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
 
 .columns.ftgsignup .columns-item-image > p a:hover {
   text-decoration: underline;
+}
+
+/* ---- Field / radio / consent: class-independent fallbacks. Publish strips
+   the .ftg-field / .ftg-question / .ftg-radio / .ftg-consent classes, so the
+   input boxes, radio circles and checkbox never draw on the published page
+   (they only survive on the aemcoder preview). Rows are anchored from the END
+   of the form, which is stable regardless of whether the First Name row is
+   present: last = Sign Up, 2nd = reCAPTCHA, 3rd = consent, 4th = No, 5th = Yes,
+   6th = question, 7th-from-end and earlier = text input fields. ---- */
+
+/* Text input fields — label with a CSS-drawn box below it */
+.columns.ftgsignup > .columns-item:nth-last-child(n+7) .columns-item-content > p {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(n+7) .columns-item-content > p::after {
+  content: "";
+  display: block;
+  height: 56px;
+  margin-top: 10px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 16px;
+  background-color: #efedf5;
+}
+
+/* "Are you currently prescribed?" question label (6th from end) */
+.columns.ftgsignup > .columns-item:nth-last-child(6) .columns-item-content > p {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0;
+}
+
+/* Radio chips Yes (5th) / No (4th) — circle before the label text */
+.columns.ftgsignup > .columns-item:nth-last-child(4) .columns-item-content > p,
+.columns.ftgsignup > .columns-item:nth-last-child(5) .columns-item-content > p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(4) .columns-item-content > p::before,
+.columns.ftgsignup > .columns-item:nth-last-child(5) .columns-item-content > p::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* Consent paragraph (3rd from end) — checkbox before, grey underlined links */
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p {
+  position: relative;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 8px 0;
+  padding-left: 40px;
+  text-align: left;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 8px;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p a {
+  color: var(--linz-grey, #4d4d4f);
+  text-decoration: underline;
+  font-size: inherit;
+  font-weight: 400;
 }
 
 /* The Sign Up row centers its button */
