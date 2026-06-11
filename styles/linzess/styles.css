@@ -16,12 +16,12 @@ main > .section {
   margin-bottom: 0;
 }
 
-/* Hero section — start at top:0. The header overlays it (position:absolute,
-   transparent gradient), so the hero must NOT be pulled up behind it; a
-   negative margin clipped the top of the hero image under the header. Live
-   starts the hero at the top with the header floating over it. */
+/* Hero section — nudge down slightly so the photo isn't tucked as far under
+   the overlay header. The header is position:absolute (transparent gradient)
+   and floats over the hero top; a small top margin drops the image so more of
+   the scene shows below the header, matching live's framing. */
 main .section.abbvie-container.hero-container {
-  margin-top: 0;
+  margin-top: var(--spacing-40);
 }
 
 /* Transcript section — outer container */
