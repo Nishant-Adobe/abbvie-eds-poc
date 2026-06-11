@@ -504,12 +504,12 @@ body main .section.cards-grid-container.carousel-video-playlist-container {
   box-sizing: border-box;
 }
 
-body main .section.cards-grid-container.carousel-video-playlist-container::before {
+body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::before {
   content: '';
   position: absolute;
   top: -60px;
-  left: 0;
-  right: 0;
+  left: -30%;
+  right: -30%;
   height: 80px;
   background: #422e83;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
@@ -523,12 +523,12 @@ body main .section.cards-grid-container.carousel-video-playlist-container::befor
   position: relative;
 }
 
-.cards-grid-container.carousel-video-playlist-container::before {
+.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::before {
   content: '';
   position: absolute;
   top: -60px;
-  left: -5%;
-  right: -5%;
+  left: -30%;
+  right: -30%;
   height: 80px;
   background: #422e83;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
