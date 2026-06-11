@@ -162,6 +162,26 @@
   min-height: 200px;
 }
 
+/* Authored poster image fills the frame — no letterbox.
+   Sits above the Brightcove video-js box (z-index 1) until play. */
+.carousel-video-playlist.grid .cvp-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.carousel-video-playlist.grid .cvp-poster,
+.carousel-video-playlist.grid .cvp-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-video-playlist.grid .cvp-poster[hidden] {
+  display: none;
+}
+
 /* Section header */
 .carousel-video-playlist.grid .cvp-header {
   text-align: center;

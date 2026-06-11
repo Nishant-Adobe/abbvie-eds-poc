@@ -51,6 +51,7 @@
 }
 
 /* Player area */
+
 .carousel-video-playlist .cvp-player-area {
   flex: 1;
   min-width: 0;
@@ -133,6 +134,7 @@
 }
 
 /* Playlist scroll wrapper (horizontal layouts) */
+
 .carousel-video-playlist .cvp-playlist-scroll-wrapper {
   display: flex;
   align-items: center;
@@ -141,6 +143,7 @@
 }
 
 /* Playlist container */
+
 .carousel-video-playlist .cvp-playlist {
   display: flex;
   gap: var(--cvp-spacing-md);
@@ -154,6 +157,7 @@
 }
 
 /* Playlist nav buttons */
+
 .carousel-video-playlist .cvp-playlist-nav {
   flex-shrink: 0;
   width: var(--cvp-nav-size);
@@ -193,6 +197,7 @@
 }
 
 /* Playlist item (thumbnail card) */
+
 .carousel-video-playlist .cvp-playlist-item {
   flex-shrink: 0;
   width: var(--cvp-thumb-width);
@@ -227,6 +232,7 @@
 }
 
 /* Thumbnail image */
+
 .carousel-video-playlist .cvp-playlist-thumb {
   position: relative;
   width: 100%;
@@ -248,6 +254,7 @@
 }
 
 /* Play icon overlay on thumbnail */
+
 .carousel-video-playlist .cvp-playlist-play-icon {
   position: absolute;
   inset: 0;
@@ -277,6 +284,7 @@
 }
 
 /* Playlist item title */
+
 .carousel-video-playlist .cvp-playlist-item-title {
   display: block;
   padding: var(--cvp-spacing-sm);
@@ -289,7 +297,9 @@
 }
 
 /* Layout: cards (2-col grid above player) */
+
 /* stylelint-disable no-descending-specificity */
+
 .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
   display: flex;
   flex-wrap: wrap;
@@ -366,6 +376,7 @@
 /* stylelint-disable no-descending-specificity */
 
 /* Layout: left sidebar */
+
 .carousel-video-playlist.cvp-layout-left {
   flex-direction: row;
 }
@@ -395,6 +406,7 @@
 }
 
 /* Layout: right sidebar */
+
 .carousel-video-playlist.cvp-layout-right {
   flex-direction: row;
 }
@@ -426,6 +438,7 @@
 /* stylelint-enable no-descending-specificity */
 
 /* Responsive: stack on mobile */
+
 @media (width < 768px) {
   .carousel-video-playlist.cvp-layout-cards .cvp-playlist {
     grid-template-columns: 1fr;
@@ -434,16 +447,6 @@
   .carousel-video-playlist.cvp-layout-left,
   .carousel-video-playlist.cvp-layout-right {
     flex-direction: column;
-  }
-
-  /* Tighten the gap above the first video card to match live (~41px): the
-     grid's top padding plus the empty header margin overshot it. */
-  .carousel-video-playlist.grid {
-    padding-top: 8px;
-  }
-
-  .carousel-video-playlist.grid .cvp-header:empty {
-    margin-bottom: 0;
   }
 
   .carousel-video-playlist.cvp-layout-left .cvp-playlist,
@@ -484,11 +487,13 @@
 }
 
 /* Hidden playlist items (maxVisible feature) */
+
 .carousel-video-playlist .cvp-playlist-item.cvp-hidden {
   display: none;
 }
 
 /* See All button (base styling) */
+
 .carousel-video-playlist .cvp-see-all-btn {
   display: block;
   margin: 24px auto 0;
@@ -496,8 +501,6 @@
   text-decoration: none;
   cursor: pointer;
 }
-
-@import '../carousel-video-playlist.css';
 
 /* stylelint-disable no-descending-specificity */
 
@@ -515,6 +518,7 @@
 }
 
 /* Loading shimmer — visible until video-js is injected */
+
 .carousel-video-playlist .cvp-player-wrap::before,
 .carousel-video-playlist .cvp-thumb-wrap::before {
   content: '';
@@ -542,6 +546,7 @@
 }
 
 /* Hide Brightcove UI overlays — we use our own name-banner + play button */
+
 .carousel-video-playlist .vjs-dock-text,
 .carousel-video-playlist .vjs-dock-title,
 .carousel-video-playlist .vjs-dock-description,
@@ -551,11 +556,13 @@
 }
 
 /* Hide play button when hidden attribute set by JS on click */
+
 .carousel-video-playlist .cvp-play-btn[hidden] {
   display: none !important;
 }
 
 /* Ensure Brightcove controls ARE visible when playing */
+
 .carousel-video-playlist .vjs-control-bar {
   font-size: var(--font-size-body-small, 12px) !important;
   color: var(--color-text-on-dark) !important;
@@ -569,6 +576,7 @@
 }
 
 /* Thumbnail video-js — only shows poster image */
+
 .carousel-video-playlist .cvp-thumb-video {
   position: absolute;
   inset: 0;
@@ -661,7 +669,29 @@
   min-height: 200px;
 }
 
+/* Authored poster image fills the frame — no letterbox.
+   Sits above the Brightcove video-js box (z-index 1) until play. */
+
+.carousel-video-playlist.grid .cvp-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.carousel-video-playlist.grid .cvp-poster,
+.carousel-video-playlist.grid .cvp-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-video-playlist.grid .cvp-poster[hidden] {
+  display: none;
+}
+
 /* Section header */
+
 .carousel-video-playlist.grid .cvp-header {
   text-align: center;
   margin-bottom: 32px;
@@ -693,6 +723,7 @@
 }
 
 /* 3-col card grid */
+
 .carousel-video-playlist.grid .cvp-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -700,16 +731,23 @@
 }
 
 /* Reset global .abbvie-container div grid-column override */
+
 .carousel-video-playlist.grid .cvp-grid > div {
   grid-column: auto;
 }
 
 /* Max visible cards — hide cards beyond the authored limit */
+
 .carousel-video-playlist.grid[data-max-visible="1"] .cvp-card:nth-child(n+2) { display: none; }
+
 .carousel-video-playlist.grid[data-max-visible="2"] .cvp-card:nth-child(n+3) { display: none; }
+
 .carousel-video-playlist.grid[data-max-visible="3"] .cvp-card:nth-child(n+4) { display: none; }
+
 .carousel-video-playlist.grid[data-max-visible="4"] .cvp-card:nth-child(n+5) { display: none; }
+
 .carousel-video-playlist.grid[data-max-visible="5"] .cvp-card:nth-child(n+6) { display: none; }
+
 .carousel-video-playlist.grid[data-max-visible="6"] .cvp-card:nth-child(n+7) { display: none; }
 
 .carousel-video-playlist.grid .cvp-card {
@@ -721,16 +759,19 @@
 }
 
 /* Hide name banner in grid mode — footer already shows the title */
+
 .carousel-video-playlist.grid .cvp-card .cvp-name-banner {
   display: none;
 }
 
 /* Only show player-wrap and card-footer — hide any other direct children of card */
+
 .carousel-video-playlist.grid .cvp-card > :not(.cvp-player-wrap, .cvp-card-footer) {
   display: none;
 }
 
 /* Hide Brightcove dock title that shows below poster — stronger selector */
+
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-text,
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-title,
 .carousel-video-playlist.grid .cvp-player-wrap .vjs-dock-description {
@@ -739,9 +780,10 @@
   overflow: hidden !important;
 }
 
-/* Card footer — light purple bg, dark text, matching site */
+/* Card footer — white bg, dark text, matching site */
+
 .carousel-video-playlist.grid .cvp-card-footer {
-  background: var(--linz-light-purple);
+  background: var(--linz-white, #fff);
   padding: 12px 16px;
   display: flex;
   align-items: center;
@@ -760,7 +802,7 @@
 }
 
 .carousel-video-playlist.grid .cvp-transcript-toggle {
-  color: var(--color-brand-primary) !important;
+  color: var(--color-brand-primary);
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small, 12px);
   font-weight: var(--font-weight-extra-bold, 800);
@@ -782,6 +824,7 @@
 }
 
 /* Video-js player fills player-wrap */
+
 .carousel-video-playlist.grid .cvp-player-wrap video-js,
 .carousel-video-playlist.grid .cvp-player-wrap .video-js {
   position: absolute;
@@ -801,6 +844,7 @@
 }
 
 /* Featured row: video (70%) + quote panel (30%) */
+
 .carousel-video-playlist.featured .cvp-featured-row {
   display: flex;
   gap: 0;
@@ -813,21 +857,25 @@
 }
 
 /* Hide name banner on featured player — title shown below via footer */
+
 .carousel-video-playlist.featured .cvp-featured-player .cvp-name-banner {
   display: none;
 }
 
 /* Hide Brightcove dock on featured player */
+
 .carousel-video-playlist.featured .vjs-dock-text {
   display: none !important;
 }
 
 /* Hide featured player title below video (already in name-banner on thumbnails) */
+
 .carousel-video-playlist.featured .cvp-featured-title {
   display: none;
 }
 
 /* Video-js player fills featured player wrap */
+
 .carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap video-js,
 .carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap .video-js {
   position: absolute;
@@ -837,6 +885,7 @@
 }
 
 /* Quote panel */
+
 .carousel-video-playlist.featured .cvp-quote-panel {
   flex: 0 0 30%;
   background: var(--color-lavender);
@@ -907,6 +956,7 @@
 }
 
 /* Playlist row: prev | thumbnails | next */
+
 .carousel-video-playlist.featured .cvp-playlist-row {
   display: flex;
   align-items: center;
@@ -993,6 +1043,7 @@
 }
 
 /* Thumbnail video-js — only shows poster image */
+
 .carousel-video-playlist.featured .cvp-thumb-video {
   position: absolute;
   inset: 0;
@@ -1002,6 +1053,7 @@
 }
 
 /* Hide all Brightcove UI on thumbnails — only show poster */
+
 .carousel-video-playlist.featured .cvp-thumb-wrap .vjs-control-bar,
 .carousel-video-playlist.featured .cvp-thumb-wrap .vjs-big-play-button,
 .carousel-video-playlist.featured .cvp-thumb-wrap .vjs-dock-text,
@@ -1016,11 +1068,13 @@
 }
 
 /* Hide name banner on thumbnails — live site only shows title below */
+
 .carousel-video-playlist.featured .cvp-thumbnails .cvp-name-banner {
   display: none;
 }
 
 /* Small play icon on thumbnails */
+
 .carousel-video-playlist.featured .cvp-thumbnails .cvp-play-btn {
   width: 32px;
   height: 32px;
@@ -1103,4 +1157,3 @@
     transition: none;
   }
 }
-
