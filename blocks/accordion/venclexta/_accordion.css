@@ -201,10 +201,16 @@
 /* ============================================================
    Fragment-loaded accordion content — icon lists + condition cards
    (what-is-aml symptoms / risk-factors / diagnosis fragments)
+   The md2jcr import strips authored classes and restructures each
+   <li> into <p><picture></p> + <p>label</p> (icons) or <h3> + <p>
+   (cards). Target the published structure via :has() instead of the
+   authored .accordion-icon-list / .accordion-card-list classes.
    Matches live venclexta.com: icon+label pairs flow inline and wrap;
    conditions are transparent centered columns.
    ============================================================ */
-.accordion .accordion-item-body .accordion-icon-list {
+
+/* Icon list — a <ul> whose items contain a picture */
+.accordion .accordion-item-body ul:has(> li picture) {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
@@ -213,7 +219,7 @@
     padding: 0;
 }
 
-.accordion .accordion-item-body .accordion-icon-list li {
+.accordion .accordion-item-body ul:has(> li picture) > li {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -223,13 +229,24 @@
     color: #404040;
 }
 
-.accordion .accordion-item-body .accordion-icon-list li img {
+/* icon cell <p> and label <p> — strip default paragraph spacing */
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion .accordion-item-body ul:has(> li picture) > li p {
+    margin: 0;
+    font-size: 14.4px;
+    font-weight: 700;
+    color: #404040;
+}
+
+.accordion .accordion-item-body ul:has(> li picture) > li picture,
+.accordion .accordion-item-body ul:has(> li picture) > li img {
     width: 30px;
     height: auto;
     flex-shrink: 0;
 }
 
-.accordion .accordion-item-body .accordion-card-list {
+/* Condition cards — a <ul> whose items contain an <h3> */
+.accordion .accordion-item-body ul:has(> li h3) {
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -238,13 +255,13 @@
     padding: 0;
 }
 
-.accordion .accordion-item-body .accordion-card-list li {
+.accordion .accordion-item-body ul:has(> li h3) > li {
     flex: 1 1 0;
     text-align: center;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.accordion .accordion-item-body .accordion-card-list h3 {
+.accordion .accordion-item-body ul:has(> li h3) > li h3 {
     color: var(--color-brand-primary);
     font-size: 24px;
     font-weight: 700;
@@ -253,7 +270,7 @@
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.accordion .accordion-item-body .accordion-card-list p {
+.accordion .accordion-item-body ul:has(> li h3) > li p {
     font-size: 14.4px;
     font-weight: 400;
     line-height: normal;
@@ -262,7 +279,7 @@
 }
 
 @media (width >= 768px) {
-    .accordion .accordion-item-body .accordion-card-list {
+    .accordion .accordion-item-body ul:has(> li h3) {
         flex-direction: row;
         gap: 30px;
     }
