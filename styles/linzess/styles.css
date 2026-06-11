@@ -909,6 +909,13 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .
   max-width: 100rem;
 }
 
+/* Hero band height: the editorial-hero default min-height is 68.4rem, taller
+   than live's ~61.5rem band. The extra height shifts the photo crop (text side
+   looks lighter) and pushes the H1 off live's centered position. Match live. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+  min-height: 61.5rem;
+}
+
 /* Hero bottom curve: the editorial-hero default draws a deep half-circle
    scoop. Live's curve is actually the white intro section's arc painting up
    over the hero (the .otc-intro-section::before, which already matches live:
