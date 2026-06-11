@@ -926,14 +926,15 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item img
   object-fit: cover;
 }
 
-/* Title + link text paragraphs sit below the image with card padding */
+/* Title + link text paragraphs sit below the image with card padding
+   (live: 16px horizontal, 20px top, 20px title→link gap, 20px bottom) */
 main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)) {
   margin: 0;
-  padding: 0 var(--spacing-20);
+  padding: 0 var(--spacing-16);
 }
 
 main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):first-of-type {
-  padding-top: var(--spacing-16);
+  padding-top: var(--spacing-20);
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
   font-weight: var(--font-weight-body);
@@ -941,8 +942,8 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
 }
 
 main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):last-of-type {
-  padding-top: var(--spacing-10);
-  padding-bottom: var(--spacing-24);
+  padding-top: var(--spacing-20);
+  padding-bottom: var(--spacing-20);
 }
 
 /* EDS auto-promotes a standalone link to p.button-container > a.button (solid
@@ -967,7 +968,7 @@ main > .section.more-like-this-section .columns.more-like-this a.button {
 
 /* ---- Section 5: CTA cards (2 items) ---- */
 main > .section.cta-cards-section .columns.cta-cards {
-  max-width: 80rem;
+  max-width: 99.8rem;
   margin: 0 auto;
   text-align: center;
 }
