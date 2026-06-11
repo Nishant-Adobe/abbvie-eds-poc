@@ -181,7 +181,7 @@ main > .section:first-of-type:not(.hero-container) .default-content-wrapper li {
 
 /* ISI section */
 .section.isi,
-main > .section:nth-of-type(2):not(.safety-bar-container) {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) {
   background-color: var(--color-background-primary, #fff);
   position: relative;
   padding: 0 var(--spacing-20) var(--spacing-80);
@@ -191,13 +191,13 @@ main > .section:nth-of-type(2):not(.safety-bar-container) {
 }
 
 .section.isi .default-content-wrapper,
-main > .section:nth-of-type(2):not(.safety-bar-container) .default-content-wrapper {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) .default-content-wrapper {
   max-width: 124rem;
   margin: 0 auto;
 }
 
 .section.isi h3,
-main > .section:nth-of-type(2):not(.safety-bar-container) h3 {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) h3 {
   font-family: var(--font-family-legal-bold);
   font-size: var(--font-size-legal-large);
   font-weight: 400;
@@ -208,7 +208,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) h3 {
 }
 
 .section.isi p,
-main > .section:nth-of-type(2):not(.safety-bar-container) p {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) p {
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
@@ -218,13 +218,13 @@ main > .section:nth-of-type(2):not(.safety-bar-container) p {
 }
 
 .section.isi ul,
-main > .section:nth-of-type(2):not(.safety-bar-container) ul {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) ul {
   margin: var(--spacing-10) 0;
   padding: 0 0 0 var(--spacing-15);
 }
 
 .section.isi li,
-main > .section:nth-of-type(2):not(.safety-bar-container) li {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) li {
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
@@ -235,21 +235,21 @@ main > .section:nth-of-type(2):not(.safety-bar-container) li {
 
 .section.isi strong,
 .section.isi b,
-main > .section:nth-of-type(2):not(.safety-bar-container) strong,
-main > .section:nth-of-type(2):not(.safety-bar-container) b {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) strong,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) b {
   font-family: var(--font-family-legal-bold);
   color: var(--color-text-muted);
   font-weight: 400;
 }
 
 .section.isi a,
-main > .section:nth-of-type(2):not(.safety-bar-container) a {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) a {
   color: var(--color-text-heading);
   text-decoration: underline;
 }
 
 .section.isi h4,
-main > .section:nth-of-type(2):not(.safety-bar-container) h4 {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) h4 {
   font-family: var(--font-family-legal-bold);
   font-size: var(--font-size-legal);
   font-weight: 400;
@@ -261,7 +261,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) h4 {
 }
 
 .section.isi h5,
-main > .section:nth-of-type(2):not(.safety-bar-container) h5 {
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) h5 {
   font-family: var(--font-family-legal-bold);
   font-size: var(--font-size-legal);
   font-weight: 400;
@@ -316,7 +316,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container) h5 {
   }
 
   .section.isi h3,
-  main > .section:nth-of-type(2):not(.safety-bar-container) h3 {
+  main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) h3 {
     font-size: var(--font-size-legal);
   }
 }
@@ -640,6 +640,314 @@ body.no-hero main > .section:first-of-type:not(.hero-container)::before {
 @media (width >= 900px) {
   body.no-hero main > .section.transcript::before,
   body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
+
+/* ============================================================
+   Healthy-Routines article sections (OTC and Prescription Treatments)
+   Sections: otc-intro (white), what-is-linzess (purple),
+   more-like-this (white), cta-cards (purple). Each carries a
+   background-arc curved top edge (footer-arc recipe).
+   Body backdrop for this hero article page is off-white.
+   ============================================================ */
+body:has(.section.otc-intro-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  overflow: visible;
+}
+
+main > .section.cta-cards-section {
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-100);
+}
+
+/* White sections */
+main > .section:is(.otc-intro-section, .more-like-this-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* Purple sections */
+main > .section:is(.what-is-linzess-section, .cta-cards-section) {
+  background-color: var(--color-brand-primary);
+}
+
+/* Arc — curved top edge sitting above the previous section */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  z-index: -1;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section)::before {
+  background-color: var(--color-background-primary, #fff);
+}
+
+main > .section:is(.what-is-linzess-section, .cta-cards-section)::before {
+  background-color: var(--color-brand-primary);
+}
+
+/* Section heading (Bebas Neue, 40px) */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2) {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: 0.9;
+  text-align: center;
+  text-transform: none;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section) :is(.heading-1, h2) {
+  color: var(--color-text-heading);
+}
+
+main > .section.what-is-linzess-section .heading-1 {
+  color: var(--color-text-on-dark);
+}
+
+/* Centered intro copy */
+main > .section.otc-intro-section > .default-content-wrapper {
+  max-width: 80rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 2: How They Work (3 icon columns) ---- */
+main > .section.otc-intro-section .columns.how-they-work {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item {
+  text-align: center;
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+  width: auto;
+  max-width: 100%;
+  max-height: 20rem;
+  margin: 0 auto;
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item-content p:first-child strong,
+main > .section.otc-intro-section .columns.how-they-work .columns-item p strong {
+  display: block;
+  margin: var(--spacing-16) 0 var(--spacing-10);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-card-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item p {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 3: What Is LINZESS? (image + text/CTA) ---- */
+main > .section.what-is-linzess-section .columns.what-is-linzess {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  align-items: center;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image {
+  text-align: center;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+  width: auto;
+  max-width: 100%;
+  max-height: 36rem;
+  margin: 0 auto;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  color: var(--color-text-on-dark);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess ul {
+  margin: 0 0 var(--spacing-16);
+  padding-left: var(--spacing-20);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess li {
+  margin-bottom: var(--spacing-16);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess a {
+  display: inline-block;
+  margin-top: var(--spacing-16);
+  padding: 16px 59px 16px 24px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-background-primary, #fff);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  text-decoration: none;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess a::after {
+  content: '\203A';
+  margin-left: var(--spacing-10);
+}
+
+/* Footnotes */
+main > .section.what-is-linzess-section .footnote {
+  max-width: 99.8rem;
+  margin: var(--spacing-24) auto 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  line-height: 1.4;
+  color: var(--color-text-on-dark);
+}
+
+main > .section.what-is-linzess-section ol.footnote {
+  padding-left: var(--spacing-16);
+}
+
+/* Hero eyebrow size (live 14.4px, not 16px) */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+  font-size: var(--font-size-button);
+}
+
+/* More Like This heading margin (live 20px 0 0) */
+main > .section.more-like-this-section :is(.heading-1, h2) {
+  margin: var(--spacing-20) auto 0;
+}
+
+/* ---- Section 4: More Like This (3 article cards) ---- */
+main > .section.more-like-this-section .columns.more-like-this {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  gap: var(--spacing-16);
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item {
+  overflow: hidden;
+  background: var(--color-brand-primary-lighter);
+  border-radius: var(--linz-rounded-corner);
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item > div {
+  margin: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  display: block;
+  width: 100%;
+}
+
+/* Title + link sit below the image with card padding */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p {
+  margin: 0;
+  padding: 0 var(--spacing-20);
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:nth-of-type(1) {
+  padding-top: var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-body);
+  color: var(--color-text-heading);
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:last-of-type {
+  padding-top: var(--spacing-10);
+  padding-bottom: var(--spacing-24);
+}
+
+main > .section.more-like-this-section .columns.more-like-this a {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+/* ---- Section 5: CTA cards (2 items) ---- */
+main > .section.cta-cards-section .columns.cta-cards {
+  max-width: 80rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.cta-cards-section .columns.cta-cards a {
+  display: inline-block;
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  text-decoration: none;
+}
+
+main > .section.cta-cards-section .columns.cta-cards a::after {
+  content: '\203A';
+  margin-left: var(--spacing-10);
+}
+
+@media (width < 744px) {
+  main > .section.hero-container .hero:is(.linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+}
+
+@media (width >= 768px) {
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+    padding: 0 var(--spacing-40) var(--spacing-100);
+  }
+
+  main > .section.cta-cards-section {
+    padding: var(--spacing-20) var(--spacing-40) var(--spacing-100);
+  }
+
+  main > .section.what-is-linzess-section .columns.what-is-linzess {
+    gap: var(--spacing-48);
+  }
+}
+
+@media (width >= 900px) {
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+    top: calc(-1 * var(--spacing-60));
     height: 255px;
   }
 }
