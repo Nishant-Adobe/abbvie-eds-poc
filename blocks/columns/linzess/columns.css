@@ -909,17 +909,30 @@
    instead of being forced taller by cover-fit image + large margins. */
 
 @media (width >= 768px) {
+  /* Fixed-width image column (matches live's 322px) so the logo fills it and
+     the text sits closer to center rather than being pushed far right. */
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+    flex: 0 0 322px;
+  }
+
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
   .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
     object-fit: contain;
     object-position: left center;
-    max-height: 173px;
+    max-height: 150px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
   .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1;
     place-content: center flex-start;
     text-align: left;
+  }
+
+  .columns.columns-homepage-promo .button-container a.button,
+  .hero-container + .columns-container .columns .button-container a.button {
+    padding-left: 32px;
   }
 
   .columns.columns-homepage-promo .columns-item-content,
