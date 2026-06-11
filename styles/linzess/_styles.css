@@ -937,6 +937,30 @@ main:has(.whylinzess-timeline) .columns.columns-homepage-savings .columns-item-c
   font-size: 16px;
 }
 
+/* Savings disclaimer footnote: EDS auto-converts this standalone link
+   paragraph into a button. Revert it to plain grey legal text (matching
+   the homepage disclaimer), since here the link has no surrounding copy. */
+main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p.button-container {
+  text-align: left;
+}
+
+main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p.button-container a.button {
+  display: inline;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font-family: var(--body-font-family);
+  font-size: var(--linz-card-footnote-size);
+  font-weight: var(--font-weight-body);
+  line-height: normal;
+  color: var(--linz-grey);
+  text-decoration: underline;
+}
+
+main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p.button-container a.button::after {
+  content: none;
+}
+
 /* Explore cards (Check My Symptoms / Understanding Constipation): title 24px
    white on live, not 18px purple. */
 main:has(.whylinzess-timeline) .cards-grid .abbv-stretched-card-body p.heading-2 {
