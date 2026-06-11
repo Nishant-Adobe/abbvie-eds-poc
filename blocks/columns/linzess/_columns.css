@@ -371,6 +371,48 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   text-align: left;
 }
 
+/* Desktop: match live savings card typography & spacing. */
+@media (width >= 986px) {
+  /* Heading 24px, body 16px (was 14px). */
+  .columns.columns-homepage-savings .columns-item-content p strong {
+    font-size: 24px;
+  }
+
+  .columns.columns-homepage-savings .columns-item-content p {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Tighten the gap between the body copy and the "Sign Up Now" button. */
+  .columns.columns-homepage-savings .columns-item-content .button-container {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  /* "Activate now" link bold + underlined like live. */
+  .columns.columns-homepage-savings .columns-item-content p:last-child a {
+    font-weight: 800;
+    text-decoration: underline;
+  }
+
+  /* More space between the eyebrow heading and the card (~75px live). */
+  .columns-homepage-savings-container > .default-content-wrapper:first-child,
+  .carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:first-child,
+  .section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper:first-child {
+    margin-bottom: 48px;
+  }
+
+  /* Disclaimer constrained to the card width and centered, tighter to card. */
+  .columns-homepage-savings-container > .default-content-wrapper:last-child,
+  .carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:last-child,
+  .section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper:last-child {
+    max-width: 982px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 8px;
+  }
+}
+
 @media (width < 768px) {
   .columns.columns-homepage-savings,
   .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) {
