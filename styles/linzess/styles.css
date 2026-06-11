@@ -903,7 +903,19 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:l
   padding-bottom: var(--spacing-24);
 }
 
-main > .section.more-like-this-section .columns.more-like-this a {
+/* EDS auto-promotes a standalone link to p.button-container > a.button (solid
+   pill). Live shows a plain underlined text link here — neutralize the pill. */
+main > .section.more-like-this-section .columns.more-like-this .button-container {
+  margin: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this a,
+main > .section.more-like-this-section .columns.more-like-this a.button {
+  display: inline;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-extra-bold);
