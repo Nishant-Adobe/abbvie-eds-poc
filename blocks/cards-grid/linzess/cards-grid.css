@@ -1501,7 +1501,7 @@ body main .section.dark :is(.cards-grid.cards-grid-icon-image-card) .abbv-image-
   color: var(--linz-dark-purple);
   font-family: var(--body-font-family);
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 700;
   text-align: center;
   line-height: 15px;
   word-spacing: 100vw;
@@ -1594,10 +1594,12 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   }
 
   /* Widen stat cards to match live (~26px gutters): the nested demo-wrap
-     padding + card side margin shrank them too narrow. */
+     padding + card side margin shrank them too narrow. Also trim the large
+     bottom padding so the card-to-footnote gap matches live (~29px). */
   .cards-grid.cards-grid-homepage-stats .demo-wrap {
     padding-left: 0;
     padding-right: 0;
+    padding-bottom: 18px;
   }
 
   .cards-grid.cards-grid-homepage-stats .savings-card-cards .abbv-flex-item-v2 {

@@ -571,7 +571,14 @@
 
 @media (width < 768px) {
   .carousel-video-playlist.grid {
-    padding: 32px 16px;
+    padding: 16px 16px 32px;
+  }
+
+  /* The heading/description live in the dark section above, so the grid's own
+     header is empty — collapse it to tighten the "Hear from real patients"
+     to first-video gap to match live (~41px). */
+  .carousel-video-playlist.grid .cvp-header:empty {
+    margin-bottom: 0;
   }
 
   /* Mobile: stack vertically */
