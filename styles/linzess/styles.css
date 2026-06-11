@@ -52,7 +52,8 @@ main .hero h1 {
 }
 
 h2 {
-  font-size: var(--font-size-h2);
+  font-size: var(--font-size-h1-mobile);
+  line-height: var(--line-height-h1-mobile);
 }
 
 h3 {
@@ -76,30 +77,20 @@ main dt {
   main dt {
     font-size: var(--body-font-size-s);
   }
+}
 
+@media (width >= 1024px) {
   main h1,
   main .hero h1,
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
     font-size: var(--font-size-h2-hero) !important;
-    line-height: var(--line-height-h2-hero) !important;
-  }
-
-  h2 {
-    font-size: var(--font-size-h2-hero);
-    line-height: var(--line-height-h2-hero);
-  }
-}
-
-@media (width >= 1024px) {
-  h1 {
-    font-size: var(--font-size-h2-hero);
-    line-height: var(--line-height-h2-hero);
+    line-height: var(--line-height-h2-hero-desktop) !important;
     letter-spacing: var(--letter-spacing-tight);
   }
 
   h2 {
     font-size: var(--font-size-h2-hero);
-    line-height: var(--line-height-h2-hero);
+    line-height: var(--line-height-h2-hero-desktop);
   }
 }
 
@@ -211,7 +202,7 @@ main > .section.find-relief-dark-purple::before {
   left: 50%;
   transform: translateX(-50%);
   width: 130vw;
-  height: 255px;
+  height: var(--cta-arc-dome-height);
   background-color: var(--color-brand-primary);
   border-radius: 100% 100% 0 0;
   z-index: -1;
@@ -226,7 +217,7 @@ main > .section.find-relief-dark-purple p {
 
 main > .section.find-relief-dark-purple h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif) !important;
-  font-size: 24px !important;
+  font-size: var(--font-size-card-title) !important;
   font-weight: 700 !important;
   text-transform: none !important;
   letter-spacing: normal;
@@ -329,7 +320,7 @@ main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white
 
 main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif) !important;
-  font-size: 24px !important;
+  font-size: var(--font-size-card-title) !important;
   font-weight: 700 !important;
   text-transform: none !important;
   letter-spacing: normal;
@@ -540,7 +531,9 @@ main > .section.find-relief-off-white::before {
   display: none;
 }
 
-.section.find-relief-checklist > .default-content-wrapper:first-child > p:first-child {
+.section.find-relief-checklist > .default-content-wrapper:first-child > p:first-child,
+div#talktoadoctor > .default-content-wrapper:first-of-type > p:first-child,
+main > .section > .default-content-wrapper > p:has(a[href=""]) {
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-extra-bold);
@@ -551,18 +544,54 @@ main > .section.find-relief-off-white::before {
   margin: 20px 0 24px;
 }
 
-.section.find-relief-checklist > .default-content-wrapper > h2 {
+main > .section > .default-content-wrapper > p:has(a[href=""]) a {
+  text-decoration: none;
+  color: inherit;
+  pointer-events: none;
+}
+
+.section.find-relief-checklist > .default-content-wrapper:first-child > p:first-child::after,
+main > .section > .default-content-wrapper > p:has(a[href=""])::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url('https://www.linzess.com/content/dam/linzess/images/divider.svg') no-repeat center / contain;
+  margin: 24px auto 0;
+}
+
+.section.find-relief-checklist > .default-content-wrapper > h2,
+main > .section > .default-content-wrapper > p:has(a[href=""]) + .default-content-wrapper > h2,
+main > .section > .default-content-wrapper:has(p:has(a[href=""])) + .default-content-wrapper > h2,
+main > .section > .default-content-wrapper > h2#what-to-talk-about-at-your-visit,
+main > .section > .default-content-wrapper > h2#what-to-know-before-starting-linzess,
+main > .section > .default-content-wrapper > h2#why-finding-the-right-doctor-is-important {
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h2-hero);
+  font-size: var(--font-size-section-heading);
+  font-weight: 400;
   color: var(--color-brand-primary);
   text-transform: none;
   text-align: center;
   letter-spacing: normal;
+  line-height: var(--line-height-section-heading);
+  margin-top: 20px;
   margin-bottom: 1.6rem;
 }
 
-.section.find-relief-checklist > .default-content-wrapper > p:nth-of-type(2) {
+.section.find-relief-checklist > .default-content-wrapper > p:nth-of-type(2),
+main > .section > .default-content-wrapper > h2#what-to-talk-about-at-your-visit + p,
+main > .section > .default-content-wrapper > h2#what-to-know-before-starting-linzess + p,
+main > .section > .default-content-wrapper > h2#why-finding-the-right-doctor-is-important + p {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-color);
   text-align: center;
+  line-height: normal;
+  max-width: 998px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 16px;
 }
 
 /* ── find-relief-off-white: Centered headings in how-to-take section ── */
@@ -697,11 +726,11 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child h2 {
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h2-hero);
+  font-size: var(--font-size-section-heading);
   font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
   margin: 20px 0 0;
-  line-height: 36px;
+  line-height: var(--line-height-section-heading);
 }
 
 .section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child h2::before {
@@ -741,11 +770,11 @@ main > .section.find-relief-off-white::before {
 
 .section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper h2 {
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h2-hero);
+  font-size: var(--font-size-section-heading);
   font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
   margin: 20px 0 0;
-  line-height: 36px;
+  line-height: var(--line-height-section-heading);
 }
 
 .section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper h2::before {
@@ -791,6 +820,18 @@ main > .section.find-relief-off-white::before {
   padding-left: 40px;
 }
 
+/* Dosing item titles ("Every Day" etc.): weight 700 (live), not strong's 900 */
+.tabs-panel .flexbox .flexbox-item-content p strong {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Dosing items center below 1024 (inherits from panel), left-aligned at desktop to match live */
+@media (width >= 1024px) {
+  .tabs-panel .flexbox .flexbox-item-content {
+    text-align: left;
+  }
+}
+
 .tabs-panel .abbvie-container {
   display: block !important;
   padding: 0 !important;
@@ -815,13 +856,13 @@ main > .section.find-relief-off-white::before {
 
 .section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2,
 .section.columns-container > .default-content-wrapper:first-child > h2 {
-  font-size: var(--font-size-h2-hero);
+  font-size: var(--font-size-section-heading);
   font-family: var(--heading-font-family);
   font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
   text-align: center;
   margin: 20px 0 0;
-  line-height: 36px;
+  line-height: var(--line-height-section-heading);
 }
 
 .section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2::before,
@@ -862,6 +903,13 @@ main > .section.find-relief-off-white::before {
   text-transform: none;
   color: var(--color-brand-primary);
   letter-spacing: normal;
+}
+
+/* Tout content left-aligned at desktop, centered below 1024 (matches live) */
+@media (width >= 1024px) {
+  .section.find-relief-off-white.columns-container .columns .columns-item-content {
+    text-align: left;
+  }
 }
 
 /* Savings card button — purple, not orange */

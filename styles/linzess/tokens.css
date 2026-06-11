@@ -74,7 +74,7 @@
   --font-size-h2-hero: 40px;
   --font-size-h3: 14px;
   --font-size-h-xl: 2.0625rem;
-  --font-size-h3-section: var(--font-size-24);
+  --font-size-h3-section: var(--font-size-card-title);
   --font-size-button: 14.4px;
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
@@ -93,6 +93,7 @@
   --line-height-h1: 1.875rem;
   --line-height-h1-hero: 50.4px;
   --line-height-h2-hero: 30px;
+  --line-height-h2-hero-desktop: 36px;
   --line-height-legal: 16px;
   --line-height-legal-large: 20px;
 
@@ -254,4 +255,23 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* ---- Section heading: responsive (matches live: 32/30 below 1024, 40/36 at/above) ---- */
+  --font-size-section-heading: var(--font-size-h1-mobile);
+  --line-height-section-heading: var(--line-height-h1-mobile);
+
+  /* ---- Card/sub-section title: responsive (live: 18px below 1024, 24px at/above) ---- */
+  --font-size-card-title: 18px;
+
+  /* ---- Dark-purple CTA arc dome height: responsive (live: 75px below 1024, 255px at/above) ---- */
+  --cta-arc-dome-height: 75px;
+}
+
+@media (width >= 1024px) {
+  :root {
+    --font-size-section-heading: var(--font-size-h2-hero);
+    --line-height-section-heading: var(--line-height-h2-hero-desktop);
+    --font-size-card-title: var(--font-size-24);
+    --cta-arc-dome-height: 255px;
+  }
 }
