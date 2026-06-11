@@ -532,6 +532,15 @@ main .section.signup-section .c-linz-dark-purple {
    Logo ~179px; heading Bebas Neue 32px, centered.
    ==================================================== */
 
+/* Form section — off-white bg + bottom spacing, matches live's
+   .background-off-white.background-arc { padding: 0 0 100px }. */
+main .section:has(.columns.ftgsignup) {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 100px;
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
 main .section:has(.columns.ftgsignup) .default-content-wrapper {
   text-align: center;
 }

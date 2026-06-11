@@ -96,6 +96,35 @@
    "Support Your Ongoing Treatment Plan" — Bebas Neue 32px.
    ==================================================== */
 
+/* White curved arc at the top of this section, curving up over the hero
+   bottom. z-index:-5 keeps it BEHIND the content (heading stays on top).
+   Matches live's .background-white-arc::before. */
+main .section:has(.flexbox.column) {
+  position: relative;
+  z-index: 0;
+}
+
+main .section:has(.flexbox.column)::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background: var(--linz-white, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+  pointer-events: none;
+}
+
+@media screen and (width >= 900px) {
+  main .section:has(.flexbox.column)::before {
+    height: 255px;
+  }
+}
+
 main .section:has(.flexbox.column) .default-content-wrapper {
   text-align: center;
 }

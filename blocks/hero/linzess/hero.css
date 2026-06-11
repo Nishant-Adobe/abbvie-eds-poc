@@ -2011,6 +2011,14 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   z-index: 1;
   pointer-events: none;
 }
+
+/* Editorial hero is shorter than live's tall image, so the overlay's left
+   dark band reads as a "shadow" near the bottom arc. Use only the top-down
+   readability fade (fully transparent well before the bottom edge). */
+.hero.linzess-behind-nav-linzess-editorial-hero::after,
+.hero.linzess-editorial-hero::after {
+  background: linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
+}
 /* h1/h2/h3/p: white text on dark overlay — comes before more specific p rules */
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1,
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h2,
@@ -2123,6 +2131,14 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   background: var(--background-color);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   content: '';
+}
+
+/* Editorial hero: the bottom curve is rendered by the following section's
+   arc (.section:has(.flexbox.column)::before), so suppress the hero's own
+   curve here to avoid a double/overlapping arc. */
+.hero.linzess-behind-nav-linzess-editorial-hero::before,
+.hero.linzess-editorial-hero::before {
+  display: none;
 }
 /* stylelint-disable-next-line no-descending-specificity */
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
@@ -2344,5 +2360,12 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
     display: block;
+  }
+
+  /* Editorial hero: curve handled by the following section's arc — keep
+     the hero's own curve hidden at desktop too. */
+  .hero.linzess-behind-nav-linzess-editorial-hero::before,
+  .hero.linzess-editorial-hero::before {
+    display: none;
   }
 }
