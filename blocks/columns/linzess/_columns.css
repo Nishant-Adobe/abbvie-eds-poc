@@ -102,6 +102,16 @@
   position: relative;
 }
 
+/* Keep the dark-purple fill on hover/focus (a generic button:hover was turning
+   it white). */
+.columns.columns-homepage-promo .button-container a.button:hover,
+.columns.columns-homepage-promo .button-container a.button:focus,
+.hero-container + .columns-container .columns .button-container a.button:hover,
+.hero-container + .columns-container .columns .button-container a.button:focus {
+  background-color: var(--linz-dark-purple);
+  color: var(--linz-white);
+}
+
 .columns.columns-homepage-promo .button-container a.button::after,
 .hero-container + .columns-container .columns .button-container a.button::after {
   content: '\203A';
@@ -127,7 +137,7 @@
   .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
     object-fit: contain;
     object-position: left center;
-    max-height: 150px;
+    max-height: 180px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
