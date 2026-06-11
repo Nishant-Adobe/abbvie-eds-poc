@@ -909,36 +909,6 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .
   max-width: 100rem;
 }
 
-/* Hero band height: live drives the band height by the loaded image's aspect
-   ratio (fluid), not a fixed height, so object-fit:fill shows the full scene
-   undistorted at every width. Desktop image is 2048x874; mobile image is the
-   near-square swap (<744px). Use aspect-ratio per breakpoint and drop the
-   fixed min-height so the band scales with width like live. */
-main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
-  min-height: 0;
-  aspect-ratio: 2048 / 874;
-}
-
-@media (width < 744px) {
-  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
-    aspect-ratio: 375 / 369;
-  }
-
-  /* Override the block's mobile min-height (420px) so the image fills the
-     aspect-ratio band exactly instead of overflowing it. */
-  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
-    min-height: 0;
-  }
-}
-
-/* Hero image fit: the behind-nav default uses object-fit:cover, which zooms
-   and crops the mug. Live stretches the image to fill the band (object-fit:
-   fill) so the whole scene shows. Match live for the OTC editorial hero. */
-main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
-  height: 100%;
-  object-fit: fill;
-}
-
 /* Hero bottom curve: the editorial-hero default draws a deep half-circle
    scoop. Live's curve is actually the white intro section's arc painting up
    over the hero (the .otc-intro-section::before, which already matches live:
