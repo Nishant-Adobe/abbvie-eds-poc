@@ -665,6 +665,20 @@
   margin: 0 auto;
 }
 
+/* Desktop: the heading/description live in the dark section above, so the
+   grid's own header is empty — collapse it and reduce the grid's top padding
+   to tighten the "Hear from real patients" to first-video gap (~45px, live). */
+
+@media (width >= 986px) {
+  .carousel-video-playlist.grid {
+    padding-top: 16px;
+  }
+
+  .carousel-video-playlist.grid .cvp-header:empty {
+    margin-bottom: 0;
+  }
+}
+
 .carousel-video-playlist.grid .cvp-card .cvp-player-wrap {
   min-height: 0;
 }

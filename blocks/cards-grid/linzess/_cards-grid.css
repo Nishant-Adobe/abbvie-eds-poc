@@ -902,19 +902,48 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   }
 }
 
-/* Desktop: 3 cards in a row */
+/* Desktop: 3 cards in a row, equal height (stretch) so all stat cards match
+   regardless of copy length, like live. */
 @media (width >= 1100px) {
   .carousel-video-playlist-container .cards-grid .savings-card-cards,
   body main .section.dark .cards-grid .savings-card-cards {
     flex-direction: row;
     gap: 24px;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2,
   body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2 {
     flex: 1;
     max-width: none;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .carousel-video-playlist-container .cards-grid .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2,
+  body main .section.dark .cards-grid .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2 {
+    align-self: stretch;
+  }
+}
+
+/* Desktop dark-stats section spacing to match live. */
+@media (width >= 986px) {
+  /* 1) Constrain the intro copy width. */
+  .cards-grid-container.carousel-video-playlist-container > .default-content-wrapper:first-child {
+    max-width: 690px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 3) Tighten the gap between the stat cards and the footnote. */
+  .cards-grid.cards-grid-homepage-stats .demo-wrap {
+    padding-bottom: 30px;
+  }
+
+  /* 5) Larger bottom padding so the "See All Patient Videos" CTA sits ~155px
+     above the inward arc, matching live. */
+  body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)) {
+    padding-bottom: 109px;
   }
 }
 
