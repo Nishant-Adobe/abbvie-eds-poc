@@ -916,6 +916,13 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
   min-height: 61.5rem;
 }
 
+/* Hero image fit: the behind-nav default uses object-fit:cover, which zooms
+   and crops the mug. Live stretches the image to fill the band (object-fit:
+   fill) so the whole scene shows. Match live for the OTC editorial hero. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+  object-fit: fill;
+}
+
 /* Hero bottom curve: the editorial-hero default draws a deep half-circle
    scoop. Live's curve is actually the white intro section's arc painting up
    over the hero (the .otc-intro-section::before, which already matches live:
