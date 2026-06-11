@@ -569,36 +569,37 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   font-weight: var(--font-weight-body);
 }
 
-/* WHY LINZESS — Mechanism cards (icon + text, stacked) */
-.columns.whylinzess-mechanism-card {
-  display: block;
-  background: transparent;
-  border-radius: 0;
-  max-width: 800px;
-  margin: 24px auto 0;
-  padding: 0;
-  overflow: visible;
-}
-
-body main .section .columns.whylinzess-mechanism-card > .columns-item,
-body main .section .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content),
-body main .section .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+/* WHY LINZESS — Mechanism cards. Image + text are authored as two separate
+   column rows (so md2jcr keeps both). The BLOCK is the flex card:
+   icon-left, text-right. */
+body main .section .columns.whylinzess-mechanism-card {
   display: flex;
   gap: 24px;
   align-items: center;
+  max-width: 800px;
+  margin: 24px auto 0;
   padding: 15px 40px 15px 5px;
   border-radius: var(--linz-rounded-corner);
+  background: var(--linz-off-white);
   overflow: visible;
 }
 
-body main .section .columns.whylinzess-mechanism-card > .columns-item,
-body main .section .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
-  background: var(--linz-off-white);
+body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+  background: var(--linz-light-purple);
 }
 
-body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item,
-body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
-  background: var(--linz-light-purple);
+body main .section .columns.whylinzess-mechanism-card > .columns-item {
+  padding: 0;
+  background: transparent;
+}
+
+/* image row → fixed-width icon column; text row → fills remaining space */
+body main .section .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+  flex: 0 0 auto;
+}
+
+body main .section .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content) {
+  flex: 1;
 }
 
 .columns.whylinzess-mechanism-card .columns-item-image {
