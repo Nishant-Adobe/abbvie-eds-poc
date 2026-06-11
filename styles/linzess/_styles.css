@@ -536,7 +536,7 @@ body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card 
 }
 
 /* "When Can I Expect" sub-heading with divider — targets 2nd default-content-wrapper, 2nd child */
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) {
   font-family: var(--heading-font-family);
   font-size: 40px;
   font-weight: var(--font-weight-body);
@@ -546,7 +546,7 @@ body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .colum
   text-align: center;
 }
 
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2)::before {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong)::before {
   content: '';
   display: block;
   width: 64px;
@@ -556,11 +556,11 @@ body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .colum
   margin: 0 auto 24px;
 }
 
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) strong {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) strong {
   font-weight: var(--font-weight-body);
 }
 
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(3) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) + p {
   font-size: 24px;
   font-weight: var(--font-weight-bold);
   margin-bottom: 40px;
@@ -573,7 +573,7 @@ body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .colum
 }
 
 /* Why LINZESS — "When Can I Expect" sub-heading */
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -584,7 +584,7 @@ body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .colum
   text-align: center;
 }
 
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2)::before {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong)::before {
   content: '';
   display: block;
   width: 64px;
@@ -594,11 +594,11 @@ body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .colum
   margin: 0 auto 24px;
 }
 
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(2) strong {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) strong {
   font-weight: var(--font-weight-body);
 }
 
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:nth-child(3) {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) + p {
   font-size: 24px;
   font-weight: var(--font-weight-bold);
   margin-bottom: 40px;
@@ -607,7 +607,7 @@ body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .colum
 
 /* Footnote (*Abdominal symptoms… / †animal studies) above the "When Can I
    Expect" heading is 12px on live, not the inherited 18px. */
-body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:first-child {
+body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:not(:has(strong)) {
   font-size: 12px;
 }
 
