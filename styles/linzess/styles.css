@@ -904,6 +904,15 @@ main > .section.more-like-this-section .columns.more-like-this {
   gap: var(--spacing-16);
 }
 
+/* Live caps each card at 300px and centers the group within the 998px row.
+   Mobile (<768px) keeps the base block's single-column stack. */
+@media (width >= 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    grid-template-columns: repeat(3, 30rem);
+    justify-content: center;
+  }
+}
+
 main > .section.more-like-this-section .columns.more-like-this .columns-item {
   overflow: hidden;
   background: var(--color-brand-primary-lighter);
