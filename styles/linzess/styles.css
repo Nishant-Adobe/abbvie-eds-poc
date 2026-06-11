@@ -1141,6 +1141,14 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
   }
 }
 
+/* Stacked range (<768px): the CTA-cards divider becomes a horizontal rule below
+   the first card (live: 1px muted purple, same as the desktop vertical rule). */
+@media (width < 768px) {
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+  }
+}
+
 @media (width >= 768px) {
   main > .section.what-is-linzess-section .columns.what-is-linzess {
     gap: var(--spacing-48);
