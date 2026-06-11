@@ -112,7 +112,7 @@ function mergeMobileImage(imageCell, mobileImageRow) {
 
   const combined = document.createElement('picture');
   const source = document.createElement('source');
-  source.media = '(min-width: 744px)';
+  source.media = '(min-width: 985px)';
   source.srcset = desktopImg.src;
   combined.appendChild(source);
   combined.appendChild(mobileImg.cloneNode(true));
