@@ -532,13 +532,30 @@ main .section.signup-section .c-linz-dark-purple {
    Logo ~179px; heading Bebas Neue 32px, centered.
    ==================================================== */
 
-/* Form section — off-white bg + bottom spacing, matches live's
-   .background-off-white.background-arc { padding: 0 0 100px }. */
+/* Form section — full-screen-width off-white bg with a curved top arc,
+   matches live's .background-off-white.background-arc (padding 0 0 100px).
+   The section is content-width (margin 0 70px), so paint a full-bleed
+   background via a 100vw ::before positioned behind the content. */
 main .section:has(.columns.ftgsignup) {
   position: relative;
   z-index: 1;
   padding-bottom: 100px;
+  background-color: transparent;
+}
+
+main .section:has(.columns.ftgsignup)::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
   background-color: var(--linz-off-white, #f4f6fb);
+  border-top-left-radius: 50% 60px;
+  border-top-right-radius: 50% 60px;
+  z-index: -1;
+  pointer-events: none;
 }
 
 main .section:has(.columns.ftgsignup) .default-content-wrapper {
