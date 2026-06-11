@@ -827,6 +827,14 @@ main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-i
   margin: 0 auto;
 }
 
+/* Mobile: live shrinks the bottle to ~283px tall; our 36rem cap is too tall
+   on small screens. Cap to ~28.3rem under 744px to match live. */
+@media (width < 744px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+    max-height: 28.3rem;
+  }
+}
+
 main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
