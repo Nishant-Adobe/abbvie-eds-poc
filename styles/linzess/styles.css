@@ -1,1059 +1,2210 @@
 @import 'tokens.css';
 @import 'fonts.css';
 
-/* LINZESS DTC — Brand-specific style overrides
-   Tokens handle most brand differentiation via CSS custom properties.
-   This file adds overrides that tokens alone cannot express. */
+/* LINZESS DTC — Brand-specific style overrides */
 
-/* Body defaults — Linzess uses 16px base (matches live site) */
-body {
-  font-size: var(--font-size-legal-large);
-  line-height: normal;
-  background-color: var(--color-background-light);
+body.appear {
+  background-color: var(--color-brand-primary, #422e83);
+  overflow-x: hidden;
 }
 
-/* Headings — Linzess uses Bebas Neue display font */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--heading-font-family);
-  color: var(--color-text-heading);
+html {
+  overflow-x: hidden;
 }
 
-main h1,
-main .hero h1 {
-  font-size: var(--font-size-h1-mobile);
-  line-height: var(--line-height-h1-mobile);
+main > .section {
+  margin-bottom: 0;
 }
 
-.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
-  font-size: var(--font-size-h1-mobile) !important;
-  line-height: var(--line-height-h1-mobile) !important;
+/* Hero section — nudge down slightly so the photo isn't tucked as far under
+   the overlay header. The header is position:absolute (transparent gradient)
+   and floats over the hero top; a small top margin drops the image so more of
+   the scene shows below the header, matching live's framing. */
+main .section.abbvie-container.hero-container {
+  margin-top: var(--spacing-40);
 }
 
-h2 {
-  font-size: var(--font-size-h2);
-}
-
-h3 {
-  font-size: var(--font-size-h3);
-}
-
-/* Mobile-first body text: 14px at <744px */
-main p,
-main a,
-main li,
-main dd,
-main dt {
-  font-size: var(--font-size-body);
-}
-
-@media (width >= 744px) {
-  main p,
-  main a,
-  main li,
-  main dd,
-  main dt {
-    font-size: var(--body-font-size-s);
-  }
-
-  main h1,
-  main .hero h1,
-  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
-    font-size: var(--font-size-h2-hero) !important;
-    line-height: var(--line-height-h2-hero) !important;
-  }
-
-  h2 {
-    font-size: var(--font-size-h2-hero);
-    line-height: var(--line-height-h2-hero);
-  }
-}
-
-@media (width >= 1024px) {
-  h1 {
-    font-size: var(--font-size-h2-hero);
-    line-height: var(--line-height-h2-hero);
-    letter-spacing: var(--letter-spacing-tight);
-  }
-
-  h2 {
-    font-size: var(--font-size-h2-hero);
-    line-height: var(--line-height-h2-hero);
-  }
-}
-
-/* Links — Linzess purple */
-a:any-link {
-  color: var(--link-color);
-}
-
-/* Buttons — Linzess rounded purple with arrow pattern */
-main a.button:any-link,
-main button.button {
-  border-radius: var(--border-radius-button-primary);
-  padding: var(--button-primary-padding-mobile);
-  font-size: var(--button-primary-font-size);
-  font-weight: var(--button-primary-font-weight);
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-color);
-  border-color: var(--button-primary-border);
-  transition: var(--transition-button);
+/* Transcript section — outer container */
+.section.transcript,
+main > .section:first-of-type:not(.hero-container) {
+  background-color: var(--color-background-primary, #fff);
   position: relative;
-}
-
-@media (width >= 744px) {
-  main a.button:any-link,
-  main button.button {
-    padding: var(--button-primary-padding);
-  }
-}
-
-a.button::after {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-top: 2px solid currentcolor;
-  border-right: 2px solid currentcolor;
-  transform: rotate(45deg);
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  margin-top: -4px;
-}
-
-a.button:hover {
-  background-color: var(--button-primary-hover-bg);
-  color: var(--button-primary-hover-color);
-}
-
-/* Secondary button */
-a.button.secondary:any-link {
-  background-color: var(--button-secondary-bg);
-  color: var(--button-secondary-color);
-  border-radius: var(--border-radius-button-secondary);
-}
-
-a.button.secondary:hover {
-  background-color: var(--button-secondary-hover-bg);
-  color: var(--button-secondary-hover-color);
-}
-
-/* Legal text — BasicCommercialLT font */
-.legal, .footnote, .disclaimer {
-  font-family: var(--font-family-legal);
-  font-size: var(--font-size-legal);
-  line-height: var(--line-height-legal);
-}
-
-/* ── Section light variant — Linzess off-white ── */
-main > .section.light {
-  background-color: var(--color-background-light);
-}
-
-/* ── Section highlight variant — Linzess purple ── */
-main > .section.highlight {
-  background-color: var(--color-brand-primary);
-  color: var(--color-text-on-dark);
-}
-
-main > .section.highlight h2,
-main > .section.highlight h3,
-main > .section.highlight p {
-  color: var(--color-text-on-dark);
-}
-
-/* ══════════════════════════════════════════════════════════════
-   FIND-RELIEF PAGE — Scoped styles using unique section classes
-   Section-metadata style classes: find-relief-*
-   These ONLY affect sections with the matching class.
-   ══════════════════════════════════════════════════════════════ */
-
-/* ── find-relief-dark-purple: Bottom CTA section ── */
-main > .section.find-relief-dark-purple {
-  position: relative;
-  background-color: var(--color-brand-primary);
-  padding: 20px 0 140px;
   overflow: visible;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-top: 60px;
-  margin-right: 0;
+  padding: 0 0 var(--spacing-100);
+  margin: var(--spacing-80) 0 0;
   max-width: none;
-  text-align: center;
+  width: 100%;
 }
 
-main > .section.find-relief-dark-purple::before {
-  content: '';
+/* Arc/curve — white ellipse overlapping body */
+.section.transcript::before,
+main > .section:first-of-type:not(.hero-container)::before {
+  content: "";
   position: absolute;
   top: -60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 130vw;
-  height: 255px;
-  background-color: var(--color-brand-primary);
-  border-radius: 100% 100% 0 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-main > .section.find-relief-dark-purple h2,
-main > .section.find-relief-dark-purple h3,
-main > .section.find-relief-dark-purple p {
-  color: var(--color-text-on-dark);
-}
-
-main > .section.find-relief-dark-purple h2 {
-  font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-h3-section);
-  font-weight: var(--font-weight-bold);
-  text-transform: none;
-  letter-spacing: normal;
-  margin-bottom: 24px;
-}
-
-main > .section.find-relief-dark-purple .columns-wrapper {
-  max-width: 998px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-main > .section.find-relief-dark-purple .columns {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-main > .section.find-relief-dark-purple .columns > .columns-item:first-child {
-  display: none;
-}
-
-main > .section.find-relief-dark-purple .columns > .columns-item:last-child {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-}
-
-main > .section.find-relief-dark-purple .columns .columns-item-content {
-  flex: 1;
-  text-align: center;
-}
-
-main > .section.find-relief-dark-purple .columns .columns-item-content:first-child {
-  border-right: 1px solid var(--color-border-purple);
-}
-
-main > .section.find-relief-dark-purple a.button:any-link {
-  display: inline-block;
-  background-color: var(--color-brand-accent);
-  color: var(--color-brand-primary);
-  border-radius: 16px;
-  padding: 16px 59px 16px 32px;
-  font-size: var(--button-primary-font-size);
-  font-weight: var(--font-weight-extra-bold);
-  text-decoration: none;
-  border: none;
-}
-
-main > .section.find-relief-dark-purple a.button:hover {
-  background-color: var(--color-brand-accent-hover);
-}
-
-@media (max-width: 768px) {
-  main > .section.find-relief-dark-purple .columns > .columns-item:last-child {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  main > .section.find-relief-dark-purple .columns .columns-item-content:first-child {
-    border-right: none;
-    border-bottom: 1px solid var(--color-border-purple);
-    padding-bottom: 40px;
-  }
-}
-
-/* ── Fallback: dark purple CTA when section-metadata isn't applied ── */
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) {
-  position: relative;
-  background-color: var(--color-brand-primary);
-  padding: 80px 0 140px;
-  overflow: visible;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-top: 60px;
-  max-width: none !important;
-  text-align: center;
-  display: block !important;
-}
-
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist)::before {
-  content: '';
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130vw;
-  height: 255px;
-  background-color: var(--color-brand-primary);
-  border-radius: 100% 100% 0 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2,
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) p {
-  color: var(--color-text-on-dark);
-}
-
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2 {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-h3-section);
-  font-weight: var(--font-weight-bold);
-  text-transform: none;
-  letter-spacing: normal;
-}
-
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) .columns-wrapper {
-  max-width: 998px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) a.button:any-link {
-  display: inline-block;
-  background-color: var(--color-brand-accent);
-  color: var(--color-brand-primary);
-  border-radius: 16px;
-  padding: 16px 59px 16px 32px;
-  font-size: var(--button-primary-font-size);
-  font-weight: var(--font-weight-extra-bold);
-  text-decoration: none;
-  border: none;
-}
-
-/* ── find-relief-off-white: How-to-Take + Storage sections ── */
-main > .section.find-relief-off-white {
-  background-color: var(--color-background-light);
-  position: relative;
-  margin-top: 4rem;
-  padding-bottom: 4rem;
-  max-width: none !important;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: 0;
-  display: block !important;
-  text-align: center;
-}
-
-main > .section.find-relief-off-white > div {
-  max-width: 998px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
-  text-align: center;
-}
-
-main > .section.find-relief-off-white::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4rem;
-  background-color: var(--color-background-light);
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-  transform: translateY(-100%);
-}
-
-/* ── find-relief-checklist: Gut Check columns card ── */
-.section.find-relief-checklist > .columns-wrapper {
-  background-color: var(--color-background-light);
-  border-radius: 16px;
-  max-width: 998px;
-  margin: 2.4rem auto;
-  overflow: hidden;
-}
-
-.section.find-relief-checklist > .columns-wrapper .columns {
-  display: flex;
-  align-items: center;
-}
-
-.section.find-relief-checklist > .columns-wrapper .columns-item-image {
-  flex: 0 0 50%;
-  border-radius: 16px 0 0 16px;
-  overflow: hidden;
-  padding: 0;
-}
-
-.section.find-relief-checklist > .columns-wrapper .columns-item-image img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 0;
-  object-fit: cover;
-}
-
-.section.find-relief-checklist > .columns-wrapper .columns-item-content {
-  flex: 1;
-  padding: 32px 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.section.find-relief-checklist > .columns-wrapper .columns-item-content h2 {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-h3-section);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-brand-primary);
-  text-transform: none;
-  letter-spacing: normal;
-  margin-bottom: 12px;
-  margin-top: 0;
-  line-height: 1.3;
-}
-
-.section.find-relief-checklist > .columns-wrapper .columns-item-content p {
-  font-size: var(--font-size-legal);
-  line-height: 1.5;
-  color: var(--text-color);
-  text-align: left;
-  margin: 12px 0 0;
-}
-
-.section.find-relief-checklist > .columns-wrapper .columns-item-content a.button:any-link {
-  background-color: var(--color-brand-primary);
-  color: var(--color-text-on-dark);
-  border-radius: var(--border-radius-button-primary);
-  margin-top: 16px;
-  display: inline-block;
-}
-
-/* ── find-relief-checklist: Purple box with orange checkmarks (2-col grid) ── */
-.section.find-relief-checklist .default-content-wrapper > ul {
-  background-color: var(--color-brand-primary);
-  border-radius: var(--linz-rounded-corner);
-  padding: 40px 40px 0;
-  list-style: none;
-  margin: 16px auto;
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 998px;
-  font-size: var(--font-size-legal-large);
-  grid-column: 1 / -1;
-  text-align: left;
-}
-
-.section.find-relief-checklist .default-content-wrapper > ul > li > p {
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: none;
-}
-
-.section.find-relief-checklist .default-content-wrapper > ul > li {
-  position: relative;
-  padding-left: 40px;
-  margin-bottom: 40px;
-  color: var(--color-text-on-dark);
-  flex: 0 0 50%;
-  box-sizing: border-box;
-  padding-right: 20px;
-}
-
-@media (width < 768px) {
-  .section.find-relief-checklist .default-content-wrapper > ul > li {
-    flex: 0 0 100%;
-  }
-}
-
-.section.find-relief-checklist .default-content-wrapper > ul > li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 28px;
-  height: 28px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23faa633'/%3E%3Cpath d='M10 15.17l-3.17-3.17-1.42 1.42L10 18l8-8-1.41-1.41L10 15.17z' fill='%23fff'/%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
-  font-family: var(--body-font-family);
-  font-size: 18px;
-  font-weight: var(--font-weight-bold);
-  text-transform: none;
-  color: var(--color-text-on-dark);
-  margin-bottom: 16px;
-  margin-top: 0;
-  letter-spacing: normal;
-  line-height: normal;
-}
-
-@media (width >= 744px) {
-  .section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
-    font-size: var(--font-size-h3-section);
-  }
-}
-
-.section.find-relief-checklist .default-content-wrapper > ul > li > p:nth-child(2) {
-  font-size: var(--font-size-legal-large);
-  color: var(--color-text-on-dark);
-  line-height: normal;
-  font-weight: var(--font-weight-body);
-}
-
-.section.find-relief-checklist .default-content-wrapper > ul > li a {
-  color: var(--color-text-on-dark);
-  text-decoration: underline;
-}
-
-/* ── find-relief-checklist: Centered eyebrow + heading ── */
-/* Remove duplicate ::before divider when <hr> already provides it */
-.section.find-relief-checklist > .default-content-wrapper:first-child > hr + h2::before {
-  display: none;
-}
-
-.section.find-relief-checklist > .default-content-wrapper:first-child > p:first-child {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-body-small);
-  font-weight: var(--font-weight-extra-bold);
-  text-transform: uppercase;
-  letter-spacing: normal;
-  color: var(--color-brand-primary);
-  text-align: center;
-  margin: 20px 0 24px;
-}
-
-.section.find-relief-checklist > .default-content-wrapper > h2 {
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-h2-hero);
-  color: var(--color-brand-primary);
-  text-transform: none;
-  text-align: center;
-  letter-spacing: normal;
-  margin-bottom: 1.6rem;
-}
-
-.section.find-relief-checklist > .default-content-wrapper > p:nth-of-type(2) {
-  text-align: center;
-}
-
-/* ── find-relief-off-white: Centered headings in how-to-take section ── */
-.section.find-relief-off-white > .default-content-wrapper > p:first-child {
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-legal);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-brand-primary);
-  text-align: center;
-  margin-bottom: 0.4rem;
-}
-
-.section.find-relief-off-white > .default-content-wrapper > h2 {
-  text-align: center;
-}
-
-.section.find-relief-off-white > .default-content-wrapper > h2 + p {
-  text-align: center;
-}
-
-/* ── find-relief-checklist: HR divider (orange short line) ── */
-.section.find-relief-checklist > .default-content-wrapper > hr,
-.section.find-relief-off-white > .default-content-wrapper > hr {
-  border: none;
-  width: 4rem;
-  height: 3px;
-  background-color: var(--color-brand-accent);
-  margin: 1.6rem auto;
-}
-
-/* ── find-relief-off-white: Footnotes / disclaimer text ── */
-.section.find-relief-off-white > .default-content-wrapper > p:has(sup:first-child) {
-  font-size: var(--font-size-body-small);
-  line-height: 1.4;
-  color: var(--text-color);
-  margin-top: 1.6rem;
-}
-
-/* ── Video heading area: centered text + orange arc ── */
-.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper,
-.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper {
-  text-align: center;
-}
-
-.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper > h2,
-.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper > h2 {
-  text-align: center;
-  position: relative;
-  padding-top: 2rem;
-}
-
-.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper > h2::before,
-.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper > h2::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4rem;
-  height: 3px;
-  background-color: var(--color-brand-accent);
-  border-radius: 2px;
-}
-
-.section.find-relief-checklist > .columns-wrapper + .default-content-wrapper > p,
-.section.find-relief-off-white > .columns-wrapper + .default-content-wrapper > p {
-  text-align: center;
-}
-
-/* ── Video embed card (border container) ── */
-.section.find-relief-checklist > .embed-wrapper,
-.section.find-relief-off-white > .embed-wrapper {
-  width: 100%;
-  max-width: 900px;
-  margin: 2rem auto 0;
-  border: 1px solid var(--linz-light-purple, #d9d7f9);
-  border-radius: 8px 8px 0 0;
-}
-
-/* ── Video caption bar (title + transcript link below embed) ── */
-.section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child,
-.section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--linz-light-purple, #d9d7f9);
-  padding: 16px 24px;
-  margin-top: -1px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid var(--linz-light-purple, #d9d7f9);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-}
-
-.section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child strong,
-.section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child strong {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-legal-large);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-brand-primary);
-  text-transform: uppercase;
-}
-
-.section.find-relief-checklist > .embed-wrapper + .default-content-wrapper > p:first-child a,
-.section.find-relief-off-white > .embed-wrapper + .default-content-wrapper > p:first-child a {
-  color: var(--color-brand-primary);
-  font-size: var(--font-size-body-small);
-  font-weight: var(--font-weight-extra-bold);
-  text-decoration: underline;
-  white-space: nowrap;
-}
-
-/* ══════════════════════════════════════════════════════════════
-   TABS WHITE CARD — inside off-white section
-   Creates a visible white rounded card on the #f4f6fb background.
-   Three parts: heading (TOP) + tabs-wrapper (MIDDLE) + panel (BOTTOM)
-   ══════════════════════════════════════════════════════════════ */
-
-/* White card TOP — heading with orange divider */
-.section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child {
-  background: var(--background-color);
-  border-radius: 16px 16px 0 0;
-  max-width: 998px;
-  margin: 40px auto 0 !important;
-  padding: 60px 24px 24px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(66, 46, 131, 0.06);
-}
-
-.section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child h2 {
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-h2-hero);
-  font-weight: var(--font-weight-body);
-  color: var(--color-brand-primary);
-  margin: 20px 0 0;
-  line-height: 36px;
-}
-
-.section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child h2::before {
-  content: '';
-  display: block;
-  width: 64px;
-  height: 5px;
-  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMjgwMDMgNC4yMzk5N1Y0LjIxMDMyQzEuMjgwMDMgNC4yMTAzMiAxNS45NSAxLjcxOTk3IDMyIDEuNzE5OTdDNDguMDggMS43MTk5NyA2Mi43MiA0LjIxMDMyIDYyLjcyIDQuMjEwMzJWNC4yMzk5NyIgc3Ryb2tlPSIjRkFBNjMzIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / contain;
-  margin: 0 auto 16px;
-}
-
-/* White card MIDDLE — tabs wrapper */
-.section.find-relief-off-white .tabs-wrapper {
-  background: var(--background-color) !important;
-  max-width: 998px !important;
-  margin: 0 auto !important;
-  padding: 0 24px 24px !important;
-  box-shadow: 0 2px 8px rgba(66, 46, 131, 0.06);
-}
-
-/* White card BOTTOM — tab panels */
-.section.find-relief-off-white .tabs-panel {
-  background: var(--background-color) !important;
-  border-radius: 0 0 16px 16px !important;
-  max-width: 998px !important;
-  margin: 0 auto !important;
-  padding: 24px 40px 48px !important;
-  box-shadow: 0 4px 12px rgba(66, 46, 131, 0.08);
-}
-
-/* Fallback: standalone tabs-container heading styling */
-.section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper {
-  text-align: center;
-  padding: 0 16px;
-  margin: 0 auto 24px;
-}
-
-.section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper h2 {
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-h2-hero);
-  font-weight: var(--font-weight-body);
-  color: var(--color-brand-primary);
-  margin: 20px 0 0;
-  line-height: 36px;
-}
-
-.section.tabs-container:not(.find-relief-off-white) > .default-content-wrapper h2::before {
-  content: '';
-  display: block;
-  width: 64px;
-  height: 5px;
-  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMjgwMDMgNC4yMzk5N1Y0LjIxMDMyQzEuMjgwMDMgNC4yMTAzMiAxNS45NSAxLjcxOTk3IDMyIDEuNzE5OTdDNDguMDggMS43MTk5NyA2Mi43MiA0LjIxMDMyIDYyLjcyIDQuMjEwMzJWNC4yMzk5NyIgc3Ryb2tlPSIjRkFBNjMzIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / contain;
-  margin: 0 auto 16px;
-}
-
-/* ── Tab panel content styling ── */
-.tabs-panel[aria-hidden="true"] {
-  display: none;
-}
-
-.tabs-panel .default-content-wrapper,
-.tabs-panel .tabs-panel-heading {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.tabs-panel .default-content-wrapper p,
-.tabs-panel .tabs-panel-heading p {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-h3-section);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-brand-primary);
-  margin: 0;
-  line-height: normal;
-}
-
-.tabs-panel .default-content-wrapper hr {
-  border: none;
-  width: 0;
-  height: 0;
-  margin: 0;
-}
-
-.tabs-panel .flexbox-wrapper {
-  max-width: 837px;
-  margin: 0 auto;
-  padding-left: 40px;
-}
-
-.tabs-panel .abbvie-container {
-  display: block !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: none !important;
-}
-
-.tabs-panel .abbvie-container > div {
-  grid-column: unset !important;
-}
-
-/* Flexbox column variant: styled via blocks/flexbox/linzess/flexbox.css */
-
-/* ── HOW TO STORE section: centered text + savings card tout ── */
-.section.find-relief-off-white.columns-container > .default-content-wrapper,
-.section.columns-container > .default-content-wrapper:first-child {
-  text-align: center;
-  max-width: 998px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2,
-.section.columns-container > .default-content-wrapper:first-child > h2 {
-  font-size: var(--font-size-h2-hero);
-  font-family: var(--heading-font-family);
-  font-weight: var(--font-weight-body);
-  color: var(--color-brand-primary);
-  text-align: center;
-  margin: 20px 0 0;
-  line-height: 36px;
-}
-
-.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > h2::before,
-.section.columns-container > .default-content-wrapper:first-child > h2::before {
-  content: '';
-  display: block;
-  width: 64px;
-  height: 5px;
-  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuMjgwMDMgNC4yMzk5N1Y0LjIxMDMyQzEuMjgwMDMgNC4yMTAzMiAxNS45NSAxLjcxOTk3IDMyIDEuNzE5OTdDNDguMDggMS43MTk5NyA2Mi43MiA0LjIxMDMyIDYyLjcyIDQuMjEwMzJWNC4yMzk5NyIgc3Ryb2tlPSIjRkFBNjMzIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / contain;
-  margin: 0 auto 16px;
-}
-
-.section.find-relief-off-white.columns-container > .default-content-wrapper:first-child > p,
-.section.columns-container > .default-content-wrapper:first-child > p {
-  text-align: center;
-  max-width: 928px;
-  margin: 20px auto 0;
-  font-size: var(--font-size-legal-large);
-  font-weight: var(--font-weight-body);
-  line-height: normal;
-  font-family: var(--body-font-family);
-  color: var(--text-color);
-  text-transform: none;
-}
-
-.section.find-relief-off-white.columns-container > .columns-wrapper {
-  max-width: 998px;
-  margin: 2.4rem auto;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-/* Savings card heading — NOT Bebas, use body font */
-.section.find-relief-off-white.columns-container .columns h2 {
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-h3-section);
-  font-weight: var(--font-weight-bold);
-  text-transform: none;
-  color: var(--color-brand-primary);
-  letter-spacing: normal;
-}
-
-/* Savings card button — purple, not orange */
-.section.find-relief-off-white.columns-container .columns a.button:any-link {
-  background-color: var(--color-brand-primary);
-  color: var(--color-text-on-dark);
-  border-radius: var(--border-radius-button-primary);
-}
-
-/* Footnote disclaimer below savings card */
-.section.find-relief-off-white.columns-container > .columns-wrapper + .default-content-wrapper {
-  max-width: 998px;
-  margin: 1rem auto 0;
-}
-
-.section.find-relief-off-white.columns-container > .columns-wrapper + .default-content-wrapper > p {
-  font-size: var(--font-size-body-small);
-  line-height: 1.4;
-  color: var(--text-color);
-  text-align: left;
-  font-family: var(--body-font-family);
-  text-transform: none;
-  font-weight: var(--font-weight-body);
-  letter-spacing: normal;
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
 }
 
 @media (width >= 900px) {
-  main > .section:first-of-type {
-    min-height: var(--hero-behind-nav-min-height-desktop);
-    padding: 8rem 4rem;
+  .section.transcript::before,
+  main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
   }
 }
 
-/* ── gutcheck-quiz-arc: White arc overlapping hero bottom ── */
-main > .section.gutcheck-quiz-arc {
-  position: relative;
-  background: var(--color-background-light);
-}
-
-main > .section.gutcheck-quiz-arc::before {
-  content: '';
+/* ISI section arc */
+.abbv-inline-use-isi::before,
+.section.isi::before {
+  content: "";
   position: absolute;
-  top: -40px;
+  top: -60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 130vw;
-  height: 225px;
-  background: var(--background-color);
-  border-radius: 100% 100% 0 0;
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  .abbv-inline-use-isi::before,
+  .section.isi::before {
+    height: 255px;
+    top: -80px;
+  }
+}
+
+.section.isi {
+  position: relative;
+  background: var(--color-background-primary, #fff);
   z-index: 1;
 }
 
-main > .section.gutcheck-quiz-arc > * {
+/* Footer must paint above the white ISI section (z-index: 1) so its purple
+   curved arc (.footer::before) shows instead of being hidden behind it. */
+.footer-wrapper {
   position: relative;
   z-index: 2;
 }
 
-/* ── Gutcheck quiz: Full-bleed alternating backgrounds + centered layout ── */
-.gut-check-quiz .quiz-steps .quiz-step {
-  position: relative;
-  padding: 48px 0;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  padding-left: calc(50vw - 50%);
-  padding-right: calc(50vw - 50%);
+
+/* Transcript content wrapper — centered with 20px side padding (matches live) */
+.section.transcript .rich-text-wrapper,
+main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.gut-check-quiz .quiz-steps .quiz-step:nth-child(even) {
-  background-color: var(--color-background-light);
+.section.transcript + .section,
+main > .section:first-of-type:not(.hero-container) + .section {
+  border-radius: 0;
 }
 
-.gut-check-quiz .quiz-steps .quiz-step:nth-child(odd) {
-  background-color: var(--background-color);
-}
-
-/* Step number — top-left corner of content area, matching live site */
-.gut-check-quiz .quiz-step .quiz-step-indicator {
-  position: absolute;
-  left: calc(50% - 330px);
-  top: 20px;
-}
-
-/* Email section — off-white full-bleed background matching live site */
-.gut-check-quiz .quiz-email-section {
-  background-color: var(--color-background-light);
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  padding: 60px 0;
+.section.transcript h1,
+main > .section .default-content-wrapper h1 {
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-text-heading);
   text-align: center;
-  max-width: none;
-  width: auto;
+  line-height: var(--spacing-30);
+  margin: 0;
+  padding: 0;
 }
 
-.gut-check-quiz .quiz-steps {
-  margin-bottom: 0;
-  padding-bottom: 0;
+.section.transcript h1::before,
+main > .section .default-content-wrapper h1::before {
+  content: '';
+  display: block;
+  width: var(--spacing-64);
+  height: var(--spacing-05);
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto var(--spacing-10);
 }
 
-.gut-check-quiz .quiz-container {
-  background-color: var(--color-background-light);
+.section.transcript .default-content-wrapper p,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-color);
+  margin: var(--spacing-16) 0;
+  padding: 0;
 }
 
-.gut-check-quiz .quiz-email-section > * {
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
+.section.transcript .default-content-wrapper strong,
+.section.transcript .default-content-wrapper b,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper strong,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper b {
+  color: var(--text-color);
+  font-weight: 700;
 }
 
-/* ── ISI text-container: Legal font styling (from live site) ── */
-.section.text-container-container {
-  background-color: var(--background-color);
-  border-top: none;
-  padding-top: 24px;
-  margin-left: calc(-50vw + 50%) !important;
-  margin-right: calc(-50vw + 50%) !important;
-  padding-left: calc(50vw - 50%);
-  padding-right: calc(50vw - 50%);
-  max-width: none !important;
-  width: auto !important;
+.section.transcript .default-content-wrapper h2,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: 600;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: var(--spacing-16) 0;
 }
 
-.text-container {
-  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
+.section.transcript .default-content-wrapper h2:first-of-type,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2:first-of-type {
+  margin: var(--spacing-40) 0 var(--spacing-16);
+}
+
+.section.transcript .default-content-wrapper ul,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper ul {
+  margin: var(--spacing-16) 0;
+  padding: 0 0 0 var(--spacing-40);
+}
+
+.section.transcript .default-content-wrapper li,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper li {
+  margin: 0;
+  padding: 0;
+}
+
+/* ISI section */
+.section.isi,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  padding: 0 var(--spacing-20) var(--spacing-80);
+  margin: 0 0 var(--spacing-20);
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Space below the ISI job code before the footer arc. Live uses 80px padding
+   + 20px margin (~100px total); our larger 100/100 left too big a gap. */
+main > .section.isi {
+  padding-bottom: var(--spacing-80);
+  margin-bottom: var(--spacing-20);
+}
+
+.section.isi .default-content-wrapper,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) .default-content-wrapper {
+  max-width: 124rem;
+  margin: 0 auto;
+}
+
+.section.isi h3,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  text-transform: none;
+  margin: var(--spacing-10) 0 0;
+  padding: 0;
+}
+
+.section.isi p,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) p {
+  font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
   color: var(--color-text-muted);
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px 40px;
+  margin: var(--spacing-10) 0;
+  padding: 0;
 }
 
-.text-container > div {
-  margin: 0;
+.section.isi ul,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) ul {
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
 }
 
-.text-container h3 {
-  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+.section.isi li,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) li {
+  font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
-  font-weight: var(--font-weight-body);
-  line-height: normal;
-  color: var(--color-brand-primary);
-  letter-spacing: -0.32px;
-  margin: 10px 0 0;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi strong,
+.section.isi b,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) strong,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) b {
+  font-family: var(--font-family-legal-bold);
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.section.isi a,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) a {
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+/* ISI links sit inside <strong> blocks, so they inherit the black legal font
+   at 14px. Live renders them in the regular Roman face (not bold/black). */
+.section.isi strong a,
+.section.isi b a,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) :is(strong, b) a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+}
+
+.section.isi h4,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) h4 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
   text-transform: none;
 }
 
+.section.isi h5,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) h5 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
+  text-decoration: none;
+}
+
+/* Desktop — arc grows larger + font-size 16px */
+@media (width >= 900px) {
+  .section.transcript::before,
+  main > .section:first-of-type:not(.hero-container)::before {
+    top: -60px;
+    width: 130%;
+    height: 255px;
+  }
+
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    max-width: var(--content-width-transcript, 998px);
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .section.transcript h1,
+  main > .section .default-content-wrapper h1 {
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
+  }
+
+  .section.transcript .default-content-wrapper p,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.transcript .default-content-wrapper h2,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+}
+
+/* Mobile — transcript and ISI padding adjustments */
+@media (width <= 744px) {
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    padding: 0 var(--spacing-16);
+  }
+
+  .section.isi h3,
+  main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk) h3 {
+    font-size: var(--font-size-legal);
+  }
+}
+
+/* ============================================================
+   DIAN-TEST PAGE — Scoped to .section.dian-test-body / .section.dian-test-isi
+   Mobile-first: base = mobile, @media (min-width: 900px) = desktop
+   ============================================================ */
+
+/* --- Section: Transcript body --- */
+.section.dian-test-body.abbvie-container {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  overflow: visible;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  max-width: none;
+  width: 100%;
+}
+
+.section.dian-test-body.abbvie-container + .section {
+  margin-top: 0;
+}
+
+.section.dian-test-body .rich-text-wrapper {
+  padding: 0 20px;
+}
+
+.section.dian-test-body h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--color-text-heading);
+  text-align: center;
+  line-height: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body h1::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto 10px;
+}
+
+.section.dian-test-body h2 {
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body h2:first-of-type {
+  margin-top: 40px;
+}
+
+.section.dian-test-body p {
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-body, #4d4d4f);
+  line-height: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body strong {
+  font-weight: 700;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.section.dian-test-body em {
+  font-style: italic;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.section.dian-test-body ul {
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  margin: 16px 0;
+  padding: 0 0 0 40px;
+}
+
+.section.dian-test-body li {
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body a {
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  text-decoration: underline;
+}
+
+.section.dian-test-body sup {
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* Arc/curve ::before */
+.section.dian-test-body::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 40px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+/* --- Section: ISI --- */
+.section.dian-test-isi.abbvie-container {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  margin: 0 0 var(--spacing-20);
+  padding: 0 var(--spacing-20) var(--spacing-80);
+  max-width: 100%;
+  width: 100%;
+}
+
+.section.dian-test-isi h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  margin: var(--spacing-10) 0 0;
+  padding: 0;
+}
+
+.section.dian-test-isi p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.dian-test-isi strong,
+.section.dian-test-isi b {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.section.dian-test-isi a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+.section.dian-test-isi ul {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+.section.dian-test-isi li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.dian-test-isi li strong {
+  font-family: var(--font-family-legal-bold);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.section.dian-test-isi sup {
+  font-size: 0.7em;
+  color: var(--color-text-muted);
+  line-height: 0;
+}
+
+/* --- Desktop (min-width: 900px) --- */
+@media (width >= 900px) {
+  .section.dian-test-body.abbvie-container {
+    padding: 0 0 var(--spacing-100, 10rem);
+    margin-top: var(--spacing-80);
+  }
+
+  .section.dian-test-body::before {
+    top: calc(-1 * var(--spacing-60));
+    width: 130%;
+    height: var(--spacing-75, 7.5rem);
+  }
+
+  .section.dian-test-body h1 {
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
+  }
+
+  .section.dian-test-body .rich-text-wrapper {
+    max-width: var(--content-width-transcript, 998px);
+    margin: 0 auto;
+    padding: 0 var(--spacing-48, 4.8rem);
+  }
+
+  .section.dian-test-body h2 {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.dian-test-body h2:first-of-type {
+    margin-top: var(--spacing-40);
+  }
+
+  .section.dian-test-body p {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.dian-test-isi .default-content-wrapper {
+    max-width: var(--content-width-isi, 1240px);
+    margin: 0 auto;
+  }
+}
+
+/* ===== From develop: non-hero page arc + H1 (body.no-hero) ===== */
+
+/* Non-hero pages: purple downward arc + H1 styling */
+body.no-hero main > .section:first-child {
+  position: relative;
+  padding-top: var(--no-hero-arc-height);
+}
+
+body.no-hero main > .section:first-child::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--no-hero-arc-height);
+  background-color: var(--color-brand-primary);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  z-index: 0;
+}
+
+body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
+  font-family: var(--heading-font-family);
+  font-size: var(--no-hero-h1-font-size);
+  line-height: var(--no-hero-h1-line-height);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-brand-primary);
+  margin-bottom: var(--no-hero-h1-margin-bottom);
+}
+
+body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1::before {
+  content: '';
+  display: block;
+  width: var(--no-hero-divider-width);
+  height: var(--no-hero-divider-height);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+  margin: 0 auto var(--no-hero-divider-margin-bottom);
+}
+
+@media (width < 768px) {
+  body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
+    font-size: var(--no-hero-h1-font-size-mobile);
+    line-height: var(--no-hero-h1-line-height-mobile);
+  }
+}
+
+/* Transcript/ISI pages keep the white upward arc, not develop's purple downward arc.
+   Equal specificity to body.no-hero rule but declared later, so this wins. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section.isi,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: 0;
+}
+
+body.no-hero main > .section.transcript::before,
+body.no-hero main > .section.isi::before,
+body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+  top: -60px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  body.no-hero main > .section.transcript::before,
+  body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
+
+/* ============================================================
+   Healthy-Routines article sections (OTC and Prescription Treatments)
+   Sections: otc-intro (white), what-is-linzess (purple),
+   more-like-this (white), cta-cards (purple). Each carries a
+   background-arc curved top edge (footer-arc recipe).
+   Body backdrop for this hero article page is off-white.
+   ============================================================ */
+body:has(.section.otc-intro-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* navigation-content.css paints a debug grey background on .header-content for
+   its own preview; live header consumes those links into the eyebrow bar and
+   shows no grey. Neutralize the debug background. */
+body.linzess main .header-content {
+  background-color: transparent;
+}
+
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  overflow: visible;
+}
+
+main > .section.cta-cards-section {
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-140);
+}
+
+/* White sections */
+main > .section:is(.otc-intro-section, .more-like-this-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* Purple sections */
+main > .section:is(.what-is-linzess-section, .cta-cards-section) {
+  background-color: var(--color-brand-primary);
+}
+
+/* Arc — curved top edge sitting above the previous section.
+   z-index matches live (-5): with the hero overlapping the first arc, -1
+   stacked the white arc at the wrong depth and produced a hard-edged seam
+   over the hero photo. Live places all four section arcs at z-index -5. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section)::before {
+  background-color: var(--color-background-primary, #fff);
+}
+
+main > .section:is(.what-is-linzess-section, .cta-cards-section)::before {
+  background-color: var(--color-brand-primary);
+}
+
+/* Section heading (Bebas Neue, 40px / line-height 36px).
+   The published page drops the authored `heading-1` class, so the heading is
+   also matched structurally: the first <p> of the section's first
+   default-content-wrapper. Both selectors are kept so styling holds whether or
+   not the class survives publish. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  text-align: center;
+  text-transform: none;
+}
+
+/* Divider line (64x5 divider.svg) centered above every section heading.
+   Live authors it as an empty <p><span class="divider"> before each heading. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2)::before,
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child::before,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child {
+  color: var(--color-text-heading);
+}
+
+main > .section.what-is-linzess-section .heading-1,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+  color: var(--color-text-on-dark);
+}
+
+/* Centered intro copy (live caps the rich-text at 920px) */
+main > .section.otc-intro-section > .default-content-wrapper {
+  max-width: 92rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Body copy = every intro paragraph except the heading (first child). Excludes
+   by both class and position so it never restyles the heading in either env. */
+main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1, :first-child) {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 2: How They Work (3 icon columns) ---- */
+main > .section.otc-intro-section .columns.how-they-work {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item {
+  text-align: center;
+}
+
+/* Icons preserve aspect ratio. Live caps the height uniformly at 20rem on
+   desktop. On mobile the first icon (Fiber) fills the column width with no
+   height cap, while the narrower Stimulant & Stool icons stay capped at
+   23.4rem. display:block removes the inline whitespace gap below the icon. */
+main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 @media (width >= 744px) {
-  .text-container h3 {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+    max-height: 20rem;
+  }
+}
+
+@media (width < 744px) {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img,
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(3) .columns-item-image img {
+    max-height: 23.4rem;
+  }
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item-content p:first-child strong,
+main > .section.otc-intro-section .columns.how-they-work .columns-item p strong {
+  display: block;
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item p {
+  margin: 0 0 var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 3: What Is LINZESS? (image + text/CTA) ---- */
+main > .section.what-is-linzess-section .columns.what-is-linzess {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  align-items: start;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image {
+  text-align: center;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+  width: auto;
+  max-width: 100%;
+  max-height: 36rem;
+  margin: 0 auto;
+}
+
+/* Mobile: live shrinks the bottle to ~283px tall; our 36rem cap is too tall
+   on small screens. Cap to ~28.3rem under 744px to match live. */
+@media (width < 744px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+    max-height: 28.3rem;
+  }
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: normal;
+  color: var(--color-text-on-dark);
+}
+
+/* Footnote inside the text column stays 12px (live), tighter 12px margins.
+   The published page drops the `footnote` class, so the footnote is also
+   matched structurally as the last paragraph of the text column. */
+main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote,
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:last-child {
+  margin: var(--spacing-12, 12px) 0;
+  font-size: var(--font-size-body-small);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess p {
+  margin: var(--spacing-16) 0;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess ul {
+  margin: var(--spacing-16) 0;
+  padding-left: var(--spacing-16);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess li {
+  margin-bottom: 0;
+}
+
+/* Bullet markers in brand purple (live: #60579e) */
+main > .section.what-is-linzess-section .columns.what-is-linzess li::marker {
+  color: var(--color-brand-primary-light);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess a {
+  position: relative;
+  display: inline-block;
+  margin-top: 0;
+  padding: 16px 59px 16px 24px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-background-primary, #fff);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
+main > .section.what-is-linzess-section .columns.what-is-linzess a::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* Footnotes — left-aligned, 12px white, matching live (Sources block).
+   The published page drops the authored `footnote` class, so the Sources
+   block (last default-content-wrapper of the section: a <p>Sources:</p> plus a
+   reference list) is also matched structurally. Both selectors are kept so the
+   styling holds whether or not the class survives publish. */
+main > .section.what-is-linzess-section .footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(p, ol, ul) {
+  max-width: 99.8rem;
+  margin: var(--spacing-12, 12px) auto;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body);
+  line-height: 1.4;
+  color: var(--color-text-on-dark);
+  text-align: left;
+}
+
+main > .section.what-is-linzess-section .footnote strong,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type strong {
+  font-weight: var(--font-weight-body);
+}
+
+main > .section.what-is-linzess-section ol.footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(ol, ul) {
+  padding-left: var(--spacing-10);
+  list-style-type: decimal;
+}
+
+main > .section.what-is-linzess-section ol.footnote li,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type li {
+  font-size: var(--font-size-body-small);
+  line-height: 1.6rem;
+  color: var(--color-text-on-dark);
+}
+
+/* Reference URLs in the Sources list are plain white citation text on live,
+   not the purple brand link color (which is invisible on the purple bg). */
+main > .section.what-is-linzess-section .footnote a,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type a {
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+}
+
+/* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+  margin-bottom: var(--spacing-24);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  text-transform: uppercase;
+}
+
+/* Hero H1 line-height (live: 36px, not the editorial-hero default 0.95) */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  line-height: var(--no-hero-h1-line-height, 36px);
+}
+
+/* Hero text column: live's editorial-hero text container is ~100rem wide so
+   the H1 stays on one line. The base behind-nav hero caps it at 64rem and the
+   editorial cmp-container at 40rem, forcing a 2-line wrap. Widen for OTC. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+  width: min(100%, 100rem);
+}
+
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+  max-width: 100rem;
+}
+
+/* Hero bottom curve: the editorial-hero default draws a deep half-circle
+   scoop. Live's curve is actually the white intro section's arc painting up
+   over the hero (the .otc-intro-section::before, which already matches live:
+   130% wide, 255px tall, top radius 100% 100% 0 0). Remove the hero's
+   competing scoop so only the shallow intro arc shows. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::before {
+  content: none;
+}
+
+/* Section-nav pill overlaps the hero bottom (sits on the arc seam) like live.
+   The nav is in the same section as the hero (hero-container + section-nav-container);
+   pull its wrapper up so the centered purple pill straddles the hero/arc boundary,
+   and lift it above the next section's white arc. Scoped to this page's hero
+   section so other section-nav usages are unaffected. */
+main > .section.hero-container.section-nav-container .section-nav-wrapper {
+  position: relative;
+  z-index: 6;
+  margin-top: calc(-1 * var(--spacing-40));
+}
+
+@media (width >= 744px) {
+  main > .section.hero-container.section-nav-container .section-nav-wrapper {
+    margin-top: calc(-1 * var(--spacing-60));
+  }
+}
+
+/* Hero band is fluid (>=744px, desktop image 2048x874): the block default is
+   a fixed 684px tall band, which over-zooms object-fit:cover as the viewport
+   narrows (laptop/tablet), enlarging the photo. Drive the band height by the
+   desktop image ratio so it shrinks with width and the full scene shows.
+   At 1440 this resolves to ~615px = the already-correct desktop view, so the
+   verified 1440 layout is unchanged. */
+@media (width >= 744px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
+    aspect-ratio: 2048 / 874;
+  }
+
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+/* Mobile (<744px): live swaps to the near-square mobile image (375x369) and
+   sizes the band to its ratio so the full scene shows. The block default
+   (420px fixed + object-fit:cover) crops it. Match live's fluid fit. */
+@media (width < 744px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    aspect-ratio: 375 / 369;
+  }
+
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+/* More Like This heading — no bottom margin; columns margin-top provides the
+   ~40px gap to cards (matches live's 43px). Divider ::before keeps top space. */
+main > .section.more-like-this-section :is(.heading-1, h2) {
+  margin: 0 auto;
+}
+
+/* ---- Section 4: More Like This (3 article cards) ----
+   Live adds a 40px row margin below the cards (on top of the section's 100px
+   bottom padding) for ~140px clearance before the CTA section. */
+main > .section.more-like-this-section .columns.more-like-this {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  gap: var(--spacing-16);
+}
+
+/* Mobile: live insets each stacked card ~6px per side within the content
+   column (373px wide at 425px viewport vs our 385px). */
+@media (width < 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    padding: 0 var(--spacing-06);
+  }
+}
+
+/* Live caps each card at 300px and centers the group within the 998px row.
+   Mobile (<768px) keeps the base block's single-column stack. */
+@media (width >= 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    grid-template-columns: repeat(3, 30rem);
+    justify-content: center;
+  }
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item {
+  overflow: hidden;
+  background: var(--color-brand-primary-lighter);
+  border-radius: var(--linz-rounded-corner);
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item > div {
+  margin: 0;
+}
+
+/* Image paragraph fills full card width, flush to the top + side edges */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:has(picture) {
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item picture,
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+/* Compact card image — match live crop ratio (598:347) so cards stay short */
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  aspect-ratio: 598 / 347;
+  object-fit: cover;
+}
+
+/* Title + link text paragraphs sit below the image with card padding
+   (live: 16px horizontal, 20px top, 20px title→link gap, 20px bottom) */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)) {
+  margin: 0;
+  padding: 0 var(--spacing-16);
+}
+
+/* Card title = the paragraph with no image and no link. (Published DOM nests
+   the image, title, and link paragraphs in one cell, so :first-of-type would
+   match the image wrapper, not the title.) */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture), :has(a)) {
+  padding-top: var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+/* Live caps the card title at 16px on desktop — it does NOT follow the
+   section's 16px->18px body step-up that --font-size-article-body applies. */
+@media (width >= 900px) {
+  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture), :has(a)) {
     font-size: var(--font-size-legal-large);
   }
 }
 
-.text-container p {
-  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
-  font-size: var(--font-size-legal);
-  line-height: 16px;
-  letter-spacing: -0.28px;
-  color: var(--color-text-muted);
-  margin: 10px 0;
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):last-of-type {
+  padding-top: var(--spacing-20);
+  padding-bottom: var(--spacing-20);
 }
 
-.text-container ul {
-  padding-left: 20px;
-  margin: 10px 0;
+/* EDS auto-promotes a standalone link to p.button-container > a.button (solid
+   pill). Live shows a plain underlined text link here — neutralize the pill. */
+main > .section.more-like-this-section .columns.more-like-this .button-container {
+  margin: 0;
 }
 
-.text-container li {
-  font-family: 'BasicCommercialLT-Roman', sans-serif;
-  font-size: var(--font-size-legal);
-  line-height: 16px;
-  letter-spacing: -0.28px;
-  color: var(--color-text-muted);
-  margin: 10px 0;
-}
-
-.text-container a {
-  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
-  font-size: var(--font-size-legal);
-  color: var(--color-brand-primary);
+main > .section.more-like-this-section .columns.more-like-this a,
+main > .section.more-like-this-section .columns.more-like-this a.button {
+  display: inline;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-text-heading);
   text-decoration: underline;
-  letter-spacing: -0.28px;
 }
 
-.text-container strong,
-.text-container b {
-  font-family: 'BasicCommercialLT-Black', sans-serif;
-  font-weight: 900;
-  color: var(--color-brand-primary);
+/* ---- Section 5: CTA cards (2 items) ---- */
+main > .section.cta-cards-section .columns.cta-cards {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.text-container u {
-  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
-  font-weight: var(--font-weight-body);
+main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+  margin: var(--spacing-24) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.cta-cards-section .columns.cta-cards a {
+  position: relative;
+  display: inline-block;
+  padding: 16px 59px 16px 24px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-brand-accent);
   color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
   text-decoration: none;
 }
 
-.text-container sup {
-  font-size: 10px;
-  line-height: 0;
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
+main > .section.cta-cards-section .columns.cta-cards a::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
 }
 
-/* Hide ISI toggle text in header utility nav */
-header .nav-indication {
-  display: none !important;
+@media (width < 744px) {
+  main > .section.hero-container .hero:is(.linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  /* Mobile: section headings shrink 40px -> 32px to match live */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+    font-size: var(--font-size-h2-hero);
+  }
+
+  /* Mobile: column labels (Fiber etc.) and CTA card titles shrink 24px -> 18px */
+  main > .section.otc-intro-section .columns.how-they-work .columns-item p strong,
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    font-size: var(--font-size-article-card-title);
+  }
+
+  /* Mobile: live centers the "How LINZESS Can Help" CTA button (desktop left) */
+  main > .section.what-is-linzess-section .columns.what-is-linzess p:has(> a) {
+    text-align: center;
+  }
 }
 
-/* Safety bar — keep below viewport until activated */
-.safety-bar {
-  position: fixed;
-  bottom: 0;
+/* Stacked range (<768px): the CTA-cards divider becomes a horizontal rule below
+   the first card (live: 1px muted purple, same as the desktop vertical rule). */
+@media (width < 768px) {
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+  }
+}
+
+@media (width >= 768px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess {
+    gap: var(--spacing-48);
+  }
+
+  /* Vertical divider between the two CTA columns (live: 1px muted purple) */
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-right: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+  }
+}
+
+@media (width >= 900px) {
+  /* Desktop/laptop body text steps up to 16px (mobile + tablet stay 14px) */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+    --font-size-article-body: 16px;
+  }
+
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 255px;
+  }
+}
+
+/* ============================================================================
+   FIND RELIEF (/find-relief) — additive page styling
+   Sections: find-relief-talk (white), find-relief-bottom-nav-section (purple).
+   Hero reuses the shared .hero-container + linzess-behind-nav-linzess-editorial-hero
+   rules above. All selectors scoped to find-relief classes (no leakage).
+   ============================================================================ */
+
+/* ---- Section: Talk to a Doctor (white, full-width, centered headings) ---- */
+main > .section.find-relief-talk {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  background-color: var(--color-background-primary, #fff);
+  overflow: visible;
+}
+
+/* White arc curving up over the hero (footer-arc recipe, matches OTC). */
+main > .section.find-relief-talk::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  background-color: var(--color-background-primary, #fff);
+  z-index: -5;
+}
+
+/* Section headings (Bebas Neue 40px purple, centered, divider above). */
+main > .section.find-relief-talk .default-content-wrapper :is(h2, .heading-1) {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: none;
+}
+
+main > .section.find-relief-talk .default-content-wrapper :is(h2, .heading-1)::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+/* H3 sub-heading (Lato bold purple, centered). */
+main > .section.find-relief-talk .default-content-wrapper h3 {
+  margin: 0 auto var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+  text-align: center;
+}
+
+/* Intro + body copy (centered, capped width). */
+main > .section.find-relief-talk .default-content-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.find-relief-talk .default-content-wrapper > p {
+  margin: var(--spacing-16) auto;
+  max-width: 92rem;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* "What To Talk About" list — dark-purple rounded card, 2-up grid of
+   orange-checkmark items (white heading + body), matching live's
+   checkmark-list-flex card. */
+main > .section.find-relief-talk .default-content-wrapper ul {
+  box-sizing: border-box;
+  max-width: 99.8rem;
+  margin: var(--spacing-24) auto;
+  padding: var(--spacing-40) var(--spacing-40) 0;
+  list-style: none;
+  text-align: left;
+  background-color: var(--color-brand-primary);
+  border-radius: var(--linz-rounded-corner, 16px);
+  color: var(--color-text-on-dark);
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--spacing-16);
+}
+
+main > .section.find-relief-talk .default-content-wrapper li {
+  position: relative;
+  margin: 0 0 var(--spacing-40);
+  padding-left: var(--spacing-32);
+}
+
+/* Orange checkmark icon (24x24) at the left of each item. */
+main > .section.find-relief-talk .default-content-wrapper li::before {
+  content: "";
+  position: absolute;
+  top: 5px;
   left: 0;
-  right: 0;
-  z-index: 100;
-  max-height: 30vh;
-  overflow-y: auto;
+  width: var(--spacing-24, 24px);
+  height: var(--spacing-24, 24px);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTIiIGZpbGw9IiNGQUE2MzMiLz4KPHBhdGggZD0iTTE4LjUgOUwxMSAxN0w3LjAwMDAyIDEzIiBzdHJva2U9IiM0MjJFODMiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==") no-repeat center;
+  background-size: contain;
+}
+
+main > .section.find-relief-talk .default-content-wrapper li > p:first-child strong {
+  display: block;
+  margin-bottom: var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title, 24px);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.find-relief-talk .default-content-wrapper li p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.find-relief-talk .default-content-wrapper li a {
+  color: var(--color-text-on-dark);
+}
+
+/* Desktop: two columns (each item ~half the card minus the gap). */
+@media (width >= 744px) {
+  main > .section.find-relief-talk .default-content-wrapper li {
+    flex: 0 0 calc(50% - (var(--spacing-16) / 2));
+    box-sizing: border-box;
+  }
+}
+
+/* ---- Gut Check tout (off-white rounded card: image left, text/CTA right) ----
+   Library block: image-text. find-relief-scoped variant on top of the block. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  display: grid;
+  grid-template-columns: 44% 1fr;
+  align-items: center;
+  background-color: var(--linz-off-white);
+  border-radius: var(--linz-rounded-corner, 16px);
+  overflow: hidden;
+}
+
+/* The image column anchors the "Actor Portrayal" overlay. The Gut Check PNG has
+   its curved/scooped right edge baked in (transparent), so let it fill the
+   column width at natural aspect (no cover-crop) to reveal the curve like live. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  line-height: 0;
+  font-size: 0;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col {
+  padding: var(--spacing-40) var(--spacing-40) var(--spacing-40) 80px;
+  text-align: left;
+}
+
+/* "Actor Portrayal" — white caption overlaid at the image's bottom-left.
+   The image-text decorator emits the footnote inside the content column; pull
+   it out visually by anchoring it to the block (which is position:relative via
+   the grid container above is static, so anchor on the block). */
+main > .section.find-relief-talk .image-text.find-relief-gut-check {
+  position: relative;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p.footnote {
+  position: absolute;
+  left: var(--spacing-20);
+  bottom: var(--spacing-16);
+  margin: 0;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p.footnote em {
+  font-style: normal;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p.heading-1 {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* "Get My Discussion Guide" CTA — purple button, white text, right chevron. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col .button-container a.button {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--spacing-10);
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col .button-container a.button::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* ---- Find Relief video block: match live (clean poster + circular play
+   button + light-purple caption bar). Scoped to both find-relief sections so
+   the shared video block and other pages are unaffected. ---- */
+
+/* Cap the video width and center it like the rest of the find-relief content. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage {
+  max-width: 99.8rem;
+}
+
+/* Remove the navy scrim — show the poster fully like live. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-overlay {
+  background: transparent;
+  gap: 0;
+}
+
+/* Hide the overlay title + "Watch" description over the poster (content kept
+   for round-trip; the title shows in the caption bar below instead). */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-overlay-title,
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-overlay-description {
+  display: none;
+}
+
+/* Play control: centered white translucent circle with a purple ▶ triangle. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-btn {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  gap: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 85%);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-btn:hover,
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-btn:focus-visible {
+  background-color: var(--color-background-light, #fff);
+  transform: scale(1.05);
+}
+
+/* Purple triangle, hide the "Watch" text label. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-icon {
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 18px solid var(--color-brand-primary);
+  margin-left: 4px;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-label {
+  display: none;
+}
+
+/* The video sits in its own wrapper above the caption wrapper. Remove the
+   video block's bottom margin so the caption bar butts against it. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage {
+  margin-bottom: 0;
+}
+
+/* The caption's default-content-wrapper is a grid item; the brand
+   `margin: 0 auto` collapses it to content width, so force it full-width
+   (capped to the video's 998px) and center it. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper:has(p a[href*="transcripts"]) {
+  width: 100%;
+  max-width: 99.8rem;
+  margin-inline: auto;
+}
+
+/* Caption bar attached to the video bottom: full-width light-purple bar,
+   title left (purple bold) and View Transcript right. Squared top + rounded
+   bottom so it reads as one unit with the video poster above it. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-24);
+  width: 100%;
+  max-width: 99.8rem;
+  margin: 0 auto var(--spacing-40);
+  padding: var(--spacing-16) var(--spacing-24);
+  background-color: var(--linz-light-purple);
+  border-radius: 0 0 var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px);
+  text-align: left;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) strong {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: var(--letter-spacing-wide-06, 0.06em);
+  color: var(--color-text-heading);
+  text-transform: uppercase;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) a {
+  flex: 0 0 auto;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+}
+
+/* ---- Section: Bottom Nav (dark purple, 2 CTA cards) ---- */
+main > .section.find-relief-bottom-nav-section {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-140);
+  background-color: var(--color-brand-primary);
+  overflow: visible;
+}
+
+main > .section.find-relief-bottom-nav-section::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  background-color: var(--color-brand-primary);
+  z-index: -5;
+}
+
+/* Library block: cards-grid (cta-card). The whole card is an <a class="grid-card">
+   linking to the destination; line-1 = title, line-2 = "Learn More" pill. */
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  gap: var(--spacing-40);
+  align-items: center;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-1 {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-on-dark);
+  text-transform: none;
+}
+
+/* "Learn More" CTA — orange pill, purple text, right chevron. The whole card
+   is a link in cta-card, so style line-2 as the visible button. */
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-2 {
+  position: relative;
+  display: inline-block;
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--linz-orange);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-2 p {
+  margin: 0;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-2::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* ---- Responsive: desktop steps body text to 16px; arc deepens ---- */
+@media (width >= 744px) {
+  main > .section.find-relief-talk .image-text.find-relief-gut-check {
+    grid-template-columns: 440fr 560fr;
+  }
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-talk,
+  main > .section.find-relief-bottom-nav-section {
+    --font-size-article-body: 16px;
+  }
+
+  main > .section.find-relief-talk::before,
+  main > .section.find-relief-bottom-nav-section::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 255px;
+  }
+}
+
+/* ---- Section: How to Take LINZESS (white, full-width) ---- */
+main > .section.find-relief-howtotake {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  background-color: var(--color-background-primary, #fff);
+  overflow: visible;
+}
+
+/* Centered default content, capped width. */
+main > .section.find-relief-howtotake .default-content-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* H2 (Bebas 40px purple, divider above). */
+main > .section.find-relief-howtotake .default-content-wrapper h2 {
+  margin: var(--spacing-40) auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: none;
+}
+
+main > .section.find-relief-howtotake .default-content-wrapper h2::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+/* H3 sub-headings (Lato bold purple, centered). */
+main > .section.find-relief-howtotake .default-content-wrapper h3 {
+  margin: var(--spacing-40) auto var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+  text-align: center;
+}
+
+/* "HOW TO STORE LINZESS" — live renders this as a display heading-1 (Bebas,
+   divider above), not a small sub-heading. Scope to the storage section (the
+   one containing the savings tout) so other h3 sub-headings stay small. */
+main > .section.find-relief-howtotake:has(.find-relief-savings-tout) .default-content-wrapper h3 {
+  margin: var(--spacing-40) auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  text-transform: none;
+}
+
+main > .section.find-relief-howtotake:has(.find-relief-savings-tout) .default-content-wrapper h3::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: 0 auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+main > .section.find-relief-howtotake .default-content-wrapper > p {
+  margin: var(--spacing-16) auto;
+  max-width: 92rem;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* Footnotes (left, 12px). */
+main > .section.find-relief-howtotake .default-content-wrapper p.footnote {
+  max-width: 99.8rem;
+  font-size: var(--font-size-body-small);
+  text-align: left;
+}
+
+/* Prescribed cards (2-up) + signup (3-up): cards-grid icon-image-card.
+   The Linzess icon-image-card variant renders its own dark/light-purple card
+   chrome, icon, and centered heading, so only spacing/CTA tweaks are scoped here. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed,
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup {
+  max-width: 99.8rem;
+  margin: var(--spacing-24) auto var(--spacing-40);
+}
+
+/* Live "Already Prescribed": card 1 = dark-purple (white text),
+   card 2 = light-purple (purple text). The variant assigns light/dark per
+   index (0=light, 1=dark), so override both explicitly to match live. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:first-child .abbv-flex-item-v2 {
+  background-color: var(--color-brand-primary);
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:first-child :is(p, .heading-2) {
+  color: var(--color-text-on-dark);
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
+  background-color: var(--linz-light-purple);
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:nth-child(2) :is(p, .heading-2) {
+  color: var(--color-text-heading);
+}
+
+/* Live prescribed cards have no CTA button; the variant injects a default
+   "Sign up" — hide it for this section only. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .cta {
+  display: none;
+}
+
+/* Sign-up CTA buttons (purple, white text, chevron). icon-image-card renders
+   the CTA as a.abbv-button-primary inside .cta; match that + plain a.button. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .cta a,
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .button-container a.button {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--spacing-16);
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .cta a::after,
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .button-container a.button::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* Savings tout (off-white rounded: image left, text/CTA right).
+   Library block: image-text. find-relief-scoped variant on top. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  background-color: var(--linz-off-white);
+  border-radius: var(--linz-rounded-corner, 16px);
+  overflow: hidden;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-image-col {
+  margin: 0;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-image-col img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col {
+  padding: var(--spacing-40);
+  text-align: left;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p.heading-1 {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* "Sign Up Now" CTA — live uses abbv-button-primary: purple fill, white text. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col .button-container a.button {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--spacing-10);
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col .button-container a.button::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* ---- Responsive: How-to-Take ---- */
+@media (width >= 744px) {
+  main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  main > .section.find-relief-howtotake .cards-grid.find-relief-signup {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  main > .section.find-relief-howtotake .image-text.find-relief-savings-tout {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-howtotake {
+    --font-size-article-body: 16px;
+  }
+}
+
+/* ---- Dosing tabs: panels are lifted out of find-relief-howtotake into
+   .tabs-panel sections, so style find-relief-dosing wherever it appears.
+   Library block: cards-grid (cta-card). Live: dosing items are a vertical
+   stack of full-width rows (no card bg), each row = blue icon (~105px) on the
+   left + text on the right. cta-card emits .grid-card with line spans:
+   line-1 = icon, line-2 = title, line-3 = body. ---- */
+
+/* Dosing cards — values ported from PR #104 (blocks/flexbox/linzess) adapted to
+   the cards-grid DOM: off-white bordered rounded cards, the raw (transparent,
+   no-bubble) icon overlaps the card's left edge, icon + text vertically centered. */
+.cards-grid.find-relief-dosing {
+  display: flex;
+  flex-direction: column;
+  max-width: 837px;
+  margin: var(--spacing-24) auto var(--spacing-40);
+  padding: 0 0 0 40px;
+  gap: 16px;
+}
+
+.cards-grid.find-relief-dosing .card-grid-item {
+  margin: 0;
+}
+
+.cards-grid.find-relief-dosing .grid-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 0;
+  padding: 24px 32px 24px 0;
+  background: var(--linz-off-white, #f4f6fb);
+  border: 1px solid var(--color-border-purple, #e0dce8);
+  border-radius: 12px;
+  overflow: visible;
+  text-align: left;
+  text-decoration: none;
+}
+
+/* The cta-card decorator always emits a line-4 span plus a trailing empty
+   <div>; dosing items only use icon/title/body, so neutralize the extras
+   to stop them creating stray implicit grid tracks (the "1 / span 8" bug). */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-4:empty,
+.cards-grid.find-relief-dosing .grid-card > div:empty {
+  display: none;
+}
+
+/* Raw icon (line-1) — transparent, 80x80, pulled -40px so it overlaps the
+   card's left edge (no circular bubble, per PR #104). */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 {
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 80px;
+  min-width: 80px;
+  height: 80px;
+  margin-left: -40px;
+  background-color: transparent;
+}
+
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  max-width: none;
+  margin: 0;
+  object-fit: contain;
+}
+
+/* Title (line-2) — purple bold. Explicitly placed in col 2 / row 1 so the
+   decorator's extra spans cannot push it into an implicit column. */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2 {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  padding-left: 24px;
+  margin-bottom: 8px;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-card-title, 24px);
+  font-weight: 700;
+  line-height: normal;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+/* Body (line-3) — 16px grey; the cards-grid decorator unwraps the first
+   paragraph to a bare text node, so following <p> use top margins for rhythm. */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  padding-left: 24px;
+  padding-right: 40px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--linz-grey, #4d4d4f);
+}
+
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p {
+  margin: 8px 0 0;
+}
+
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p.footnote,
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 em {
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* "Take LINZESS" panel heading — centered purple bold (live: heading-2
+   c-linz-dark-purple), the first paragraph inside each dosing tab panel. */
+main > .tabs-panel > .section.cards-grid-container > .default-content-wrapper p:has(strong),
+main > .section.find-relief-dosing-panel.cards-grid-container > .default-content-wrapper p:has(strong) {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title, 24px);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  text-align: center;
+}
+
+/* Mobile (< 744px): stack icon above text, 56px icon, no overlap (per PR #104). */
+@media (width < 744px) {
+  .cards-grid.find-relief-dosing {
+    max-width: 100%;
+    padding: 0 16px;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card {
+    grid-template-columns: 1fr;
+    padding: 24px 16px;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 {
+    grid-row: auto;
+    width: 56px;
+    min-width: 56px;
+    height: 56px;
+    margin-left: 0;
+    margin-bottom: 12px;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2,
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 {
+    font-size: 14px;
+  }
+}
+
+/* ---- Instructions box: heading + tab bar in a white card with rounded TOP
+   corners; the active dosing panel below attaches seamlessly (squared join).
+   Sits on the find-relief off-white band so it reads as one container. ---- */
+main > .section.find-relief-instructions {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-40) var(--spacing-20) 0;
+  background-color: var(--color-background-light, #f4f6fb);
+}
+
+main > .section.find-relief-instructions .default-content-wrapper {
+  width: 100%;
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: var(--spacing-40) var(--spacing-40) var(--spacing-24);
+  background-color: var(--color-background-primary, #fff);
+  border-radius: var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px) 0 0;
+  text-align: center;
+}
+
+/* Instructions heading (Bebas-style purple, divider above, centered). */
+main > .section.find-relief-instructions .default-content-wrapper h3 {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: none;
+}
+
+main > .section.find-relief-instructions .default-content-wrapper h3::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: 0 auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+/* The tabs block lives inside the instructions white card. */
+main > .section.find-relief-instructions .tabs-wrapper {
+  width: 100%;
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-40) var(--spacing-24);
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* ---- Dosing tab panels attach UNDER the instructions box: white card,
+   squared top corners (joins the instructions box), rounded bottom, no top gap.
+   Must align edge-to-edge with the instructions box above (same 99.8rem width,
+   same 20px band padding) so the two read as a single white container. ---- */
+main > .tabs-panel {
+  background-color: var(--color-background-light, #f4f6fb);
+  padding: 0 var(--spacing-20) var(--spacing-40);
+}
+
+main > .tabs-panel > .section.cards-grid-container {
+  box-sizing: border-box;
+  max-width: 99.8rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-40);
+  background-color: var(--color-background-primary, #fff);
+  border-radius: 0 0 var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px);
+}
+
+/* Dosing block fills the panel card's content width (no extra inset);
+   left padding is reserved on the cards-grid itself for the overlapping icon. */
+main > .tabs-panel > .section.cards-grid-container > .default-content-wrapper,
+main > .tabs-panel > .section.cards-grid-container > .cards-grid-wrapper {
+  width: 100%;
+  max-width: none;
+  margin: 0;
 }

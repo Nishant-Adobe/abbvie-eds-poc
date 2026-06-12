@@ -13,8 +13,15 @@ function normalize(value) {
  */
 function getSectionIdentifier(section) {
   if (section.id) return section.id;
-  if (section.dataset.aueLabel) return section.dataset.aueLabel;
+  // decorateSections() promotes section-metadata rows to dataset keys and removes
+  // the .section-metadata div, so read the tab name from the dataset first.
+  // Two delivery paths produce different casings of the same value:
+  //   - doc authoring: toCamelCase('tabName') -> dataset.tabname (all lowercase)
+  //   - markup/xwalk:  JCR `tabName` -> data-tab-name -> dataset.tabName
   if (section.dataset.tabName) return section.dataset.tabName;
+  if (section.dataset.tabname) return section.dataset.tabname;
+  if (section.dataset.name) return section.dataset.name;
+  if (section.dataset.aueLabel) return section.dataset.aueLabel;
 
   const meta = section.querySelector('.section-metadata');
   if (meta) {
@@ -102,7 +109,12 @@ export default async function decorate(block) {
       wrapper.setAttribute('aria-labelledby', button.id);
       wrapper.setAttribute('aria-hidden', !shouldActivate);
 
-      blockSection.appendChild(wrapper);
+      const insertBefore = matched[0];
+      // Insert relative to the matched panel's real parent. Guard against the
+      // anchor having been detached (avoids "node is not a child" NotFoundError).
+      const anchorParent = insertBefore.parentElement;
+      if (anchorParent) anchorParent.insertBefore(wrapper, insertBefore);
+      else main.append(wrapper);
       matched.forEach((section) => {
         section.dataset.tabsGrid = 'true';
         if (shouldActivate) section.style.display = '';
@@ -114,7 +126,7 @@ export default async function decorate(block) {
 
     button.addEventListener('click', () => {
       // Hide all panels
-      blockSection.querySelectorAll(`.tabs-panel[id^="tab-panel-${tabBlockCnt}"]`).forEach((p) => {
+      main.querySelectorAll(`.tabs-panel[id^="tab-panel-${tabBlockCnt}"]`).forEach((p) => {
         p.setAttribute('aria-hidden', true);
       });
       tablist.querySelectorAll('button').forEach((btn) => {
