@@ -343,31 +343,6 @@
   padding: 0 !important;
 }
 
-/* Tablet: inset the image banner with extra horizontal padding and give it a
-   little more height than the base. Overrides the padding:0 !important above. */
-@media (min-width: 601px) and (max-width: 984px) {
-  .hero.half-split-cta > div:first-child {
-    padding-left: 40px !important;
-    padding-right: 40px !important;
-    min-height: 420px;
-  }
-
-  /* Vertically center the text overlay (h3 + CTA) within the taller banner and
-     shift it right so it sits inside the padded image instead of spilling onto
-     the grey gutter (the absolutely-positioned overlay ignores the banner's
-     40px padding, so the text needs ~60px left padding to clear the image edge). */
-  .hero.half-split-cta .hero-text-container {
-    display: flex !important;
-    align-items: center;
-  }
-
-  .hero.half-split-cta .hero-text-container .cmp-container-x-large {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 60px;
-  }
-}
-
 .hero.half-split-cta > div:not(:first-child):not(.hero-text-container) {
   display: none;
 }
@@ -502,6 +477,51 @@
   }
 }
 
+/* Tablet (900–984px ONLY) — placed AFTER the `@media (min-width: 900px)` block
+   so these rules win by source order. The desktop block above forces a tall
+   heading text-container (320px) and a wide-thin CTA banner (aspect-ratio
+   2274/542 + max-width 1180), but live at tablet shows: a SHORT heading region
+   that hugs its content (~191px), and the CTA banner displaying the mobile
+   image at its intrinsic 670×440 (object-fit:fill, container hugging the
+   image) — NOT cropped/stretched into an aspect-ratio box. Lower bound 900px
+   avoids colliding with the `@media (max-width: 899px)` mobile block below
+   (which pins img+container to 230px). Desktop (>=985px) is untouched. */
+@media (min-width: 900px) and (max-width: 984px) {
+  .hero.half-split-heading .hero-text-container {
+    min-height: auto;
+  }
+
+  .hero.half-split-cta {
+    max-width: none;
+    aspect-ratio: auto;
+  }
+
+  .hero.half-split-cta > div:first-child {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero.half-split-cta img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    object-fit: fill;
+  }
+
+  .hero.half-split-cta .hero-text-container {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .hero.half-split-cta .hero-text-container .cmp-container-x-large {
+    padding: 20px 32px 20px 60px;
+    margin-left: 0;
+  }
+}
+
 @media (max-width: 899px) {
 
   .section:has(.hero.half-split-heading)::before {
@@ -527,6 +547,9 @@
   .hero.half-split-heading .hero-text-container {
     position: static;
     display: block;
+    /* Reset base hero.css min-height:368px (applied >=744px) so the heading
+       band hugs its content on 744–899px tablets instead of a tall empty box. */
+    min-height: auto;
   }
 
   .hero.half-split-heading .cmp-container-x-large {
@@ -566,12 +589,23 @@
 
   .hero.half-split-cta > div:first-child {
     overflow: hidden;
-    height: 230px;
+    /* Hug the image (which keeps its 670:440 aspect ratio) — matches live,
+       which shows the mobile image at natural 670×440 on tablet and scales it
+       down proportionally on phones. Reset the base hero.css min-height:368px
+       (applied at >=744px) so the wrapper follows the image, no empty gap. */
+    height: auto;
+    min-height: 0;
+    display: flex;
+    justify-content: center;
   }
 
   .hero.half-split-cta img {
-    width: 100%;
-    height: 230px;
+    /* Natural size, capped to container width, aspect ratio preserved (NOT
+       stretched to a fixed 230px height). Live: 670×440 on tablet, ~350×230
+       on a 390px phone — proportional throughout. */
+    width: auto;
+    max-width: 100%;
+    height: auto;
     border-radius: 0;
     object-fit: fill;
   }
@@ -617,6 +651,24 @@
     font-family: 'Graphik Medium', 'Helvetica Neue', arial, helvetica, sans-serif;
     font-weight: 700;
     padding: 12px 40px 12px 24px;
+  }
+}
+
+/* Tablet (744–899px ONLY): the shared `@media (max-width: 899px)` block above
+   top-aligns the CTA text overlay (padding-top:45px) — correct for phones, but
+   on tablet the overlay should be VERTICALLY CENTERED over the banner image and
+   shifted slightly right (like the 900–984px block), matching live. Placed
+   AFTER the ≤899px block so it wins by source order; lower bound 744px keeps
+   true phones (≤743px) on the top-aligned treatment. */
+@media (min-width: 744px) and (max-width: 899px) {
+  .hero.half-split-cta .hero-text-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .hero.half-split-cta .cmp-container-x-large {
+    padding: 20px 32px 20px 60px;
+    margin-left: 0;
   }
 }
 
