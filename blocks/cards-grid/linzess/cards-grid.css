@@ -1857,4 +1857,102 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   WHY LINZESS — Explore CTA section (Check My Symptoms / Understanding
+   Constipation). Full-bleed dark-purple band with a top arc, white
+   headings, and orange Learn More buttons (matches live). Scoped to the
+   why-linzess-only .whylinzess-explore variant so the homepage is
+   untouched.
+   ═══════════════════════════════════════════════════════════════════ */
+
+body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore) {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 62px max(24px, calc(50vw - 50% + 24px)) 100px;
+  background-color: #422e83;
+  color: #fff;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+/* Top arc — a dark dome poking up into the section above. */
+
+body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -30%;
+  right: -30%;
+  height: 140px;
+  background: #422e83;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.cards-grid.whylinzess-explore .demo-wrap {
+  max-width: 998px;
+  margin: 0 auto;
+}
+
+/* Two columns separated by a thin vertical divider, centered text. */
+
+.cards-grid.whylinzess-explore .flexbox-cards,
+.cards-grid.whylinzess-explore .abbv-flex-container-v2 {
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+}
+
+.cards-grid.whylinzess-explore .flexboxitem-v2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.cards-grid.whylinzess-explore .flexboxitem-v2:first-child {
+  border-right: 1px solid rgb(255 255 255 / 30%);
+}
+
+/* Headings white, ~24px. */
+
+.cards-grid.whylinzess-explore .heading-2,
+.cards-grid.whylinzess-explore p:not(.cta) {
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* Learn More buttons: orange bg, dark-purple text (matches live). */
+
+.cards-grid.whylinzess-explore .cta a,
+.cards-grid.whylinzess-explore a.abbv-button-primary,
+.cards-grid.whylinzess-explore a.abbv-button-secondary {
+  background-color: #faa633;
+  color: #422e83;
+  border-radius: var(--linz-rounded-corner);
+  font-weight: 800;
+}
+
+@media (width < 768px) {
+  .cards-grid.whylinzess-explore .flexbox-cards,
+  .cards-grid.whylinzess-explore .abbv-flex-container-v2 {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .cards-grid.whylinzess-explore .flexboxitem-v2:first-child {
+    border-right: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 30%);
+    padding-bottom: 40px;
+  }
+}
+
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
