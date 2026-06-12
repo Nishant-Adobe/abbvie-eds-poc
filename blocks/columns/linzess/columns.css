@@ -1839,73 +1839,90 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
 
 /* ═══════════════════════════════════════════════════════════════════
    COMPARISON TABLE: "IBS-C & CIC Symptoms & Causes Comparison"
-   Variant: understanding-comparison (2 columns, icon list rows)
+   Variant: understanding-comparison
+   Banded layout: header row (IBS-C | CIC), full-width "Symptoms" band,
+   2-col symptoms, full-width "Causes" band, 2-col causes. No icons.
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.understanding-comparison {
   display: block;
   max-width: 1000px;
   margin: 40px auto 0;
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+  background-color: var(--linz-white);
 }
-
-/* Single row holds two cards (IBS-C | CIC). */
 
 .columns.understanding-comparison > .columns-item {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 0;
   padding: 0;
   background: none;
 }
 
 .columns.understanding-comparison > .columns-item > div {
-  padding: 32px 28px;
-  height: 100%;
-  border-radius: var(--linz-rounded-corner);
+  padding: 20px 28px;
 }
 
-/* Card 1 = IBS-C (light purple), Card 2 = CIC (dark purple) */
+/* Header row (IBS-C | CIC) */
 
-.columns.understanding-comparison > .columns-item > div:first-child {
+.columns.understanding-comparison > .columns-item:first-of-type > div {
+  text-align: center;
+  color: var(--linz-white);
+  background-color: var(--linz-dark-purple);
+}
+
+.columns.understanding-comparison > .columns-item:first-of-type > div:last-child {
+  background-color: var(--linz-purple);
+}
+
+.columns.understanding-comparison > .columns-item:first-of-type strong {
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  text-transform: uppercase;
+}
+
+/* Full-width band rows ("Symptoms", "Causes") — only one cell. */
+
+.columns.understanding-comparison > .columns-item:not(:has(> div:nth-child(2))) {
+  grid-template-columns: 1fr;
+}
+
+.columns.understanding-comparison > .columns-item:not(:has(> div:nth-child(2))) > div {
+  text-align: center;
   background-color: var(--linz-light-purple);
+  color: var(--linz-dark-purple);
+  padding: 12px 28px;
+}
+
+.columns.understanding-comparison > .columns-item:not(:has(> div:nth-child(2))) strong {
+  font-family: var(--heading-font-family);
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+/* Two-column content rows: divider between the IBS-C and CIC columns. */
+
+.columns.understanding-comparison > .columns-item:has(> div:nth-child(2)):not(:first-of-type) > div:first-child {
+  border-right: 1px solid var(--linz-light-purple);
+}
+
+.columns.understanding-comparison strong {
   color: var(--linz-dark-purple);
 }
 
-.columns.understanding-comparison > .columns-item > div:last-child {
-  background-color: var(--linz-dark-purple);
-  color: var(--linz-white);
-}
-
-.columns.understanding-comparison > .columns-item > div:last-child a {
-  color: var(--linz-white);
-}
-
-/* Heading rows: IBS-C / CIC label, then section sub-heads. */
-
-.columns.understanding-comparison .columns-item > div > p:first-child strong {
-  display: block;
-  font-size: 28px;
-  margin-bottom: 8px;
-}
-
 .columns.understanding-comparison ul {
-  list-style: none;
   margin: 8px 0 20px;
-  padding: 0;
+  padding-left: 20px;
 }
 
 .columns.understanding-comparison li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   line-height: 1.4;
 }
 
-.columns.understanding-comparison li picture,
-.columns.understanding-comparison li img {
-  flex: 0 0 auto;
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+.columns.understanding-comparison p {
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
