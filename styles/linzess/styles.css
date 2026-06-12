@@ -1017,13 +1017,13 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::
   content: none;
 }
 
-/* Hero band is fluid (>=744px, desktop image 2048x874): the block default is
+/* Hero band is fluid (>=1024px, desktop image 2048x874): the block default is
    a fixed 684px tall band, which over-zooms object-fit:cover as the viewport
-   narrows (laptop/tablet), enlarging the photo. Drive the band height by the
-   desktop image ratio so it shrinks with width and the full scene shows.
-   At 1440 this resolves to ~615px = the already-correct desktop view, so the
-   verified 1440 layout is unchanged. */
-@media (width >= 744px) {
+   narrows, enlarging the photo. Drive the band height by the desktop image
+   ratio so it shrinks with width and the full scene shows. At 1440 this
+   resolves to ~615px = the already-correct desktop view, so the verified 1440
+   layout is unchanged. Live only swaps to this wide image at >=1024px. */
+@media (width >= 1024px) {
   main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
     min-height: 0;
     aspect-ratio: 2048 / 874;
@@ -1036,11 +1036,13 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::
   }
 }
 
-/* Mobile (<744px): live swaps to the near-square mobile image (375x369) and
-   sizes the band to its ratio so the full scene shows. The block default
-   (420px fixed + object-fit:cover) crops it. Match live's fluid fit. */
-@media (width < 744px) {
+/* Mobile + tablet (<1024px): live keeps the near-square mobile image (375x369)
+   through the whole tablet band and sizes the band to its ratio so the full
+   scene shows. The block default (420px fixed + object-fit:cover) crops it.
+   Match live's fluid fit. */
+@media (width < 1024px) {
   main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
     aspect-ratio: 375 / 369;
   }
 
