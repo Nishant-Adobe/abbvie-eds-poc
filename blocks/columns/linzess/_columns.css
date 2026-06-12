@@ -787,10 +787,17 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
    is a single rounded fill. */
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card {
   background: var(--color-brand-primary);
+  min-height: 120px;
 }
 
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
   background: var(--linz-light-purple);
+}
+
+/* 2nd side-effect card: bold body text + list items (matches live emphasis). */
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card .columns-item-content p,
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card .columns-item-content li {
+  font-weight: 700;
 }
 
 /* The 3rd (longest) card: dark bg + 24px vertical padding (vs 15px on the
