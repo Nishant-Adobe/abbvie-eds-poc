@@ -193,11 +193,13 @@ main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section
   width: 100%;
 }
 
-/* Space below the ISI job code before the footer arc. Live uses 80px padding
-   + 20px margin (~100px total); our larger 100/100 left too big a gap. */
-main > .section.isi {
+/* Space below the ISI job code before the footer arc. The white ISI must
+   reach (and slightly overlap) the footer so the purple arc curves into white
+   — matching the OTC page. A bottom margin would leave a purple sliver in the
+   arc zone, so spacing lives entirely in padding-bottom. */
+body.linzess main > .section.abbvie-container.isi {
   padding-bottom: var(--spacing-80);
-  margin-bottom: var(--spacing-20);
+  margin-bottom: 0;
 }
 
 .section.isi .default-content-wrapper,
