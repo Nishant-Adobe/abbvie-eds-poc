@@ -272,6 +272,19 @@ body main .section.carousel-video-playlist-container .carousel-video-playlist-wr
   margin: 0 0 8px;
 }
 
+/* Orange eyebrow divider above "HEAR THE CONSTIPATION CONVERSATION". The footnote
+   occupies p:first-child, so the heading is the p:has(strong) — the standard
+   eyebrow rule (p:first-child strong::before) misses it. Add it here. */
+body main .section.carousel-video-playlist-container .carousel-video-playlist-wrapper:has(.carousel-video-playlist.featured) + .default-content-wrapper > p:has(strong)::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
 /* Max visible cards — hide cards beyond the authored limit */
 .carousel-video-playlist.grid[data-max-visible="1"] .cvp-card:nth-child(n+2) { display: none; }
 .carousel-video-playlist.grid[data-max-visible="2"] .cvp-card:nth-child(n+3) { display: none; }
