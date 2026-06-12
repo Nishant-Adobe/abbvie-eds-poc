@@ -817,13 +817,18 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item-image img
   margin: 0 auto;
 }
 
-@media (width >= 744px) {
+/* Desktop (>=1024px): live caps all three icons uniformly at 20rem. */
+@media (width >= 1024px) {
   main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
     max-height: 20rem;
   }
 }
 
-@media (width < 744px) {
+/* Mobile + tablet (<1024px): live leaves the first icon (Fiber) uncapped so it
+   fills its column to the natural ratio (~251px at tablet), while the narrower
+   Stimulant & Stool icons stay capped at 23.4rem. Our build previously applied
+   the 20rem desktop cap from >=744px, shrinking all three on tablet. */
+@media (width < 1024px) {
   main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img,
   main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(3) .columns-item-image img {
     max-height: 23.4rem;
