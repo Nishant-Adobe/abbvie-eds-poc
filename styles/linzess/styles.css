@@ -4150,6 +4150,13 @@ body main .section:has(.carousel-video-playlist.featured).whylinzess-patients {
   padding-top: 24px;
 }
 
+/* Reduce the gap between the intro copy and the featured video player to
+   match live (~39px). The header wrapper's default 48px bottom margin was
+   pushing the player too far down. */
+body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper:first-child {
+  margin-bottom: 16px;
+}
+
 .section:has(.carousel-video-playlist.featured) > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
   font-size: 12px;
