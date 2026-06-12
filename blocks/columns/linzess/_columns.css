@@ -779,6 +779,28 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
   background: var(--linz-light-purple);
 }
 
+/* Standalone "Common Side Effects" section (NOT the how-it-works timeline):
+   live paints the whole card as ONE rounded box (1st & 3rd dark, 2nd light),
+   not the inner items. The brand styles.css colors the inner .columns-item,
+   which left a wrong-colored rounded frame around square inner boxes. Color
+   the wrapper per position and force the inner items transparent so the card
+   is a single rounded fill. */
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card {
+  background: var(--color-brand-primary);
+}
+
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+  background: var(--linz-light-purple);
+}
+
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+  background: var(--color-brand-primary);
+}
+
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item {
+  background: transparent !important;
+}
+
 /* Live parity: the last "How LINZESS Works" card (gut) gets 24px vertical
    padding on desktop vs 15px on the others (.how-linz-works last-child). */
 @media (width >= 986px) {
