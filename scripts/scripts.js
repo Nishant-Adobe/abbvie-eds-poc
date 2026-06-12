@@ -409,6 +409,33 @@ function decorateFragmentRotation(main) {
 }
 
 /**
+ * Re-creates the savings-card radio options. The authored markup wraps each
+ * option in <span class="form-radio">, but the Markdown round-trip strips the
+ * spans and merges the text into a single "Yes No" node, so CSS alone cannot
+ * draw a circle before each option. Split the text back into spans at runtime
+ * so the .form-radio circle styling has elements to attach to.
+ * @param {Element} main The main element
+ */
+function decorateSavingsRadioOptions(main) {
+  const question = main.querySelector(
+    '.section.white-arc > .default-content-wrapper > p:first-child:has(strong)',
+  );
+  const options = question?.nextElementSibling;
+  if (!options || options.tagName !== 'P' || options.querySelector('a, img')) return;
+
+  const labels = options.textContent.split(/\s+/).filter(Boolean);
+  if (!labels.length) return;
+
+  options.textContent = '';
+  labels.forEach((label) => {
+    const span = document.createElement('span');
+    span.className = 'form-radio';
+    span.textContent = label;
+    options.append(span);
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -423,6 +450,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   // Run after decorateBlocks (which assigns fragment-wrapper class) but before loadSection
   decorateFragmentRotation(main);
+  decorateSavingsRadioOptions(main);
   // add aria-label to links
   a11yLinks(main);
 }

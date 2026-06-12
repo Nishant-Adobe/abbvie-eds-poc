@@ -3586,8 +3586,12 @@ main > .section.white-arc .columns-wrapper {
   padding: 0 16px;
 }
 
-/* Form section CTA buttons — solid purple pills with chevron */
-main > .section.white-arc > .default-content-wrapper > .button-container {
+/* Form section CTA buttons — solid purple pills with chevron.
+   The authored "button secondary" classes are stripped by the Markdown
+   round-trip and, because two links share one <p>, EDS does NOT auto-generate
+   .button/.button-container. So target the <p> holding the activate link and
+   its child <a>s directly. */
+main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) {
   display: flex;
   flex-wrap: wrap;
   gap: 2.4rem;
@@ -3595,8 +3599,7 @@ main > .section.white-arc > .default-content-wrapper > .button-container {
   margin: 3.2rem 0 2.4rem;
 }
 
-main > .section.white-arc .button-container a.button,
-main > .section.white-arc .button-container a.button.secondary {
+main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) a {
   display: inline-flex;
   align-items: center;
   gap: 1.2rem;
@@ -3612,8 +3615,7 @@ main > .section.white-arc .button-container a.button.secondary {
   line-height: 1.2;
 }
 
-main > .section.white-arc .button-container a.button:hover,
-main > .section.white-arc .button-container a.button.secondary:hover {
+main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) a:hover {
   background: var(--linz-purple, #60579e);
 }
 
@@ -3625,7 +3627,7 @@ main > .section.white-arc .button-container a.button.secondary:hover {
 
 /* Tablet: stack the CTA buttons in a single column */
 @media (width >= 768px) {
-  main > .section.white-arc > .default-content-wrapper > .button-container {
+  main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) {
     gap: 0;
     flex-direction: column;
   }
@@ -3633,7 +3635,7 @@ main > .section.white-arc .button-container a.button.secondary:hover {
 
 /* Desktop: CTA buttons side-by-side, centered */
 @media (width >= 1024px) {
-  main > .section.white-arc > .default-content-wrapper > .button-container {
+  main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) {
     flex-direction: row;
     gap: 2.4rem;
     justify-content: center;
@@ -3646,8 +3648,7 @@ main > .section.white-arc .button-container a.button.secondary:hover {
   }
 
   /* Desktop: centered pill labels, fixed max width */
-  main > .section.white-arc .button-container a.button,
-  main > .section.white-arc .button-container a.button.secondary {
+  main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) a {
     max-width: 32rem;
     justify-content: center;
     padding-left: 3.2rem;
@@ -3783,38 +3784,54 @@ main > .section.white-arc .columns-item-content > p:first-child {
 }
 
 
+/* NOTE: the authored form copy carries custom classes (form-radio-question,
+   form-radio, form-checkbox, form-consent, form-expand-link, button secondary)
+   but the AEM Markdown round-trip STRIPS all of them — and deletes the empty
+   marker <span>s. So the rules below are re-anchored on structural / content
+   selectors that match the surviving DOM, the same technique used for the
+   reCAPTCHA logo below. Scope: main > .section.white-arc > .default-content-wrapper
+   p1=radio question, p2="Yes No", p3=marketing consent (PrivacyUseData link),
+   p4=privacy notice, p5=expand link, p6=consent-to-process, p7=reCAPTCHA notice
+   (google links), p8=badge img, p9=buttons (activate link), p10=disclaimer (em). */
+
 /* Form area copy is always left-aligned (radio question, consent, privacy, expand) */
-main > .section.white-arc .default-content-wrapper:has(.form-radio-question) > p {
+main > .section.white-arc > .default-content-wrapper > p {
   text-align: left;
 }
 
 /* Inline links in the consent/privacy copy are underlined */
-main > .section.white-arc .default-content-wrapper:has(.form-radio-question) > p:not(.button-container) a {
+main > .section.white-arc > .default-content-wrapper > p:not(:has(a[href$="/activate"])):not(:has(a[href="/linzess/savings-card"])) a {
   text-decoration: underline;
 }
 
-/* ---- Radio question + options ---- */
-main > .section.white-arc .form-radio-question {
+/* ---- Radio question (p1) ---- */
+main > .section.white-arc > .default-content-wrapper > p:first-child:has(strong) {
   font-size: 1.6rem;
   color: var(--text-color, #4d4d4f);
   margin: 2.4rem 0 1.2rem;
 }
 
-main > .section.white-arc .form-radio-options {
+/* ---- Radio options "Yes No" (p2) ----
+   decorateSavingsRadioOptions() in scripts.js re-wraps each option in a
+   .form-radio span at runtime so the circle marker below has an element to
+   attach to (the authored spans are stripped by the Markdown round-trip). */
+main > .section.white-arc > .default-content-wrapper > p:first-child:has(strong) + p {
   display: flex;
   gap: 4rem;
   align-items: center;
+  font-size: 1.6rem;
+  color: var(--text-color, #4d4d4f);
   margin: 0 0 2.4rem;
 }
 
-main > .section.white-arc .form-radio {
+main > .section.white-arc > .default-content-wrapper .form-radio {
   display: inline-flex;
   align-items: center;
   font-size: 1.6rem;
   color: var(--text-color, #4d4d4f);
 }
 
-main > .section.white-arc .form-radio::before {
+main > .section.white-arc > .default-content-wrapper .form-radio::before {
   content: '';
   display: inline-block;
   width: 2.4rem;
@@ -3826,8 +3843,8 @@ main > .section.white-arc .form-radio::before {
   box-sizing: border-box;
 }
 
-/* ---- Marketing consent (square checkbox + label) ---- */
-main > .section.white-arc .form-consent {
+/* ---- Marketing consent (p3): square checkbox box via ::before ---- */
+main > .section.white-arc > .default-content-wrapper > p:has(a[href*="PrivacyUseData"]) {
   position: relative;
   padding-left: 4rem;
   font-size: 1.6rem;
@@ -3837,7 +3854,8 @@ main > .section.white-arc .form-consent {
   margin: 8px 0;
 }
 
-main > .section.white-arc .form-checkbox {
+main > .section.white-arc > .default-content-wrapper > p:has(a[href*="PrivacyUseData"])::before {
+  content: '';
   position: absolute;
   left: 0;
   top: 0.2rem;
@@ -3850,9 +3868,10 @@ main > .section.white-arc .form-checkbox {
   box-sizing: border-box;
 }
 
-/* ---- Privacy / consent context paragraphs + expand link ---- */
-main > .section.white-arc .form-consent ~ p:not(.form-recaptcha):not(.form-recaptcha-badge):not(.button-container),
-main > .section.white-arc .form-expand-link {
+/* ---- Privacy / consent context paragraphs + expand link (p4, p5, p6) ----
+   All paragraphs after the marketing consent that are NOT the reCAPTCHA notice,
+   the badge image, the button container, or the disclaimer. */
+main > .section.white-arc > .default-content-wrapper > p:has(a[href*="PrivacyUseData"]) ~ p:not(:has(a[href*="policies.google.com"])):not(:has(img)):not(:has(a[href$="/activate"])):not(:has(em)) {
   color: #4d4d4f;
   font-family: 'Lato', sans-serif;
   font-size: 16px;
@@ -3863,38 +3882,39 @@ main > .section.white-arc .form-expand-link {
   margin: 8px 0;
 }
 
-/* Mobile: smaller consent text (matches live .cmp-adaptiveform-text) */
-main > .section.white-arc .form-expand-link {
+/* Expand link (p5) */
+main > .section.white-arc > .default-content-wrapper > p:nth-child(5) {
   padding-left: 30px;
 }
 
-main > .section.white-arc .form-consent + p {
+/* Privacy notice (p4): paragraph immediately after marketing consent */
+main > .section.white-arc > .default-content-wrapper > p:has(a[href*="PrivacyUseData"]) + p {
   padding-left: 30px;
 }
 
-main > .section.white-arc .form-expand-link + p {
+/* Consent-to-process (p6): paragraph immediately after the expand link */
+main > .section.white-arc > .default-content-wrapper > p:nth-child(5) + p {
   padding-left: 25px;
 }
 
 @media (width <= 768px) {
-  main > .section.white-arc .form-consent ~ p:not(.form-recaptcha):not(.form-recaptcha-badge):not(.button-container),
-  main > .section.white-arc .form-expand-link {
+  main > .section.white-arc > .default-content-wrapper > p:has(a[href*="PrivacyUseData"]) ~ p:not(:has(a[href*="policies.google.com"])):not(:has(img)):not(:has(a[href$="/activate"])):not(:has(em)) {
     font-size: 14px;
     line-height: 19.6px;
   }
 }
 
-/* ---- reCAPTCHA notice ---- */
-main > .section.white-arc .form-recaptcha {
+/* ---- reCAPTCHA notice (p7) ---- */
+main > .section.white-arc > .default-content-wrapper > p:has(a[href*="policies.google.com"]) {
   font-size: 1.6rem;
   color: var(--text-color, #4d4d4f);
   text-align: center;
   margin: 2.4rem 0 1.6rem;
 }
 
-/* ---- Disclaimer footnote ---- */
-main > .section.white-arc .form-disclaimer,
-main > .section.white-arc .form-disclaimer em {
+/* ---- Disclaimer footnote (p10) ---- */
+main > .section.white-arc > .default-content-wrapper > p:has(em):last-child,
+main > .section.white-arc > .default-content-wrapper > p:has(em):last-child em {
   color: #4d4d4f;
   font-family: 'Lato', sans-serif;
   font-size: 12px;
