@@ -371,6 +371,26 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   text-align: left;
 }
 
+/* Disclaimer link ("Program Terms…") — match the surrounding footnote text
+   (grey, same size) with an underline, like live. */
+.columns-homepage-savings-container > .default-content-wrapper:last-child a,
+.carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:last-child a,
+.section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper:last-child a {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+}
+
+/* why-linzess savings card: the section carries carousel-video-playlist-container
+   (it follows the patient-experiences carousel) — the homepage savings section
+   does NOT, so this is why-linzess-only. Live shows the "90 days for $30" badge
+   un-cropped within the off-white panel; the shared rule cover-crops it. Contain
+   it so the full graphic shows like live. */
+.section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img {
+  object-fit: contain;
+}
+
 /* Desktop: match live savings card typography & spacing. */
 @media (width >= 986px) {
   /* Heading 24px, body 16px (was 14px). */
