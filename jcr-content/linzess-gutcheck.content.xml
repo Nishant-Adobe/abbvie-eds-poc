@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0" jcr:primaryType="cq:Page">
+  <jcr:content cq:template="/libs/core/franklin/templates/page" sling:resourceType="core/franklin/components/page/v1/page" jcr:primaryType="cq:PageContent">
+    <root jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/root/v1/root">
+
+      <!-- SECTION 0: Hero -->
+      <section sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section" modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="gutcheck-hero">
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Hero" model="hero"
+          modelFields="[image,imageAlt,mobileImage,mobileImageAlt,eyebrow,indication,text,layers,video,imageCaption,classes_textAlign,classes_textColor,classes_customClass]"
+          image="/content/dam/abbvie-eds-poc/linzess/images/gutcheck-hero-desktop.jpg"
+          imageAlt=""
+          eyebrow="Check My Symptoms"
+          text="&lt;p&gt;&lt;h1&gt;Gut Check Quiz&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;Answer 5 quick questions to help guide a conversation with your healthcare provider. All Fields Required&lt;/p&gt;"
+          imageCaption="Actor Portrayal"
+          classes_customClass="no-padding text-left linzess-behind-nav-linzess-editorial-hero"
+          classes_textAlign="left"/>
+      </section>
+
+      <!-- SECTION 1: Gut Check Quiz -->
+      <section_1 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section" modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="gutcheck-quiz-arc">
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Gut Check Quiz"
+          model="gut-check-quiz"
+          modelFields="[q0,q1,q2,q3,q4,q5,q6,q7,q8,q9,q10,q11,q12,q13,q14,q15,q16,q17,q18,q19,q20,q21]"
+          filter="gut-check-quiz"
+          q0="&lt;p&gt;type:checkbox&lt;/p&gt;"
+          q1="&lt;picture&gt;&lt;img src=&quot;/content/dam/abbvie-eds-poc/linzess/images/discomfort-inactive-icon.svg&quot; alt=&quot;Symptoms icon&quot;&gt;&lt;/picture&gt;"
+          q2="&lt;p&gt;Let's talk about symptoms. Which of the following have you been experiencing?&lt;/p&gt;&lt;p&gt;Select all that apply and scroll to the next question when done&lt;/p&gt;"
+          q3="&lt;ul&gt;&lt;li&gt;Constipation&lt;/li&gt;&lt;li&gt;Fewer than 3 bowel movements a week&lt;/li&gt;&lt;li&gt;Incomplete bowel movements&lt;/li&gt;&lt;li&gt;Abdominal (belly) pain&lt;/li&gt;&lt;li&gt;Abdominal discomfort&lt;/li&gt;&lt;li&gt;Bloating&lt;/li&gt;&lt;/ul&gt;"
+          q4="&lt;p&gt;type:radio&lt;/p&gt;"
+          q5="&lt;picture&gt;&lt;img src=&quot;/content/dam/abbvie-eds-poc/linzess/images/what-is-cic-fewer-than-three.png&quot; alt=&quot;Duration icon&quot;&gt;&lt;/picture&gt;"
+          q6="&lt;p&gt;How long have you been experiencing these symptoms?&lt;/p&gt;"
+          q7="&lt;ul&gt;&lt;li&gt;Less than 3 months&lt;/li&gt;&lt;li&gt;3 to 6 months&lt;/li&gt;&lt;li&gt;6 months to 1 year&lt;/li&gt;&lt;li&gt;1 to 3 years&lt;/li&gt;&lt;li&gt;More than 3 years&lt;/li&gt;&lt;/ul&gt;"
+          q8="&lt;p&gt;type:checkbox&lt;/p&gt;"
+          q9="&lt;p&gt;What are your bowel movements usually like?&lt;/p&gt;&lt;p&gt;Select all that apply and scroll to the next question when done&lt;/p&gt;"
+          q10="&lt;ul&gt;&lt;li&gt;Small, hard lumps&lt;/li&gt;&lt;li&gt;Log-like, but lumpy&lt;/li&gt;&lt;li&gt;Log-like with surface cracks&lt;/li&gt;&lt;li&gt;Smooth &amp;amp; snake-like&lt;/li&gt;&lt;li&gt;Soft blobs with clear-cut edges&lt;/li&gt;&lt;li&gt;Fluffy with ragged edges&lt;/li&gt;&lt;li&gt;Watery, no solid pieces&lt;/li&gt;&lt;/ul&gt;"
+          q11="&lt;picture&gt;&lt;img src=&quot;/content/dam/abbvie-eds-poc/linzess/images/gut-check-step-three-scale.png&quot; alt=&quot;Bristol Stool Chart&quot;&gt;&lt;/picture&gt;"
+          q12="&lt;p&gt;type:radio&lt;/p&gt;"
+          q13="&lt;picture&gt;&lt;img src=&quot;/content/dam/abbvie-eds-poc/linzess/images/impact-inactive-icon.svg&quot; alt=&quot;Impact icon&quot;&gt;&lt;/picture&gt;"
+          q14="&lt;p&gt;How do your symptoms impact your everyday life?&lt;/p&gt;"
+          q15="&lt;ul&gt;&lt;li&gt;Minimally—I still do everything I want&lt;/li&gt;&lt;li&gt;Somewhat—they sometimes get in the way&lt;/li&gt;&lt;li&gt;Significantly—they regularly affect my daily activities&lt;/li&gt;&lt;li&gt;Severely—they have a major impact on my life&lt;/li&gt;&lt;/ul&gt;"
+          q16="&lt;p&gt;type:radio&lt;/p&gt;"
+          q17="&lt;picture&gt;&lt;img src=&quot;/content/dam/abbvie-eds-poc/linzess/images/relief-inactive-icon.svg&quot; alt=&quot;Relief icon&quot;&gt;&lt;/picture&gt;"
+          q18="&lt;p&gt;Have you tried anything for relief?&lt;/p&gt;"
+          q19="&lt;ul&gt;&lt;li&gt;Nothing yet&lt;/li&gt;&lt;li&gt;Over-the-counter remedies (fiber, laxatives, stool softeners)&lt;/li&gt;&lt;li&gt;Dietary changes (more fiber, probiotics)&lt;/li&gt;&lt;li&gt;Prescription medication&lt;/li&gt;&lt;li&gt;Multiple approaches&lt;/li&gt;&lt;/ul&gt;"
+          q20="&lt;h2&gt;Get your summary emailed&lt;/h2&gt;"
+          q21="&lt;p&gt;By providing your email address and submitting this form, you agree to receive your Gut Check results summary email from AbbVie Inc. You may unsubscribe from these communications at any time. Your information will be treated in accordance with our &lt;a href=&quot;https://privacy.abbvie/privacy-policies/us-english.html&quot;&gt;Privacy Notice&lt;/a&gt;.&lt;/p&gt;"/>
+      </section_1>
+
+      <!-- SECTION 2: ISI Text Container -->
+      <section_2 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section" modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="gutcheck-isi">
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Text Container" model="text-container"
+          modelFields="[classes_customDynamicClass,classes_textWidth,classes_textTopSpacing,classes_textBottomSpacing,classes_textAlignment,classes_textDirection,classes_theme,classes_textVariant,classes_columns,blockId,classes_commonCustomClass,language,analytics_id]"
+          filter="text-container"
+          classes_customDynamicClass="-"
+          blockId="id:linzess-gutcheck-isi"
+          classes_commonCustomClass="-"
+          language="lang:none"
+          analytics_id="-">
+          <item_0 jcr:primaryType="nt:unstructured" sling:resourceType="core/franklin/components/block/v1/block/item"
+            name="Text Container Text" model="text-container-text" modelFields="[text]"
+            text="&lt;p&gt;&lt;h3&gt;USES&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;LINZESS® (linaclotide) is a prescription medication used to treat irritable bowel syndrome with constipation (IBS-C) in adults and in children and adolescents 7 years of age and older, chronic idiopathic constipation (CIC) in adults, and functional constipation (FC) in children and adolescents 6 years of age and older. &quot;Idiopathic&quot; means the cause of the constipation is unknown. &lt;strong&gt;It is not known if LINZESS is safe and effective in children with functional constipation less than 6 years of age or in children with IBS-C less than 7 years of age.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;IMPORTANT RISK INFORMATION&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Do not give LINZESS to children who are less than 2 years of age. It may harm them.&lt;/strong&gt; LINZESS can cause severe diarrhea and your child could get severe dehydration (loss of a large amount of body water and salt).&lt;/li&gt;&lt;li&gt;Do not take LINZESS if a doctor has told you that you have a bowel blockage (intestinal obstruction).&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Before you take LINZESS, tell your doctor about your medical conditions, including if you are:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;Pregnant or plan to become pregnant. It is not known if LINZESS will harm your unborn baby.&lt;/li&gt;&lt;li&gt;Breastfeeding or plan to breastfeed. You and your doctor should decide if you will take LINZESS and breastfeed.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Tell your doctor about all the medicines you take,&lt;/strong&gt; including prescription and over-the-counter medicines, vitamins, and herbal supplements.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Side Effects&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;LINZESS can cause serious side effects, including diarrhea, which is the most common side effect and can sometimes be severe.&lt;/strong&gt; Diarrhea often begins within the first 2 weeks of LINZESS treatment. &lt;strong&gt;Stop taking LINZESS and call your doctor right away if you get severe diarrhea during treatment with LINZESS.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Other common side effects of LINZESS in people with IBS-C and CIC include gas, stomach-area (abdomen) pain, and swelling, or a feeling of fullness or pressure in your abdomen (distention).&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Call your doctor or go to the nearest hospital emergency room right away if you develop unusual or severe stomach-area (abdomen) pain, especially if you also have bright red, bloody stools or black stools that look like tar.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;These are not all the possible side effects of LINZESS. For more information, ask your doctor or pharmacist.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;You are encouraged to report negative side effects of prescription drugs to the FDA. Visit &lt;a href=&quot;https://www.fda.gov/medwatch&quot;&gt;www.fda.gov/medwatch&lt;/a&gt; or call &lt;a href=&quot;tel:18003321088&quot;&gt;1-800-FDA-1088&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;If you are having difficulty paying for your medicine, AbbVie and Ironwood may be able to help. Visit &lt;a href=&quot;https://www.abbvie.com/patients/patient-support.html&quot;&gt;AbbVie.com/PatientAccessSupport&lt;/a&gt; to learn more.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please see full &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf&quot;&gt;Prescribing Information&lt;/a&gt;, including Boxed Warning, and &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf#page=26&quot;&gt;Medication Guide&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;US-LIN-250121&lt;/p&gt;"/>
+        </block>
+      </section_2>
+
+      <!-- SECTION 3: Safety Bar -->
+      <section_3 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section" modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]"
+        classes_customClass="gutcheck-safety">
+        <block sling:resourceType="core/franklin/components/block/v1/block" jcr:primaryType="nt:unstructured"
+          name="Safety Bar" model="safety-bar"
+          modelFields="[collapsedContent,collapsedContentCol2,expandedContent,classes_variant,blockId,classes_commonCustomClass,language]"
+          collapsedContent="&lt;p&gt;&lt;h3&gt;USES&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;LINZESS® (linaclotide) is a prescription medication used to treat irritable bowel syndrome with constipation (IBS-C) in adults and in children and adolescents 7 years of age and older, chronic idiopathic constipation (CIC) in adults, and functional constipation (FC) in children and adolescents 6 years of age and older. &quot;Idiopathic&quot; means the cause of the constipation is unknown. &lt;strong&gt;It is not known if LINZESS is safe and effective in children with functional constipation less than 6 years of age or in children with IBS-C less than 7 years of age.&lt;/strong&gt;&lt;/p&gt;"
+          collapsedContentCol2="&lt;p&gt;&lt;h3&gt;IMPORTANT RISK INFORMATION&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Do not give LINZESS to children who are less than 2 years of age. It may harm them.&lt;/strong&gt; LINZESS can cause severe diarrhea and your child could get severe dehydration (loss of a large amount of body water and salt).&lt;/li&gt;&lt;li&gt;Do not take LINZESS if a doctor has told you that you have a bowel blockage (intestinal obstruction).&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Before you take LINZESS, tell your doctor about your medical conditions, including if you are:&lt;/strong&gt;&lt;/p&gt;"
+          expandedContent="&lt;p&gt;&lt;h3&gt;USES&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;LINZESS® (linaclotide) is a prescription medication used to treat irritable bowel syndrome with constipation (IBS-C) in adults and in children and adolescents 7 years of age and older, chronic idiopathic constipation (CIC) in adults, and functional constipation (FC) in children and adolescents 6 years of age and older. &quot;Idiopathic&quot; means the cause of the constipation is unknown. It is not known if LINZESS is safe and effective in children with functional constipation less than 6 years of age or in children with IBS-C less than 7 years of age.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;IMPORTANT RISK INFORMATION&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Do not give LINZESS to children who are less than 2 years of age. It may harm them.&lt;/strong&gt; LINZESS can cause severe diarrhea and your child could get severe dehydration (loss of a large amount of body water and salt).&lt;/li&gt;&lt;li&gt;Do not take LINZESS if a doctor has told you that you have a bowel blockage (intestinal obstruction).&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Before you take LINZESS, tell your doctor about your medical conditions, including if you are:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;Pregnant or plan to become pregnant. It is not known if LINZESS will harm your unborn baby.&lt;/li&gt;&lt;li&gt;Breastfeeding or plan to breastfeed. You and your doctor should decide if you will take LINZESS and breastfeed.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Tell your doctor about all the medicines you take,&lt;/strong&gt; including prescription and over-the-counter medicines, vitamins, and herbal supplements.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Side Effects&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;LINZESS can cause serious side effects, including diarrhea, which is the most common side effect and can sometimes be severe.&lt;/strong&gt; Diarrhea often begins within the first 2 weeks of LINZESS treatment. &lt;strong&gt;Stop taking LINZESS and call your doctor right away if you get severe diarrhea during treatment with LINZESS.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Other common side effects of LINZESS in people with IBS-C and CIC include gas, stomach-area (abdomen) pain, and swelling, or a feeling of fullness or pressure in your abdomen (distention).&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Call your doctor or go to the nearest hospital emergency room right away if you develop unusual or severe stomach-area (abdomen) pain, especially if you also have bright red, bloody stools or black stools that look like tar.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;These are not all the possible side effects of LINZESS. For more information, ask your doctor or pharmacist.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;You are encouraged to report negative side effects of prescription drugs to the FDA. Visit &lt;a href=&quot;https://www.fda.gov/medwatch&quot;&gt;www.fda.gov/medwatch&lt;/a&gt; or call &lt;a href=&quot;tel:18003321088&quot;&gt;1-800-FDA-1088&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;If you are having difficulty paying for your medicine, AbbVie and Ironwood may be able to help. Visit &lt;a href=&quot;https://www.abbvie.com/patients/patient-support.html&quot;&gt;AbbVie.com/PatientAccessSupport&lt;/a&gt; to learn more.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please see full &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf&quot;&gt;Prescribing Information&lt;/a&gt;, including Boxed Warning, and &lt;a href=&quot;https://www.rxabbvie.com/pdf/linzess_pi.pdf#page=26&quot;&gt;Medication Guide&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;US-LIN-250121&lt;/p&gt;"
+          classes_variant="split"
+          blockId="id:linzess-gutcheck-safety"
+          classes_commonCustomClass=""
+          language="lang:none"/>
+      </section_3>
+
+      <!-- SECTION 4: Metadata -->
+      <section_4 sling:resourceType="core/franklin/components/section/v1/section" jcr:primaryType="nt:unstructured"
+        model="section" modelFields="[name,background,backgroundAlt,sectionId,classes_desktopWidth,classes_contentWidth,classes_height,classes_borderRadius,classes_transparency,classes_alignment,classes_padding,classes_bg-color,classes_customClass,language]">
+        <text sling:resourceType="core/franklin/components/text/v1/text" jcr:primaryType="nt:unstructured"
+          text="&lt;p&gt;brand&lt;/p&gt;&lt;p&gt;linzess&lt;/p&gt;&lt;p&gt;nav&lt;/p&gt;&lt;p&gt;/linzess/nav&lt;/p&gt;&lt;p&gt;footer&lt;/p&gt;&lt;p&gt;/linzess/footer&lt;/p&gt;&lt;p&gt;title&lt;/p&gt;&lt;p&gt;Gut Check Quiz | Find Relief | LINZESS® (linaclotide)&lt;/p&gt;&lt;p&gt;description&lt;/p&gt;&lt;p&gt;Answer 5 quick questions to prepare for your doctor visit. Get your personalized discussion guide. See Important Risk Info and Boxed Warning.&lt;/p&gt;"/>
+      </section_4>
+
+    </root>
+  </jcr:content>
+</jcr:root>
