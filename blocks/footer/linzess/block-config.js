@@ -101,6 +101,31 @@ function groupBottomLogosAndTexts(bottom) {
   texts.append(copy, code);
 }
 
+/**
+ * Floating back-to-top button (live: circular up-arrow that appears after
+ * scrolling and smooth-scrolls to the top). Appended to <body> so it floats
+ * above page content; shown once the user scrolls past 300px.
+ */
+function createBackToTop() {
+  const btn = document.createElement('button');
+  btn.className = 'back-to-top';
+  btn.setAttribute('aria-label', 'back to top');
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        btn.classList.toggle('is-visible', window.scrollY > 300);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  document.body.appendChild(btn);
+}
+
 async function decorateLinzess(block) {
   const fragment = await loadFooterFragment();
   block.textContent = '';
@@ -123,6 +148,8 @@ async function decorateLinzess(block) {
       block.appendChild(bottom);
     }
   }
+
+  createBackToTop();
 }
 
 export default async function getBlockConfigs() {
