@@ -676,7 +676,9 @@ body.no-hero main > .section:first-of-type:not(.hero-container)::before {
    background-arc curved top edge (footer-arc recipe).
    Body backdrop for this hero article page is off-white.
    ============================================================ */
-body:has(.section.otc-intro-section) {
+body:has(.section.otc-intro-section),
+body.no-hero:has(.section.transcript),
+body.no-hero:has(.section.isi) {
   background-color: var(--color-background-primary, #fff);
 }
 
