@@ -1290,8 +1290,29 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
     width: 100%;
   }
 
+  /* Featured play button shrinks to 64px on mobile to match live. */
+  .carousel-video-playlist.featured .cvp-featured-player .cvp-play-btn {
+    width: 64px;
+    height: 64px;
+    background-size: 38px;
+  }
+
+  /* Live wraps thumbnails into a 2-column grid on mobile (no horizontal
+     scroller, no paging arrows). */
+  .carousel-video-playlist.featured .cvp-thumbnails {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 8px;
+  }
+
+  .carousel-video-playlist.featured .cvp-prev,
+  .carousel-video-playlist.featured .cvp-next {
+    display: none;
+  }
+
   .carousel-video-playlist.featured .cvp-thumb {
-    width: 140px;
+    width: calc(50% - 4px);
+    flex-shrink: 1;
   }
 }
 

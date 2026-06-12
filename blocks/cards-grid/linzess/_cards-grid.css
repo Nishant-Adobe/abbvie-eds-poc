@@ -1237,6 +1237,37 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::aft
     border-bottom: 1px solid rgb(148 142 190);
     padding-bottom: 40px;
   }
+
+  /* Card side padding 32→16px to match live's narrower gutters on mobile. */
+  .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card,
+  .cards-grid.cards-grid-stat-card.whylinzess-timeline .linz-stat-card {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Live keeps the small circle badges and shallow explore arc from mobile all
+   the way up to 1100px (the desktop breakpoint where the 136px circle and tall
+   arc kick in). Apply both below 1100px to match. */
+@media (width < 1100px) {
+  /* Symptom + timeline stat-card circle badges: 136→96px, font 24→17px. */
+  .cards-grid.cards-grid-stat-card .linz-stat-card-heading strong {
+    width: 96px;
+    height: 96px;
+    line-height: 96px;
+    font-size: 17px;
+    margin: -50px auto 24px;
+  }
+
+  /* Explore band: shallow 75px top arc (not 255px) and no bottom dome. */
+  body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::before {
+    height: 75px;
+    top: -45px;
+  }
+
+  body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::after {
+    display: none;
+  }
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
