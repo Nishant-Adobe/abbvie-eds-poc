@@ -3740,6 +3740,7 @@ body main .section:has(.cards-grid-stat-card.whylinzess-symptoms) .columns.whyli
 body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card p,
 body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card li {
   color: var(--color-brand-primary);
+  font-weight: var(--font-weight-bold);
 }
 
 /* ---- "How LINZESS Works" Section (dark purple with arc) ---- */
@@ -3827,6 +3828,17 @@ body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card 
   font-size: 16px;
   text-align: center;
   margin-top: 16px;
+}
+
+/* Footnote "*Abdominal symptoms…" (first <p> of the post-cards wrapper) — remove
+   its bottom margin so the *…/†… footnote lines sit tight, like live. */
+.section:has(.whylinzess-timeline) > .columns-wrapper + .default-content-wrapper > p:first-child {
+  margin-bottom: 0;
+}
+
+/* Add bottom spacing below the second mechanism card (gut card) in this section. */
+.section:has(.whylinzess-timeline) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+  margin-bottom: 20px;
 }
 
 .section:has(.whylinzess-timeline) ul {
