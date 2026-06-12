@@ -736,11 +736,18 @@ body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline
   color: var(--color-text-on-dark);
 }
 
-/* FDA reporting paragraph */
+/* FDA reporting paragraph — live is 690px wide, centered, regular weight. */
 .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:last-child > p:last-child {
   font-size: 16px;
+  font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
-  margin-top: 40px;
+  margin: 40px auto 0;
+  max-width: 690px;
+  text-align: center;
+}
+
+.section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:last-child > p:last-child strong {
+  font-weight: var(--font-weight-body);
 }
 
 /* "Hear from real patients" heading in How Works section.
