@@ -347,8 +347,13 @@
 }
 
 .carousel-video-playlist.featured .cvp-featured-player {
-  flex: 0 0 70%;
+  flex: 0 0 75%;
   position: relative;
+}
+
+/* Rounded corners on the featured player frame (matches live, r=16px). */
+.carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap {
+  border-radius: 16px;
 }
 
 /* Hide name banner on featured player — title shown below via footer */
@@ -500,7 +505,7 @@
 
 .carousel-video-playlist.featured .cvp-thumb {
   flex-shrink: 0;
-  width: 180px;
+  width: 221px;
   cursor: pointer;
   border-radius: 10px;
   overflow: hidden;
@@ -578,6 +583,14 @@
   padding: 8px 10px;
   line-height: 1.2;
   text-align: left;
+}
+
+/* The brand's whylinzess-timeline rule
+   (main:has(.whylinzess-timeline) p:not(.button-container):last-child)
+   adds margin-bottom:20px to the last <p>; the thumbnail title is a <p>, so
+   override it back to 0 for the thumbnail footer only. */
+main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-title:last-child {
+  margin-bottom: 0;
 }
 
 /* ── Mobile ──────────────────────────────────────────────────────────────────── */
