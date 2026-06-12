@@ -1276,23 +1276,23 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
     grid-template-columns: 1fr;
     justify-content: stretch;
   }
+}
 
-  /* CTA divider is a horizontal rule below the first (stacked) card, matching
-     live + the mobile treatment — not the desktop vertical rule. Live drops the
-     divider 80px below the first card's content (wrapper padding-bottom), then a
-     60px grid gap to the second card, giving a ~160px inter-card rhythm. */
+/* Stacked range (<1024px, mobile + tablet): live applies the same CTA spacing
+   across every stacked width — the divider drops 80px below the first card's
+   content, then a 60px grid gap to the second card (~160px inter-card rhythm),
+   an 18px title margin, and the Learn More pill carries no vertical margin with
+   24px left padding. Our base grid uses a 24px gap, 24px title margin, and a
+   12px margin + 32px left padding, which collapses the rhythm at mobile. */
+@media (width <= 1023px) {
+  main > .section.cta-cards-section .columns.cta-cards {
+    gap: var(--spacing-60);
+  }
+
   main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
     border-right: none;
     border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
     padding-bottom: var(--spacing-80);
-  }
-
-  /* Live's tablet CTA spacing: 60px between the two stacked cards (our base
-     grid gap is 24px), 18px title margin (not 24px), and the Learn More pill
-     carries no vertical margin with 24px left padding (our base adds 12px
-     margin + 32px left padding, inflating the button + card height). */
-  main > .section.cta-cards-section .columns.cta-cards {
-    gap: var(--spacing-60);
   }
 
   main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
@@ -1306,14 +1306,6 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
   main > .section.cta-cards-section .columns.cta-cards a {
     margin: 0;
     padding-left: var(--spacing-24);
-  }
-}
-
-/* Stacked range (<768px): the CTA-cards divider becomes a horizontal rule below
-   the first card (live: 1px muted purple, same as the desktop vertical rule). */
-@media (width < 768px) {
-  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
-    border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
   }
 }
 
