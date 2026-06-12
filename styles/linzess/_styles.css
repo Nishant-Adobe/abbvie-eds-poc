@@ -660,9 +660,26 @@ body main .section:has(.whylinzess-timeline).cards-grid-container.carousel-video
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)),
 main > .section.dark + .section.columns-container.whylinzess-sideeffects {
   background-color: var(--color-background-light);
-  padding: 80px 24px;
+  padding: 80px 24px 100px;
   text-align: center;
   max-width: none;
+  position: relative;
+}
+
+/* Bottom inward curve — a white dome rising into the off-white Side Effects
+   section, carving the transition down to the white Patient Experiences
+   section below (matches live). */
+body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline))::after,
+main > .section.dark + .section.columns-container.whylinzess-sideeffects::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: var(--background-color);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  z-index: 1;
 }
 
 .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper,
