@@ -3551,12 +3551,13 @@ main > .section.dark-purple .accordion p {
 
 /* ---- White Arc Section (curved top transition from purple) ---- */
 main > .section.white-arc {
-  background-color: #fff;
-  padding: 4rem 2rem;
+  background-color: var(--linz-white, #fff);
+  padding: 4rem 2rem 100px;
   max-width: none;
   margin: 0;
   width: 100%;
   position: relative;
+  z-index: 1;
   border-top-left-radius: 4rem;
   margin-top: -2rem;
 }
@@ -3565,6 +3566,13 @@ main > .section.white-arc .default-content-wrapper {
   max-width: 998px;
   margin: 0 auto;
   padding: 0 16px;
+}
+
+/* Mobile: extra bottom space below the form area (matches live forms-embed) */
+@media (width <= 768px) {
+  main > .section.white-arc .default-content-wrapper:has(.form-radio-question) {
+    padding-bottom: 80px;
+  }
 }
 
 main > .section.white-arc h2 {
@@ -3615,11 +3623,20 @@ main > .section.white-arc .button-container a.button.secondary:hover {
   }
 }
 
-/* Tablet + desktop: stack the CTA buttons in a single column */
+/* Tablet: stack the CTA buttons in a single column */
 @media (width >= 768px) {
   main > .section.white-arc > .default-content-wrapper > .button-container {
     gap: 0;
     flex-direction: column;
+  }
+}
+
+/* Desktop: CTA buttons side-by-side, centered */
+@media (width >= 1024px) {
+  main > .section.white-arc > .default-content-wrapper > .button-container {
+    flex-direction: row;
+    gap: 2.4rem;
+    justify-content: center;
   }
 }
 
@@ -3766,6 +3783,16 @@ main > .section.white-arc .columns-item-content > p:first-child {
 }
 
 
+/* Form area copy is always left-aligned (radio question, consent, privacy, expand) */
+main > .section.white-arc .default-content-wrapper:has(.form-radio-question) > p {
+  text-align: left;
+}
+
+/* Inline links in the consent/privacy copy are underlined */
+main > .section.white-arc .default-content-wrapper:has(.form-radio-question) > p:not(.button-container) a {
+  text-decoration: underline;
+}
+
 /* ---- Radio question + options ---- */
 main > .section.white-arc .form-radio-question {
   font-size: 1.6rem;
@@ -3837,6 +3864,18 @@ main > .section.white-arc .form-expand-link {
 }
 
 /* Mobile: smaller consent text (matches live .cmp-adaptiveform-text) */
+main > .section.white-arc .form-expand-link {
+  padding-left: 30px;
+}
+
+main > .section.white-arc .form-consent + p {
+  padding-left: 30px;
+}
+
+main > .section.white-arc .form-expand-link + p {
+  padding-left: 25px;
+}
+
 @media (width <= 768px) {
   main > .section.white-arc .form-consent ~ p:not(.form-recaptcha):not(.form-recaptcha-badge):not(.button-container),
   main > .section.white-arc .form-expand-link {
