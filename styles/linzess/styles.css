@@ -1283,6 +1283,27 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
     border-right: none;
     border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
   }
+
+  /* Live's tablet CTA spacing: 60px between the two stacked cards (our base
+     grid gap is 24px), 18px title margin (not 24px), and the Learn More pill
+     carries no vertical margin with 24px left padding (our base adds 12px
+     margin + 32px left padding, inflating the button + card height). */
+  main > .section.cta-cards-section .columns.cta-cards {
+    gap: var(--spacing-60);
+  }
+
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    margin: var(--spacing-18) 0;
+  }
+
+  main > .section.cta-cards-section .columns.cta-cards p:has(> a) {
+    margin: 0;
+  }
+
+  main > .section.cta-cards-section .columns.cta-cards a {
+    margin: 0;
+    padding-left: var(--spacing-24);
+  }
 }
 
 /* Stacked range (<768px): the CTA-cards divider becomes a horizontal rule below
