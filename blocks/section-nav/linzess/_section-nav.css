@@ -24,6 +24,10 @@
   margin: 0 auto;
   overflow: visible;
   width: var(--section-nav-mobile-width);
+
+  /* Mobile pill: dark-purple bar background (matches live). Desktop (>=744px)
+     re-asserts its own background below. */
+  background-color: var(--section-nav-bg);
 }
 
 /* ── Links (mobile base) ─────────────────────────────────────────────── */
@@ -69,7 +73,7 @@
   width: var(--section-nav-mobile-width);
   z-index: 5;
   top: 0;
-  background-color: transparent;
+  background-color: var(--section-nav-bg);
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
