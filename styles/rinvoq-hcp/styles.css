@@ -904,7 +904,7 @@ body {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-download-white.svg');
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTguMzc1MTEgMlYxMC4zNjQxTDQuODgxMTEgNi41MjA2NUw0IDcuNUw5IDEzTDE0IDcuNUwxMy4xMTg5IDYuNTMwNzhMOS42MjIxMiAxMC4zNjQxVjJIOC4zNzUxMVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0yIDE3SDE2VjE1SDJWMTdaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K');
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -1008,7 +1008,8 @@ body {
   background-position: 50% 50%;
 }
 
-.section.glacier .image-text .image-text-content-col h2 .logo-rinvoq-complete {
+.section.glacier .image-text .image-text-content-col h2::after {
+  content: '';
   display: inline-block;
   width: 294px;
   max-width: 100%;
@@ -1074,8 +1075,10 @@ body {
   }
 
   /* Badge caption sits centered under the badge (not full width), matching
-     live — constrain it to roughly the badge width. */
-  .section.glacier .image-text .image-text-content-col > .image-text-content > p.badge-caption:first-child {
+     live — constrain it to roughly the badge width. Targets the first
+     paragraph structurally because the `badge-caption` class is dropped by
+     md2jcr on the live round-trip (markdown can't carry a <p> class). */
+  .section.glacier .image-text .image-text-content-col > .image-text-content > p:first-child {
     position: static;
     width: 100%;
     max-width: 300px;
@@ -1097,13 +1100,11 @@ body {
     margin: 0 0 47px -18px;
   }
 
-  .section.glacier .image-text .image-text-content-col h2 .logo-rinvoq-complete {
-    display: inline-block;
+  .section.glacier .image-text .image-text-content-col h2::after {
     width: 195px;
     height: 19px;
     margin-left: 6px;
     margin-top: 0;
-    vertical-align: middle;
   }
 
   .section.glacier .image-text .image-text-content-col h3 {
@@ -1173,7 +1174,11 @@ body {
   margin: 0 auto 16px;
 }
 
-.section.brushstroke-glacier-white a {
+/* Qualify with a.button so these beat the base `a.button:any-link` rule on
+   live EDS — without `.button` the specificity ties and base wins by source
+   order. Matches both the decorated (`a.button`) and plain `a` cases. */
+.section.brushstroke-glacier-white a,
+.section.brushstroke-glacier-white a.button {
   display: inline-flex;
   align-items: center;
   background-color: rgb(144, 18, 74);
@@ -1187,7 +1192,8 @@ body {
   position: relative;
 }
 
-.section.brushstroke-glacier-white a::after {
+.section.brushstroke-glacier-white a::after,
+.section.brushstroke-glacier-white a.button::after {
   content: '';
   position: absolute;
   right: 22px;
@@ -1195,7 +1201,7 @@ body {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url('/content/dam/rinvoqhcpivy/images/icons/icon-circle-arrow-right-white.svg');
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTlweCIgaGVpZ2h0PSIxOXB4IiB2aWV3Qm94PSIwIDAgMTkgMTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+aWNvbi1jaGV2cm9uX2NpcmNsZS13aGl0ZTwvdGl0bGU+CiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iaWNvbi1jaGV2cm9uX2NpcmNsZS13aGl0ZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC41LCAwLjUpIiBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iPgogICAgICAgICAgICA8cGF0aCBkPSJNMCw5IEMwLDEzLjk3MDU2MjcgNC4wMjk0MzcyNiwxOCA5LDE4IEMxMy45NzA1NjI3LDE4IDE4LDEzLjk3MDU2MjcgMTgsOSBDMTgsNC4wMjk0MzcyNiAxMy45NzA1NjI3LDAgOSwwIEM0LjAyOTQzNzI2LDAgMCw0LjAyOTQzNzI2IDAsOSBaIE0xMy4xOTc4NTcyLDkgTDcuNTQwNzE0MzIsMTQuNjU3MTQyOCBMNi4wNzM3MTQyOCwxMy4yMDA0Mjg1IEwxMC4yNzQxNDI4LDkgTDYuMDczNzE0MjgsNC43OTk1NzE0MyBMNy41MzU1NzE0OCwzLjM0Mjg1NzE1IEwxMy4xOTc4NTcyLDkgWiIgaWQ9Imljb25zL2NoZXZyb24iPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==');
   background-size: contain;
   background-repeat: no-repeat;
 }
