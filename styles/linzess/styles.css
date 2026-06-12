@@ -13,7 +13,7 @@ body {
 }
 
 /* ── Mobile viewport fixes: ensure content doesn't clip ── */
-@media (max-width: 743px) {
+@media (width <= 743px) {
   main > .section.abbvie-container {
     padding-left: 16px;
     padding-right: 16px;
@@ -30,7 +30,6 @@ body {
 
   main > .section.abbvie-container .default-content-wrapper {
     overflow-wrap: break-word;
-    word-break: break-word;
   }
 }
 
@@ -273,7 +272,7 @@ main > .section.find-relief-dark-purple a.button:hover {
   background-color: var(--color-brand-accent-hover);
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   main > .section.find-relief-dark-purple .columns > .columns-item:last-child {
     flex-direction: column;
     gap: 40px;
@@ -287,7 +286,7 @@ main > .section.find-relief-dark-purple a.button:hover {
 }
 
 /* ── Fallback: dark purple CTA when section-metadata isn't applied ── */
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) {
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white, .find-relief-dark-purple, .find-relief-checklist) {
   position: relative;
   background-color: var(--color-brand-primary);
   padding: 80px 0 140px;
@@ -300,7 +299,7 @@ main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white
   display: block !important;
 }
 
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist)::before {
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white, .find-relief-dark-purple, .find-relief-checklist)::before {
   content: '';
   position: absolute;
   top: -60px;
@@ -314,12 +313,12 @@ main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white
   pointer-events: none;
 }
 
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2,
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) p {
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white, .find-relief-dark-purple, .find-relief-checklist) h2,
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white, .find-relief-dark-purple, .find-relief-checklist) p {
   color: var(--color-text-on-dark);
 }
 
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) h2 {
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white, .find-relief-dark-purple, .find-relief-checklist) h2 {
   font-family: var(--body-font-family, 'Lato', sans-serif) !important;
   font-size: var(--font-size-card-title) !important;
   font-weight: 700 !important;
@@ -328,13 +327,13 @@ main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white
   white-space: nowrap;
 }
 
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) .columns-wrapper {
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white, .find-relief-dark-purple, .find-relief-checklist) .columns-wrapper {
   max-width: 998px;
   margin: 0 auto;
   padding: 0 16px;
 }
 
-main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white):not(.find-relief-dark-purple):not(.find-relief-checklist) a.button:any-link {
+main > .section.columns-container:nth-last-of-type(2):not(.find-relief-off-white, .find-relief-dark-purple, .find-relief-checklist) a.button:any-link {
   display: inline-block;
   background-color: var(--color-brand-accent);
   color: var(--color-brand-primary);
@@ -400,14 +399,29 @@ main > .section.find-relief-off-white::before {
   border-radius: 16px 0 0 16px;
   overflow: hidden;
   padding: 0;
+  position: relative;
 }
 
 .section.find-relief-checklist > .columns-wrapper .columns-item-image img {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
   border-radius: 0;
   object-fit: cover;
+}
+
+.section.find-relief-checklist > .columns-wrapper .columns-item-image p:has(> em) {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  margin: 0;
+  color: var(--color-text-on-dark);
+  font-size: var(--font-size-caption, 12px);
+  text-align: right;
+}
+
+.section.find-relief-checklist > .columns-wrapper .columns-item-image p:has(> em) em {
+  font-style: normal;
 }
 
 .section.find-relief-checklist > .columns-wrapper .columns-item-content {
@@ -416,6 +430,8 @@ main > .section.find-relief-off-white::before {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .section.find-relief-checklist > .columns-wrapper .columns-item-content h2 {
@@ -434,7 +450,7 @@ main > .section.find-relief-off-white::before {
   font-size: var(--font-size-legal);
   line-height: 1.5;
   color: var(--text-color);
-  text-align: left;
+  text-align: center;
   margin: 12px 0 0;
 }
 
@@ -527,6 +543,7 @@ main > .section.find-relief-off-white::before {
 }
 
 /* ── find-relief-checklist: Centered eyebrow + heading ── */
+
 /* Eyebrow's ::after already supplies the divider, so suppress the heading's ::before */
 .section.find-relief-checklist.columns-container > .default-content-wrapper:first-child > h2::before {
   display: none;
@@ -725,7 +742,7 @@ main > .section > .default-content-wrapper > h2#why-finding-the-right-doctor-is-
   margin: 40px auto 0 !important;
   padding: 60px 24px 24px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(66, 46, 131, 0.06);
+  box-shadow: 0 2px 8px rgb(66 46 131 / 6%);
 }
 
 .section.find-relief-off-white.tabs-container > .default-content-wrapper:first-child h2 {
@@ -752,7 +769,7 @@ main > .section > .default-content-wrapper > h2#why-finding-the-right-doctor-is-
   max-width: 998px !important;
   margin: 0 auto !important;
   padding: 0 24px 24px !important;
-  box-shadow: 0 2px 8px rgba(66, 46, 131, 0.06);
+  box-shadow: 0 2px 8px rgb(66 46 131 / 6%);
 }
 
 /* White card BOTTOM — tab panels */
@@ -762,7 +779,7 @@ main > .section > .default-content-wrapper > h2#why-finding-the-right-doctor-is-
   max-width: 998px !important;
   margin: 0 auto !important;
   padding: 24px 40px 48px !important;
-  box-shadow: 0 4px 12px rgba(66, 46, 131, 0.08);
+  box-shadow: 0 4px 12px rgb(66 46 131 / 8%);
 }
 
 /* Fallback: standalone tabs-container heading styling */
@@ -1083,7 +1100,7 @@ main > .section.gutcheck-quiz-arc > * {
 }
 
 .text-container li {
-  font-family: 'BasicCommercialLT-Roman', sans-serif;
+  font-family: BasicCommercialLT-Roman, sans-serif;
   font-size: var(--font-size-legal);
   line-height: 16px;
   letter-spacing: -0.28px;
@@ -1101,7 +1118,7 @@ main > .section.gutcheck-quiz-arc > * {
 
 .text-container strong,
 .text-container b {
-  font-family: 'BasicCommercialLT-Black', sans-serif;
+  font-family: BasicCommercialLT-Black, sans-serif;
   font-weight: 900;
   color: var(--color-brand-primary);
 }
