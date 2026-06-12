@@ -826,12 +826,18 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item-image img
 
 /* Mobile + tablet (<1024px): live leaves the first icon (Fiber) uncapped so it
    fills its column to the natural ratio (~251px at tablet), while the narrower
-   Stimulant & Stool icons stay capped at 23.4rem. Our build previously applied
-   the 20rem desktop cap from >=744px, shrinking all three on tablet. */
+   Stimulant & Stool icons are height-driven to 23.4rem. The Stimulant icon is
+   wider than tall, so live lets it overflow the column width (max-width:none)
+   to reach the shared 234px height — this keeps the Stimulant & Stool labels on
+   a common row. Constraining it with max-width:100% shrinks its height and lifts
+   its label, leaving a gap above it. */
 @media (width < 1024px) {
   main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img,
   main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(3) .columns-item-image img {
-    max-height: 23.4rem;
+    height: 23.4rem;
+    width: auto;
+    max-width: none;
+    max-height: none;
   }
 }
 
