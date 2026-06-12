@@ -782,6 +782,12 @@ body main .section .columns.whylinzess-mechanism-card {
   overflow: visible;
 }
 
+/* How-it-works timeline cards: equalize heights so the shorter pill card (card 1)
+   matches the taller gut card, like live. */
+body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card {
+  min-height: 150px;
+}
+
 body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
   background: var(--linz-light-purple);
 }
