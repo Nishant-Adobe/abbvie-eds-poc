@@ -997,7 +997,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.columns-homepage-savings,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-off-white);
@@ -1012,18 +1012,18 @@
 }
 
 .columns.columns-homepage-savings > .columns-item,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item {
   padding: 0;
   grid-column: auto;
 }
 
 .columns.columns-homepage-savings > .columns-item:not(:has(img, strong, a)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:not(:has(img, strong, a)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-image) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-image) {
   flex: 0 0 55%;
   background: transparent;
   padding: 0;
@@ -1055,7 +1055,7 @@
 
 main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .columns.columns-homepage-savings > div > div:first-child img,
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-image) img {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1064,7 +1064,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-content:not(:empty)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 32px 40px;
   display: flex;
@@ -1258,19 +1258,19 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 
 @media (width < 768px) {
   .columns.columns-homepage-savings,
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) {
     flex-wrap: wrap;
     max-width: 100%;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-image) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
     order: -1;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
     padding: 16px;
     text-align: center;
@@ -1844,6 +1844,7 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
    2-col symptoms, full-width "Causes" band, 2-col causes. No icons.
    ═══════════════════════════════════════════════════════════════════ */
 
+.columns-container .columns.understanding-comparison,
 .columns.understanding-comparison {
   display: block;
   max-width: 1000px;
@@ -1851,6 +1852,16 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
   border-radius: var(--linz-rounded-corner);
   overflow: hidden;
   background-color: var(--linz-white);
+}
+
+/* The card sits inside a dark section (white text inherited from
+   .section.dark and the :has() dark rules). Force dark text inside the
+   white card with a higher-specificity selector; the dark header row
+   re-applies white below. */
+
+main .section .columns.understanding-comparison,
+main .section .columns.understanding-comparison :is(p, li, strong, a) {
+  color: var(--linz-dark-purple);
 }
 
 .columns.understanding-comparison > .columns-item {
@@ -1863,17 +1874,22 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
 
 .columns.understanding-comparison > .columns-item > div {
   padding: 20px 28px;
+  grid-column: auto;
 }
 
 /* Row order (anchor row consumed by columns.js):
    1 = header (IBS-C | CIC), 2 = Symptoms band, 3 = symptoms content,
    4 = Causes band, 5 = causes content. */
 
-/* Header row (IBS-C | CIC) */
+/* Header row (IBS-C | CIC) — dark bg, white text. */
 
-.columns.understanding-comparison > .columns-item:nth-child(1) > div {
+main .section .columns.understanding-comparison > .columns-item:nth-child(1) > div,
+main .section .columns.understanding-comparison > .columns-item:nth-child(1) strong {
   text-align: center;
   color: var(--linz-white);
+}
+
+.columns.understanding-comparison > .columns-item:nth-child(1) > div {
   background-color: var(--linz-dark-purple);
 }
 
