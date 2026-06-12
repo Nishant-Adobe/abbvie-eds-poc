@@ -793,8 +793,11 @@ body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline
   background: var(--linz-light-purple);
 }
 
+/* The 3rd (longest) card: dark bg + 24px vertical padding (vs 15px on the
+   others) so it reads ~197px tall like live. */
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
   background: var(--color-brand-primary);
+  padding: 24px 5px;
 }
 
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item {
