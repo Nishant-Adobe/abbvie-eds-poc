@@ -9,16 +9,9 @@
 .hero h1 {
   color: var(--color-text-heading);
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-h1-mobile) !important;
-  line-height: var(--line-height-h1-mobile) !important;
+  font-size: var(--font-size-h1-hero);
+  line-height: var(--line-height-h1-hero);
   text-transform: uppercase;
-}
-
-@media (width >= 744px) {
-  .hero h1 {
-    font-size: var(--font-size-h2-hero) !important;
-    line-height: var(--line-height-h2-hero) !important;
-  }
 }
 
 .hero h2,
@@ -128,15 +121,13 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   display: none;
 }
 
-.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > div:first-child {
-  position: absolute;
+.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child {
+  position: relative;
   inset: 0;
   min-height: 100%;
   margin: 0;
   padding: 0;
   z-index: 0;
-  overflow: hidden;
-  height: auto;
 }
 
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child picture,
@@ -202,7 +193,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   display: block;
   margin-top: var(--spacing-24);
   content: '';
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+  background-image: url("/icons/divider.svg");
   width: var(--spacing-64);
   height: var(--hero-divider-height);
 }
@@ -258,7 +249,6 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
   min-height: var(--hero-cta-min-height);
-  aspect-ratio: 2.343 / 1;
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
@@ -270,17 +260,11 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
-  font-size: var(--font-size-h1-mobile);
-  line-height: var(--line-height-h1-mobile);
+  font-size: var(--font-size-40);
+  line-height: 0.9;
+  letter-spacing: 0;
   max-width: none;
   width: 100%;
-}
-
-@media (width >= 744px) {
-  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
-    font-size: var(--font-size-40);
-    line-height: 0.95;
-  }
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
@@ -373,35 +357,22 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   min-height: auto;
   padding: 0;
   margin-inline: auto;
-  margin-bottom: 24px;
-  font-size: 12px;
-  font-weight: 800;
+  margin-bottom: var(--spacing-40);
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-body);
   text-transform: uppercase;
-}
-
-.hero.linzess-behind-nav-linzess-editorial-hero h1 {
-  line-height: 36px;
-  margin: 0;
-}
-
-.hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
-  padding: 50px 20px 20px;
 }
 
 .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
   display: block;
   margin-top: var(--spacing-24);
   content: '';
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+  background-image: url("/icons/divider.svg");
   width: var(--spacing-64);
   height: var(--hero-divider-height);
 }
 
 @media (width < 744px) {
-  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-    aspect-ratio: 3 / 4;
-  }
-
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) picture img {
     min-height: var(--hero-mobile-min-height);
   }
@@ -528,9 +499,9 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     min-height: auto;
     padding: 0;
     margin-inline: auto;
-    margin-bottom: 24px;
-    font-size: 12px;
-    font-weight: 800;
+    margin-bottom: var(--spacing-40);
+    font-size: var(--font-size-legal-large);
+    font-weight: var(--font-weight-body);
     text-transform: uppercase;
   }
 
@@ -538,12 +509,68 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     display: block;
     margin-top: var(--spacing-24);
     content: '';
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+    background-image: url("/icons/divider.svg");
     width: var(--spacing-64);
     height: var(--hero-divider-height);
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
     display: block;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HOMEPAGE HERO FIX — match live linzess.com computed styles
+   Desktop H1: 56px / line-height 50.4px (live source getComputedStyle)
+   Desktop eyebrow: 16px / weight 400 / no uppercase (live source)
+   Mobile H1: 40px / 36px (live source)
+   Mobile eyebrow: 14px / weight 400 / no uppercase (live source)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Desktop (>= 1024px): H1 = 56px to match live; widen text container to ~960px */
+@media (width >= 1024px) {
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
+    font-size: 56px;
+    line-height: 50.4px;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* All viewports: eyebrow fix — sentence case, 16px, normal weight */
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-eyebrow {
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: none;
+}
+
+/* stylelint-disable no-descending-specificity */
+
+/* Override the generic p rule that forces 12px/800/uppercase on eyebrow divs */
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container, :first-child):has(> div > p) p {
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: none;
+}
+
+/* Hide divider after eyebrow on CTA hero (live homepage has no divider on eyebrow) */
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container, :first-child):has(> div > p) p::after {
+  display: none;
+}
+
+@media (width < 744px) {
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-eyebrow,
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) > div:not(.hero-text-container, :first-child):has(> div > p) p {
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: none;
   }
 }
