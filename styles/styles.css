@@ -3835,6 +3835,15 @@ main > .section.white-arc .form-expand-link {
   margin: 8px 0;
 }
 
+/* Mobile: smaller consent text (matches live .cmp-adaptiveform-text) */
+@media (width <= 768px) {
+  main > .section.white-arc .form-consent ~ p:not(.form-recaptcha):not(.form-recaptcha-badge):not(.button-container),
+  main > .section.white-arc .form-expand-link {
+    font-size: 14px;
+    line-height: 19.6px;
+  }
+}
+
 /* ---- reCAPTCHA notice ---- */
 main > .section.white-arc .form-recaptcha {
   font-size: 1.6rem;
