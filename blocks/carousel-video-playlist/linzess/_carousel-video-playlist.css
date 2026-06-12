@@ -263,6 +263,15 @@ body main .section.carousel-video-playlist-container .carousel-video-playlist-wr
   margin-top: 48px;
 }
 
+/* Footnote paragraph (‡Estimated IBS-C/CIC sufferers…) is the first <p> in that
+   wrapper — live renders it as 12px grey legal text, centered. The dark-section
+   body rule inflates it to 18px, so scope it back down here. */
+body main .section.carousel-video-playlist-container .carousel-video-playlist-wrapper:has(.carousel-video-playlist.featured) + .default-content-wrapper > p:first-child {
+  font-size: 12px;
+  line-height: normal;
+  margin: 0 0 8px;
+}
+
 /* Max visible cards — hide cards beyond the authored limit */
 .carousel-video-playlist.grid[data-max-visible="1"] .cvp-card:nth-child(n+2) { display: none; }
 .carousel-video-playlist.grid[data-max-visible="2"] .cvp-card:nth-child(n+3) { display: none; }
