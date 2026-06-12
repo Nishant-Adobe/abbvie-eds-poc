@@ -945,6 +945,15 @@ main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type 
   color: var(--color-text-on-dark);
 }
 
+/* Reference URLs in the Sources list are plain white citation text on live,
+   not the purple brand link color (which is invisible on the purple bg). */
+main > .section.what-is-linzess-section .footnote a,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type a {
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+}
+
 /* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
 main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
   margin-bottom: var(--spacing-24);
