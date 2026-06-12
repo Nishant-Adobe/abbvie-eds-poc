@@ -964,6 +964,18 @@ body main .section.carousel-video-playlist-container .carousel-video-playlist-wr
   height: 100%;
 }
 
+/* Video/poster cover the frame so the Brightcove black letterbox doesn't show
+   as a dark border around the player and thumbnails. */
+
+.carousel-video-playlist .cvp-player-wrap video,
+.carousel-video-playlist .cvp-player-wrap .vjs-tech,
+.carousel-video-playlist .cvp-player-wrap .vjs-poster,
+.carousel-video-playlist .cvp-thumb-wrap video,
+.carousel-video-playlist .cvp-thumb-wrap .vjs-tech,
+.carousel-video-playlist .cvp-thumb-wrap .vjs-poster {
+  object-fit: cover !important;
+}
+
 /* Quote panel */
 
 .carousel-video-playlist.featured .cvp-quote-panel {
