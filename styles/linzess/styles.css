@@ -1345,6 +1345,14 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section)::before {
   background-color: var(--color-brand-primary);
 }
 
+/* CTA-cards arc is taller than the shared 96px arc — live renders the curve at
+   255px desktop / 75px mobile (top -60px). Section-scoped so the sibling
+   otc-intro / what-is-linzess / more-like-this arcs stay unchanged. */
+main > .section.cta-cards-section::before {
+  top: -60px;
+  height: 255px;
+}
+
 /* Section heading (Bebas Neue, 40px / line-height 36px).
    The published page drops the authored `heading-1` class, so the heading is
    also matched structurally: the first <p> of the section's first
@@ -1860,6 +1868,11 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
   /* Mobile: live centers the "How LINZESS Can Help" CTA button (desktop left) */
   main > .section.what-is-linzess-section .columns.what-is-linzess p:has(> a) {
     text-align: center;
+  }
+
+  /* Mobile: CTA-cards arc is shallower (live 75px vs 255px desktop) */
+  main > .section.cta-cards-section::before {
+    height: 75px;
   }
 }
 
