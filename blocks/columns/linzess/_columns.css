@@ -384,11 +384,22 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 
 /* why-linzess savings card: the section carries carousel-video-playlist-container
    (it follows the patient-experiences carousel) — the homepage savings section
-   does NOT, so this is why-linzess-only. Live shows the "90 days for $30" badge
-   un-cropped within the off-white panel; the shared rule cover-crops it. Contain
-   it so the full graphic shows like live. */
+   does NOT, so this is why-linzess-only. Match live exactly: the card is 998px
+   wide with a fixed 440px image column that the badge fills (no whitespace), and
+   the card height tracks the 299px image rather than over-tall padding. */
+.section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings {
+  max-width: 998px;
+  min-height: 299px;
+}
+
+.section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+  flex: 0 0 440px;
+}
+
 .section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img {
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Desktop: match live savings card typography & spacing. */

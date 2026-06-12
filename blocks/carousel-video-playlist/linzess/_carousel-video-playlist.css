@@ -337,6 +337,8 @@
   background: var(--background-color);
   color: var(--text-color);
   padding: 48px 24px;
+  max-width: 1046px;
+  margin: 0 auto;
 }
 
 /* Featured row: video (70%) + quote panel (30%) */
@@ -351,9 +353,11 @@
   position: relative;
 }
 
-/* Rounded corners on the featured player frame (matches live, r=16px). */
+/* The player + quote panel form one rounded rectangle (live, r=16px): the
+   player rounds its LEFT corners, the quote panel rounds its RIGHT corners,
+   and they sit flush with no gap between them. */
 .carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap {
-  border-radius: 16px;
+  border-radius: 16px 0 0 16px;
 }
 
 /* Hide name banner on featured player — title shown below via footer */
@@ -382,8 +386,9 @@
 
 /* Quote panel */
 .carousel-video-playlist.featured .cvp-quote-panel {
-  flex: 0 0 30%;
+  flex: 0 0 25%;
   background: #d9d7f9;
+  border-radius: 0 16px 16px 0;
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
