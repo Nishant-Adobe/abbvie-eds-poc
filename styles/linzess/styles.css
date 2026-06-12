@@ -1832,17 +1832,20 @@ main > .section.cta-cards-section .columns.cta-cards a {
   text-decoration: none;
 }
 
-/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
-   edge and vertically centered (not an inline character after the label). */
+/* Live's chevron is an abbv-iconFont glyph, but the locally bundled icon font
+   maps that codepoint to a bent arrow instead of a clean right-chevron. Draw
+   the chevron in pure CSS (two rotated borders) so it matches live's thin `›`
+   regardless of which icon-font file is loaded. */
 main > .section.cta-cards-section .columns.cta-cards a::after {
-  content: '\e315';
+  content: '';
   position: absolute;
   top: 50%;
-  right: var(--spacing-10);
-  font-family: var(--icon-font-family);
-  font-size: 2.08rem;
-  line-height: 1;
-  transform: translateY(-50%);
+  right: var(--spacing-20, 20px);
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid var(--color-brand-primary);
+  border-right: 2px solid var(--color-brand-primary);
+  transform: translateY(-50%) rotate(45deg);
 }
 
 @media (width < 744px) {
