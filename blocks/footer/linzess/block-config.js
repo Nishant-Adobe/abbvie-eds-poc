@@ -102,9 +102,11 @@ function groupBottomLogosAndTexts(bottom) {
 }
 
 /**
- * Floating back-to-top button (live: circular up-arrow that appears after
- * scrolling and smooth-scrolls to the top). Appended to <body> so it floats
- * above page content; shown once the user scrolls past 300px.
+ * Floating back-to-top button (live: circular up-arrow that smooth-scrolls to
+ * the top). Appended to <body> so it floats above page content. It shows only
+ * once the floating safety bar has hidden itself (i.e. the ISI/footer has
+ * scrolled into view) so the two never overlap — matching live behaviour.
+ * Falls back to a 300px scroll threshold when no safety bar is present.
  */
 function createBackToTop() {
   const btn = document.createElement('button');
@@ -113,15 +115,22 @@ function createBackToTop() {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   let ticking = false;
+  const update = () => {
+    const safetyBar = document.querySelector('.safety-bar-section');
+    const show = safetyBar
+      ? safetyBar.classList.contains('is-hidden')
+      : window.scrollY > 300;
+    btn.classList.toggle('is-visible', show);
+    ticking = false;
+  };
+
   window.addEventListener('scroll', () => {
     if (!ticking) {
-      window.requestAnimationFrame(() => {
-        btn.classList.toggle('is-visible', window.scrollY > 300);
-        ticking = false;
-      });
+      window.requestAnimationFrame(update);
       ticking = true;
     }
   });
+  update();
 
   document.body.appendChild(btn);
 }
