@@ -1325,7 +1325,10 @@
 }
 
 /* Legal text paragraphs — small, light text. Live uses auto line-height in
-   the footer-bottom (only the columns use the 16px footer line-height). */
+   the footer-bottom (only the columns use the 16px footer line-height). The
+   trademark/disclaimer copy (direct children of .footer-bottom) is 10px;
+   the copyright/job-code inside .footer-bottom-texts stays at the 12px
+   footer font size. */
 
 .footer .footer-bottom p {
   color: var(--footer-color-text);
@@ -1335,6 +1338,10 @@
   line-height: normal;
   margin: 0;
   text-align: left;
+}
+
+.footer .footer-bottom > p {
+  font-size: 10px;
 }
 
 /* Logo paragraphs sit inside the .footer-bottom-logos wrapper (created by
