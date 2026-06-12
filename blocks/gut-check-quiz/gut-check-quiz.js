@@ -161,74 +161,91 @@ function initQuiz(block) {
   }
 }
 
+// Normalize content into a flat, ordered list of elements regardless of how it
+// was authored: as multiple doc-table rows (one logical unit per cell) or as a
+// single rich-text field (xwalk/UE) holding every element in one cell.
+function collectElements(block) {
+  const out = [];
+  [...block.children].forEach((row) => {
+    [...row.children].forEach((cell) => {
+      const kids = [...cell.children];
+      if (kids.length === 0) {
+        out.push(cell); // text-only cell (e.g. a bare "type:checkbox" marker)
+      } else {
+        kids.forEach((k) => out.push(k));
+      }
+    });
+  });
+  return out;
+}
+
+const isImageEl = (el) => !!el && (el.matches?.('picture, img') || !!el.querySelector?.('picture, img'));
+const isListEl = (el) => !!el && (el.matches?.('ul, ol') || !!el.querySelector?.('ul, ol'));
+const imgHTML = (el) => {
+  const pic = el.matches?.('picture') ? el : el.querySelector?.('picture');
+  if (pic) return pic.outerHTML;
+  const img = el.matches?.('img') ? el : el.querySelector?.('img');
+  return img ? img.outerHTML : '';
+};
+
 export default async function decorate(block) {
-  const rows = [...block.children];
+  const els = collectElements(block);
   const questions = [];
   let emailConfig = {};
   let recaptchaImg = '';
 
   let i = 0;
-  while (i < rows.length) {
-    const cells = [...rows[i].children];
-    const firstCellText = cells[0]?.textContent?.trim() || '';
-    const hasImage = cells[0]?.querySelector('img, picture');
+  while (i < els.length) {
+    const el = els[i];
+    const text = (el.textContent || '').trim();
 
-    if (firstCellText.startsWith('type:')) {
-      const type = firstCellText.replace('type:', '').trim();
+    if (text.startsWith('type:')) {
       const question = {
-        type,
+        type: text.replace('type:', '').trim(),
         icon: null,
         title: '',
         options: [],
         instruction: '',
         image: null,
       };
-
       i += 1;
 
-      // Check for icon image row (row after type)
-      if (rows[i]) {
-        const iconImg = rows[i].children[0]?.querySelector('img, picture');
-        if (iconImg) {
-          question.icon = iconImg.closest('picture')?.outerHTML || iconImg.outerHTML;
-          i += 1;
-        }
-      }
-
-      // Title row
-      if (rows[i]) {
-        const titleCell = rows[i].children[0];
-        const instrEl = titleCell?.querySelector('p:nth-child(2)');
-        if (instrEl) {
-          question.instruction = instrEl.textContent.trim();
-          const titleEl = titleCell?.querySelector('p:first-child');
-          question.title = titleEl?.outerHTML || titleEl?.innerHTML || '';
-        } else {
-          question.title = titleCell?.innerHTML || '';
-        }
+      // Optional icon image directly after the type marker
+      if (i < els.length && isImageEl(els[i]) && !isListEl(els[i])) {
+        question.icon = imgHTML(els[i]);
         i += 1;
       }
 
-      // Options row (has ul/ol)
-      if (rows[i]) {
-        const list = rows[i].children[0]?.querySelector('ul, ol');
-        if (list) {
-          question.options = [...list.querySelectorAll('li')].map((li) => li.innerHTML.trim());
-          i += 1;
+      // Title + optional instruction: consecutive paragraphs before list/image/next type
+      const paras = [];
+      while (i < els.length) {
+        const e = els[i];
+        const et = (e.textContent || '').trim();
+        if (et.startsWith('type:') || isImageEl(e) || isListEl(e)) break;
+        paras.push(e);
+        i += 1;
+      }
+      if (paras.length) {
+        question.title = paras[0].outerHTML || paras[0].innerHTML || '';
+        if (paras.length > 1) {
+          question.instruction = paras.slice(1).map((p) => p.textContent.trim()).join(' ');
         }
       }
 
-      // Check for trailing image (e.g., Bristol chart scale)
-      if (rows[i]) {
-        const trailingImg = rows[i].children[0]?.querySelector('img, picture');
-        const trailingText = rows[i].children[0]?.textContent?.trim() || '';
-        if (trailingImg && !trailingText.startsWith('type:') && !trailingText.startsWith('endpoint:')) {
-          question.image = trailingImg.closest('picture')?.outerHTML || trailingImg.outerHTML;
-          i += 1;
-        }
+      // Options list
+      if (i < els.length && isListEl(els[i])) {
+        const e = els[i];
+        const list = e.matches?.('ul, ol') ? e : e.querySelector('ul, ol');
+        question.options = [...list.querySelectorAll('li')].map((li) => li.innerHTML.trim());
+        i += 1;
       }
 
-      // If Q3 (bowel movements) add Bristol images
+      // Optional trailing image (e.g., Bristol chart scale)
+      if (i < els.length && isImageEl(els[i]) && !(els[i].textContent || '').trim().startsWith('type:')) {
+        question.image = imgHTML(els[i]);
+        i += 1;
+      }
+
       if (question.title.includes('bowel movements')) {
         question.bristolImages = [
           '/content/dam/abbvie-eds-poc/linzess/images/bristol1.png',
@@ -242,25 +259,15 @@ export default async function decorate(block) {
       }
 
       questions.push(question);
-    } else if (cells[0]?.querySelector('h2, h3, strong') || firstCellText.includes('Get your summary')) {
-      emailConfig = {
-        heading: cells[0]?.innerHTML || '',
-        body: '',
-      };
+    } else if (el.matches?.('h2, h3') || el.querySelector?.('h2, h3') || text.includes('Get your summary')) {
+      emailConfig = { heading: el.outerHTML || el.innerHTML || '', body: '' };
       i += 1;
-      // Next row is consent text
-      if (rows[i] && !rows[i].children[0]?.textContent?.trim().startsWith('endpoint:')) {
-        emailConfig.body = rows[i].children[0]?.innerHTML || '';
+      if (i < els.length && !(els[i].textContent || '').trim().startsWith('endpoint:')) {
+        emailConfig.body = els[i].outerHTML || els[i].innerHTML || '';
         i += 1;
       }
-    } else if (hasImage && !firstCellText.startsWith('type:')) {
-      // reCAPTCHA image or other standalone image
-      const img = cells[0]?.querySelector('picture') || cells[0]?.querySelector('img');
-      if (img) {
-        recaptchaImg = img.closest('picture')?.outerHTML || img.outerHTML;
-      }
-      i += 1;
-    } else if (firstCellText.startsWith('endpoint:') || firstCellText.startsWith('http')) {
+    } else if (isImageEl(el)) {
+      recaptchaImg = imgHTML(el);
       i += 1;
     } else {
       i += 1;
