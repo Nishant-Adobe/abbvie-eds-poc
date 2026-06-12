@@ -435,11 +435,27 @@ body main .section.carousel-video-playlist-container .carousel-video-playlist-wr
    as a dark border around the player and thumbnails. */
 .carousel-video-playlist .cvp-player-wrap video,
 .carousel-video-playlist .cvp-player-wrap .vjs-tech,
-.carousel-video-playlist .cvp-player-wrap .vjs-poster,
 .carousel-video-playlist .cvp-thumb-wrap video,
-.carousel-video-playlist .cvp-thumb-wrap .vjs-tech,
-.carousel-video-playlist .cvp-thumb-wrap .vjs-poster {
+.carousel-video-playlist .cvp-thumb-wrap .vjs-tech {
   object-fit: cover !important;
+}
+
+/* The Brightcove poster is a background-image (object-fit has no effect), and
+   the video-js root + tech default to a black background that shows as a dark
+   border when the media letterboxes. Cover the poster and brand-tint the
+   player so no black edge appears. */
+.carousel-video-playlist .cvp-player-wrap .vjs-poster,
+.carousel-video-playlist .cvp-thumb-wrap .vjs-poster {
+  background-size: cover !important;
+  background-position: center !important;
+  background-color: transparent !important;
+}
+
+.carousel-video-playlist .cvp-player-wrap .video-js,
+.carousel-video-playlist .cvp-player-wrap video-js,
+.carousel-video-playlist .cvp-thumb-wrap .video-js,
+.carousel-video-playlist .cvp-thumb-wrap video-js {
+  background-color: var(--color-brand-primary) !important;
 }
 
 /* Quote panel */
