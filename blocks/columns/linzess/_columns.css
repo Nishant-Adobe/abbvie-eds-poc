@@ -1114,16 +1114,45 @@ main .section .columns.understanding-comparison > .columns-item:nth-child(1) str
 }
 
 .columns.understanding-comparison ul {
+  list-style: none;
   margin: 8px 0 20px;
-  padding-left: 20px;
+  padding-left: 0;
 }
 
 .columns.understanding-comparison li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 10px;
   line-height: 1.4;
+}
+
+/* Symptom list icons */
+.columns.understanding-comparison .columns-item li img {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
 
 .columns.understanding-comparison p {
   margin-bottom: 12px;
   line-height: 1.5;
+}
+
+/* Cause items: leading icon + text paragraph (icon floated so the text
+   node after <strong> stays in normal flow and wraps full-width). */
+.columns.understanding-comparison p:has(> img:first-child) {
+  position: relative;
+  padding-left: 48px;
+  min-height: 36px;
+}
+
+.columns.understanding-comparison .columns-item p > img:first-child {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
