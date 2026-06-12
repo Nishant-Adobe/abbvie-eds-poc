@@ -1230,6 +1230,31 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
   }
 }
 
+/* Tablet (744–1023px): live keeps the mobile type scale through tablet and only
+   steps up to the larger desktop sizes at >=1024px. Our build otherwise jumps to
+   desktop sizes at >=744px, so the tablet headings/labels render too large.
+   Replicate live's measured tablet type (hero + section headings 32/30; pill
+   labels + CTA card titles 18px) — bounded so mobile (<744) and desktop (>=1024)
+   are untouched. */
+@media (width >= 744px) and (width <= 1023px) {
+  main > .section.hero-container .hero:is(.linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  main > .section.otc-intro-section .columns.how-they-work .columns-item p strong,
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    font-size: var(--font-size-article-card-title);
+  }
+}
+
 /* Stacked range (<768px): the CTA-cards divider becomes a horizontal rule below
    the first card (live: 1px muted purple, same as the desktop vertical rule). */
 @media (width < 768px) {
