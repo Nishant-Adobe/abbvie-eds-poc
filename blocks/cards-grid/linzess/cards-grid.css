@@ -1915,6 +1915,8 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::aft
   z-index: 1;
   max-width: 998px;
   margin: 0 auto;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* Live has no inner card box here — just centered text on the dark band.
@@ -1928,7 +1930,9 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::aft
   box-shadow: none;
 }
 
-/* Two columns separated by a thin vertical divider, centered text. */
+/* Two columns separated by a thin vertical divider, centered text. The inner
+   flex container must fill the full 998px width so the two columns are equal
+   and the content sits centered (matching live), not hugging content width. */
 
 .cards-grid.whylinzess-explore .flexbox-v2,
 .cards-grid.whylinzess-explore .abbv-flex-container-v2 {
@@ -1936,18 +1940,20 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::aft
   gap: 0;
   margin: 0;
   padding: 0;
+  width: 100%;
   align-items: stretch;
+  justify-content: normal;
 }
 
 .cards-grid.whylinzess-explore .flexboxitem-v2 {
-  flex: 1;
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 24px;
   margin: 0;
-  padding: 0 24px;
+  padding: 36px 24px;
   text-align: center;
 }
 
