@@ -277,8 +277,8 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin-bottom: 24px;
 }
 
-.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2),
-.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2) strong {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-of-type > p:nth-child(2),
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-of-type > p:nth-child(2) strong {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -299,7 +299,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin: 0 auto 24px;
 }
 
-.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(n+3) {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-of-type > p:nth-child(n+3) {
   font-family: var(--body-font-family);
   font-size: 16px;
   line-height: 1.6rem;
@@ -308,7 +308,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin-top: 20px;
 }
 
-.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:last-child a {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-of-type > p:last-child a {
   background-color: var(--color-brand-primary);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -322,7 +322,7 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   margin-top: 40px;
 }
 
-.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:last-child a::after {
+.section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-of-type > p:last-child a::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -859,7 +859,7 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
 /* Mobile responsive overrides */
 
 @media (width < 768px) {
-  .section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2),
+  .section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper:first-of-type > p:nth-child(2),
   .section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2),
   body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
     font-size: 28px;
@@ -1124,7 +1124,7 @@ main .section:is(
   :has(.understanding-treatment),
   :has(.understanding-pediatric),
   :has(.carousel-video-playlist):not(:has([class*='understanding-']))
-) > .default-content-wrapper > p:first-child {
+) > .default-content-wrapper:first-of-type > p:first-child {
   font-family: var(--body-font-family);
   font-size: var(--linz-card-footnote-size);
   font-weight: var(--font-weight-extra-bold);
@@ -1141,14 +1141,14 @@ main .section:is(
   :has(.understanding-treatment),
   :has(.understanding-pediatric),
   :has(.carousel-video-playlist):not(:has([class*='understanding-']))
-) > .default-content-wrapper > p:nth-child(2),
+) > .default-content-wrapper:first-of-type > p:nth-child(2),
 main .section:is(
   :has(.understanding-difference),
   :has(.understanding-prevalence),
   :has(.understanding-treatment),
   :has(.understanding-pediatric),
   :has(.carousel-video-playlist):not(:has([class*='understanding-']))
-) > .default-content-wrapper > p:nth-child(2) strong {
+) > .default-content-wrapper:first-of-type > p:nth-child(2) strong {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -1165,7 +1165,7 @@ main .section:is(
   :has(.understanding-treatment),
   :has(.understanding-pediatric),
   :has(.carousel-video-playlist):not(:has([class*='understanding-']))
-) > .default-content-wrapper > p:nth-child(2)::before {
+) > .default-content-wrapper:first-of-type > p:nth-child(2)::before {
   content: '';
   display: block;
   width: 64px;
@@ -1183,7 +1183,7 @@ main .section:is(
   :has(.understanding-treatment),
   :has(.understanding-pediatric),
   :has(.carousel-video-playlist):not(:has([class*='understanding-']))
-) > .default-content-wrapper > p:nth-child(n+3) {
+) > .default-content-wrapper:first-of-type > p:nth-child(n+3) {
   font-family: var(--body-font-family);
   font-size: 16px;
   line-height: 1.6rem;
@@ -1195,4 +1195,55 @@ main .section:is(
 main .section:has(.understanding-prevalence) > .default-content-wrapper :is(p, strong, h2),
 main .section:has(.carousel-video-playlist):not(:has([class*='understanding-'])) > .default-content-wrapper :is(p, strong, h2) {
   color: var(--linz-white);
+}
+
+/* Secondary sub-headings (e.g. "What Could Small, Hard Stools Mean?") live in
+   a NON-first default-content-wrapper as a leading <p><strong>. They get the
+   Bebas heading treatment like the section title, but with NO eyebrow/divider
+   and centered, matching live. */
+
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric)
+) > .default-content-wrapper:not(:first-of-type) {
+  text-align: center;
+  max-width: 928px;
+  margin-inline: auto;
+}
+
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric)
+) > .default-content-wrapper:not(:first-of-type) > p:first-child,
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric)
+) > .default-content-wrapper:not(:first-of-type) > p:first-child strong {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  line-height: 36px;
+  font-weight: var(--font-weight-body);
+  color: var(--color-brand-primary);
+  margin-bottom: 24px;
+}
+
+/* Body copy after the sub-heading */
+
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric)
+) > .default-content-wrapper:not(:first-of-type) > p:nth-child(n+2) {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 1.6rem;
+  color: var(--linz-grey);
+  margin-top: 16px;
 }
