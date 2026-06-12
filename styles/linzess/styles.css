@@ -252,6 +252,12 @@ main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section
   font-weight: 400;
 }
 
+/* Live applies -0.02em tracking across the ISI legal copy (h3 -0.32px,
+   p/li/strong -0.28px). Apply it to all ISI text for parity. */
+.section.isi :is(h3, h4, h5, p, li, strong, b, a) {
+  letter-spacing: -0.02em;
+}
+
 .section.isi a,
 main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) a {
   color: var(--color-text-heading);
