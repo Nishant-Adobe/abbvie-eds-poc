@@ -1820,18 +1820,72 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
     gap: 60px;
   }
 
-  /* Keep the live row/overlap layout on mobile (icon half-outside the card),
-     but shrink the icon 105→96px and pull its offset inboard so it doesn't
-     clip off the left viewport edge. */
-  body main .section .columns.whylinzess-mechanism-card > .columns-item {
+  /* HOW LINZESS WORKS (timeline section): keep live's row/overlap layout —
+     icon half-outside the card on the left, text left-aligned — but shrink
+     the icon 105→96px and pull its offset inboard so it doesn't clip off the
+     left viewport edge. */
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card > .columns-item {
     flex-direction: row;
     text-align: left;
   }
 
-  body main .section .columns.whylinzess-mechanism-card .columns-item-image img {
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-image img {
     left: -28px;
     width: 96px;
     height: 96px;
+  }
+
+  /* SIDE EFFECTS section (non-timeline): live centers the icon overlapping the
+     card's TOP edge (top half on the off-white section bg, bottom half on the
+     purple card) with centered text below. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card {
+    position: relative;
+    margin-top: 48px;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Collapse the image column out of flow so it doesn't reserve a row, then
+     center the icon and pull it up to straddle the card's top edge. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+    position: absolute;
+    top: -48px;
+    left: 0;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image {
+    flex: 0 0 auto;
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image img {
+    position: static;
+    left: auto;
+    transform: none;
+    margin: 0 auto;
+    width: 96px;
+    height: 96px;
+  }
+
+  /* Make room at the top of the card for the lower half of the overlapping
+     icon (48px) plus breathing room. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content) {
+    padding-top: 56px;
+  }
+
+  /* Stack the "Calms pain-sensing nerves / Accelerates bowel movements"
+     bullets in a single column on mobile (live does); the side-by-side
+     row was forcing the card wider than the viewport. */
+  .columns.whylinzess-mechanism-card .columns-item-content ul {
+    flex-direction: column;
+    gap: 12px;
   }
 }
 

@@ -4273,6 +4273,19 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     line-height: 30px;
   }
 
+  /* "When Can I Expect…" heading: 40→32px / 36→30px to match live mobile. */
+  body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  /* "When LINZESS is taken daily…" intro: 24px/tight → 18px/normal so the
+     lines no longer overlap (live uses 18px, normal line-height). */
+  body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) + p {
+    font-size: 18px;
+    line-height: normal;
+  }
+
   /* Stack the symptom cards on mobile. The section-level grid rule (0,4,1)
      outranks the block-level mobile rule, so override it here at matching
      specificity, otherwise the IBS-C/CIC cards stay side-by-side. */
