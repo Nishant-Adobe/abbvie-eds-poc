@@ -258,6 +258,15 @@ main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section
   text-decoration: underline;
 }
 
+/* ISI links sit inside <strong> blocks, so they inherit the black legal font
+   at 14px. Live renders them in the regular Roman face (not bold/black). */
+.section.isi strong a,
+.section.isi b a,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) :is(strong, b) a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+}
+
 .section.isi h4,
 main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section) h4 {
   font-family: var(--font-family-legal-bold);
