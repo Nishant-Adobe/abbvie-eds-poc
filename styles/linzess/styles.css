@@ -4143,6 +4143,13 @@ body main .section:has(.carousel-video-playlist.featured) {
   margin-right: auto;
 }
 
+/* The off-white Side Effects section's inward arc already supplies visual
+   space below it, so the Patient Experiences section needs less top padding
+   (the heading was sitting too far below the curve). */
+body main .section:has(.carousel-video-playlist.featured).whylinzess-patients {
+  padding-top: 24px;
+}
+
 .section:has(.carousel-video-playlist.featured) > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
   font-size: 12px;
