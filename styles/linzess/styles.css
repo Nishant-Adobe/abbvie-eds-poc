@@ -193,11 +193,11 @@ main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section
   width: 100%;
 }
 
-/* Clear the footer's upward purple arc (offset -140px) so the ISI's last line
-   (job code) is never overlapped by it. */
+/* Space below the ISI job code before the footer arc. Live uses 80px padding
+   + 20px margin (~100px total); our larger 100/100 left too big a gap. */
 main > .section.isi {
-  padding-bottom: var(--spacing-100);
-  margin-bottom: var(--spacing-100);
+  padding-bottom: var(--spacing-80);
+  margin-bottom: var(--spacing-20);
 }
 
 .section.isi .default-content-wrapper,
