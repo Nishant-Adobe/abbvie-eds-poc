@@ -1081,7 +1081,7 @@
   --footer-font-size: var(--font-size-body-small);
   --footer-font-weight: var(--font-weight-body);
   --footer-font-weight-bold: var(--font-weight-extra-bold);
-  --footer-line-height: var(--line-height-body);
+  --footer-line-height: 16px;
 
   /* Footer-logos box dimensions for the AbbVie + Ironwood partner logos in
      the bottom row (small, equal heights, separated by a vertical divider). */
@@ -1314,6 +1314,7 @@
   font-family: var(--footer-font-family);
   font-size: var(--footer-font-size);
   font-weight: var(--footer-font-weight);
+  line-height: normal;
   text-decoration: underline;
 }
 
@@ -1323,14 +1324,15 @@
   text-decoration: none;
 }
 
-/* Legal text paragraphs — small, light text */
+/* Legal text paragraphs — small, light text. Live uses auto line-height in
+   the footer-bottom (only the columns use the 16px footer line-height). */
 
 .footer .footer-bottom p {
   color: var(--footer-color-text);
   font-family: var(--footer-font-family);
   font-size: var(--footer-font-size);
   font-weight: var(--footer-font-weight);
-  line-height: var(--footer-line-height);
+  line-height: normal;
   margin: 0;
   text-align: left;
 }
