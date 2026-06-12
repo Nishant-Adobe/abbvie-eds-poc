@@ -742,6 +742,7 @@ main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type
   font-size: var(--font-size-article-heading);
   font-weight: var(--font-weight-body);
   line-height: var(--no-hero-h1-line-height, 36px);
+  letter-spacing: normal;
   text-align: center;
   text-transform: none;
 }
@@ -980,9 +981,12 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .
   text-transform: uppercase;
 }
 
-/* Hero H1 line-height (live: 36px, not the editorial-hero default 0.95) */
+/* Hero H1 line-height (live: 36px, not the editorial-hero default 0.95) and
+   letter-spacing normal (live has no tracking; the global h1 rule applies
+   -0.02em at >=1024px). */
 main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
   line-height: var(--no-hero-h1-line-height, 36px);
+  letter-spacing: normal;
 }
 
 /* Hero text column: live's editorial-hero text container is ~100rem wide so
