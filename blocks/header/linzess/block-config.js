@@ -6,6 +6,11 @@ export default async function getBlockConfigs() {
     variations: [],
     decorations: {
       afterDecorate: (block) => {
+        // Add no-hero class for non-hero pages (purple header + arc)
+        if (!document.querySelector('main .hero')) {
+          document.body.classList.add('no-hero');
+        }
+
         block.querySelectorAll('a.external-link').forEach((link) => link.classList.remove('external-link'));
 
         // Remove ISI trigger text ("top") injected into the eyebrow bar by buildEyebrows.
@@ -22,8 +27,7 @@ export default async function getBlockConfigs() {
         // Clone CTA into the mobile header row (before hamburger) so it's visible in both
         // closed and open states — .nav-sections is hidden when the nav is collapsed.
         // Wrapped in a div (not li) since it sits as a direct child of nav alongside other divs.
-        const ctaItem = [...block.querySelectorAll('.nav-sections .default-content-wrapper > ul > li')]
-          .find((li) => li.querySelector('a[href*="check-my-symptoms"]'));
+        const ctaItem = block.querySelector('.nav-sections .default-content-wrapper > ul > li.menu-check-my-symptoms');
         const hamburger = block.querySelector('.nav-hamburger');
         if (ctaItem && hamburger) {
           const ctaLink = ctaItem.querySelector('a.nav-item-link, button');
