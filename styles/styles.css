@@ -3632,12 +3632,16 @@ main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"
   }
 }
 
-/* Tablet: stack the CTA buttons in a single centered column with spacing */
+/* Tablet: stack the CTA buttons full-width with centered labels and spacing */
 @media (width >= 768px) {
   main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) {
     gap: 1.6rem;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+  }
+
+  main > .section.white-arc > .default-content-wrapper > p:has(a[href$="/activate"]) a {
+    justify-content: center;
   }
 }
 
