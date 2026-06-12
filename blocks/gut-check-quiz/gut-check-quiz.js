@@ -197,10 +197,14 @@ export default async function decorate(block) {
 
       // Title row
       if (rows[i]) {
-        question.title = rows[i].children[0]?.innerHTML || '';
-        const instrEl = rows[i].children[0]?.querySelector('p:nth-child(2)');
+        const titleCell = rows[i].children[0];
+        const instrEl = titleCell?.querySelector('p:nth-child(2)');
         if (instrEl) {
           question.instruction = instrEl.textContent.trim();
+          const titleEl = titleCell?.querySelector('p:first-child');
+          question.title = titleEl?.outerHTML || titleEl?.innerHTML || '';
+        } else {
+          question.title = titleCell?.innerHTML || '';
         }
         i += 1;
       }
