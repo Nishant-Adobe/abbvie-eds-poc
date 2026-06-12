@@ -863,8 +863,11 @@ main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
   color: var(--color-text-on-dark);
 }
 
-/* Footnote inside the text column stays 12px (live), tighter 12px margins */
-main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote {
+/* Footnote inside the text column stays 12px (live), tighter 12px margins.
+   The published page drops the `footnote` class, so the footnote is also
+   matched structurally as the last paragraph of the text column. */
+main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote,
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:last-child {
   margin: var(--spacing-12, 12px) 0;
   font-size: var(--font-size-body-small);
 }
@@ -1096,6 +1099,14 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
   font-size: var(--font-size-article-body);
   font-weight: var(--font-weight-body);
   color: var(--color-text-heading);
+}
+
+/* Live caps the card title at 16px on desktop — it does NOT follow the
+   section's 16px->18px body step-up that --font-size-article-body applies. */
+@media (width >= 900px) {
+  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):first-of-type {
+    font-size: var(--font-size-legal-large);
+  }
 }
 
 main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):last-of-type {
