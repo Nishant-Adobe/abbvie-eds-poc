@@ -1106,16 +1106,18 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore) {
   overflow: visible;
 }
 
-/* Top arc — a dark dome poking up into the section above. */
+/* Top arc — a dark dome poking up into the section above. Live uses a tall,
+   shallow dome (255px, radius 100% 100% 0 0) that bleeds past the edges; the
+   horizontal overflow is clipped by html { overflow-x: hidden }. */
 body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::before {
   content: '';
   position: absolute;
   top: -60px;
-  left: 0;
-  right: 0;
-  height: 140px;
+  left: -30%;
+  right: -30%;
+  height: 255px;
   background: #422e83;
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border-radius: 100% 100% 0 0 / 100% 100% 0 0;
 }
 
 /* Bottom inward curve — a white dome rising from the section's bottom into the
