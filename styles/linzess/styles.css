@@ -720,8 +720,14 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section)::before {
   background-color: var(--color-brand-primary);
 }
 
-/* Section heading (Bebas Neue, 40px / line-height 36px) */
-main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2) {
+/* Section heading (Bebas Neue, 40px / line-height 36px).
+   The published page drops the authored `heading-1` class, so the heading is
+   also matched structurally: the first <p> of the section's first
+   default-content-wrapper. Both selectors are kept so styling holds whether or
+   not the class survives publish. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
@@ -733,7 +739,9 @@ main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this
 
 /* Divider line (64x5 divider.svg) centered above every section heading.
    Live authors it as an empty <p><span class="divider"> before each heading. */
-main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2)::before {
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2)::before,
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child::before,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child::before {
   content: "";
   display: block;
   width: var(--spacing-64);
@@ -743,11 +751,13 @@ main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this
   background-size: contain;
 }
 
-main > .section:is(.otc-intro-section, .more-like-this-section) :is(.heading-1, h2) {
+main > .section:is(.otc-intro-section, .more-like-this-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child {
   color: var(--color-text-heading);
 }
 
-main > .section.what-is-linzess-section .heading-1 {
+main > .section.what-is-linzess-section .heading-1,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
   color: var(--color-text-on-dark);
 }
 
@@ -758,7 +768,9 @@ main > .section.otc-intro-section > .default-content-wrapper {
   text-align: center;
 }
 
-main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1) {
+/* Body copy = every intro paragraph except the heading (first child). Excludes
+   by both class and position so it never restyles the heading in either env. */
+main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1):not(:first-child) {
   margin: var(--spacing-16) 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
@@ -1143,7 +1155,9 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
   }
 
   /* Mobile: section headings shrink 40px -> 32px to match live */
-  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2) {
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
     font-size: var(--font-size-h2-hero);
   }
 
