@@ -772,6 +772,16 @@ body main .section:has(.whylinzess-timeline) > .carousel-video-playlist-wrapper 
   max-width: 928px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 100px;
+}
+
+/* "Our panel of real people…" intro under the "Hear from real patients"
+   heading is 720px / 16px centered on live, not the 928px / 14px default. */
+body main .section.cards-grid-container.carousel-video-playlist-container:has(.whylinzess-timeline) > .default-content-wrapper:has(h2) > p:last-child {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
 }
 
 /* Featured patient-experiences playlist sits in a wider 998px frame to match
