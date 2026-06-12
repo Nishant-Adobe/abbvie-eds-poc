@@ -1621,6 +1621,33 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::
   content: none;
 }
 
+/* ── Find-relief hero: restore the white bottom curve and float the section-nav
+   pill over it (live linzess.com pattern), at all viewports. The OTC page above
+   suppresses the curve because its intro-section arc paints over the hero; the
+   find-relief hero lives in a section-nav-container and has no such arc, so it
+   needs its own curve + an overlapping nav pill. ── */
+main > .section.section-nav-container .hero.linzess-behind-nav-linzess-editorial-hero::before {
+  content: '';
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -1px;
+  z-index: 2;
+  height: 56px;
+  background: var(--background-color, #fff);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  pointer-events: none;
+}
+
+/* Pull the JUMP-TO pill up so it straddles the hero's bottom curve. */
+main > .section.section-nav-container .section-nav-wrapper {
+  position: relative;
+  z-index: 3;
+  margin-top: -28px;
+  display: flex;
+  justify-content: center;
+}
+
 /* Hero band is fluid (>=744px, desktop image 2048x874): the block default is
    a fixed 684px tall band, which over-zooms object-fit:cover as the viewport
    narrows (laptop/tablet), enlarging the photo. Drive the band height by the
