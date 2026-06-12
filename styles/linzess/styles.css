@@ -1891,3 +1891,24 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
     height: 255px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   columns-homepage-savings — "You Could Pay as Little as $30" card
+   imported from linzess-migration homepage. Layout comes from the base
+   columns block; these are the section padding + disclaimer footnote.
+   Scoped to :has(.columns-homepage-savings) so only this card is affected.
+   ═══════════════════════════════════════════════════════════════ */
+main > .section:has(.columns-homepage-savings) {
+  padding-top: 48px;
+  padding-bottom: 80px;
+}
+
+main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-child p {
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-body);
+  line-height: normal;
+  color: var(--linz-grey);
+  margin-top: 24px;
+  text-align: left;
+}
