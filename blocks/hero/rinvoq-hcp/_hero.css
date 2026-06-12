@@ -127,6 +127,20 @@
   content: '';
 }
 
+/* Tablet only (744–1023px): the base hero.css forces
+   `.hero-text-container { min-height: 368px }` at ≥744px. On desktop the text
+   container is position:absolute (overlaid on the image) so that min-height is
+   harmless, but at tablet it's static and the unused height shows as a large
+   empty gap below the H1 before the next section. Reset it to auto for the
+   HOME hero only — scoped via the hero→cards-grid section adjacency, which is
+   unique to the home page (other no-padding heroes are followed by
+   dismiss/section-nav). Desktop overlay and other pages are untouched. */
+@media (width >= 744px) and (width <= 1023px) {
+  .hero-container:has(+ .cards-grid-container) .hero.no-padding .hero-text-container {
+    min-height: auto;
+  }
+}
+
 @media (width >= 1024px) {
   .hero.no-padding > :where(div):first-child {
     min-height: var(--hero-no-padding-min-height);
