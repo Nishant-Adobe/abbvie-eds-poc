@@ -804,28 +804,30 @@ body main .section .columns.whylinzess-mechanism-card > .columns-item:has(.colum
 body main .section .columns.whylinzess-mechanism-card .columns-item-image {
   flex: 0 0 55px;
   width: 55px;
-  height: 0;
-  align-self: center;
+  align-self: stretch;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
 /* The 105px icon must not dictate the card height (live keeps the card at
-   text height ~87px and lets the icon overflow above/below). Pull it out of
-   flow vertically so the card hugs its text. */
+   text height ~87px and lets the icon overflow above/below). Absolutely
+   center it in the icon column so it's fully out of flow. */
 body main .section .columns.whylinzess-mechanism-card .columns-item-image img {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  transform: translateY(-50%);
   width: 105px;
   max-width: none;
   height: 105px;
-  margin-left: -50px;
-  margin-top: -52px;
   object-fit: contain;
 }
 
 .columns.whylinzess-mechanism-card .columns-item-content {
   flex: 1;
-  padding: 0 85px 0 33px;
+  padding: 0 50px 0 33px;
   text-align: left;
 }
 
@@ -836,6 +838,13 @@ body main .section .columns.whylinzess-mechanism-card .columns-item-image img {
   line-height: normal;
   margin-bottom: 8px;
   text-align: left;
+}
+
+/* The brand's main:has(.whylinzess-timeline) p:not(.button-container):last-child
+   rule adds margin-bottom:20px to the card's last paragraph, padding the card
+   ~20px taller than live. Zero it inside these cards. */
+main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content p:last-child {
+  margin-bottom: 0;
 }
 
 .columns.whylinzess-mechanism-card .columns-item-content ul {
