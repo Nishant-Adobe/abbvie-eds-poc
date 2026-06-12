@@ -1865,46 +1865,59 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
   padding: 20px 28px;
 }
 
+/* Row order (anchor row consumed by columns.js):
+   1 = header (IBS-C | CIC), 2 = Symptoms band, 3 = symptoms content,
+   4 = Causes band, 5 = causes content. */
+
 /* Header row (IBS-C | CIC) */
 
-.columns.understanding-comparison > .columns-item:first-of-type > div {
+.columns.understanding-comparison > .columns-item:nth-child(1) > div {
   text-align: center;
   color: var(--linz-white);
   background-color: var(--linz-dark-purple);
 }
 
-.columns.understanding-comparison > .columns-item:first-of-type > div:last-child {
+.columns.understanding-comparison > .columns-item:nth-child(1) > div:last-child {
   background-color: var(--linz-purple);
 }
 
-.columns.understanding-comparison > .columns-item:first-of-type strong {
+.columns.understanding-comparison > .columns-item:nth-child(1) strong {
   font-family: var(--heading-font-family);
   font-size: 28px;
   text-transform: uppercase;
 }
 
-/* Full-width band rows ("Symptoms", "Causes") — only one cell. */
+/* Full-width band rows ("Symptoms", "Causes") — duplicate label, hide 2nd. */
 
-.columns.understanding-comparison > .columns-item:not(:has(> div:nth-child(2))) {
+.columns.understanding-comparison > .columns-item:nth-child(2),
+.columns.understanding-comparison > .columns-item:nth-child(4) {
   grid-template-columns: 1fr;
 }
 
-.columns.understanding-comparison > .columns-item:not(:has(> div:nth-child(2))) > div {
+.columns.understanding-comparison > .columns-item:nth-child(2) > div:nth-child(2),
+.columns.understanding-comparison > .columns-item:nth-child(4) > div:nth-child(2) {
+  display: none;
+}
+
+.columns.understanding-comparison > .columns-item:nth-child(2) > div:first-child,
+.columns.understanding-comparison > .columns-item:nth-child(4) > div:first-child {
   text-align: center;
   background-color: var(--linz-light-purple);
   color: var(--linz-dark-purple);
   padding: 12px 28px;
 }
 
-.columns.understanding-comparison > .columns-item:not(:has(> div:nth-child(2))) strong {
+.columns.understanding-comparison > .columns-item:nth-child(2) strong,
+.columns.understanding-comparison > .columns-item:nth-child(4) strong {
   font-family: var(--heading-font-family);
   font-size: 22px;
   text-transform: uppercase;
 }
 
-/* Two-column content rows: divider between the IBS-C and CIC columns. */
+/* Two-column content rows (3 & 5): divider between IBS-C and CIC columns. */
 
-.columns.understanding-comparison > .columns-item:has(> div:nth-child(2)):not(:first-of-type) > div:first-child {
+.columns.understanding-comparison > .columns-item:nth-child(3) > div:first-child,
+.columns.understanding-comparison > .columns-item:nth-child(5) > div:first-child {
   border-right: 1px solid var(--linz-light-purple);
 }
 

@@ -1012,17 +1012,44 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   UNDERSTANDING CONSTIPATION — section headers
-   Eyebrow (uppercase) + orange divider + Bebas heading, centered.
-   Applies to the leading default-content-wrapper of each understanding
-   section.
+   UNDERSTANDING CONSTIPATION — section styling
+   section-metadata style classes do NOT survive the html2md publish
+   round-trip, so sections are identified by the block-variant classes
+   that DO survive (they become the block element's class).
+
+   Section map (by surviving block class):
+   - .understanding-difference  → Types (light)
+   - .understanding-prevalence   → IBS-C & CIC (dark)  [+ a video]
+   - .understanding-comparison   → Comparison (dark)
+   - lone .carousel-video-playlist (no understanding-* block) → Diagnose (dark)
+   - .understanding-treatment    → Treatment (off-white)
+   - .understanding-pediatric    → Pediatric (light)
+   - .understanding-explore      → Bottom explore (dark)
    ═══════════════════════════════════════════════════════════════════ */
-main :is(
-  .section.understanding-types,
-  .section.understanding-ibsccic,
-  .section.understanding-diagnose,
-  .section.understanding-treatment,
-  .section.understanding-pediatric
+
+/* ---- Dark sections: purple background + white text ---- */
+main .section:has(.understanding-prevalence),
+main .section:has(.understanding-comparison),
+main .section:has(.understanding-explore),
+main .section:has(.carousel-video-playlist):not(:has([class*='understanding-'])) {
+  background-color: var(--color-brand-primary);
+  color: var(--linz-white);
+}
+
+main .section:has(.understanding-prevalence) :is(p, li, h2, h3, strong),
+main .section:has(.understanding-comparison) > .default-content-wrapper :is(p, li, h2, h3, strong),
+main .section:has(.understanding-explore) :is(p, li, h2, h3),
+main .section:has(.carousel-video-playlist):not(:has([class*='understanding-'])) :is(p, li, h2, h3, strong) {
+  color: var(--linz-white);
+}
+
+/* ---- Centered section headers (eyebrow + divider + Bebas heading) ---- */
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric),
+  :has(.carousel-video-playlist):not(:has([class*='understanding-']))
 ) > .default-content-wrapper {
   text-align: center;
   max-width: 928px;
@@ -1030,12 +1057,12 @@ main :is(
 }
 
 /* Eyebrow — first paragraph */
-main :is(
-  .section.understanding-types,
-  .section.understanding-ibsccic,
-  .section.understanding-diagnose,
-  .section.understanding-treatment,
-  .section.understanding-pediatric
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric),
+  :has(.carousel-video-playlist):not(:has([class*='understanding-']))
 ) > .default-content-wrapper > p:first-child {
   font-family: var(--body-font-family);
   font-size: var(--linz-card-footnote-size);
@@ -1046,19 +1073,19 @@ main :is(
 }
 
 /* Heading — second paragraph (the bold title) */
-main :is(
-  .section.understanding-types,
-  .section.understanding-ibsccic,
-  .section.understanding-diagnose,
-  .section.understanding-treatment,
-  .section.understanding-pediatric
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric),
+  :has(.carousel-video-playlist):not(:has([class*='understanding-']))
 ) > .default-content-wrapper > p:nth-child(2),
-main :is(
-  .section.understanding-types,
-  .section.understanding-ibsccic,
-  .section.understanding-diagnose,
-  .section.understanding-treatment,
-  .section.understanding-pediatric
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric),
+  :has(.carousel-video-playlist):not(:has([class*='understanding-']))
 ) > .default-content-wrapper > p:nth-child(2) strong {
   font-family: var(--heading-font-family);
   font-size: 40px;
@@ -1069,12 +1096,12 @@ main :is(
 }
 
 /* Orange divider between eyebrow and heading */
-main :is(
-  .section.understanding-types,
-  .section.understanding-ibsccic,
-  .section.understanding-diagnose,
-  .section.understanding-treatment,
-  .section.understanding-pediatric
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric),
+  :has(.carousel-video-playlist):not(:has([class*='understanding-']))
 ) > .default-content-wrapper > p:nth-child(2)::before {
   content: '';
   display: block;
@@ -1086,12 +1113,12 @@ main :is(
 }
 
 /* Body copy */
-main :is(
-  .section.understanding-types,
-  .section.understanding-ibsccic,
-  .section.understanding-diagnose,
-  .section.understanding-treatment,
-  .section.understanding-pediatric
+main .section:is(
+  :has(.understanding-difference),
+  :has(.understanding-prevalence),
+  :has(.understanding-treatment),
+  :has(.understanding-pediatric),
+  :has(.carousel-video-playlist):not(:has([class*='understanding-']))
 ) > .default-content-wrapper > p:nth-child(n+3) {
   font-family: var(--body-font-family);
   font-size: 16px;
@@ -1099,11 +1126,8 @@ main :is(
   margin-top: 16px;
 }
 
-/* Dark sections: white text for header + body */
-main :is(.section.understanding-ibsccic, .section.understanding-diagnose) > .default-content-wrapper > p:first-child,
-main :is(.section.understanding-ibsccic, .section.understanding-diagnose) > .default-content-wrapper > p:nth-child(2),
-main :is(.section.understanding-ibsccic, .section.understanding-diagnose) > .default-content-wrapper > p:nth-child(2) strong,
-main :is(.section.understanding-ibsccic, .section.understanding-diagnose) > .default-content-wrapper > p:nth-child(n+3),
-main :is(.section.understanding-ibsccic, .section.understanding-diagnose) > .default-content-wrapper h2 {
+/* Dark-section headings stay white (override the brand-purple header color) */
+main .section:has(.understanding-prevalence) > .default-content-wrapper :is(p, strong, h2),
+main .section:has(.carousel-video-playlist):not(:has([class*='understanding-'])) > .default-content-wrapper :is(p, strong, h2) {
   color: var(--linz-white);
 }
