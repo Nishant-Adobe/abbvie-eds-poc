@@ -1073,6 +1073,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   font-size: var(--linz-card-body-size);
 }
 
+/* Savings card content: tighter bottom padding (savings variant only).
+   Matches the shared rule's specificity (container context) so it wins, while
+   the .columns-homepage-savings class keeps it scoped to the savings card. */
+
+.columns-container:not(.hero-container + .columns-container) .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
+  padding: 30px 40px 15px;
+}
+
 .columns.columns-homepage-savings .columns-item-content p {
   font-family: var(--body-font-family);
   font-size: var(--linz-card-body-size);
