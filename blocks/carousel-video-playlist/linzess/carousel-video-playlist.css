@@ -750,6 +750,25 @@
   grid-column: auto;
 }
 
+/* why-linzess "Hear from real patients" grid has only 2 cards: center them
+   (live centers, not left-aligned in a 3-col track) and equalize card +
+   footer heights so both footers match even when one title wraps. Scoped to
+   the timeline section so the homepage's 3-card grid is untouched. */
+
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist.grid .cvp-grid {
+  grid-template-columns: repeat(2, 300px);
+  justify-content: center;
+  align-items: stretch;
+}
+
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist.grid .cvp-card {
+  height: 100%;
+}
+
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist.grid .cvp-card-footer {
+  flex: 1 0 auto;
+}
+
 /* Max visible cards — hide cards beyond the authored limit */
 
 .carousel-video-playlist.grid[data-max-visible="1"] .cvp-card:nth-child(n+2) { display: none; }
