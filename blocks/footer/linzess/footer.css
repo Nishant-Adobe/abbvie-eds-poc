@@ -1271,35 +1271,32 @@
   margin-top: var(--spacing-40);
 }
 
-/* Horizontal sub-links UL — always row-wrap (mobile through desktop) so items
-   flow naturally across the available width. Matches live's
-   `.abbv-link-list ul li:after` `|` separator pattern.
+/* Live renders the sub-links as inline-block <li>s (not flex) packed tightly:
+   each li has 27px right padding holding the `|` separator and 16px bottom
+   margin for wrapped rows.
    Top border = separator between section 1 columns and section 2 sub-links. */
 
 .footer .footer-bottom ul {
   list-style: none;
   padding: var(--spacing-24) 0 0;
   margin: 0;
-  display: flex;
-  flex-flow: row wrap;
-
-  /* row-gap spaces wrapped lines; column-gap stays 0 (margin-right per <li>
-     handles the inline spacing so the `|` separator can sit between items). */
-  gap: var(--spacing-12) 0;
   border-top: var(--separator-height-1) solid var(--footer-color-separator);
 }
 
-/* `|` separator after every item except the last */
-
-.footer .footer-bottom ul li:not(:last-child) {
-  margin-right: var(--spacing-24);
+.footer .footer-bottom ul li {
+  display: inline-block;
+  padding-right: 27px;
+  margin-bottom: var(--spacing-16);
   position: relative;
 }
+
+/* `|` separator after every item except the last, sitting in the 27px
+   right padding. */
 
 .footer .footer-bottom ul li:not(:last-child)::after {
   content: '|';
   position: absolute;
-  right: calc(-1 * var(--spacing-16));
+  right: var(--spacing-12);
   color: var(--footer-color-separator);
 }
 
