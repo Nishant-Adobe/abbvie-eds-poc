@@ -1639,6 +1639,15 @@ body {
   }
 }
 
+/* Real Patients brushstroke CTA: taller band on mobile + tablet to match live.
+   Scoped to the real-patients page so the shared brushstroke on the access
+   page is not affected. */
+@media (max-width: 984px) {
+  .section.real-patients-hero-section ~ .section.brushstroke-glacier-white {
+    min-height: 420px;
+  }
+}
+
 /* Access page: footnotes legal section (scoped to pages with access-hero) */
 /* First legal text-container (savings disclaimers, directly after the
    brushstroke resources CTA) has no grey panel. The ISI legal block further
@@ -2924,39 +2933,63 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   background-repeat: no-repeat;
 }
 
-.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container > div > h3.text-container-text {
+/* Patient title block laid out as a 2-column grid:
+   col 1 = name (row 1) + age (row 2); col 2 = the h4 title spanning both
+   rows. The vertical pipe separator is rendered as h3::after (matching live's
+   markup), positioned in the column gap and tall enough to span name + age.
+   The "(age NN)" is authored as its own <p> because parenthesized text can
+   never round-trip as inline <em>/<span> through md2jcr — CommonMark refuses
+   to emphasize text flanked by punctuation, so it collapses to plain text. */
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container div:has(> h3) {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  column-gap: 48px;
+}
+
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container div:has(> h3) > h3 {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
   font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 36px;
   font-weight: 600;
   color: rgb(37, 40, 42);
   margin: 0;
-  position: relative;
-  padding-right: 24px;
+  line-height: 1.1;
 }
 
-.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container > div > h3.text-container-text::after {
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container div:has(> h3) > h3::after {
   content: '';
   position: absolute;
-  right: 0;
-  top: 8px;
+  top: 0;
+  left: calc(100% + 24px);
   width: 1px;
-  height: 40px;
+  height: calc(100% + 20px);
   background: rgb(0, 0, 0);
 }
 
-.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container > div > h3.text-container-text span {
-  display: block;
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container div:has(> h3) > p {
+  grid-column: 1;
+  grid-row: 2;
+  font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 16px;
   font-weight: 600;
+  font-style: normal;
+  color: rgb(37, 40, 42);
+  margin: 0;
+  line-height: 1.2;
 }
 
-.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container > div > h4.text-container-text {
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:first-child .text-container div:has(> h3) > h4 {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: rgb(37, 40, 42);
   margin: 0;
-  padding-left: 16px;
 }
 
 .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container {
@@ -2969,21 +3002,22 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   padding: 16px 0;
 }
 
-.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div > h4.text-container-text {
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container h4 {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 16px;
+  line-height: 24px;
   font-weight: 700;
   color: rgb(37, 40, 42);
   margin: 0 0 8px;
   text-transform: uppercase;
 }
 
-.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div > ul.text-container-text {
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container ul {
   margin: 0;
   padding-left: 20px;
 }
 
-.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div > ul.text-container-text li {
+.section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container ul li {
   font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 16px;
   color: rgb(70, 72, 74);
@@ -3025,10 +3059,19 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   font-size: 14px;
   color: rgb(70, 72, 74);
   line-height: 1.5;
-  margin: 8px 0;
+  margin: 8px 0 14px;
 }
 
 /* Safety info paragraph section (after tabs) */
+/* "Please see Important Safety Information…" block (section right after the
+   tab panel): live insets its content an extra 20px beyond the section's base
+   side padding at every breakpoint (desktop 50→70, tablet/mobile 20→40). Add
+   the extra 20px on the wrapper so the left/right inset matches live. */
+.section.real-patients-hero-section ~ .tabs-panel + .section > .default-content-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .section.real-patients-hero-section ~ .tabs-panel + .section > .default-content-wrapper:first-child p {
   font-family: 'Graphik Bold', 'Helvetica Neue', arial, helvetica, sans-serif;
   font-size: 16px;
@@ -3091,6 +3134,17 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+/* Tablet (744–984px): the base text-container.css switches `.text-two-columns`
+   to 2 grid columns at ≥744px, but live keeps the real-patients efficacy block
+   single-column through tablet (2 columns only at desktop ≥985px). Force 1
+   column for this section across the tablet range. Scoped to the real-patients
+   efficacy section so no other text-two-columns usage is affected. */
+@media (min-width: 744px) and (max-width: 984px) {
+  .section.real-patients-hero-section ~ .section .text-container.text-two-columns.block {
+    grid-template-columns: 1fr;
+  }
 }
 
 .text-container.text-two-columns.block > div > p.text-container-text:first-child {
@@ -3361,6 +3415,71 @@ body:has(.access-hero-section) .section.text-container-container .text-container
   }
 }
 
+/* Tablet (900–984px): live keeps the stacked hero (patient image band on top,
+   heading below) through tablet, switching to the side-by-side desktop hero
+   only at ≥985px. The base ≤899px block stacks it for mobile; re-assert just
+   the hero-specific stacked rules here so tablet matches live. The tabs and
+   patient panel already switch to their desktop horizontal/2-col layout at
+   900px and are intentionally left untouched. */
+@media (min-width: 900px) and (max-width: 984px) {
+  .section.real-patients-hero-section {
+    padding: 0;
+    display: block;
+  }
+
+  .section.real-patients-hero-section::before {
+    background-size: 506px auto;
+    background-position: calc(50% - 20px) 50%;
+    height: 190px;
+    min-height: 190px;
+    position: relative;
+    display: block;
+    width: 100%;
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .section.real-patients-hero-section .hero-wrapper .hero.no-padding .hero-text-container {
+    position: static;
+    padding: 32px 0 30px;
+    min-height: auto;
+    align-items: flex-start;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+    font-size: 26px;
+    line-height: 1.0625;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large h1 em {
+    font-size: 58px;
+    line-height: 0.8;
+  }
+
+  .section.real-patients-hero-section .hero.no-padding .hero-text-container .cmp-container-x-large p {
+    position: absolute;
+    top: -30px;
+    right: 30px;
+    left: auto;
+    text-align: right;
+    color: rgb(255, 255, 255);
+    margin: 0;
+  }
+
+  .section.real-patients-hero-section .default-content-wrapper {
+    padding: 0 20px;
+  }
+
+  .section.real-patients-hero-section .dismiss-wrapper {
+    padding: 0 20px;
+  }
+
+  .section.real-patients-hero-section .dismiss {
+    padding: 24px 48px 24px 24px;
+  }
+}
+
 @media (max-width: 899px) {
   .section.real-patients-hero-section {
     padding: 0;
@@ -3483,21 +3602,22 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     background-size: cover;
   }
 
-  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div > h4.text-container-text {
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container h4 {
     font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
     font-size: 16px;
+    line-height: 24px;
     font-style: normal;
     font-weight: 700;
     color: rgb(70, 72, 74);
     text-transform: none;
   }
 
-  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div > ul.text-container-text {
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container ul {
     padding-left: 24px;
     margin: 4px 0 0;
   }
 
-  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container > div > ul.text-container-text li {
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] .text-container-wrapper:nth-child(2) .text-container ul li {
     font-family: Graphik, 'Helvetica Neue', arial, helvetica, sans-serif;
     font-size: 16px;
     font-style: normal;
@@ -3510,10 +3630,6 @@ body:has(.access-hero-section) .section.text-container-container .text-container
 
   .text-container.text-two-columns.block > div > p.text-container-text:nth-child(n+2) {
     flex: 1 1 100%;
-  }
-
-  .section.real-patients-hero-section ~ .section .default-content-wrapper .button-container {
-    text-align: left;
   }
 
   .section.real-patients-hero-section ~ .tabs-panel + .section > .default-content-wrapper p.button-container {
@@ -3529,5 +3645,62 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     display: inline-block;
     vertical-align: middle;
     margin-left: 8px;
+  }
+}
+
+/* Tablet (744–899px): the ≤899px mobile block above stacks the patient tabs
+   into a vertical list, but live keeps the horizontal card tabs across the
+   whole tablet range (only stacking at true mobile ≤743px). Re-assert the
+   desktop horizontal tab layout for this range. Placed AFTER the ≤899px block
+   so it wins by source order (equal specificity). */
+@media (min-width: 744px) and (max-width: 899px) {
+  .section.real-patients-hero-section ~ .section.tabs-container .tabs-list[role="tablist"] {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"] {
+    flex: 1 1 0%;
+    width: auto;
+    white-space: normal;
+    text-align: center;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 1px solid rgb(201, 201, 202);
+    border-radius: 8px 8px 0 0;
+    border-bottom: none;
+    min-height: 56px;
+    background-color: rgb(227, 227, 227);
+  }
+
+  .section.real-patients-hero-section ~ .section.tabs-container .tabs-tab[role="tab"][aria-selected="true"] {
+    background-color: rgb(245, 245, 245);
+    border-bottom-color: rgb(245, 245, 245);
+    font-family: 'Graphik Black', 'Helvetica Neue', arial, helvetica, sans-serif;
+    font-weight: 600;
+    padding: 20px 24px;
+  }
+
+  /* Patient detail panel: live keeps CLINICAL PRESENTATION + MEDICAL HISTORY
+     as two side-by-side columns through tablet. The ≤899px mobile block flips
+     the inner text-container to a single column — re-assert the row layout. */
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:nth-child(2) .text-container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:nth-child(2) .text-container > div {
+    flex: 1;
+  }
+
+  /* h4 column headings: 16px on live (mobile base leaves them at 18px because
+     the 16px rule targets `h4.text-container-text`, but the class is on the
+     wrapping <p>, not the h4). Target the actual h4 element. */
+  .section.real-patients-hero-section ~ .tabs-panel[role="tabpanel"] > .section > .text-container-wrapper:nth-child(2) .text-container h4 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
   }
 }
