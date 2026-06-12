@@ -1892,6 +1892,12 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
     gap: var(--spacing-48);
   }
 
+  /* Two equal side-by-side cards (live layout). The base columns grid uses
+     auto-fit/minmax(0,1fr), which collapses to a single track; pin it to 2. */
+  main > .section.cta-cards-section .columns.cta-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
   /* Vertical divider between the two CTA columns (live: 1px muted purple) */
   main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
     border-right: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
