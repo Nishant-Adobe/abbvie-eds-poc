@@ -1578,8 +1578,9 @@ body main .section .columns.whylinzess-mechanism-card {
   display: flex;
   gap: 0;
   align-items: center;
+  position: relative;
   max-width: 670px;
-  margin: 24px auto 0;
+  margin: 20px auto 0;
   padding: 15px 5px;
   border-radius: 16px;
   background: var(--linz-off-white);
@@ -1617,16 +1618,23 @@ body main .section .columns.whylinzess-mechanism-card > .columns-item:has(.colum
 body main .section .columns.whylinzess-mechanism-card .columns-item-image {
   flex: 0 0 55px;
   width: 55px;
+  height: 0;
+  align-self: center;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+
+/* The 105px icon must not dictate the card height (live keeps the card at
+   text height ~87px and lets the icon overflow above/below). Pull it out of
+   flow vertically so the card hugs its text. */
 
 body main .section .columns.whylinzess-mechanism-card .columns-item-image img {
   width: 105px;
   max-width: none;
   height: 105px;
   margin-left: -50px;
+  margin-top: -52px;
   object-fit: contain;
 }
 
