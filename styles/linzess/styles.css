@@ -3767,8 +3767,9 @@ body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card 
   z-index: 1;
 }
 
-/* Bottom inward curve — a white dome rising into the dark section, carving the
-   transition down to the white section below (matches live). */
+/* Bottom inward curve — an off-white dome rising into the dark section, carving
+   the transition down to the off-white Side Effects section below. The dome
+   colour must match that section (not pure white) so there's no visible gap. */
 .section:has(.whylinzess-timeline)::after {
   content: '';
   position: absolute;
@@ -3776,7 +3777,7 @@ body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card 
   left: 0;
   right: 0;
   height: 80px;
-  background-color: var(--background-color);
+  background-color: var(--color-background-light);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   z-index: 1;
 }
