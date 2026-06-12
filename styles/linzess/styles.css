@@ -910,8 +910,13 @@ main > .section.what-is-linzess-section .columns.what-is-linzess a::after {
   transform: translateY(-50%);
 }
 
-/* Footnotes — left-aligned, 12px white, matching live (Sources block) */
-main > .section.what-is-linzess-section .footnote {
+/* Footnotes — left-aligned, 12px white, matching live (Sources block).
+   The published page drops the authored `footnote` class, so the Sources
+   block (last default-content-wrapper of the section: a <p>Sources:</p> plus a
+   reference list) is also matched structurally. Both selectors are kept so the
+   styling holds whether or not the class survives publish. */
+main > .section.what-is-linzess-section .footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(p, ol, ul) {
   max-width: 99.8rem;
   margin: var(--spacing-12, 12px) auto;
   font-family: var(--body-font-family);
@@ -922,16 +927,19 @@ main > .section.what-is-linzess-section .footnote {
   text-align: left;
 }
 
-main > .section.what-is-linzess-section .footnote strong {
+main > .section.what-is-linzess-section .footnote strong,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type strong {
   font-weight: var(--font-weight-body);
 }
 
-main > .section.what-is-linzess-section ol.footnote {
+main > .section.what-is-linzess-section ol.footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(ol, ul) {
   padding-left: var(--spacing-10);
   list-style-type: decimal;
 }
 
-main > .section.what-is-linzess-section ol.footnote li {
+main > .section.what-is-linzess-section ol.footnote li,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type li {
   font-size: var(--font-size-body-small);
   line-height: 1.6rem;
   color: var(--color-text-on-dark);
