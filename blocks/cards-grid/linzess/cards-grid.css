@@ -1891,17 +1891,48 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
 }
 
+/* Bottom inward curve — a white dome rising from the section's bottom into the
+   dark band, carving the transition down to the white ISI section below
+   (mirrors live, where the ISI region paints this dome as its own ::before). */
+
+body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: -30%;
+  right: -30%;
+  height: 110px;
+  background: #fff;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  z-index: 0;
+}
+
 .cards-grid.whylinzess-explore .demo-wrap {
+  position: relative;
+  z-index: 1;
   max-width: 998px;
   margin: 0 auto;
 }
 
+/* Live has no inner card box here — just centered text on the dark band.
+   The icon-image-card builder wraps each column in a light/dark-purple
+   rounded box; strip that so the columns are transparent and the divider
+   between them is visible. */
+
+.cards-grid.whylinzess-explore .abbv-flex-item-v2 {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 /* Two columns separated by a thin vertical divider, centered text. */
 
-.cards-grid.whylinzess-explore .flexbox-cards,
+.cards-grid.whylinzess-explore .flexbox-v2,
 .cards-grid.whylinzess-explore .abbv-flex-container-v2 {
   display: flex;
   gap: 0;
+  margin: 0;
+  padding: 0;
   align-items: stretch;
 }
 
@@ -1912,17 +1943,34 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
   align-items: center;
   justify-content: center;
   gap: 24px;
+  margin: 0;
   padding: 0 24px;
   text-align: center;
 }
 
-.cards-grid.whylinzess-explore .flexboxitem-v2:first-child {
-  border-right: 1px solid rgb(255 255 255 / 30%);
+/* The builder nests each column in .abbv-flex-item-v2; let it stretch and
+   center so the divider on the column edge meets cleanly. */
+
+.cards-grid.whylinzess-explore .flexboxitem-v2 .abbv-flex-item-v2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-/* Headings white, ~24px. */
+.cards-grid.whylinzess-explore .flexboxitem-v2:first-child {
+  border-right: 1px solid rgb(148 142 190);
+}
+
+/* Headings white, ~24px (override the per-column c-linz-dark-purple class). */
 
 .cards-grid.whylinzess-explore .heading-2,
+.cards-grid.whylinzess-explore .c-linz-dark-purple,
 .cards-grid.whylinzess-explore p:not(.cta) {
   color: #fff;
   font-family: var(--body-font-family);
@@ -1942,7 +1990,7 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
 }
 
 @media (width < 768px) {
-  .cards-grid.whylinzess-explore .flexbox-cards,
+  .cards-grid.whylinzess-explore .flexbox-v2,
   .cards-grid.whylinzess-explore .abbv-flex-container-v2 {
     flex-direction: column;
     gap: 40px;
@@ -1950,7 +1998,7 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
 
   .cards-grid.whylinzess-explore .flexboxitem-v2:first-child {
     border-right: 0;
-    border-bottom: 1px solid rgb(255 255 255 / 30%);
+    border-bottom: 1px solid rgb(148 142 190);
     padding-bottom: 40px;
   }
 }
