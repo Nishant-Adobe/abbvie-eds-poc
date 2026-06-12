@@ -1459,21 +1459,17 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check {
   position: relative;
 }
 
-main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p.footnote {
-  position: absolute;
-  left: var(--spacing-20);
-  bottom: var(--spacing-16);
-  margin: 0;
-  font-size: var(--font-size-body-small);
+/* Body paragraphs (md2jcr strips <p class>, so target by position). */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
   line-height: var(--line-height-body);
-  color: var(--color-text-on-dark);
+  color: var(--color-text-body, #4d4d4f);
 }
 
-main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p.footnote em {
-  font-style: normal;
-}
-
-main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p.heading-1 {
+/* Heading — first paragraph in the content cell. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p:first-child {
   margin: 0 0 var(--spacing-16);
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-cta-title);
@@ -1481,12 +1477,16 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-c
   color: var(--color-text-heading);
 }
 
-main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p {
-  margin: 0 0 var(--spacing-16);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-article-body);
+/* "Actor Portrayal" footnote — last paragraph, overlaid white on the image. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p:last-child {
+  position: absolute;
+  left: var(--spacing-20);
+  bottom: var(--spacing-16);
+  margin: 0;
+  font-size: var(--font-size-body-small);
   line-height: var(--line-height-body);
-  color: var(--color-text-body, #4d4d4f);
+  font-style: normal;
+  color: var(--color-text-on-dark);
 }
 
 /* "Get My Discussion Guide" CTA — purple button, white text, right chevron. */

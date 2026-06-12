@@ -79,19 +79,31 @@ function extractPicture(row) {
 export default function decorate(block) {
   const rows = [...block.querySelectorAll(':scope > div')];
 
+  // Delivery environments differ on whether a leading empty "classes" row is
+  // present (md2jcr publish keeps it; some paths drop it), which would shift
+  // every absolute row index by one. Anchor all lookups to the actual image
+  // row — the first row containing an image/picture (or an asset link) — so the
+  // field mapping stays correct regardless of that leading row.
+  // Prefer a real image/picture; fall back to an asset link only if no image
+  // exists in any row (AEM Author reference case).
+  let imageRowIdx = rows.findIndex((r) => r.querySelector('img, picture'));
+  if (imageRowIdx < 0) imageRowIdx = rows.findIndex((r) => r.querySelector('a[href]'));
+  const base = imageRowIdx > 0 ? imageRowIdx : 0;
+  const row = (offset) => rows[base + offset];
+
   // --- Extract DOM nodes before clearing the block ---
-  const picture = extractPicture(rows[ROW.IMAGE]);
-  const mobilePicture = extractPicture(rows[ROW.MOBILE_IMAGE]);
-  const contentCell = rows[ROW.CONTENT]?.firstElementChild;
+  const picture = extractPicture(row(ROW.IMAGE));
+  const mobilePicture = extractPicture(row(ROW.MOBILE_IMAGE));
+  const contentCell = row(ROW.CONTENT)?.firstElementChild;
 
   // --- Extract text values ---
-  const ctaLabel = getCellText(rows[ROW.CTA_LABEL]);
-  const ctaHrefLink = rows[ROW.CTA_HREF]?.querySelector('a');
-  const ctaHref = ctaHrefLink?.href || getCellText(rows[ROW.CTA_HREF]);
-  const ctaTarget = getCellText(rows[ROW.CTA_TARGET]) || '_self';
-  const modalId = getCellText(rows[ROW.MODAL_ID]);
-  const anchorId = getCellText(rows[ROW.ANCHOR_ID]);
-  const analyticsId = getCellText(rows[ROW.ANALYTICS_ID]);
+  const ctaLabel = getCellText(row(ROW.CTA_LABEL));
+  const ctaHrefLink = row(ROW.CTA_HREF)?.querySelector('a');
+  const ctaHref = ctaHrefLink?.href || getCellText(row(ROW.CTA_HREF));
+  const ctaTarget = getCellText(row(ROW.CTA_TARGET)) || '_self';
+  const modalId = getCellText(row(ROW.MODAL_ID));
+  const anchorId = getCellText(row(ROW.ANCHOR_ID));
+  const analyticsId = getCellText(row(ROW.ANALYTICS_ID));
 
   // --- Apply anchor ID to block ---
   if (anchorId) block.id = anchorId;
