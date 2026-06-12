@@ -1102,7 +1102,10 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
   padding: 0 var(--spacing-16);
 }
 
-main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):first-of-type {
+/* Card title = the paragraph with no image and no link. (Published DOM nests
+   the image, title, and link paragraphs in one cell, so :first-of-type would
+   match the image wrapper, not the title.) */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
   padding-top: var(--spacing-20);
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
@@ -1113,7 +1116,7 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
 /* Live caps the card title at 16px on desktop — it does NOT follow the
    section's 16px->18px body step-up that --font-size-article-body applies. */
 @media (width >= 900px) {
-  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):first-of-type {
+  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
     font-size: var(--font-size-legal-large);
   }
 }
