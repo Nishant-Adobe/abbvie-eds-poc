@@ -396,7 +396,19 @@ const TEMPLATES = {
         col.appendChild(el(document, `<h3>${header}</h3>`).firstChild);
         foods.forEach(([base, label, callout]) => {
           const altText = callout ? `${label}. ${callout}` : label;
-          col.appendChild(img(document, `${FSDAM}/${FSP}-${base}@2x.png`, altText));
+          const picture = img(document, `${FSDAM}/${FSP}-${base}@2x.png`, altText);
+          if (callout) {
+            // Live overlays the bubble copy (white, centered) on the colored
+            // circle baked into the -callout PNG. Keep the text in the same
+            // paragraph as the picture so that <p> is the positioning context;
+            // <em> survives md2jcr and is styled/positioned by the food-swaps CSS.
+            const p = document.createElement('p');
+            p.appendChild(picture);
+            p.appendChild(el(document, `<em>${callout}</em>`).firstChild);
+            col.appendChild(p);
+          } else {
+            col.appendChild(picture);
+          }
           col.appendChild(el(document, `<p>${label}</p>`).firstChild);
         });
         return [...col.childNodes];

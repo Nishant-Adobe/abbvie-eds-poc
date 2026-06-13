@@ -1266,8 +1266,17 @@ main > .section.otc-intro-section.food-swaps-intro > .default-content-wrapper:fi
   color: var(--color-text-body, #4d4d4f);
 }
 
+/* Live shows the orange divider eyebrow (divider.svg, 64x5) centered above the
+   intro body copy. The shared heading ::before draws it but at heading scale;
+   re-assert it here as a small centered divider above this body paragraph. */
 main > .section.otc-intro-section.food-swaps-intro > .default-content-wrapper:first-of-type > p:first-child::before {
-  content: none;
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
 }
 
 /* Food Swaps comparison — white page section, two light-purple panels
@@ -1279,8 +1288,11 @@ main > .section.otc-intro-section.food-swaps-intro > .default-content-wrapper:fi
 main > .section.otc-intro-section.food-swaps-section .columns.food-swaps {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-24);
-  max-width: 64rem;
+
+  /* Live: two 422px panels with a ~58px gap (902px row). The 64rem cap made
+     panels only ~308px; widen to match live's column size. */
+  gap: 5.8rem;
+  max-width: 90.2rem;
   margin: 0 auto;
 }
 
@@ -1308,10 +1320,13 @@ main > .section.otc-intro-section.food-swaps-section .columns.food-swaps h3 {
   color: var(--color-text-on-dark);
 }
 
-/* Food illustration cards — the PNG already contains the white circle + any
-   colored callout badge. Cap to the live size and centre. */
+/* Food illustration cards — the PNG contains the food + the EMPTY colored
+   bubble circle. Cap to the live size and centre. The image paragraph is the
+   positioning context for the bubble-text overlay (the <em>). */
 main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p:has(img) {
-  margin: 0;
+  position: relative;
+  width: 25.4rem;
+  margin: 0 auto;
 }
 
 main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p img {
@@ -1320,6 +1335,54 @@ main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p img {
   max-width: 25.4rem;
   height: auto;
   margin: 0 auto;
+}
+
+/* Bubble copy — live overlays it as white 12px/700 centered text on the colored
+   circle baked into the -callout PNG. Authored as <em> (survives md2jcr); the
+   shared italic em styling is reset. Positioned per-item: the circle sits in a
+   different corner of each PNG, so anchor each overlay to its bubble. The
+   overlay box is sized to the circle (~33% of the 254px image). */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p:has(img) em {
+  position: absolute;
+  width: 33%;
+  font-family: var(--body-font-family);
+  font-size: 1.2rem;
+  font-weight: var(--font-weight-bold);
+  font-style: normal;
+  line-height: normal;
+  text-align: center;
+  color: var(--color-text-on-dark);
+  transform: translate(-50%, -50%);
+}
+
+/* Try These column (1st columns-item): image+label <p>s interleave, so the
+   image paragraphs are at odd nth-of-type. Yogurt (p#1) bubble top-RIGHT;
+   kiwi (p#3) & brown rice (p#9) bubbles top-LEFT. */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps .columns-item:first-child p:nth-of-type(1) em {
+  top: 32%;
+  left: 79%;
+}
+
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps .columns-item:first-child p:nth-of-type(3) em {
+  top: 29%;
+  left: 23%;
+}
+
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps .columns-item:first-child p:nth-of-type(9) em {
+  top: 29%;
+  left: 21%;
+}
+
+/* When Craving These column (2nd columns-item): honey (p#5) bubble top-LEFT;
+   chips (p#7) bubble top-RIGHT. */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps .columns-item:last-child p:nth-of-type(5) em {
+  top: 33%;
+  left: 22%;
+}
+
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps .columns-item:last-child p:nth-of-type(7) em {
+  top: 40%;
+  left: 79%;
 }
 
 /* Labels under each illustration — dark-purple bold, centered; extra space
