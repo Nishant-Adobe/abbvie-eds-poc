@@ -1514,11 +1514,15 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type p st
 }
 
 /* EDS auto-links the citation URLs; their default brand-purple matches the
-   dark-purple section background and renders invisible. Force white to match
-   the surrounding citation text (live). */
+   dark-purple section background and renders invisible, and the base link
+   styles enlarge them. Match the surrounding citation text (live): white, same
+   small size/line-height, no underline. */
 main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(p, li) a {
   color: var(--color-text-on-dark);
-  text-decoration: underline;
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  text-decoration: none;
 }
 
 main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(ol, ul) {
