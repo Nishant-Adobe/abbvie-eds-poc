@@ -1346,6 +1346,244 @@ main > .section.otc-intro-section.gut-diets-section .columns.how-they-work .colu
   }
 }
 
+/* ---- Low FODMAP Diet: "Breaking Down FODMAP" 4 category icon cards ----
+   Reuses the how-they-work icon-card variant, but this section sits on a WHITE
+   band on live (unlike the pantry off-white blob band). The shared pantry rule
+   `:has(.columns.how-they-work)` (4 classes) tints it off-white, so match that
+   specificity with the unique .fodmap-categories-section class to force white.
+   Live icons are uniform ~177px (no wider 2nd-card cap). */
+main > .section.otc-intro-section.fodmap-categories-section:has(.columns.how-they-work) {
+  background-color: var(--color-background, #fff);
+}
+
+main > .section.otc-intro-section.fodmap-categories-section .columns.how-they-work .columns-item-image img,
+main > .section.otc-intro-section.fodmap-categories-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img {
+  max-width: 17.7rem;
+  max-height: 20.9rem;
+}
+
+/* Tablet/mobile (<=985px): live widens the category icons up to 203px, but the
+   icon must never exceed its grid cell — at 768 the 4-up grid cell is ~164px, so
+   a flat 203px cap overflowed and overlapped neighbors. Cap at min(20.3rem, 100%)
+   so the icon fills the cell (164px @768) and reaches the full 203px only when the
+   cell is wide enough (1-col @390). Width drives; release the desktop height cap. */
+@media (width <= 985px) {
+  main > .section.otc-intro-section.fodmap-categories-section .columns.how-they-work .columns-item-image img,
+  main > .section.otc-intro-section.fodmap-categories-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img {
+    max-width: min(20.3rem, 100%);
+    max-height: none;
+  }
+}
+
+/* Live bottom-aligns the 4 icons on a common baseline inside a fixed-height
+   (209px) box, so every card's title and body start at the same Y regardless of
+   icon height — keeping all text parallel. The cell here holds the image +
+   title + body together; only the FIRST <p> wraps the icon, so give just that
+   paragraph the fixed height + bottom-aligned icon, leaving title/body in flow. */
+main > .section.otc-intro-section.fodmap-categories-section .columns.how-they-work .columns-item-image > p:first-child {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 20.9rem;
+  margin: 0;
+}
+
+main > .section.otc-intro-section.fodmap-categories-section .columns.how-they-work .columns-item-image > p:first-child img {
+  margin-bottom: 0;
+}
+
+/* Live uses a 20px gap below the category title (the shared how-they-work rule
+   applies 10px); restore 20px for this section to match. */
+main > .section.otc-intro-section.fodmap-categories-section .columns.how-they-work .columns-item-image > p:has(strong) {
+  margin-bottom: var(--spacing-20);
+}
+
+/* ---- Low FODMAP Diet: "Mapping Out" infographic + 6 steps ----
+   Periwinkle band (live #d9d7f9). Live is a single full-width illustrated map
+   (car + winding road + 6 purple pins + trees, baked into the -d- PNG) with the
+   6 step texts overlaid at the pins in a 3-row x 2-col zig-zag. Authored via the
+   additive fodmap-map columns variant: cell 1 = the map image (backdrop), cell 2
+   = 6 step paragraphs (one <p> each: <strong>title</strong><br>body). The
+   .fodmap-map-section class keeps every rule page-local. */
+main > .section.otc-intro-section.fodmap-map-section:has(.columns.fodmap-map) {
+  background-color: var(--color-brand-primary-lighter);
+}
+
+/* The section's top arc (::before) inherits the white otc-intro-section arc,
+   but live's fodmap band arc is periwinkle (matches the band) and deeper at
+   desktop (255px dome, vs the base 60px). Override both, scoped to this page. */
+main > .section.otc-intro-section.fodmap-map-section::before {
+  background-color: var(--color-brand-primary-lighter);
+}
+
+@media (width >= 900px) {
+  main > .section.otc-intro-section.fodmap-map-section::before {
+    top: -60px;
+    height: 255px;
+  }
+}
+
+/* Block = full-width column (not the base 2-col grid): the image item flows
+   full width as the backdrop; the content item is overlaid at desktop. */
+main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map {
+  position: relative;
+  display: block;
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+}
+
+/* Neutralize the global .abbvie-container 12-track grid-column. */
+main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map div {
+  grid-column: auto;
+}
+
+/* Map image = full-width backdrop (live -d- ratio 0.78). */
+main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-image {
+  text-align: center;
+}
+
+main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+/* Step title (strong) + body (after <br>) in one centered paragraph. */
+main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 1.6rem;
+  line-height: var(--line-height-body);
+  text-align: center;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p strong {
+  display: block;
+  margin-bottom: var(--spacing-10);
+  font-size: var(--font-size-article-cta-title, 24px);
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+  color: var(--color-text-heading);
+}
+
+/* Desktop overlay (>=985px): the 6 step paragraphs sit over the map at each pin
+   in a 3-row x 2-col zig-zag. Anchors are calibrated to the live -d- image:
+   left col center-X 28%, right col 70.7%; rows at top 30.5% / 61.7% / 93.4%;
+   each block ~40.5% of the image width, translated to center on its X anchor. */
+@media (width >= 985px) {
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
+    position: absolute;
+    width: 40.5%;
+    transform: translateX(-50%);
+    pointer-events: auto;
+  }
+
+  /* Row 1 */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(1) {
+    top: 30.5%;
+    left: 28%;
+  }
+
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(2) {
+    top: 30.5%;
+    left: 70.7%;
+  }
+
+  /* Row 2 */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(3) {
+    top: 61.7%;
+    left: 28%;
+  }
+
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(4) {
+    top: 61.7%;
+    left: 70.7%;
+  }
+
+  /* Row 3 */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(5) {
+    top: 93.4%;
+    left: 28%;
+  }
+
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(6) {
+    top: 93.4%;
+    left: 70.7%;
+  }
+}
+
+/* Tablet/mobile (<=984px): live swaps to the TALL vertical -m- infographic
+   (558x4705, ratio 0.1186 — all 6 pins stacked single-file) with each step's
+   title + body overlaid directly below its pin, centered, full image width.
+   The md2da pipeline flattens <picture> to a single -d- <img>, so we can't
+   author an -m- <source>; instead hide the inline -d- img and paint the -m-
+   asset as a background on the image cell (sized to its ratio), then re-anchor
+   the 6 step overlays to the live -m- pin positions. CSS-only; content/md2jcr
+   unchanged. Pins sit at ~20.2/35.8/50.8/65.7/80.7/95.6% of image height. */
+@media (width <= 984px) {
+  /* The image cell becomes the tall -m- map: keep the block's relative context,
+     paint -m- as a contained background sized to its 0.1186 aspect ratio. */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-image {
+    width: 100%;
+    max-width: 31.1rem;
+    margin: 0 auto;
+    aspect-ratio: 558 / 4705;
+    background-image: url("/content/dam/abbvie-eds-poc/linzess/images/4.2.4-m-your-map-to-a-low-fodmap-diet-map-infographic-no-bkg@2x.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: contain;
+  }
+
+  /* Hide the flattened inline -d- img; the -m- background replaces it. */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-image img {
+    display: none;
+  }
+
+  /* Overlay the 6 steps on the tall map, centered under each pin. The content
+     item is absolutely positioned over the image cell (same box as live). */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: 31.1rem;
+    margin: 0 auto;
+    pointer-events: none;
+  }
+
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
+    position: absolute;
+    left: 50%;
+    width: 90%;
+    transform: translateX(-50%);
+    pointer-events: auto;
+  }
+
+  /* Live -m- pin anchors (top % of image height). */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(1) { top: 20.2%; }
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(2) { top: 35.8%; }
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(3) { top: 50.8%; }
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(4) { top: 65.7%; }
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(5) { top: 80.7%; }
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(6) { top: 95.6%; }
+
+  /* Live mobile step type: title 18px/700 purple, body 14px gray. */
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p strong {
+    font-size: 1.8rem;
+  }
+
+  main > .section.otc-intro-section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
+    font-size: 1.4rem;
+  }
+}
+
 /* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
 main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
   margin-bottom: var(--spacing-24);

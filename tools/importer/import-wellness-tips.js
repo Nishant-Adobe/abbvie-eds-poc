@@ -449,6 +449,87 @@ const TEMPLATES = {
       });
     },
   },
+
+  'low-fodmap-diet': {
+    documentPath: '/linzess/starting-linzess/wellness-tips/your-map-to-a-low-fodmap-diet',
+    build(document, main) {
+      // 1. HERO (hero JPGs stay on the linzess.com host).
+      heroSection(document, main, {
+        desktop: '/content/dam/linzess/images/Low_Food_diet_Desktop.jpg',
+        mobile: '/content/dam/linzess/images/Low_Food_Diet_Mobile.jpg',
+        eyebrow: 'Resources / Wellness Tips',
+        h1: '<h1 id="your-map-to-a-low-fodmap-diet">Your Map to a Low FODMAP Diet</h1>',
+      });
+
+      // 2. BREAKING DOWN FODMAP (white otc-intro-section) — intro + 4 FODMAP
+      // category icon cards (icon + title + body) via the how-they-work variant.
+      const introNodes = nodes(document, `<p class="heading-1">Breaking Down &ldquo;FODMAP&rdquo;</p>
+<p>In addition to a treatment plan, a Low FODMAP diet can help you manage constipation and the unwanted symptoms that go along with it: gas, bloating, and belly pain. Eating fewer FODMAPs can go a long way in improving your gut health. But what exactly are FODMAPs?</p>
+<p>FODMAP stands for &ldquo;Fermentable Oligosaccharides Disaccharides Monosaccharides and Polyols.&rdquo; Don&rsquo;t worry&mdash;there won&rsquo;t be a quiz! Simply put, FODMAPs are carbs that your small intestine doesn&rsquo;t absorb well&mdash;so do your best to avoid them whenever possible. Here&rsquo;s a look at the FODMAPs:</p>`);
+      const LFDAM = '/content/dam/abbvie-eds-poc/linzess/images';
+      const LFP = '4.2.4-d-your-map-to-a-low-fodmap-diet';
+      const categories = [
+        ['Oligosaccharides', `${LFDAM}/${LFP}-oligosaccharides@2x.png`, 'Wheat, rye, legumes, and fruits and veggies such as garlic and onions.'],
+        ['Disaccharides', `${LFDAM}/${LFP}-disaccharides@2x.png`, 'Milk, yogurt, and soft cheese&mdash;lactose is the main carb here.'],
+        ['Monosaccharides', `${LFDAM}/${LFP}-monosaccharides@2x.png`, 'Fruits like apples and pears and sweeteners that are chock-full of fructose.'],
+        ['Polyols', `${LFDAM}/${LFP}-polyols@2x.png`, 'Fruits like peaches and blackberries and low-cal sweeteners that end in &ldquo;-ol.&rdquo;'],
+      ];
+      const categoryItems = categories.map(([title, src, body]) => {
+        const div = document.createElement('div');
+        div.appendChild(img(document, src, title));
+        div.appendChild(el(document, `<p><strong>${title}</strong></p>`).firstChild);
+        div.appendChild(el(document, `<p>${body}</p>`).firstChild);
+        return [...div.childNodes];
+      });
+      const categoryGrid = columnsBlock(document, 'how-they-work', categoryItems);
+      section(document, main, [...introNodes, categoryGrid], [['classes_customClass', 'otc-intro-section, fodmap-categories-section']]);
+
+      // 3. MAPPING OUT A LOW FODMAP DIET (periwinkle band) — heading + a 2-col
+      // image-text: the vertical "map" infographic image (left) + 6 numbered
+      // steps (right). Authored via an additive fodmap-map columns variant.
+      // Steps use <strong> titles (survive md2jcr) so the CSS can style them.
+      const mapHeading = nodes(document, `<p class="heading-1">Mapping Out a Low FODMAP Diet</p>`);
+      const mapImageCol = document.createElement('div');
+      mapImageCol.appendChild(img(document, `${LFDAM}/4.2.4-d-your-map-to-a-low-fodmap-diet-map-infographic-no-bkg@2x.png`, 'Low FODMAP diet map infographic'));
+      const steps = [
+        ['The FODMAP Swap', 'Replace High FODMAPs with Low FODMAPs for 2&ndash;6 weeks. This part&rsquo;s only temporary.'],
+        ['Read the Labels', 'Look for unexpected FODMAPs hidden in the ingredients of certain foods.'],
+        ['Know Your Portions', 'Low FODMAPs in higher quantities can still trigger symptoms.'],
+        ['Be Prepared', 'Pack Low FODMAP options when on-the-go to avoid spontaneous snacking.'],
+        ['Be Patient', 'Slowly reintroduce High FODMAP foods and take note of any change in symptoms.'],
+        ['Identify Your Triggers', 'Most people find that only 1 or 2 foods were the culprits. Cut those long-term to keep symptoms in check.'],
+      ];
+      const mapStepsCol = document.createElement('div');
+      // One <p> per step (title <strong> + <br> + body), mirroring the live DOM
+      // so the 6 steps can be overlaid as 6 elements on the full-width map image.
+      steps.forEach(([title, body]) => {
+        mapStepsCol.appendChild(el(document, `<p><strong>${title}</strong><br>${body}</p>`).firstChild);
+      });
+      const mapBlock = columnsBlock(document, 'fodmap-map', [[...mapImageCol.childNodes], [...mapStepsCol.childNodes]]);
+      const sources = nodes(document, `<p class="footnote"><strong>Sources:</strong></p>
+<ol class="footnote">
+<li>&ldquo;FODMAPs and Irritable Bowel Syndrome.&rdquo; <em>Monash University</em>. Accessed 3 Nov. 2021. www.monashfodmap.com/about-fodmap-and-ibs/</li>
+<li>&ldquo;Starting the Low FODMAP Diet.&rdquo; <em>Monash University</em>. Accessed 29 Sept. 2025. https://www.monashfodmap.com/ibs-central/i-have-ibs/starting-the-low-fodmap-diet/</li>
+<li>Eswaran, Shanti. &ldquo;Low-FODMAP (Fermentable, Oligo-, Di-, Mono-saccharides and Polyols) Diet.&rdquo; <em>American College of Gastroenterology</em>. Accessed 29 Sept. 2025. https://gi.org/topics/low-fodmap-diet/</li>
+</ol>`);
+      section(document, main, [...mapHeading, mapBlock, ...sources], [['classes_customClass', 'otc-intro-section, fodmap-map-section']]);
+
+      // 4. MORE LIKE THIS
+      moreLikeThis(document, main, [
+        ['Is Your Pantry FODMAP-Friendly?', '/content/dam/linzess/images/Article-Pantry-card.jpg', '/linzess/starting-linzess/wellness-tips/is-your-pantry-fodmap-friendly'],
+        ['Good for Your Gut&mdash;Flavorful Food Swaps', '/content/dam/linzess/images/Article-FoodSwap-card.jpg', '/linzess/starting-linzess/wellness-tips/good-for-your-gut-flavorful-food-swaps'],
+        ['Tackling IBS-C Triggers', '/content/dam/linzess/images/Article-TacklingIBS-card.jpg', '/linzess/starting-linzess/healthy-routines/tackling-ibs-c-triggers'],
+      ]);
+
+      ctaCards(document, main);
+      isiSection(document, main);
+      safetyBarSection(document, main, 'sb-low-fodmap-diet');
+      metadataSection(document, main, {
+        title: 'Your Map to a Low FODMAP Diet | LINZESS&reg; (linaclotide)',
+        description: 'Make the most of a Low FODMAP diet by learning what it means, what to expect, and how to enjoy your snacks and meals while you&rsquo;re eating Low FODMAP. See Important Risk Info and Boxed Warning.',
+      });
+    },
+  },
 };
 
 // ---- shared section builders ----
@@ -514,6 +595,7 @@ function resolveTemplate(url) {
   if (url.includes('pantry')) return TEMPLATES.pantry;
   if (url.includes('make-a-game-plan')) return TEMPLATES['game-plan'];
   if (url.includes('good-for-your-gut')) return TEMPLATES['food-swaps'];
+  if (url.includes('your-map-to-a-low-fodmap')) return TEMPLATES['low-fodmap-diet'];
   return TEMPLATES.recipes;
 }
 
