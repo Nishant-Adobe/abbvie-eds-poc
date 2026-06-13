@@ -821,7 +821,17 @@ main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1, :
   color: var(--color-text-body, #4d4d4f);
 }
 
-/* ---- Section 2: How They Work (3 icon columns) ---- */
+/* ---- Section 2: How They Work (3 icon columns) ----
+   The pantry shopping-list section sits on an off-white band on live
+   (background-off-white #f4f6fb). The icon PNGs have a white rounded blob
+   baked in, which only reads against that off-white backdrop — on pure white
+   the blob is invisible. Tint the whole section (intro + cards) to match.
+   Scoped via :has() so it only applies to the pantry page, not the recipe
+   page which shares the otc-intro-section class on a white background. */
+main > .section.otc-intro-section:has(.columns.how-they-work) {
+  background-color: var(--linz-off-white);
+}
+
 main > .section.otc-intro-section .columns.how-they-work {
   max-width: 99.8rem;
   margin: var(--spacing-40) auto 0;
@@ -831,38 +841,28 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item {
   text-align: center;
 }
 
-/* Icons preserve aspect ratio. Live caps the height uniformly at 20rem on
-   desktop. On mobile the first icon (Fiber) fills the column width with no
-   height cap, while the narrower Stimulant & Stool icons stay capped at
-   23.4rem. display:block removes the inline whitespace gap below the icon. */
+/* Icons preserve aspect ratio. Live is WIDTH-driven: each icon is capped at
+   max-width:170px and the height follows the natural ratio (so the four icons
+   are different heights — Grains is tallest, Protein shortest). The Protein
+   icon (card 2) gets a wider 188px cap on live (.protien-img img). On tablet
+   (<=985px) all icons widen to 203px. display:block removes the inline gap. */
 main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
   display: block;
   width: auto;
-  max-width: 100%;
+  max-width: 17rem;
+  height: auto;
   margin: 0 auto var(--spacing-20);
 }
 
-/* Desktop (>=1024px): live caps all three icons uniformly at 20rem. */
-@media (width >= 1024px) {
-  main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
-    max-height: 20rem;
-  }
+/* Protein icon (2nd card) is wider on live — 188px cap. */
+main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img {
+  max-width: 18.8rem;
 }
 
-/* Mobile + tablet (<1024px): live leaves the first icon (Fiber) uncapped so it
-   fills its column to the natural ratio (~251px at tablet), while the narrower
-   Stimulant & Stool icons are height-driven to 23.4rem. The Stimulant icon is
-   wider than tall, so live lets it overflow the column width (max-width:none)
-   to reach the shared 234px height — this keeps the Stimulant & Stool labels on
-   a common row. Constraining it with max-width:100% shrinks its height and lifts
-   its label, leaving a gap above it. */
-@media (width < 1024px) {
-  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img,
-  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(3) .columns-item-image img {
-    height: 23.4rem;
-    width: auto;
-    max-width: none;
-    max-height: none;
+/* Tablet (<=985px): live widens all icons to 203px. */
+@media (width <= 985px) {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+    max-width: 20.3rem;
   }
 }
 
@@ -879,9 +879,15 @@ main > .section.otc-intro-section .columns.how-they-work .columns-item p strong 
 main > .section.otc-intro-section .columns.how-they-work .columns-item p {
   margin: 0 0 var(--spacing-20);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-button);
+  font-size: 1.6rem;
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
+}
+
+/* Title paragraph (the one wrapping <strong>): live uses a 10px gap to the
+   description, not the 20px the generic paragraph rule applies. */
+main > .section.otc-intro-section .columns.how-they-work .columns-item p:has(strong) {
+  margin-bottom: var(--spacing-10);
 }
 
 /* ---- Wellness Tips: recipe list (FODMAP recipes) ----
@@ -981,27 +987,71 @@ main > .section.otc-intro-section .cards-grid.cards-grid-recipe-cards .abbv-imag
 main > .section.what-is-linzess-section .columns.what-is-linzess {
   max-width: 99.8rem;
   margin: var(--spacing-40) auto 0;
-  align-items: start;
+  align-items: center;
+}
+
+/* Live order is text-left / nutrition-image-right. The import emits the image
+   column first, so flip the visual order at desktop (stacks naturally on
+   mobile with image first, matching live's mobile order). */
+@media (width >= 768px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item:has(.columns-item-image) {
+    order: 2;
+  }
+
+  main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item:has(.columns-item-content) {
+    order: 1;
+  }
 }
 
 main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image {
   text-align: center;
 }
 
-main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
-  width: auto;
-  max-width: 100%;
-  max-height: 36rem;
-  margin: 0 auto;
+/* Intro line ("Here's a handy list...") is a 24px/700 white heading on live. */
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:first-of-type strong {
+  display: block;
+  font-size: var(--font-size-article-cta-title, 24px);
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
 }
 
-/* Mobile + tablet (<1024px): live shrinks the bottle to ~283px tall; our 36rem
-   cap is too tall below desktop. Cap to ~28.3rem under 1024px to match live
-   (the 36rem cap applies only at desktop where the 2-col layout has more room). */
-@media (width < 1024px) {
-  main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
-    max-height: 28.3rem;
-  }
+/* The 3 pro-tip rows: live renders each as a checkmark icon (38x35) at the
+   left with the title + body offset to its right. With the flat <p> structure
+   we approximate by drawing the checkmark as a left-gutter background on each
+   title paragraph and indenting the matching body paragraph to align under it.
+   Titles = strong paragraphs after the intro; bodies = the plain paragraphs. */
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-of-type) {
+  min-height: 3.5rem;
+  margin: var(--spacing-24) 0 var(--spacing-10);
+  padding-left: 5.4rem;
+  background-image: url('/icons/checkmark-square.svg');
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 3.8rem 3.5rem;
+  font-size: 1.872rem;
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+}
+
+/* Live's pro-tip h3 titles are weight 700; the inner <strong> would otherwise
+   inherit the heavy 900 weight. Pin to 700 to match. */
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-of-type) strong {
+  font-weight: var(--font-weight-bold);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:not(:has(strong), :first-of-type) {
+  margin: 0 0 var(--spacing-16);
+  padding-left: 5.4rem;
+  font-size: 1.6rem;
+}
+
+/* Nutrition-facts image fills its half-column (live renders it ~469px wide /
+   484px tall — width-driven, no height cap). */
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+  width: 100%;
+  max-width: 46.9rem;
+  height: auto;
+  margin: 0 auto;
 }
 
 main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
@@ -1014,8 +1064,7 @@ main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
 /* Footnote inside the text column stays 12px (live), tighter 12px margins.
    The published page drops the `footnote` class, so the footnote is also
    matched structurally as the last paragraph of the text column. */
-main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote,
-main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:last-child {
+main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote {
   margin: var(--spacing-12, 12px) 0;
   font-size: var(--font-size-body-small);
 }
