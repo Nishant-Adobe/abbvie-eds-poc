@@ -1966,7 +1966,11 @@ main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .imag
   order: 2;
 }
 
-main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p.heading-1 {
+/* Heading — first paragraph in the content. Target by position as well as the
+   .heading-1 class because md2jcr strips <p class> on publish, leaving the
+   heading as a bare <p> that would otherwise fall back to body styling. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p.heading-1,
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p:first-child {
   margin: 0 0 var(--spacing-16);
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-cta-title);
