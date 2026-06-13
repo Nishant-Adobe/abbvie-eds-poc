@@ -2243,6 +2243,14 @@ main > .section.find-relief-instructions {
   background-color: var(--color-background-light, #f4f6fb);
 }
 
+/* Round only the TOP corners of the instructions box so it joins the dosing
+   panel below (squared top, rounded bottom) into one seamless white container.
+   The base .tabs-container rule sets all-corner 16px with !important. */
+main > .section.find-relief-instructions.tabs-container:not(.find-relief-off-white) {
+  border-radius: var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px) 0 0 !important;
+  padding-bottom: 0 !important;
+}
+
 main > .section.find-relief-instructions .default-content-wrapper {
   width: 100%;
   max-width: 99.8rem;
