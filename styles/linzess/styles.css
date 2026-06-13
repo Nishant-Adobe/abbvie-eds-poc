@@ -1034,12 +1034,11 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .
   margin-top: var(--spacing-30, 3rem);
 }
 
-/* Below 1024px the band is shorter (375/369 ratio) but live drops the text even
-   lower proportionally (186px top / 96px in a 418px band), so the desktop nudge
-   is not enough — increase it to push the text block down to match live. */
-@media (width < 1024px) {
+/* Tablet (744–1023px): nudge the hero text block down to match live's lower
+   placement in the shorter band. Mobile keeps the base 3rem nudge. */
+@media (width >= 744px) and (width <= 1023px) {
   main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
-    margin-top: var(--spacing-80, 8rem);
+    margin-top: var(--spacing-20, 2rem);
   }
 }
 

@@ -319,16 +319,33 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
 
   header nav .mobile-cta-clone > a.nav-item-link,
   header nav .mobile-cta-clone > button {
+    position: relative;
     background-color: var(--color-brand-primary-lighter);
     border-radius: var(--border-radius-button-primary);
     color: var(--color-brand-primary);
     font-size: var(--font-size-body-small);
-    font-weight: var(--font-weight-600);
-    padding: var(--spacing-09) var(--spacing-24);
+    font-weight: var(--font-weight-800);
+    line-height: normal;
+    padding: var(--spacing-12) var(--spacing-42) var(--spacing-12) var(--spacing-24);
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: none;
     width: var(--header-mobile-cta-width);
     margin-right: var(--spacing-15);
+  }
+
+  /* Live's chevron is the abbv-iconFont glyph pinned to the right edge,
+     vertically centered — purple, matching the desktop CTA. */
+  header nav .mobile-cta-clone > a.nav-item-link::after,
+  header nav .mobile-cta-clone > button::after {
+    content: '\e315';
+    position: absolute;
+    top: 50%;
+    right: var(--spacing-15);
+    font-family: var(--icon-font-family);
+    font-size: 2.08rem;
+    line-height: 1;
+    color: var(--color-brand-primary);
+    transform: translateY(-50%);
   }
 
   /* Utility clone — visible at bottom of open nav */
