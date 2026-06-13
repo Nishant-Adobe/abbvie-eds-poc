@@ -1360,6 +1360,18 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
   }
 }
 
+/* Tablet (768–985): the how-it-works video grid (FINDING RELIEF / SEEKING)
+   shows 2×300px cards on live's mobile-style stacked layout — full-width cards,
+   one per row. Override the 2×300px timeline grid track here. */
+
+@media (width >= 768px) and (width < 986px) {
+  body main .section:has(.whylinzess-timeline) .carousel-video-playlist.grid .cvp-grid {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+    gap: 16px;
+  }
+}
+
 /* Tablet (768–1023): the featured patient-experiences carousel is 998px wide
    and overflows the viewport. Live stacks the player full-width with a 2-column
    thumbnail grid below (same as mobile), so reuse that layout here. The .grid

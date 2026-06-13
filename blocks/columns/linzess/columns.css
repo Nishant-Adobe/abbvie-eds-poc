@@ -1889,10 +1889,50 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
   }
 }
 
-/* Tablet (768–985): live also stacks the mechanism-card bullets vertically
-   here (the desktop side-by-side row only applies at >=986px). */
+/* Tablet (768–985): live uses the same single-column card layout as mobile for
+   the Side Effects section — icon centered, straddling the card's top edge,
+   with centered text below and stacked bullets. The desktop icon-on-left row
+   only applies at >=986px. */
 
 @media (width >= 768px) and (width < 986px) {
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card {
+    position: relative;
+    margin-top: 64px;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+    position: absolute;
+    top: -48px;
+    left: 0;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image {
+    flex: 0 0 auto;
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image img {
+    position: static;
+    left: auto;
+    transform: none;
+    margin: 0 auto;
+    width: 96px;
+    height: 96px;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content) {
+    padding-top: 56px;
+  }
+
   .columns.whylinzess-mechanism-card .columns-item-content ul {
     flex-direction: column;
     gap: 12px;
