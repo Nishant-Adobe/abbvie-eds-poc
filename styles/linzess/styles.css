@@ -1018,6 +1018,14 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h
   max-width: 8em;
 }
 
+/* The hero-text-container is a centered flex row, so its cmp-container child
+   shrink-wraps to the H1's 8em max-width and gets centered — pushing the text
+   off the left padding (85px instead of 20px at mobile). Force the cmp-container
+   to fill the row so the breadcrumb + H1 anchor to the left edge like live. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+  width: 100%;
+}
+
 /* Live biases the hero text block below the band's vertical center. At desktop
    (615px band) it sits 247px from top / 217px from bottom; our flex-centered
    container sits ~15px too high, so nudge it down — margin-top on a
