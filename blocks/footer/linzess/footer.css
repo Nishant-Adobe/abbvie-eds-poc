@@ -1133,6 +1133,15 @@
   z-index: -1;
 }
 
+/* Mobile + tablet (<1024px): the narrower viewport needs a wider, shallower
+   arc so the curve reads correctly — match live's mobile arc geometry. */
+@media (width < 1024px) {
+  .footer::before {
+    top: calc(-1 * 38px);
+    width: 203vw;
+  }
+}
+
 /* ── Heading-based grid — mobile + tablet 2 cols (matches live
    `.abbv-col { width: 50% }`); desktop 6 cols below. ── */
 
