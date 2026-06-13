@@ -12,7 +12,7 @@
   display: block !important;
   background: #fff !important;
   border-radius: 16px !important;
-  box-shadow: 0 4px 20px rgba(66, 46, 131, 0.12) !important;
+  box-shadow: 0 4px 20px rgb(66 46 131 / 12%) !important;
   max-width: 998px !important;
   margin: 40px auto 0 !important;
   padding: 60px 16px 40px !important;
@@ -96,9 +96,10 @@
   border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
 }
 
-/* If last tab is active — round right side */
+/* If last tab is active — round the inner (left) edge, matching live where the
+   active tab's rounded corners face the adjacent inactive tab. */
 .tabs-container .tabs .tabs-list button.tabs-tab:last-child[aria-selected='true'] {
-  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
+  border-radius: var(--linz-rounded-corner) 0 0 var(--linz-rounded-corner);
 }
 
 /* ── Panel wrapper — inside the white card section ── */
@@ -137,7 +138,7 @@
   }
 
   .tabs-panel {
-    padding: 40px 40px;
+    padding: 40px;
   }
 }
 
