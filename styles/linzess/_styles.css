@@ -901,11 +901,27 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
   body main .section:has(.carousel-video-playlist.featured).whylinzess-patients {
     padding-left: 0;
     padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  /* Heading "Hear From Real Patients…" 28→32px to match live. */
+  body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper > p:nth-child(2),
+  body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper > p:nth-child(2) strong {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  /* Intro copy "If you're experiencing…" 16px/tight → 14px/normal (live)
+     so the lines stop overlapping. */
+  body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper > p:nth-child(3) {
+    font-size: 14px;
+    line-height: normal;
   }
 
   body main .section:has(.whylinzess-timeline) .carousel-video-playlist {
