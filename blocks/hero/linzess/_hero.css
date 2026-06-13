@@ -285,7 +285,27 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 }
 
-@media (width >= 744px) {
+/* Tablet (744–1023): the migrated content only ships the wide desktop image,
+   so the 2048/874 ratio would squash the band to ~328px. Live keeps a tall
+   hero (~756px) here, so use a fixed tall min-height and crop the wide image
+   with object-fit:cover instead of stretching it. */
+@media (width >= 744px) and (width < 1024px) {
+  /* .section.hero-container prefix raises specificity above the later
+     @media(>=744px) rules that set min-height:auto on these heroes. */
+  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 756px;
+    aspect-ratio: auto;
+  }
+
+  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
+  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (width >= 1024px) {
   .hero.linzess-behind-nav-linzess-editorial-hero {
     min-height: 0;
     aspect-ratio: 2048 / 874;

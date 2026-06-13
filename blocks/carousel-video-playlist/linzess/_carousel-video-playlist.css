@@ -814,6 +814,67 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
   }
 }
 
+/* Tablet (768–1023): the featured patient-experiences carousel is 998px wide
+   and overflows the viewport. Live stacks the player full-width with a 2-column
+   thumbnail grid below (same as mobile), so reuse that layout here. The .grid
+   (how-it-works) carousel already fits at this width and is left untouched. */
+@media (width >= 768px) and (width < 1024px) {
+  .carousel-video-playlist.featured {
+    max-width: 100%;
+    padding: 32px 0;
+  }
+
+  .carousel-video-playlist.featured .cvp-featured-row {
+    flex-direction: column;
+  }
+
+  .carousel-video-playlist.featured .cvp-featured-player,
+  .carousel-video-playlist.featured .cvp-quote-panel {
+    flex: unset;
+    width: 100%;
+  }
+
+  .carousel-video-playlist.featured .cvp-quote-panel {
+    background: transparent;
+    padding: 8px 16px 0;
+    border-radius: 0;
+    text-align: right;
+  }
+
+  .carousel-video-playlist.featured .cvp-quote,
+  .carousel-video-playlist.featured .cvp-patient-name,
+  .carousel-video-playlist.featured .cvp-prescribed {
+    display: none;
+  }
+
+  .carousel-video-playlist.featured .cvp-quote-panel .cvp-view-transcript {
+    display: inline-block;
+    margin-left: auto;
+  }
+
+  .carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap {
+    border-radius: 16px;
+  }
+
+  .carousel-video-playlist.featured .cvp-thumbnails {
+    flex-wrap: wrap;
+    overflow: hidden auto;
+    max-height: 320px;
+    gap: 8px;
+    scrollbar-width: thin;
+  }
+
+  .carousel-video-playlist.featured .cvp-prev,
+  .carousel-video-playlist.featured .cvp-next {
+    display: none;
+  }
+
+  .carousel-video-playlist.featured .cvp-thumb {
+    width: calc(50% - 4px);
+    flex-shrink: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .carousel-video-playlist .cvp-grid,
   .carousel-video-playlist .cvp-thumbnails {
