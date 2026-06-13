@@ -18,7 +18,7 @@ export default function decorate(block) {
       if (label && rawHref) {
         items.push({
           label,
-          href: rawHref.startsWith('#') ? rawHref : `#${rawHref}`,
+          href: (rawHref.startsWith('#') || rawHref.includes('/')) ? rawHref : `#${rawHref}`,
           ue: {
             resource: row.dataset.aueResource,
             type: row.dataset.aueType,
