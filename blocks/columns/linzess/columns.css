@@ -1256,6 +1256,29 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   }
 }
 
+/* Tablet (768-985): live stacks the why-linzess savings card (image on top,
+   text below) until the 986px desktop breakpoint — it only goes side-by-side at
+   >=986px. The base card is flex-row, so force it to wrap/stack here. Scoped to
+   the why-linzess card (carousel-video-playlist-container) so the homepage card
+   is untouched. */
+
+@media (width >= 768px) and (width < 986px) {
+  .section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings {
+    flex-wrap: wrap;
+  }
+
+  .section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1 1 100%;
+    padding: 16px;
+    text-align: center;
+  }
+}
+
 @media (width < 768px) {
   .columns.columns-homepage-savings,
   .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card) {
