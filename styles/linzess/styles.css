@@ -1477,22 +1477,23 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type ul {
 
 /* Desktop (>=1024px): inside the white sub-card, image left + story right
    via a 2-column grid (image spans both rows, heading over story). */
+/* Desktop (>=1024px): image left, heading + story stacked tightly on the
+   right. The renderer flattens the cell into one <p> (display:contents), so
+   the picture/h3/story are siblings. Float the image so the text wraps to its
+   right and the heading sits directly above its story (no row distribution). */
 @media (width >= 1024px) {
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
-    display: grid;
-    grid-template-columns: 18.2rem 1fr;
-    column-gap: var(--spacing-24);
-    align-items: center;
-    justify-items: start;
+    display: block;
   }
 
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image picture {
-    grid-row: 1 / -1;
+    float: left;
+    width: 18.2rem;
+    margin-right: var(--spacing-24);
   }
 
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3,
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p {
-    grid-column: 2;
     text-align: left;
   }
 }
