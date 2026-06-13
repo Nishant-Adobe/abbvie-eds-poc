@@ -1042,6 +1042,14 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .
   }
 }
 
+/* Mobile (<744px): live drops the hero text further down the shorter band, so
+   nudge the cmp-container down to match. */
+@media (width < 744px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+    margin-top: var(--spacing-70, 7rem);
+  }
+}
+
 /* Hero bottom curve: the editorial-hero default draws a deep half-circle
    scoop. Live's curve is actually the white intro section's arc painting up
    over the hero (the .otc-intro-section::before, which already matches live:

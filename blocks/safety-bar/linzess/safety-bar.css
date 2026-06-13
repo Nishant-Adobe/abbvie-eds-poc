@@ -1063,8 +1063,14 @@
 
 
 .safety-bar-abbreviated {
-  padding: var(--spacing-10) var(--spacing-25, 25px) 0;
+  padding: 0 var(--spacing-25, 25px);
   margin: auto;
+}
+
+/* Split (two-column collapsed): tighter gap + no top padding to match live */
+.safety-bar.split .safety-bar-abbreviated {
+  gap: var(--spacing-10);
+  padding-top: 0;
 }
 
 
