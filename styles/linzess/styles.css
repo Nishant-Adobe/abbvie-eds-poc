@@ -1367,12 +1367,13 @@ main > .section.cheat-sheet-section .columns.cheat-sheet {
   gap: var(--spacing-40);
 }
 
-/* Outer card: light-purple, rounded. Holds a white sub-card (image + story)
-   on top, then the "A Better Way" strategies on the light-purple below. */
+/* Outer card: light-purple, rounded. The white sub-card sits flush at full
+   width on top; the "A Better Way" strategies sit on the light-purple below
+   (padded). No side padding here so the white card spans the full card width
+   like live. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-24);
   background-color: var(--color-brand-primary-lighter);
   border-radius: var(--linz-rounded-corner);
 }
@@ -1423,9 +1424,10 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p
   color: var(--color-text-body, #4d4d4f);
 }
 
-/* Strategies block sits on the light-purple card below the white sub-card */
+/* Strategies block sits on the light-purple card below the white sub-card
+   (the purple card has no padding, so pad the strategies here). */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content {
-  padding: var(--spacing-24) 0 0;
+  padding: var(--spacing-24);
 }
 
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p:has(strong) {
@@ -1492,8 +1494,12 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type ul {
     margin-right: var(--spacing-24);
   }
 
+  /* overflow:hidden establishes a block formatting context so the heading and
+     story sit in the remaining column beside the float (a fixed ~416px width)
+     instead of wrapping back under the image. */
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3,
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p {
+    overflow: hidden;
     text-align: left;
   }
 }
