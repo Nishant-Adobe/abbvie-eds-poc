@@ -1221,6 +1221,29 @@ main > .section.otc-intro-section > .default-content-wrapper:has(ol) ol {
   list-style-type: decimal;
 }
 
+/* Low FODMAP map page: live's Sources block is LEFT-aligned at full section
+   width (998px, not the centered 920px cap), with a deeper 40px ol indent and
+   no inter-item gap. Scope to .fodmap-map-section so the game-plan Sources stay
+   as-is. */
+main > .section.otc-intro-section.fodmap-map-section > .default-content-wrapper:has(ol) {
+  max-width: 99.8rem;
+  text-align: left;
+}
+
+main > .section.otc-intro-section.fodmap-map-section > .default-content-wrapper:has(ol) :is(p, ol, li) {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
+}
+
+main > .section.otc-intro-section.fodmap-map-section > .default-content-wrapper:has(ol) ol {
+  padding-left: var(--spacing-40);
+}
+
+main > .section.otc-intro-section.fodmap-map-section > .default-content-wrapper:has(ol) li {
+  margin-bottom: 0;
+}
+
 /* ============================================================
    Good for Your Gut — Flavorful Food Swaps
    ============================================================ */
