@@ -1513,6 +1513,14 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type p st
   font-weight: var(--font-weight-body);
 }
 
+/* EDS auto-links the citation URLs; their default brand-purple matches the
+   dark-purple section background and renders invisible. Force white to match
+   the surrounding citation text (live). */
+main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(p, li) a {
+  color: var(--color-text-on-dark);
+  text-decoration: underline;
+}
+
 main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(ol, ul) {
   margin: var(--spacing-12) 0;
   padding-left: var(--spacing-10);
