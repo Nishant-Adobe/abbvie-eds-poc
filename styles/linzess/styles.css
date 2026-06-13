@@ -1425,8 +1425,11 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3 
   text-transform: none;
 }
 
-/* Story paragraph (first <p> after the heading) — body grey. */
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p {
+/* Story paragraph — body grey. Selectors use descendant `p` (not `> p p`) so
+   they match both the published DOM (elements directly in the cell) and the
+   local renderer (which wraps them in a single <p>). The picture-wrapper <p>
+   and the strategies lead-in <p> are excluded. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)) {
   margin: 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
@@ -1438,14 +1441,14 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p
    the light-purple strategies band: negative margins bleed the band full-width
    to the card edges (cancelling the cell's 24px padding), and top padding adds
    the gap above the lead-in. */
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p:has(strong) {
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong) {
   margin: var(--spacing-24) calc(-1 * var(--spacing-24)) 0;
   padding: var(--spacing-24) var(--spacing-24) var(--spacing-10);
   background-color: var(--color-brand-primary-lighter);
   color: var(--color-brand-primary);
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p strong {
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p strong {
   font-weight: var(--font-weight-bold);
 }
 
@@ -1514,14 +1517,14 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
      story sit in the remaining column beside the float (a fixed ~416px width)
      instead of wrapping back under the image. */
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3,
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p:not(:has(strong)) {
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)) {
     overflow: hidden;
     text-align: left;
   }
 
   /* The strategies band clears the floated image so it spans the full card
      width below (live), rather than sitting in the narrow text column. */
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p:has(strong) {
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong) {
     clear: both;
   }
 }
@@ -1551,7 +1554,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
   main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
   main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)),
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
     font-size: var(--font-size-body);
   }
@@ -1591,7 +1594,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
   main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
   main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)),
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
     font-size: var(--font-size-body);
   }
