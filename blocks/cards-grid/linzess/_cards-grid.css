@@ -1122,23 +1122,9 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
   border-radius: 100% 100% 0 0 / 100% 100% 0 0;
 }
 
-/* Bottom inward curve — replicates live exactly: the ISI region paints a tall,
-   wide white dome (255px x 1872px ≈ 130vw, radius 100% 100% 0 0) whose apex
-   rises ~80px above this band's bottom. Only the shallow top sliver shows over
-   the purple; the rest extends harmlessly down into the white ISI below. We
-   anchor that same dome to the explore band's bottom via ::after. */
-body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 110vw;
-  transform: translateX(-50%);
-  height: 72px;
-  background: #fff;
-  border-radius: 100% 100% 0 0 / 100% 100% 0 0;
-  z-index: 1;
-}
+/* The purple→white transition below this band is carved by the ISI section's
+   own white ::before top-dome (see styles/linzess: .section.isi::before),
+   matching the live/reference arc mechanism. No ::after dome is needed here. */
 
 .cards-grid.whylinzess-explore .demo-wrap {
   position: relative;
