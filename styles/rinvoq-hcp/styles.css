@@ -3756,3 +3756,125 @@ body:has(.access-hero-section) .section.text-container-container .text-container
     font-weight: 700;
   }
 }
+
+/* ============================================================================
+   LEVEL UP H2H page (rinvoq-vs-dupixent/level-up) — PROVISIONAL section styling
+   Authored from LIVE computed-style baseline (captured 2026-06-13 @1440), scoped
+   strictly to this page's classes_customClass section classes. NOT yet verified
+   against the rendered preview DOM — values to be confirmed/tuned at Step-0 once
+   the page is pushed to preview. Zero cross-page risk: every selector is prefixed
+   with a level-up/measure-up/h2h/efficacy section class unique to this page.
+   ============================================================================ */
+
+/* §3 Hero — live: H1 Graphik Black 45px/45px, weight 600, color rgb(37,40,42).
+   Specificity must beat base _hero.css `.hero.no-padding .hero-text-container
+   .cmp-container-x-large h1` (0,4,1) which is also inside an @media(min-width:1024px)
+   block — so we match its descendant chain + add the section prefix (0,5,1) and
+   re-assert in the desktop media query below. */
+.section.level-up-hero .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+  font-family: 'Graphik Black', 'Helvetica Neue', arial, helvetica, sans-serif;
+  font-size: 45px;
+  line-height: 45px;
+  font-weight: 600;
+  color: rgb(37, 40, 42);
+}
+
+.section.level-up-hero .hero h1 sup,
+.section.level-up-hero .hero p sup {
+  font-size: 60%;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* §9 AE comparison table — live: 718px, 16px/700 centered headers,
+   14px data cells (padding 10.5px 5.25px), white 1px row borders */
+.section.ae-comparison-table .table table {
+  width: 100%;
+  max-width: 718px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.section.ae-comparison-table .table th {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(37, 40, 42);
+  text-align: center;
+  padding: 16px 6px;
+}
+
+.section.ae-comparison-table .table td {
+  font-size: 14px;
+  text-align: center;
+  padding: 10.5px 5.25px;
+  border-bottom: 1px solid #fff;
+}
+
+/* AE table group-header rows (single bold cell spanning the row, e.g. INFECTIONS) */
+.section.ae-comparison-table .table td:first-child strong {
+  font-weight: 700;
+}
+
+/* §10 Label highlights table — live: 1140px, GOLD header row rgb(255,209,0) */
+.section.label-highlights-table .table table {
+  width: 100%;
+  max-width: 1140px;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.section.label-highlights-table .table th {
+  background-color: var(--color-gold, #ffd100);
+  color: rgb(37, 40, 42);
+  font-weight: 400;
+  font-size: 16px;
+  padding: 16px 6px;
+  text-align: left;
+}
+
+.section.label-highlights-table .table td {
+  font-size: 14px;
+  padding: 12px 8px;
+  vertical-align: top;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.section.label-highlights-table .table th:first-child,
+.section.label-highlights-table .table td:first-child {
+  font-weight: 700;
+}
+
+/* §11 Engagement CTA — default content (icon + heading + body) on light accent,
+   centered. Live had no button. */
+.section.level-up-cta {
+  text-align: center;
+  background-color: var(--color-light-gold, rgba(255, 209, 0, 0.55));
+}
+
+.section.level-up-cta picture img {
+  width: 48px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Mobile: tables scroll horizontally (swipe), per brief */
+@media (max-width: 899px) {
+  .section.ae-comparison-table .table,
+  .section.label-highlights-table .table {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .section.ae-comparison-table .table table {
+    min-width: 718px;
+  }
+
+  .section.label-highlights-table .table table {
+    min-width: 760px;
+  }
+
+  .section.level-up-hero .hero.no-padding .hero-text-container .cmp-container-x-large h1 {
+    font-size: 32px;
+    line-height: 32px;
+  }
+}
