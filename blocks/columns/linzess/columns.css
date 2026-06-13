@@ -254,12 +254,14 @@ main .section.isi strong {
   font-family: var(--font-family-legal-bold, "BasicCommercialLT-Black", sans-serif);
 }
 
-/* Flat full-bleed white body fill */
+/* Flat full-bleed white body fill. Extend 10px past the section bottom so the
+   white meets the footer's curved purple arc with no gap — otherwise the page
+   (body) background shows as a thin grey band above the footer. */
 main .section.isi::after {
   content: "";
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: -10px;
   left: 50%;
   margin-left: -50vw;
   width: 100vw;
