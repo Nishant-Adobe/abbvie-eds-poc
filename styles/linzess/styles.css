@@ -1566,11 +1566,14 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     line-height: var(--line-height-h2-hero);
   }
 
-  /* Mobile: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px */
+  /* Mobile: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px.
+     The cheat story/lead selectors mirror the base rules' specificity
+     (:not(:has(strong)) / :has(strong)) so they win inside this media query. */
   main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
   main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong),
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
     font-size: var(--font-size-body);
   }
@@ -1606,11 +1609,13 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     line-height: var(--line-height-h2-hero);
   }
 
-  /* Tablet: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px */
+  /* Tablet: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px.
+     Story/lead selectors mirror the base rules' specificity so they win here. */
   main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
   main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong),
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
     font-size: var(--font-size-body);
   }
