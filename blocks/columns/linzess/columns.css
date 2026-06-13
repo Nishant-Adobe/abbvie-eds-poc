@@ -1889,6 +1889,16 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
   }
 }
 
+/* Tablet (768–985): live also stacks the mechanism-card bullets vertically
+   here (the desktop side-by-side row only applies at >=986px). */
+
+@media (width >= 768px) and (width < 986px) {
+  .columns.whylinzess-mechanism-card .columns-item-content ul {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
 /* Mobile: promo card — stack image above text. */
 
 @media (width < 768px) {

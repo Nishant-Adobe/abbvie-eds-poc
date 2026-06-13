@@ -1861,6 +1861,16 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   }
 }
 
+/* Tablet (768–985): once stacked, the short CIC card collapses to ~100px.
+   Live gives the symptom cards bottom padding so the CIC card keeps a
+   comfortable height (~144px) — add it back here. */
+
+@media (width >= 768px) and (width < 986px) {
+  .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card {
+    padding-bottom: 40px;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    WHY LINZESS — Explore CTA section (Check My Symptoms / Understanding
    Constipation). Full-bleed dark-purple band with a top arc, white

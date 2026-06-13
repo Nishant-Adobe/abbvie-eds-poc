@@ -967,6 +967,26 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
   }
 }
 
+/* Tablet (768–985): live uses the same smaller "When Can I Expect" heading
+   (32px) and 18px intro as mobile, and left-aligns the *…/†… footnote — but
+   our tablet range otherwise falls back to the 40px/24px desktop sizes. */
+@media (width >= 768px) and (width < 986px) {
+  body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) + p {
+    font-size: 18px;
+    line-height: normal;
+  }
+
+  /* Footnote "*Abdominal…/†This was seen…" left-aligned to match live. */
+  body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:first-child {
+    text-align: left;
+  }
+}
+
 /* Video playlist cards in How Works section */
 body main .section:has(.whylinzess-timeline) .carousel-video-playlist .carousel-video-playlist-item {
   border-radius: var(--linz-rounded-corner);
