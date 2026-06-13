@@ -96,6 +96,46 @@
   vertical-align: super;
 }
 
+/* ====================================================
+   Index savings-and-support: the imported table carries leaked
+   config markers — a <thead> "table-2-columns" row and a leading
+   "table-col-2" column in every <tbody> row. Live has only the two
+   real columns, with the first body row ("If You Have:" / "You Could
+   Pay:") acting as the purple header. Hide the markers and promote
+   that first row. Scoped to the index page (only page with a
+   section-nav-container) so other linzess tables are unaffected. */
+main:has(.section.section-nav-container) .table.linzess-insurance.block table thead {
+  display: none;
+}
+
+main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody td:first-child {
+  display: none;
+}
+
+/* First body row → purple header (overrides the generic label/value
+   backgrounds below). */
+main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:first-child td:nth-child(2),
+main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:first-child td:last-child {
+  background-color: var(--linz-purple, #60579e);
+  color: var(--linz-white, #fff);
+  font-weight: 800;
+  text-transform: uppercase;
+  vertical-align: middle;
+  border-bottom: none;
+}
+
+/* Label column is now the 2nd cell (first is hidden): light-purple bg. */
+main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:not(:first-child) td:nth-child(2) {
+  background-color: var(--linz-light-purple, #d9d7f9);
+  color: var(--linz-dark-purple, #422e83);
+  font-weight: 400;
+  width: 32%;
+}
+
+main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:not(:first-child) td:nth-child(2) strong {
+  color: var(--linz-dark-purple, #422e83);
+}
+
 /* Mobile: stack label above value */
 @media (width < 600px) {
   .table.linzess-insurance.block table,

@@ -229,6 +229,28 @@ main .section:has(.flexbox.column) .flexbox-wrapper {
   box-shadow: 0 2px 8px rgba(0 0 0 / 10%);
 }
 
+/* From-the-gut cards: live floats the round icon so ~half of it sits OUTSIDE
+   the card's left edge (icon center on the border). The base -50px margin is
+   cancelled by the card's 32px left padding, leaving the icon almost fully
+   inside. Pull it out by half the icon width plus the card padding so 50%
+   overhangs. Scoped to the from-the-gut page (.columns.ftgsignup only exists
+   there) so other .flexbox.column usages are unchanged.
+   icon 100px, card padding-left 32px → -(50 + 32) = -82px. */
+main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image {
+  margin-left: -82px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* From-the-gut desktop: live's icon graphic includes its own pale inner circle
+   and fills the disc edge-to-edge; padding leaves a white ring. Let it fill the
+   100px disc. Scoped to the from-the-gut page so other usages keep 64px. */
+main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image img {
+  width: auto;
+  height: 100px;
+}
+
 .flexbox.column .flexbox-item-image img {
   width: 64px;
   height: 64px;
@@ -290,6 +312,18 @@ main .section:has(.flexbox.column) .flexbox-wrapper {
     height: 80px;
     margin-left: -40px;
   }
+
+  /* From-the-gut: 50% overhang. icon 80px, card padding-left 32px → -(40+32). */
+  main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image {
+    margin-left: -72px;
+    padding: 0;
+  }
+
+  /* Icon fills the 80px disc by height (auto width preserves aspect) to match live. */
+  main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image img {
+    width: auto;
+    height: 80px;
+  }
 }
 
 /* Mobile: smaller icons */
@@ -306,9 +340,40 @@ main .section:has(.flexbox.column) .flexbox-wrapper {
     margin-left: -36px;
   }
 
+  /* From-the-gut: live shows a ~76px icon disc sitting fully visible just left
+     of the card. Our section has less side margin than live, so a full 50%
+     overhang would clip the disc off the viewport's left edge. Enlarge the disc
+     to match live's scale and pull it left only enough to overhang the card
+     while staying on-screen. Scoped to the from-the-gut page so other
+     .flexbox.column usages are unaffected. */
+  /* Live's container is transparent — each icon SVG carries its own pale circle.
+     Our base adds a white disc + shadow, which shows as a ring behind the wider
+     strawberry whose baked circle is narrower. Make the ftg disc transparent so
+     only the icon's own circle renders, matching live. */
+  main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image {
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+    margin-left: -64px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
   .flexbox.column .flexbox-item-image img {
     width: 36px;
     height: 36px;
+  }
+
+  /* Live's icon graphic includes its own pale inner circle that fills the disc
+     by HEIGHT; any padding leaves a white ring. The strawberry/carrot asset is
+     wider than square, so forcing it square squished it. Size by height with
+     auto width (preserving aspect like live) so each icon's baked circle fills
+     the disc and the wider strawberry shows its full carrot without distortion. */
+  main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image img {
+    width: auto;
+    height: 76px;
+    object-fit: contain;
   }
 
   .flexbox.column .flexbox-item-content h2,
@@ -318,6 +383,22 @@ main .section:has(.flexbox.column) .flexbox-wrapper {
 
   .flexbox.column .flexbox-item-content p {
     font-size: 14px;
+  }
+
+  /* From-the-gut cards: live keeps the card titles at 18px on mobile (the
+     generic 16px reduction above shrinks them). Scoped to the from-the-gut
+     page (.columns.ftgsignup only exists there) so other .flexbox.column
+     usages keep 16px. */
+  main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-content h2,
+  main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-content h3 {
+    font-size: 18px;
+  }
+
+  /* Live leaves a 43px gap between the intro paragraph and the first card;
+     ours is 25px. Add the 18px shortfall above the cards block. Scoped to the
+     from-the-gut page so other .flexbox.column usages are unaffected. */
+  main:has(.columns.ftgsignup) .flexbox.column.block {
+    margin-top: 18px;
   }
 }
 
@@ -490,6 +571,19 @@ main .section:has(.flexbox.column) .flexbox-wrapper {
     flex: 1 1 100%;
     width: 100%;
   }
+}
+
+/* Index savings-and-support: the Text/Call/Click sign-up cards render their
+   title at 24px and body copy at 16px on live (root font-size is 62.5%, so
+   the base 18px title / 1rem=10px body are too small here). Scoped to the
+   index page's signup-section so other pages' signup/financial cards keep
+   their existing sizing. */
+main .section.signup-section .flexbox.signup-cards .flexbox-item-content h2 {
+  font-size: 24px;
+}
+
+main .section.signup-section .flexbox.signup-cards .flexbox-item-content p {
+  font-size: 16px;
 }
 
 /* ====================================================
