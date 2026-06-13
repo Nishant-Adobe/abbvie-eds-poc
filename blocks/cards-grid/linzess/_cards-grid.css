@@ -1080,7 +1080,9 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   color: var(--color-brand-primary);
 }
 
-@media (width < 768px) {
+/* Live stacks the IBS-C / CIC stat cards into a single column below the 986px
+   desktop breakpoint (covers both mobile and tablet). */
+@media (width < 986px) {
   .cards-grid.cards-grid-stat-card {
     grid-template-columns: 1fr;
     gap: 72px;
