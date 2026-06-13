@@ -271,8 +271,12 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
   position: absolute;
-  left: -5%;
-  right: -5%;
+
+  /* Overhang the elliptical arc well past both edges so its curved sides clear
+     the hero's bottom corners. At -5% the shallow curve on a wide (>=1000px)
+     hero left triangular gaps where the image bled through below the arc. */
+  left: -15%;
+  right: -15%;
   bottom: var(--hero-cta-curve-bottom);
   z-index: 2;
   height: var(--hero-cta-curve-height);

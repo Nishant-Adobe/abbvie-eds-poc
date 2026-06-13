@@ -1745,6 +1745,7 @@ color: inherit;
   /* ---- Color: Named Palette (from CSS vars) ---- */
   --linz-dark-purple: #422e83;
   --linz-purple: #60579e;
+  --linz-purple-muted: #948ebe;
   --linz-light-purple: #d9d7f9;
   --linz-orange: #faa633;
   --linz-grey: #4d4d4f;
@@ -1798,6 +1799,12 @@ color: inherit;
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
   --font-size-quote: 1.3125rem;
+
+  /* ---- Article (healthy-routines) sizes ---- */
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px; /* mobile + tablet; 16px at desktop (>=900px) */
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
@@ -1916,6 +1923,19 @@ color: inherit;
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+  /* ---- Header: No-hero arc ---- */
+  --header-z-index: 10;
+  --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --no-hero-arc-height: 80px;
+  --no-hero-h1-font-size: 40px;
+  --no-hero-h1-line-height: 36px;
+  --no-hero-h1-margin-bottom: 40px;
+  --no-hero-h1-font-size-mobile: 28px;
+  --no-hero-h1-line-height-mobile: 30px;
+  --no-hero-divider-width: 64px;
+  --no-hero-divider-height: var(--hero-divider-height);
+  --no-hero-divider-margin-bottom: 24px;
+
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
@@ -2188,8 +2208,12 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
   position: absolute;
-  left: -5%;
-  right: -5%;
+
+  /* Overhang the elliptical arc well past both edges so its curved sides clear
+     the hero's bottom corners. At -5% the shallow curve on a wide (>=1000px)
+     hero left triangular gaps where the image bled through below the arc. */
+  left: -15%;
+  right: -15%;
   bottom: var(--hero-cta-curve-bottom);
   z-index: 2;
   height: var(--hero-cta-curve-height);
