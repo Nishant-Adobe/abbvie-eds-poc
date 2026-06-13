@@ -263,9 +263,7 @@
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
 @custom-media --bp-tablet (min-width: 744px);
-
 @custom-media --bp-desktop (min-width: 1024px);
-
 @custom-media --bp-wide (min-width: 1440px);
 
 :root {
@@ -733,8 +731,8 @@
   --color-border-muted: #b8b8b8;
 
   /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgba(0, 0, 0, 0.8);
-  --color-overlay-muted: rgba(115, 133, 159, 0.75);
+  --color-overlay-dark: rgb(0 0 0 / 80%);
+  --color-overlay-muted: rgb(115 133 159 / 75%);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Lato', sans-serif;
@@ -833,12 +831,12 @@
   --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
-  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
+  --shadow-safety-bar: rgb(0 0 0 / 25%) 0 0 10px 0;
   --shadow-section-nav-stuck: 0 4px 12px rgb(0 0 0 / 25%);
 
   /* ---- Gradient ---- */
-  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
-  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+  --gradient-hero-overlay: linear-gradient(rgb(0 0 0 / 80%), rgb(255 255 255 / 0%));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115 133 159) 100%);
 
   /* ---- Transition ---- */
   --transition-button: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -922,23 +920,29 @@
 
 /* ── Sticky stuck ────────────────────────────────────────────────────── */
 
-/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
-   Override to keep the pill at --section-nav-mobile-width, centred. */
-
-.section-nav.sticky,
-.section-nav.sticky.is-stuck {
+/* Non-stuck: sticky at top so the pill sits in flow over the hero. */
+.section-nav.sticky {
   position: sticky;
   top: 0;
-  left: auto;
-  right: auto;
-  transform: none;
   z-index: 100;
 }
 
+/* Stuck: pin the pill to the viewport top (position:fixed), kept content-width
+   and centred via a 50% left anchor + translateX(-50%). No box-shadow and no
+   full-width strip — matches live find-relief, where the stuck element is the
+   pill itself (independent, no white lines beside it). Top corners flatten so
+   the pill reads as joined to the top edge. */
+
 .section-nav.sticky.is-stuck {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  z-index: 100;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  box-shadow: var(--shadow-section-nav-stuck);
+  box-shadow: none;
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -1076,8 +1080,7 @@
     width: 100%;
   }
 
-  .section-nav.sticky,
-  .section-nav.sticky.is-stuck {
+  .section-nav.sticky {
     position: sticky;
     top: 0;
     left: auto;
@@ -1086,8 +1089,18 @@
     width: 100%;
   }
 
+  /* Desktop stuck: keep the pill content-width and centred (NOT a full-width
+     bar) and carry no box-shadow — matches live find-relief, where the stuck
+     element is the independent pill with no strip/lines beside it. The inner
+     nav holds the pill background + flattened top corners. */
   .section-nav.sticky.is-stuck {
-    box-shadow: var(--shadow-section-nav-stuck);
+    position: fixed;
+    top: 0;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: auto;
+    box-shadow: none;
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
@@ -1148,13 +1161,16 @@
     display: flex;
   }
 
-  /* Inline link — restore desktop padding and reset mobile overrides */
+  /* Inline link — restore desktop padding and reset mobile overrides.
+     Match the EDS reference pill: 16px links, vertical centring via the
+     50px line-height (from the base link rule), horizontal padding only. */
   .section-nav.mobile-menu nav a {
     border-bottom: none;
     color: var(--section-nav-text);
     display: inline-block;
+    font-size: 16px;
     font-weight: var(--font-weight-semibold);
-    padding: var(--spacing-12) var(--spacing-24);
+    padding: 0 var(--spacing-24);
     text-align: unset;
     width: auto;
   }

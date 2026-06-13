@@ -5,25 +5,30 @@
   background: transparent;
   margin: var(--spacing-00);
 }
+
 .section.hero-container:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) {
   padding: 0;
 }
+
 /* AbbVie Hero — White overlap panel on hero image */
 .hero-container .hero-wrapper {
   max-width: unset;
   padding: var(--spacing-00);
 }
+
 /* Navy-overlap hero: pull wrapper into section padding so bg image shows */
 .hero-navy {
   padding-bottom: var(--spacing-00);
   margin-bottom: var(--spacing-32);
   background-color: var(--color-white);
 }
+
 .hero-navy .hero-wrapper {
   margin: var(--spacing-n40) -3.5rem var(--spacing-00);
   max-width: none;
   overflow: hidden;
 }
+
 @media (width >= 744px) {
   .hero-navy .hero-wrapper {
     margin: -5.6rem -7rem var(--spacing-00);
@@ -34,6 +39,7 @@
     margin-bottom: var(--spacing-80);
   }
 }
+
 @media (width >= 1024px) {
   .hero-navy .hero-wrapper {
     margin: -8rem -5.5rem 0;
@@ -43,11 +49,13 @@
    border-top-left-radius: var(--spacing-80);
   }
 }
+
 /* Height-tall variant — taller hero image area matching live site .height-tall */
 .height-tall .hero > :where(div):first-child {
   min-height: var(--hero-tall-image-container-height);
   padding: var(--spacing-00);
 }
+
 .height-tall .hero > :where(div):first-child :where(img) {
   position: absolute;
   inset: var(--spacing-00);
@@ -56,10 +64,12 @@
   max-height: none;
   object-fit: cover;
 }
+
 /* Breadcrumbs inside hero text panel */
 .hero .hero-breadcrumbs {
   margin-bottom: var(--spacing-32);
 }
+
 .hero-breadcrumbs :where(ol) {
   display: flex;
   flex-flow: wrap;
@@ -69,6 +79,7 @@
   gap: var(--spacing-08);
   align-items: baseline;
 }
+
 .hero-breadcrumbs :where(ol li) {
   font-family: var(--roboto-bold-font-family);
   font-size: var(--font-size-14);
@@ -80,6 +91,7 @@
   display: flex;
   align-items: flex-end;
 }
+
 /* Chevron separator — scaled to match text cap height and vertically centred */
 .hero-breadcrumbs :where(ol li):not(:last-child)::after {
   content: '\203A';
@@ -89,26 +101,31 @@
   vertical-align: middle;
   line-height: 1;
 }
+
 .hero-breadcrumbs :where(li a) {
   color: var(--text-color);
   font-weight: var(--font-weight-700);
   font-size: inherit;
   text-decoration: none;
 }
+
 /* Current page — muted gray, no link */
 .hero-breadcrumbs :where(ol li)[aria-current] {
   color: var(--color-gray-dark);
   font-weight: var(--font-weight-700);
 }
+
 .hero {
   position: relative;
   display: flex;
   flex-direction: column;
 }
+
 /* Remove gradient overlay — AbbVie uses white panel instead */
 .hero::after {
   display: none;
 }
+
 /* Image container — natural flow, not absolute */
 .hero > div:first-child {
   position: relative;
@@ -119,17 +136,21 @@
   padding-left: var(--spacing-55);
   padding-right: var(--spacing-55);
 }
+
 .section-wide .hero > :where(div):first-child {
     margin: 0;
     padding-left: 0;
     padding-right: 0;
 }
+
 .hero.no-padding > :where(div):first-child{
   padding: var(--spacing-00);
 }
+
 .hero picture {
   display: block;
 }
+
 .hero img {
   object-fit: cover;
   width: 100%;
@@ -138,6 +159,7 @@
   border-top-left-radius: var(--border-top-left-radius);
   max-height: var(--hero-image-container-height);
 }
+
 /* Text container — white overlap panel */
 .hero > div:nth-child(2) {
  /*  display: flex;
@@ -150,6 +172,7 @@
   padding-bottom: var(--spacing-00);
   max-width: calc(100vw - var(--spacing-40));
 }
+
 /* font-weight: inherit prevents browser UA bold, defers to F37 Lineca Medium's own weight */
 .hero h1 {
   margin: var(--spacing-00) var(--spacing-00) var(--spacing-08);
@@ -158,15 +181,18 @@
   color: var(--text-color);
   font-family: var(--heading-font-family-bold);
 }
+
 /* Roboto Small (300 light) for all hero paragraphs */
 .hero p {
   margin: var(--spacing-00);
   padding-bottom: var(--spacing-16);
 }
+
 .navy-overlap .hero:where(:not(.body-unica-32-reg)) :where(p) {
     font-size: var(--font-size-16);
     line-height: var(--line-height-22);
 }
+
 /* Height-tall hero paragraph — larger font matching body-unica-32-reg scale
    Uses higher specificity to override navy-overlap when both are present */
 .navy-overlap.height-tall .hero :where(p),
@@ -175,10 +201,12 @@
   line-height: var(--line-height-26);
   margin-top: var(--spacing-08);
 }
+
 .hero.light-font p {
   font-family: var(--roboto-light-font-family);
   font-weight: var(--font-weight-300);
 }
+
 .hero a.button {
   background: none;
   font-family: var(--roboto-bold-font-family);
@@ -194,11 +222,13 @@
   margin: var(--spacing-16) 0 0;
   border: 0;
 }
+
 .hero :where(a).button:hover {
   color: var(--link-hover-color);
   cursor: pointer;
   background: none;
 }
+
 @media (width >= 744px) {
   .hero > div:first-child {
     min-height: var(--hero-image-container-height);
@@ -247,6 +277,7 @@
     line-height: var(--line-height-40);
   }
 }
+
 @media (width >= 1024px) {
     .hero > div:first-child {
       min-height: var(--hero-image-container-height);
@@ -288,16 +319,19 @@
     line-height: 4rem;
   }
 }
+
 /* =====================================================
    Hero Profile Variant — no hero image, navy band
    Authoring: use block name "Hero (profile)"
    ===================================================== */
+
 /* Section override — full-width so navy band spans edge-to-edge */
 .hero-container,
 .hero-profile-section {
   max-width: var(--content-max-width-wide);
   margin-bottom: var(--spacing-32);
 }
+
 /* Profile breadcrumbs — uppercase, 14px to match live site */
 .hero.profile .hero-breadcrumbs :where(ol li) {
   font-size: var(--font-size-14);
@@ -305,10 +339,13 @@
   text-transform: uppercase;
   font-weight: var(--font-weight-700);
 }
+
 .profile .hero-breadcrumbs :where(ol li)[aria-current] {
   font-weight: var(--font-weight-700);
 }
+
 /* Profile breadcrumb separator — inherits base styling */
+
 /* Navy background band replaces hero image */
 .hero.profile > :where(div):first-child {
   background-color: var(--color-navy-dark);
@@ -317,29 +354,36 @@
    min-height: var(--hero-profile-container-height);
    margin: var(--spacing-00);
 }
+
 .profile.purple-overlap > :where(div):first-child {
  background-color: var(--color-accent-purple);
 }
+
 .large-radius .hero > :where(div):first-child {
  border-top-left-radius: var(--border-top-radius);
 }
+
 .medium-radius .hero > :where(div):first-child {
   border-top-left-radius: var(--border-top-radius-medium);
 }
+
 .hero.profile > :where(div):first-child :where(picture),
 .hero.profile > :where(div):first-child :where(img) {
   display: none;
 }
+
 /* White overlap card — profile spacing */
 .hero.profile > :where(div):nth-child(2) {
   margin-top: var(--spacing-n48);
   padding: var(--spacing-32) var(--spacing-20) var(--spacing-00);
 }
+
 /* Subtitle — Roboto Small, weight 300 (matches --roboto-small-font-family) */
 .hero.profile.light-font :where(p) {
   font-family: var(--roboto-small-font-family);
   font-weight: var(--font-weight-300);
 }
+
 @media (width >= 744px) {
 .hero.profile > :where(div):nth-child(2) {
   margin-top: var(--spacing-n64);
@@ -350,6 +394,7 @@
 margin-bottom: var(--spacing-80);
 }
 }
+
 @media (width >= 1024px) {
   .hero-profile-section {
     margin-bottom: var(--spacing-00);
@@ -370,6 +415,7 @@ margin-bottom: var(--spacing-80);
     max-width: 85%;
   }
 }
+
 /* hero grid */
 .hero .hero-text-container {
   width: 100%;
@@ -378,9 +424,11 @@ margin-bottom: var(--spacing-80);
   grid-template-columns: repeat(6, 1fr);
   align-self: center;
 }
+
 .hero .cmp-container-x-large {
   grid-column: 1 / span 6;
 }
+
 @media (width >= 744px) {
 .hero .hero-text-container {
     grid-template-columns: repeat(8, 1fr);
@@ -391,6 +439,7 @@ margin-bottom: var(--spacing-80);
   grid-column: 1 / span 8;
 }
 }
+
 @media (width >= 1024px) {
 .hero .hero-text-container {
     grid-template-columns: repeat(12, 1fr);
@@ -400,11 +449,13 @@ margin-bottom: var(--spacing-80);
   grid-column: 2 / span 10;
 }
 }
+
 /* =====================================================
    Hero Landing Variant — full-bleed image with gradient overlay
    Authoring: use block name "Hero (landing)"
    Matches abbvie.com homepage hero 1:1 across breakpoints
    ===================================================== */
+
 /* Section override — edge-to-edge, no bottom margin */
 .hero-landing-section {
   max-width: var(--content-max-width-wide);
@@ -413,18 +464,22 @@ margin-bottom: var(--spacing-80);
   margin-bottom: var(--spacing-00);
   padding: var(--spacing-00);
 }
+
 .hero-landing-section:where(:has(.fragment-wrapper)) {
   margin-bottom: var(--spacing-32);
 }
+
 .fragment-wrapper .hero-landing-section {
     margin-right: auto;
     margin-left: auto;
 }
+
 .hero-landing-section .hero-wrapper {
   margin: var(--spacing-00);
   max-width: none;
   overflow: hidden;
 }
+
 /* Block root — min-height for hero image area; grows with press-releases content */
 .hero.landing {
   position: relative;
@@ -434,6 +489,7 @@ margin-bottom: var(--spacing-80);
   min-height: var(--hero-landing-container-height);
   border-top-left-radius: var(--border-top-left-radius);
 }
+
 /* Re-enable gradient overlay via ::after — fixed height covers image area only */
 .hero.landing::after {
   display: block;
@@ -448,6 +504,7 @@ margin-bottom: var(--spacing-80);
   pointer-events: none;
   border-top-left-radius: var(--border-top-left-radius);
 }
+
 /* Image container — fixed height covers image area only */
 .hero.landing > :where(div):first-child {
   position: absolute;
@@ -462,6 +519,7 @@ margin-bottom: var(--spacing-80);
   z-index: var(--z-index-0);
   border-top-left-radius: var(--border-top-left-radius);
 }
+
 .hero.landing picture {
   position: absolute;
   inset: var(--spacing-00);
@@ -469,6 +527,7 @@ margin-bottom: var(--spacing-80);
   width: 100%;
   height: 100%;
 }
+
 .hero.landing img {
   position: absolute;
   inset: var(--spacing-00);
@@ -480,11 +539,13 @@ margin-bottom: var(--spacing-80);
   border-top-left-radius: var(--border-radius-00);
   max-height: none;
 }
+
 /* Disable grid for landing — use direct padding for text offset */
 .hero.landing .hero-text-container {
   display: block;
   align-self: stretch;
 }
+
 /* Text container — positioned over image, text starts at padding-top */
 .hero.landing > :where(div):nth-child(2) {
   position: relative;
@@ -497,6 +558,7 @@ margin-bottom: var(--spacing-80);
   display: block;
   box-sizing: border-box;
 }
+
 /* Text colours — white on dark overlay */
 .hero.landing h1 {
   color: var(--color-white);
@@ -504,14 +566,17 @@ margin-bottom: var(--spacing-80);
   line-height: var(--line-height-34);
   margin-bottom: var(--spacing-16);
 }
+
 .hero.landing p {
   color: var(--color-white);
   margin-bottom: var(--spacing-16);
 }
+
 /* CTA link — blue, uppercase, no background */
 .hero.landing .button-container {
 padding: var(--spacing-00);
 }
+
 .hero.landing :where(a).button {
   color: var(--hero-button-color);
   background: none;
@@ -526,20 +591,25 @@ padding: var(--spacing-00);
   padding: var(--spacing-00) var(--spacing-02) var(--spacing-03);
   margin: var(--spacing-00);
 }
+
 .hero.landing :where(a.button):hover {
   color: var(--hero-button-hover-color);
   background: none;
 }
+
 /* Landing breadcrumbs — white text on dark overlay */
 .hero.landing .hero-breadcrumbs :where(ol li) {
   color: var(--color-white);
 }
+
 .hero.landing .hero-breadcrumbs :where(li a) {
   color: var(--color-white);
 }
+
 .landing .hero-breadcrumbs :where(ol li)[aria-current] {
   color: var(--color-text-on-dark-60);
 }
+
 /* ---- Tablet (>=744px) ---- */
 @media (width >= 744px) {
 .hero-landing-section:where(:has(.fragment-wrapper)) {
@@ -574,6 +644,7 @@ padding: var(--spacing-00);
   font-size: var(--font-size-14)
   }
 }
+
 /* ---- Desktop (>=1024px) ---- */
 @media (width >= 1024px) {
   .hero-landing-section {
@@ -604,11 +675,13 @@ padding: var(--spacing-00);
     line-height: var(--line-height-24);
     }
 }
+
 /* =====================================================
    Landing hero — Press-releases wrapper (white overlap box)
    Matches abbvie.com .homepage-overlap > .cmp-container
    Uses same margin/width pattern as profile variant text panel
    ===================================================== */
+
 /* ---- Mobile (base) ---- */
 .hero.landing .hero-press-releases-container {
   background-color: var(--color-white);
@@ -618,9 +691,11 @@ padding: var(--spacing-00);
   position: relative;
   color: var(--text-color);
 }
+
 .hero.landing .hero-press-releases-container :where(p) {
 color: inherit;
 }
+
 /* ---- Tablet (>=744px) ---- */
 @media (width >= 744px) {
   .hero.landing .hero-press-releases-container {
@@ -629,6 +704,7 @@ color: inherit;
     padding: var(--spacing-56) var(--spacing-70) var(--spacing-00);
   }
 }
+
 /* ---- Desktop (>=1024px) — profile-like auto centering ---- */
 @media (width >= 1024px) {
   .hero.landing .hero-press-releases-container {
@@ -637,6 +713,7 @@ color: inherit;
     padding: var(--spacing-80) var(--spacing-55) var(--spacing-00);
   }
 }
+
 /* =====================================================
    Hero Stat-Overlay Variant — oversized stat number on image
    Authoring: use block name "Hero (stat-overlay)"
@@ -644,6 +721,7 @@ color: inherit;
 .hero.stat-overlay > :where(div):nth-child(2) {
   overflow: visible;
 }
+
 .hero.stat-overlay .hero-stat-number {
   display: block;
   font-family: var(--heading-font-family-bold);
@@ -652,6 +730,7 @@ color: inherit;
   line-height: var(--hero-stat-line-height, 0.9);
   margin-bottom: var(--spacing-16);
 }
+
 /* =====================================================
    Hero Multilayer Variant — buddy-state layer switching
    Authoring: use block name "Hero (multilayer)"
@@ -661,6 +740,7 @@ color: inherit;
 .hero.multilayer > :where(div):first-child {
   position: relative;
 }
+
 .hero.multilayer .hero-layer {
   position: absolute;
   inset: 0;
@@ -668,10 +748,12 @@ color: inherit;
   transition: var(--hero-layer-transition);
   pointer-events: none;
 }
+
 .hero.multilayer .hero-layer.is-active {
   opacity: 1;
   pointer-events: auto;
 }
+
 .hero.multilayer .hero-layer:first-child {
   position: relative;
   opacity: 1;
@@ -680,6 +762,7 @@ color: inherit;
 .hero.full :where(a).button { color: var(--color-text-on-dark, #fff); }
 /* stylelint-disable-next-line no-descending-specificity */
 .hero.solid :where(a).button { color: var(--color-text-on-dark, #fff); }
+
 /* =====================================================
    Hero Dual-CTA Variant — two side-by-side CTAs
    Authoring: use block name "Hero (dual-cta)"
@@ -690,12 +773,15 @@ color: inherit;
   gap: var(--spacing-16, 1.6rem);
   align-items: center;
 }
+
 .hero.dual-cta .button-container :where(a).button:first-child {
   margin-top: var(--spacing-16);
 }
+
 .hero.dual-cta .button-container :where(a).button:not(:first-child) {
   margin-top: var(--spacing-16);
 }
+
 /* =====================================================
    Hero Eyebrow Text
    Detected by JS: first <p> before <h1>/<h2> with no links
@@ -710,6 +796,7 @@ color: inherit;
   margin-bottom: var(--spacing-08, 0.8rem);
   color: inherit;
 }
+
 /* Indication banner: ISI header — absolutely pinned to top of hero, above overlay */
 .hero .hero-indication {
   position: absolute;
@@ -725,13 +812,16 @@ color: inherit;
   text-align: center;
   box-sizing: border-box;
 }
+
 .hero .hero-indication p {
   margin: 0;
   color: inherit;
 }
+
 .hero .hero-indication strong {
   font-weight: 700;
 }
+
 /* Image caption: "Actor portrayal." etc — bottom-right corner of image cell */
 .hero .hero-image-caption {
   position: absolute;
@@ -742,6 +832,7 @@ color: inherit;
   font-style: italic;
   pointer-events: none;
 }
+
 /* =====================================================
    Text Alignment Modifiers
    ===================================================== */
@@ -750,11 +841,13 @@ color: inherit;
 .hero.text-center p {
   text-align: center;
 }
+
 .hero.text-right > :where(div):nth-child(2),
 .hero.text-right h1,
 .hero.text-right p {
   text-align: right;
 }
+
 /* =====================================================
    Text Color Override Modifiers
    ===================================================== */
@@ -765,6 +858,7 @@ color: inherit;
 .hero.text-light .hero-eyebrow {
   color: var(--color-text-on-dark, #fff);
 }
+
 .hero.text-dark h1,
 .hero.text-dark h2,
 .hero.text-dark h3,
@@ -772,6 +866,7 @@ color: inherit;
 .hero.text-dark .hero-eyebrow {
   color: var(--text-color);
 }
+
 /* =====================================================
    Hero Full Variant — full-bleed image, tall, white text overlay
    Authoring: use block name "Hero (full)"
@@ -783,6 +878,7 @@ color: inherit;
   align-items: center;
   overflow: hidden;
 }
+
 .hero.full > :where(div):first-child {
   position: absolute;
   inset: 0;
@@ -792,6 +888,7 @@ color: inherit;
   overflow: hidden;
   z-index: 0;
 }
+
 .hero.full picture {
   position: absolute;
   inset: 0;
@@ -799,6 +896,7 @@ color: inherit;
   width: 100%;
   height: 100%;
 }
+
 .hero.full img {
   position: absolute;
   inset: 0;
@@ -809,6 +907,7 @@ color: inherit;
   border-radius: 0;
   max-height: unset;
 }
+
 /* Dark left-to-transparent overlay for legibility */
 .hero.full::after {
   display: block;
@@ -819,6 +918,7 @@ color: inherit;
   z-index: 2;
   pointer-events: none;
 }
+
 .hero.full > :where(div):nth-child(2) {
   position: relative;
   z-index: 2;
@@ -828,20 +928,25 @@ color: inherit;
   padding: var(--spacing-80, 8rem) var(--spacing-55, 5.5rem);
   max-width: var(--hero-content-max-width-full);
 }
+
 .hero.full .hero-text-container {
   display: block;
 }
+
 .hero.full h1 {
   color: var(--color-text-on-dark, #fff);
   font-size: var(--font-size-h1-hero, var(--font-size-h1, 2.6rem));
   line-height: var(--line-height-h1-hero, var(--line-height-h1, 2.8rem));
 }
+
 .hero.full p {
   color: var(--color-text-on-dark-90);
 }
+
 .hero.full .hero-eyebrow {
   color: var(--color-text-on-dark-80);
 }
+
 @media (width < 744px) {
   .hero.full {
     min-height: var(--hero-full-min-height-mobile);
@@ -852,6 +957,7 @@ color: inherit;
     padding: var(--spacing-32, 3.2rem) var(--spacing-20, 2rem);
   }
 }
+
 @media (width >= 1024px) {
   .hero.full {
     min-height: var(--hero-full-min-height-desktop);
@@ -861,6 +967,7 @@ color: inherit;
     max-width: var(--hero-content-max-width-full-desktop);
   }
 }
+
 /* =====================================================
    Hero Compact Variant — short interior-page hero
    Authoring: use block name "Hero (compact)"
@@ -872,6 +979,7 @@ color: inherit;
   align-items: center;
   overflow: hidden;
 }
+
 .hero.compact > :where(div):first-child {
   position: absolute;
   inset: 0;
@@ -881,6 +989,7 @@ color: inherit;
   overflow: hidden;
   z-index: 0;
 }
+
 .hero.compact picture {
   position: absolute;
   inset: 0;
@@ -888,6 +997,7 @@ color: inherit;
   width: 100%;
   height: 100%;
 }
+
 .hero.compact img {
   position: absolute;
   inset: 0;
@@ -897,6 +1007,7 @@ color: inherit;
   border-radius: 0;
   max-height: unset;
 }
+
 .hero.compact::after {
   display: block;
   content: '';
@@ -906,6 +1017,7 @@ color: inherit;
   z-index: 1;
   pointer-events: none;
 }
+
 .hero.compact > :where(div):nth-child(2) {
   position: relative;
   z-index: 2;
@@ -915,20 +1027,25 @@ color: inherit;
   padding: var(--spacing-40, 4rem) var(--spacing-55, 5.5rem);
   max-width: var(--hero-content-max-width-compact);
 }
+
 .hero.compact .hero-text-container {
   display: block;
 }
+
 .hero.compact h1 {
   color: var(--color-text-on-dark, #fff);
   font-size: var(--font-size-h2, 2rem);
   line-height: var(--line-height-h2, 2.5rem);
 }
+
 .hero.compact p {
   color: var(--color-text-on-dark-90);
 }
+
 .hero.compact .hero-eyebrow {
   color: var(--color-text-on-dark-80);
 }
+
 @media (width < 744px) {
   .hero.compact {
     min-height: var(--hero-compact-min-height-mobile);
@@ -939,6 +1056,7 @@ color: inherit;
     padding: var(--spacing-32, 3.2rem) var(--spacing-20, 2rem);
   }
 }
+
 @media (width >= 744px) {
   .hero.compact {
     min-height: var(--hero-compact-min-height-tablet);
@@ -949,6 +1067,7 @@ color: inherit;
     line-height: var(--line-height-h1, 2.8rem);
   }
 }
+
 /* =====================================================
    Hero Split Variant — 50/50 image + text side by side
    Authoring: use block name "Hero (split)"
@@ -960,6 +1079,7 @@ color: inherit;
   align-items: center;
   overflow: hidden;
 }
+
 .hero.split > :where(div):first-child {
   position: relative;
   min-height: unset;
@@ -969,10 +1089,12 @@ color: inherit;
   align-items: center;
   justify-content: center;
 }
+
 .hero.split picture {
   display: block;
   width: 100%;
 }
+
 .hero.split img {
   max-width: 100%;
   height: auto;
@@ -982,6 +1104,7 @@ color: inherit;
   position: static;
   display: block;
 }
+
 .hero.split > :where(div):nth-child(2) {
   background: transparent;
   border-radius: 0;
@@ -989,9 +1112,11 @@ color: inherit;
   padding: var(--spacing-56, 5.6rem) var(--spacing-55, 5.5rem);
   max-width: unset;
 }
+
 .hero.split .hero-text-container {
   display: block;
 }
+
 @media (width < 744px) {
   .hero.split {
     grid-template-columns: 1fr;
@@ -1007,6 +1132,7 @@ color: inherit;
     padding: var(--spacing-32, 3.2rem) var(--spacing-20, 2rem);
   }
 }
+
 /* =====================================================
    Hero Centered Variant — centered text over image or color bg
    Authoring: use block name "Hero (centered)"
@@ -1019,6 +1145,7 @@ color: inherit;
   justify-content: center;
   overflow: hidden;
 }
+
 .hero.centered > :where(div):first-child {
   position: absolute;
   inset: 0;
@@ -1028,6 +1155,7 @@ color: inherit;
   overflow: hidden;
   z-index: 0;
 }
+
 .hero.centered picture {
   position: absolute;
   inset: 0;
@@ -1035,6 +1163,7 @@ color: inherit;
   width: 100%;
   height: 100%;
 }
+
 .hero.centered img {
   position: absolute;
   inset: 0;
@@ -1044,6 +1173,7 @@ color: inherit;
   border-radius: 0;
   max-height: unset;
 }
+
 .hero.centered::after {
   display: block;
   content: '';
@@ -1053,6 +1183,7 @@ color: inherit;
   z-index: 1;
   pointer-events: none;
 }
+
 .hero.centered > :where(div):nth-child(2) {
   position: relative;
   z-index: 2;
@@ -1063,18 +1194,22 @@ color: inherit;
   max-width: var(--hero-content-max-width-centered);
   text-align: center;
 }
+
 .hero.centered .hero-text-container {
   display: block;
 }
+
 .hero.centered h1 {
   color: var(--color-text-on-dark, #fff);
   text-align: center;
 }
+
 .hero.centered p {
   color: var(--color-text-on-dark-90);
   text-align: center;
 }
 .hero.centered .hero-eyebrow { color: var(--color-text-on-dark-80); }
+
 @media (width < 744px) {
   .hero.centered {
     min-height: var(--hero-centered-min-height-mobile);
@@ -1085,6 +1220,7 @@ color: inherit;
     max-width: 90%;
   }
 }
+
 /* =====================================================
    Hero Video Variant — Brightcove background video
    Authoring: use block name "Hero (video)"
@@ -1099,6 +1235,7 @@ color: inherit;
   align-items: center;
   overflow: hidden;
 }
+
 .hero.video > :where(div):first-child {
   position: absolute;
   inset: 0;
@@ -1108,6 +1245,7 @@ color: inherit;
   overflow: hidden;
   z-index: 0;
 }
+
 .hero.video picture {
   position: absolute;
   inset: 0;
@@ -1115,6 +1253,7 @@ color: inherit;
   width: 100%;
   height: 100%;
 }
+
 .hero.video img {
   position: absolute;
   inset: 0;
@@ -1124,12 +1263,14 @@ color: inherit;
   border-radius: 0;
   max-height: unset;
 }
+
 .hero.video .hero-video-bg {
   position: absolute;
   inset: 0;
   overflow: hidden;
   z-index: 1;
 }
+
 .hero.video .hero-video-bg .video-js,
 .hero.video .hero-video-bg video {
   position: absolute;
@@ -1142,6 +1283,7 @@ color: inherit;
   transform: translate(-50%, -50%);
   object-fit: cover;
 }
+
 .hero.video::after {
   display: block;
   content: '';
@@ -1151,6 +1293,7 @@ color: inherit;
   z-index: 2;
   pointer-events: none;
 }
+
 .hero.video > :where(div):nth-child(2) {
   position: relative;
   z-index: 3;
@@ -1160,16 +1303,20 @@ color: inherit;
   padding: var(--spacing-80, 8rem) var(--spacing-55, 5.5rem);
   max-width: var(--hero-content-max-width-full);
 }
+
 .hero.video .hero-text-container {
   display: block;
 }
 .hero.video h1 { color: var(--color-text-on-dark, #fff); }
+
 .hero.video p {
   color: var(--color-text-on-dark-90);
 }
+
 .hero.video .hero-eyebrow {
   color: var(--color-text-on-dark-80);
 }
+
 /* Mobile: hide video, show fallback poster image only */
 @media (width < 744px) {
   .hero.video {
@@ -1185,6 +1332,7 @@ color: inherit;
     padding: var(--spacing-32, 3.2rem) var(--spacing-20, 2rem);
   }
 }
+
 @media (width >= 1024px) {
   .hero.video {
     min-height: var(--hero-video-min-height-desktop);
@@ -1194,6 +1342,7 @@ color: inherit;
     max-width: var(--hero-content-max-width-full-desktop);
   }
 }
+
 /* =====================================================
    Hero Solid Variant — solid brand color background, no image required
    Authoring: use block name "Hero (solid)"
@@ -1206,6 +1355,7 @@ color: inherit;
   align-items: center;
   background-color: var(--hero-solid-bg, var(--color-brand-primary, var(--hero-solid-bg-fallback)));
 }
+
 .hero.solid > :where(div):first-child {
   position: relative;
   min-height: unset;
@@ -1214,12 +1364,15 @@ color: inherit;
   display: flex;
   align-items: center;
 }
+
 .hero.solid > :where(div):first-child:empty {
   display: none;
 }
+
 .hero.solid picture {
   display: block;
 }
+
 .hero.solid img {
   max-height: var(--hero-solid-img-max-height);
   width: auto;
@@ -1229,6 +1382,7 @@ color: inherit;
   position: static;
   height: auto;
 }
+
 .hero.solid > :where(div):nth-child(2) {
   background: transparent;
   border-radius: 0;
@@ -1236,19 +1390,24 @@ color: inherit;
   padding: var(--spacing-56, 5.6rem) var(--spacing-55, 5.5rem);
   max-width: var(--hero-content-max-width-solid);
 }
+
 .hero.solid .hero-text-container {
   display: block;
 }
+
 .hero.solid h1,
 .hero.solid h2 {
   color: var(--color-text-on-dark, #fff);
 }
+
 .hero.solid p {
   color: var(--color-text-on-dark-90);
 }
+
 .hero.solid .hero-eyebrow {
   color: var(--color-text-on-dark-80);
 }
+
 @media (width < 744px) {
   .hero.solid {
     min-height: var(--hero-solid-min-height-mobile);
@@ -1264,11 +1423,13 @@ color: inherit;
     padding: var(--spacing-32, 3.2rem) var(--spacing-20, 2rem);
   }
 }
+
 @media (width >= 1024px) {
   .hero.solid {
     min-height: var(--hero-solid-min-height-desktop);
   }
 }
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -1280,11 +1441,13 @@ color: inherit;
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 @custom-media --bp-tablet (min-width: 744px);
 @custom-media --bp-desktop (min-width: 1024px);
 @custom-media --bp-wide (min-width: 1440px);
+
 :root {
 /* -----------------------------------------------------------
    PX → REM Conversion Helper
@@ -1678,6 +1841,7 @@ color: inherit;
   --cdp-max-width: 1180px;
   --cdp-letter-spacing-title: 0.02em;
 }
+
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -1685,6 +1849,7 @@ color: inherit;
     --hero-tall-image-container-height: 41.6rem;
   }
 }
+
 @media (--bp-desktop) {
   :root {
     --border-top-radius: 8rem;
@@ -1692,6 +1857,7 @@ color: inherit;
     --hero-tall-image-container-height: 60.8rem;
   }
 }
+
 /* ============================================================
    LINZESS DTC — Brand Token Overrides
    Source: linzess.com (Platform C)
@@ -1737,8 +1903,8 @@ color: inherit;
   --color-border-muted: #b8b8b8;
 
   /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgba(0, 0, 0, 0.8);
-  --color-overlay-muted: rgba(115, 133, 159, 0.75);
+  --color-overlay-dark: rgb(0 0 0 / 80%);
+  --color-overlay-muted: rgb(115 133 159 / 75%);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Lato', sans-serif;
@@ -1837,11 +2003,11 @@ color: inherit;
   --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
-  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
+  --shadow-safety-bar: rgb(0 0 0 / 25%) 0 0 10px 0;
 
   /* ---- Gradient ---- */
-  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
-  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+  --gradient-hero-overlay: linear-gradient(rgb(0 0 0 / 80%), rgb(255 255 255 / 0%));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115 133 159) 100%);
   --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
@@ -1885,9 +2051,11 @@ color: inherit;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
 }
+
 /* ============================================================
    LINZESS DTC — Hero Block Overrides (XWalk/UE preview)
    ============================================================ */
+
 /* Heading: Bebas Neue, uppercase, purple */
 .hero h1 {
   color: var(--color-text-heading);
@@ -1896,19 +2064,23 @@ color: inherit;
   line-height: var(--line-height-h1-hero);
   text-transform: uppercase;
 }
+
 .hero h2,
 .hero h3 {
   font-family: var(--heading-font-family);
   text-transform: uppercase;
 }
+
 /* Body: Lato */
 .hero p {
   font-family: var(--body-font-family);
 }
+
 /* Profile band: purple */
 .hero.profile > :where(div):first-child {
   background-color: var(--color-brand-primary);
 }
+
 /* Profile text panel: white text on purple band */
 .hero.profile h1,
 .hero.profile h2,
@@ -1916,32 +2088,39 @@ color: inherit;
 .hero.profile p {
   color: var(--color-text-on-dark);
 }
+
 .hero.profile .hero-breadcrumbs :where(ol li),
 .hero.profile .hero-breadcrumbs :where(li a) {
   color: var(--color-text-on-dark);
 }
+
 /* CTA button: orange accent */
 .hero :where(a).button {
   color: var(--color-brand-accent);
 }
+
 .hero.landing :where(a).button,
 .hero.full :where(a).button,
 .hero.video :where(a).button {
   color: var(--color-brand-accent);
 }
+
 /* Landing/full gradient: dark-to-transparent overlay from tokens */
 .hero.landing::after,
 .hero.full::after,
 .hero.video::after {
   background: var(--gradient-hero-overlay);
 }
+
 /* Solid background: purple */
 .hero.solid {
   background-color: var(--color-brand-primary);
 }
+
 .hero.solid :where(a).button {
   color: var(--color-brand-accent);
 }
+
 /* ============================================================
    LINZESS nav-overlap heroes
    Custom classes:
@@ -1953,26 +2132,31 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   background: var(--gradient-hero-nav-wrapper);
   box-shadow: none;
 }
+
 /* Nav hamburger: transparent bg + white text (lower specificity — must come first) */
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button {
   background-color: transparent;
   color: var(--color-text-on-dark);
 }
+
 /* Nav text: white on dark overlay */
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-brand a,
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-sections > .default-content-wrapper > ul > li > button,
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-tools > .default-content-wrapper > ul > li > button {
   color: var(--color-text-on-dark);
 }
+
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-hamburger button > span {
   background: var(--color-text-on-dark);
 }
+
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:hover::after,
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:focus::after,
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button:focus-visible::after,
 body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)) header nav .nav-item-level-0 .default-content-wrapper > ul > li > button[aria-expanded='true']::after {
   background: var(--color-brand-accent);
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
   position: relative;
   display: flex;
@@ -1982,9 +2166,11 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   overflow: hidden;
   min-height: var(--hero-behind-nav-min-height);
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):has(> div:empty) {
   display: none;
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > div:first-child {
   position: absolute;
   inset: 0;
@@ -1995,11 +2181,13 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   overflow: hidden;
   height: auto;
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child picture,
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child img {
   width: 100%;
   height: 100%;
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) > :where(div):first-child img {
   position: relative;
   inset: 0;
@@ -2007,6 +2195,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   border-radius: 0;
   max-height: none;
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero)::after {
   display: block;
   content: '';
@@ -2016,6 +2205,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   z-index: 1;
   pointer-events: none;
 }
+
 /* h1/h2/h3/p: white text on dark overlay — comes before more specific p rules */
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1,
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h2,
@@ -2023,12 +2213,14 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
   color: var(--color-text-on-dark);
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
   margin: 0 0 var(--spacing-20);
   font-size: var(--font-size-h1-hero);
   font-weight: var(--font-weight-body);
   line-height: 90%;
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) p {
   font-size: var(--hero-body-font-size);
   line-height: var(--hero-body-line-height);
@@ -2055,6 +2247,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   width: var(--spacing-64);
   height: var(--hero-divider-height);
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
   position: relative;
   z-index: 2;
@@ -2065,10 +2258,12 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   background: transparent;
   max-width: none;
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
   grid-column: auto;
   max-width: var(--hero-cmp-max-width);
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-eyebrow {
   display: inline-block;
   padding: 0;
@@ -2081,6 +2276,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   line-height: var(--hero-eyebrow-line-height);
   text-transform: capitalize;
 }
+
 .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) .hero-image-caption {
   position: absolute;
   right: 0;
@@ -2100,25 +2296,31 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   text-align: right;
   text-shadow: var(--hero-caption-text-shadow);
 }
+
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
   min-height: var(--hero-cta-min-height);
   aspect-ratio: 2.343 / 1;
 }
+
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
   padding-bottom: var(--hero-cta-padding-bottom);
 }
+
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
   max-width: var(--hero-cta-text-max-width);
 }
+
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
   font-size: var(--font-size-40);
   line-height: 0.95;
   max-width: none;
   width: 100%;
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
   min-height: auto;
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
   position: absolute;
   left: -5%;
@@ -2135,20 +2337,25 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   margin-top: 1.6rem;
   font-size: var(--font-size-legal-large);
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) h1 {
   font-size: var(--font-size-40);
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
   width: min(100%, 72rem);
   padding-bottom: 7.6rem;
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
   max-width: var(--hero-cta-text-max-width-tablet);
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .button-container {
   padding-bottom: 0;
   margin-top: 0;
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button {
   min-width: var(--hero-cta-btn-min-width);
   padding: var(--hero-cta-btn-padding);
@@ -2163,6 +2370,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   text-transform: none;
   margin-top: 0;
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button::after {
   display: inline-block;
   margin-left: var(--hero-cta-btn-arrow-margin);
@@ -2170,10 +2378,12 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   font-size: var(--hero-cta-btn-arrow-font-size);
   line-height: 1;
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) :where(a).button:hover {
   background: var(--color-brand-accent-hover);
   color: var(--color-brand-primary);
 }
+
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
   position: absolute;
   display: flex;
@@ -2184,6 +2394,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   padding: 0;
   margin-inline: auto;
 }
+
 .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
   position: relative;
   z-index: 2;
@@ -2200,13 +2411,16 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   font-weight: 800;
   text-transform: uppercase;
 }
+
 .hero.linzess-behind-nav-linzess-editorial-hero h1 {
   line-height: 36px;
-  margin: 0;
+  margin: 0 0 20px;
 }
+
 .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
   padding: 50px 20px 20px;
 }
+
 .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
   display: block;
   margin-top: var(--spacing-24);
@@ -2215,6 +2429,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   width: var(--spacing-64);
   height: var(--hero-divider-height);
 }
+
 @media (width < 744px) {
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
     aspect-ratio: 3 / 4;
@@ -2256,6 +2471,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     font-size: var(--font-size-body);
   }
 }
+
 @media (width >= 744px) {
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
     min-height: auto;
@@ -2291,6 +2507,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     display: none;
   }
 }
+
 @media (width >= 1024px) {
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
     min-height: var(--hero-behind-nav-min-height-desktop);

@@ -85,22 +85,28 @@
 
 /* ── Sticky stuck ────────────────────────────────────────────────────── */
 
-/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
-   Override to keep the pill at --section-nav-mobile-width, centred. */
-.section-nav.sticky,
-.section-nav.sticky.is-stuck {
+/* Non-stuck: sticky at top so the pill sits in flow over the hero. */
+.section-nav.sticky {
   position: sticky;
   top: 0;
-  left: auto;
-  right: auto;
-  transform: none;
   z-index: 100;
 }
 
+/* Stuck: pin the pill to the viewport top (position:fixed), kept content-width
+   and centred via a 50% left anchor + translateX(-50%). No box-shadow and no
+   full-width strip — matches live find-relief, where the stuck element is the
+   pill itself (independent, no white lines beside it). Top corners flatten so
+   the pill reads as joined to the top edge. */
 .section-nav.sticky.is-stuck {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  z-index: 100;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  box-shadow: var(--shadow-section-nav-stuck);
+  box-shadow: none;
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -236,8 +242,7 @@
     width: 100%;
   }
 
-  .section-nav.sticky,
-  .section-nav.sticky.is-stuck {
+  .section-nav.sticky {
     position: sticky;
     top: 0;
     left: auto;
@@ -246,8 +251,18 @@
     width: 100%;
   }
 
+  /* Desktop stuck: keep the pill content-width and centred (NOT a full-width
+     bar) and carry no box-shadow — matches live find-relief, where the stuck
+     element is the independent pill with no strip/lines beside it. The inner
+     nav holds the pill background + flattened top corners. */
   .section-nav.sticky.is-stuck {
-    box-shadow: var(--shadow-section-nav-stuck);
+    position: fixed;
+    top: 0;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: auto;
+    box-shadow: none;
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
@@ -308,13 +323,16 @@
     display: flex;
   }
 
-  /* Inline link — restore desktop padding and reset mobile overrides */
+  /* Inline link — restore desktop padding and reset mobile overrides.
+     Match the EDS reference pill: 16px links, vertical centring via the
+     50px line-height (from the base link rule), horizontal padding only. */
   .section-nav.mobile-menu nav a {
     border-bottom: none;
     color: var(--section-nav-text);
     display: inline-block;
+    font-size: 16px;
     font-weight: var(--font-weight-semibold);
-    padding: var(--spacing-12) var(--spacing-24);
+    padding: 0 var(--spacing-24);
     text-align: unset;
     width: auto;
   }
