@@ -1477,8 +1477,6 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type ul {
   padding-left: var(--spacing-10);
 }
 
-/* Desktop (>=1024px): inside the white sub-card, image left + story right
-   via a 2-column grid (image spans both rows, heading over story). */
 /* Desktop (>=1024px): image left, heading + story stacked tightly on the
    right. The renderer flattens the cell into one <p> (display:contents), so
    the picture/h3/story are siblings. Float the image so the text wraps to its
@@ -1486,6 +1484,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type ul {
 @media (width >= 1024px) {
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
     display: block;
+    padding-top: 35px;
   }
 
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image picture {
