@@ -1009,15 +1009,13 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h
   letter-spacing: normal;
 }
 
-/* Hero text column: live's editorial-hero text container is ~100rem wide so
-   the H1 stays on one line. The base behind-nav hero caps it at 64rem and the
-   editorial cmp-container at 40rem, forcing a 2-line wrap. Widen for OTC. */
-main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
-  width: min(100%, 100rem);
-}
-
-main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
-  max-width: 100rem;
+/* Hero H1 wraps to two lines on live ("OTC & PRESCRIPTION" / "TREATMENTS") via
+   an authored <br>. Our content has no <br>, so cap the H1 width to force the
+   same break after "PRESCRIPTION". Line 1 measures ~6.2em at every breakpoint
+   (197px@32px mobile, 246px@40px desktop), so 8em fits line 1 but pushes the
+   longer "TREATMENTS" word to line 2 — matching live's break at all widths. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  max-width: 8em;
 }
 
 /* Hero bottom curve: the editorial-hero default draws a deep half-circle
