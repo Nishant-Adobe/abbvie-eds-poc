@@ -234,6 +234,15 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   z-index: 2;
 }
 
+/* Mobile: the hero image is only ~384px tall, so the -80px overlap lifted the
+   JUMP TO bar fully onto the photo. Live straddles the image's bottom edge
+   (bar bottom sits just below it), so reduce the overlap here. */
+@media (width < 768px) {
+  .section.section-nav-container {
+    margin-top: -36px;
+  }
+}
+
 /* ---- "How LINZESS Can Help" Section ---- */
 .section:has(.cards-grid-stat-card.whylinzess-symptoms) {
   text-align: center;

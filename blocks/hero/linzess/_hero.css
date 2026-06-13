@@ -442,6 +442,16 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     height: 100%;
   }
 
+  /* Editorial hero: live positions the eyebrow + headline in the lower half of
+     the banner so they sit BELOW the overlaid logo (header is ~152px tall).
+     Centering put the eyebrow at ~94px, overlapping the logo. Anchor the copy
+     to the bottom and clear the header with top padding. */
+  .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+    justify-content: flex-end;
+    padding-top: 152px;
+    padding-bottom: var(--spacing-40);
+  }
+
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
     bottom: var(--hero-mobile-curve-bottom);
     height: var(--hero-mobile-curve-height);
