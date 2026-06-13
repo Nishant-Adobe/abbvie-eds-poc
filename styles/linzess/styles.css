@@ -745,10 +745,13 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-se
 }
 
 /* Tackling page uses live's deeper arc (255px tall, top -60px) for every
-   section boundary; scoped to this page so the OTC arc stays as approved. */
-body:has(.section.triggers-section) main > .section:is(.triggers-section, .cheat-sheet-section, .more-like-this-section, .cta-cards-section)::before {
-  top: calc(-1 * var(--spacing-60));
-  height: 25.5rem;
+   section boundary; scoped to this page so the OTC arc stays as approved.
+   Desktop only — live keeps the shallow base arc at mobile and tablet. */
+@media (min-width: 1024px) {
+  body:has(.section.triggers-section) main > .section:is(.triggers-section, .cheat-sheet-section, .more-like-this-section, .cta-cards-section)::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 25.5rem;
+  }
 }
 
 /* Section heading (Bebas Neue, 40px / line-height 36px).
@@ -1314,7 +1317,7 @@ main > .section.triggers-section .columns.triggers .columns-item p:not(:has(pict
   margin: calc(-1 * var(--spacing-60)) 0 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
-  font-weight: var(--font-weight-body);
+  font-weight: 700;
   line-height: var(--line-height-body);
   color: var(--color-brand-primary);
 }
@@ -1384,19 +1387,24 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-24);
-  align-items: center;
+  align-items: stretch;
   padding: var(--spacing-24);
   background-color: var(--color-background-primary, #fff);
   border-radius: var(--linz-rounded-corner);
+  text-align: left;
 }
 
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p {
   display: contents;
 }
 
+/* Image is centered at the top of the card; heading/story below are
+   left-aligned (live). Spacing controlled by margins, not a flex gap, so the
+   heading-to-story gap stays tight (10px) while the image keeps breathing room. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image picture {
   flex: 0 0 auto;
+  align-self: center;
+  margin-bottom: var(--spacing-24);
 }
 
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image img {
@@ -1492,6 +1500,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     float: left;
     width: 18.2rem;
     margin-right: var(--spacing-24);
+    margin-bottom: 0;
   }
 
   /* overflow:hidden establishes a block formatting context so the heading and
@@ -1518,10 +1527,13 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     line-height: var(--line-height-h2-hero);
   }
 
-  /* Mobile: intro body + trigger labels shrink 16px -> 14px to match live */
+  /* Mobile: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px */
   main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
-  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child) {
+  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p:has(strong),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content li {
     font-size: var(--font-size-body);
   }
 
@@ -1556,10 +1568,13 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     line-height: var(--line-height-h2-hero);
   }
 
-  /* Tablet: intro body + trigger labels shrink 16px -> 14px to match live */
+  /* Tablet: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px */
   main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
-  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child) {
+  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p:has(strong),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content li {
     font-size: var(--font-size-body);
   }
 
@@ -1575,6 +1590,17 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
   main > .section.cta-cards-section .columns.cta-cards {
     grid-template-columns: 1fr;
     justify-content: stretch;
+  }
+
+  /* Trigger icons stay stacked + centered through tablet (live). The base
+     columns block sets align-items:start at >=768px, which pins the flex-column
+     items left; re-center them here without affecting the desktop row layout.
+     The label's -60px pull makes each item box 26px shorter than its icon image,
+     so the icon overflows below the box and the 40px flex gap collapses to ~14px
+     between blobs. Add that 26px back to the gap to restore live's 40px spacing. */
+  main > .section.triggers-section .columns.triggers {
+    align-items: center;
+    gap: calc(var(--spacing-40) + 2.6rem);
   }
 }
 
