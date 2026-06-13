@@ -81,6 +81,16 @@ export default async function decorate(block) {
     if (matched.length > 0) tabPanelMap.set(name, matched);
   });
 
+  // Fallback: if no section matched any tab by identifier (e.g. the section's
+  // tabName was dropped during publish), pair the consecutive sibling sections
+  // immediately following the tabs block to tabs by document order — one panel
+  // per tab. This keeps tabs functional even when the tabName metadata is lost.
+  if (tabPanelMap.size === 0 && panels.length > 0) {
+    tabNames.forEach((name, i) => {
+      if (panels[i]) tabPanelMap.set(name, [panels[i]]);
+    });
+  }
+
   // Build tab buttons and wrap matched panels
   let hasActiveTab = false;
   tabNames.forEach((name, i) => {
