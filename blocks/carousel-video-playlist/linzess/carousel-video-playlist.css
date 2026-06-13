@@ -927,6 +927,15 @@ body main .section.carousel-video-playlist-container .carousel-video-playlist-wr
   margin: 0 auto;
 }
 
+/* Patient Experiences: the intro copy already sits in the dark section header
+   above with its own spacing, so collapse the featured block's top padding to
+   tighten the intro-text → first-video gap to match live (~40px, not ~88px). */
+
+body main .section:has(.whylinzess-timeline) .carousel-video-playlist.featured,
+body main .section.whylinzess-patients .carousel-video-playlist.featured {
+  padding-top: 0;
+}
+
 /* Featured row: video (70%) + quote panel (30%) */
 
 .carousel-video-playlist.featured .cvp-featured-row {
