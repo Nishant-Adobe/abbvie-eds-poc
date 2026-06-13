@@ -1293,8 +1293,12 @@ main > .section.triggers-section .columns.triggers .columns-item-image img {
   object-fit: fill;
 }
 
-main > .section.triggers-section .columns.triggers .columns-item p {
-  margin: var(--spacing-12) 0 0;
+/* Label overlaps the lower part of the icon's translucent blob (live pulls it
+   ~60px up into the icon rather than sitting below it). Scope to the label
+   paragraph only — not the <p> that wraps the icon picture. */
+main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)) {
+  position: relative;
+  margin: calc(-1 * var(--spacing-60)) 0 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
   font-weight: var(--font-weight-body);
