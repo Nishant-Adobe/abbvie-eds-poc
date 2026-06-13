@@ -1370,14 +1370,18 @@ main > .section.cheat-sheet-section .columns.cheat-sheet {
   gap: var(--spacing-40);
 }
 
-/* Card: single white cell holding image, heading, story, and the "A Better
-   Way" strategies (one xwalk column item = one cell, so everything is authored
-   in the same cell and renders as flat siblings). */
+/* Card: single cell holding image, heading, story, and the "A Better Way"
+   strategies (one xwalk column item = one cell, so everything is authored in
+   the same cell and renders as flat siblings). Live shows a white sub-card for
+   the image/heading/story with a light-purple band for the strategies below;
+   recreate that two-tone look with a white card + a purple strategies band that
+   bleeds to the card edges. overflow:hidden clips the bleed to the card radius. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
   display: flex;
   flex-direction: column;
   background-color: var(--color-background-primary, #fff);
   border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
 }
 
 /* The renderer wraps the cell content in a single <p>; flatten it with
@@ -1430,10 +1434,14 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p
   color: var(--color-text-body, #4d4d4f);
 }
 
-/* "A Better Way…" lead-in (the <p> that holds a <strong>) — purple, spaced
-   above to separate it from the story. */
+/* "A Better Way…" lead-in (the <p> that holds a <strong>) — purple. It opens
+   the light-purple strategies band: negative margins bleed the band full-width
+   to the card edges (cancelling the cell's 24px padding), and top padding adds
+   the gap above the lead-in. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p:has(strong) {
-  margin: var(--spacing-16) 0 0;
+  margin: var(--spacing-24) calc(-1 * var(--spacing-24)) 0;
+  padding: var(--spacing-24) var(--spacing-24) var(--spacing-10);
+  background-color: var(--color-brand-primary-lighter);
   color: var(--color-brand-primary);
 }
 
@@ -1441,9 +1449,12 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p
   font-weight: var(--font-weight-body);
 }
 
+/* List continues the light-purple band; negative margins match the lead-in so
+   the band reads as one block, and bottom padding closes it at the card edge. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image ul {
-  margin: var(--spacing-10) 0 0;
-  padding-left: var(--spacing-14);
+  margin: 0 calc(-1 * var(--spacing-24)) calc(-1 * var(--spacing-24));
+  padding: 0 var(--spacing-24) var(--spacing-24) calc(var(--spacing-24) + var(--spacing-14));
+  background-color: var(--color-brand-primary-lighter);
   list-style-type: disc;
 }
 
@@ -1453,6 +1464,10 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li 
   font-size: var(--font-size-legal-large);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li:last-child {
+  margin-bottom: 0;
 }
 
 /* Sources reference list (white, 12px, numbered) */
@@ -1495,14 +1510,19 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     margin-bottom: 0;
   }
 
-  /* overflow:hidden establishes a block formatting context so the heading,
-     story, and strategies sit in the remaining column beside the float (a fixed
-     ~416px width) instead of wrapping back under the image. */
+  /* overflow:hidden establishes a block formatting context so the heading and
+     story sit in the remaining column beside the float (a fixed ~416px width)
+     instead of wrapping back under the image. */
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3,
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image ul {
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p:not(:has(strong)) {
     overflow: hidden;
     text-align: left;
+  }
+
+  /* The strategies band clears the floated image so it spans the full card
+     width below (live), rather than sitting in the narrow text column. */
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p:has(strong) {
+    clear: both;
   }
 }
 
