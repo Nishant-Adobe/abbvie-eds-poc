@@ -915,6 +915,15 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     height: 40px;
   }
 
+  /* Side Effects section: the off-white background must span the full viewport
+     width on mobile (live is edge-to-edge). Zero any side margin; the inner
+     content keeps its 24px gutter via the section's own padding. */
+  body main .section.whylinzess-sideeffects,
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper {
     padding-left: 16px;
     padding-right: 16px;
