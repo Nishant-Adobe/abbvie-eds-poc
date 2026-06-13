@@ -2240,13 +2240,14 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
   position: absolute;
-  left: -5%;
-  right: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
   bottom: var(--hero-cta-curve-bottom);
   z-index: 2;
   height: var(--hero-cta-curve-height);
   background: var(--background-color);
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  border-radius: 100% 100% 0 0;
   content: '';
 }
 /* stylelint-disable-next-line no-descending-specificity */
