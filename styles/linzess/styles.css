@@ -987,6 +987,15 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h
   line-height: var(--no-hero-h1-line-height, 36px);
 }
 
+/* Find-relief hero H1 wraps to two lines on live ("Chronic Constipation" /
+   "Calls for a Conversation"). The shared container is widened for OTC, so cap
+   just this page's H1 width to force the same break. Scoped via the section's
+   find-relief class so other editorial heroes keep their single-line width. */
+main > .section.hero-container.find-relief .hero.linzess-behind-nav-linzess-editorial-hero h1,
+main > .section.hero-container.section-nav-container .hero.linzess-behind-nav-linzess-editorial-hero h1#find-relief {
+  max-width: 340px;
+}
+
 /* Hero text column: live's editorial-hero text container is ~100rem wide so
    the H1 stays on one line. The base behind-nav hero caps it at 64rem and the
    editorial cmp-container at 40rem, forcing a 2-line wrap. Widen for OTC. */
@@ -1307,7 +1316,7 @@ main > .section.find-relief-talk::before {
    :is(...)-based heading rule below carries class-level specificity, so this
    eyebrow rule is given matching specificity via :where()-free chaining to win
    for the in-wrapper h2. */
-main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper h2:not(.heading-1) {
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper h2:not(.heading-1):has(+ h3) {
   margin: 0 auto var(--spacing-8, 0.8rem);
   font-family: var(--body-font-family);
   font-size: 12px;
@@ -1325,8 +1334,9 @@ main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-c
      Doctor Is Important" — the eyebrow rule above is scoped to wrapper h2,
      so this standalone h2 needs the heading treatment here. */
 main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1),
-main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2,
-main > .section.find-relief-talk > h2 {
+main > .section.find-relief-talk .default-content-wrapper h2:not(:has(+ h3)),
+main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2:not(:has(+ h3)),
+main > .section.find-relief-talk > h2:not(:has(+ h3)) {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
@@ -1338,9 +1348,10 @@ main > .section.find-relief-talk > h2 {
   text-transform: none;
 }
 
-main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1)::before,
-main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2::before,
-main > .section.find-relief-talk > h2::before {
+/* Divider (orange line) only above the section heading (h3 / .heading-1),
+   matching live. The standalone "Why Finding" h2 keeps the Bebas font above
+   but has NO divider on live, so it is intentionally excluded here. */
+main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1)::before {
   content: "";
   display: block;
   width: var(--spacing-64);
@@ -1809,8 +1820,10 @@ main > .section.find-relief-howtotake .default-content-wrapper {
   text-align: center;
 }
 
-/* H2 (Bebas 40px purple, divider above). */
-main > .section.find-relief-howtotake .default-content-wrapper h2 {
+/* H2 (Bebas 40px purple, divider above). Exclude the eyebrow h2 (the one
+   immediately followed by an h3), which the eyebrow rule styles as a small
+   12px Lato label with no divider. */
+main > .section.find-relief-howtotake .default-content-wrapper h2:not(:has(+ h3)) {
   margin: var(--spacing-40) auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
@@ -1821,7 +1834,7 @@ main > .section.find-relief-howtotake .default-content-wrapper h2 {
   text-transform: none;
 }
 
-main > .section.find-relief-howtotake .default-content-wrapper h2::before {
+main > .section.find-relief-howtotake .default-content-wrapper h2:not(:has(+ h3))::before {
   content: "";
   display: block;
   width: var(--spacing-64);
@@ -1831,34 +1844,28 @@ main > .section.find-relief-howtotake .default-content-wrapper h2::before {
   background-size: contain;
 }
 
-/* H3 sub-headings (Lato bold purple, centered). */
+/* Section headings (Bebas Neue 40px purple, centered, orange swoosh divider
+   above — live renders "What to Know Before Starting LINZESS", "Already Been
+   Prescribed LINZESS?", "Need A Savings Card?", "Instructions For Adults &
+   Children", and "How to Store LINZESS" with the orange curved rule above each
+   heading, matching the find-relief-talk section). */
 main > .section.find-relief-howtotake .default-content-wrapper h3 {
-  margin: var(--spacing-40) auto var(--spacing-16);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-article-cta-title);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-heading);
-  text-align: center;
-}
-
-/* "HOW TO STORE LINZESS" — live renders this as a display heading-1 (Bebas,
-   divider above), not a small sub-heading. Scope to the storage section (the
-   one containing the savings tout) so other h3 sub-headings stay small. */
-main > .section.find-relief-howtotake:has(.find-relief-savings-tout) .default-content-wrapper h3 {
   margin: var(--spacing-40) auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
   font-weight: var(--font-weight-body);
   line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-heading);
+  text-align: center;
   text-transform: none;
 }
 
-main > .section.find-relief-howtotake:has(.find-relief-savings-tout) .default-content-wrapper h3::before {
+main > .section.find-relief-howtotake .default-content-wrapper h3::before {
   content: "";
   display: block;
   width: var(--spacing-64);
   height: var(--hero-divider-height, 5px);
-  margin: 0 auto var(--spacing-24);
+  margin: var(--spacing-16) auto var(--spacing-24);
   background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
   background-size: contain;
 }
@@ -1870,6 +1877,18 @@ main > .section.find-relief-howtotake .default-content-wrapper > p {
   font-size: var(--font-size-article-body);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
+}
+
+/* Sub-heading line directly under a section heading — ONLY the "Choose how you
+   want to sign up:" line, which live renders as a heading-2 (24px bold purple).
+   Scope to the wrapper that immediately precedes the sign-up cards grid so the
+   "What to Know Before Starting" video intro and "How to Store" body (also h3+p)
+   stay as 16px body copy and are not promoted to sub-heading size. */
+main > .section.find-relief-howtotake .default-content-wrapper:has(+ .cards-grid-wrapper) > h3 + p {
+  margin: 0 auto var(--spacing-16);
+  font-size: var(--font-size-card-title, 24px);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
 }
 
 /* Footnotes (left, 12px). */
@@ -1911,6 +1930,14 @@ main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexbo
    "Sign up" — hide it for this section only. */
 main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .cta {
   display: none;
+}
+
+/* Sign-up card titles ("Text", "Call", "Click") sit on a light card and must
+   all be purple. The icon-image-card variant only baked the c-linz-dark-purple
+   class on some titles, so "Call" inherited the variant's default white and
+   rendered invisible. Force purple on every signup-card title to match live. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card :is(.heading-2, h2, p):first-child {
+  color: var(--color-text-heading) !important;
 }
 
 /* Sign-up CTA buttons (purple, white text, chevron). icon-image-card renders
@@ -2069,12 +2096,14 @@ main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .imag
   }
 }
 
-/* ---- Find-relief instructions tabs: live renders the pill control at ~59px
-   tall (12px vertical padding), whereas the shared linzess desktop tab rule
-   uses 20px/40px (~82px). Scope a tighter pill to the find-relief tabs only so
-   the standalone how-to-take page's tabs are unaffected. ---- */
+/* ---- Find-relief instructions tabs: live renders the pill control thin
+   (~59px) with 12px padding and 12.8px text. The shared linzess desktop tab
+   rule uses 20px/40px padding + 16px text (~66-82px). Scope a tighter pill to
+   the find-relief tabs only so the standalone how-to-take page is unaffected. */
 main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
-  padding: var(--spacing-12, 1.2rem) var(--spacing-16, 1.6rem);
+  padding: var(--spacing-12, 1.2rem);
+  font-size: var(--font-size-body-small, 12.8px);
+  line-height: var(--line-height-tight, 1.2);
 }
 
 /* ---- Dosing tabs: panels are lifted out of find-relief-howtotake into
@@ -2097,9 +2126,11 @@ main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
 }
 
 .cards-grid.find-relief-dosing .card-grid-item {
-  margin: 0;
+  margin: 0 0 var(--spacing-10, 1rem);
 }
 
+/* Each dosing row is an off-white rounded card on live
+   (abbv-flex-item-v2 background-off-white rounded-corners). */
 .cards-grid.find-relief-dosing .grid-card {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -2107,9 +2138,9 @@ main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
   align-items: center;
   column-gap: 0;
   padding: 24px 32px 24px 0;
-  background: transparent;
+  background: var(--linz-off-white, #f4f6fb);
   border: none;
-  border-radius: 0;
+  border-radius: var(--linz-rounded-corner, 16px);
   overflow: visible;
   text-align: left;
   text-decoration: none;
@@ -2160,6 +2191,12 @@ main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
   font-weight: 700;
   line-height: normal;
   color: var(--linz-dark-purple, #422e83);
+}
+
+/* The label markup wraps the title in <strong> (default 900); live renders it
+   at 700, so neutralize the bold weight to match. */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2 strong {
+  font-weight: 700;
 }
 
 /* Body (line-3) — 16px grey; the cards-grid decorator unwraps the first
