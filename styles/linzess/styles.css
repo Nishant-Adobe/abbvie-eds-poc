@@ -4272,6 +4272,16 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     margin-right: 0;
   }
 
+  /* Side Effects bottom arc: the 80px full-width dome is too deep/pointed on a
+     390px viewport. Live uses a shallow gentle curve — reduce the height.
+     Match both the mechanism-card and the higher-specificity sideeffects
+     selectors so neither base rule keeps the 80px height. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline))::after,
+  body main > .section.dark + .section.columns-container.whylinzess-sideeffects::after,
+  body main .section.columns-container.whylinzess-sideeffects::after {
+    height: 40px;
+  }
+
   body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper {
     padding-left: 16px;
     padding-right: 16px;

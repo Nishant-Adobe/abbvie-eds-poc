@@ -1182,12 +1182,15 @@
     width: 100%;
   }
 
-  /* Restore base full-width stuck behaviour (undo mobile transform/width) */
+  /* Restore base full-width stuck behaviour (undo mobile transform/width).
+     Keep the wrapper transparent — the purple pill lives on the nav element,
+     so the wrapper must NOT inherit the mobile stuck background. */
   .section-nav.sticky.is-stuck {
     left: 0;
     right: 0;
     transform: none;
     width: 100%;
+    background-color: transparent;
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
