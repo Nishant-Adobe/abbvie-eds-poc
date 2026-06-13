@@ -2240,25 +2240,14 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130%;
+  left: -5%;
+  right: -5%;
   bottom: var(--hero-cta-curve-bottom);
   z-index: 2;
   height: var(--hero-cta-curve-height);
   background: var(--background-color);
-  border-radius: 100% 100% 0 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   content: '';
-}
-/* Editorial hero: live shows a shallow white curve rising ~20px at centre with
-   its corners flush to the hero bottom. For a 100% 100% 0 0 ellipse at 130%
-   width the corner-to-centre height ratio is a constant 0.64 at every viewport
-   width, so height-|bottom| sets the centre rise and |bottom| <= 0.64*height
-   keeps the corners covered (no dark sliver / horizontal line). 52/-32 →
-   centre +20px, corners +1.3px. */
-.hero.linzess-behind-nav-linzess-editorial-hero::before {
-  height: 52px;
-  bottom: -32px;
 }
 /* stylelint-disable-next-line no-descending-specificity */
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
@@ -2452,34 +2441,18 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     max-width: var(--hero-cmp-max-width-cta);
   }
 
-  /* Editorial hero text column is 960px on live (centred, 240px gutters) so it
-     aligns 240px from the edge — narrower than the shared 1000px caption token
-     used by the homepage CTA hero. */
-  .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container,
   .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
-    max-width: 960px;
-  }
-
-  /* Constrain the headline so it wraps to two balanced lines (break after
-     "Prescribed") as on live, and open the eyebrow→H1 gap to live's 63px. */
-  .hero.linzess-behind-nav-linzess-editorial-hero h1 {
-    max-width: 480px;
-  }
-
-  /* .section.hero-container prefix raises specificity above the generic
-     hero-container p:first-of-type rule (0,4,1) that otherwise forces 24px. */
-  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     inset: unset;
     width: 100%;
-    max-width: 960px;
+    max-width: var(--hero-caption-max-width);
     min-height: auto;
     padding: 0;
     margin-inline: auto;
-    margin-bottom: 63px;
+    margin-bottom: var(--spacing-40);
     font-size: var(--font-size-legal-large);
     font-weight: var(--font-weight-body);
     text-transform: uppercase;

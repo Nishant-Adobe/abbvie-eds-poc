@@ -285,29 +285,13 @@ export default async function decorate(block) {
     textContainer.classList.add('hero-text-container');
     textCell.classList.add('cmp-container-x-large');
 
-    // Brand-agnostic: any variation ending in 'editorial-hero' lifts the eyebrow
-    // label into the text cell above the heading. The eyebrow row is the first
-    // non-image, non-heading row that carries plain text (authored as bare text
-    // or a <p>). Without this it would fall through to the caption path and get
-    // absolutely positioned over the image. Clearing the source cell stops the
-    // caption detector (which already references this row) from re-using it.
+    // Brand-agnostic: any variation ending in 'editorial-hero' moves the third row's
+    // <p> into the text cell (e.g. the Linzess behind-nav editorial-hero layout).
     const isEditorialHero = [...block.classList].some((c) => c.endsWith('editorial-hero'));
     if (isEditorialHero) {
-      const eyebrowRow = Array.from(block.children).find((row) => {
-        if (row === imageRow || row === mobileImageRow || row === textRow || row === videoRow) {
-          return false;
-        }
-        const cell = row.firstElementChild;
-        const text = cell?.textContent?.trim();
-        return text && !cell.querySelector('h1,h2,h3,h4,h5,h6,picture,img,a[href]');
-      });
-      if (eyebrowRow) {
-        const eyebrow = document.createElement('p');
-        eyebrow.classList.add('hero-eyebrow');
-        eyebrow.textContent = eyebrowRow.firstElementChild.textContent.trim();
-        textCell.prepend(eyebrow);
-        eyebrowRow.firstElementChild.textContent = '';
-      }
+      const thirdRow = Array.from(block.children)[2];
+      const p = thirdRow?.querySelector('p');
+      if (p) textCell.prepend(p);
     }
   }
 
