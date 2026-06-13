@@ -4513,6 +4513,18 @@ body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container >
   font-size: 40px;
 }
 
+/* Mobile: those carousel headings shrink to 32px/30px (live) to stop the
+   overlapping lines. Placed after the 40px rule so it wins by source order. */
+@media (width < 768px) {
+  body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p:first-child,
+  body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p:nth-child(2),
+  body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p:first-child strong,
+  body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper > p:nth-child(2) strong {
+    font-size: 32px;
+    line-height: 30px;
+  }
+}
+
 /* Savings card inherits the homepage columns-homepage-savings styling
    verbatim (982-wide, 55% image, 18px title, 14px body) — no why-linzess
    overrides, so it renders identically to the homepage card. */
