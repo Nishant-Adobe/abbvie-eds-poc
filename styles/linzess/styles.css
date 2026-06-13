@@ -1370,27 +1370,24 @@ main > .section.cheat-sheet-section .columns.cheat-sheet {
   gap: var(--spacing-40);
 }
 
-/* Outer card: light-purple, rounded. The white sub-card sits flush at full
-   width on top; the "A Better Way" strategies sit on the light-purple below
-   (padded). No side padding here so the white card spans the full card width
-   like live. */
+/* Card: single white cell holding image, heading, story, and the "A Better
+   Way" strategies (one xwalk column item = one cell, so everything is authored
+   in the same cell and renders as flat siblings). */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
   display: flex;
   flex-direction: column;
-  background-color: var(--color-brand-primary-lighter);
+  background-color: var(--color-background-primary, #fff);
   border-radius: var(--linz-rounded-corner);
 }
 
-/* White inner sub-card: image + heading/story (stacked on mobile/tablet).
-   The renderer wraps the cell content in a single <p>; flatten it with
-   display:contents so the picture/h3/story become the card's flex items. */
+/* The renderer wraps the cell content in a single <p>; flatten it with
+   display:contents so the picture/h3/story/strategies become the card's
+   flex items. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   padding: var(--spacing-24);
-  background-color: var(--color-background-primary, #fff);
-  border-radius: var(--linz-rounded-corner);
   text-align: left;
 }
 
@@ -1424,6 +1421,7 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3 
   text-transform: none;
 }
 
+/* Story paragraph (first <p> after the heading) — body grey. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p {
   margin: 0;
   font-family: var(--body-font-family);
@@ -1432,30 +1430,24 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p
   color: var(--color-text-body, #4d4d4f);
 }
 
-/* Strategies block sits on the light-purple card below the white sub-card
-   (the purple card has no padding, so pad the strategies here). */
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content {
-  padding: var(--spacing-24);
-}
-
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p:has(strong) {
-  margin: 0 0 var(--spacing-16);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-legal-large);
+/* "A Better Way…" lead-in (the <p> that holds a <strong>) — purple, spaced
+   above to separate it from the story. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p:has(strong) {
+  margin: var(--spacing-16) 0 0;
   color: var(--color-brand-primary);
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p strong {
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p strong {
   font-weight: var(--font-weight-body);
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content ul {
-  margin: var(--spacing-16) 0 0;
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image ul {
+  margin: var(--spacing-10) 0 0;
   padding-left: var(--spacing-14);
   list-style-type: disc;
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content li {
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
   margin: 0 0 var(--spacing-10);
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
@@ -1503,11 +1495,12 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     margin-bottom: 0;
   }
 
-  /* overflow:hidden establishes a block formatting context so the heading and
-     story sit in the remaining column beside the float (a fixed ~416px width)
-     instead of wrapping back under the image. */
+  /* overflow:hidden establishes a block formatting context so the heading,
+     story, and strategies sit in the remaining column beside the float (a fixed
+     ~416px width) instead of wrapping back under the image. */
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3,
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p {
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image ul {
     overflow: hidden;
     text-align: left;
   }
@@ -1539,8 +1532,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
   main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p:has(strong),
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content li {
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
     font-size: var(--font-size-body);
   }
 
@@ -1580,8 +1572,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
   main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
   main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
   main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p,
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p:has(strong),
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content li {
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
     font-size: var(--font-size-body);
   }
 
