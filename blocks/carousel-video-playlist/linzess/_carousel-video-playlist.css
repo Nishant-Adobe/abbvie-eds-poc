@@ -815,13 +815,27 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
 }
 
 /* Tablet (768–985): the how-it-works video grid (FINDING RELIEF / SEEKING)
-   shows 2×300px cards on live's mobile-style stacked layout — full-width cards,
-   one per row. Override the 2×300px timeline grid track here. */
+   shows 2×300px cards. Live stacks them full-width, one per row. The grid block
+   is a flex child that otherwise shrink-wraps its 300px tracks, so force it
+   (and its wrapper) to fill the content column, then stack the cards in a flex
+   column at 100% width (mirroring the <768 mobile rule). */
 @media (width >= 768px) and (width < 986px) {
+  body main .section:has(.whylinzess-timeline) > .carousel-video-playlist-wrapper,
+  body main .section:has(.whylinzess-timeline) .carousel-video-playlist.grid {
+    width: 100%;
+    max-width: 100%;
+  }
+
   body main .section:has(.whylinzess-timeline) .carousel-video-playlist.grid .cvp-grid {
-    grid-template-columns: 1fr;
-    justify-content: stretch;
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: unset;
     gap: 16px;
+    width: 100%;
+  }
+
+  body main .section:has(.whylinzess-timeline) .carousel-video-playlist.grid .cvp-card {
+    width: 100%;
   }
 }
 
