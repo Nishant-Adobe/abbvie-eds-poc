@@ -1519,6 +1519,13 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     line-height: var(--line-height-h2-hero);
   }
 
+  /* The trigger label's -60px pull makes each item box 26px shorter than its
+     icon image, collapsing the 40px flex gap to ~14px between blobs. Add that
+     26px back so the inter-blob spacing reads as live's 40px (same as tablet). */
+  main > .section.triggers-section .columns.triggers {
+    gap: calc(var(--spacing-40) + 2.6rem);
+  }
+
   /* Mobile: section headings shrink 40px -> 32px to match live */
   main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
   main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
