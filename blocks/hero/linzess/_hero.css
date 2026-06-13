@@ -532,18 +532,34 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     max-width: var(--hero-cmp-max-width-cta);
   }
 
+  /* Editorial hero text column is 960px on live (centred, 240px gutters) so it
+     aligns 240px from the edge — narrower than the shared 1000px caption token
+     used by the homepage CTA hero. */
+  .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container,
   .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+    max-width: 960px;
+  }
+
+  /* Constrain the headline so it wraps to two balanced lines (break after
+     "Prescribed") as on live, and open the eyebrow→H1 gap to live's 63px. */
+  .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+    max-width: 480px;
+  }
+
+  /* .section.hero-container prefix raises specificity above the generic
+     hero-container p:first-of-type rule (0,4,1) that otherwise forces 24px. */
+  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     inset: unset;
     width: 100%;
-    max-width: var(--hero-caption-max-width);
+    max-width: 960px;
     min-height: auto;
     padding: 0;
     margin-inline: auto;
-    margin-bottom: var(--spacing-40);
+    margin-bottom: 63px;
     font-size: var(--font-size-legal-large);
     font-weight: var(--font-weight-body);
     text-transform: uppercase;
