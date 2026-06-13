@@ -844,7 +844,17 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
    thumbnail grid below (same as mobile), so reuse that layout here. The .grid
    (how-it-works) carousel already fits at this width and is left untouched. */
 @media (width >= 768px) and (width < 1024px) {
+  /* Force the featured carousel and its wrapper to span the section content
+     width. Without an explicit width the wrapper shrink-wraps to its content,
+     so the second (4-thumbnail) carousel collapsed to ~489px while the first
+     (with a quote panel) filled the row. Both must be full-width like live. */
+  body main .section.whylinzess-patients > .carousel-video-playlist-wrapper:has(.carousel-video-playlist.featured) {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .carousel-video-playlist.featured {
+    width: 100%;
     max-width: 100%;
     padding: 32px 0;
   }
