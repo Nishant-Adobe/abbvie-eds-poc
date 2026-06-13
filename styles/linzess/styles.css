@@ -1301,19 +1301,42 @@ main > .section.find-relief-talk::before {
   z-index: -5;
 }
 
-/* Section headings (Bebas Neue 40px purple, centered, divider above). */
-main > .section.find-relief-talk .default-content-wrapper :is(h2, .heading-1) {
+/* Eyebrow (first heading, e.g. "Talk to a Doctor") — small uppercase Lato,
+   matches live where this line is a 12px eyebrow above the section heading. */
+main > .section.find-relief-talk .default-content-wrapper h2 {
+  margin: 0 auto var(--spacing-8, 0.8rem);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-extra-bold);
+  line-height: normal;
+  letter-spacing: var(--letter-spacing-wide-06, 0.06em);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Section heading (Bebas Neue 40px purple, centered, divider above).
+   - in-wrapper h3 / .heading-1, e.g. "What To Talk About At Your Visit"
+   - standalone h2 (its own block, no wrapper), e.g. "Why Finding The Right
+     Doctor Is Important" — the eyebrow rule above is scoped to wrapper h2,
+     so this standalone h2 needs the heading treatment here. */
+main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1),
+main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2,
+main > .section.find-relief-talk > h2 {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
   font-weight: var(--font-weight-body);
   line-height: var(--no-hero-h1-line-height, 36px);
+  letter-spacing: normal;
   color: var(--color-text-heading);
   text-align: center;
   text-transform: none;
 }
 
-main > .section.find-relief-talk .default-content-wrapper :is(h2, .heading-1)::before {
+main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1)::before,
+main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2::before,
+main > .section.find-relief-talk > h2::before {
   content: "";
   display: block;
   width: var(--spacing-64);
@@ -1321,16 +1344,6 @@ main > .section.find-relief-talk .default-content-wrapper :is(h2, .heading-1)::b
   margin: var(--spacing-16) auto var(--spacing-24);
   background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
   background-size: contain;
-}
-
-/* H3 sub-heading (Lato bold purple, centered). */
-main > .section.find-relief-talk .default-content-wrapper h3 {
-  margin: 0 auto var(--spacing-16);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-article-cta-title);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-heading);
-  text-align: center;
 }
 
 /* Intro + body copy (centered, capped width). */
@@ -1533,9 +1546,10 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-c
    button + light-purple caption bar). Scoped to both find-relief sections so
    the shared video block and other pages are unaffected. ---- */
 
-/* Cap the video width and center it like the rest of the find-relief content. */
+/* Cap the video width and center it to match live (600px at desktop). */
 main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage {
-  max-width: 99.8rem;
+  max-width: 60rem;
+  margin-inline: auto;
 }
 
 /* Remove the navy scrim — show the poster fully like live. */
@@ -1590,26 +1604,27 @@ main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.vid
 }
 
 /* The caption's default-content-wrapper is a grid item; the brand
-   `margin: 0 auto` collapses it to content width, so force it full-width
-   (capped to the video's 998px) and center it. */
+   `margin: 0 auto` collapses it to content width, so force it to the video's
+   width (600px on live) and center it. */
 main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper:has(p a[href*="transcripts"]) {
   width: 100%;
-  max-width: 99.8rem;
+  max-width: 60rem;
   margin-inline: auto;
 }
 
-/* Caption bar attached to the video bottom: full-width light-purple bar,
-   title left (purple bold) and View Transcript right. Squared top + rounded
-   bottom so it reads as one unit with the video poster above it. */
+/* Caption attached to the video bottom: light-purple rounded card the same
+   width as the video. Live wraps video + caption in one #d9d7f9 rounded card;
+   here the caption carries the purple with squared top + rounded bottom so it
+   reads as one unit with the video poster above it. */
 main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-24);
   width: 100%;
-  max-width: 99.8rem;
+  max-width: 60rem;
   margin: 0 auto var(--spacing-40);
-  padding: var(--spacing-16) var(--spacing-24);
+  padding: var(--spacing-16);
   background-color: var(--linz-light-purple);
   border-radius: 0 0 var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px);
   text-align: left;
@@ -1617,18 +1632,18 @@ main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-c
 
 main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) strong {
   font-family: var(--body-font-family);
-  font-size: var(--font-size-body-small);
-  font-weight: var(--font-weight-extra-bold);
-  letter-spacing: var(--letter-spacing-wide-06, 0.06em);
+  font-size: var(--font-size-article-body, 16px);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: normal;
   color: var(--color-text-heading);
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) a {
   flex: 0 0 auto;
   font-family: var(--body-font-family);
   font-size: var(--font-size-body-small);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-extra-bold);
   color: var(--color-brand-primary);
   text-decoration: underline;
 }
@@ -2040,7 +2055,7 @@ main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .imag
   }
 
   main > .section.find-relief-howtotake .image-text.find-relief-savings-tout {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 44%) 1fr;
   }
 }
 
@@ -2048,6 +2063,14 @@ main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .imag
   main > .section.find-relief-howtotake {
     --font-size-article-body: 16px;
   }
+}
+
+/* ---- Find-relief instructions tabs: live renders the pill control at ~59px
+   tall (12px vertical padding), whereas the shared linzess desktop tab rule
+   uses 20px/40px (~82px). Scope a tighter pill to the find-relief tabs only so
+   the standalone how-to-take page's tabs are unaffected. ---- */
+main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
+  padding: var(--spacing-12, 1.2rem) var(--spacing-16, 1.6rem);
 }
 
 /* ---- Dosing tabs: panels are lifted out of find-relief-howtotake into
