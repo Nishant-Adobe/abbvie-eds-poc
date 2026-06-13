@@ -4528,6 +4528,17 @@ main > .section:has(> .default-content-wrapper > h3:first-child)::before {
   }
 }
 
+/* At >=1440px live insets the ISI body to a 1240px content column (100px each
+   side). Match that with wider horizontal padding so the legal copy doesn't run
+   full-bleed. */
+@media (width >= 1440px) {
+  .section.isi,
+  main > .section:has(> .default-content-wrapper > h3:first-child) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+}
+
 /* USES, IMPORTANT RISK INFORMATION, "Before you take...", "Side Effects"
    are all bold purple headings (BasicCommercialLT-Black). */
 .section.isi h3,
