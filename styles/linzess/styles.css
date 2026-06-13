@@ -1432,6 +1432,7 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check {
    column width at natural aspect (no cover-crop) to reveal the curve like live. */
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col {
   position: relative;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -1439,12 +1440,17 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-i
   font-size: 0;
 }
 
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col picture {
+  display: block;
+  height: 100%;
+}
+
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-height: none;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col {
@@ -1905,17 +1911,37 @@ main > .section.find-relief-howtotake .image-text.find-relief-savings-tout {
 
 main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-image-col {
   margin: 0;
+  align-self: stretch;
+  line-height: 0;
 }
 
 main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-image-col img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
 main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col {
   padding: var(--spacing-40);
   text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Flatten the content wrapper so the "Sign Up Now" button (a sibling
+   button-container) can be ordered before the "Activate now" line, matching
+   the reference where the CTA sits above the activate prompt. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content {
+  display: contents;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col .button-container {
+  order: 1;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p:last-child {
+  order: 2;
 }
 
 main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p.heading-1 {
