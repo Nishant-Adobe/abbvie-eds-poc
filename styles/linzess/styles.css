@@ -1018,6 +1018,23 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h
   max-width: 8em;
 }
 
+/* Live biases the hero text block below the band's vertical center. At desktop
+   (615px band) it sits 247px from top / 217px from bottom; our flex-centered
+   container sits ~15px too high, so nudge it down — margin-top on a
+   center-aligned flex item shifts content down by half the value. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+  margin-top: var(--spacing-30, 3rem);
+}
+
+/* Below 1024px the band is shorter (375/369 ratio) but live drops the text even
+   lower proportionally (186px top / 96px in a 418px band), so the desktop nudge
+   is not enough — increase it to push the text block down to match live. */
+@media (width < 1024px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+    margin-top: var(--spacing-80, 8rem);
+  }
+}
+
 /* Hero bottom curve: the editorial-hero default draws a deep half-circle
    scoop. Live's curve is actually the white intro section's arc painting up
    over the hero (the .otc-intro-section::before, which already matches live:
