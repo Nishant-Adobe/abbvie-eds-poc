@@ -1311,13 +1311,14 @@ main > .section.triggers-section .columns.triggers .columns-item-image img {
   object-fit: fill;
 }
 
-/* Label is centered over the icon's translucent blob (live overlays it at the
-   vertical center of the image, not below it). Absolutely positioned so the
-   item height stays equal to the image height. Scope to the label paragraph
-   only — not the <p> that wraps the icon picture. */
+/* Label overlays the lower part of the icon's translucent blob (live sits it
+   below the illustration, in the empty lower-blob area — ~76% down the image,
+   not at the vertical center). Absolutely positioned so the item height stays
+   equal to the image height. Scope to the label paragraph only — not the <p>
+   that wraps the icon picture. */
 main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)) {
   position: absolute;
-  top: 50%;
+  top: 76%;
   left: 0;
   right: 0;
   transform: translateY(-50%);
