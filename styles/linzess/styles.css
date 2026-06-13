@@ -1392,9 +1392,11 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
   overflow: hidden;
 }
 
-/* The renderer wraps the cell content in a single <p>; flatten it with
-   display:contents so the picture/h3/story/strategies become the card's
-   flex items. */
+/* The local renderer wraps the whole cell in a single <p> (which contains the
+   picture); flatten ONLY that wrapper with display:contents so its children
+   become the card's flex items. Scope to :has(picture) so it never matches the
+   strategies lead-in <p> on the published DOM (where elements are direct
+   children and the lead-in <p> must keep its own box for the band/clear). */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
   display: flex;
   flex-direction: column;
@@ -1403,7 +1405,7 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
   text-align: left;
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p {
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p:has(picture) {
   display: contents;
 }
 
