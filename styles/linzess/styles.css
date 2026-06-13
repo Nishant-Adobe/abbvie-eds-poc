@@ -1348,10 +1348,15 @@ main > .section.find-relief-talk > h2:not(:has(+ h3)) {
   text-transform: none;
 }
 
-/* Divider (orange line) only above the section heading (h3 / .heading-1),
-   matching live. The standalone "Why Finding" h2 keeps the Bebas font above
-   but has NO divider on live, so it is intentionally excluded here. */
-main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1)::before {
+/* Divider (orange swoosh) above the section heading. Applies to the in-wrapper
+   h3/.heading-1 AND the standalone "Why Finding The Right Doctor Is Important"
+   h2 — live renders an orange <span class="divider"> above that heading too, so
+   it gets the swoosh as well. Only the eyebrow h2 (followed by an h3) is left
+   out, since the eyebrow rule above styles it as a 12px label. */
+main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1)::before,
+main > .section.find-relief-talk .default-content-wrapper h2:not(:has(+ h3))::before,
+main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2:not(:has(+ h3))::before,
+main > .section.find-relief-talk > h2:not(:has(+ h3))::before {
   content: "";
   display: block;
   width: var(--spacing-64);
@@ -1926,6 +1931,13 @@ main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexbo
   color: var(--color-text-heading) !important;
 }
 
+/* Prescribed-card body copy is 16px on live; the icon-image-card variant's
+   :is() rule drops it to --linz-body-font-size (14px), so restore 16px scoped
+   to these cards. Match the variant's display-wrapper path to win specificity. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .abbv-image-text-v2 .abbv-image-text-display-v2 p:not(.heading-2, .eyebrow, .footnote, .tout-overlay) {
+  font-size: 16px;
+}
+
 /* Live prescribed cards have no CTA button; the variant injects a default
    "Sign up" — hide it for this section only. */
 main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .cta {
@@ -2234,6 +2246,13 @@ main > .section.find-relief-dosing-panel.cards-grid-container > .default-content
   font-weight: var(--font-weight-bold);
   color: var(--color-brand-primary);
   text-align: center;
+}
+
+/* The heading text is wrapped in <strong> (default 900); live renders it at
+   700, so neutralize the bold weight to match. */
+main > .tabs-panel > .section.cards-grid-container > .default-content-wrapper p:has(strong) strong,
+main > .section.find-relief-dosing-panel.cards-grid-container > .default-content-wrapper p:has(strong) strong {
+  font-weight: var(--font-weight-bold);
 }
 
 /* Mobile (< 744px): stack icon above text, 56px icon, no overlap (per PR #104). */
