@@ -1350,7 +1350,20 @@ main > .section.cheat-sheet-section .columns.cheat-sheet {
   gap: var(--spacing-40);
 }
 
+/* Outer card: light-purple, rounded. Holds a white sub-card (image + story)
+   on top, then the "A Better Way" strategies on the light-purple below. */
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-24);
+  background-color: var(--color-brand-primary-lighter);
+  border-radius: var(--linz-rounded-corner);
+}
+
+/* White inner sub-card: image + heading/story (stacked on mobile/tablet).
+   The renderer wraps the cell content in a single <p>; flatten it with
+   display:contents so the picture/h3/story become the card's flex items. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-24);
@@ -1360,7 +1373,11 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
   border-radius: var(--linz-rounded-corner);
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p {
+  display: contents;
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image picture {
   flex: 0 0 auto;
 }
 
@@ -1371,7 +1388,7 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image img
   object-fit: fill;
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content h3 {
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3 {
   margin: 0 0 var(--spacing-10);
   font-family: var(--body-font-family);
   font-size: 1.872rem;
@@ -1381,16 +1398,23 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content h
   text-transform: none;
 }
 
-main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p {
-  margin: 0 0 var(--spacing-20);
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p {
+  margin: 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
 }
 
+/* Strategies block sits on the light-purple card below the white sub-card */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content {
+  padding: var(--spacing-24) 0 0;
+}
+
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p:has(strong) {
-  margin: var(--spacing-16) 0;
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
   color: var(--color-brand-primary);
 }
 
@@ -1399,12 +1423,13 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content p
 }
 
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content ul {
-  margin: var(--spacing-16) 0;
+  margin: var(--spacing-16) 0 0;
   padding-left: var(--spacing-14);
   list-style-type: disc;
 }
 
 main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content li {
+  margin: 0 0 var(--spacing-10);
   font-family: var(--body-font-family);
   font-size: var(--font-size-legal-large);
   line-height: var(--line-height-body);
@@ -1433,16 +1458,25 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type ul {
   padding-left: var(--spacing-10);
 }
 
-/* Desktop (>=1024px): image left, text right. */
+/* Desktop (>=1024px): inside the white sub-card, image left + story right
+   via a 2-column grid (image spans both rows, heading over story). */
 @media (width >= 1024px) {
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
-    flex-direction: row;
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
+    display: grid;
+    grid-template-columns: 18.2rem 1fr;
+    column-gap: var(--spacing-24);
     align-items: center;
-    gap: var(--spacing-24);
+    justify-items: start;
   }
 
-  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content {
-    flex: 1 1 0;
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image picture {
+    grid-row: 1 / -1;
+  }
+
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3,
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p p {
+    grid-column: 2;
+    text-align: left;
   }
 }
 
