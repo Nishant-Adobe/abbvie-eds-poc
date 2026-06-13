@@ -1710,6 +1710,17 @@ main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-na
   main > .section.find-relief-talk .image-text.find-relief-gut-check {
     grid-template-columns: 440fr 560fr;
   }
+
+  /* Bottom-nav CTA cards sit side-by-side on desktop (1 column on mobile).
+     Reset the abbvie-container grid-column:span override so each card occupies
+     a single track instead of spanning all 12 columns. */
+  main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav > .card-grid-item {
+    grid-column: auto;
+  }
 }
 
 @media (width >= 900px) {
