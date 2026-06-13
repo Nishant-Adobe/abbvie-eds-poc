@@ -738,6 +738,13 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-se
   background-color: var(--color-brand-primary);
 }
 
+/* Tackling page uses live's deeper arc (255px tall, top -60px) for every
+   section boundary; scoped to this page so the OTC arc stays as approved. */
+body:has(.section.triggers-section) main > .section:is(.triggers-section, .cheat-sheet-section, .more-like-this-section, .cta-cards-section)::before {
+  top: calc(-1 * var(--spacing-60));
+  height: 25.5rem;
+}
+
 /* Section heading (Bebas Neue, 40px / line-height 36px).
    The published page drops the authored `heading-1` class, so the heading is
    also matched structurally: the first <p> of the section's first
