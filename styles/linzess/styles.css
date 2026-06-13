@@ -771,7 +771,11 @@ main > .section.otc-intro-section > .default-content-wrapper:first-of-type > p:f
 main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
-  font-size: var(--font-size-article-heading);
+
+  /* Fallback to 40px: on some deployed builds --font-size-article-heading is
+     out of scope, which collapsed these section headings to ~6px on desktop
+     (the tablet/mobile rules below use --font-size-h2-hero and were unaffected). */
+  font-size: var(--font-size-article-heading, 40px);
   font-weight: var(--font-weight-body);
   line-height: var(--no-hero-h1-line-height, 36px);
   letter-spacing: normal;
@@ -991,6 +995,15 @@ main > .section.otc-intro-section .cards-grid.cards-grid-recipe-cards .abbv-imag
   main > .section.otc-intro-section .cards-grid.cards-grid-recipe-cards .abbv-image-text {
     grid-template-columns: 38.7rem 1fr;
     gap: var(--spacing-40);
+  }
+
+  /* Tablet (601-984px): live serves the imageText001-medium source and narrows
+     the recipe image column to ~333px, giving the text more room. Without this
+     the desktop 38.7rem column squeezes the tablet text. */
+  @media (width <= 984px) {
+    main > .section.otc-intro-section .cards-grid.cards-grid-recipe-cards .abbv-image-text {
+      grid-template-columns: 33.3rem 1fr;
+    }
   }
 
   /* Game-plan strategy rows use a narrower image column than the recipe cards:
