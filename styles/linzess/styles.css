@@ -1511,10 +1511,18 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
   }
 
   /* Mobile: section headings shrink 40px -> 32px to match live */
-  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
   main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
   main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
     font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  /* Mobile: intro body + trigger labels shrink 16px -> 14px to match live */
+  main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
+  main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
+  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child) {
+    font-size: var(--font-size-body);
   }
 
   /* Mobile: column labels (Fiber etc.) and CTA card titles shrink 24px -> 18px */
@@ -1541,11 +1549,18 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
     line-height: var(--line-height-h2-hero);
   }
 
-  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
   main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
   main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
     font-size: var(--font-size-h2-hero);
     line-height: var(--line-height-h2-hero);
+  }
+
+  /* Tablet: intro body + trigger labels shrink 16px -> 14px to match live */
+  main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
+  main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
+  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child) {
+    font-size: var(--font-size-body);
   }
 
   main > .section.otc-intro-section .columns.how-they-work .columns-item p strong,
