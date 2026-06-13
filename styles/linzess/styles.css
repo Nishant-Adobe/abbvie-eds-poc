@@ -4348,14 +4348,18 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
    (32px) and 18px intro as mobile, and left-aligns the *…/†… footnote — but
    our tablet range otherwise falls back to the 40px/24px desktop sizes. */
 @media (width >= 768px) and (width < 986px) {
+  /* Heading uses the full content width on live's tablet (not the 700px desktop
+     cap), so it wraps to two balanced lines. */
   body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) {
     font-size: 32px;
     line-height: 30px;
+    max-width: none;
   }
 
   body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:has(strong) + p {
     font-size: 18px;
     line-height: normal;
+    max-width: none;
   }
 
   /* Footnote "*Abdominal…/†This was seen…" left-aligned to match live. */
