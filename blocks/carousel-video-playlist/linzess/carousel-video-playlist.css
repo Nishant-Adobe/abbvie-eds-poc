@@ -1275,8 +1275,10 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
     width: 100%;
   }
 
+  /* Drop the featured block's side padding on mobile so the player spans the
+     full content column (live's player is near full-width). */
   .carousel-video-playlist.featured {
-    padding: 32px 16px;
+    padding: 32px 0;
   }
 
   /* Stack featured row vertically on mobile */
@@ -1290,9 +1292,30 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
     width: 100%;
   }
 
-  /* Live hides the quote panel on mobile — only the video player shows. */
+  /* Live hides the quote text/name on mobile but KEEPS the "View Transcript"
+     link below the player. Collapse the quote panel's padding/background and
+     hide only the quote copy, leaving the transcript link visible. */
   .carousel-video-playlist.featured .cvp-quote-panel {
+    background: transparent;
+    padding: 8px 0 0;
+    border-radius: 0;
+    text-align: right;
+  }
+
+  .carousel-video-playlist.featured .cvp-quote,
+  .carousel-video-playlist.featured .cvp-patient-name,
+  .carousel-video-playlist.featured .cvp-prescribed {
     display: none;
+  }
+
+  .carousel-video-playlist.featured .cvp-view-transcript {
+    display: inline-block;
+  }
+
+  /* The player's left corners were rounded for the flush desktop pairing;
+     on mobile (no quote panel beside it) round all four corners. */
+  .carousel-video-playlist.featured .cvp-featured-player .cvp-player-wrap {
+    border-radius: 16px;
   }
 
   /* Featured play button shrinks to 64px on mobile to match live. */
@@ -1302,12 +1325,15 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
     background-size: 38px;
   }
 
-  /* Live wraps thumbnails into a 2-column grid on mobile (no horizontal
-     scroller, no paging arrows). */
+  /* Live keeps the thumbnails in a 2-column grid that scrolls vertically
+     (fixed height, not all visible at once). Hide paging arrows. */
   .carousel-video-playlist.featured .cvp-thumbnails {
     flex-wrap: wrap;
-    overflow-x: visible;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 320px;
     gap: 8px;
+    scrollbar-width: thin;
   }
 
   .carousel-video-playlist.featured .cvp-prev,
@@ -1317,7 +1343,7 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
 
   .carousel-video-playlist.featured .cvp-thumb {
     width: calc(50% - 4px);
-    flex-shrink: 1;
+    flex-shrink: 0;
   }
 }
 
