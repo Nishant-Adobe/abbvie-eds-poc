@@ -1296,10 +1296,16 @@ main > .section.triggers-section .columns.triggers {
   gap: var(--spacing-40);
 }
 
-/* Each item is the positioning context for its centered label overlay. */
 main > .section.triggers-section .columns.triggers .columns-item {
-  position: relative;
   text-align: center;
+}
+
+/* The image cell is the positioning context for the label overlay — its height
+   equals the image, so the label's top:% resolves against the image regardless
+   of any extra item-box height (e.g. the picture wrapper's default <p> margin
+   on the published DOM). */
+main > .section.triggers-section .columns.triggers .columns-item-image {
+  position: relative;
 }
 
 main > .section.triggers-section .columns.triggers .columns-item-image img {
@@ -1311,12 +1317,19 @@ main > .section.triggers-section .columns.triggers .columns-item-image img {
   object-fit: fill;
 }
 
+/* Neutralize the default bottom margin on the picture wrapper <p> so the image
+   cell stays exactly image-height (published DOM wraps the picture in its own
+   <p> which carries a ~30px bottom margin, inflating the box). */
+main > .section.triggers-section .columns.triggers .columns-item-image p:has(picture) {
+  margin: 0;
+}
+
 /* Label overlays the lower part of the icon's translucent blob (live sits it
    below the illustration, in the empty lower-blob area). Live centers the text
    at ~81% of the image height, leaving ~11% space below. Absolutely positioned
-   so the item height stays equal to the image height. Scope to the label
-   paragraph only — not the <p> that wraps the icon picture. */
-main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)) {
+   against the image cell. Scope to the label paragraph only — not the <p> that
+   wraps the icon picture. */
+main > .section.triggers-section .columns.triggers .columns-item-image p:not(:has(picture)) {
   position: absolute;
   top: 81%;
   left: 0;
@@ -1339,13 +1352,8 @@ main > .section.triggers-section .columns.triggers .columns-item p:not(:has(pict
     gap: var(--spacing-20);
   }
 
-  /* Cap the item to the image height (24rem) so the label's top:% overlay
-     resolves against the image, not a taller item box. Without this the flex
-     row leaves ~30px extra below the image, pushing the label to ~91% (jammed
-     at the bottom) instead of live's ~82%. */
   main > .section.triggers-section .columns.triggers .columns-item {
     flex: 1 1 0;
-    height: 24rem;
   }
 
   main > .section.triggers-section .columns.triggers .columns-item-image img {
