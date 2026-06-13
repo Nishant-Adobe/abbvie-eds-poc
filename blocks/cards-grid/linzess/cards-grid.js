@@ -324,7 +324,11 @@ function buildLinzessRecipeCardRow(wrapper) {
     });
   }
 
-  if (ctaDiv) {
+  // Only emit a CTA when the cell actually carries one (a link or text).
+  // Some recipe-card uses (e.g. game-plan strategy rows) are title+body only.
+  const hasCta = ctaDiv
+    && (ctaDiv.querySelector('a[href]') || (ctaDiv.textContent || '').trim());
+  if (hasCta) {
     const { href, label } = resolveLinzessArticleCta(ctaDiv);
     const ctaP = document.createElement('p');
     const a = document.createElement('a');

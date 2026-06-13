@@ -767,7 +767,7 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-se
    default-content-wrapper. Both selectors are kept so styling holds whether or
    not the class survives publish. */
 main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
-main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+main > .section.otc-intro-section > .default-content-wrapper:first-of-type > p:first-child,
 main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
@@ -782,7 +782,7 @@ main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type
 /* Divider line (64x5 divider.svg) centered above every section heading.
    Live authors it as an empty <p><span class="divider"> before each heading. */
 main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2)::before,
-main > .section.otc-intro-section > .default-content-wrapper > p:first-child::before,
+main > .section.otc-intro-section > .default-content-wrapper:first-of-type > p:first-child::before,
 main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child::before {
   content: "";
   display: block;
@@ -794,7 +794,7 @@ main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type
 }
 
 main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section) :is(.heading-1, h2),
-main > .section.otc-intro-section > .default-content-wrapper > p:first-child {
+main > .section.otc-intro-section > .default-content-wrapper:first-of-type > p:first-child {
   color: var(--color-text-heading);
 }
 
@@ -907,6 +907,17 @@ main > .section.otc-intro-section .cards-grid.cards-grid-recipe-cards .module2 {
   gap: var(--spacing-40);
 }
 
+/* Game-plan strategy grid sits inside an off-white rounded band on live
+   (background-off-white #f4f6fb, 16px radius, ~24px inner inset). The recipes
+   page uses the same recipe-cards variant WITHOUT a band, so scope the band to
+   the game-plan page only via :has(ol) — that section uniquely carries the
+   Sources <ol>; the recipes otc-intro-section has none. */
+main > .section.otc-intro-section:has(ol) .cards-grid.cards-grid-recipe-cards .module2 {
+  padding: var(--spacing-24);
+  border-radius: var(--linz-rounded-corner);
+  background-color: var(--linz-off-white);
+}
+
 /* The global `.abbvie-container div { grid-column: 1 / span 12 }` rule (every
    section is an .abbvie-container) forces nested divs to span all 12 tracks,
    which would collapse the image/text columns below into one stacked column.
@@ -980,6 +991,13 @@ main > .section.otc-intro-section .cards-grid.cards-grid-recipe-cards .abbv-imag
   main > .section.otc-intro-section .cards-grid.cards-grid-recipe-cards .abbv-image-text {
     grid-template-columns: 38.7rem 1fr;
     gap: var(--spacing-40);
+  }
+
+  /* Game-plan strategy rows use a narrower image column than the recipe cards:
+     live caps the image container at 332px (.game-plan-container
+     .abbv-image-content-container). Scoped to the game-plan page via :has(ol). */
+  main > .section.otc-intro-section:has(ol) .cards-grid.cards-grid-recipe-cards .abbv-image-text {
+    grid-template-columns: 33.2rem 1fr;
   }
 }
 
@@ -1157,6 +1175,37 @@ main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type 
   font-size: var(--font-size-body-small);
   color: var(--color-text-on-dark);
   text-decoration: none;
+}
+
+/* Sources footnote inside the white otc-intro-section (game-plan strategy
+   page authors the Sources list in the same section as the strategy rows).
+   Live: Lato 12px/400, left-aligned, muted gray, decimal list — NOT the
+   section heading treatment the default-content rules would otherwise apply.
+   Scoped via :has(ol) so it targets ONLY the Sources wrapper (which holds the
+   reference <ol>) and never the intro wrapper (recipes/pantry intro has no ol). */
+main > .section.otc-intro-section > .default-content-wrapper:has(ol) :is(p, ol, li) {
+  max-width: 99.8rem;
+  margin: var(--spacing-12, 12px) auto;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body);
+  line-height: 1.4;
+  color: var(--color-text-body, #4d4d4f);
+  text-align: left;
+  text-transform: none;
+}
+
+main > .section.otc-intro-section > .default-content-wrapper:has(ol) p::before {
+  content: none;
+}
+
+main > .section.otc-intro-section > .default-content-wrapper:has(ol) strong {
+  font-weight: var(--font-weight-bold);
+}
+
+main > .section.otc-intro-section > .default-content-wrapper:has(ol) ol {
+  padding-left: var(--spacing-15);
+  list-style-type: decimal;
 }
 
 /* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
@@ -1695,7 +1744,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
 
   /* Mobile: section headings shrink 40px -> 32px to match live */
   main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
-  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.otc-intro-section > .default-content-wrapper:first-of-type > p:first-child,
   main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
     font-size: var(--font-size-h2-hero);
     line-height: var(--line-height-h2-hero);
@@ -1735,7 +1784,7 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(
   }
 
   main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
-  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.otc-intro-section > .default-content-wrapper:first-of-type > p:first-child,
   main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
     font-size: var(--font-size-h2-hero);
     line-height: var(--line-height-h2-hero);

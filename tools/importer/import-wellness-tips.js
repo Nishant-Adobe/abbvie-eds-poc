@@ -287,6 +287,69 @@ const TEMPLATES = {
       });
     },
   },
+
+  'game-plan': {
+    documentPath: '/linzess/starting-linzess/wellness-tips/make-a-game-plan-for-ibs-c',
+    build(document, main) {
+      // 1. HERO (hero JPGs stay on the linzess.com host — proven to render from
+      // the CDN on the recipes page).
+      heroSection(document, main, {
+        desktop: '/content/dam/linzess/images/article-wellness-gameplan-desktop.jpg',
+        mobile: '/content/dam/linzess/images/article-wellness-gameplan-mobile.jpg',
+        eyebrow: 'Resources / Wellness Tips',
+        h1: '<h1 id="make-a-game-plan-for-ibs-c">Make a Game Plan for IBS-C</h1>',
+      });
+
+      // 2. INTRO (otc-intro-section) + 4 strategy rows (image-left / text-right)
+      // reusing the cards-grid-recipe-cards variant. Strategy images migrated
+      // into the project DAM so cards.js optimized URLs resolve locally.
+      const introNodes = nodes(document, `<p class="heading-1">Your Game Plan Helps Put You in Control</p>
+<p>Along with treatment, healthy diet and lifestyle habits can help with managing your symptoms. But when it&rsquo;s tough to stick to your routine, it doesn&rsquo;t hurt to be prepared. Consider these strategies so you can be confident and comfortable no matter what life throws your way.</p>`);
+      const GDAM = '/content/dam/abbvie-eds-poc/linzess/images';
+      const strategies = [
+        ['Don&rsquo;t Miss a Meal', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-meal@2x.png`, 'There&rsquo;s no need to fret when it comes to eating out. Check out the menu ahead of time, keep an eye on portion control, and consider passing on rich and fried foods. Many restaurants now offer gluten-free and dairy-free options&mdash;opt for one of these and indulge without the worry. Bon App&eacute;tit!'],
+        ['A Night on the Town', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-night_on_the_town@2x.png`, 'Hanging out with friends is a great way to blow off steam, and you don&rsquo;t have to miss out on the fun just because you have IBS-C. Yes, certain beverages can be triggers, but that&rsquo;s not to say they can&rsquo;t be enjoyed within reason. Swap sugary sodas for unsweetened cranberry juice, a Low FODMAP fave for cocktails (or mocktails!).'],
+        ['Stay on Track When You&rsquo;re on the Go-Go-Go', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-stay-on-track@2x.png`, 'Running around town with a full day of errands can throw your schedule&mdash;and eating habits&mdash;out of whack. There&rsquo;s no need to go hungry. In fact, it&rsquo;s much better for your digestion to eat small meals regularly. Pack a gut-friendly snack pack and remember to take quick meal breaks. Forgot to pack your healthy snacks? Swap the burger for a grilled chicken wrap at your local fast-food joint if you&rsquo;re in a pinch.'],
+        ['Manage Your Symptoms and Your Workload', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-workload@2x.png`, 'Staying on track while on the job shouldn&rsquo;t be a problem. Mid-morning slump? Keep in mind when heading to the coffee cart that caffeine can be a trigger. You might want to reconsider that second cup of coffee, or even better, swap it for green tea when you need a pick-me-up. And while you wait, deep breaths can be a great distraction, and a great de-stresser. Keep calm and work on.'],
+      ];
+      // grid-card cells: [link] / image / line1=title / line2=description /
+      // line3=CTA (left EMPTY — strategy rows have no CTA; the linzess
+      // decoration skips the empty cell).
+      const strategyRows = strategies.map(([title, src, desc]) => [
+        [''],
+        [img(document, src, decodeEntities(document, title))],
+        [el(document, `<p>${title}</p>`).firstChild],
+        [el(document, `<p>${desc}</p>`).firstChild],
+        [''],
+      ]);
+      const strategyGrid = WebImporter.Blocks.createBlock(document, {
+        name: 'cards-grid (cards-grid-recipe-cards)',
+        cells: strategyRows,
+      });
+      const sources = nodes(document, `<p class="footnote"><strong>Sources:</strong></p>
+<ol class="footnote">
+<li>Smith, Jennifer. &ldquo;IBS at Work: How to Manage &amp; Prevent IBS Attacks in the Workplace.&rdquo; <em>Matter</em>. 2 Dec. 2020. Accessed 3 Nov. 2021. www.mindsethealth.com/matter/ibs-at-work</li>
+<li>&ldquo;A Diet for IBS With Constipation (IBS-C).&rdquo; <em>WebMD</em>. 9 Aug. 2025. Accessed 6 Oct. 2025. www.webmd.com/ibs/diet-solution-ibs</li>
+<li>Wilson, D&eacute;d&eacute;. &ldquo;Strategies for Dining Out with IBS.&rdquo; <em>FODMAP Everyday</em>. 8 Nov. 2024. Accessed 30 Sept. 2025. https://www.fodmapeveryday.com/strategies-for-dining-out-with-ibs/</li>
+</ol>`);
+      section(document, main, [...introNodes, strategyGrid, ...sources], [['classes_customClass', 'otc-intro-section']]);
+
+      // 3. MORE LIKE THIS
+      moreLikeThis(document, main, [
+        ['Tackling IBS-C Triggers', '/content/dam/linzess/images/Article-TacklingIBS-card.jpg', '/linzess/starting-linzess/healthy-routines/tackling-ibs-c-triggers'],
+        ['Keeping in Touch with Your Doctor', '/content/dam/linzess/images/Article-KeepInTouch-card.jpg', '/linzess/starting-linzess/healthy-routines/keeping-in-touch-with-your-doctor'],
+        ['Good for Your Gut&mdash;Flavorful Food Swaps', '/content/dam/linzess/images/Article-FoodSwap-card.jpg', '/linzess/starting-linzess/wellness-tips/good-for-your-gut-flavorful-food-swaps'],
+      ]);
+
+      ctaCards(document, main);
+      isiSection(document, main);
+      safetyBarSection(document, main, 'sb-game-plan');
+      metadataSection(document, main, {
+        title: 'Make a Game Plan for IBS-C | LINZESS&reg; (linaclotide)',
+        description: 'Build a game plan for managing IBS-C with simple strategies for dining out, socializing, running errands, and staying on track at work. See Important Risk Info and Boxed Warning.',
+      });
+    },
+  },
 };
 
 // ---- shared section builders ----
@@ -350,6 +413,7 @@ function metadataSection(document, main, { title, description }) {
 
 function resolveTemplate(url) {
   if (url.includes('pantry')) return TEMPLATES.pantry;
+  if (url.includes('make-a-game-plan')) return TEMPLATES['game-plan'];
   return TEMPLATES.recipes;
 }
 
