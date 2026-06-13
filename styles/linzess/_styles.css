@@ -989,6 +989,16 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
   body main .section:has(.whylinzess-timeline) > .default-content-wrapper + .columns-wrapper + .columns-wrapper + .default-content-wrapper > p:first-child {
     text-align: left;
   }
+
+  /* Patient Experiences band runs near-full-width on live's tablet (16px
+     gutters), not the base 70px section inset. Pull the side margins in so the
+     savings card and its left-aligned disclaimer span the viewport like live. */
+  body main .section:has(.carousel-video-playlist.featured).whylinzess-patients {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 /* Video playlist cards in How Works section */

@@ -2009,12 +2009,6 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
     gap: 40px;
   }
 
-  .cards-grid.whylinzess-explore .flexboxitem-v2:first-child {
-    border-right: 0;
-    border-bottom: 1px solid rgb(148 142 190);
-    padding-bottom: 40px;
-  }
-
   /* Card side padding 32→16px to match live's narrower gutters on mobile. */
   .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card,
   .cards-grid.cards-grid-stat-card.whylinzess-timeline .linz-stat-card {
@@ -2035,6 +2029,14 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
     line-height: 96px;
     font-size: 17px;
     margin: -50px auto 24px;
+  }
+
+  /* Stacked arc: the two panels sit vertically until 1100px, so the divider
+     moves from the column edge (border-right) to between the rows. */
+  .cards-grid.whylinzess-explore .flexboxitem-v2:first-child {
+    border-right: 0;
+    border-bottom: 1px solid rgb(148 142 190);
+    padding-bottom: 40px;
   }
 
   /* Explore band: shallow 75px top arc (not 255px) and no bottom dome. */

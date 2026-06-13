@@ -1,7 +1,7 @@
 import { resolveImageReference } from '../../scripts/scripts.js';
 import decorateExternalLinksUtility from '../../scripts/utils.js';
 
-const MOBILE_IMAGE_MEDIA = '(max-width: 599px)';
+const MOBILE_IMAGE_MEDIA = '(max-width: 984px)';
 
 /**
  * When a column image cell holds two images (desktop + mobile variant), merge
