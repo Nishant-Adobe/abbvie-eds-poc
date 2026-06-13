@@ -1221,6 +1221,131 @@ main > .section.otc-intro-section > .default-content-wrapper:has(ol) ol {
   list-style-type: decimal;
 }
 
+/* ============================================================
+   Good for Your Gut — Flavorful Food Swaps
+   ============================================================ */
+
+/* Intro section is body-only (no heading), but the shared otc-intro-section
+   rule styles the first <p> as the big purple Bebas heading. This section's
+   only paragraph is that first child, so override it back to Lato body copy.
+   Scoped via the unique food-swaps-intro class so no other page is affected. */
+
+/* :first-of-type on the wrapper raises specificity to (0,6,2) so this beats the
+   desktop heading rule AND the tablet/mobile @media heading rules (all (0,5,2)),
+   which would otherwise scale this body paragraph up to --font-size-h2-hero. */
+main > .section.otc-intro-section.food-swaps-intro > .default-content-wrapper:first-of-type > p:first-child {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  text-transform: none;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+main > .section.otc-intro-section.food-swaps-intro > .default-content-wrapper:first-of-type > p:first-child::before {
+  content: none;
+}
+
+/* Food Swaps comparison — white page section, two light-purple panels
+   ("Try These:" / "When Craving These:"), each a dark-purple header bar + 5
+   image-cards (circular food illustration + label). The colored callout
+   badges are baked into the *-callout PNGs, so no CSS overlay is needed.
+   Reuses the columns block with a `food-swaps` variant; the section uses the
+   white otc-intro-section base so the purple lives only inside the panels. */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-24);
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* Each panel — light-purple (pastel) rounded card; the header bar sits flush
+   at the top so the cell has no top padding. */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps .columns-item-image {
+  overflow: hidden;
+  background-color: var(--color-brand-primary-lighter);
+  border-radius: 1.6rem;
+  text-align: center;
+}
+
+/* Header bar ("Try These:" / "When Craving These:") — dark-purple full-width
+   bar. Live uses Lato 700 24px white with 24px padding (NOT Bebas). Authored
+   as <h3> so it survives md2jcr (which strips classes). */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps h3 {
+  margin: 0 0 var(--spacing-24);
+  padding: var(--spacing-24);
+  background-color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: 2.4rem;
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+  text-transform: none;
+  color: var(--color-text-on-dark);
+}
+
+/* Food illustration cards — the PNG already contains the white circle + any
+   colored callout badge. Cap to the live size and centre. */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p:has(img) {
+  margin: 0;
+}
+
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p img {
+  display: block;
+  width: 100%;
+  max-width: 25.4rem;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Labels under each illustration — dark-purple bold, centered; extra space
+   below before the next card. Live: Lato 700 16px purple. */
+main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p:not(:has(img)) {
+  margin: 0 0 var(--spacing-32);
+  padding: 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-body);
+  color: var(--color-text-heading);
+}
+
+/* Mobile: stack the two panels; live narrows the food illustration to 205px. */
+@media (width < 768px) {
+  main > .section.otc-intro-section.food-swaps-section .columns.food-swaps {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-20);
+  }
+
+  main > .section.otc-intro-section.food-swaps-section .columns.food-swaps p img {
+    max-width: 20.5rem;
+  }
+}
+
+/* Gut-Friendly Diets — 4 icon cards on a light-purple band. Reuses the
+   how-they-work columns variant but overrides the pantry off-white band
+   (scoped to .gut-diets-section) and the 170px icon cap (live icons are
+   ~210px and have no white blob). */
+
+/* Match the pantry off-white rule's specificity (it uses :has(.columns.how-they-work),
+   which scores 4 classes) so the periwinkle band wins here. The added
+   .gut-diets-section class keeps this page-local — the pantry page lacks it and
+   stays off-white. */
+main > .section.otc-intro-section.gut-diets-section:has(.columns.how-they-work) {
+  background-color: var(--color-brand-primary-lighter);
+}
+
+main > .section.otc-intro-section.gut-diets-section .columns.how-they-work .columns-item-image img {
+  max-width: 21rem;
+}
+
+@media (width <= 985px) {
+  main > .section.otc-intro-section.gut-diets-section .columns.how-they-work .columns-item-image img {
+    max-width: 21rem;
+  }
+}
+
 /* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
 main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
   margin-bottom: var(--spacing-24);
@@ -1404,7 +1529,7 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
   padding-top: var(--spacing-20);
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-body);
   color: var(--color-text-heading);
 }
 

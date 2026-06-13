@@ -350,6 +350,105 @@ const TEMPLATES = {
       });
     },
   },
+
+  'food-swaps': {
+    documentPath: '/linzess/starting-linzess/wellness-tips/good-for-your-gut-flavorful-food-swaps',
+    build(document, main) {
+      // 1. HERO (hero JPGs stay on the linzess.com host).
+      heroSection(document, main, {
+        desktop: '/content/dam/linzess/images/article-wellness-goodgut-desktop.jpg',
+        mobile: '/content/dam/linzess/images/article-wellness-goodgut-mobile.jpg',
+        eyebrow: 'Resources / Wellness Tips',
+        h1: '<h1 id="good-for-your-gut-flavorful-food-swaps">Good for Your Gut&mdash;Flavorful Food Swaps</h1>',
+      });
+
+      // 2. INTRO (white otc-intro-section) — intro paragraph only, no heading.
+      const introNodes = nodes(document, `<p>The taste buds want what the taste buds want, but it&rsquo;s possible to find foods that are both smart and satisfying. Check out these appetizing alternatives to some possible trigger foods you should avoid.</p>`);
+      section(document, main, introNodes, [['classes_customClass', 'otc-intro-section, food-swaps-intro']]);
+
+      // 3. FOOD SWAPS comparison — two light-purple panels ("Try These:" /
+      // "When Craving These:"), each a header + 5 image-cards (circular food
+      // illustration + label below). The live colored callout badges (teal on
+      // the left, dark-purple on the right) are baked into the *-callout PNGs,
+      // so no CSS overlay is needed; the callout wording is preserved in alt
+      // text for accessibility. md2jcr strips non-semantic classes, so the
+      // header is an <h3> and each card is a <picture> + <p> — both survive
+      // publish and are styled structurally by the food-swaps CSS.
+      const FSDAM = '/content/dam/abbvie-eds-poc/linzess/images';
+      const FSP = '4.2.2-d-good-for-your-gut-flavorful-food-swaps';
+      // [imageBaseName, label, callout (for alt only; '' = none)]
+      const tryFoods = [
+        ['yogurt-callout', 'Almond milk, yogurt, brie, or camembert', 'Yogurt contains good bacteria your gut loves.'],
+        ['kiwi-callout', 'Bananas, berries, citrus fruits, or kiwi', 'Kiwi acts as a natural laxative.'],
+        ['maple-syrup', 'Treats made with molasses or maple syrup', ''],
+        ['popcorn', 'Baked chips, rice cakes, or popcorn', ''],
+        ['rice_bowl_callout', 'Whole-grain bread, oats, brown rice, or quinoa', 'Brown rice provides 4 grams of fiber per cup.'],
+      ];
+      const craveFoods = [
+        ['milk', 'Milk, cream cheese, or sour cream', ''],
+        ['apple', 'Apples, pears, watermelon, or dried fruit', ''],
+        ['honey-callout', 'Treats made with honey or artificial sweeteners that end in &ldquo;-ol&rdquo;', 'Honey is high in fructose, which can cause flare-ups.'],
+        ['chips-callout', 'Potato chips or fried foods', 'Fatty foods slow digestion and can bring on the bloat.'],
+        ['white-bread', 'Pasta, crackers, white rice and white wheat, or rye bread', ''],
+      ];
+      const foodColumn = (header, foods) => {
+        const col = document.createElement('div');
+        col.appendChild(el(document, `<h3>${header}</h3>`).firstChild);
+        foods.forEach(([base, label, callout]) => {
+          const altText = callout ? `${label}. ${callout}` : label;
+          col.appendChild(img(document, `${FSDAM}/${FSP}-${base}@2x.png`, altText));
+          col.appendChild(el(document, `<p>${label}</p>`).firstChild);
+        });
+        return [...col.childNodes];
+      };
+      const swapBlock = columnsBlock(document, 'food-swaps', [foodColumn('Try These:', tryFoods), foodColumn('When Craving These:', craveFoods)]);
+      section(document, main, [swapBlock], [['classes_customClass', 'otc-intro-section, food-swaps-section']]);
+
+      // 4. SOME COMMON GUT-FRIENDLY DIETS — light-purple band (dedicated
+      // gut-diets-section class), heading + intro + 4 icon cards (icon + body,
+      // no visible title) reusing the how-they-work columns variant, then
+      // Sources footnote.
+      const GDDAM = '/content/dam/abbvie-eds-poc/linzess/images';
+      const dietHeading = nodes(document, `<p class="heading-1">Some Common Gut-Friendly Diets</p>
+<p>Your meal plan should be about finding what works best for your needs, lifestyle&mdash;and taste. Always <a href="/linzess/find-relief#talktoadoctor">seek your doctor&rsquo;s advice</a> to determine which diet is best for you. Along with a treatment plan, there are a few IBS-C and CIC-friendly diets you might want to consider:</p>`);
+      const diets = [
+        ['Low FODMAP diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-low-fodmap-diet@2x.png`, 'High FODMAP foods are difficult for your body to digest and often lead to flare-ups.'],
+        ['Gluten-free diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-gluten-free-diet@2x.png`, 'Cut out barley, rye, and wheat and look for a &ldquo;Certified Gluten-Free&rdquo; label.'],
+        ['High fiber diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-high-fiber-diet@2x.png`, 'Fiber helps move things along. It&rsquo;s best to eat 22&ndash;34 grams each day. (Most of us eat only 16!)'],
+        ['Low fat diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-low-fat-diet@2x.png`, 'High fat foods are usually low in fiber. Swap fatty foods for lean meats, fruits, and veggies.'],
+      ];
+      const dietItems = diets.map(([alt, src, body]) => {
+        const div = document.createElement('div');
+        div.appendChild(img(document, src, alt));
+        div.appendChild(el(document, `<p>${body}</p>`).firstChild);
+        return [...div.childNodes];
+      });
+      const dietGrid = columnsBlock(document, 'how-they-work', dietItems);
+      const sources = nodes(document, `<p class="footnote"><strong>Sources:</strong></p>
+<ol class="footnote">
+<li>&ldquo;A Diet for IBS With Constipation (IBS-C).&rdquo; <em>WebMD</em>. 9 Aug. 2025. Accessed 6 Oct. 2025. https://www.webmd.com/ibs/diet-solution-ibs</li>
+<li>&ldquo;FODMAPs and Irritable Bowel Syndrome.&rdquo; <em>Monash University</em>. Accessed 7 March 2022. www.monashfodmap.com/about-fodmap-and-ibs</li>
+<li>Cherney, Kristeen and Klein, Erika. &ldquo;Types of Diets and Tips on What to Eat with IBS.&rdquo; <em>Healthline</em>. 30 June 2025. Accessed 7 Oct. 2025. https://www.healthline.com/health/ibs/ibs-diet</li>
+<li>&ldquo;Try A FODMAPs Diet To Manage Irritable Bowel Syndrome.&rdquo; <em>Harvard Health Publishing</em>. Accessed 7 Oct. 2025. https://www.health.harvard.edu/diseases-and-conditions/a-new-diet-to-manage-irritable-bowel-syndrome</li>
+</ol>`);
+      section(document, main, [...dietHeading, dietGrid, ...sources], [['classes_customClass', 'otc-intro-section, gut-diets-section']]);
+
+      // 5. MORE LIKE THIS
+      moreLikeThis(document, main, [
+        ['Your Map to a Low FODMAP Diet', '/content/dam/linzess/images/article-thumb-fodmap.jpg', '/linzess/starting-linzess/wellness-tips/your-map-to-a-low-fodmap-diet'],
+        ['Is Your Pantry FODMAP-Friendly?', '/content/dam/linzess/images/Article-Pantry-card.jpg', '/linzess/starting-linzess/wellness-tips/is-your-pantry-fodmap-friendly'],
+        ['5 Holiday Low FODMAP Recipes', '/content/dam/linzess/images/article-thumb-holiday.jpg', '/linzess/starting-linzess/wellness-tips/5-holiday-low-fodmap-recipes'],
+      ]);
+
+      ctaCards(document, main);
+      isiSection(document, main);
+      safetyBarSection(document, main, 'sb-food-swaps');
+      metadataSection(document, main, {
+        title: 'Helpful Foods for Constipation | LINZESS&reg; (linaclotide)',
+        description: 'Discover flavorful food swaps and gut-friendly diets to help manage IBS-C and CIC symptoms. See Important Risk Info and Boxed Warning.',
+      });
+    },
+  },
 };
 
 // ---- shared section builders ----
@@ -414,6 +513,7 @@ function metadataSection(document, main, { title, description }) {
 function resolveTemplate(url) {
   if (url.includes('pantry')) return TEMPLATES.pantry;
   if (url.includes('make-a-game-plan')) return TEMPLATES['game-plan'];
+  if (url.includes('good-for-your-gut')) return TEMPLATES['food-swaps'];
   return TEMPLATES.recipes;
 }
 
