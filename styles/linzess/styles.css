@@ -1346,7 +1346,7 @@ main > .section.triggers-section .columns.triggers .columns-item p:not(:has(pict
    a white-text Sources reference list.
    ============================================================ */
 main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type {
-  max-width: 92rem;
+  max-width: 69rem;
   margin: 0 auto;
   text-align: center;
 }
@@ -1455,9 +1455,9 @@ main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-content l
   color: var(--color-text-body, #4d4d4f);
 }
 
-/* Sources reference list (white, 12px) */
+/* Sources reference list (white, 12px, numbered) */
 main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type {
-  max-width: 67rem;
+  max-width: 92rem;
   margin: var(--spacing-40) auto 0;
 }
 
@@ -1472,9 +1472,10 @@ main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type p st
   font-weight: var(--font-weight-body);
 }
 
-main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type ul {
+main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(ol, ul) {
   margin: var(--spacing-12) 0;
   padding-left: var(--spacing-10);
+  list-style-type: decimal;
 }
 
 /* Desktop (>=1024px): image left, heading + story stacked tightly on the
