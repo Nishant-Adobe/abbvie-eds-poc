@@ -316,6 +316,17 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   content: '';
 }
 
+/* Editorial hero: live shows a shallow white curve rising ~20px at centre with
+   its corners flush to the hero bottom. For a 100% 100% 0 0 ellipse at 130%
+   width the corner-to-centre height ratio is a constant 0.64 at every viewport
+   width, so height-|bottom| sets the centre rise and |bottom| <= 0.64*height
+   keeps the corners covered (no dark sliver / horizontal line). 52/-32 →
+   centre +20px, corners +1.3px. */
+.hero.linzess-behind-nav-linzess-editorial-hero::before {
+  height: 52px;
+  bottom: -32px;
+}
+
 /* stylelint-disable-next-line no-descending-specificity */
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) p {
   margin-top: 1.6rem;
