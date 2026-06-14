@@ -1742,8 +1742,11 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   padding: 5px 32px 0;
 }
 
+/* Live overlaps the circle onto the card by sitting -50px above the top edge
+   (not -68px), so more of the badge rests on the card. */
+
 .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card-heading strong {
-  margin: -68px auto 24px;
+  margin: -50px auto 24px;
 }
 
 .cards-grid.cards-grid-stat-card.whylinzess-timeline {
@@ -1861,13 +1864,18 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   }
 }
 
-/* Tablet (768–985): once stacked, the short CIC card collapses to ~100px.
-   Live gives the symptom cards bottom padding so the CIC card keeps a
-   comfortable height (~144px) — add it back here. */
+/* Tablet (768–985): once stacked, the short CIC card collapses too far.
+   Live keeps the symptom cards taller (IBS-C ~250px, single-line CIC ~171px),
+   so give the CIC card (the shorter nth-child(2)) extra bottom padding to
+   match live's height. */
 
 @media (width >= 768px) and (width < 986px) {
   .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card {
     padding-bottom: 40px;
+  }
+
+  .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card:nth-child(2) {
+    padding-bottom: 72px;
   }
 }
 
