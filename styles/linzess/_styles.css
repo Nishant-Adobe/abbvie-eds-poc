@@ -1760,6 +1760,37 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
   color: #4d4d4f;
 }
 
+/* ── Patient-stories video card (community section) ──
+   Live shows the video on the off-white section with no purple band, dark
+   text, a light-purple title bar, and a purple "More Videos Like This" CTA. */
+
+/* Drop the full-bleed purple band the .grid carousel paints by default. */
+body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid {
+  background: transparent;
+}
+
+/* "Hear REAL Patient Stories" heading → dark purple; intro copy → dark grey. */
+body main .section:is(.resources-community, #communityresources) > .default-content-wrapper h2 {
+  color: #422e83;
+}
+
+body main .section:is(.resources-community, #communityresources) > .default-content-wrapper:has(h2) p {
+  color: #4d4d4f;
+}
+
+/* Video title bar: light-purple band with dark-purple text. */
+body main .section:is(.resources-community, #communityresources) .carousel-video-playlist .cvp-name-banner {
+  background: #d9d7f9;
+  color: #422e83;
+}
+
+/* "More Videos Like This" CTA: purple background, white text. */
+body main .section:is(.resources-community, #communityresources) .carousel-video-playlist-wrapper + .default-content-wrapper a.button,
+body main .section:is(.resources-community, #communityresources) > .default-content-wrapper a.button {
+  background: #422e83;
+  color: #fff;
+}
+
 /* Explore band panel titles (matches live 24px/700 Lato) */
 body main .section .cards-grid.resources-explore.cards-grid-icon-image-card .heading-2 {
   font-family: var(--body-font-family);
