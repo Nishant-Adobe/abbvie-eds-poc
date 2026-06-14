@@ -436,6 +436,64 @@ function decorateSavingsRadioOptions(main) {
 }
 
 /**
+ * Sitemap page: the live site lays the link categories out in a 3-column grid,
+ * but the migrated content is a flat sequence of <h2> + link <p>s in one wrapper.
+ * Group each <h2> with its following link paragraphs into a .sitemap-category
+ * wrapper so CSS can lay them out as a responsive grid. Runs only on the sitemap
+ * (detected by the #sitemap heading).
+ * @param {Element} main The main element
+ */
+function decorateSitemapColumns(main) {
+  const h1 = main.querySelector('h1#sitemap');
+  if (!h1) return;
+  const wrapper = h1.closest('.default-content-wrapper');
+  if (!wrapper || wrapper.querySelector('.sitemap-category')) return;
+
+  const grid = document.createElement('div');
+  grid.className = 'sitemap-categories';
+
+  let current = null;
+  // Walk siblings after the H1; group each H2 with its following content.
+  // The live sitemap also has a headless 6th column (Check My Symptoms / FAQs /
+  // Sign Up) with no <h2>; start a new category at that link so it splits off
+  // from the preceding "Savings & Support" group.
+  let node = h1.nextElementSibling;
+  while (node) {
+    const next = node.nextElementSibling;
+    const startsHeadlessGroup = node.tagName === 'P' && node.querySelector('a[href*="find-relief/gutcheck"]');
+    if (node.tagName === 'H2' || startsHeadlessGroup) {
+      current = document.createElement('div');
+      current.className = 'sitemap-category';
+      grid.append(current);
+    }
+    if (current) current.append(node);
+    node = next;
+  }
+
+  if (grid.children.length) wrapper.append(grid);
+
+  // Each sitemap link sits alone in a <p>, so decorateButtons() turned them into
+  // button pills. The live sitemap uses plain underlined text links — undo that.
+  grid.querySelectorAll('p.button-container').forEach((p) => p.classList.remove('button-container'));
+  grid.querySelectorAll('a.button').forEach((a) => a.classList.remove('button', 'primary', 'secondary'));
+}
+
+/**
+ * SMS Terms & Conditions page: the live page ships NO viewport meta tag, so
+ * phones lay it out at the default ~980px width and zoom out to fit — the copy
+ * appears small. This project's global head.html sets width=device-width, which
+ * reflows instead. To match the live small-text/zoom-out presentation, swap the
+ * viewport to a fixed device-width=980 ONLY on this page (detected by the unique
+ * terms heading). Scoped so no other page is affected.
+ * @param {Element} main The main element
+ */
+function applyTermsViewport(main) {
+  if (!main.querySelector('h3#from-the-gutsm-text-message-terms-and-conditions')) return;
+  const viewport = document.head.querySelector('meta[name="viewport"]');
+  if (viewport) viewport.setAttribute('content', 'width=980');
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -451,6 +509,8 @@ export function decorateMain(main) {
   // Run after decorateBlocks (which assigns fragment-wrapper class) but before loadSection
   decorateFragmentRotation(main);
   decorateSavingsRadioOptions(main);
+  decorateSitemapColumns(main);
+  applyTermsViewport(main);
   // add aria-label to links
   a11yLinks(main);
 }
