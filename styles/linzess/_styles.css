@@ -1451,11 +1451,18 @@ body main .section .cards-grid.resources-articles .abbv-image-content-container-
   margin: 0;
 }
 
-body main .section .cards-grid.resources-articles .abbv-image-content-container-v2 picture,
-body main .section .cards-grid.resources-articles .abbv-image-content-container-v2 img {
+/* Base .cards-grid-icon-image-card pulls the image up -50px (icon overlap);
+   the article-card images are full photos, so cancel that to show them fully. */
+body main .section .cards-grid.resources-articles.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 {
+  margin-top: 0;
+}
+
+body main .section .cards-grid.resources-articles.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 picture,
+body main .section .cards-grid.resources-articles.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 img {
   display: block;
   width: 100%;
   height: auto;
+  margin-top: 0;
   object-fit: fill;
 }
 
