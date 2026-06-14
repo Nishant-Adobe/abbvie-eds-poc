@@ -5252,18 +5252,43 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
    Live shows the video on the off-white section with no purple band, dark
    text, a light-purple title bar, and a purple "More Videos Like This" CTA. */
 
-/* Drop the full-bleed purple band the .grid carousel paints by default. */
+/* Drop the full-bleed purple band the .grid carousel paints by default, and
+   cap the video to its live 728px width, centered. */
 body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid {
   background: transparent;
+  max-width: 728px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* "Hear REAL Patient Stories" heading → dark purple; intro copy → dark grey. */
+/* "Hear REAL Patient Stories" heading → dark purple, 32px/30px. */
 body main .section:is(.resources-community, #communityresources) > .default-content-wrapper h2 {
   color: #422e83;
+  line-height: 30px;
 }
 
+/* Intro copy above the video → dark grey, 14px, 620px max, centered. */
 body main .section:is(.resources-community, #communityresources) > .default-content-wrapper:has(h2) p {
   color: #4d4d4f;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: normal;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Copy below the video sits in a default-content-wrapper with no h2, so the
+   rule above misses it — it would otherwise read white. Force dark grey,
+   14px, 620px max, centered to match live. */
+body main .section:is(.resources-community, #communityresources) .carousel-video-playlist-wrapper + .default-content-wrapper > p:first-child {
+  color: #4d4d4f;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: normal;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Video title bar: light-purple band with dark-purple text. */
