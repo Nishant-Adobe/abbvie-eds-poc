@@ -5198,8 +5198,18 @@ body main .section .columns.columns-resources-savings .columns-item-content {
   color: #4d4d4f;
 }
 
-/* Content side of the savings card sits on a white panel (the image side keeps
-   the light-purple band behind the tout). */
+/* The whole savings card is a single white rounded card (matches live). The
+   tout image carries its own light-purple panel, so the image cell stays
+   transparent and the card background reads white across both halves.
+   Scoped through the community section so it beats the section's #f4f6fb
+   band that would otherwise show through the card. */
+body main .section:is(.resources-community, #communityresources) .columns.columns-resources-savings {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Content side of the savings card sits on the white card. */
 body main .section .columns.columns-resources-savings .columns-item-content {
   background: #fff;
 }
