@@ -62,7 +62,15 @@ export default function parse(element, { document }) {
   const textHint = document.createComment(' field: text ');
   textCell.appendChild(textHint);
   if (heading) {
-    textCell.appendChild(heading.cloneNode(true));
+    const headingClone = heading.cloneNode(true);
+    // Markdown headings are single-line, so a mid-heading <br> is dropped on
+    // publish and the surrounding phrases concatenate (e.g. "QuestionsAbout").
+    // Replace each <br> with a space so the heading stays readable and wraps
+    // naturally on the rendered page.
+    headingClone.querySelectorAll('br').forEach((br) => {
+      br.replaceWith(document.createTextNode(' '));
+    });
+    textCell.appendChild(headingClone);
   }
   // Append CTA links if present
   if (ctaLinks.length > 0) {
