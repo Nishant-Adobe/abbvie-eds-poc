@@ -1413,6 +1413,14 @@ body main .section .cards-grid.resources-articles .abbv-flex-container-v2 {
   margin: 40px auto 0;
 }
 
+/* Base rule forces nowrap on .flexbox-cards:has(.col-2-card) at >=986px;
+   keep the resources article grids wrapping (3-up, then 2). */
+@media (width >= 986px) {
+  body main .section .cards-grid.resources-articles .abbv-flex-container-v2.flexbox-cards {
+    flex-wrap: wrap;
+  }
+}
+
 body main .section .cards-grid.resources-articles .flexboxitem-v2 {
   flex: 0 0 300px;
   max-width: 300px;
