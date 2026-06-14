@@ -1740,6 +1740,20 @@ body main .section .columns.columns-resources-savings .columns-item-content {
   background: #fff;
 }
 
+/* Tighten savings card copy: drop the 30px bottom margin on the body line
+   above the button, the Sign Up Now button line, and the "Already have a
+   savings card?" line. */
+body main .section .columns.columns-resources-savings .columns-item-content > p:nth-child(2),
+body main .section .columns.columns-resources-savings .columns-item-content > p:nth-child(3),
+body main .section .columns.columns-resources-savings .columns-item-content > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Space between the savings card and the disclaimer below it. */
+body main .section:is(.resources-community, #communityresources) .columns-wrapper:has(.columns-resources-savings) {
+  margin-bottom: 32px;
+}
+
 /* Trailing savings disclaimer (*Maximum savings limit…) sits in the community
    section's last default-content-wrapper; force dark grey too. */
 body main .section:is(.resources-community, #communityresources) > .default-content-wrapper:last-child p {
