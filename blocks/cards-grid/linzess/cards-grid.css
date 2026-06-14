@@ -935,13 +935,13 @@
 
 /* linzess-global: icon cards + flexbox cards */
 
-:is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .icon-image-card img {
+:is(.cards-grid.cards-grid-icon-image-card:not(.resources-articles), .cards-grid.cards-grid-article-cards) .icon-image-card img {
   width: 96px;
   margin-top: -50px;
 }
 
 @media (width >= 986px) {
-  :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .icon-image-card img {
+  :is(.cards-grid.cards-grid-icon-image-card:not(.resources-articles), .cards-grid.cards-grid-article-cards) .icon-image-card img {
     width: 105px;
   }
 }
@@ -1093,7 +1093,7 @@
   font-weight: 700;
 }
 
-:is(.cards-grid.cards-grid-icon-image-card):not(.cards-grid-homepage-content) .icon-image-card .abbv-image-content-container-v2 {
+:is(.cards-grid.cards-grid-icon-image-card):not(.cards-grid-homepage-content, .resources-articles) .icon-image-card .abbv-image-content-container-v2 {
   margin-top: -50px;
   text-align: center;
 }
