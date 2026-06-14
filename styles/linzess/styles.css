@@ -4992,11 +4992,18 @@ body main .section .cards-grid.resources-articles a.abbv-button-primary:focus {
 }
 
 /* ── Tip cards (3 stacked light-purple boxes: icon left, text right) ── */
+body main .section:is(.resources-wellness-tips, #wellnesstips) .columns-wrapper:has(.columns.resources-tips) {
+  width: 100%;
+  max-width: none;
+}
+
 body main .section:is(.resources-wellness-tips, #wellnesstips).columns-container .columns.resources-tips.block {
   background: transparent;
   border-radius: 0;
   padding: 0;
   display: block;
+  width: 100%;
+  max-width: none;
 }
 
 body main .section .columns.resources-tips .columns-item {
@@ -5016,8 +5023,9 @@ body main .section .columns.resources-tips .columns-item > div {
   width: auto;
 }
 
-body main .section .columns.resources-tips .columns-item .columns-item-image,
-body main .section .columns.resources-tips .columns-item picture {
+/* Card content is one <p> wrapping <picture> + nested <p>(title) + <ul>.
+   Float the icon left; title/bullets flow to its right and clear below. */
+body main .section .columns.resources-tips .columns-item .columns-item-image {
   display: block;
   width: auto;
 }
@@ -5026,6 +5034,17 @@ body main .section .columns.resources-tips .columns-item .columns-item-image pic
   float: left;
   width: 120px;
   margin: 0 24px 0 0;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image p,
+body main .section .columns.resources-tips .columns-item .columns-item-image ul {
+  overflow: hidden;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image::after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
 body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.resources-tips > .columns-item:has(.columns-item-image) .columns-item-image img,
@@ -5037,12 +5056,6 @@ body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.resource
   margin: 0;
   display: block;
   object-fit: contain;
-}
-
-body main .section .columns.resources-tips .columns-item .columns-item-image::after {
-  content: "";
-  display: block;
-  clear: both;
 }
 
 body main .section .columns.resources-tips p strong {
