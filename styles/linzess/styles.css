@@ -4306,9 +4306,15 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     max-width: 100%;
   }
 
-  /* Patient Experiences section: drop the 24px side padding on mobile so the
-     featured player spans nearly the full viewport width (matching live). The
-     intro copy keeps its own breathing room via the wrapper below. */
+  /* Featured carousel sections: drop the 24px side padding on mobile so the
+     player spans nearly the full viewport width (matching live). The intro
+     copy keeps its own breathing room via the wrapper below. */
+  body main .section:has(.carousel-video-playlist.featured) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Patient Experiences section: also zero the side margins on mobile. */
   body main .section:has(.carousel-video-playlist.featured).whylinzess-patients {
     padding-left: 0;
     padding-right: 0;
