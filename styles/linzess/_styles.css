@@ -829,18 +829,6 @@ body main .section:has(.carousel-video-playlist.featured).whylinzess-patients {
   padding-top: 24px;
 }
 
-/* Eyebrow "Linzess Patient Experiences" is the first paragraph here and must
-   stay a 12px/800 kicker at every width. A broad carousel-heading rule
-   (body main:has(.whylinzess-timeline) … p:first-child -> 32px) wrongly catches
-   it. That rule keys off the STATIC .carousel-video-playlist-container class
-   (not the JS-added .featured), so this override must too — keying off
-   .featured fails before the playlist JS runs. Match the same static classes
-   plus .whylinzess-patients and .columns-container to outrank it (0,7,3). */
-body main:has(.whylinzess-timeline) .section.whylinzess-patients.carousel-video-playlist-container.columns-container > .default-content-wrapper > p:first-child {
-  font-size: 12px;
-  line-height: normal;
-}
-
 /* Desktop: the patient-experiences band is full-bleed on live (white bg spans
    the viewport edge-to-edge) with the player, thumbnails, savings card, and
    disclaimer centered at their own max-widths. The base section margin (~55px
@@ -1250,12 +1238,11 @@ body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container >
 /* Mobile: those carousel headings shrink to 32px/30px (live) to stop the
    overlapping lines. Placed after the 40px rule so it wins by source order. */
 @media (width < 768px) {
-  /* :not(:last-child) excludes the savings-card disclaimer, which is the last
-     content wrapper in the patients section (also a carousel container) — it is
-     a 12px footnote, not a 32px heading. */
-  body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper:not(:last-child) > p:first-child,
+  /* The section heading is always the 2nd paragraph (the eyebrow kicker is the
+     1st and must stay 12px). Only size p:nth-child(2) — targeting p:first-child
+     here wrongly blew up the "Linzess Patient Experiences" eyebrow to 32px.
+     :not(:last-child) excludes the savings-card disclaimer wrapper. */
   body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper:not(:last-child) > p:nth-child(2),
-  body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper:not(:last-child) > p:first-child strong,
   body main:has(.whylinzess-timeline) .section.carousel-video-playlist-container > .default-content-wrapper:not(:last-child) > p:nth-child(2) strong {
     font-size: 32px;
     line-height: 30px;
