@@ -1009,6 +1009,20 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     font-size: 18px;
     line-height: normal;
   }
+
+  /* Footnote "*Abdominal…/†This was seen…" left-aligned on mobile too (it
+     inherits center from the dark section otherwise). Matches live. */
+  body main .section:has(.whylinzess-timeline) > .columns-wrapper + .default-content-wrapper > p:first-child {
+    text-align: left;
+  }
+
+  /* Mechanism-card body copy: live uses 14px/400 (regular), not 16px/700.
+     Match the section:has() prefix so this outranks the bold rule at the top of
+     this file. */
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content p {
+    font-size: 14px;
+    font-weight: 400;
+  }
 }
 
 /* Tablet (768–985): live uses the same smaller "When Can I Expect" heading

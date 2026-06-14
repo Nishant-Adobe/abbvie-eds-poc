@@ -4378,6 +4378,20 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     line-height: normal;
   }
 
+  /* Footnote "*Abdominal…/†This was seen…" left-aligned on mobile too (it
+     inherits center from the dark section otherwise). Matches live. */
+  body main .section:has(.whylinzess-timeline) > .columns-wrapper + .default-content-wrapper > p:first-child {
+    text-align: left;
+  }
+
+  /* Mechanism-card body copy: live uses 14px/400 (regular), not 16px/700.
+     Match the section:has() prefix so this outranks the bold rule at the top of
+     this file. */
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content p {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
   /* Stack the symptom cards on mobile. The section-level grid rule (0,4,1)
      outranks the block-level mobile rule, so override it here at matching
      specificity, otherwise the IBS-C/CIC cards stay side-by-side. */
