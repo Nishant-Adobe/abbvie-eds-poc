@@ -4792,8 +4792,26 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
 .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) {
   text-align: center;
   padding: 60px 24px;
+  max-width: none;
+  margin: 0;
+}
+
+/* Center inner content wrappers since the section itself is now full-bleed */
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > div {
   max-width: 1046px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Wellness Tips = full-bleed dark-purple band with white header text */
+body main .section.resources-wellness-tips {
+  background: #422e83;
+}
+
+/* Community Resources = full-bleed off-white band */
+body main .section.resources-community,
+body main .section.resources-community.cards-grid-container.carousel-video-playlist-container {
+  background: #f4f6fb;
 }
 
 /* Section header: eyebrow → divider → heading → intro */
@@ -4844,9 +4862,17 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
   font-family: var(--body-font-family);
   font-size: 16px;
   line-height: 1.6rem;
-  color: #422e83;
+  color: #fff;
   text-align: center;
   margin: 40px auto 0;
+}
+
+/* Wellness Tips dark band: eyebrow, heading and intro are white */
+body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:first-child,
+body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:nth-child(2),
+body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:nth-child(2) strong,
+body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:nth-child(n+3) {
+  color: #fff;
 }
 
 /* ── Article cards (Healthy Routines 3-up, Wellness 5-up wrapping) ──
@@ -4938,7 +4964,7 @@ body main .section .cards-grid.resources-articles a.abbv-button-primary:focus {
   color: #422e83;
 }
 
-/* ── Tip cards (3 stacked transparent cards: icon left, text right) ── */
+/* ── Tip cards (3 stacked light-purple boxes: icon left, text right) ── */
 body main .section.resources-wellness-tips.columns-container .columns.resources-tips.block {
   background: transparent;
   border-radius: 0;
@@ -4948,15 +4974,15 @@ body main .section.resources-wellness-tips.columns-container .columns.resources-
 body main .section .columns.resources-tips .columns-item {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  max-width: 700px;
+  gap: 20px;
+  max-width: 690px;
   margin: 40px auto 0;
 }
 
 body main .section .columns.resources-tips .columns-item > div {
-  background: transparent;
-  border-radius: 0;
-  padding: 24px 0;
+  background: #d9d7f9;
+  border-radius: 16px;
+  padding: 29px 40px;
   text-align: left;
   width: auto;
 }
@@ -5014,11 +5040,11 @@ body main .section .columns.columns-resources-gutcheck {
   margin: 60px auto 0;
 }
 
-body main .section .columns.columns-resources-gutcheck .columns-item {
+body main .section.resources-wellness-tips .columns.columns-resources-gutcheck > .columns-item:has(.columns-item-image) {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  background: #d9d7f9;
+  background: #f4f6fb;
   border-radius: 16px;
   overflow: hidden;
 }
@@ -5050,14 +5076,7 @@ body main .section .columns.columns-resources-gutcheck p {
   color: #422e83;
 }
 
-/* Community section is white on live, but the base brand rule
-   .cards-grid-container.carousel-video-playlist-container paints it dark purple.
-   Override back to transparent (scoped to resources-community only). */
-body main .section.resources-community.cards-grid-container.carousel-video-playlist-container {
-  background-color: transparent;
-}
-
-/* ── Community cards (2 stacked/side light-purple cards) ── */
+/* ── Community cards (2 dark-purple cards, white text, white "Learn More" pill) ── */
 body main .section .cards-grid.resources-community .abbv-flex-container-v2 {
   display: flex;
   flex-wrap: wrap;
@@ -5073,7 +5092,7 @@ body main .section .cards-grid.resources-community .flexboxitem-v2 {
 }
 
 body main .section .cards-grid.resources-community .abbv-flex-item-v2 {
-  background: #d9d7f9;
+  background: #422e83;
   border-radius: 16px;
   padding: 32px;
   text-align: center;
@@ -5087,18 +5106,41 @@ body main .section .cards-grid.resources-community .abbv-image-content-container
   display: block;
 }
 
-body main .section .cards-grid.resources-community .heading-2 {
+body main .section .cards-grid.resources-community.cards-grid-icon-image-card .heading-2 {
   font-family: var(--heading-font-family);
   font-size: 24px;
   font-weight: 400;
-  color: #422e83;
+  color: #fff;
   text-transform: none;
   margin-bottom: 12px;
 }
 
-body main .section .cards-grid.resources-community p {
+body main .section .cards-grid.resources-community.cards-grid-icon-image-card p {
   font-family: var(--body-font-family);
   font-size: 16px;
+  color: #fff;
+}
+
+/* Community "Learn More" = white pill with dark-purple text */
+body main .section .cards-grid.resources-community .abbv-image-text-content-v2 a,
+body main .section .cards-grid.resources-community a.abbv-button-primary {
+  display: inline-block;
+  background: #fff;
+  color: #422e83;
+  border: 0;
+  border-radius: 16px;
+  padding: 12px 32px;
+  margin-top: 16px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: none;
+}
+
+body main .section .cards-grid.resources-community a.abbv-button-primary:hover,
+body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
+  background: #fff;
   color: #422e83;
 }
 
