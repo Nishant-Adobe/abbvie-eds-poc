@@ -831,9 +831,12 @@ body main .section:has(.carousel-video-playlist.featured).whylinzess-patients {
 
 /* Eyebrow "Linzess Patient Experiences" is the first paragraph here and must
    stay a 12px/800 kicker at every width. A broad carousel-heading rule
-   (...p:first-child -> 32px) wrongly catches it, so pin it down at base scope
-   (the extra .carousel-video-playlist-container class outranks that rule). */
-body main .section:has(.carousel-video-playlist.featured).whylinzess-patients.carousel-video-playlist-container > .default-content-wrapper > p:first-child {
+   (body main:has(.whylinzess-timeline) … p:first-child -> 32px) wrongly catches
+   it. That rule keys off the STATIC .carousel-video-playlist-container class
+   (not the JS-added .featured), so this override must too — keying off
+   .featured fails before the playlist JS runs. Match the same static classes
+   plus .whylinzess-patients and .columns-container to outrank it (0,7,3). */
+body main:has(.whylinzess-timeline) .section.whylinzess-patients.carousel-video-playlist-container.columns-container > .default-content-wrapper > p:first-child {
   font-size: 12px;
   line-height: normal;
 }
