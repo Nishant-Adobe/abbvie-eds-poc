@@ -103,7 +103,12 @@ main .section.off-white.accordion-container {
    such section, so they are unaffected. */
 main .section.section-nav-container {
   position: relative;
-  z-index: 1;
+  /* z-index:2 (not 1) so the lifted pill paints above the hero box it overlaps
+     via the -84px wrapper lift. At z-index:1 the hero covered the pill's lower
+     half, hiding the Savings / Financial Support labels. The following
+     savings-intro section is also z-index:2 but later in DOM, so its white arc
+     still wins over this section's arc and the SAVINGS heading stays visible. */
+  z-index: 2;
   overflow: visible;
   padding-bottom: 0;
   /* The pill is lifted -84px, leaving dead white space below it before the
@@ -630,8 +635,7 @@ main .section.dark-purple + .section strong {
 .columns.doctor-tout .columns-item-image img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 
 .columns.savings-card-tout .columns-item-content,
@@ -663,26 +667,45 @@ main .section.savings-tout-section .columns-item-content p {
    the content define the card height and stretches the image to match.
    align-items:stretch grows the card to fit the text (no clipping) while
    the card keeps its rounded-corner clip. Scoped to .savings-tout-section. */
-main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child) {
-  align-items: stretch;
+/* Desktop only (>=768px): the two columns sit side by side. Below this the
+   mobile rule (@media width<768) stacks image over text, where these
+   stretch/absolute-fill rules must NOT apply (they'd collapse the stacked
+   image out of flow and overflow the text). */
+@media (width >= 768px) {
+  main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child) {
+    align-items: stretch;
+  }
+
+  /* The image at flex:0 0 50% + height:auto has a fixed intrinsic height
+     (width/1.469). With align-items:stretch the row settles at THAT height, so
+     when the body copy is taller (larger DPR/zoom, font swap, longer copy) it
+     overflows the card and the first line is clipped. Detach the image from the
+     row's height: its column stretches to whatever height the TEXT needs, and
+     the img fills that box via object-fit:cover. Now the text column alone
+     drives the card height — no clipping at any zoom. */
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image {
+    position: relative;
+    align-self: stretch;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
-/* Vertically center the text block within the (image-driven) card height,
-   matching live — text sits with comfortable space above the first line
-   instead of hugging the top edge. Scoped to .savings-tout-section. */
+/* Vertically center the text block within the card height, matching live —
+   text sits with comfortable space above the first line instead of hugging
+   the top edge. Scoped to .savings-tout-section. */
 main .section.savings-tout-section .columns.savings-card-tout .columns-item-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-/* The savings-card image has the "YOU MAY BE ELIGIBLE TO GET" heading baked
-   into its top. With align-items:stretch the image panel is taller than the
-   image's aspect ratio, so object-fit:cover crops the top and clips that
-   heading. Live shows the whole graphic (object-fit:fill). Scoped here so
-   other touts keep cover. */
-main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img {
-  object-fit: fill;
 }
 
 .columns.savings-card-tout .columns-item-content h2,
@@ -731,10 +754,12 @@ main .section.savings-tout-section .columns.savings-card-tout .columns-item-imag
   text-decoration: underline;
 }
 
-/* Mobile: stack image above text */
+/* Mobile: stack image above text. Match the base rule's specificity
+   (:not(:first-child), 0-3-0) so flex-direction:column actually wins —
+   otherwise the side-by-side row layout bleeds into mobile and overflows. */
 @media (width < 768px) {
-  .columns.savings-card-tout > .columns-item,
-  .columns.doctor-tout > .columns-item {
+  .columns.savings-card-tout > .columns-item:not(:first-child),
+  .columns.doctor-tout > .columns-item:not(:first-child) {
     flex-direction: column;
   }
 
