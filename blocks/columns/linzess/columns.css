@@ -544,6 +544,7 @@
    Legal Font: BasicCommercialLT
    ============================================================ */
 
+/* stylelint-disable-next-line no-duplicate-selectors */
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #422e83;
@@ -1900,7 +1901,24 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
   /* Make room at the top of the card for the lower half of the overlapping
      icon (48px) plus breathing room. */
   body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content) {
-    padding-top: 56px;
+    padding-top: 41px;
+  }
+
+  /* Live drops the card's own vertical padding to 0 (the icon-overlap space is
+     handled by the content's padding-top above), so the cards aren't ~30-48px
+     taller than live. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card,
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* Card body copy: live uses 14px regular (not 16px/700-900). Match the
+     2nd-card bold and 3rd-card strong overrides too. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-content p,
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-content p strong {
+    font-size: 14px;
+    font-weight: 400;
   }
 
   /* Stack the "Calms pain-sensing nerves / Accelerates bowel movements"

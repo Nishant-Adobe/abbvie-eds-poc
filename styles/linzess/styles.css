@@ -4335,6 +4335,15 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     margin-right: 0;
   }
 
+  /* FDA reporting footnote: live sits it close under the last card with a
+     14px/regular size and a small 14px top gap (vs the 16px/700, 40px-gap
+     desktop treatment). */
+  .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .default-content-wrapper:last-child > p:last-child {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 14px;
+  }
+
   body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper {
     padding-left: 16px;
     padding-right: 16px;
@@ -4345,6 +4354,15 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
   body main .section:has(.carousel-video-playlist.featured).whylinzess-patients > .default-content-wrapper > p:nth-child(2) strong {
     font-size: 32px;
     line-height: 30px;
+  }
+
+  /* Eyebrow "Linzess Patient Experiences" is the first paragraph here; the
+     broad carousel-heading 32px rule (p:first-child) wrongly catches it. Live
+     keeps it a 12px/800 kicker. The extra .carousel-video-playlist-container
+     class outranks that rule (same specificity otherwise, but this is later). */
+  body main .section:has(.carousel-video-playlist.featured).whylinzess-patients.carousel-video-playlist-container > .default-content-wrapper > p:first-child {
+    font-size: 12px;
+    line-height: normal;
   }
 
   /* Intro copy "If you're experiencing…" 16px/tight → 14px/normal (live)
