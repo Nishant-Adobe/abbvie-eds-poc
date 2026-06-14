@@ -1305,3 +1305,347 @@ main:has(.whylinzess-timeline) .cards-grid .abbv-stretched-card-body p.heading-2
 main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
   line-height: 1.6rem;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESOURCES PAGE — scoped to .resources-* variants only so the homepage
+   and why-linzess pages are never affected. Explicit px per the Linzess
+   CSS-isolation rule. Breakpoints: mobile <768, tablet 768-985, desktop >=986.
+   Live facts: all 3 sections have white/transparent bg; cards are
+   light-purple (#d9d7f9) 16px-radius. Article cards 3-up (300px, image-top);
+   tip cards stacked full-width (670px, icon-top + bullet list).
+   ═══════════════════════════════════════════════════════════════════ */
+
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) {
+  text-align: center;
+  padding: 60px 24px;
+  max-width: 1046px;
+  margin: 0 auto;
+}
+
+/* Section header: eyebrow → divider → heading → intro */
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:first-child {
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: normal;
+  color: #422e83;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2),
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2) strong {
+  font-family: var(--heading-font-family);
+  font-size: 40px;
+  line-height: 36px;
+  font-weight: 400;
+  color: #422e83;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2)::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto 24px;
+}
+
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(n+3) {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 1.6rem;
+  color: #422e83;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Intro line that precedes the wellness article grid */
+.section.resources-wellness-tips > .default-content-wrapper:not(:first-child) > p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 1.6rem;
+  color: #422e83;
+  text-align: center;
+  margin: 40px auto 0;
+}
+
+/* ── Article cards (Healthy Routines 3-up, Wellness 5-up wrapping) ──
+   300px light-purple cards, image-top 174px, 3 per row, gap 16px. */
+body main .section .cards-grid.resources-articles .abbv-flex-container-v2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  max-width: 998px;
+  margin: 40px auto 0;
+}
+
+body main .section .cards-grid.resources-articles .flexboxitem-v2 {
+  flex: 0 0 300px;
+  max-width: 300px;
+}
+
+body main .section .cards-grid.resources-articles .abbv-flex-item-v2 {
+  background: #d9d7f9;
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: left;
+  height: 100%;
+}
+
+body main .section .cards-grid.resources-articles .abbv-image-content-container-v2 {
+  display: block;
+  width: 100%;
+}
+
+body main .section .cards-grid.resources-articles .abbv-image-content-container-v2 picture,
+body main .section .cards-grid.resources-articles .abbv-image-content-container-v2 img {
+  display: block;
+  width: 100%;
+  height: 174px;
+  object-fit: cover;
+}
+
+body main .section .cards-grid.resources-articles .abbv-image-text-content-v2 {
+  padding: 20px 24px 24px;
+}
+
+body main .section .cards-grid.resources-articles .heading-2 {
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #422e83;
+  margin-bottom: 12px;
+  text-transform: none;
+}
+
+body main .section .cards-grid.resources-articles p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #422e83;
+  margin-bottom: 16px;
+}
+
+body main .section .cards-grid.resources-articles .abbv-image-text-content-v2 a,
+body main .section .cards-grid.resources-articles a.abbv-button-primary {
+  display: inline-block;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #422e83;
+  text-decoration: underline;
+  text-transform: none;
+}
+
+body main .section .cards-grid.resources-articles a.abbv-button-primary.i-a::after,
+body main .section .cards-grid.resources-articles a.abbv-button-primary.i-b::before {
+  content: none;
+  display: none;
+}
+
+body main .section .cards-grid.resources-articles a.abbv-button-primary:hover,
+body main .section .cards-grid.resources-articles a.abbv-button-primary:focus {
+  background: transparent;
+  color: #422e83;
+}
+
+/* ── Tip cards (3 stacked transparent cards: icon left, text right) ── */
+body main .section.resources-wellness-tips.columns-container .columns.resources-tips.block {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+
+body main .section .columns.resources-tips .columns-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 700px;
+  margin: 40px auto 0;
+}
+
+body main .section .columns.resources-tips .columns-item > div {
+  background: transparent;
+  border-radius: 0;
+  padding: 24px 0;
+  text-align: left;
+  width: auto;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image,
+body main .section .columns.resources-tips .columns-item picture {
+  display: block;
+  width: auto;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image picture {
+  float: left;
+  width: 120px;
+  margin: 0 24px 0 0;
+}
+
+body main .section.resources-wellness-tips .columns.resources-tips > .columns-item:has(.columns-item-image) .columns-item-image img,
+body main .section.resources-wellness-tips .columns.resources-tips > .columns-item:has(.columns-item-image) picture img {
+  width: 120px;
+  height: auto;
+  max-width: 120px;
+  min-height: 0;
+  margin: 0;
+  display: block;
+  object-fit: contain;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+body main .section .columns.resources-tips p strong {
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  color: #422e83;
+  text-transform: none;
+}
+
+body main .section .columns.resources-tips ul {
+  text-align: left;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #422e83;
+  padding-left: 20px;
+  margin-top: 16px;
+}
+
+/* ── Gut-check promo banner (image left + copy right, light-purple) ── */
+body main .section .columns.columns-resources-gutcheck {
+  max-width: 998px;
+  margin: 60px auto 0;
+}
+
+body main .section .columns.columns-resources-gutcheck .columns-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: #d9d7f9;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+body main .section .columns.columns-resources-gutcheck .columns-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+body main .section .columns.columns-resources-gutcheck .columns-item-content {
+  padding: 40px;
+  text-align: left;
+}
+
+body main .section .columns.columns-resources-gutcheck p strong {
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  line-height: 30px;
+  font-weight: 400;
+  color: #422e83;
+  text-transform: none;
+}
+
+body main .section .columns.columns-resources-gutcheck p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: #422e83;
+}
+
+/* Community section is white on live, but the base brand rule
+   .cards-grid-container.carousel-video-playlist-container paints it dark purple.
+   Override back to transparent (scoped to resources-community only). */
+body main .section.resources-community.cards-grid-container.carousel-video-playlist-container {
+  background-color: transparent;
+}
+
+/* ── Community cards (2 stacked/side light-purple cards) ── */
+body main .section .cards-grid.resources-community .abbv-flex-container-v2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 800px;
+  margin: 40px auto 0;
+}
+
+body main .section .cards-grid.resources-community .flexboxitem-v2 {
+  flex: 0 0 360px;
+  max-width: 360px;
+}
+
+body main .section .cards-grid.resources-community .abbv-flex-item-v2 {
+  background: #d9d7f9;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  height: 100%;
+}
+
+body main .section .cards-grid.resources-community .abbv-image-content-container-v2 img {
+  width: 105px;
+  height: auto;
+  margin: 0 auto 16px;
+  display: block;
+}
+
+body main .section .cards-grid.resources-community .heading-2 {
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  color: #422e83;
+  text-transform: none;
+  margin-bottom: 12px;
+}
+
+body main .section .cards-grid.resources-community p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: #422e83;
+}
+
+/* Mobile/tablet: stack all card grids single column, 32px headings */
+@media (width < 986px) {
+  .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2),
+  .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2) strong {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  body main .section .columns.columns-resources-gutcheck .columns-item {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width < 768px) {
+  body main .section .cards-grid.resources-articles .flexboxitem-v2,
+  body main .section .cards-grid.resources-community .flexboxitem-v2 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
