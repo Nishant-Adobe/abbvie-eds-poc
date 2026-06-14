@@ -2474,3 +2474,77 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     margin-bottom: 20px;
   }
 }
+
+/* ====================================================
+   FAQs page hero — page-scoped mobile fixes (mirrors from-the-gut).
+   Scoped to main:has(picture img[src*="faq-hero"]) — the faq-hero image only
+   exists on the FAQs page, so no other hero is affected.
+   ==================================================== */
+@media (width < 744px) {
+  /* Migrated content references only the wide 2.34:1 faq-hero-desktop crop at
+     every breakpoint, so on mobile it over-crops. Live swaps to a dedicated
+     near-square mobile asset (faq-hero-mobile.jpg, ~1:1). Swap to it here so
+     the scene shows undistorted in the ~1:1 mobile box, matching live. */
+  .hero.linzess-behind-nav-linzess-editorial-hero:has(picture img[src*="faq-hero"]) picture img,
+  .hero.linzess-editorial-hero:has(picture img[src*="faq-hero"]) picture img {
+    content: url("https://www.linzess.com/content/dam/linzess/images/faq-hero-mobile.jpg?width=750&format=webply&optimize=medium");
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  /* Top-align eyebrow/title and clear the taller migrated mobile header
+     (logo bottom ~167px) so the eyebrow is not hidden. */
+  main:has(picture img[src*="faq-hero"]) .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 204px 20px 20px;
+  }
+
+  main:has(picture img[src*="faq-hero"]) .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container > * {
+    width: 100%;
+    max-width: none;
+  }
+
+  main:has(picture img[src*="faq-hero"]) .hero .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 24px;
+  }
+
+  main:has(picture img[src*="faq-hero"]) .hero h1 {
+    font-size: 32px;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+}
+
+/* ====================================================
+   Savings & Support index page hero — page-scoped mobile fixes.
+   Scoped to main:has(.section-nav) — the jump-nav block only exists on the
+   index page, so no other hero is affected. The index hero already serves the
+   ~1:1 savings-hero-mobile asset via its <source>, so no image swap is needed.
+   ==================================================== */
+@media (width < 744px) {
+  main:has(.section-nav) .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 204px 20px 20px;
+  }
+
+  main:has(.section-nav) .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container > * {
+    width: 100%;
+    max-width: none;
+  }
+
+  main:has(.section-nav) .hero .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 24px;
+  }
+
+  main:has(.section-nav) .hero h1 {
+    font-size: 32px;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+}
