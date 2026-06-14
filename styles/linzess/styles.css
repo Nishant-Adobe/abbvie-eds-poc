@@ -4789,7 +4789,7 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
    tip cards stacked full-width (670px, icon-top + bullet list).
    ═══════════════════════════════════════════════════════════════════ */
 
-.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) {
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) {
   text-align: center;
   padding: 60px 24px;
   max-width: none;
@@ -4797,25 +4797,24 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
 }
 
 /* Center inner content wrappers since the section itself is now full-bleed */
-.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > div {
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > div {
   max-width: 1046px;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* Wellness Tips = full-bleed dark-purple band with white header text */
-body main .section.resources-wellness-tips {
+body main .section:is(.resources-wellness-tips, #wellnesstips) {
   background: #422e83;
 }
 
 /* Community Resources = full-bleed off-white band */
-body main .section.resources-community,
-body main .section.resources-community.cards-grid-container.carousel-video-playlist-container {
+body main .section:is(.resources-community, #communityresources) {
   background: #f4f6fb;
 }
 
 /* Section header: eyebrow → divider → heading → intro */
-.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:first-child {
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
   font-size: 12px;
   font-weight: 800;
@@ -4826,8 +4825,8 @@ body main .section.resources-community.cards-grid-container.carousel-video-playl
   margin-bottom: 24px;
 }
 
-.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2),
-.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2) strong {
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(2),
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(2) strong {
   font-family: var(--heading-font-family);
   font-size: 40px;
   line-height: 36px;
@@ -4837,7 +4836,7 @@ body main .section.resources-community.cards-grid-container.carousel-video-playl
   margin-bottom: 24px;
 }
 
-.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2)::before {
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(2)::before {
   content: '';
   display: block;
   width: 64px;
@@ -4847,7 +4846,7 @@ body main .section.resources-community.cards-grid-container.carousel-video-playl
   margin: 0 auto 24px;
 }
 
-.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(n+3) {
+.section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(n+3) {
   font-family: var(--body-font-family);
   font-size: 16px;
   line-height: 1.6rem;
@@ -4858,7 +4857,7 @@ body main .section.resources-community.cards-grid-container.carousel-video-playl
 }
 
 /* Intro line that precedes the wellness article grid */
-.section.resources-wellness-tips > .default-content-wrapper:not(:first-child) > p {
+.section:is(.resources-wellness-tips, #wellnesstips) > .default-content-wrapper:not(:first-child) > p {
   font-family: var(--body-font-family);
   font-size: 16px;
   line-height: 1.6rem;
@@ -4868,10 +4867,10 @@ body main .section.resources-community.cards-grid-container.carousel-video-playl
 }
 
 /* Wellness Tips dark band: eyebrow, heading and intro are white */
-body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:first-child,
-body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:nth-child(2),
-body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:nth-child(2) strong,
-body main .section.resources-wellness-tips > .default-content-wrapper:first-child > p:nth-child(n+3) {
+body main .section:is(.resources-wellness-tips, #wellnesstips) > .default-content-wrapper:first-child > p:first-child,
+body main .section:is(.resources-wellness-tips, #wellnesstips) > .default-content-wrapper:first-child > p:nth-child(2),
+body main .section:is(.resources-wellness-tips, #wellnesstips) > .default-content-wrapper:first-child > p:nth-child(2) strong,
+body main .section:is(.resources-wellness-tips, #wellnesstips) > .default-content-wrapper:first-child > p:nth-child(n+3) {
   color: #fff;
 }
 
@@ -4965,7 +4964,7 @@ body main .section .cards-grid.resources-articles a.abbv-button-primary:focus {
 }
 
 /* ── Tip cards (3 stacked light-purple boxes: icon left, text right) ── */
-body main .section.resources-wellness-tips.columns-container .columns.resources-tips.block {
+body main .section:is(.resources-wellness-tips, #wellnesstips).columns-container .columns.resources-tips.block {
   background: transparent;
   border-radius: 0;
   padding: 0;
@@ -4999,8 +4998,8 @@ body main .section .columns.resources-tips .columns-item .columns-item-image pic
   margin: 0 24px 0 0;
 }
 
-body main .section.resources-wellness-tips .columns.resources-tips > .columns-item:has(.columns-item-image) .columns-item-image img,
-body main .section.resources-wellness-tips .columns.resources-tips > .columns-item:has(.columns-item-image) picture img {
+body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.resources-tips > .columns-item:has(.columns-item-image) .columns-item-image img,
+body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.resources-tips > .columns-item:has(.columns-item-image) picture img {
   width: 120px;
   height: auto;
   max-width: 120px;
@@ -5040,7 +5039,7 @@ body main .section .columns.columns-resources-gutcheck {
   margin: 60px auto 0;
 }
 
-body main .section.resources-wellness-tips .columns.columns-resources-gutcheck > .columns-item:has(.columns-item-image) {
+body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.columns-resources-gutcheck > .columns-item:has(.columns-item-image) {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -5146,8 +5145,8 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
 
 /* Mobile/tablet: stack all card grids single column, 32px headings */
 @media (width < 986px) {
-  .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2),
-  .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community) > .default-content-wrapper:first-child > p:nth-child(2) strong {
+  .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(2),
+  .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(2) strong {
     font-size: 32px;
     line-height: 30px;
   }
