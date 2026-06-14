@@ -2205,6 +2205,15 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   max-width: none;
   width: 100%;
 }
+
+/* Resources hero headline wraps to two lines like live
+   ("Helpful Information To Help" / "You Get Started"). */
+@media (width >= 1024px) {
+  .hero.resources-hero h1 {
+    max-width: 400px;
+    width: auto;
+  }
+}
 /* Hero band height tracks the active image's aspect-ratio (object-fit:fill) so
    the photo scales fluidly and never over-zooms — instead of a fixed min-height.
    The hero block (mergeMobileImage) swaps the picture source at 744px: mobile
