@@ -915,9 +915,23 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
   .section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2),
   .section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2) strong,
   .section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2),
+  .section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2) strong,
   body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
     font-size: 32px;
     line-height: 30px;
+  }
+
+  /* Live's mobile top dome is a tall, round arc (border-radius 100% 100% with a
+     130%-wide centered shape), not the shallow full-width ellipse used at
+     desktop. Match it so the purple section's curved top reads the same. */
+  .section:has(.whylinzess-timeline)::before {
+    left: 50%;
+    right: auto;
+    width: 130%;
+    transform: translateX(-50%);
+    height: 110px;
+    top: -90px;
+    border-radius: 100% 100% 0 0;
   }
 
   .section:has(.whylinzess-timeline) > .carousel-video-playlist-wrapper,
