@@ -1816,8 +1816,19 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item {
   border-radius: var(--linz-rounded-corner);
 }
 
+/* The single inner wrapper holds image + title + link. Stretch it full card
+   height and make it a flex column so the link can pin to the card bottom —
+   live aligns all three "Read the article" links on one baseline regardless
+   of whether the title wraps to two lines. */
 main > .section.more-like-this-section .columns.more-like-this .columns-item > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   margin: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item .button-container {
+  margin-top: auto;
 }
 
 /* Image paragraph fills full card width, flush to the top + side edges */
@@ -1854,6 +1865,7 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
   font-weight: var(--font-weight-body);
+  line-height: normal;
   color: var(--color-text-heading);
 }
 
