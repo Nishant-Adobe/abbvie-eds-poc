@@ -5190,6 +5190,20 @@ body main .section .columns.columns-resources-savings p strong {
   text-transform: none;
 }
 
+/* Savings card body copy + "Already have a savings card?" line: dark grey on
+   the light-purple card (the community section otherwise inherits white text,
+   which made this copy invisible). */
+body main .section .columns.columns-resources-savings .columns-item-content p,
+body main .section .columns.columns-resources-savings .columns-item-content {
+  color: #4d4d4f;
+}
+
+/* Trailing savings disclaimer (*Maximum savings limit…) sits in the community
+   section's last default-content-wrapper; force dark grey too. */
+body main .section:is(.resources-community, #communityresources) > .default-content-wrapper:last-child p {
+  color: #4d4d4f;
+}
+
 /* Explore band panel titles (matches live 24px/700 Lato) */
 body main .section .cards-grid.resources-explore.cards-grid-icon-image-card .heading-2 {
   font-family: var(--body-font-family);
