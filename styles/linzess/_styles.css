@@ -909,10 +909,14 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
 
 /* Mobile responsive overrides */
 @media (width < 768px) {
+  /* Live's mobile section heading ("LINZESS CAN HELP RELIEVE SYMPTOMS…") is
+     32px/30px. Include the inner strong so it doesn't keep the 40px desktop
+     size set by the more-specific `p:nth-child(2) strong` rule above. */
   .section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2),
+  .section:has(.cards-grid-stat-card.whylinzess-symptoms) > .default-content-wrapper > p:nth-child(2) strong,
   .section:has(.whylinzess-timeline) > .default-content-wrapper:first-child > p:nth-child(2),
   body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
-    font-size: 28px;
+    font-size: 32px;
     line-height: 30px;
   }
 
