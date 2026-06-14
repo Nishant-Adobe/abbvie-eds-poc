@@ -1377,8 +1377,8 @@ body main .section.resources-community.cards-grid-container.carousel-video-playl
 .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(n+3) {
   font-family: var(--body-font-family);
   font-size: 16px;
-  line-height: 1.6rem;
-  color: #422e83;
+  line-height: normal;
+  color: #4d4d4f;
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
@@ -1553,7 +1553,7 @@ body main .section .columns.resources-tips .columns-item {
 body main .section .columns.resources-tips .columns-item > div {
   background: #d9d7f9;
   border-radius: 16px;
-  padding: 24px 40px;
+  padding: 24px;
   text-align: left;
   width: auto;
 }
@@ -1563,13 +1563,22 @@ body main .section .columns.resources-tips .columns-item .columns-item-image {
   width: auto;
 }
 
-body main .section .columns.resources-tips .columns-item .columns-item-image picture {
+/* Float the icon-wrapping <p> left so the title/bullets flow beside it
+   (live icon-left layout). The picture's own <p> must NOT be overflow:hidden
+   or it forms a BFC and drops below the float. */
+body main .section .columns.resources-tips .columns-item .columns-item-image p:has(picture) {
   float: left;
   width: 120px;
   margin: 0 24px 0 0;
+  overflow: visible;
 }
 
-body main .section .columns.resources-tips .columns-item .columns-item-image p,
+body main .section .columns.resources-tips .columns-item .columns-item-image picture {
+  display: block;
+  width: 120px;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image p:not(:has(picture)),
 body main .section .columns.resources-tips .columns-item .columns-item-image ul {
   overflow: hidden;
 }
@@ -1644,10 +1653,10 @@ body main .section .columns.columns-resources-gutcheck .columns-item-content {
 }
 
 body main .section .columns.columns-resources-gutcheck p strong {
-  font-family: var(--heading-font-family);
-  font-size: 32px;
-  line-height: 30px;
-  font-weight: 400;
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  line-height: normal;
+  font-weight: 700;
   color: #422e83;
   text-transform: none;
 }
@@ -1655,7 +1664,7 @@ body main .section .columns.columns-resources-gutcheck p strong {
 body main .section .columns.columns-resources-gutcheck p {
   font-family: var(--body-font-family);
   font-size: 16px;
-  color: #422e83;
+  color: #4d4d4f;
 }
 
 /* ── Community cards (2 dark-purple cards, white text, white "Learn More" pill) ── */
@@ -1689,12 +1698,30 @@ body main .section .cards-grid.resources-community .abbv-image-content-container
 }
 
 body main .section .cards-grid.resources-community.cards-grid-icon-image-card .heading-2 {
-  font-family: var(--heading-font-family);
+  font-family: var(--body-font-family);
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 700;
   color: #fff;
   text-transform: none;
   margin-bottom: 12px;
+}
+
+/* Savings card heading (matches live 24px/700 Lato, dark purple) */
+body main .section .columns.columns-resources-savings p strong {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  line-height: normal;
+  font-weight: 700;
+  color: #422e83;
+  text-transform: none;
+}
+
+/* Explore band panel titles (matches live 24px/700 Lato) */
+body main .section .cards-grid.resources-explore.cards-grid-icon-image-card .heading-2 {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: none;
 }
 
 body main .section .cards-grid.resources-community.cards-grid-icon-image-card p {
@@ -1736,6 +1763,14 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
 
   body main .section .columns.columns-resources-gutcheck .columns-item {
     grid-template-columns: 1fr;
+  }
+
+  /* Section-card headings drop to 18px on mobile/tablet to match live */
+  body main .section .columns.columns-resources-gutcheck p strong,
+  body main .section .columns.columns-resources-savings p strong,
+  body main .section .cards-grid.resources-explore.cards-grid-icon-image-card .heading-2,
+  body main .section .cards-grid.resources-community.cards-grid-icon-image-card .heading-2 {
+    font-size: 18px;
   }
 }
 
