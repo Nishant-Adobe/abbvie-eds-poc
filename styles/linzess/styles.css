@@ -212,6 +212,16 @@ main .default-content-wrapper:has(> h1#sitemap) .sitemap-category a {
   padding: 1.1rem 0;
 }
 
+/* Mobile (< 768px): single column, center-aligned headings and links. */
+@media (width < 768px) {
+  main .default-content-wrapper:has(> h1#sitemap) .sitemap-categories,
+  main .default-content-wrapper:has(> h1#sitemap) .sitemap-category,
+  main .default-content-wrapper:has(> h1#sitemap) .sitemap-category h2,
+  main .default-content-wrapper:has(> h1#sitemap) .sitemap-category p {
+    text-align: center;
+  }
+}
+
 @media (width >= 768px) {
   main .default-content-wrapper:has(> h1#sitemap) .sitemap-categories {
     grid-template-columns: repeat(2, 1fr);
