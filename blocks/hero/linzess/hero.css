@@ -2346,6 +2346,54 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     display: none;
   }
 }
+
+/* Tablet (744–1023px): the editorial hero heading and eyebrow drop to live's
+   smaller tablet scale (h1 32/30, eyebrow 12px) — the generic .hero h1 rule
+   above sets 40px which is the desktop size. Scoped to the editorial variant
+   and the tablet range so desktop (>=1024px) and other hero variants are
+   unaffected. Matches linzess.com /from-the-gut tablet hero. */
+@media (width >= 744px) and (width < 1024px) {
+  /* Live shows a tall full-bleed image hero at tablet that keeps a ~1:1
+     (768×748) aspect across the tablet range; the generic 744px editorial rule
+     sets min-height:auto, collapsing it to the short text-container height.
+     Use aspect-ratio so the hero scales proportionally with viewport width
+     (a fixed height would look too short/wide near 1024px). */
+  .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
+    aspect-ratio: 768 / 748;
+  }
+
+  /* The hero is a flex column; make the image column grow to fill the tall
+     hero so the photo covers the full height (text-container is absolute, so
+     the image column is the sole in-flow child). */
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child {
+    flex: 1 0 auto;
+    align-self: stretch;
+  }
+
+  /* The source image is a wide 2.34:1 landscape; in the near-square tablet box
+     object-fit:cover crops the sides. Live keeps the right portion (man +
+     child) in frame, so anchor the crop to the right edge. */
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 50%;
+  }
+
+  .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+    font-size: var(--font-size-32);
+    line-height: var(--line-height-30);
+  }
+
+  .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+    font-size: var(--font-size-12);
+  }
+}
+
 @media (width >= 1024px) {
   .hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-hero, .linzess-behind-nav-linzess-cta-hero) {
     min-height: var(--hero-behind-nav-min-height-desktop);

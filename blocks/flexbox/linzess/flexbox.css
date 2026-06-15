@@ -514,6 +514,27 @@ main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image img {
   color: var(--linz-grey, #4d4d4f);
 }
 
+/* Support-cards section (Insurance Coverage Support / MyAbbVie Assist): live
+   renders heading 24px, body 16px, and the inline link at body size (16px) with
+   weight 800, dark-purple, underlined. Our defaults leave the heading at 18px,
+   the body at 1rem (=10px on this 10px-root project), and the link oversized and
+   unstyled. Scoped to .support-cards-section so the Text/Call/Click signup cards
+   keep their own sizing. */
+.section.support-cards-section .flexbox.financial-cards .flexbox-item-content h2 {
+  font-size: 24px;
+}
+
+.section.support-cards-section .flexbox.financial-cards .flexbox-item-content p {
+  font-size: 16px;
+}
+
+.section.support-cards-section .flexbox.financial-cards .flexbox-item-content a {
+  font-size: inherit;
+  font-weight: 800;
+  color: var(--linz-dark-purple, #422e83);
+  text-decoration: underline;
+}
+
 /* CTA buttons (sign-up cards) */
 .flexbox.signup-cards a.button:any-link {
   background-color: var(--linz-dark-purple, #422e83);
