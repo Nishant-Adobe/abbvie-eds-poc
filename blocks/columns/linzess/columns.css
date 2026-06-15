@@ -338,14 +338,17 @@ main .section.isi strong {
   font-family: var(--font-family-legal-bold, "BasicCommercialLT-Black", sans-serif);
 }
 
-/* Flat full-bleed white body fill. Extend 10px past the section bottom so the
-   white meets the footer's curved purple arc with no gap — otherwise the page
-   (body) background shows as a thin grey band above the footer. */
+/* Flat full-bleed white body fill. Extend well past the section bottom so the
+   white meets the footer's curved purple arc with no gap — the footer arc rises
+   up to ~85px above the footer top, so the off-white body would otherwise show
+   as a band between the ISI and the arc (visible on mobile especially). The
+   footer paints its purple arc over this via its own ::before, so the extra
+   white extension is hidden under the arc. */
 main .section.isi::after {
   content: "";
   position: absolute;
   top: 0;
-  bottom: -10px;
+  bottom: -90px;
   left: 50%;
   margin-left: -50vw;
   width: 100vw;
@@ -388,18 +391,20 @@ body:has(main .section.isi) footer .footer {
   z-index: 2;
 }
 
-/* The section directly before the dark-purple CTA band paints white full-bleed
-   down to its bottom edge so the area above the purple arc is white (matches
-   live), not the off-white body colour showing through. Scoped to pages WITHOUT
-   the index's section-nav — the index's preceding doctor-tout is a floating
-   white card whose off-white surround is intentional. Only the immediately
-   preceding section is targeted, so other sections/pages are unaffected. */
-main:not(:has(.section.section-nav-container)) .section:has(+ .section.dark-purple) {
+/* A WHITE content section directly before the dark-purple CTA band paints white
+   full-bleed down to its bottom edge so the area above the purple arc is white
+   (matches live), not the off-white body colour showing through. Excludes
+   .off-white sections — live keeps those off-white (e.g. the from-the-gut
+   sign-up form band, which sits on #f4f6fb). Scoped to pages WITHOUT the index's
+   section-nav (the index's preceding doctor-tout is a floating white card whose
+   off-white surround is intentional). Only the immediately preceding section is
+   targeted, so other sections/pages are unaffected. */
+main:not(:has(.section.section-nav-container)) .section:not(.off-white):has(+ .section.dark-purple) {
   position: relative;
   z-index: 0;
 }
 
-main:not(:has(.section.section-nav-container)) .section:has(+ .section.dark-purple)::after {
+main:not(:has(.section.section-nav-container)) .section:not(.off-white):has(+ .section.dark-purple)::after {
   content: "";
   position: absolute;
   top: 0;
@@ -679,8 +684,11 @@ main .section.dark-purple + .section a {
   text-decoration: underline;
   font-weight: 400;
   font-size: inherit;
-  font-family: inherit;
   line-height: inherit;
+  /* Live renders ISI inline links at regular weight even inside bold (<strong>)
+     sentences, so force the regular legal font rather than inheriting the bold
+     BasicCommercialLT-Black from a surrounding <strong>. */
+  font-family: var(--font-family-legal, "BasicCommercialLT-Roman", sans-serif);
 }
 
 main .section.dark-purple + .section strong {

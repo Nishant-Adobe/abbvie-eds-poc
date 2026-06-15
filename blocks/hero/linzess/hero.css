@@ -2180,8 +2180,13 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
   font-size: var(--font-size-40);
   line-height: 0.95;
-  max-width: none;
+  /* Constrain width + balance wrapping so a long single-string title (e.g. the
+     FAQs "Frequently Asked Questions About IBS-C, CIC & LINZESS") breaks across
+     ~2 balanced lines like live, instead of one full-width line. Titles with an
+     authored <br> (e.g. From the Gut) are unaffected. */
+  max-width: 28ch;
   width: 100%;
+  text-wrap: balance;
 }
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
   min-height: auto;
