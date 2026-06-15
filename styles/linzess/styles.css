@@ -4460,6 +4460,13 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     margin-left: 16px;
     margin-right: 16px;
   }
+
+  /* "How LINZESS Works" content cards band also runs near-full-width on live's
+     tablet (16px gutters → ~736px cards). Pull in the 70px section inset. */
+  body main .section.cards-grid-container:has(.cards-grid-homepage-content) {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
 }
 
 /* Video playlist cards in How Works section */
