@@ -4866,6 +4866,26 @@ body main .section:is(.resources-wellness-tips, #wellnesstips) {
   padding-bottom: 140px;
 }
 
+/* Top inward curve — a purple dome rising into the white Healthy Routines
+   section above, so the band's top edge reads as an arch (matches live). */
+body main .section:is(.resources-wellness-tips, #wellnesstips)::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 255px;
+  background-color: #422e83;
+  border-radius: 100% 100% 0 0;
+  z-index: 0;
+}
+
+/* Keep header + content above the top dome. */
+body main .section:is(.resources-wellness-tips, #wellnesstips) > div {
+  position: relative;
+  z-index: 1;
+}
+
 /* Bottom inward curve — an off-white dome rising into the dark Wellness Tips
    band, carving the transition down to the off-white Community section below.
    The dome colour matches that section (#f4f6fb) so there's no visible seam. */
@@ -4926,7 +4946,7 @@ body main .section:is(.resources-community, #communityresources) {
   line-height: normal;
   color: #4d4d4f;
   text-align: center;
-  max-width: 800px;
+  max-width: 998px;
   margin: 0 auto;
 }
 
@@ -4940,7 +4960,7 @@ body main .section:is(.resources-community, #communityresources) {
   color: #fff;
   text-align: center;
   max-width: 998px;
-  margin: 40px auto 0;
+  margin: 24px auto;
 }
 
 /* Wellness Tips dark band: eyebrow, heading and intro are white */
@@ -5139,13 +5159,17 @@ body main .section .columns.resources-tips .columns-item:nth-child(2) > div {
 body main .section .columns.resources-tips .columns-item .columns-item-image {
   display: grid;
   grid-template-columns: 76px 1fr;
-  grid-template-rows: auto 1fr;
+
+  /* Flexible spacer rows top & bottom so the title + list block centers
+     vertically against the taller icon (matches live), instead of pinning to
+     the top on shorter cards. */
+  grid-template-rows: 1fr auto auto 1fr;
   column-gap: 0;
   align-items: start;
   width: auto;
 }
 
-/* Icon spans both rows and is vertically centered against the title+list. */
+/* Icon spans all rows and is vertically centered against the title+list. */
 body main .section .columns.resources-tips .columns-item .columns-item-image p:has(picture) {
   grid-column: 1;
   grid-row: 1 / -1;
@@ -5156,12 +5180,12 @@ body main .section .columns.resources-tips .columns-item .columns-item-image p:h
 
 body main .section .columns.resources-tips .columns-item .columns-item-image p:not(:has(picture)) {
   grid-column: 2;
-  grid-row: 1;
+  grid-row: 2;
 }
 
 body main .section .columns.resources-tips .columns-item .columns-item-image ul {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 3;
 }
 
 body main .section .columns.resources-tips .columns-item .columns-item-image picture {
