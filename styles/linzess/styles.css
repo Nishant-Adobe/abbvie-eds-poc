@@ -4913,6 +4913,18 @@ body main .section:is(.resources-community, #communityresources) {
   /* z-index intentionally omitted: raising it here clips the explorer arc. */
 }
 
+/* Savings-card disclaimer footnote (last loose paragraph in the community band):
+   live renders it 12px/400, left-aligned, in a centered 920px column. */
+body main .section:has(.cards-grid.resources-community) > .default-content-wrapper:last-child > p {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  color: #4d4d4f;
+  text-align: left;
+  max-width: 920px;
+  margin: 12px auto;
+}
+
 /* Section header: eyebrow → divider → heading → intro */
 .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:first-child {
   font-family: var(--body-font-family);
