@@ -1247,3 +1247,15 @@ main .section:is(
   color: var(--linz-grey);
   margin-top: 16px;
 }
+
+/* Dark-section text override — MUST come last so it beats the eyebrow /
+   heading / body-copy color rules above. On the purple bands every default
+   heading, eyebrow and paragraph stays white. Specificity is raised to match
+   the header rules (which target :first-of-type > p:nth-child(n)). (The white
+   card inside the comparison block re-asserts dark text via its own
+   higher-specificity rule in _columns.css.) */
+
+main .section:has(.understanding-prevalence) > .default-content-wrapper :is(p, h2, h3, strong),
+main .section:has(.carousel-video-playlist):not(:has([class*='understanding-'])) > .default-content-wrapper :is(p, h2, h3, strong) {
+  color: var(--linz-white) !important;
+}
