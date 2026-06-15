@@ -38,10 +38,13 @@ main > .section.isi .text-container {
 }
 
 /* ISI headings (USES / IMPORTANT RISK INFORMATION) match live
-   .abbv-inline-use-isi h3: brand purple, 1rem/16px, tight letter-spacing. */
+   .abbv-inline-use-isi h3: brand purple, BasicCommercialLT-Black, 1rem/16px,
+   line-height normal, tight letter-spacing. */
 main > .section.isi h3 {
   color: var(--color-brand-primary, #422e83);
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
   font-size: 1.6rem;
+  line-height: normal;
   letter-spacing: -0.32px;
   margin-top: 2.4rem;
 }
@@ -50,15 +53,31 @@ main > .section.isi h3:first-child {
   margin-top: 0;
 }
 
-/* ISI body paragraphs match live .abbv-inline-use-isi p: muted gray, tighter
-   leading (live spec: .875rem/1rem on a 16px root → 1.4rem/1.6rem here). List
-   items keep the 16px/20px container base (live li is not overridden). */
-main > .section.isi .text-container p {
+/* ISI body copy matches live .abbv-inline-use-isi p/li: BasicCommercialLT-Roman,
+   muted gray #555, 1.4rem/1.6rem, tight letter-spacing. The text-container base
+   leaves <li> black at the 16px container size, so pin paragraphs AND list
+   items to the same legal-font treatment as live. */
+main > .section.isi .text-container p,
+main > .section.isi .text-container li {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
   color: #555;
   font-size: 1.4rem;
   line-height: 1.6rem;
   letter-spacing: -0.28px;
+}
+
+main > .section.isi .text-container p {
   margin-bottom: 1.2rem;
+}
+
+/* Bold runs in ISI copy use the legal black font (live: <b> →
+   BasicCommercialLT-Black) at the same muted gray, not the project's default
+   Roboto Bold. */
+main > .section.isi .text-container strong,
+main > .section.isi .text-container b {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-weight: 400;
+  color: #555;
 }
 
 /* Purple ISI subtitles (live: p.linzess-isi-subtitle b). The authored class is
@@ -80,8 +99,6 @@ main > .section.isi .text-container ul {
 }
 
 main > .section.isi .text-container li {
-  font-size: 1.4rem;
-  line-height: 1.6rem;
   margin-bottom: 0.4rem;
 }
 
