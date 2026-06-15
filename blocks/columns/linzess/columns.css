@@ -1304,6 +1304,15 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     margin-right: auto;
     margin-top: 8px;
   }
+
+  /* Homepage only: give the disclaimer a fixed height so the full footnote is
+     visible (the shared rule above also covers the why-linzess card via the
+     carousel sibling selector, so height is applied here to homepage selectors
+     only — why-linzess and resources are untouched). */
+  .columns-homepage-savings-container > .default-content-wrapper:last-child,
+  .section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper:last-child {
+    height: 150px;
+  }
 }
 
 /* Tablet (768-985): live stacks the why-linzess savings card (image on top,
