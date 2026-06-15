@@ -1793,6 +1793,55 @@ body main .section .columns.resources-tips ul li:last-child {
   margin-bottom: 0;
 }
 
+/* ── Mobile: wellness section + tip cards (matches live /resources) ──
+   Less top space above the eyebrow, and tip cards switch from icon-left to a
+   centered column with the icon straddling the card's top edge. */
+@media (width < 768px) {
+  /* Reduce the gap between the top arc and the Wellness Tips eyebrow. */
+  body main .section:is(.resources-wellness-tips, #wellnesstips) {
+    padding-top: 24px;
+  }
+
+  /* Cards fit the viewport instead of the 670px desktop width. */
+  body main .section .columns.resources-tips .columns-item {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Stack icon-on-top, content centered below. */
+  body main .section .columns.resources-tips .columns-item .columns-item-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Icon centered, overlapping the card's top edge. */
+  body main .section .columns.resources-tips .columns-item .columns-item-image p:has(picture) {
+    order: -1;
+    margin: -65px 0 0;
+  }
+
+  body main .section .columns.resources-tips .columns-item .columns-item-image picture {
+    margin-left: 0;
+  }
+
+  body main .section .columns.resources-tips .columns-item > div {
+    padding-top: 0;
+  }
+
+  /* Bullet list stays left-aligned within the centered card. */
+  body main .section .columns.resources-tips ul {
+    text-align: left;
+  }
+
+  /* "Check out some articles…" intro: 18px and tighter vertical margin. */
+  body main .section:is(.resources-wellness-tips, #wellnesstips) > .default-content-wrapper:not(:first-child) > p {
+    font-size: 18px;
+    margin: 18px auto;
+  }
+}
+
 /* ── Gut-check promo banner (image left + copy right, off-white card) ──
    The block authors as two sibling .columns-item cells (image + content). Make
    the .columns block the rounded card: a 440px image column + flexible content
