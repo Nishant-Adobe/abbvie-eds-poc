@@ -1404,6 +1404,20 @@ h1.heading-1 {
   }
 }
 
+/* FAQ-page accordion width — match live 998px centered blades.
+   Live linzess.com/.../faqs renders accordion bars at 998px, centered; the
+   migrated block stretches the full section width (1330px). Constrain only on
+   non-index savings pages (faqs) so the index "Program Terms" expander stays
+   full-width and from-the-gut is unaffected. Overrides the full-width rule and
+   the desktop margin: unset above. */
+@media (width >= 1024px) {
+  main:not(:has(.section.section-nav-container)) .section.accordion-container .accordion.block {
+    max-width: 998px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 /* Tablet fixes */
 @media (width >= 768px) and (width < 1024px) {
   .section.centered.accordion-container {
