@@ -5068,14 +5068,15 @@ body main .section .columns.resources-tips .columns-item > div {
   width: auto;
 }
 
-/* Icon-left layout (matches live / the why-linzess side-effects columns): a
-   2-column grid with the icon in column 1 spanning both rows and vertically
-   centered beside the title + bullet list in column 2. */
+/* Icon-left layout (matches live): the icon's white circle overhangs the card's
+   left edge by ~45px and is vertically centered beside the title + bullet list.
+   A 2-column grid (icon zone + content); the icon is pulled left out of the card
+   via a negative margin so its circle pokes past the rounded-card edge. */
 body main .section .columns.resources-tips .columns-item .columns-item-image {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 76px 1fr;
   grid-template-rows: auto 1fr;
-  column-gap: 24px;
+  column-gap: 0;
   align-items: start;
   width: auto;
 }
@@ -5086,6 +5087,7 @@ body main .section .columns.resources-tips .columns-item .columns-item-image p:h
   grid-row: 1 / -1;
   align-self: center;
   margin: 0;
+  overflow: visible;
 }
 
 body main .section .columns.resources-tips .columns-item .columns-item-image p:not(:has(picture)) {
@@ -5101,6 +5103,7 @@ body main .section .columns.resources-tips .columns-item .columns-item-image ul 
 body main .section .columns.resources-tips .columns-item .columns-item-image picture {
   display: block;
   width: 120px;
+  margin-left: -69px;
 }
 
 body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.resources-tips > .columns-item:has(.columns-item-image) .columns-item-image img,
@@ -5146,6 +5149,11 @@ body main .section .columns.resources-tips ul li {
   font-size: 14.4px;
   line-height: normal;
   color: #4d4d4f;
+  margin-bottom: 10px;
+}
+
+body main .section .columns.resources-tips ul li:last-child {
+  margin-bottom: 0;
 }
 
 /* ── Gut-check promo banner (image left + copy right, off-white card) ──
