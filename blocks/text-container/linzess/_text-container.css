@@ -34,6 +34,11 @@ main > .section.isi .text-container {
   max-width: none;
   width: 100%;
   margin: 0;
+
+  /* Match the savings-card ISI inset: default-content there sits 20px inside the
+     section's 20px padding (content left edge at 40px). The text-container block
+     renders flush to the section padding, so add the same 20px inset here. */
+  padding: 0 2rem;
   text-align: left;
 }
 
