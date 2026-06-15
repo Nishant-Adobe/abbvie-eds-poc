@@ -858,6 +858,21 @@
   display: flex;
   justify-content: center;
   padding: 0;
+
+  /* Reserve the pill's height so the page doesn't shift when the nav switches
+     to position:fixed on stuck. Pairs with the sentinel override below. */
+  min-height: 50px;
+}
+
+/* Flicker fix: the base JS resizes the sentinel (0 → block height) on stuck to
+   reserve flow space. But it observes that same sentinel, so growing it flips
+   its own intersection state → is-stuck oscillates every frame at the boundary
+   (measured 25 toggles across a 50px scroll band). The Linzess pill overlaps
+   the hero via the wrapper's negative margin and never occupied flow space, so
+   the reservation isn't needed here — pin the sentinel to 0 to break the loop.
+   The wrapper min-height above covers the fixed-switch gap. */
+.section-nav-container .section-nav-sentinel {
+  height: 0 !important;
 }
 
 /* ── Block-scoped tokens ─────────────────────────────────────────────── */
@@ -1030,6 +1045,20 @@
   border-top: none;
   overflow: hidden;
   padding: var(--spacing-08) 0;
+
+  /* Anchor the dropdown to the toggle's bottom edge as an overlay. Without
+     this the list is an in-flow static box (z-index:auto) and the following
+     page sections paint over its white panel, so the links appear to float on
+     the page content. Absolute + high z-index lifts the white panel above the
+     content; full width + left/right:0 keeps it flush to the pill (the block is
+     position:sticky, so it is the containing block). */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: var(--z-index-anchor-nav, 100);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 15%);
 }
 
 .section-nav.mobile-menu nav ul li {
@@ -1146,7 +1175,7 @@
     display: none;
   }
 
-  /* Horizontal list */
+  /* Horizontal list — reset the mobile dropdown overlay back to in-flow */
   .section-nav.mobile-menu nav ul {
     background-color: transparent;
     border-radius: 0;
@@ -1154,6 +1183,9 @@
     overflow: visible;
     padding: 0;
     width: auto;
+    position: static;
+    box-shadow: none;
+    z-index: auto;
   }
 
   /* Flex li */

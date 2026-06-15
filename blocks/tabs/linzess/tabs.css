@@ -31,7 +31,9 @@
   width: 100%;
 }
 
-/* ── Tab list — light purple bg bar with rounded ends ── */
+/* ── Tab list — light purple track that frames the active pill ──
+   Small uniform padding insets the active pill so the light-purple track
+   stays visible around it (top/bottom/sides), matching live. */
 .tabs-container .tabs .tabs-list {
   display: flex;
   flex-direction: row;
@@ -39,7 +41,7 @@
   gap: 0;
   background: var(--linz-light-purple);
   border: none;
-  padding: 0;
+  padding: var(--spacing-04);
   border-radius: var(--linz-rounded-corner);
   overflow: visible;
   width: 100%;
@@ -67,39 +69,24 @@
     color var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
-/* First tab — rounded left corners */
-.tabs-container .tabs .tabs-list button.tabs-tab:first-child {
-  border-radius: var(--linz-rounded-corner) 0 0 var(--linz-rounded-corner);
-}
-
-/* Last tab — rounded right corners */
-.tabs-container .tabs .tabs-list button.tabs-tab:last-child {
-  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
+/* Inactive tabs sit flat behind the track (no individual radius) */
+.tabs-container .tabs .tabs-list button.tabs-tab {
+  border-radius: 0;
 }
 
 /* Hover */
 .tabs-container .tabs .tabs-list button.tabs-tab:hover {
   background: var(--linz-purple);
   color: var(--color-text-on-dark);
+  border-radius: var(--linz-rounded-corner);
 }
 
-/* ── Active tab — dark purple, rounded right side only ── */
+/* ── Active tab — dark purple, fully-rounded pill inset in the track ── */
 .tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
   background: var(--linz-dark-purple);
   color: var(--color-text-on-dark);
-  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
+  border-radius: var(--linz-rounded-corner);
   z-index: var(--z-index-1);
-}
-
-/* If first tab is active — still right-side radius only (matches live site) */
-.tabs-container .tabs .tabs-list button.tabs-tab:first-child[aria-selected='true'] {
-  border-radius: 0 var(--linz-rounded-corner) var(--linz-rounded-corner) 0;
-}
-
-/* If last tab is active — round the inner (left) edge, matching live where the
-   active tab's rounded corners face the adjacent inactive tab. */
-.tabs-container .tabs .tabs-list button.tabs-tab:last-child[aria-selected='true'] {
-  border-radius: var(--linz-rounded-corner) 0 0 var(--linz-rounded-corner);
 }
 
 /* ── Panel wrapper — inside the white card section ── */

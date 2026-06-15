@@ -212,6 +212,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .f
   font-size: var(--font-size-legal-large);
   font-weight: 400;
   line-height: normal;
+  letter-spacing: -0.32px;
   color: var(--color-text-heading);
   text-transform: none;
   margin: var(--spacing-10) 0 0;
@@ -223,6 +224,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .f
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
+  letter-spacing: -0.28px;
   color: var(--color-text-muted);
   margin: var(--spacing-10) 0;
   padding: 0;
@@ -239,6 +241,7 @@ main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .f
   font-family: var(--font-family-legal);
   font-size: var(--font-size-legal);
   line-height: var(--line-height-legal);
+  letter-spacing: -0.28px;
   color: var(--color-text-muted);
   margin: var(--spacing-10) 0;
   padding: 0;
@@ -1284,6 +1287,29 @@ main > .section.cta-cards-section .columns.cta-cards a::after {
    rules above. All selectors scoped to find-relief classes (no leakage).
    ============================================================================ */
 
+/* Responsive type scale for find-relief sections. Live uses a smaller scale on
+   mobile (heading 40->32, body 16->14, card/checklist title 24->18) and steps
+   up at the >=744px breakpoint. The find-relief rules below read these article
+   tokens, so redefining them on the section containers cascades to every
+   heading/body/card without touching individual rules. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) {
+  --font-size-article-heading: 32px;
+  --font-size-article-body: 14px;
+  --font-size-article-cta-title: 18px;
+  --font-size-article-card-title: 18px;
+  --no-hero-h1-line-height: 30px;
+}
+
+@media (width >= 900px) {
+  main > :is(.section.find-relief-talk, .section.find-relief-howtotake) {
+    --font-size-article-heading: 40px;
+    --font-size-article-body: 16px;
+    --font-size-article-cta-title: 24px;
+    --font-size-article-card-title: 24px;
+    --no-hero-h1-line-height: 36px;
+  }
+}
+
 /* ---- Section: Talk to a Doctor (white, full-width, centered headings) ---- */
 main > .section.find-relief-talk {
   position: relative;
@@ -1453,7 +1479,10 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check {
   max-width: 99.8rem;
   margin: var(--spacing-40) auto;
   display: grid;
-  grid-template-columns: 44% 1fr;
+
+  /* Mobile-first: single column (image on top, content stacked below). Live
+     stacks this tout on mobile; the 2-column row is gated to >=744px below. */
+  grid-template-columns: 1fr;
   align-items: center;
   background-color: var(--linz-off-white);
   border-radius: var(--linz-rounded-corner, 16px);
@@ -1468,14 +1497,13 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-i
   align-self: stretch;
   display: flex;
   flex-direction: column;
-  margin: 0;
+  overflow: hidden;
   line-height: 0;
   font-size: 0;
 }
 
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col picture {
   display: block;
-  height: 100%;
 }
 
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col img {
@@ -1484,11 +1512,14 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-i
   height: 100%;
   max-height: none;
   object-fit: cover;
+  object-position: bottom;
 }
 
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col {
-  padding: 0 var(--spacing-40) 0 80px;
-  text-align: left;
+  /* Mobile: comfortable padding, centered text. The 2-col left inset is
+     applied at >=744px below. */
+  padding: var(--spacing-24) var(--spacing-24) var(--spacing-32);
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1520,19 +1551,15 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-c
   color: var(--color-text-heading);
 }
 
-/* "Actor Portrayal" footnote — last paragraph, overlaid white on the image. */
+/* "Actor Portrayal" footnote — last paragraph. On mobile (stacked) it renders
+   as a small centered caption; the white overlay anchored on the image is
+   applied at >=744px (2-col layout) below. */
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p:last-child {
-  position: absolute;
-  left: auto;
-  right: 58%;
-  bottom: var(--spacing-16);
-  margin: 0;
-  padding-right: var(--spacing-20);
+  margin: var(--spacing-08) 0 0;
   font-size: var(--font-size-body-small);
   line-height: var(--line-height-body);
   font-style: normal;
-  text-align: right;
-  color: var(--color-text-on-dark);
+  color: var(--color-text-body, #4d4d4f);
 }
 
 /* "Get My Discussion Guide" CTA — purple button, white text, right chevron. */
@@ -1545,10 +1572,17 @@ main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-c
   background: var(--color-brand-primary);
   color: var(--color-text-on-dark);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-button);
+  font-size: 12px;
   font-weight: var(--font-weight-extra-bold);
   line-height: 1.2;
   text-decoration: none;
+}
+
+/* Desktop steps the CTA label up to the standard button size (live: 14.4px). */
+@media (width >= 900px) {
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col .button-container a.button {
+    font-size: var(--font-size-button);
+  }
 }
 
 main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col .button-container a.button::after {
@@ -1757,6 +1791,38 @@ main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-na
 @media (width >= 744px) {
   main > .section.find-relief-talk .image-text.find-relief-gut-check {
     grid-template-columns: 440fr 560fr;
+
+    /* Let the cut-out figure rise ~13px above the card top (live). */
+    overflow: visible;
+  }
+
+  /* Pop the cut-out above the card: rise 13px above the top while the image
+     bottom stays anchored to the card bottom (live measurement). */
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col {
+    margin-top: -13px;
+    overflow: visible;
+  }
+
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col picture {
+    height: calc(100% + 13px);
+  }
+
+  /* 2-col content cell: left inset from the image, left-aligned text. */
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col {
+    padding: 0 var(--spacing-40) 0 80px;
+    text-align: left;
+  }
+
+  /* "Actor Portrayal" — white caption overlaid at the image's bottom-left. */
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p:last-child {
+    position: absolute;
+    left: auto;
+    right: 58%;
+    bottom: var(--spacing-16);
+    margin: 0;
+    padding-right: var(--spacing-20);
+    text-align: right;
+    color: var(--color-text-on-dark);
   }
 
   /* Bottom-nav CTA cards sit side-by-side on desktop (1 column on mobile).
@@ -1884,6 +1950,25 @@ main > .section.find-relief-howtotake .default-content-wrapper > p {
   color: var(--color-text-body, #4d4d4f);
 }
 
+/* Savings legal footnotes (* and †). md2jcr strips the authored `footnote`
+   class, so target by the legal links they carry. Live renders these 12px,
+   left-aligned, with gray underlined links (not the purple body-link style). */
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="savings-and-support#expand"]),
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsterms"]),
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsprivacy"]) {
+  margin: var(--spacing-12) auto;
+  font-size: 12px;
+  text-align: left;
+}
+
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="savings-and-support#expand"]) a,
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsterms"]) a,
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsprivacy"]) a {
+  font-size: 12px;
+  color: var(--color-text-body, #4d4d4f);
+  text-decoration: underline;
+}
+
 /* Sub-heading line directly under a section heading — ONLY the "Choose how you
    want to sign up:" line, which live renders as a heading-2 (24px bold purple).
    Scope to the wrapper that immediately precedes the sign-up cards grid so the
@@ -1980,6 +2065,23 @@ main > .section.find-relief-howtotake .cards-grid.find-relief-signup .button-con
   font-size: 2.08rem;
   line-height: 1;
   transform: translateY(-50%);
+}
+
+/* Dark-purple "Call" card: the force-purple title rule above renders the
+   heading purple-on-purple (invisible). Invert to white on the dark surface.
+   Higher specificity (both card classes) beats the !important purple rule. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card.background-dark-purple :is(.heading-2, h2, p):first-child {
+  color: var(--color-text-on-dark, #fff) !important;
+}
+
+/* Dark-purple "Call" card: the purple-fill button is invisible on the purple
+   card, so invert it to a white fill with purple text + chevron (matches live;
+   brand JS marks this CTA abbv-button-secondary). Scoped to the dark surface so
+   the two light cards keep their purple-fill/white-text buttons. The chevron
+   ::after uses the font color, so it follows automatically. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .background-dark-purple .cta a {
+  background: var(--color-text-on-dark, #fff);
+  color: var(--color-brand-primary, #422e83);
 }
 
 /* Savings tout (off-white rounded: image left, text/CTA right).
@@ -2100,6 +2202,14 @@ main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .imag
   main > .section.find-relief-howtotake .image-text.find-relief-savings-tout {
     grid-template-columns: minmax(0, 44%) 1fr;
   }
+
+  /* The icon-image-card flex container keeps flexbox-column-mobile stacked until
+     986px in the base brand block, but live shows the 2-up Prescribed cards
+     side-by-side from tablet up. Switch to row at 744px, scoped to Prescribed
+     only (Sign-up's 3 cards don't fit cleanly at tablet, so it keeps stacking). */
+  main > .section.find-relief-howtotake .find-relief-prescribed .flexbox-column-mobile {
+    flex-direction: row;
+  }
 }
 
 @media (width >= 900px) {
@@ -2108,14 +2218,45 @@ main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .imag
   }
 }
 
-/* ---- Find-relief instructions tabs: live renders the pill control thin
-   (~59px) with 12px padding and 12.8px text. The shared linzess desktop tab
-   rule uses 20px/40px padding + 16px text (~66-82px). Scope a tighter pill to
-   the find-relief tabs only so the standalone how-to-take page is unaffected. */
+/* ---- Find-relief instructions tabs — exact live values ----
+   Track: light-purple pill, max-width 902px, overflow:hidden clips the tab
+   outer corners. Tabs: 12px padding, 17.6px line-height, 14px (<1024) / 16px
+   (>=1024). Active tab deep-purple, weight 800; inactive weight 700. The active
+   tab only rounds the corner facing the inactive tab (the wrapper clips the
+   outer two), so active-left rounds inner-right and active-right rounds
+   inner-left. Heights resolve to ~59px desktop / taller on mobile when the
+   long Pediatric label wraps. */
+main > .section.find-relief-instructions .tabs,
+main > .section.find-relief-instructions .tabs .tabs-list {
+  width: 100%;
+}
+
+main > .section.find-relief-instructions .tabs .tabs-list {
+  max-width: 902px;
+  overflow: hidden;
+}
+
 main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
   padding: var(--spacing-12, 1.2rem);
-  font-size: var(--font-size-body-small, 12.8px);
-  line-height: var(--line-height-tight, 1.2);
+  font-size: var(--font-size-14, 1.4rem);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 17.6px;
+  border-radius: 0;
+}
+
+/* Active tab is a fully-rounded deep-purple pill inset in the light track
+   (all four corners rounded), matching live. The track's overflow:hidden +
+   matching radius keeps the outer corners flush with the track edge while the
+   inner corners (at the 50% meeting line) show the full pill rounding. */
+main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  font-weight: var(--font-weight-extra-bold, 800);
+  border-radius: var(--linz-rounded-corner, 16px);
+}
+
+@media (width >= 1024px) {
+  main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
+    font-size: var(--font-size-16, 1.6rem);
+  }
 }
 
 /* ---- Dosing tabs: panels are lifted out of find-relief-howtotake into
@@ -2228,6 +2369,10 @@ main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
 
 .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p {
   margin: 8px 0 0;
+
+  /* Nested paragraphs must match the line-3 body size (live is a uniform
+     14px on mobile); without this they fall back to the global 16px p rule. */
+  font-size: inherit;
 }
 
 .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p.footnote,
@@ -2255,40 +2400,91 @@ main > .section.find-relief-dosing-panel.cards-grid-container > .default-content
   font-weight: var(--font-weight-bold);
 }
 
-/* Mobile (< 744px): stack icon above text, 56px icon, no overlap (per PR #104). */
-@media (width < 744px) {
+/* Tablet & mobile (< 985px): live switches the icon-left row to a centered
+   stack — icon in a circular light-purple badge on top, heading + body
+   centered below, full-width card. (Desktop >=985px keeps icon-left.) */
+@media (width < 985px) {
   .cards-grid.find-relief-dosing {
     max-width: 100%;
     padding: 0 16px;
+
+    /* Live uses a larger gap between the stacked cards (~50px) than the
+       desktop 16px. */
+    gap: 50px;
   }
 
   .cards-grid.find-relief-dosing .grid-card {
     grid-template-columns: 1fr;
-    padding: 24px 16px;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+
+    /* Live floats the icon badge so it straddles the card's top edge; extra
+       top padding makes room for the protruding lower half of the badge.
+       overflow must stay visible so the upper half can spill above the card. */
+    padding: 60px 16px 24px;
+    text-align: center;
+    overflow: visible;
   }
 
+  /* Icon — centered, pulled up so ~half the circular badge overlaps above the
+     card's top edge (matches live). The SVG carries its own light-purple
+     circle, so just size/center/offset it (no extra CSS bubble). */
   .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 {
-    grid-row: auto;
-    width: 56px;
-    min-width: 56px;
-    height: 56px;
+    grid-column: 1;
+    grid-row: 1;
+    width: 96px;
+    min-width: 96px;
+    height: 96px;
     margin-left: 0;
-    margin-bottom: 12px;
+    margin-top: -110px;
+    margin-bottom: 16px;
   }
 
   .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 img {
-    width: 56px;
-    height: 56px;
+    width: 96px;
+    height: 96px;
   }
 
-  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2,
+  /* Item margin is folded into the flex gap above, so reset it to keep the
+     inter-card spacing exactly the live value. */
+  .cards-grid.find-relief-dosing .card-grid-item {
+    margin: 0;
+  }
+
+  /* The first card sits directly under the "Take LINZESS" panel heading, but
+     its badge protrudes 50px above the card edge — without clearance the badge
+     punches up into the heading text. Cards 2-4 are fine (the 50px stacking gap
+     absorbs the protrusion). Add top clearance to the first card only so its
+     badge lands cleanly below the heading. */
+  .cards-grid.find-relief-dosing .card-grid-item:first-child {
+    margin-top: 56px;
+  }
+
+  /* Title + body span the single column, centered. Live renders the heading
+     at 18px on mobile (desktop is 24px). */
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2 {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: auto;
+    padding-left: 0;
+    font-size: 18px;
+    text-align: center;
+  }
+
   .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: auto;
     padding-left: 0;
     padding-right: 0;
+    font-size: 14px;
+    text-align: center;
   }
 
-  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 {
-    font-size: 14px;
+  /* Footnote (‡) — live renders it upright, not italic, on mobile. */
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p.footnote,
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 em {
+    font-style: normal;
   }
 }
 
@@ -2386,6 +2582,15 @@ main > .tabs-panel > .section.cards-grid-container {
   padding: var(--spacing-40);
   background-color: var(--color-background-primary, #fff);
   border-radius: 0 0 var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px);
+}
+
+/* The 16px token reads almost square on the ~1000px-wide dosing card. Deepen
+   the bottom corners on the find-relief dosing panel so the curve is clearly
+   visible (matches the live single rounded white container). Scoped to the
+   dosing panel so other brands' tab panels keep the 16px token. */
+main > .tabs-panel > .section.find-relief-dosing-panel.cards-grid-container {
+  border-bottom-right-radius: var(--spacing-32);
+  border-bottom-left-radius: var(--spacing-32);
 }
 
 /* Dosing block fills the panel card's content width (no extra inset);

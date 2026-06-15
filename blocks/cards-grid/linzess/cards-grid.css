@@ -3,10 +3,6 @@
   --cards-grid-neutral-dark: var(--color-black);
 }
 
-.cards-grid-wrapper {
-  margin-bottom: 40px;
-}
-
 .cards-grid .demo-wrap {
   max-width: var(--content-max-width-narrow);
   margin: 0 auto;
@@ -530,7 +526,7 @@
   --font-size-h1: 2rem;
   --font-size-h1-hero: 56px;
   --font-size-h2: 1.125rem;
-  --font-size-h2-hero: 40px;
+  --font-size-h2-hero: 32px;
   --font-size-h3: 14px;
   --font-size-h-xl: 2.0625rem;
   --font-size-button: 14.4px;
@@ -561,8 +557,8 @@
   --button-primary-color: #fff;
   --button-primary-bg: #422e83;
   --button-primary-border: transparent;
-  --button-primary-padding: 16px 59px 16px 32px;
-  --button-primary-font-size: 14.4px;
+  --button-primary-padding: 16px 59px 16px 24px;
+  --button-primary-font-size: 0.9rem;
   --button-primary-font-weight: 800;
   --button-primary-hover-bg: #f4f6fb;
   --button-primary-hover-color: #422e83;
@@ -720,8 +716,7 @@
 }
 
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .margin-top-80 {
-  margin-top: 120px;
-  margin-bottom: 40px;
+  margin-top: var(--spacing-80);
 }
 
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .rounded-corners {
@@ -729,7 +724,7 @@
 }
 
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .col-2-card {
-  padding: 0 32px 32px;
+  padding: 0 var(--spacing-24) var(--spacing-40);
   margin: 0;
 }
 
@@ -776,7 +771,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
 }
 
 @media (width >= 986px) {
@@ -886,7 +880,7 @@
 }
 
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .flexbox-cards:has(.col-2-card) {
-  gap: 16px;
+  gap: 80px;
 }
 
 @media (width >= 986px) {
@@ -1064,125 +1058,3 @@
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
-
-/* ── Linzess find-relief: centered icon-image cards ── */
-.cards-grid.cards-grid-icon-image-card > .demo-wrap {
-  max-width: 998px !important;
-  margin: 0 auto;
-  padding: 40px 16px 24px !important;
-  overflow: visible;
-}
-
-.cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  gap: 24px;
-  max-width: 998px;
-  margin: 0 auto;
-}
-
-.cards-grid.cards-grid-icon-image-card > .demo-wrap > .flexbox-v2 > .abbv-flex-container-v2 > .flexboxitem-v2 {
-  flex: 1;
-  min-width: 0;
-}
-
-.cards-grid.cards-grid-icon-image-card .icon-image-card {
-  background: #422e83 !important;
-  border-radius: 16px !important;
-  padding: 48px 32px 32px !important;
-  text-align: center;
-  height: 100%;
-  position: relative;
-  overflow: visible;
-  margin-top: 40px;
-}
-
-.cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 60px;
-  z-index: 1;
-}
-
-.cards-grid.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
-
-.cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
-.cards-grid.cards-grid-icon-image-card .icon-image-card h2 {
-  font-family: var(--body-font-family) !important;
-  font-size: 24px !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  margin: 0 0 12px !important;
-}
-
-.cards-grid.cards-grid-icon-image-card .icon-image-card p {
-  font-family: var(--body-font-family);
-  font-size: 16px;
-  font-weight: 400;
-  color: #fff;
-  line-height: normal;
-  margin: 0 0 16px;
-}
-
-.cards-grid.cards-grid-icon-image-card .icon-image-card a {
-  display: inline-block;
-  background: #fff;
-  color: #422e83;
-  border-radius: 16px;
-  padding: 12px 40px 12px 24px;
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: none;
-  margin-top: 16px;
-}
-
-/* Light purple variant cards (savings cards + second prescribed card) */
-.cards-grid.cards-grid-icon-image-card .background-light-purple {
-  background: #d9d7f9 !important;
-}
-
-.cards-grid.cards-grid-icon-image-card .background-light-purple .heading-2,
-.cards-grid.cards-grid-icon-image-card .background-light-purple h2 {
-  color: #422e83 !important;
-}
-
-.cards-grid.cards-grid-icon-image-card .background-light-purple p {
-  color: #4d4d4f;
-}
-
-.cards-grid.cards-grid-icon-image-card .background-light-purple a {
-  background: #422e83;
-  color: #fff;
-}
-
-/* Second cards-grid instance (savings cards) — all light purple */
-.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card,
-.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card {
-  background: #d9d7f9 !important;
-}
-
-.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
-.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card h2,
-.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card .heading-2,
-.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card h2 {
-  color: #422e83 !important;
-}
-
-.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card p,
-.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card p {
-  color: #4d4d4f;
-}
-
-.cards-grid-wrapper:nth-of-type(2) .cards-grid.cards-grid-icon-image-card .icon-image-card a,
-.cards-grid-wrapper + .cards-grid-wrapper .cards-grid.cards-grid-icon-image-card .icon-image-card a {
-  background: #422e83;
-  color: #fff;
-}

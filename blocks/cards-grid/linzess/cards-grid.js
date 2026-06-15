@@ -273,6 +273,30 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
   return col;
 }
 
+// find-relief dosing icons ship as a <picture> whose crisp image/svg+xml source
+// is gated to (min-width: 600px); below that the rasterized WebP source wins and
+// the badge looks soft. Replace the <picture> with a plain vector <img> pointing
+// at the raw SVG so the icon stays crisp at every viewport. Runs after the base
+// decorateBlock has built the line-1 span.
+export function fixDosingIcons(block) {
+  if (!block.classList.contains('find-relief-dosing')) return;
+  block.querySelectorAll('span.card-grid-item-line-1 picture').forEach((picture) => {
+    const oldImg = picture.querySelector('img');
+    if (!oldImg) return;
+    const rawSrc = (oldImg.getAttribute('src') || '').split('?')[0];
+    if (!rawSrc.toLowerCase().endsWith('.svg')) return;
+    const img = document.createElement('img');
+    img.src = rawSrc;
+    img.alt = oldImg.getAttribute('alt') || '';
+    img.loading = 'lazy';
+    const w = oldImg.getAttribute('width');
+    const h = oldImg.getAttribute('height');
+    if (w) img.setAttribute('width', w);
+    if (h) img.setAttribute('height', h);
+    picture.replaceWith(img);
+  });
+}
+
 export default function decorate(block) {
   if (block.classList.contains('cards-grid-icon-image-card')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
