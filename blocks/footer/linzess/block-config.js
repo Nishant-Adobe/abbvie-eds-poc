@@ -4,7 +4,7 @@ import {
   buildColumnsByHeading,
   buildBottom,
 } from '../footer.js';
-import decorateExternalLinksUtility from '../../../scripts/utils.js';
+import decorateExternalLinksUtility, { isUniversalEditor } from '../../../scripts/utils.js';
 
 /**
  * LINZESS DTC footer — 6-column heading-based grid with 3 callout-only columns
@@ -158,7 +158,9 @@ async function decorateLinzess(block) {
     }
   }
 
-  createBackToTop();
+  // Skip in the Universal Editor: appending to document.body and attaching a
+  // global scroll listener interferes with the editor's canvas instrumentation.
+  if (!isUniversalEditor()) createBackToTop();
 }
 
 export default async function getBlockConfigs() {
