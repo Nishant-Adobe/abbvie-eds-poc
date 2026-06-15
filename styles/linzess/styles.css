@@ -671,6 +671,22 @@ body.no-hero main > .section:first-of-type:not(.hero-container)::before {
   }
 }
 
+/* Transcript/experience pages: more breathing room above the h1 to match
+   live (~50px container-to-h1 gap vs our 14px). Scoped to no-hero so the
+   healthy-routines hero pages are untouched. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: var(--spacing-36, 36px);
+}
+
+/* Transcript/experience pages: deepen the footer arc to match live
+   (top -60px vs our -40px). Scoped to no-hero so hero pages keep the
+   shallower arc defined in the footer block. */
+body.no-hero .footer::before {
+  top: -60px;
+  width: 130vw;
+}
+
 /* ============================================================
    Healthy-Routines article sections (OTC and Prescription Treatments)
    Sections: otc-intro (white), what-is-linzess (purple),
