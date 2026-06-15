@@ -4909,7 +4909,8 @@ body main .section:is(.resources-community, #communityresources) {
   /* Sit above the wellness band's bottom dome (::after z-index:1); without this
      the dome paints over the eyebrow, leaving a white bar on the published page. */
   position: relative;
-  z-index: 2;
+
+  /* z-index intentionally omitted: raising it here clips the explorer arc. */
 }
 
 /* Section header: eyebrow → divider → heading → intro */
@@ -4922,6 +4923,7 @@ body main .section:is(.resources-community, #communityresources) {
   text-transform: uppercase;
   text-align: center;
   margin-bottom: 24px;
+  margin-top: 32px;
 }
 
 .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(2),
