@@ -456,6 +456,88 @@ main > .section.es-testimonial picture + p {
   margin: 0 0 1.6rem;
 }
 
-/* NOTE: Inline ISI styling (main > .section.isi ...) now lives in the
-   text-container block override at blocks/text-container/linzess/_text-container.css
-   so it ships only with the text-container block, not the brand stylesheet. */
+/* ============================================================
+   Inline ISI region (.section.isi) — brand-level styling so it applies on
+   ANY page, including those where the ISI is plain default content with no
+   text-container block (e.g. /linzess/savings-card, where the block CSS does
+   not load). The text-container block override carries the same values scoped
+   to `.text-container`; these rules cover the default-content variant.
+   Matches live .abbv-inline-use-isi: white bg, legal fonts, muted gray body,
+   brand-purple headings. (1rem = 10px in this project.)
+   ============================================================ */
+main > .section.isi {
+  background-color: var(--linz-white, #fff);
+  color: #000;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  padding: 3.2rem 2rem 8rem;
+}
+
+@media (width >= 768px) {
+  main > .section.isi {
+    padding: 4.8rem 2rem 8rem;
+  }
+}
+
+@media (width >= 1024px) {
+  main > .section.isi {
+    padding: 6.4rem 2rem 8rem;
+  }
+}
+
+/* Headings (USES / IMPORTANT RISK INFORMATION): brand purple,
+   BasicCommercialLT-Black, 1.6rem, line-height normal, tight letter-spacing,
+   10px top margin / no bottom (matches live .abbv-inline-use-isi h3). */
+main > .section.isi h3 {
+  color: var(--color-brand-primary, #422e83);
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  margin: 1rem 0 0;
+}
+
+/* Body paragraphs & list items: BasicCommercialLT-Roman, muted gray #555,
+   1.4rem/1.6rem, tight letter-spacing. */
+main > .section.isi p,
+main > .section.isi li {
+  font-family: var(--font-family-legal, 'BasicCommercialLT-Roman', sans-serif);
+  color: #555;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  letter-spacing: -0.28px;
+}
+
+main > .section.isi p {
+  margin-bottom: 1.2rem;
+}
+
+/* Bold runs use the legal black font (live <b> → BasicCommercialLT-Black) at
+   the muted gray, not the project default Roboto Bold. */
+main > .section.isi strong,
+main > .section.isi b {
+  font-family: var(--font-family-legal-bold, 'BasicCommercialLT-Black', sans-serif);
+  font-weight: 400;
+  color: #555;
+}
+
+/* Purple subtitles (live p.linzess-isi-subtitle b). The authored class is
+   stripped by the md round-trip; the ISI is built deterministically so the
+   subtitle paragraphs hold fixed positions: "Before you take LINZESS…" = p2,
+   "Side Effects" = p4. */
+main > .section.isi > p:nth-of-type(2) strong,
+main > .section.isi > p:nth-of-type(4) strong {
+  color: var(--color-brand-primary, #422e83);
+}
+
+/* Compact list spacing + disc bullets (live: tight 10px list margins). */
+main > .section.isi ul {
+  list-style: disc;
+  margin: 1rem 0;
+  padding: 0 0 0 1.5rem;
+}
+
+main > .section.isi li {
+  margin-bottom: 0.4rem;
+}
