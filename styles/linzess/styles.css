@@ -5143,10 +5143,10 @@ body main .section .columns.resources-tips ul li {
    The block authors as two sibling .columns-item cells (image + content); make
    the .columns block itself the rounded card and lay the two cells out as a
    50/50 grid (matches live's single full-width 998px card). */
-body main .section .columns.columns-resources-gutcheck {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
+body main .section.columns-container .columns.columns-resources-gutcheck {
+  display: grid !important;
+  grid-template-columns: 440px 1fr;
+  align-items: stretch;
   max-width: 998px;
   margin: 60px auto 0;
   background: #f4f6fb;
@@ -5157,6 +5157,7 @@ body main .section .columns.columns-resources-gutcheck {
 body main .section .columns.columns-resources-gutcheck > .columns-item {
   width: auto;
   height: 100%;
+  min-height: 0;
 }
 
 body main .section .columns.columns-resources-gutcheck .columns-item-image,
@@ -5184,7 +5185,29 @@ body main .section .columns.columns-resources-gutcheck p strong {
 body main .section .columns.columns-resources-gutcheck p {
   font-family: var(--body-font-family);
   font-size: 16px;
+  line-height: normal;
   color: #4d4d4f;
+  margin: 0 0 14px;
+}
+
+/* Body copy: tighter spacing above the CTA (matches live). */
+body main .section .columns.columns-resources-gutcheck .columns-item-content p:nth-child(2) {
+  margin: 0 0 24px;
+}
+
+/* CTA → dark-purple pill (matches live: 16px radius, arrow on the right). */
+body main .section .columns.columns-resources-gutcheck .columns-item-content a {
+  display: inline-block;
+  background: #422e83;
+  color: #fff;
+  border-radius: 16px;
+  padding: 16px 48px 16px 32px;
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: none;
 }
 
 /* ── Community cards (2 dark-purple cards, white text, white "Learn More" pill) ── */
@@ -5237,7 +5260,7 @@ body main .section .cards-grid.resources-community.cards-grid-icon-image-card .i
 body main .section .cards-grid.resources-community.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 img {
   width: 105px;
   height: auto;
-  margin: 0 auto;
+  margin: -25px auto 0;
   display: inline-block;
 }
 
