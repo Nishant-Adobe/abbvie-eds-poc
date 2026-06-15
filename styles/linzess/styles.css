@@ -992,10 +992,11 @@ main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h
 
 /* Find-relief hero H1 wraps to two lines on live ("Chronic Constipation" /
    "Calls for a Conversation"). The shared container is widened for OTC, so cap
-   just this page's H1 width to force the same break. Scoped via the section's
-   find-relief class so other editorial heroes keep their single-line width. */
+   just this page's H1 width to force the same break. The find-relief hero sits
+   in the section-nav-container section, so scope via that class so other
+   editorial heroes keep their single-line width. */
 main > .section.hero-container.find-relief .hero.linzess-behind-nav-linzess-editorial-hero h1,
-main > .section.hero-container.section-nav-container .hero.linzess-behind-nav-linzess-editorial-hero h1#find-relief {
+main > .section.hero-container.section-nav-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
   max-width: 340px;
 }
 
@@ -2021,6 +2022,21 @@ main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexbo
    to these cards. Match the variant's display-wrapper path to win specificity. */
 main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .abbv-image-text-v2 .abbv-image-text-display-v2 p:not(.heading-2, .eyebrow, .footnote, .tout-overlay) {
   font-size: 16px;
+}
+
+/* Card titles (.heading-2) on the prescribed + sign-up icon-image cards resolve
+   to --font-size-h2 (1.125rem = 11.25px at the 10px root) — far smaller than
+   live, where these titles are 24px on desktop (≥900px) and 18px below. Live's
+   rem token assumes a 16px root; restore the intended px sizes scoped to these
+   find-relief cards so the headings read at the correct scale. */
+main > .section.find-relief-howtotake .cards-grid:is(.find-relief-prescribed, .find-relief-signup) .heading-2 {
+  font-size: 18px;
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-howtotake .cards-grid:is(.find-relief-prescribed, .find-relief-signup) .heading-2 {
+    font-size: 24px;
+  }
 }
 
 /* Live prescribed cards have no CTA button; the variant injects a default
