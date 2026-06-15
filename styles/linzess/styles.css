@@ -2023,11 +2023,14 @@ main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexbo
   color: var(--color-text-heading) !important;
 }
 
-/* Prescribed-card body copy is 16px on live; the icon-image-card variant's
-   :is() rule drops it to --linz-body-font-size (14px), so restore 16px scoped
-   to these cards. Match the variant's display-wrapper path to win specificity. */
-main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .abbv-image-text-v2 .abbv-image-text-display-v2 p:not(.heading-2, .eyebrow, .footnote, .tout-overlay) {
-  font-size: 16px;
+/* Prescribed + sign-up card body copy is 16px on live at desktop (≥900px) and
+   14px below; the icon-image-card variant's :is() rule pins it to 14px at all
+   widths, so restore the 16px desktop step scoped to these cards. Match the
+   variant's display-wrapper path to win specificity. */
+@media (width >= 900px) {
+  main > .section.find-relief-howtotake .cards-grid:is(.find-relief-prescribed, .find-relief-signup) .abbv-image-text-v2 .abbv-image-text-display-v2 p:not(.heading-2, .eyebrow, .footnote, .tout-overlay) {
+    font-size: 16px;
+  }
 }
 
 /* Card titles (.heading-2) on the prescribed + sign-up icon-image cards resolve
