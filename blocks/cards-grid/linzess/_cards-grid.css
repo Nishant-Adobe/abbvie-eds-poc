@@ -380,7 +380,13 @@
 /* Mobile: widen the feature cards to match live (~16px gutters). The nested
    demo-wrap padding + card side margin shrank them ~60px too narrow. */
 @media (width < 986px) {
+  /* Tighten the gap above the first content card on mobile to match live
+     (~110px from the promo card vs ~184px). The desktop stack (section 30 +
+     demo-wrap 24 + container 80 + card 50) is too tall on mobile; drop the
+     demo-wrap's top padding (and its side padding to widen the cards) and the
+     card's 50px top margin. */
   .cards-grid.cards-grid-homepage-content .demo-wrap {
+    padding-top: 0;
     padding-left: 0;
     padding-right: 0;
   }
@@ -388,6 +394,10 @@
   .cards-grid.cards-grid-homepage-content .flexbox-cards .flexboxitem-v2 .abbv-flex-item-v2 {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .cards-grid.cards-grid-homepage-content .icon-image-card.abbv-flex-item-v2 {
+    margin-top: 0;
   }
 }
 

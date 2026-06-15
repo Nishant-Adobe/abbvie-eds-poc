@@ -1268,6 +1268,16 @@ body main:has(.whylinzess-timeline) .section.columns-container .columns.columns-
   max-height: 300px;
 }
 
+/* Savings disclaimer "Program Terms, Conditions, Privacy Notice, and
+   Eligibility Criteria" link is underlined on live across all breakpoints.
+   Target it by href so it stays underlined wherever the anchor is present
+   (why-linzess, resources, homepage). NOTE: on the homepage this phrase was
+   imported as plain text with no anchor, so CSS cannot underline it there —
+   that requires re-importing the content with the link intact. */
+main a[href*="savings-and-support#expand"] {
+  text-decoration: underline;
+}
+
 /* Savings disclaimer footnote: EDS auto-converts this standalone link
    paragraph into a button. Revert it to plain grey legal text (matching
    the homepage disclaimer), since here the link has no surrounding copy. */

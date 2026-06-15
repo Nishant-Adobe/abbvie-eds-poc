@@ -467,6 +467,15 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     padding-bottom: var(--spacing-40);
   }
 
+  /* Homepage CTA hero: same overlap as the editorial hero — vertically centered
+     copy collided with the overlaid logo. Anchor copy to the bottom and clear
+     the ~152px header. */
+  .hero.linzess-behind-nav-linzess-cta-hero .hero-text-container {
+    justify-content: flex-end;
+    padding-top: 152px;
+    padding-bottom: var(--spacing-40);
+  }
+
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
     bottom: var(--hero-mobile-curve-bottom);
     height: var(--hero-mobile-curve-height);
