@@ -222,18 +222,13 @@ main .default-content-wrapper:has(> h1#sitemap) .sitemap-category a {
   }
 }
 
+/* Tablet & desktop (>= 768px) share the same layout: the live 3-up row of
+   proportional columns — col 1/2 at 32%, col 3 at 20%, separated by 70px gaps
+   (live .abbv-col-4 width:32%, .abbv-col:nth-child(3) width:20%,
+   :nth-child(2)/(3) margin-left:70px, .abbv-col:first-child margin-left:0).
+   Expressed as a grid so the first column has no left margin and the
+   proportions hold across rows. */
 @media (width >= 768px) {
-  main .default-content-wrapper:has(> h1#sitemap) .sitemap-categories {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Live desktop layout (min-width 986px): a 3-up row of proportional columns —
-   col 1/2 at 32%, col 3 at 20%, separated by 70px gaps (live .abbv-col-4
-   width:32%, .abbv-col:nth-child(3) width:20%, :nth-child(2)/(3)
-   margin-left:70px, .abbv-col:first-child margin-left:0). Expressed as a grid so
-   the first column has no left margin and the proportions hold across rows. */
-@media (width >= 986px) {
   main .default-content-wrapper:has(> h1#sitemap) .sitemap-categories {
     grid-template-columns: 32% 32% 20%;
     column-gap: 7rem;
