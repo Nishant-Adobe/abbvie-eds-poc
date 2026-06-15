@@ -1352,10 +1352,13 @@ body main .section:is(.resources-wellness-tips, #wellnesstips)::after {
   z-index: 1;
 }
 
-/* Community Resources = full-bleed off-white band */
-body main .section.resources-community,
+/* Community Resources = full-bleed off-white band. Pull it up under the dome
+   of the dark Wellness Tips section above so the curved transition overlaps
+   correctly (matches live). */
+body main .section:is(.resources-community, #communityresources),
 body main .section.resources-community.cards-grid-container.carousel-video-playlist-container {
   background: #f4f6fb;
+  margin-top: -40px !important;
 }
 
 /* Section header: eyebrow → divider → heading → intro */
