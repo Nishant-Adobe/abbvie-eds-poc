@@ -1749,25 +1749,23 @@ body main .section .cards-grid.resources-community .savings-card-cards .flexboxi
   background: #d9d7f9;
 }
 
-/* Icon sits in a white circle inside the card top (like the homepage stats
-   card), NOT overhanging — neutralise the base -50px overlap on the icon
-   container and wrap the icon in a fixed white circle. */
+/* Icon overhangs the card top by -50px (matches live). The icon asset already
+   includes its own circular badge, so the container has NO background/circle —
+   just centre the 105px icon and let it overlap the card's top edge. */
 body main .section .cards-grid.resources-community.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 {
-  margin: 0 auto 16px;
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  border-radius: 50%;
+  margin: -50px auto 0;
+  width: auto;
+  height: auto;
+  background: none;
+  border-radius: 0;
+  text-align: center;
 }
 
 body main .section .cards-grid.resources-community.cards-grid-icon-image-card .icon-image-card .abbv-image-content-container-v2 img {
-  width: 48px;
+  width: 105px;
   height: auto;
-  margin: 0;
-  display: block;
+  margin: 0 auto;
+  display: inline-block;
 }
 
 /* The card TITLE (p.heading-2) is otherwise turned into a 136px circle by the
@@ -1959,7 +1957,14 @@ body main .section .cards-grid.resources-community.cards-grid-icon-image-card p 
   color: #fff;
 }
 
-/* Community "Learn More" = white pill with dark-purple text */
+/* The base .carousel-video-playlist-container .cards-grid .cta rule hides the
+   CTA row (display:none); the community cards DO show a "Learn More" pill, so
+   re-enable it. */
+body main .section .cards-grid.resources-community .cta {
+  display: block;
+  text-align: center;
+}
+
 body main .section .cards-grid.resources-community .abbv-image-text-content-v2 a,
 body main .section .cards-grid.resources-community a.abbv-button-primary {
   display: inline-block;
@@ -1967,7 +1972,7 @@ body main .section .cards-grid.resources-community a.abbv-button-primary {
   color: #422e83;
   border: 0;
   border-radius: 16px;
-  padding: 12px 32px;
+  padding: 12px 48px 12px 32px;
   margin-top: 16px;
   font-family: var(--body-font-family);
   font-size: 14px;
