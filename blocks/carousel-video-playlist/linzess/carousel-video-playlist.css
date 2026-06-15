@@ -677,6 +677,12 @@
   .carousel-video-playlist.grid .cvp-header:empty {
     margin-bottom: 0;
   }
+
+  /* why-linzess "Hear from real patients" band sits the videos ~45px below the
+     intro (vs ~60px with the 16px grid padding). Trim it for this band. */
+  body main:has(.whylinzess-timeline) .carousel-video-playlist.grid {
+    padding-top: 0;
+  }
 }
 
 .carousel-video-playlist.grid .cvp-card .cvp-player-wrap {

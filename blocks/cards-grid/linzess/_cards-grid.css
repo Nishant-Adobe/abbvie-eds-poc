@@ -561,6 +561,13 @@ body main .section.cards-grid-container.carousel-video-playlist-container {
   box-sizing: border-box;
 }
 
+/* "HOW LINZESS WORKS" timeline band sits the eyebrow ~117px below the arc on
+   live, not the 80px-padding default that pushes it to ~163px. Trim the top
+   padding for the timeline variant of this dark band. */
+body main .section.cards-grid-container.carousel-video-playlist-container:has(.whylinzess-timeline) {
+  padding-top: 34px;
+}
+
 body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::before {
   content: '';
   position: absolute;
