@@ -5114,6 +5114,15 @@ body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.resource
   object-fit: contain;
 }
 
+/* Tip-card title paragraph: 16px, no inherited 3rem bottom margin (the base
+   `p { margin-bottom: 3rem }` rule otherwise opens a big gap before the list). */
+body main .section .columns.resources-tips .columns-item-image p:not(:has(picture)) {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: normal;
+  margin: 0;
+}
+
 body main .section .columns.resources-tips p strong {
   font-family: var(--body-font-family);
   font-size: 16px;
@@ -5130,7 +5139,7 @@ body main .section .columns.resources-tips ul {
   line-height: normal;
   color: #4d4d4f;
   padding-left: 20px;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 body main .section .columns.resources-tips ul li {
@@ -5168,8 +5177,14 @@ body main .section .columns.columns-resources-gutcheck .columns-item-image img {
   display: block;
 }
 
+/* Curved right edge on the image (live bakes this into the asset; the migrated
+   asset is a plain rectangle, so round its right edge to match). */
+body main .section .columns.columns-resources-gutcheck .columns-item-image img {
+  border-radius: 0 60px 60px 0;
+}
+
 body main .section .columns.columns-resources-gutcheck .columns-item-content {
-  padding: 40px;
+  padding: 32px 40px;
   text-align: left;
 }
 
