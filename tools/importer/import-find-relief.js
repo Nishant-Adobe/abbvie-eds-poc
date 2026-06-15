@@ -12,6 +12,7 @@ import tabsParser from './parsers/tabs.js';
 
 // TRANSFORMER IMPORTS
 import linzessCleanupTransformer from './transformers/linzess-cleanup.js';
+import linzessImageUrlsTransformer from './transformers/linzess-image-urls.js';
 import linzessSubpageSplitterTransformer from './transformers/linzess-subpage-splitter.js';
 import linzessSectionsTransformer from './transformers/linzess-sections.js';
 
@@ -109,6 +110,7 @@ function resolveTemplate(params) {
 // TRANSFORMER REGISTRY (order matters: cleanup → subpage split → sections)
 const transformers = [
   linzessCleanupTransformer,
+  linzessImageUrlsTransformer,
   linzessSubpageSplitterTransformer,
   linzessSectionsTransformer,
 ];
@@ -196,6 +198,18 @@ export default {
     WebImporter.rules.createMetadata(main, document);
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+
+    // adjustImageUrls re-absolutises project DAM refs against the source host
+    // (https://www.linzess.com/content/dam/abbvie-eds-poc/...). Strip the host
+    // back off so they stay host-relative /content/dam/... and resolve on EDS.
+    main.querySelectorAll('img, source').forEach((el) => {
+      ['src', 'srcset'].forEach((attr) => {
+        const v = el.getAttribute(attr);
+        if (v && v.includes('/content/dam/abbvie-eds-poc/')) {
+          el.setAttribute(attr, v.replace(/https?:\/\/[^/]+(\/content\/dam\/abbvie-eds-poc\/)/g, '$1'));
+        }
+      });
+    });
 
     // 6. Generate sanitized path
     const path = template.documentPath || WebImporter.FileUtils.sanitizePath(

@@ -1,8 +1,26 @@
+/* eslint-disable */
 var CustomImportScript = (() => {
   var __defProp = Object.defineProperty;
+  var __defProps = Object.defineProperties;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getOwnPropSymbols = Object.getOwnPropertySymbols;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __propIsEnum = Object.prototype.propertyIsEnumerable;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+  var __spreadValues = (a, b) => {
+    for (var prop in b || (b = {}))
+      if (__hasOwnProp.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    if (__getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(b)) {
+        if (__propIsEnum.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      }
+    return a;
+  };
+  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
@@ -31,17 +49,18 @@ var CustomImportScript = (() => {
   var LINZESS_ACCOUNT_ID = "1029485116001";
   var DEFAULT_PLAYER_ID = "Mcp9TXMkPT";
   function parse(element, { document: document2 }) {
+    var _a, _b, _c;
     const contentArea = element.querySelector(".abbv-video-content");
     const dockTitle = element.querySelector(".vjs-dock-title");
-    const contentH3 = contentArea?.querySelector("h3");
+    const contentH3 = contentArea == null ? void 0 : contentArea.querySelector("h3");
     const titleEl = contentH3 && contentH3.textContent.trim() ? contentH3 : dockTitle;
-    const overlayTitle = titleEl?.textContent?.trim() || "";
+    const overlayTitle = ((_a = titleEl == null ? void 0 : titleEl.textContent) == null ? void 0 : _a.trim()) || "";
     const dockDesc = element.querySelector(".vjs-dock-description");
-    const contentP = contentArea?.querySelector("p");
+    const contentP = contentArea == null ? void 0 : contentArea.querySelector("p");
     const descEl = contentP && contentP.textContent.trim() ? contentP : dockDesc;
-    const overlayDescription = descEl?.textContent?.trim() || "";
+    const overlayDescription = ((_b = descEl == null ? void 0 : descEl.textContent) == null ? void 0 : _b.trim()) || "";
     const posterImg = element.querySelector(".vjs-poster img");
-    const posterSrc = posterImg?.getAttribute("src") || "";
+    const posterSrc = (posterImg == null ? void 0 : posterImg.getAttribute("src")) || "";
     const videoJs = element.querySelector("video-js");
     let playerId = DEFAULT_PLAYER_ID;
     if (videoJs) {
@@ -59,8 +78,8 @@ var CustomImportScript = (() => {
       else if (contentContainer.classList.contains("content-bottom")) videoContentLayout = "bottom";
     }
     const transcriptLinkEl = element.querySelector("a.transcript-link");
-    const transcriptHref = transcriptLinkEl?.getAttribute("href") || "";
-    const transcriptLabel = transcriptLinkEl?.textContent?.trim() || "";
+    const transcriptHref = (transcriptLinkEl == null ? void 0 : transcriptLinkEl.getAttribute("href")) || "";
+    const transcriptLabel = ((_c = transcriptLinkEl == null ? void 0 : transcriptLinkEl.textContent) == null ? void 0 : _c.trim()) || "";
     const hasTranscript = !!transcriptHref;
     const videoId = VIDEO_ID_MAP[overlayTitle] || "";
     function hintedCell(fieldName, value) {
@@ -337,15 +356,16 @@ var CustomImportScript = (() => {
 
   // tools/importer/parsers/hero.js
   function parse5(element, { document: document2 }) {
+    var _a, _b, _c;
     const img = element.querySelector(".abbv-image-content-container-v2 img");
-    const imgSrc = img?.getAttribute("src") || "";
-    const imgAlt = img?.getAttribute("alt") || "";
+    const imgSrc = (img == null ? void 0 : img.getAttribute("src")) || "";
+    const imgAlt = (img == null ? void 0 : img.getAttribute("alt")) || "";
     const eyebrowEl = element.querySelector(".eyebrow, .eyebrow--white");
-    const eyebrow = eyebrowEl?.textContent?.trim() || "";
+    const eyebrow = ((_a = eyebrowEl == null ? void 0 : eyebrowEl.textContent) == null ? void 0 : _a.trim()) || "";
     const headingEl = element.querySelector("h1, .heading-1");
-    const headingText = headingEl?.textContent?.trim() || "";
+    const headingText = ((_b = headingEl == null ? void 0 : headingEl.textContent) == null ? void 0 : _b.trim()) || "";
     const captionEl = element.querySelector(".tout-overlay");
-    const imageCaption = captionEl?.textContent?.trim() || "";
+    const imageCaption = ((_c = captionEl == null ? void 0 : captionEl.textContent) == null ? void 0 : _c.trim()) || "";
     const classes = [];
     if (element.classList.contains("uppercase")) classes.push("no-padding");
     const contentContainer = element.querySelector(".abbv-image-text-content-container-v2");
@@ -396,7 +416,7 @@ var CustomImportScript = (() => {
   function parse6(element, { document: document2, params }) {
     const navItems = element.querySelectorAll(".section-navigation-list li a");
     if (!navItems.length) return;
-    const subpageName = params?.subpageName || "";
+    const subpageName = (params == null ? void 0 : params.subpageName) || "";
     const anchorMap = SUBPAGE_ANCHOR_MAP[subpageName] || null;
     const cells = [];
     navItems.forEach((link) => {
@@ -505,8 +525,31 @@ var CustomImportScript = (() => {
     }
   }
 
-  // tools/importer/transformers/linzess-subpage-splitter.js
+  // tools/importer/transformers/linzess-image-urls.js
   var TransformHook2 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
+  var SOURCE_DAM_PREFIX = "/content/dam/linzess/images/";
+  var PROJECT_DAM_PREFIX = "/content/dam/abbvie-eds-poc/linzess/images/";
+  function rewriteUrl(value) {
+    if (!value) return value;
+    return value.replace(
+      /(https?:\/\/[^/]+)?\/content\/dam\/linzess\/images\//g,
+      PROJECT_DAM_PREFIX
+    );
+  }
+  function transform2(hookName, element, payload) {
+    if (hookName !== TransformHook2.beforeTransform) return;
+    element.querySelectorAll("img, source").forEach((el) => {
+      ["src", "data-src", "srcset", "data-srcset"].forEach((attr) => {
+        const val = el.getAttribute(attr);
+        if (val && val.includes(SOURCE_DAM_PREFIX)) {
+          el.setAttribute(attr, rewriteUrl(val));
+        }
+      });
+    });
+  }
+
+  // tools/importer/transformers/linzess-subpage-splitter.js
+  var TransformHook3 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   var SUBPAGE_CONFIG = {
     "find-relief-talk-to-a-doctor": {
       keepAnchor: "talktoadoctor",
@@ -519,8 +562,8 @@ var CustomImportScript = (() => {
       heroTitle: "How to Take LINZESS"
     }
   };
-  function transform2(hookName, element, payload) {
-    if (hookName !== TransformHook2.beforeTransform) return;
+  function transform3(hookName, element, payload) {
+    if (hookName !== TransformHook3.beforeTransform) return;
     const { template } = payload;
     if (!template) return;
     const config = SUBPAGE_CONFIG[template.name];
@@ -542,7 +585,7 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/transformers/linzess-sections.js
-  var TransformHook3 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
+  var TransformHook4 = { beforeTransform: "beforeTransform", afterTransform: "afterTransform" };
   function findSectionElement(element, selector) {
     const selectors = Array.isArray(selector) ? selector : [selector];
     for (const sel of selectors) {
@@ -570,8 +613,8 @@ var CustomImportScript = (() => {
     }
     return null;
   }
-  function transform3(hookName, element, payload) {
-    if (hookName === TransformHook3.afterTransform) {
+  function transform4(hookName, element, payload) {
+    if (hookName === TransformHook4.afterTransform) {
       const { template } = payload;
       if (!template || !template.sections || template.sections.length < 2) return;
       const doc = element.ownerDocument || document;
@@ -686,7 +729,7 @@ var CustomImportScript = (() => {
     }
   };
   function resolveTemplate(params) {
-    const subpageName = params?.subpageName || "";
+    const subpageName = (params == null ? void 0 : params.subpageName) || "";
     if (subpageName && PAGE_TEMPLATES[subpageName]) {
       return PAGE_TEMPLATES[subpageName];
     }
@@ -695,7 +738,8 @@ var CustomImportScript = (() => {
   var transformers = [
     transform,
     transform2,
-    transform3
+    transform3,
+    transform4
   ];
   function executeTransformers(hookName, element, payload) {
     transformers.forEach((transformerFn) => {
@@ -733,7 +777,7 @@ var CustomImportScript = (() => {
       const { document: document2, url, html, params } = payload;
       const main = document2.body;
       const template = resolveTemplate(params);
-      const enhancedPayload = { ...payload, template };
+      const enhancedPayload = __spreadProps(__spreadValues({}, payload), { template });
       executeTransformers("beforeTransform", main, enhancedPayload);
       const pageBlocks = findBlocksOnPage(document2, template);
       pageBlocks.forEach((block) => {
@@ -754,6 +798,14 @@ var CustomImportScript = (() => {
       WebImporter.rules.createMetadata(main, document2);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+      main.querySelectorAll("img, source").forEach((el) => {
+        ["src", "srcset"].forEach((attr) => {
+          const v = el.getAttribute(attr);
+          if (v && v.includes("/content/dam/abbvie-eds-poc/")) {
+            el.setAttribute(attr, v.replace(/https?:\/\/[^/]+(\/content\/dam\/abbvie-eds-poc\/)/g, "$1"));
+          }
+        });
+      });
       const path = template.documentPath || WebImporter.FileUtils.sanitizePath(
         new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html$/, "")
       );
