@@ -1765,7 +1765,10 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
     width: 96px;
     height: 96px;
     font-size: 17px;
-    margin: -50px auto 0;
+
+    /* Tablet only: sink the circle ~half into the card (more overlap) to match
+       live. Mobile (<768) and desktop (>=1100) keep their own overlap. */
+    margin: -24px auto 0;
   }
 
   body main .cards-grid.cards-grid-homepage-stats .savings-card-cards .heading-2 .linz-stat-number,
