@@ -62,6 +62,7 @@ var CustomImportScript = (() => {
 
   // tools/importer/transformers/linzess-utility-content.js
   function transform2(hookName, element, payload) {
+    var _a;
     if (hookName !== "beforeTransform") return;
     const { document } = payload;
     element.querySelectorAll(".abbv-browser-chrome, .abbv-brand-explorer, .abbv-top-banner").forEach((el) => el.remove());
@@ -71,6 +72,12 @@ var CustomImportScript = (() => {
       }
     });
     element.querySelectorAll('.abbv-inline-use-isi, .abbv-inline-use, .linzess-isi-iri, [class*="inline-use-isi"]').forEach((el) => el.remove());
+    const sourceUrl = ((_a = payload.params) == null ? void 0 : _a.originalURL) || payload.url || "";
+    if (/reminder-terms-conditions/i.test(sourceUrl)) {
+      element.querySelectorAll("sup").forEach((sup) => {
+        sup.replaceWith(document.createTextNode(sup.textContent));
+      });
+    }
   }
 
   // tools/importer/transformers/linzess-utility-isi.js

@@ -29,4 +29,18 @@ export default function transform(hookName, element, payload) {
   // Inline ISI / Important Safety Information — utility pages surface ISI via
   // the safety-bar/fragment, not inline duplicated copy.
   element.querySelectorAll('.abbv-inline-use-isi, .abbv-inline-use, .linzess-isi-iri, [class*="inline-use-isi"]').forEach((el) => el.remove());
+
+  // SMS reminder terms is a plain standalone document. The body copy carries
+  // trademark/service-mark superscripts (From the Gut<sup>SM</sup>, T-Mobile
+  // <sup>®</sup>). md2jcr mis-serializes a <sup> mdast node as a block-level
+  // <div>, which breaks the surrounding <p> on the published page and truncates
+  // every paragraph at the first mark. Flatten <sup> to its plain inline text so
+  // the marks survive intact (the live page shows them inline-sized anyway, and
+  // the page <h3> title already renders "SM" un-raised).
+  const sourceUrl = payload.params?.originalURL || payload.url || '';
+  if (/reminder-terms-conditions/i.test(sourceUrl)) {
+    element.querySelectorAll('sup').forEach((sup) => {
+      sup.replaceWith(document.createTextNode(sup.textContent));
+    });
+  }
 }
