@@ -419,8 +419,15 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     padding: calc(var(--nav-height) + 6.4rem) 7rem 7rem;
   }
 
+  /* Editorial hero keeps a tall band on tablet (matches live ~768px) instead
+     of collapsing to the image's natural aspect ratio. */
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-    min-height: auto;
+    min-height: var(--hero-behind-nav-min-height);
+  }
+
+  /* Image fills the tall band as a background (text overlays it). */
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) > :where(div):first-child {
+    position: absolute;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {

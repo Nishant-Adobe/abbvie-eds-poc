@@ -1916,9 +1916,29 @@ color: inherit;
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+  /* ---- Header: No-hero arc ---- */
+  --header-z-index: 10;
+  --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --no-hero-arc-height: 80px;
+  --no-hero-h1-font-size: 40px;
+  --no-hero-h1-line-height: 36px;
+  --no-hero-h1-margin-bottom: 40px;
+  --no-hero-h1-font-size-mobile: 28px;
+  --no-hero-h1-line-height-mobile: 30px;
+  --no-hero-divider-width: 64px;
+  --no-hero-divider-height: var(--hero-divider-height);
+  --no-hero-divider-margin-bottom: 24px;
+
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
+
+  /* ---- Homepage Card Tokens ---- */
+  --linz-card-heading-size: 18px;
+  --linz-card-body-size: 14px;
+  --linz-card-footnote-size: 12px;
+  --linz-section-heading-size: 32px;
+  --linz-section-heading-line-height: 30px;
 
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
@@ -2323,8 +2343,15 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     padding: calc(var(--nav-height) + 6.4rem) 7rem 7rem;
   }
 
+  /* Editorial hero keeps a tall band on tablet (matches live ~768px) instead
+     of collapsing to the image's natural aspect ratio. */
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-    min-height: auto;
+    min-height: var(--hero-behind-nav-min-height);
+  }
+
+  /* Image fills the tall band as a background (text overlays it). */
+  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) > :where(div):first-child {
+    position: absolute;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
