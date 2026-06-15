@@ -1111,6 +1111,17 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
     height: 96px;
   }
 
+  /* Live's 2nd card body wraps to fewer lines (so the card is ~195px, not
+     ~222px): its text column is wider than ours. Trim the content's right
+     padding and tighten the bullet gap so the copy wraps like live. */
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content {
+    padding-right: 16px;
+  }
+
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content ul {
+    gap: 10px;
+  }
+
   /* SIDE EFFECTS section (non-timeline): live centers the icon overlapping the
      card's TOP edge (top half on the off-white section bg, bottom half on the
      purple card) with centered text below. */

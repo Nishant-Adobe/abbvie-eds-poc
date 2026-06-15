@@ -413,6 +413,30 @@ body main .section.whylinzess-patients .carousel-video-playlist.featured {
   padding-top: 0;
 }
 
+/* Patient Experiences section (carousel + columns, no cards-grid): live keeps a
+   ~39px gap between the intro/eyebrow copy and the first video of each featured
+   carousel. Collapse the intro wrapper's trailing margin and drive the gap with
+   the featured block's top padding so both carousels match (live = 39px). */
+body main .section.carousel-video-playlist-container.columns-container:not(.cards-grid-container) .carousel-video-playlist.featured {
+  padding-top: 39px;
+}
+
+body main .section.carousel-video-playlist-container.columns-container:not(.cards-grid-container) > .default-content-wrapper:has(+ .carousel-video-playlist-wrapper) {
+  margin-bottom: 0;
+}
+
+body main .section.carousel-video-playlist-container.columns-container:not(.cards-grid-container) > .default-content-wrapper:has(+ .carousel-video-playlist-wrapper) > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Savings disclaimer (§Maximum savings limit applies…) — live caps it at 928px
+   and centers it within the section track (text stays left-aligned). */
+body main .section.carousel-video-playlist-container.columns-container:not(.cards-grid-container) > .default-content-wrapper:last-child > p {
+  max-width: 928px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Featured row: video (70%) + quote panel (30%) */
 .carousel-video-playlist.featured .cvp-featured-row {
   display: flex;

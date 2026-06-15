@@ -674,6 +674,13 @@ main > .section.dark + .section.columns-container.whylinzess-sideeffects {
   text-align: center;
   max-width: none;
   position: relative;
+
+  /* Full-bleed: the off-white background spans the viewport on live, not the
+     base 5.5rem section inset. Pull the section edge-to-edge (the inner content
+     keeps its own gutters). */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 }
 
 /* Bottom inward curve — a white dome rising into the off-white Side Effects
@@ -1032,12 +1039,12 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     text-align: left;
   }
 
-  /* Mechanism-card body copy: live uses 14px/400 (regular), not 16px/700.
-     Match the section:has() prefix so this outranks the bold rule at the top of
-     this file. */
+  /* Mechanism-card body copy: live uses 14px bold (the source wraps the copy in
+     <b>), not the 16px desktop size. Keep the bold weight from the top-of-file
+     rule and only shrink the size on mobile. */
   body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content p {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: var(--font-weight-bold);
   }
 }
 

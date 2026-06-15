@@ -1317,6 +1317,16 @@ body main .section.cards-grid-container.carousel-video-playlist-container:has(.w
   padding-top: 34px;
 }
 
+/* Mobile: live tucks the eyebrow ~37px below the arc (vs the 34px+20px the
+   desktop padding + eyebrow margin produce). Trim the band's top padding so the
+   arc → "HOW LINZESS WORKS" gap matches live; desktop keeps its 34px. */
+
+@media (width < 768px) {
+  body main .section.cards-grid-container.carousel-video-playlist-container:has(.whylinzess-timeline) {
+    padding-top: 17px;
+  }
+}
+
 body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline))::before {
   content: '';
   position: absolute;
@@ -1350,6 +1360,12 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(:h
   background: #fff;
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   z-index: 1;
+}
+
+/* Resources page only: drop the -1px bottom offset on the concave arc. */
+
+body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)):has(.resources-community)::after {
+  bottom: auto;
 }
 
 .cards-grid-container.carousel-video-playlist-container {
