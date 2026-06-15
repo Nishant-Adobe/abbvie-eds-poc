@@ -1742,6 +1742,16 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)) {
     padding-bottom: 109px;
   }
+
+  /* Dark-band headings (eyebrow, "LINZESS Patient Experiences", savings) match
+     live's desktop type: 40px Bebas Neue, 36px line-height, no extra tracking.
+     Mobile/tablet keep the 32px token. */
+  body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)) > .default-content-wrapper p:first-child strong,
+  body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)) > .default-content-wrapper h2 {
+    font-size: 40px;
+    line-height: 36px;
+    letter-spacing: normal;
+  }
 }
 
 /* WHY LINZESS — Stat cards (2-up: IBS-C / CIC), cards-grid variant.

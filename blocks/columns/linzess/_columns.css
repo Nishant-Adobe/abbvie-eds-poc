@@ -433,6 +433,16 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     text-decoration: underline;
   }
 
+  /* "YOU COULD PAY AS LITTLE…" band heading matches live's desktop type:
+     40px Bebas Neue, 36px line-height, no extra tracking. */
+  .columns-homepage-savings-container > .default-content-wrapper p strong,
+  .carousel-video-playlist-container ~ .columns-container > .default-content-wrapper p strong,
+  .section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper p strong {
+    font-size: 40px;
+    line-height: 36px;
+    letter-spacing: normal;
+  }
+
   /* More space between the eyebrow heading and the card (~75px live). */
   .columns-homepage-savings-container > .default-content-wrapper:first-child,
   .carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:first-child,
