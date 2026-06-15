@@ -462,8 +462,11 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     padding: calc(var(--nav-height) + 8.4rem) 5.5rem 7.2rem;
   }
 
+  /* Editorial hero: both image and text containers are absolutely
+     positioned at desktop, so the band needs an explicit min-height
+     (auto would collapse it to 0). */
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-    min-height: auto;
+    min-height: var(--hero-behind-nav-min-height-desktop);
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
