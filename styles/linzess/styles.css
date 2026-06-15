@@ -4304,14 +4304,34 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     right: auto;
     width: 130%;
     transform: translateX(-50%);
-    height: 110px;
-    top: -90px;
+
+    /* Live's mobile dome is shorter (75px tall, -60px offset): a taller dome
+       crowds the CTA above and pushes the arc crest up toward the eyebrow. */
+    height: 75px;
+    top: -60px;
     border-radius: 100% 100% 0 0;
+  }
+
+  /* Mobile: live's bottom inward arc is a shallower dome (30% vertical radius),
+     and the band leaves less purple below the last video before the curve. */
+  .section:has(.whylinzess-timeline) {
+    padding-bottom: 40px;
+  }
+
+  .section:has(.whylinzess-timeline)::after {
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
   }
 
   .section:has(.whylinzess-timeline) > .carousel-video-playlist-wrapper,
   .section:has(.carousel-video-playlist.featured) > .carousel-video-playlist-wrapper {
     max-width: 100%;
+  }
+
+  /* Mobile: live leaves far less purple below the last video before the bottom
+     arc. The 100px desktop margin pushes the video ~150px above the dome — trim
+     it so the video sits close to the curve. */
+  body main .section:has(.whylinzess-timeline) > .carousel-video-playlist-wrapper {
+    margin-bottom: 24px;
   }
 
   /* Featured carousel sections: drop the 24px side padding on mobile so the

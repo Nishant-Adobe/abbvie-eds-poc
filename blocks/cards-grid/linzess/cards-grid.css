@@ -1324,6 +1324,11 @@ body main .section.cards-grid-container.carousel-video-playlist-container:has(.w
 @media (width < 768px) {
   body main .section.cards-grid-container.carousel-video-playlist-container:has(.whylinzess-timeline) {
     padding-top: 17px;
+
+    /* Live insets the band copy by 16px (not 24px) on mobile, so the body text
+       runs a touch wider. */
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
@@ -1991,6 +1996,25 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   .cards-grid.cards-grid-stat-card.whylinzess-timeline .linz-stat-card-body > p:last-child {
     font-size: 14px;
     line-height: normal;
+  }
+}
+
+/* Mobile: live tightens the How-LINZESS-Can-Help symptom cards — small gap
+   above the IBS-C circle (~42px, not ~95px), 14px bullet copy (not 16px), and
+   a taller single-bullet CIC card (~181px). Scoped under 768px so tablet and
+   desktop keep their own geometry. */
+
+@media (width < 768px) {
+  .cards-grid.cards-grid-stat-card.whylinzess-symptoms {
+    margin-top: 7px;
+  }
+
+  .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card-body li {
+    font-size: 14px;
+  }
+
+  .cards-grid.cards-grid-stat-card.whylinzess-symptoms .linz-stat-card:nth-child(2) {
+    padding-bottom: 48px;
   }
 }
 
