@@ -4449,6 +4449,16 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     padding-left: 0;
     padding-right: 0;
   }
+
+  /* Homepage savings + gut-check bands also run near-full-width on live's
+     tablet (16px gutters → ~736px cards), not the base 70px section inset.
+     Scoped to the homepage savings & gut-check columns so why-linzess and
+     resources columns sections are untouched. */
+  body main .section.columns-container:has(.columns-homepage-savings),
+  body main .section.columns-container:has(.columns-homepage-gutcheck) {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
 }
 
 /* Video playlist cards in How Works section */

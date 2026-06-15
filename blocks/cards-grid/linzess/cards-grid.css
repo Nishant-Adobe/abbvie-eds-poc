@@ -1687,6 +1687,16 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   }
 }
 
+/* Tablet (768–1099): live shows the homepage stat cards as full-width single
+   column rows (~716px), not the narrow ~350px-capped cards. Remove the
+   max-width cap and let each card fill the column. Scoped to homepage stats. */
+@media (width >= 768px) and (width < 1100px) {
+  .cards-grid.cards-grid-homepage-stats .savings-card-cards .flexboxitem-v2 {
+    max-width: none;
+    width: 100%;
+  }
+}
+
 /* Desktop: 3 cards in a row, equal height (stretch) so all stat cards match
    regardless of copy length, like live. */
 

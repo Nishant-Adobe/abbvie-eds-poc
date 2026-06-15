@@ -1386,6 +1386,24 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
   }
 }
 
+/* Tablet (768–985): the HOMEPAGE patient-experiences video grid stacks the
+   three cards full-width vertically on live (not a cramped 3-up row). Scoped
+   to the homepage grid (NOT the why-linzess timeline section) so why-linzess
+   keeps its own tablet rules. */
+@media (width >= 768px) and (width < 986px) {
+  body main .section:not(:has(.whylinzess-timeline)) .carousel-video-playlist.grid .cvp-grid {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: unset;
+    gap: 16px;
+    width: 100%;
+  }
+
+  body main .section:not(:has(.whylinzess-timeline)) .carousel-video-playlist.grid .cvp-card {
+    width: 100%;
+  }
+}
+
 /* Tablet (768–1023): the featured patient-experiences carousel is 998px wide
    and overflows the viewport. Live stacks the player full-width with a 2-column
    thumbnail grid below (same as mobile), so reuse that layout here. The .grid
