@@ -1278,6 +1278,25 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     padding: 16px;
     text-align: center;
   }
+
+  /* Homepage savings card stacks the same way on live's tablet (image on top,
+     centered copy below). The base card is a flex row, so wrap it and make both
+     the image + content cells full-width. Scoped to the homepage savings card
+     in a plain columns-container (not the why-linzess carousel one above). */
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings {
+    flex-wrap: wrap;
+  }
+
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1 1 100%;
+    padding: 16px;
+    text-align: center;
+  }
 }
 
 @media (width < 768px) {
