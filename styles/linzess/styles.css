@@ -4806,6 +4806,23 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
 /* Wellness Tips = full-bleed dark-purple band with white header text */
 body main .section:is(.resources-wellness-tips, #wellnesstips) {
   background: #422e83;
+  position: relative;
+  padding-bottom: 140px;
+}
+
+/* Bottom inward curve — an off-white dome rising into the dark Wellness Tips
+   band, carving the transition down to the off-white Community section below.
+   The dome colour matches that section (#f4f6fb) so there's no visible seam. */
+body main .section:is(.resources-wellness-tips, #wellnesstips)::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: #f4f6fb;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  z-index: 1;
 }
 
 /* Community Resources = full-bleed off-white band */
@@ -4856,13 +4873,16 @@ body main .section:is(.resources-community, #communityresources) {
   margin: 0 auto;
 }
 
-/* Intro line that precedes the wellness article grid */
+/* Intro line that precedes the wellness article grid — live renders it as the
+   block's 24px/700 heading-2, centered, full container width. */
 .section:is(.resources-wellness-tips, #wellnesstips) > .default-content-wrapper:not(:first-child) > p {
   font-family: var(--body-font-family);
-  font-size: 16px;
-  line-height: 1.6rem;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
   color: #fff;
   text-align: center;
+  max-width: 998px;
   margin: 40px auto 0;
 }
 
@@ -4909,6 +4929,23 @@ body main .section .cards-grid.resources-articles .flexboxitem-v2 .abbv-flex-ite
   padding: 0;
 }
 
+/* Card is a full-height flex column: image+text block on top, the CTA row
+   (a separate .cta sibling) pinned to the bottom so "Read the article" aligns
+   across cards whose body copy differs in length (matches live). */
+body main .section .cards-grid.resources-articles .flexboxitem-v2 .abbv-flex-item-v2 {
+  display: flex;
+  flex-direction: column;
+}
+
+body main .section .cards-grid.resources-articles .flexboxitem-v2 .abbv-flex-item-v2 > .image-text-v2 {
+  flex: 0 0 auto;
+}
+
+body main .section .cards-grid.resources-articles .flexboxitem-v2 .abbv-flex-item-v2 > .cta {
+  margin-top: auto;
+  padding: 0 24px 24px;
+}
+
 /* Force card inner layout to a full-width column (image top, text below) */
 body main .section .cards-grid.resources-articles .image-text-v2,
 body main .section .cards-grid.resources-articles .abbv-image-text-v2 {
@@ -4947,13 +4984,13 @@ body main .section .cards-grid.resources-articles .abbv-image-text-display-v2 p 
 }
 
 body main .section .cards-grid.resources-articles .abbv-image-text-content-v2 {
-  padding: 16px;
+  padding: 24px 24px 0;
 }
 
 body main .section .cards-grid.resources-articles .abbv-image-text-display-v2 .heading-2 {
   font-family: var(--body-font-family);
   font-size: 16px;
-  line-height: 1.3;
+  line-height: normal;
   font-weight: 400;
   color: #422e83;
   margin-bottom: 20px;
@@ -4964,7 +5001,7 @@ body main .section .cards-grid.resources-articles .abbv-image-text-display-v2 p:
   font-family: var(--body-font-family);
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: normal;
   color: #4d4d4f;
   margin-bottom: 20px;
 }
@@ -4980,7 +5017,7 @@ body main .section .cards-grid.resources-articles a.abbv-button-primary {
   font-family: var(--body-font-family);
   font-size: 12px;
   font-weight: 800;
-  line-height: 1.4;
+  line-height: normal;
   color: #422e83;
   text-decoration: underline;
   text-transform: none;
@@ -5030,37 +5067,39 @@ body main .section .columns.resources-tips .columns-item > div {
   width: auto;
 }
 
-/* Card content is one <p> wrapping <picture> + nested <p>(title) + <ul>.
-   Float the icon left; title/bullets flow to its right and clear below. */
+/* Icon-left layout (matches live / the why-linzess side-effects columns): a
+   2-column grid with the icon in column 1 spanning both rows and vertically
+   centered beside the title + bullet list in column 2. */
 body main .section .columns.resources-tips .columns-item .columns-item-image {
-  display: block;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 24px;
+  align-items: start;
   width: auto;
 }
 
-/* Float the icon-wrapping <p> left so the title/bullets flow beside it
-   (live icon-left layout). The picture's own <p> must NOT be overflow:hidden
-   or it forms a BFC and drops below the float. */
+/* Icon spans both rows and is vertically centered against the title+list. */
 body main .section .columns.resources-tips .columns-item .columns-item-image p:has(picture) {
-  float: left;
-  width: 120px;
-  margin: 0 24px 0 0;
-  overflow: visible;
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: center;
+  margin: 0;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image p:not(:has(picture)) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+body main .section .columns.resources-tips .columns-item .columns-item-image ul {
+  grid-column: 2;
+  grid-row: 2;
 }
 
 body main .section .columns.resources-tips .columns-item .columns-item-image picture {
   display: block;
   width: 120px;
-}
-
-body main .section .columns.resources-tips .columns-item .columns-item-image p:not(:has(picture)),
-body main .section .columns.resources-tips .columns-item .columns-item-image ul {
-  overflow: hidden;
-}
-
-body main .section .columns.resources-tips .columns-item .columns-item-image::after {
-  content: "";
-  display: block;
-  clear: both;
 }
 
 body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.resources-tips > .columns-item:has(.columns-item-image) .columns-item-image img,
@@ -5099,21 +5138,27 @@ body main .section .columns.resources-tips ul li {
   color: #4d4d4f;
 }
 
-/* ── Gut-check promo banner (image left + copy right, light-purple) ── */
+/* ── Gut-check promo banner (image left + copy right, off-white card) ──
+   The block authors as two sibling .columns-item cells (image + content); make
+   the .columns block itself the rounded card and lay the two cells out as a
+   50/50 grid (matches live's single full-width 998px card). */
 body main .section .columns.columns-resources-gutcheck {
-  max-width: 998px;
-  margin: 60px auto 0;
-}
-
-body main .section:is(.resources-wellness-tips, #wellnesstips) .columns.columns-resources-gutcheck > .columns-item:has(.columns-item-image) {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+  max-width: 998px;
+  margin: 60px auto 0;
   background: #f4f6fb;
   border-radius: 16px;
   overflow: hidden;
 }
 
+body main .section .columns.columns-resources-gutcheck > .columns-item {
+  width: auto;
+  height: 100%;
+}
+
+body main .section .columns.columns-resources-gutcheck .columns-item-image,
 body main .section .columns.columns-resources-gutcheck .columns-item-image img {
   width: 100%;
   height: 100%;
@@ -5152,16 +5197,28 @@ body main .section .cards-grid.resources-community .abbv-flex-container-v2 {
 }
 
 body main .section .cards-grid.resources-community .flexboxitem-v2 {
-  flex: 0 0 360px;
-  max-width: 360px;
+  flex: 0 0 491px;
+  max-width: 491px;
 }
 
 body main .section .cards-grid.resources-community .abbv-flex-item-v2 {
-  background: #422e83;
   border-radius: 16px;
   padding: 32px;
   text-align: center;
   height: auto;
+}
+
+/* Live: 1st card (IBSPatient.org) is dark purple with white copy; 2nd card
+   (PatientsLikeMe.com) is light purple with dark copy. Because this section is
+   a carousel-video-playlist-container and the flex container carries
+   .savings-card-cards, the homepage stats-card rules recolour these cards
+   (off-white on the 2nd item). Match that exact structure so these win. */
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(1) .abbv-flex-item-v2 {
+  background: #422e83;
+}
+
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
+  background: #d9d7f9;
 }
 
 /* Icon sits in a white circle inside the card top (like the homepage stats
@@ -5185,13 +5242,51 @@ body main .section .cards-grid.resources-community.cards-grid-icon-image-card .i
   display: block;
 }
 
-body main .section .cards-grid.resources-community.cards-grid-icon-image-card .heading-2 {
+/* The card TITLE (p.heading-2) is otherwise turned into a 136px circle by the
+   homepage stats-circle rule (this section is a carousel-video-playlist-container
+   and the flex container carries .savings-card-cards). Reset it back to a plain
+   heading. */
+/* The card TITLE (p.heading-2) is otherwise turned into a 136px circle by the
+   homepage stats-circle rule (this section is a carousel-video-playlist-container
+   and the flex container carries .savings-card-cards). Reset both cards' titles
+   back to plain headings — match the .savings-card-cards .flexboxitem-v2
+   structure so this beats the stats-circle + nth-child(2) overrides. */
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2 .heading-2 {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0 0 12px;
+  border-radius: 0;
+  background: none;
   font-family: var(--body-font-family);
   font-size: 24px;
   font-weight: 700;
-  color: #fff;
+  line-height: normal;
+  word-spacing: normal;
   text-transform: none;
-  margin-bottom: 12px;
+}
+
+/* Card 1 (dark) → white title + body; Card 2 (light) → dark-purple title,
+   dark-grey body. */
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(1) .heading-2,
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(1) p:not(.heading-2) {
+  color: #fff;
+}
+
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(2) .heading-2 {
+  color: #422e83;
+}
+
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(2) p:not(.heading-2) {
+  color: #4d4d4f;
+}
+
+/* Card 2 (light) "Learn More" → dark-purple pill with white text (card 1's
+   white pill is set further below). */
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(2) a.abbv-button-primary,
+body main .section .cards-grid.resources-community .savings-card-cards .flexboxitem-v2:nth-child(2) .abbv-image-text-content-v2 a {
+  background: #422e83;
+  color: #fff;
 }
 
 /* Savings card heading (matches live 24px/700 Lato, dark purple) */
@@ -5253,10 +5348,18 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
    text, a light-purple title bar, and a purple "More Videos Like This" CTA. */
 
 /* Drop the full-bleed purple band the .grid carousel paints by default, and
-   cap the video to its live 728px width, centered. */
+   cap the video to its live ~600px width, centered (single player, not the
+   homepage 3-up grid). */
 body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid {
   background: transparent;
-  max-width: 728px;
+  width: 100%;
+}
+
+/* The carousel block is a flex container that shrink-wraps to its card's
+   content width, so cap + center the wrapper at the live ~600px instead. */
+body main .section:is(.resources-community, #communityresources) .carousel-video-playlist-wrapper {
+  width: 100%;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -5276,6 +5379,20 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
   max-width: 620px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* "Hear their real stories:" lead-in is dark purple on live. */
+body main .section:is(.resources-community, #communityresources) > .default-content-wrapper:has(h2) p strong {
+  color: #422e83;
+}
+
+/* Single video player (one column), not the homepage 3-up card grid. The
+   grid wrapper is flex, so the single cvp-grid item must stretch to fill
+   (otherwise it collapses to the card's content width). */
+body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid .cvp-grid {
+  grid-template-columns: 1fr;
+  flex: 1 1 auto;
+  width: 100%;
 }
 
 /* Copy below the video sits in a default-content-wrapper with no h2, so the
@@ -5349,7 +5466,7 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
     line-height: 30px;
   }
 
-  body main .section .columns.columns-resources-gutcheck .columns-item {
+  body main .section .columns.columns-resources-gutcheck {
     grid-template-columns: 1fr;
   }
 
