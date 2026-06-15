@@ -1749,12 +1749,18 @@ main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-na
 
 main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-1 {
   margin: 0 0 var(--spacing-16);
-  font-family: var(--heading-font-family);
-  font-size: var(--font-size-article-heading);
-  font-weight: var(--font-weight-body);
-  line-height: var(--no-hero-h1-line-height, 36px);
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
   color: var(--color-text-on-dark);
   text-transform: none;
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-1 {
+    font-size: 24px;
+  }
 }
 
 /* "Learn More" CTA — orange pill, purple text, right chevron. The whole card
@@ -1767,7 +1773,7 @@ main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-na
   background: var(--linz-orange);
   color: var(--color-brand-primary);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-button);
+  font-size: 12px;
   font-weight: var(--font-weight-extra-bold);
   line-height: 1.2;
   text-decoration: none;
