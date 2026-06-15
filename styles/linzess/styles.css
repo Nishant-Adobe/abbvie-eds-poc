@@ -2062,6 +2062,18 @@ main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image
   color: var(--color-text-heading) !important;
 }
 
+/* Cards vary in body length ("Click" is shortest), so bottom-anchor the CTA so
+   all three buttons align on one baseline like live. Make the card a flex
+   column and push the .cta to the bottom. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card {
+  display: flex;
+  flex-direction: column;
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card .cta {
+  margin-top: auto;
+}
+
 /* Sign-up CTA buttons (purple, white text, chevron). icon-image-card renders
    the CTA as a.abbv-button-primary inside .cta; match that + plain a.button. */
 main > .section.find-relief-howtotake .cards-grid.find-relief-signup .cta a,
