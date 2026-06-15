@@ -5169,6 +5169,19 @@ body main .section .columns.columns-resources-gutcheck > .columns-item {
   min-height: 0;
 }
 
+/* The image cell is the positioning context; the image fills it absolutely so
+   the photo's intrinsic height never inflates the card — only the copy drives
+   card height (matches live, where the content is the taller column). */
+body main .section .columns.columns-resources-gutcheck > .columns-item:has(.columns-item-image) {
+  position: relative;
+  overflow: hidden;
+}
+
+body main .section .columns.columns-resources-gutcheck .columns-item-image {
+  position: absolute;
+  inset: 0;
+}
+
 body main .section .columns.columns-resources-gutcheck .columns-item-image,
 body main .section .columns.columns-resources-gutcheck .columns-item-image img {
   width: 100%;
@@ -5184,7 +5197,7 @@ body main .section .columns.columns-resources-gutcheck .columns-item-image img {
 }
 
 body main .section .columns.columns-resources-gutcheck .columns-item-content {
-  padding: 32px 40px;
+  padding: 24px 40px;
   text-align: left;
 }
 
