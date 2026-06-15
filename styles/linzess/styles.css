@@ -5042,22 +5042,25 @@ body main .section:is(.resources-wellness-tips, #wellnesstips) .columns-wrapper:
   max-width: none;
 }
 
+/* Stack the 3 tip cards centered on the page with a 20px gap between them
+   (matches live: 670px-wide cards, centered, 20px vertical gap). */
 body main .section:is(.resources-wellness-tips, #wellnesstips).columns-container .columns.resources-tips.block {
   background: transparent;
   border-radius: 0;
-  padding: 0;
-  display: block;
+  padding: 40px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   width: 100%;
   max-width: none;
 }
 
 body main .section .columns.resources-tips .columns-item {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
+  width: 670px;
   max-width: 670px;
-  margin: 40px auto 0;
+  margin: 0;
+  align-self: center !important;
 }
 
 body main .section .columns.resources-tips .columns-item > div {
@@ -5066,6 +5069,11 @@ body main .section .columns.resources-tips .columns-item > div {
   padding: 24px;
   text-align: left;
   width: auto;
+}
+
+/* Second tip card ("Drink More Water") uses an off-white background on live. */
+body main .section .columns.resources-tips .columns-item:nth-child(2) > div {
+  background: #f4f6fb;
 }
 
 /* Icon-left layout (matches live): the icon's white circle overhangs the card's
