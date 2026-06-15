@@ -1123,22 +1123,31 @@
 .footer::before {
   content: '';
   position: absolute;
-  top: calc(-1 * 40px);
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
-  width: 139vw;
+  width: 160vw;
   height: var(--footer-arc-height);
   background-color: var(--footer-color-bg);
   border-radius: 100% 100% 0 0;
   z-index: -1;
 }
 
+/* Footer content must paint above the arc pseudo (z-index:-1 within the
+   footer's own stacking context). The wrapper's z-index:2 (set in
+   styles.css) keeps the whole footer — arc included — above the white ISI
+   section so the curve is visible rising into it. */
+.footer > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* Mobile + tablet (<1024px): the narrower viewport needs a wider, shallower
    arc so the curve reads correctly — match live's mobile arc geometry. */
 @media (width < 1024px) {
   .footer::before {
-    top: calc(-1 * 38px);
-    width: 203vw;
+    top: -30px;
+    width: 220vw;
   }
 }
 

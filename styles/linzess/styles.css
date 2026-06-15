@@ -193,11 +193,14 @@ main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .f
   width: 100%;
 }
 
-/* Space below the ISI job code before the footer arc. Live uses 80px padding
-   + 20px margin (~100px total); our larger 100/100 left too big a gap. */
+/* Space above the USES heading (so it isn't cramped against the preceding
+   purple bottom-nav band) and below the job code before the footer arc. The
+   footer arc pseudo is shallow (top:-40px), so a modest bottom padding keeps
+   the curve close to the content like live without a large empty band. */
 main > .section.isi {
-  padding-bottom: var(--spacing-80);
-  margin-bottom: var(--spacing-20);
+  padding-top: var(--spacing-40);
+  padding-bottom: var(--spacing-40);
+  margin-bottom: 0;
 }
 
 .section.isi .default-content-wrapper,
