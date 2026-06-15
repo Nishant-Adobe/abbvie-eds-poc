@@ -101,7 +101,22 @@ function groupBottomLogosAndTexts(bottom) {
   texts.append(copy, code);
 }
 
+/* No-chrome utility pages (e.g. the SMS reminder terms) render on the live site
+   as bare standalone documents. The repo content sets footer:false, but the
+   published .aem.page serves author metadata that may still point at a footer
+   fragment — so guard by path here too, leaving the block empty (the brand CSS
+   rule `footer.footer-wrapper:has(> .footer.block:empty)` then hides it). */
+const NO_CHROME_PATHS = [/\/linzess\/utility\/reminder-terms-conditions$/i];
+
+function isNoChromePath() {
+  return NO_CHROME_PATHS.some((re) => re.test(window.location.pathname));
+}
+
 async function decorateLinzess(block) {
+  if (isNoChromePath()) {
+    block.textContent = '';
+    return;
+  }
   const fragment = await loadFooterFragment();
   block.textContent = '';
 

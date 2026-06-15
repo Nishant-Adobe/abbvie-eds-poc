@@ -1,11 +1,27 @@
 import { isUniversalEditor } from '../../../scripts/utils.js';
 
+/* No-chrome utility pages (e.g. the SMS reminder terms) render on the live site
+   as bare standalone documents. The repo content sets nav:false, but the
+   published .aem.page serves author metadata that may still point at a nav
+   fragment — so guard by path here too, emptying the block so no <nav> exists
+   (the brand CSS rule `header.header-wrapper:not(:has(nav))` then hides it). */
+const NO_CHROME_PATHS = [/\/linzess\/utility\/reminder-terms-conditions$/i];
+
+function isNoChromePath() {
+  return NO_CHROME_PATHS.some((re) => re.test(window.location.pathname));
+}
+
 export default async function getBlockConfigs() {
   return {
     flags: {},
     variations: [],
     decorations: {
       afterDecorate: (block) => {
+        if (isNoChromePath()) {
+          block.textContent = '';
+          return;
+        }
+
         // Add no-hero class for non-hero pages (purple header + arc)
         if (!document.querySelector('main .hero')) {
           document.body.classList.add('no-hero');
