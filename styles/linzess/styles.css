@@ -3,6 +3,600 @@
 
 /* LINZESS DTC — Brand-specific style overrides */
 
+body.appear {
+  background-color: var(--color-brand-primary, #422e83);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+main > .section {
+  margin-bottom: 0;
+}
+
+/* Hero section — nudge down slightly so the photo isn't tucked as far under
+   the overlay header. The header is position:absolute (transparent gradient)
+   and floats over the hero top; a small top margin drops the image so more of
+   the scene shows below the header, matching live's framing. */
+main .section.abbvie-container.hero-container {
+  margin-top: var(--spacing-40);
+}
+
+/* Transcript section — outer container */
+.section.transcript,
+main > .section:first-of-type:not(.hero-container) {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  overflow: visible;
+  padding: 0 0 var(--spacing-100);
+  margin: var(--spacing-80) 0 0;
+  max-width: none;
+  width: 100%;
+}
+
+/* Arc/curve — white ellipse overlapping body */
+.section.transcript::before,
+main > .section:first-of-type:not(.hero-container)::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  .section.transcript::before,
+  main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
+
+/* ISI section arc */
+.abbv-inline-use-isi::before,
+.section.isi::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  .abbv-inline-use-isi::before,
+  .section.isi::before {
+    height: 255px;
+    top: -80px;
+  }
+}
+
+.section.isi {
+  position: relative;
+  background: var(--color-background-primary, #fff);
+  z-index: 1;
+}
+
+/* Footer must paint above the white ISI section (z-index: 1) so its purple
+   curved arc (.footer::before) shows instead of being hidden behind it. */
+.footer-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* Transcript content wrapper — centered with 20px side padding (matches live) */
+.section.transcript .rich-text-wrapper,
+main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section.transcript + .section,
+main > .section:first-of-type:not(.hero-container) + .section {
+  border-radius: 0;
+}
+
+.section.transcript h1,
+main > .section .default-content-wrapper h1 {
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-text-heading);
+  text-align: center;
+  line-height: var(--spacing-30);
+  margin: 0;
+  padding: 0;
+}
+
+.section.transcript h1::before,
+main > .section .default-content-wrapper h1::before {
+  content: '';
+  display: block;
+  width: var(--spacing-64);
+  height: var(--spacing-05);
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto var(--spacing-10);
+}
+
+.section.transcript .default-content-wrapper p,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-color);
+  margin: var(--spacing-16) 0;
+  padding: 0;
+}
+
+.section.transcript .default-content-wrapper strong,
+.section.transcript .default-content-wrapper b,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper strong,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper b {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.section.transcript .default-content-wrapper h2,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: 600;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: var(--spacing-16) 0;
+}
+
+.section.transcript .default-content-wrapper h2:first-of-type,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2:first-of-type {
+  margin: var(--spacing-40) 0 var(--spacing-16);
+}
+
+.section.transcript .default-content-wrapper ul,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper ul {
+  margin: var(--spacing-16) 0;
+  padding: 0 0 0 var(--spacing-40);
+}
+
+.section.transcript .default-content-wrapper li,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper li {
+  margin: 0;
+  padding: 0;
+}
+
+/* ISI section */
+.section.isi,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  padding: 0 var(--spacing-20) var(--spacing-80);
+  margin: 0 0 var(--spacing-20);
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Space above the USES heading (so it isn't cramped against the preceding
+   purple bottom-nav band) and below the job code before the footer arc. The
+   footer arc pseudo is shallow (top:-40px), so a modest bottom padding keeps
+   the curve close to the content like live without a large empty band. */
+main > .section.isi {
+  padding-top: var(--spacing-40);
+  padding-bottom: var(--spacing-40);
+  margin-bottom: 0;
+}
+
+.section.isi .default-content-wrapper,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) .default-content-wrapper {
+  max-width: 124rem;
+  margin: 0 auto;
+}
+
+.section.isi h3,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.32px;
+  color: var(--color-text-heading);
+  text-transform: none;
+  margin: var(--spacing-10) 0 0;
+  padding: 0;
+}
+
+.section.isi p,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.28px;
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi ul,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) ul {
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+.section.isi li,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.28px;
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi strong,
+.section.isi b,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) strong,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) b {
+  font-family: var(--font-family-legal-bold);
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.section.isi a,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) a {
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+/* ISI links sit inside <strong> blocks, so they inherit the black legal font
+   at 14px. Live renders them in the regular Roman face (not bold/black). */
+.section.isi strong a,
+.section.isi b a,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) :is(strong, b) a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+}
+
+.section.isi h4,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) h4 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
+}
+
+.section.isi h5,
+main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) h5 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
+  text-decoration: none;
+}
+
+/* Desktop — arc grows larger + font-size 16px */
+@media (width >= 900px) {
+  .section.transcript::before,
+  main > .section:first-of-type:not(.hero-container)::before {
+    top: -60px;
+    width: 130%;
+    height: 255px;
+  }
+
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    max-width: var(--content-width-transcript, 998px);
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .section.transcript h1,
+  main > .section .default-content-wrapper h1 {
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
+  }
+
+  .section.transcript .default-content-wrapper p,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.transcript .default-content-wrapper h2,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+}
+
+/* Mobile — transcript and ISI padding adjustments */
+@media (width <= 744px) {
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    padding: 0 var(--spacing-16);
+  }
+
+  .section.isi h3,
+  main > .section:nth-of-type(2):not(.safety-bar-container, .otc-intro-section, .find-relief-talk, .find-relief-howtotake) h3 {
+    font-size: var(--font-size-legal);
+  }
+}
+
+/* ============================================================
+   DIAN-TEST PAGE — Scoped to .section.dian-test-body / .section.dian-test-isi
+   Mobile-first: base = mobile, @media (min-width: 900px) = desktop
+   ============================================================ */
+
+/* --- Section: Transcript body --- */
+.section.dian-test-body.abbvie-container {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  overflow: visible;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  max-width: none;
+  width: 100%;
+}
+
+.section.dian-test-body.abbvie-container + .section {
+  margin-top: 0;
+}
+
+.section.dian-test-body .rich-text-wrapper {
+  padding: 0 20px;
+}
+
+.section.dian-test-body h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--color-text-heading);
+  text-align: center;
+  line-height: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body h1::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto 10px;
+}
+
+.section.dian-test-body h2 {
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body h2:first-of-type {
+  margin-top: 40px;
+}
+
+.section.dian-test-body p {
+  font-family: Lato, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-body, #4d4d4f);
+  line-height: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body strong {
+  font-weight: 700;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.section.dian-test-body em {
+  font-style: italic;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.section.dian-test-body ul {
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  margin: 16px 0;
+  padding: 0 0 0 40px;
+}
+
+.section.dian-test-body li {
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body a {
+  font-family: Lato, sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  text-decoration: underline;
+}
+
+.section.dian-test-body sup {
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* Arc/curve ::before */
+.section.dian-test-body::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 40px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+/* --- Section: ISI --- */
+.section.dian-test-isi.abbvie-container {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  margin: 0 0 var(--spacing-20);
+  padding: 0 var(--spacing-20) var(--spacing-80);
+  max-width: 100%;
+  width: 100%;
+}
+
+.section.dian-test-isi h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  margin: var(--spacing-10) 0 0;
+  padding: 0;
+}
+
+.section.dian-test-isi p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.dian-test-isi strong,
+.section.dian-test-isi b {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.section.dian-test-isi a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+.section.dian-test-isi ul {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+.section.dian-test-isi li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.dian-test-isi li strong {
+  font-family: var(--font-family-legal-bold);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.section.dian-test-isi sup {
+  font-size: 0.7em;
+  color: var(--color-text-muted);
+  line-height: 0;
+}
+
+/* --- Desktop (min-width: 900px) --- */
+@media (width >= 900px) {
+  .section.dian-test-body.abbvie-container {
+    padding: 0 0 var(--spacing-100, 10rem);
+    margin-top: var(--spacing-80);
+  }
+
+  .section.dian-test-body::before {
+    top: calc(-1 * var(--spacing-60));
+    width: 130%;
+    height: var(--spacing-75, 7.5rem);
+  }
+
+  .section.dian-test-body h1 {
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
+  }
+
+  .section.dian-test-body .rich-text-wrapper {
+    max-width: var(--content-width-transcript, 998px);
+    margin: 0 auto;
+    padding: 0 var(--spacing-48, 4.8rem);
+  }
+
+  .section.dian-test-body h2 {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.dian-test-body h2:first-of-type {
+    margin-top: var(--spacing-40);
+  }
+
+  .section.dian-test-body p {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.dian-test-isi .default-content-wrapper {
+    max-width: var(--content-width-isi, 1240px);
+    margin: 0 auto;
+  }
+}
+
+/* ===== From develop: non-hero page arc + H1 (body.no-hero) ===== */
+
 /* Non-hero pages: purple downward arc + H1 styling */
 body.no-hero main > .section:first-child {
   position: relative;
@@ -36,7 +630,7 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
   display: block;
   width: var(--no-hero-divider-width);
   height: var(--no-hero-divider-height);
-  background: url("/icons/divider.svg") no-repeat center;
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
   background-size: contain;
   margin: 0 auto var(--no-hero-divider-margin-bottom);
 }
@@ -46,4 +640,2004 @@ body.no-hero main > .section:first-child > .default-content-wrapper:first-child 
     font-size: var(--no-hero-h1-font-size-mobile);
     line-height: var(--no-hero-h1-line-height-mobile);
   }
+}
+
+/* Transcript/ISI pages keep the white upward arc, not develop's purple downward arc.
+   Equal specificity to body.no-hero rule but declared later, so this wins. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section.isi,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: 0;
+}
+
+body.no-hero main > .section.transcript::before,
+body.no-hero main > .section.isi::before,
+body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+  top: -60px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  body.no-hero main > .section.transcript::before,
+  body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
+
+/* ============================================================
+   Healthy-Routines article sections (OTC and Prescription Treatments)
+   Sections: otc-intro (white), what-is-linzess (purple),
+   more-like-this (white), cta-cards (purple). Each carries a
+   background-arc curved top edge (footer-arc recipe).
+   Body backdrop for this hero article page is off-white.
+   ============================================================ */
+body:has(.section.otc-intro-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* navigation-content.css paints a debug grey background on .header-content for
+   its own preview; live header consumes those links into the eyebrow bar and
+   shows no grey. Neutralize the debug background. */
+body.linzess main .header-content {
+  background-color: transparent;
+}
+
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  overflow: visible;
+}
+
+main > .section.cta-cards-section {
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-140);
+}
+
+/* White sections */
+main > .section:is(.otc-intro-section, .more-like-this-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* Purple sections */
+main > .section:is(.what-is-linzess-section, .cta-cards-section) {
+  background-color: var(--color-brand-primary);
+}
+
+/* Arc — curved top edge sitting above the previous section.
+   z-index matches live (-5): with the hero overlapping the first arc, -1
+   stacked the white arc at the wrong depth and produced a hard-edged seam
+   over the hero photo. Live places all four section arcs at z-index -5. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section)::before {
+  background-color: var(--color-background-primary, #fff);
+}
+
+main > .section:is(.what-is-linzess-section, .cta-cards-section)::before {
+  background-color: var(--color-brand-primary);
+}
+
+/* Section heading (Bebas Neue, 40px / line-height 36px).
+   The published page drops the authored `heading-1` class, so the heading is
+   also matched structurally: the first <p> of the section's first
+   default-content-wrapper. Both selectors are kept so styling holds whether or
+   not the class survives publish. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  text-align: center;
+  text-transform: none;
+}
+
+/* Divider line (64x5 divider.svg) centered above every section heading.
+   Live authors it as an empty <p><span class="divider"> before each heading. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2)::before,
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child::before,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child {
+  color: var(--color-text-heading);
+}
+
+main > .section.what-is-linzess-section .heading-1,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+  color: var(--color-text-on-dark);
+}
+
+/* Centered intro copy (live caps the rich-text at 920px) */
+main > .section.otc-intro-section > .default-content-wrapper {
+  max-width: 92rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Body copy = every intro paragraph except the heading (first child). Excludes
+   by both class and position so it never restyles the heading in either env. */
+main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1, :first-child) {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 2: How They Work (3 icon columns) ---- */
+main > .section.otc-intro-section .columns.how-they-work {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item {
+  text-align: center;
+}
+
+/* Icons preserve aspect ratio. Live caps the height uniformly at 20rem on
+   desktop. On mobile the first icon (Fiber) fills the column width with no
+   height cap, while the narrower Stimulant & Stool icons stay capped at
+   23.4rem. display:block removes the inline whitespace gap below the icon. */
+main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (width >= 744px) {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+    max-height: 20rem;
+  }
+}
+
+@media (width < 744px) {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img,
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(3) .columns-item-image img {
+    max-height: 23.4rem;
+  }
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item-content p:first-child strong,
+main > .section.otc-intro-section .columns.how-they-work .columns-item p strong {
+  display: block;
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item p {
+  margin: 0 0 var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 3: What Is LINZESS? (image + text/CTA) ---- */
+main > .section.what-is-linzess-section .columns.what-is-linzess {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  align-items: start;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image {
+  text-align: center;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+  width: auto;
+  max-width: 100%;
+  max-height: 36rem;
+  margin: 0 auto;
+}
+
+/* Mobile: live shrinks the bottle to ~283px tall; our 36rem cap is too tall
+   on small screens. Cap to ~28.3rem under 744px to match live. */
+@media (width < 744px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+    max-height: 28.3rem;
+  }
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: normal;
+  color: var(--color-text-on-dark);
+}
+
+/* Footnote inside the text column stays 12px (live), tighter 12px margins.
+   The published page drops the `footnote` class, so the footnote is also
+   matched structurally as the last paragraph of the text column. */
+main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote,
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:last-child {
+  margin: var(--spacing-12, 12px) 0;
+  font-size: var(--font-size-body-small);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess p {
+  margin: var(--spacing-16) 0;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess ul {
+  margin: var(--spacing-16) 0;
+  padding-left: var(--spacing-16);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess li {
+  margin-bottom: 0;
+}
+
+/* Bullet markers in brand purple (live: #60579e) */
+main > .section.what-is-linzess-section .columns.what-is-linzess li::marker {
+  color: var(--color-brand-primary-light);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess a {
+  position: relative;
+  display: inline-block;
+  margin-top: 0;
+  padding: 16px 59px 16px 24px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-background-primary, #fff);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
+main > .section.what-is-linzess-section .columns.what-is-linzess a::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* Footnotes — left-aligned, 12px white, matching live (Sources block).
+   The published page drops the authored `footnote` class, so the Sources
+   block (last default-content-wrapper of the section: a <p>Sources:</p> plus a
+   reference list) is also matched structurally. Both selectors are kept so the
+   styling holds whether or not the class survives publish. */
+main > .section.what-is-linzess-section .footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(p, ol, ul) {
+  max-width: 99.8rem;
+  margin: var(--spacing-12, 12px) auto;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body);
+  line-height: 1.4;
+  color: var(--color-text-on-dark);
+  text-align: left;
+}
+
+main > .section.what-is-linzess-section .footnote strong,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type strong {
+  font-weight: var(--font-weight-body);
+}
+
+main > .section.what-is-linzess-section ol.footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(ol, ul) {
+  padding-left: var(--spacing-10);
+  list-style-type: decimal;
+}
+
+main > .section.what-is-linzess-section ol.footnote li,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type li {
+  font-size: var(--font-size-body-small);
+  line-height: 1.6rem;
+  color: var(--color-text-on-dark);
+}
+
+/* Reference URLs in the Sources list are plain white citation text on live,
+   not the purple brand link color (which is invisible on the purple bg). */
+main > .section.what-is-linzess-section .footnote a,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type a {
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+}
+
+/* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+  margin-bottom: var(--spacing-24);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  text-transform: uppercase;
+}
+
+/* Hero H1 line-height (live: 36px, not the editorial-hero default 0.95) */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  line-height: var(--no-hero-h1-line-height, 36px);
+}
+
+/* Find-relief hero H1 wraps to two lines on live ("Chronic Constipation" /
+   "Calls for a Conversation"). The shared container is widened for OTC, so cap
+   just this page's H1 width to force the same break. The find-relief hero sits
+   in the section-nav-container section, so scope via that class so other
+   editorial heroes keep their single-line width. */
+main > .section.hero-container.find-relief .hero.linzess-behind-nav-linzess-editorial-hero h1,
+main > .section.hero-container.section-nav-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  max-width: 340px;
+}
+
+/* Hero text column: live's editorial-hero text container is ~100rem wide so
+   the H1 stays on one line. The base behind-nav hero caps it at 64rem and the
+   editorial cmp-container at 40rem, forcing a 2-line wrap. Widen for OTC. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+  width: min(100%, 100rem);
+}
+
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+  max-width: 100rem;
+}
+
+/* Hero bottom curve: the editorial-hero default draws a deep half-circle
+   scoop. Live's curve is actually the white intro section's arc painting up
+   over the hero (the .otc-intro-section::before, which already matches live:
+   130% wide, 255px tall, top radius 100% 100% 0 0). Remove the hero's
+   competing scoop so only the shallow intro arc shows. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::before {
+  content: none;
+}
+
+/* Section-nav pill overlaps the hero bottom (sits on the arc seam) like live.
+   The nav is in the same section as the hero (hero-container + section-nav-container);
+   pull its wrapper up so the centered purple pill straddles the hero/arc boundary,
+   and lift it above the next section's white arc. Scoped to this page's hero
+   section so other section-nav usages are unaffected. */
+main > .section.hero-container.section-nav-container .section-nav-wrapper {
+  position: relative;
+  z-index: 6;
+  margin-top: calc(-1 * var(--spacing-40));
+}
+
+@media (width >= 744px) {
+  main > .section.hero-container.section-nav-container .section-nav-wrapper {
+    margin-top: calc(-1 * var(--spacing-60));
+  }
+}
+
+/* Hero band is fluid (>=744px, desktop image 2048x874): the block default is
+   a fixed 684px tall band, which over-zooms object-fit:cover as the viewport
+   narrows (laptop/tablet), enlarging the photo. Drive the band height by the
+   desktop image ratio so it shrinks with width and the full scene shows.
+   At 1440 this resolves to ~615px = the already-correct desktop view, so the
+   verified 1440 layout is unchanged. */
+@media (width >= 744px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
+    aspect-ratio: 2048 / 874;
+  }
+
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+/* Mobile (<744px): live swaps to the near-square mobile image (375x369) and
+   sizes the band to its ratio so the full scene shows. The block default
+   (420px fixed + object-fit:cover) crops it. Match live's fluid fit. */
+@media (width < 744px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    aspect-ratio: 375 / 369;
+  }
+
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+/* More Like This heading — no bottom margin; columns margin-top provides the
+   ~40px gap to cards (matches live's 43px). Divider ::before keeps top space. */
+main > .section.more-like-this-section :is(.heading-1, h2) {
+  margin: 0 auto;
+}
+
+/* ---- Section 4: More Like This (3 article cards) ----
+   Live adds a 40px row margin below the cards (on top of the section's 100px
+   bottom padding) for ~140px clearance before the CTA section. */
+main > .section.more-like-this-section .columns.more-like-this {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  gap: var(--spacing-16);
+}
+
+/* Mobile: live insets each stacked card ~6px per side within the content
+   column (373px wide at 425px viewport vs our 385px). */
+@media (width < 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    padding: 0 var(--spacing-06);
+  }
+}
+
+/* Live caps each card at 300px and centers the group within the 998px row.
+   Mobile (<768px) keeps the base block's single-column stack. */
+@media (width >= 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    grid-template-columns: repeat(3, 30rem);
+    justify-content: center;
+  }
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item {
+  overflow: hidden;
+  background: var(--color-brand-primary-lighter);
+  border-radius: var(--linz-rounded-corner);
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item > div {
+  margin: 0;
+}
+
+/* Image paragraph fills full card width, flush to the top + side edges */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:has(picture) {
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item picture,
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+/* Compact card image — match live crop ratio (598:347) so cards stay short */
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  aspect-ratio: 598 / 347;
+  object-fit: cover;
+}
+
+/* Title + link text paragraphs sit below the image with card padding
+   (live: 16px horizontal, 20px top, 20px title→link gap, 20px bottom) */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)) {
+  margin: 0;
+  padding: 0 var(--spacing-16);
+}
+
+/* Card title = the paragraph with no image and no link. (Published DOM nests
+   the image, title, and link paragraphs in one cell, so :first-of-type would
+   match the image wrapper, not the title.) */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture), :has(a)) {
+  padding-top: var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+/* Live caps the card title at 16px on desktop — it does NOT follow the
+   section's 16px->18px body step-up that --font-size-article-body applies. */
+@media (width >= 900px) {
+  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture), :has(a)) {
+    font-size: var(--font-size-legal-large);
+  }
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):last-of-type {
+  padding-top: var(--spacing-20);
+  padding-bottom: var(--spacing-20);
+}
+
+/* EDS auto-promotes a standalone link to p.button-container > a.button (solid
+   pill). Live shows a plain underlined text link here — neutralize the pill. */
+main > .section.more-like-this-section .columns.more-like-this .button-container {
+  margin: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this a,
+main > .section.more-like-this-section .columns.more-like-this a.button {
+  display: inline;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+/* ---- Section 5: CTA cards (2 items) ---- */
+main > .section.cta-cards-section .columns.cta-cards {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+  margin: var(--spacing-24) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.cta-cards-section .columns.cta-cards a {
+  position: relative;
+  display: inline-block;
+  padding: 16px 59px 16px 24px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
+main > .section.cta-cards-section .columns.cta-cards a::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+@media (width < 744px) {
+  main > .section.hero-container .hero:is(.linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-h1-mobile);
+    line-height: var(--line-height-h1-mobile);
+  }
+
+  /* Mobile: section headings shrink 40px -> 32px to match live */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section) :is(.heading-1, h2),
+  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+    font-size: var(--font-size-h2-hero);
+  }
+
+  /* Mobile: column labels (Fiber etc.) and CTA card titles shrink 24px -> 18px */
+  main > .section.otc-intro-section .columns.how-they-work .columns-item p strong,
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    font-size: var(--font-size-article-card-title);
+  }
+
+  /* Mobile: live centers the "How LINZESS Can Help" CTA button (desktop left) */
+  main > .section.what-is-linzess-section .columns.what-is-linzess p:has(> a) {
+    text-align: center;
+  }
+}
+
+/* Stacked range (<768px): the CTA-cards divider becomes a horizontal rule below
+   the first card (live: 1px muted purple, same as the desktop vertical rule). */
+@media (width < 768px) {
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+  }
+}
+
+@media (width >= 768px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess {
+    gap: var(--spacing-48);
+  }
+
+  /* Vertical divider between the two CTA columns (live: 1px muted purple) */
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-right: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+  }
+}
+
+@media (width >= 900px) {
+  /* Desktop/laptop body text steps up to 16px (mobile + tablet stay 14px) */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+    --font-size-article-body: 16px;
+  }
+
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 255px;
+  }
+}
+
+/* ============================================================================
+   FIND RELIEF (/find-relief) — additive page styling
+   Sections: find-relief-talk (white), find-relief-bottom-nav-section (purple).
+   Hero reuses the shared .hero-container + linzess-behind-nav-linzess-editorial-hero
+   rules above. All selectors scoped to find-relief classes (no leakage).
+   ============================================================================ */
+
+/* Responsive type scale for find-relief sections. Live uses a smaller scale on
+   mobile (heading 40->32, body 16->14, card/checklist title 24->18) and steps
+   up at the >=744px breakpoint. The find-relief rules below read these article
+   tokens, so redefining them on the section containers cascades to every
+   heading/body/card without touching individual rules. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) {
+  --font-size-article-heading: 32px;
+  --font-size-article-body: 14px;
+  --font-size-article-cta-title: 18px;
+  --font-size-article-card-title: 18px;
+  --no-hero-h1-line-height: 30px;
+}
+
+@media (width >= 900px) {
+  main > :is(.section.find-relief-talk, .section.find-relief-howtotake) {
+    --font-size-article-heading: 40px;
+    --font-size-article-body: 16px;
+    --font-size-article-cta-title: 24px;
+    --font-size-article-card-title: 24px;
+    --no-hero-h1-line-height: 36px;
+  }
+}
+
+/* ---- Section: Talk to a Doctor (white, full-width, centered headings) ---- */
+main > .section.find-relief-talk {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  background-color: var(--color-background-primary, #fff);
+  overflow: visible;
+}
+
+/* White arc curving up over the hero (footer-arc recipe, matches OTC). */
+main > .section.find-relief-talk::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  background-color: var(--color-background-primary, #fff);
+  z-index: -5;
+}
+
+/* Eyebrow (first heading, e.g. "Talk to a Doctor" / "How to Take Linzess") —
+   small uppercase Lato, matches live where this line is a 12px eyebrow above
+   the section heading. Scoped to both find-relief sections. The
+   :is(...)-based heading rule below carries class-level specificity, so this
+   eyebrow rule is given matching specificity via :where()-free chaining to win
+   for the in-wrapper h2. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper h2:not(.heading-1):has(+ h3) {
+  margin: 0 auto var(--spacing-8, 0.8rem);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-extra-bold);
+  line-height: normal;
+  letter-spacing: var(--letter-spacing-wide-06, 0.06em);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Section heading (Bebas Neue 40px purple, centered, divider above).
+   - in-wrapper h3 / .heading-1, e.g. "What To Talk About At Your Visit"
+   - standalone h2 (its own block, no wrapper), e.g. "Why Finding The Right
+     Doctor Is Important" — the eyebrow rule above is scoped to wrapper h2,
+     so this standalone h2 needs the heading treatment here. */
+main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1),
+main > .section.find-relief-talk .default-content-wrapper h2:not(:has(+ h3)),
+main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2:not(:has(+ h3)),
+main > .section.find-relief-talk > h2:not(:has(+ h3)) {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  letter-spacing: normal;
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: none;
+}
+
+/* Divider (orange swoosh) above the section heading. Applies to the in-wrapper
+   h3/.heading-1 AND the standalone "Why Finding The Right Doctor Is Important"
+   h2 — live renders an orange <span class="divider"> above that heading too, so
+   it gets the swoosh as well. Only the eyebrow h2 (followed by an h3) is left
+   out, since the eyebrow rule above styles it as a 12px label. */
+main > .section.find-relief-talk .default-content-wrapper :is(h3, .heading-1)::before,
+main > .section.find-relief-talk .default-content-wrapper h2:not(:has(+ h3))::before,
+main > .section.find-relief-talk > div:not(:has(.default-content-wrapper)) > h2:not(:has(+ h3))::before,
+main > .section.find-relief-talk > h2:not(:has(+ h3))::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+/* Intro + body copy (centered, capped width). */
+main > .section.find-relief-talk .default-content-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.find-relief-talk .default-content-wrapper > p {
+  margin: var(--spacing-16) auto;
+  max-width: 92rem;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* "What To Talk About" list — dark-purple rounded card, 2-up grid of
+   orange-checkmark items (white heading + body), matching live's
+   checkmark-list-flex card. */
+main > .section.find-relief-talk .default-content-wrapper ul {
+  box-sizing: border-box;
+  max-width: 99.8rem;
+  margin: var(--spacing-24) auto;
+  padding: var(--spacing-40) var(--spacing-40) 0;
+  list-style: none;
+  text-align: left;
+  background-color: var(--color-brand-primary);
+  border-radius: var(--linz-rounded-corner, 16px);
+  color: var(--color-text-on-dark);
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--spacing-16);
+}
+
+main > .section.find-relief-talk .default-content-wrapper li {
+  position: relative;
+  margin: 0 0 var(--spacing-40);
+  padding-left: var(--spacing-32);
+}
+
+/* Orange checkmark icon (24x24) at the left of each item. */
+main > .section.find-relief-talk .default-content-wrapper li::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: var(--spacing-24, 24px);
+  height: var(--spacing-24, 24px);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTIiIGZpbGw9IiNGQUE2MzMiLz4KPHBhdGggZD0iTTE4LjUgOUwxMSAxN0w3LjAwMDAyIDEzIiBzdHJva2U9IiM0MjJFODMiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==") no-repeat center;
+  background-size: contain;
+}
+
+main > .section.find-relief-talk .default-content-wrapper li > p:first-child strong {
+  display: block;
+  margin-bottom: var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title, 24px);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.find-relief-talk .default-content-wrapper li p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.find-relief-talk .default-content-wrapper li a {
+  color: var(--color-text-on-dark);
+}
+
+/* Desktop: two columns (each item ~half the card minus the gap). */
+@media (width >= 744px) {
+  main > .section.find-relief-talk .default-content-wrapper li {
+    flex: 0 0 calc(50% - (var(--spacing-16) / 2));
+    box-sizing: border-box;
+  }
+}
+
+/* ---- Gut Check tout (off-white rounded card: image left, text/CTA right) ----
+   Library block: image-text. find-relief-scoped variant on top of the block. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  display: grid;
+
+  /* Mobile-first: single column (image on top, content stacked below). Live
+     stacks this tout on mobile; the 2-column row is gated to >=744px below. */
+  grid-template-columns: 1fr;
+  align-items: center;
+  background-color: var(--linz-off-white);
+  border-radius: var(--linz-rounded-corner, 16px);
+  overflow: hidden;
+}
+
+/* The image column anchors the "Actor Portrayal" overlay. The Gut Check PNG has
+   its curved/scooped right edge baked in (transparent), so let it fill the
+   column width at natural aspect (no cover-crop) to reveal the curve like live. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  line-height: 0;
+  font-size: 0;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col picture {
+  display: block;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col {
+  /* Mobile: comfortable padding, centered text. The 2-col left inset is
+     applied at >=744px below. */
+  padding: var(--spacing-24) var(--spacing-24) var(--spacing-32);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* "Actor Portrayal" — white caption overlaid at the image's bottom-left.
+   The image-text decorator emits the footnote inside the content column; pull
+   it out visually by anchoring it to the block (which is position:relative via
+   the grid container above is static, so anchor on the block). */
+main > .section.find-relief-talk .image-text.find-relief-gut-check {
+  position: relative;
+}
+
+/* Body paragraphs (md2jcr strips <p class>, so target by position). */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* Heading — first paragraph in the content cell. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p:first-child {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+/* "Actor Portrayal" footnote — last paragraph. On mobile (stacked) it renders
+   as a small centered caption; the white overlay anchored on the image is
+   applied at >=744px (2-col layout) below. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p:last-child {
+  margin: var(--spacing-08) 0 0;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body);
+  font-style: normal;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* "Get My Discussion Guide" CTA — purple button, white text, right chevron. */
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col .button-container a.button {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--spacing-10);
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+/* Desktop steps the CTA label up to the standard button size (live: 14.4px). */
+@media (width >= 900px) {
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col .button-container a.button {
+    font-size: var(--font-size-button);
+  }
+}
+
+main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col .button-container a.button::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* ---- Find Relief video block: match live (clean poster + circular play
+   button + light-purple caption bar). Scoped to both find-relief sections so
+   the shared video block and other pages are unaffected. ---- */
+
+/* Cap the video width and center it to match live (600px at desktop). */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage {
+  max-width: 60rem;
+  margin-inline: auto;
+}
+
+/* Remove the navy scrim — show the poster fully like live. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-overlay {
+  background: transparent;
+  gap: 0;
+}
+
+/* Hide the overlay title + "Watch" description over the poster (content kept
+   for round-trip; the title shows in the caption bar below instead). */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-overlay-title,
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-overlay-description {
+  display: none;
+}
+
+/* Play control: centered white translucent circle with a purple ▶ triangle. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-btn {
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  gap: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 85%);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-btn:hover,
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-btn:focus-visible {
+  background-color: var(--color-background-light, #fff);
+  transform: scale(1.05);
+}
+
+/* Purple triangle, hide the "Watch" text label. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-icon {
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 18px solid var(--color-brand-primary);
+  margin-left: 4px;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage .video-play-label {
+  display: none;
+}
+
+/* The video sits in its own wrapper above the caption wrapper. Remove the
+   video block's bottom margin so the caption bar butts against it. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .video.video-stage {
+  margin-bottom: 0;
+}
+
+/* The caption's default-content-wrapper is a grid item; the brand
+   `margin: 0 auto` collapses it to content width, so force it to the video's
+   width (600px on live) and center it. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper:has(p a[href*="transcripts"]) {
+  width: 100%;
+  max-width: 60rem;
+  margin-inline: auto;
+}
+
+/* Caption attached to the video bottom: light-purple rounded card the same
+   width as the video. Live wraps video + caption in one #d9d7f9 rounded card;
+   here the caption carries the purple with squared top + rounded bottom so it
+   reads as one unit with the video poster above it. */
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-24);
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto var(--spacing-40);
+  padding: var(--spacing-16);
+  background-color: var(--linz-light-purple);
+  border-radius: 0 0 var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px);
+  text-align: left;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) strong {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body, 16px);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: normal;
+  color: var(--color-text-heading);
+  text-transform: none;
+}
+
+main > :is(.section.find-relief-talk, .section.find-relief-howtotake) .default-content-wrapper p:has(a[href*="transcripts"]) a {
+  flex: 0 0 auto;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+}
+
+/* ---- Section: Bottom Nav (dark purple, 2 CTA cards) ---- */
+main > .section.find-relief-bottom-nav-section {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-140);
+  background-color: var(--color-brand-primary);
+  overflow: visible;
+}
+
+main > .section.find-relief-bottom-nav-section::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  background-color: var(--color-brand-primary);
+  z-index: -5;
+}
+
+/* Library block: cards-grid (cta-card). The whole card is an <a class="grid-card">
+   linking to the destination; line-1 = title, line-2 = "Learn More" pill. */
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  gap: var(--spacing-40);
+  align-items: center;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-1 {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  color: var(--color-text-on-dark);
+  text-transform: none;
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-1 {
+    font-size: 24px;
+  }
+}
+
+/* "Learn More" CTA — orange pill, purple text, right chevron. The whole card
+   is a link in cta-card, so style line-2 as the visible button. */
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-2 {
+  position: relative;
+  display: inline-block;
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--linz-orange);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-2 p {
+  margin: 0;
+}
+
+main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav .grid-card .card-grid-item-line-2::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* ---- Responsive: desktop steps body text to 16px; arc deepens ---- */
+@media (width >= 744px) {
+  main > .section.find-relief-talk .image-text.find-relief-gut-check {
+    grid-template-columns: 440fr 560fr;
+
+    /* Let the cut-out figure rise ~13px above the card top (live). */
+    overflow: visible;
+  }
+
+  /* Pop the cut-out above the card: rise 13px above the top while the image
+     bottom stays anchored to the card bottom (live measurement). */
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col {
+    margin-top: -13px;
+    overflow: visible;
+  }
+
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-image-col picture {
+    height: calc(100% + 13px);
+  }
+
+  /* 2-col content cell: left inset from the image, left-aligned text. */
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content-col {
+    padding: 0 var(--spacing-40) 0 80px;
+    text-align: left;
+  }
+
+  /* "Actor Portrayal" — white caption overlaid at the image's bottom-left. */
+  main > .section.find-relief-talk .image-text.find-relief-gut-check .image-text-content p:last-child {
+    position: absolute;
+    left: auto;
+    right: 58%;
+    bottom: var(--spacing-16);
+    margin: 0;
+    padding-right: var(--spacing-20);
+    text-align: right;
+    color: var(--color-text-on-dark);
+  }
+
+  /* Bottom-nav CTA cards sit side-by-side on desktop (1 column on mobile).
+     Reset the abbvie-container grid-column:span override so each card occupies
+     a single track instead of spanning all 12 columns. */
+  main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  main > .section.find-relief-bottom-nav-section .cards-grid.find-relief-bottom-nav > .card-grid-item {
+    grid-column: auto;
+  }
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-talk,
+  main > .section.find-relief-bottom-nav-section {
+    --font-size-article-body: 16px;
+  }
+
+  main > .section.find-relief-talk::before,
+  main > .section.find-relief-bottom-nav-section::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 255px;
+  }
+}
+
+/* ---- Section: How to Take LINZESS (off-white, full-width, arc top) ---- */
+main > .section.find-relief-howtotake {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  background-color: var(--linz-off-white, #f4f6fb);
+  overflow: visible;
+}
+
+/* Off-white arc curving up over the preceding section (matches live
+   background-off-white-arc). */
+main > .section.find-relief-howtotake::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  background-color: var(--linz-off-white, #f4f6fb);
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-howtotake::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 255px;
+  }
+}
+
+/* Centered default content, capped width. */
+main > .section.find-relief-howtotake .default-content-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* H2 (Bebas 40px purple, divider above). Exclude the eyebrow h2 (the one
+   immediately followed by an h3), which the eyebrow rule styles as a small
+   12px Lato label with no divider. */
+main > .section.find-relief-howtotake .default-content-wrapper h2:not(:has(+ h3)) {
+  margin: var(--spacing-40) auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: none;
+}
+
+main > .section.find-relief-howtotake .default-content-wrapper h2:not(:has(+ h3))::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+/* Section headings (Bebas Neue 40px purple, centered, orange swoosh divider
+   above — live renders "What to Know Before Starting LINZESS", "Already Been
+   Prescribed LINZESS?", "Need A Savings Card?", "Instructions For Adults &
+   Children", and "How to Store LINZESS" with the orange curved rule above each
+   heading, matching the find-relief-talk section). */
+main > .section.find-relief-howtotake .default-content-wrapper h3 {
+  margin: var(--spacing-40) auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: none;
+}
+
+main > .section.find-relief-howtotake .default-content-wrapper h3::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+main > .section.find-relief-howtotake .default-content-wrapper > p {
+  margin: var(--spacing-16) auto;
+  max-width: 92rem;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* Savings legal footnotes (* and †). md2jcr strips the authored `footnote`
+   class, so target by the legal links they carry. Live renders these 12px,
+   left-aligned, with gray underlined links (not the purple body-link style). */
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="savings-and-support#expand"]),
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsterms"]),
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsprivacy"]) {
+  margin: var(--spacing-12) auto;
+  font-size: 12px;
+  text-align: left;
+}
+
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="savings-and-support#expand"]) a,
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsterms"]) a,
+main > .section.find-relief-howtotake .default-content-wrapper > p:has(a[href*="smsprivacy"]) a {
+  font-size: 12px;
+  color: var(--color-text-body, #4d4d4f);
+  text-decoration: underline;
+}
+
+/* Sub-heading line directly under a section heading — ONLY the "Choose how you
+   want to sign up:" line, which live renders as a heading-2 (24px bold purple).
+   Scope to the wrapper that immediately precedes the sign-up cards grid so the
+   "What to Know Before Starting" video intro and "How to Store" body (also h3+p)
+   stay as 16px body copy and are not promoted to sub-heading size. */
+main > .section.find-relief-howtotake .default-content-wrapper:has(+ .cards-grid-wrapper) > h3 + p {
+  margin: 0 auto var(--spacing-16);
+  font-size: var(--font-size-card-title, 24px);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+/* Footnotes (left, 12px). */
+main > .section.find-relief-howtotake .default-content-wrapper p.footnote {
+  max-width: 99.8rem;
+  font-size: var(--font-size-body-small);
+  text-align: left;
+}
+
+/* Prescribed cards (2-up) + signup (3-up): cards-grid icon-image-card.
+   The Linzess icon-image-card variant renders its own dark/light-purple card
+   chrome, icon, and centered heading, so only spacing/CTA tweaks are scoped here. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed,
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup {
+  max-width: 99.8rem;
+  margin: var(--spacing-24) auto var(--spacing-40);
+}
+
+/* Live "Already Prescribed": card 1 = dark-purple (white text),
+   card 2 = light-purple (purple text). The variant assigns light/dark per
+   index (0=light, 1=dark), so override both explicitly to match live. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:first-child .abbv-flex-item-v2 {
+  background-color: var(--color-brand-primary) !important;
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:first-child :is(p, .heading-2) {
+  color: var(--color-text-on-dark) !important;
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
+  background-color: var(--linz-light-purple) !important;
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .flexboxitem-v2:nth-child(2) :is(p, .heading-2) {
+  color: var(--color-text-heading) !important;
+}
+
+/* Prescribed + sign-up card body copy is 16px on live at desktop (≥900px) and
+   14px below; the icon-image-card variant's :is() rule pins it to 14px at all
+   widths, so restore the 16px desktop step scoped to these cards. Match the
+   variant's display-wrapper path to win specificity. */
+@media (width >= 900px) {
+  main > .section.find-relief-howtotake .cards-grid:is(.find-relief-prescribed, .find-relief-signup) .abbv-image-text-v2 .abbv-image-text-display-v2 p:not(.heading-2, .eyebrow, .footnote, .tout-overlay) {
+    font-size: 16px;
+  }
+}
+
+/* Card titles (.heading-2) on the prescribed + sign-up icon-image cards resolve
+   to --font-size-h2 (1.125rem = 11.25px at the 10px root) — far smaller than
+   live, where these titles are 24px on desktop (≥900px) and 18px below. Live's
+   rem token assumes a 16px root; restore the intended px sizes scoped to these
+   find-relief cards so the headings read at the correct scale. */
+main > .section.find-relief-howtotake .cards-grid:is(.find-relief-prescribed, .find-relief-signup) .heading-2 {
+  font-size: 18px;
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-howtotake .cards-grid:is(.find-relief-prescribed, .find-relief-signup) .heading-2 {
+    font-size: 24px;
+  }
+}
+
+/* Live prescribed cards have no CTA button; the variant injects a default
+   "Sign up" — hide it for this section only. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed .cta {
+  display: none;
+}
+
+/* Sign-up card titles ("Text", "Call", "Click") sit on a light card and must
+   all be purple. The icon-image-card variant only baked the c-linz-dark-purple
+   class on some titles, so "Call" inherited the variant's default white and
+   rendered invisible. Force purple on every signup-card title to match live. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card :is(.heading-2, h2, p):first-child {
+  color: var(--color-text-heading) !important;
+}
+
+/* Cards vary in body length ("Click" is shortest), so bottom-anchor the CTA so
+   all three buttons align on one baseline like live. Make the card a flex
+   column and push the .cta to the bottom. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card {
+  display: flex;
+  flex-direction: column;
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card .cta {
+  margin-top: auto;
+}
+
+/* Sign-up CTA buttons (purple, white text, chevron). icon-image-card renders
+   the CTA as a.abbv-button-primary inside .cta; match that + plain a.button. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .cta a,
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .button-container a.button {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--spacing-16);
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .cta a::after,
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .button-container a.button::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* Dark-purple "Call" card: the force-purple title rule above renders the
+   heading purple-on-purple (invisible). Invert to white on the dark surface.
+   Higher specificity (both card classes) beats the !important purple rule. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .icon-image-card.background-dark-purple :is(.heading-2, h2, p):first-child {
+  color: var(--color-text-on-dark, #fff) !important;
+}
+
+/* Dark-purple "Call" card: the purple-fill button is invisible on the purple
+   card, so invert it to a white fill with purple text + chevron (matches live;
+   brand JS marks this CTA abbv-button-secondary). Scoped to the dark surface so
+   the two light cards keep their purple-fill/white-text buttons. The chevron
+   ::after uses the font color, so it follows automatically. */
+main > .section.find-relief-howtotake .cards-grid.find-relief-signup .background-dark-purple .cta a {
+  background: var(--color-text-on-dark, #fff);
+  color: var(--color-brand-primary, #422e83);
+}
+
+/* Savings tout (off-white rounded: image left, text/CTA right).
+   Library block: image-text. find-relief-scoped variant on top. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  background-color: var(--color-background-primary, #fff);
+  border-radius: var(--linz-rounded-corner, 16px);
+  overflow: hidden;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-image-col {
+  margin: 0;
+  align-self: stretch;
+  line-height: 0;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-image-col picture {
+  display: block;
+  height: 100%;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-image-col img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col {
+  padding: var(--spacing-24) var(--spacing-40) var(--spacing-15);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Flatten the content wrapper so the "Sign Up Now" button (a sibling
+   button-container) can be ordered before the "Activate now" line, matching
+   the reference where the CTA sits above the activate prompt. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content {
+  display: contents;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col .button-container {
+  order: 1;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p:last-child {
+  order: 2;
+}
+
+/* Heading — first paragraph in the content. Target by position as well as the
+   .heading-1 class because md2jcr strips <p class> on publish, leaving the
+   heading as a bare <p> that would otherwise fall back to body styling. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p.heading-1,
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p:first-child {
+  margin: 0 0 var(--spacing-16);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content p {
+  margin: 0 0 var(--spacing-8, 0.8rem);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* "Sign Up Now" CTA — live uses abbv-button-primary: purple fill, white text. */
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col .button-container {
+  margin: var(--spacing-8, 0.8rem) 0;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col .button-container a.button {
+  position: relative;
+  display: inline-block;
+  margin-top: 0;
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner, 16px);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+main > .section.find-relief-howtotake .image-text.find-relief-savings-tout .image-text-content-col .button-container a.button::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-10);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* ---- Responsive: How-to-Take ---- */
+@media (width >= 744px) {
+  main > .section.find-relief-howtotake .cards-grid.find-relief-prescribed {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  main > .section.find-relief-howtotake .cards-grid.find-relief-signup {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  main > .section.find-relief-howtotake .image-text.find-relief-savings-tout {
+    grid-template-columns: minmax(0, 44%) 1fr;
+  }
+
+  /* The icon-image-card flex container keeps flexbox-column-mobile stacked until
+     986px in the base brand block, but live shows the 2-up Prescribed cards
+     side-by-side from tablet up. Switch to row at 744px, scoped to Prescribed
+     only (Sign-up's 3 cards don't fit cleanly at tablet, so it keeps stacking). */
+  main > .section.find-relief-howtotake .find-relief-prescribed .flexbox-column-mobile {
+    flex-direction: row;
+  }
+}
+
+@media (width >= 900px) {
+  main > .section.find-relief-howtotake {
+    --font-size-article-body: 16px;
+  }
+}
+
+/* ---- Find-relief instructions tabs — exact live values ----
+   Track: light-purple pill, max-width 902px, overflow:hidden clips the tab
+   outer corners. Tabs: 12px padding, 17.6px line-height, 14px (<1024) / 16px
+   (>=1024). Active tab deep-purple, weight 800; inactive weight 700. The active
+   tab only rounds the corner facing the inactive tab (the wrapper clips the
+   outer two), so active-left rounds inner-right and active-right rounds
+   inner-left. Heights resolve to ~59px desktop / taller on mobile when the
+   long Pediatric label wraps. */
+main > .section.find-relief-instructions .tabs,
+main > .section.find-relief-instructions .tabs .tabs-list {
+  width: 100%;
+}
+
+main > .section.find-relief-instructions .tabs .tabs-list {
+  max-width: 902px;
+  overflow: hidden;
+}
+
+main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
+  padding: var(--spacing-12, 1.2rem);
+  font-size: var(--font-size-14, 1.4rem);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 17.6px;
+  border-radius: 0;
+}
+
+/* Active tab is a fully-rounded deep-purple pill inset in the light track
+   (all four corners rounded), matching live. The track's overflow:hidden +
+   matching radius keeps the outer corners flush with the track edge while the
+   inner corners (at the 50% meeting line) show the full pill rounding. */
+main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  font-weight: var(--font-weight-extra-bold, 800);
+  border-radius: var(--linz-rounded-corner, 16px);
+}
+
+@media (width >= 1024px) {
+  main > .section.find-relief-instructions .tabs .tabs-list button.tabs-tab {
+    font-size: var(--font-size-16, 1.6rem);
+  }
+}
+
+/* ---- Dosing tabs: panels are lifted out of find-relief-howtotake into
+   .tabs-panel sections, so style find-relief-dosing wherever it appears.
+   Library block: cards-grid (cta-card). Live: dosing items are a vertical
+   stack of full-width rows (no card bg), each row = blue icon (~105px) on the
+   left + text on the right. cta-card emits .grid-card with line spans:
+   line-1 = icon, line-2 = title, line-3 = body. ---- */
+
+/* Dosing cards — values ported from PR #104 (blocks/flexbox/linzess) adapted to
+   the cards-grid DOM: off-white bordered rounded cards, the raw (transparent,
+   no-bubble) icon overlaps the card's left edge, icon + text vertically centered. */
+.cards-grid.find-relief-dosing {
+  display: flex;
+  flex-direction: column;
+  max-width: 837px;
+  margin: var(--spacing-24) auto var(--spacing-40);
+  padding: 0 0 0 40px;
+  gap: 16px;
+}
+
+.cards-grid.find-relief-dosing .card-grid-item {
+  margin: 0 0 var(--spacing-10, 1rem);
+}
+
+/* Each dosing row is an off-white rounded card on live
+   (abbv-flex-item-v2 background-off-white rounded-corners). */
+.cards-grid.find-relief-dosing .grid-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 0;
+  padding: 24px 32px 24px 0;
+  background: var(--linz-off-white, #f4f6fb);
+  border: none;
+  border-radius: var(--linz-rounded-corner, 16px);
+  overflow: visible;
+  text-align: left;
+  text-decoration: none;
+}
+
+/* The cta-card decorator always emits a line-4 span plus a trailing empty
+   <div>; dosing items only use icon/title/body, so neutralize the extras
+   to stop them creating stray implicit grid tracks (the "1 / span 8" bug). */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-4:empty,
+.cards-grid.find-relief-dosing .grid-card > div:empty {
+  display: none;
+}
+
+/* Raw icon (line-1) — transparent, 80x80, pulled -40px so it overlaps the
+   card's left edge (no circular bubble, per PR #104). */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 {
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 80px;
+  min-width: 80px;
+  height: 80px;
+  margin-left: -40px;
+  background-color: transparent;
+}
+
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  max-width: none;
+  margin: 0;
+  object-fit: contain;
+}
+
+/* Title (line-2) — purple bold. Explicitly placed in col 2 / row 1 so the
+   decorator's extra spans cannot push it into an implicit column. */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2 {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  padding-left: 24px;
+  margin-bottom: 8px;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-card-title, 24px);
+  font-weight: 700;
+  line-height: normal;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+/* The label markup wraps the title in <strong> (default 900); live renders it
+   at 700, so neutralize the bold weight to match. */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2 strong {
+  font-weight: 700;
+}
+
+/* Body (line-3) — 16px grey; the cards-grid decorator unwraps the first
+   paragraph to a bare text node, so following <p> use top margins for rhythm. */
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  padding-left: 24px;
+  padding-right: 40px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--linz-grey, #4d4d4f);
+}
+
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p {
+  margin: 8px 0 0;
+
+  /* Nested paragraphs must match the line-3 body size (live is a uniform
+     14px on mobile); without this they fall back to the global 16px p rule. */
+  font-size: inherit;
+}
+
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p.footnote,
+.cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 em {
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* "Take LINZESS" panel heading — centered purple bold (live: heading-2
+   c-linz-dark-purple), the first paragraph inside each dosing tab panel. */
+main > .tabs-panel > .section.cards-grid-container > .default-content-wrapper p:has(strong),
+main > .section.find-relief-dosing-panel.cards-grid-container > .default-content-wrapper p:has(strong) {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title, 24px);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand-primary);
+  text-align: center;
+}
+
+/* The heading text is wrapped in <strong> (default 900); live renders it at
+   700, so neutralize the bold weight to match. */
+main > .tabs-panel > .section.cards-grid-container > .default-content-wrapper p:has(strong) strong,
+main > .section.find-relief-dosing-panel.cards-grid-container > .default-content-wrapper p:has(strong) strong {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Tablet & mobile (< 985px): live switches the icon-left row to a centered
+   stack — icon in a circular light-purple badge on top, heading + body
+   centered below, full-width card. (Desktop >=985px keeps icon-left.) */
+@media (width < 985px) {
+  .cards-grid.find-relief-dosing {
+    max-width: 100%;
+    padding: 0 16px;
+
+    /* Live uses a larger gap between the stacked cards (~50px) than the
+       desktop 16px. */
+    gap: 50px;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    justify-items: center;
+
+    /* Live floats the icon badge so it straddles the card's top edge; extra
+       top padding makes room for the protruding lower half of the badge.
+       overflow must stay visible so the upper half can spill above the card. */
+    padding: 60px 16px 24px;
+    text-align: center;
+    overflow: visible;
+  }
+
+  /* Icon — centered, pulled up so ~half the circular badge overlaps above the
+     card's top edge (matches live). The SVG carries its own light-purple
+     circle, so just size/center/offset it (no extra CSS bubble). */
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 {
+    grid-column: 1;
+    grid-row: 1;
+    width: 96px;
+    min-width: 96px;
+    height: 96px;
+    margin-left: 0;
+    margin-top: -110px;
+    margin-bottom: 16px;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-1 img {
+    width: 96px;
+    height: 96px;
+  }
+
+  /* Item margin is folded into the flex gap above, so reset it to keep the
+     inter-card spacing exactly the live value. */
+  .cards-grid.find-relief-dosing .card-grid-item {
+    margin: 0;
+  }
+
+  /* The first card sits directly under the "Take LINZESS" panel heading, but
+     its badge protrudes 50px above the card edge — without clearance the badge
+     punches up into the heading text. Cards 2-4 are fine (the 50px stacking gap
+     absorbs the protrusion). Add top clearance to the first card only so its
+     badge lands cleanly below the heading. */
+  .cards-grid.find-relief-dosing .card-grid-item:first-child {
+    margin-top: 56px;
+  }
+
+  /* Title + body span the single column, centered. Live renders the heading
+     at 18px on mobile (desktop is 24px). */
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-2 {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: auto;
+    padding-left: 0;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: auto;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  /* Footnote (‡) — live renders it upright, not italic, on mobile. */
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 p.footnote,
+  .cards-grid.find-relief-dosing .grid-card .card-grid-item-line-3 em {
+    font-style: normal;
+  }
+}
+
+/* ---- Instructions box: heading + tab bar in a white card with rounded TOP
+   corners; the active dosing panel below attaches seamlessly (squared join).
+   Sits on the find-relief off-white band so it reads as one container. ---- */
+main > .section.find-relief-instructions {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: var(--spacing-40) var(--spacing-20) 0;
+  background-color: var(--color-background-light, #f4f6fb);
+}
+
+/* Round only the TOP corners of the instructions box so it joins the dosing
+   panel below (squared top, rounded bottom) into one seamless white container.
+   The base .tabs-container rule sets all-corner 16px with !important. */
+main > .section.find-relief-instructions.tabs-container:not(.find-relief-off-white) {
+  position: relative;
+  border-radius: var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px) 0 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Full-bleed off-white band behind the instructions white card so its side
+   gaps read off-white (matching live), not the purple page body. The howtotake
+   band above and the tabs-panel band below are already full-width off-white;
+   this fills the gap beside the centered 998px card. */
+main > .section.find-relief-instructions.tabs-container:not(.find-relief-off-white)::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background-color: var(--linz-off-white, #f4f6fb);
+  z-index: -1;
+}
+
+main > .section.find-relief-instructions .default-content-wrapper {
+  width: 100%;
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: var(--spacing-40) var(--spacing-40) var(--spacing-24);
+  background-color: var(--color-background-primary, #fff);
+  border-radius: var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px) 0 0;
+  text-align: center;
+}
+
+/* Instructions heading (Bebas-style purple, divider above, centered). */
+main > .section.find-relief-instructions .default-content-wrapper h3 {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  color: var(--color-text-heading);
+  text-align: center;
+  text-transform: none;
+}
+
+main > .section.find-relief-instructions .default-content-wrapper h3::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: 0 auto var(--spacing-24);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center;
+  background-size: contain;
+}
+
+/* The tabs block lives inside the instructions white card. */
+main > .section.find-relief-instructions .tabs-wrapper {
+  width: 100%;
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-40) var(--spacing-24);
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* ---- Dosing tab panels attach UNDER the instructions box: white card,
+   squared top corners (joins the instructions box), rounded bottom, no top gap.
+   Must align edge-to-edge with the instructions box above (same 99.8rem width,
+   same 20px band padding) so the two read as a single white container. ---- */
+main > .tabs-panel {
+  background-color: var(--color-background-light, #f4f6fb);
+  padding: 0 var(--spacing-20) var(--spacing-40);
+}
+
+main > .tabs-panel > .section.cards-grid-container {
+  box-sizing: border-box;
+  max-width: 99.8rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-40);
+  background-color: var(--color-background-primary, #fff);
+  border-radius: 0 0 var(--linz-rounded-corner, 16px) var(--linz-rounded-corner, 16px);
+}
+
+/* The 16px token reads almost square on the ~1000px-wide dosing card. Deepen
+   the bottom corners on the find-relief dosing panel so the curve is clearly
+   visible (matches the live single rounded white container). Scoped to the
+   dosing panel so other brands' tab panels keep the 16px token. */
+main > .tabs-panel > .section.find-relief-dosing-panel.cards-grid-container {
+  border-bottom-right-radius: var(--spacing-32);
+  border-bottom-left-radius: var(--spacing-32);
+}
+
+/* Dosing block fills the panel card's content width (no extra inset);
+   left padding is reserved on the cards-grid itself for the overlapping icon. */
+main > .tabs-panel > .section.cards-grid-container > .default-content-wrapper,
+main > .tabs-panel > .section.cards-grid-container > .cards-grid-wrapper {
+  width: 100%;
+  max-width: none;
+  margin: 0;
 }

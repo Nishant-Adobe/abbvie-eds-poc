@@ -8,6 +8,36 @@
    Source:         linzess.com/find-relief section-navigation pattern
 */
 
+/* ── Section-level positioning: overlap hero bottom curve ─────────────── */
+
+.section-nav-container .section-nav-wrapper {
+  position: relative;
+  z-index: 3;
+  margin-top: -72px;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+
+  /* Reserve the pill's height so the page doesn't shift when the nav switches
+     to position:fixed on stuck. Pairs with the sentinel override below. */
+  min-height: 50px;
+}
+
+/* Flicker fix: the base JS resizes the sentinel (0 → block height) on stuck to
+   reserve flow space. But it observes that same sentinel, so growing it flips
+   its own intersection state → is-stuck oscillates every frame at the boundary.
+   The Linzess pill overlaps the hero via the wrapper's negative margin and never
+   occupied flow space, so pin the sentinel to 0 to break the loop. */
+.section-nav-container .section-nav-sentinel {
+  height: 0 !important;
+}
+
+/* Override --header-height for section-nav sticky calculations.
+   Linzess section-nav sticks at top:0 (header scrolls away), not below the header. */
+.section-nav-container {
+  --header-height: 0px;
+}
+
 /* ── Block-scoped tokens ─────────────────────────────────────────────── */
 
 .section-nav {
@@ -24,6 +54,13 @@
   margin: 0 auto;
   overflow: visible;
   width: var(--section-nav-mobile-width);
+  height: 50px;
+}
+
+/* ── Nav inner: vertically center links ──────────────────────────────── */
+
+.section-nav nav {
+  align-items: center;
 }
 
 /* ── Links (mobile base) ─────────────────────────────────────────────── */
@@ -31,9 +68,13 @@
 .section-nav a {
   color: var(--section-nav-text);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
+  font-size: 16px;
+  font-weight: 600;
   text-decoration: none;
+  border-bottom: none;
+  padding: 0 24px;
+  line-height: 50px;
+  white-space: nowrap;
 }
 
 .section-nav a:hover {
@@ -51,22 +92,34 @@
 .section-nav a.is-active {
   border-bottom: none;
   color: var(--section-nav-text);
-  font-weight: var(--font-weight-extra-bold);
+  font-weight: 800;
   text-decoration: none;
 }
 
 /* ── Sticky stuck ────────────────────────────────────────────────────── */
 
-/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
-   Override to keep the pill at --section-nav-mobile-width, centred. */
+/* Non-stuck: sticky at top so the pill sits in flow over the hero. */
+.section-nav.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Stuck: pin the pill to the viewport top (position:fixed), kept content-width
+   and centred via a 50% left anchor + translateX(-50%). No box-shadow and no
+   full-width strip — matches live find-relief, where the stuck element is the
+   pill itself (independent, no white lines beside it). Top corners flatten so
+   the pill reads as joined to the top edge. */
 .section-nav.sticky.is-stuck {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  box-shadow: var(--shadow-section-nav-stuck);
+  position: fixed;
+  top: 0;
   left: 50%;
   right: auto;
   transform: translateX(-50%);
-  width: var(--section-nav-mobile-width);
+  z-index: 100;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: none;
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -152,6 +205,16 @@
   border-top: none;
   overflow: hidden;
   padding: var(--spacing-08) 0;
+
+  /* Anchor the dropdown to the toggle's bottom edge as an overlay so the
+     following page sections don't paint over its white panel. */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: var(--z-index-anchor-nav, 100);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 15%);
 }
 
 .section-nav.mobile-menu nav ul li {
@@ -202,12 +265,27 @@
     width: 100%;
   }
 
-  /* Restore base full-width stuck behaviour (undo mobile transform/width) */
-  .section-nav.sticky.is-stuck {
-    left: 0;
-    right: 0;
+  .section-nav.sticky {
+    position: sticky;
+    top: 0;
+    left: auto;
+    right: auto;
     transform: none;
     width: 100%;
+  }
+
+  /* Desktop stuck: keep the pill content-width and centred (NOT a full-width
+     bar) and carry no box-shadow — matches live find-relief, where the stuck
+     element is the independent pill with no strip/lines beside it. The inner
+     nav holds the pill background + flattened top corners. */
+  .section-nav.sticky.is-stuck {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: auto;
+    box-shadow: none;
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */
@@ -253,7 +331,7 @@
     display: none;
   }
 
-  /* Horizontal list */
+  /* Horizontal list — reset the mobile dropdown overlay back to in-flow */
   .section-nav.mobile-menu nav ul {
     background-color: transparent;
     border-radius: 0;
@@ -261,6 +339,9 @@
     overflow: visible;
     padding: 0;
     width: auto;
+    position: static;
+    box-shadow: none;
+    z-index: auto;
   }
 
   /* Flex li */
@@ -268,13 +349,16 @@
     display: flex;
   }
 
-  /* Inline link — restore desktop padding and reset mobile overrides */
+  /* Inline link — restore desktop padding and reset mobile overrides.
+     Match the EDS reference pill: 16px links, vertical centring via the
+     50px line-height (from the base link rule), horizontal padding only. */
   .section-nav.mobile-menu nav a {
     border-bottom: none;
     color: var(--section-nav-text);
     display: inline-block;
+    font-size: 12.8px;
     font-weight: var(--font-weight-semibold);
-    padding: var(--spacing-12) var(--spacing-24);
+    padding: 0 var(--spacing-24);
     text-align: unset;
     width: auto;
   }

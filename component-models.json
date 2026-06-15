@@ -167,17 +167,6 @@
     ]
   },
   {
-    "id": "text",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "text",
-        "label": "Text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "image",
     "fields": [
       {
@@ -231,6 +220,18 @@
             "value": "h6"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
@@ -564,6 +565,14 @@
         "name": "classes_customClass",
         "label": "Custom Class Name",
         "description": "Add one or more custom CSS class names (space-separated) to this section",
+        "value": "",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "tabName",
+        "label": "Tab Name",
+        "description": "When this section is a tab panel, the tab label it pairs with (must match the Tabs item label).",
         "value": "",
         "valueType": "string"
       },
@@ -7528,6 +7537,18 @@
     ]
   },
   {
+    "id": "gut-check-quiz",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "quiz_content",
+        "value": "",
+        "label": "Quiz Content",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -7645,10 +7666,10 @@
         "valueType": "string"
       },
       {
-        "component": "reference",
+        "component": "richtext",
         "name": "layers",
         "value": "",
-        "label": "Badge / Layers Image",
+        "label": "Layers (Multilayer variant — one image ref per layer; add data-buddy-state via custom class)",
         "valueType": "string"
       },
       {
@@ -13704,7 +13725,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "tabTitle",
+        "name": "label",
         "value": "",
         "label": "Tab Name",
         "required": true,

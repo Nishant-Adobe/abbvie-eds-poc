@@ -74,6 +74,8 @@ export default async function decorate(block) {
     items.forEach((item) => block.append(item));
   }
 
+  // Column variant: CSS handles all styling via linzess/flexbox.css
+
   try {
     await renderBlock(block);
   } catch {

@@ -17,7 +17,7 @@
 
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #faa633;
-  --color-brand-accent-hover: #f2a94b;
+  --color-brand-accent-hover: #e89520;
 
   /* ---- Color: Named Palette (from CSS vars) ---- */
   --linz-dark-purple: #422e83;
@@ -44,10 +44,11 @@
   /* ---- Color: Border ---- */
   --color-border-default: #c2c2c2;
   --color-border-muted: #b8b8b8;
+  --color-border-purple: #948ebe;
 
   /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgba(0, 0, 0, 0.8);
-  --color-overlay-muted: rgba(115, 133, 159, 0.75);
+  --color-overlay-dark: rgb(0 0 0 / 80%);
+  --color-overlay-muted: rgb(115 133 159 / 75%);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Lato', sans-serif;
@@ -63,14 +64,17 @@
   --font-size-body-xs: 0.75rem;
   --font-size-legal: 14px;
   --font-size-legal-large: 16px;
-  --font-size-nav: 14.4px;
+  --font-size-nav: 16px;
   --font-size-footer: 14.4px;
-  --font-size-h1: 2rem;
+  --font-size-h1: 32px;
+  --font-size-h1-mobile: 32px;
   --font-size-h1-hero: 56px;
+  --line-height-h1-mobile: 30px;
   --font-size-h2: 1.125rem;
-  --font-size-h2-hero: 32px;
+  --font-size-h2-hero: 40px;
   --font-size-h3: 14px;
   --font-size-h-xl: 2.0625rem;
+  --font-size-h3-section: var(--font-size-24);
   --font-size-button: 14.4px;
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
@@ -80,6 +84,9 @@
   --font-weight-body: 400;
   --font-weight-bold: 700;
   --font-weight-extra-bold: 800;
+
+  /* ---- Font: Letter Spacing ---- */
+  --letter-spacing-tight: 0;
 
   /* ---- Font: Line Height ---- */
   --line-height-body: normal;
@@ -99,8 +106,9 @@
   --button-primary-color: #fff;
   --button-primary-bg: #422e83;
   --button-primary-border: transparent;
-  --button-primary-padding: 16px 59px 16px 24px;
-  --button-primary-font-size: 0.9rem;
+  --button-primary-padding: 16px 59px 16px 32px;
+  --button-primary-padding-mobile: 16px 59px 16px 24px;
+  --button-primary-font-size: 14.4px;
   --button-primary-font-weight: 800;
   --button-primary-hover-bg: #f4f6fb;
   --button-primary-hover-color: #422e83;
@@ -146,12 +154,12 @@
   --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
-  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
+  --shadow-safety-bar: rgb(0 0 0 / 25%) 0 0 10px 0;
   --shadow-section-nav-stuck: 0 4px 12px rgb(0 0 0 / 25%);
 
   /* ---- Gradient ---- */
-  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
-  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+  --gradient-hero-overlay: linear-gradient(rgb(0 0 0 / 80%), rgb(255 255 255 / 0%));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115 133 159) 100%);
   --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
@@ -193,6 +201,7 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+
   /* ---- Header: No-hero arc ---- */
   --header-z-index: 10;
   --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
@@ -208,7 +217,8 @@
 
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
-  --linz-body-font-size: var(--font-size-body);
+  --linz-body-font-size: var(--font-size-legal-large);
+  --body-font-size-m: var(--body-font-size-s);
 
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
@@ -245,4 +255,15 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* ---- Find Relief article tokens (recovered from edb210b1) ---- */
+  --font-size-article-heading: 40px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-card-title: 24px;
+  --font-size-card-title: 24px;
+  --font-size-article-body: 16px;
+  --linz-purple-muted: #948ebe;
+  --content-width-isi: 99.8rem;
+  --content-width-transcript: 83rem;
+  --spacing-75: 75px;
 }

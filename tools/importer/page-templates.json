@@ -1,0 +1,293 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "find-relief",
+      "urls": ["https://www.linzess.com/find-relief"],
+      "documentPath": "/linzess/find-relief/index",
+      "description": "Linzess Find Relief page - Talk to a Doctor, How to Take LINZESS sections with videos, cards, tabs",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [".hero-container.abbv-image-text-v2"]
+        },
+        {
+          "name": "section-nav",
+          "instances": [".abbv-section-navigation"]
+        },
+        {
+          "name": "columns",
+          "instances": [".image-outside-container-v3.abbv-image-text-v2", ".abbv-row-container.savings-card-tout", ".abbv-container.background-dark-purple-gradient .abbv-image-text-v2"]
+        },
+        {
+          "name": "brightcove-video",
+          "instances": [".abbv-video-player"]
+        },
+        {
+          "name": "cards",
+          "instances": [".abbv-flex-container-v2:has(.icon-image-card)", ".savings-card-cards"]
+        },
+        {
+          "name": "tabs",
+          "instances": [".abbv-tabs"]
+        },
+        {
+          "name": "fragment",
+          "instances": [".abbv-inline-use-isi"]
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero",
+          "selector": ".hero-container.abbv-image-text-v2",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-nav",
+          "name": "Section Navigation",
+          "selector": ".section-navigation.parbase",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["section-nav"],
+          "defaultContent": []
+        },
+        {
+          "id": "talk-to-a-doctor",
+          "name": "Talk to a Doctor",
+          "selector": ["#talktoadoctor", ".abbv-container.background-white.background-white-arc"],
+          "style": "find-relief-checklist",
+          "anchorId": "talktoadoctor",
+          "blocks": ["columns", "brightcove-video"],
+          "defaultContent": [".abbv-rich-text.text-align-center.narrow-spacing", ".checkmark-list"]
+        },
+        {
+          "id": "how-to-take",
+          "name": "How to Take LINZESS",
+          "selector": ["#howtotake", ".abbv-container.background-off-white"],
+          "style": "find-relief-off-white",
+          "anchorId": "howtotake",
+          "blocks": ["brightcove-video", "cards", "tabs", "columns"],
+          "defaultContent": [".abbv-rich-text.text-align-center"]
+        },
+        {
+          "id": "bottom-cta",
+          "name": "Bottom Navigation CTA",
+          "selector": ".abbv-container.background-dark-purple.bottom-nav",
+          "style": "find-relief-dark-purple",
+          "anchorId": null,
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "isi",
+          "name": "ISI",
+          "selector": ".abbv-inline-use-isi",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["fragment"],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
+      "name": "find-relief-talk-to-a-doctor",
+      "urls": ["https://www.linzess.com/find-relief"],
+      "documentPath": "/linzess/find-relief/talk-to-a-doctor",
+      "description": "Linzess Find Relief subpage - Talk to a Doctor section with checklist, gut check tout, and video",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [".hero-container.abbv-image-text-v2"]
+        },
+        {
+          "name": "section-nav",
+          "instances": [".abbv-section-navigation"]
+        },
+        {
+          "name": "columns",
+          "instances": [".image-outside-container-v3.abbv-image-text-v2"]
+        },
+        {
+          "name": "brightcove-video",
+          "instances": [".abbv-video-player"]
+        },
+        {
+          "name": "fragment",
+          "instances": [".abbv-inline-use-isi"]
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero",
+          "selector": ".hero-container.abbv-image-text-v2",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-nav",
+          "name": "Section Navigation",
+          "selector": ".section-navigation.parbase",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["section-nav"],
+          "defaultContent": []
+        },
+        {
+          "id": "talk-to-a-doctor",
+          "name": "Talk to a Doctor",
+          "selector": ["#talktoadoctor", ".abbv-container.background-white.background-white-arc"],
+          "style": "find-relief-checklist",
+          "anchorId": "talktoadoctor",
+          "blocks": ["columns", "brightcove-video"],
+          "defaultContent": [".abbv-rich-text.text-align-center.narrow-spacing", ".checkmark-list"]
+        },
+        {
+          "id": "bottom-cta",
+          "name": "Bottom Navigation CTA",
+          "selector": ".abbv-container.background-dark-purple.bottom-nav",
+          "style": "find-relief-dark-purple",
+          "anchorId": null,
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "isi",
+          "name": "ISI",
+          "selector": ".abbv-inline-use-isi",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["fragment"],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
+      "name": "find-relief-how-to-take-linzess",
+      "urls": ["https://www.linzess.com/find-relief"],
+      "documentPath": "/linzess/find-relief/how-to-take-linzess",
+      "description": "Linzess Find Relief subpage - How to Take LINZESS with videos, dosing cards, tabs, and savings card",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [".hero-container.abbv-image-text-v2"]
+        },
+        {
+          "name": "section-nav",
+          "instances": [".abbv-section-navigation"]
+        },
+        {
+          "name": "columns",
+          "instances": [".abbv-row-container.savings-card-tout", ".abbv-container.background-dark-purple-gradient .abbv-image-text-v2"]
+        },
+        {
+          "name": "brightcove-video",
+          "instances": [".abbv-video-player"]
+        },
+        {
+          "name": "cards",
+          "instances": [".abbv-flex-container-v2:has(.icon-image-card)", ".savings-card-cards"]
+        },
+        {
+          "name": "tabs",
+          "instances": [".abbv-tabs"]
+        },
+        {
+          "name": "fragment",
+          "instances": [".abbv-inline-use-isi"]
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero",
+          "selector": ".hero-container.abbv-image-text-v2",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-nav",
+          "name": "Section Navigation",
+          "selector": ".section-navigation.parbase",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["section-nav"],
+          "defaultContent": []
+        },
+        {
+          "id": "how-to-take",
+          "name": "How to Take LINZESS",
+          "selector": ["#howtotake", ".abbv-container.background-off-white"],
+          "style": "find-relief-off-white",
+          "anchorId": "howtotake",
+          "blocks": ["brightcove-video", "cards", "tabs", "columns"],
+          "defaultContent": [".abbv-rich-text.text-align-center"]
+        },
+        {
+          "id": "bottom-cta",
+          "name": "Bottom Navigation CTA",
+          "selector": ".abbv-container.background-dark-purple.bottom-nav",
+          "style": "find-relief-dark-purple",
+          "anchorId": null,
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "isi",
+          "name": "ISI",
+          "selector": ".abbv-inline-use-isi",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["fragment"],
+          "defaultContent": []
+        }
+      ]
+    },
+    {
+      "name": "find-relief-gutcheck",
+      "urls": ["https://www.linzess.com/find-relief/gutcheck"],
+      "documentPath": "/linzess/find-relief/gutcheck",
+      "description": "Linzess Find Relief Gut Check quiz page - 5-question symptom assessment",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [".hero-container.abbv-image-text-v2"]
+        },
+        {
+          "name": "fragment",
+          "instances": [".abbv-inline-use-isi"]
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero",
+          "selector": ".hero-container.abbv-image-text-v2",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "isi",
+          "name": "ISI",
+          "selector": ".abbv-inline-use-isi",
+          "style": null,
+          "anchorId": null,
+          "blocks": ["fragment"],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

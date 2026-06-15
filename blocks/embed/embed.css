@@ -10,10 +10,23 @@
   width: 100%;
   text-align: center;
   max-width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.embed.embed-is-loaded {
+  aspect-ratio: auto;
 }
 .embed > div {
   display: flex;
   justify-content: center;
+}
+
+.embed.embed-is-loaded > div {
+  display: block;
+}
+
+.embed > div[style*="padding-bottom"] {
+  display: block;
 }
 .embed .embed-placeholder {
   width: 100%;

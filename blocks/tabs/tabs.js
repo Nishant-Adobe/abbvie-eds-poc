@@ -13,6 +13,14 @@ function normalize(value) {
  */
 function getSectionIdentifier(section) {
   if (section.id) return section.id;
+  // decorateSections() promotes section-metadata rows to dataset keys and removes
+  // the .section-metadata div, so read the tab name from the dataset first.
+  // Two delivery paths produce different casings of the same value:
+  //   - doc authoring: toCamelCase('tabName') -> dataset.tabname (all lowercase)
+  //   - markup/xwalk:  JCR `tabName` -> data-tab-name -> dataset.tabName
+  if (section.dataset.tabName) return section.dataset.tabName;
+  if (section.dataset.tabname) return section.dataset.tabname;
+  if (section.dataset.name) return section.dataset.name;
   if (section.dataset.aueLabel) return section.dataset.aueLabel;
 
   const meta = section.querySelector('.section-metadata');
@@ -73,6 +81,16 @@ export default async function decorate(block) {
     if (matched.length > 0) tabPanelMap.set(name, matched);
   });
 
+  // Fallback: if no section matched any tab by identifier (e.g. the section's
+  // tabName was dropped during publish), pair the consecutive sibling sections
+  // immediately following the tabs block to tabs by document order — one panel
+  // per tab. This keeps tabs functional even when the tabName metadata is lost.
+  if (tabPanelMap.size === 0 && panels.length > 0) {
+    tabNames.forEach((name, i) => {
+      if (panels[i]) tabPanelMap.set(name, [panels[i]]);
+    });
+  }
+
   // Build tab buttons and wrap matched panels
   let hasActiveTab = false;
   tabNames.forEach((name, i) => {
@@ -102,7 +120,11 @@ export default async function decorate(block) {
       wrapper.setAttribute('aria-hidden', !shouldActivate);
 
       const insertBefore = matched[0];
-      main.insertBefore(wrapper, insertBefore);
+      // Insert relative to the matched panel's real parent. Guard against the
+      // anchor having been detached (avoids "node is not a child" NotFoundError).
+      const anchorParent = insertBefore.parentElement;
+      if (anchorParent) anchorParent.insertBefore(wrapper, insertBefore);
+      else main.append(wrapper);
       matched.forEach((section) => {
         section.dataset.tabsGrid = 'true';
         if (shouldActivate) section.style.display = '';

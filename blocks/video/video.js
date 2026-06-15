@@ -152,6 +152,82 @@ function embedVimeo(url, autoplay, background) {
   return wrap;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Brightcove helpers
+// Brightcove player links look like:
+//   https://players.brightcove.net/{accountId}/{playerId}_default/index.html?videoId={id}
+// We derive the poster from the Playback API (needs the player's policy key,
+// read once from the player config.json) when no poster image is authored.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const brightcovePolicyKeyCache = new Map();
+
+function parseBrightcove(link) {
+  try {
+    const url = new URL(link);
+    if (!url.hostname.includes('players.brightcove.net')) return null;
+    const [accountId, playerSeg] = url.pathname.split('/').filter(Boolean);
+    const playerId = playerSeg?.replace(/_default$/, '') || 'default';
+    const videoId = url.searchParams.get('videoId');
+    if (!accountId || !videoId) return null;
+    return { accountId, playerId, videoId };
+  } catch (e) {
+    return null;
+  }
+}
+
+async function getBrightcovePolicyKey({ accountId, playerId }) {
+  const cacheKey = `${accountId}/${playerId}`;
+  if (brightcovePolicyKeyCache.has(cacheKey)) return brightcovePolicyKeyCache.get(cacheKey);
+  try {
+    const res = await fetch(`https://players.brightcove.net/${accountId}/${playerId}_default/config.json`);
+    if (!res.ok) return null;
+    const cfg = await res.json();
+    const key = cfg?.video_cloud?.policy_key || null;
+    brightcovePolicyKeyCache.set(cacheKey, key);
+    return key;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function getBrightcovePoster(info) {
+  const policyKey = await getBrightcovePolicyKey(info);
+  if (!policyKey) return null;
+  try {
+    const res = await fetch(
+      `https://edge.api.brightcove.com/playback/v1/accounts/${info.accountId}/videos/${info.videoId}`,
+      { headers: { Accept: `application/json;pk=${policyKey}` } },
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.poster || data.thumbnail || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function embedBrightcove(info, autoplay) {
+  const params = new URLSearchParams();
+  params.set('videoId', info.videoId);
+  if (autoplay) {
+    params.set('autoplay', 'true');
+    params.set('playsinline', 'true');
+  }
+  const iframe = document.createElement('iframe');
+  iframe.className = 'video-iframe';
+  iframe.src = `https://players.brightcove.net/${info.accountId}/${info.playerId}_default/index.html?${params.toString()}`;
+  iframe.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+  iframe.allowFullscreen = true;
+  iframe.loading = 'lazy';
+  iframe.title = 'Content from Brightcove';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'video-player-wrap';
+  wrap.append(iframe);
+  return wrap;
+}
+
 function getNativeVideoElement(source, autoplay, background) {
   const video = document.createElement('video');
   video.className = 'video-native';
@@ -196,9 +272,17 @@ function loadVideoEmbed(block, link, autoplay, background, mountPoint) {
   const url = new URL(link);
   const isYoutube = link.includes('youtube') || link.includes('youtu.be');
   const isVimeo = link.includes('vimeo');
+  const brightcoveInfo = parseBrightcove(link);
   let playerWrap;
 
-  if (isYoutube) {
+  if (brightcoveInfo) {
+    block.dataset.videoProvider = 'brightcove';
+    playerWrap = embedBrightcove(brightcoveInfo, autoplay);
+    playerWrap.querySelector('iframe').addEventListener('load', () => {
+      block.dataset.embedLoaded = 'true';
+      block.dataset.embedLoading = 'false';
+    }, { once: true });
+  } else if (isYoutube) {
     block.dataset.videoProvider = 'youtube';
     playerWrap = embedYoutube(url, autoplay, background);
     playerWrap.querySelector('iframe').addEventListener('load', () => {
@@ -322,6 +406,31 @@ export default async function decorate(block) {
   media.className = 'video-media';
   shell.append(media);
 
+  // When no poster image is authored but the link is a Brightcove player URL,
+  // derive the poster from the Brightcove Playback API so the video stage shows
+  // the same thumbnail the native Brightcove player would, instead of an empty
+  // overlay box.
+  let derivedPoster = null;
+  if (!placeholderClone) {
+    const brightcoveInfo = parseBrightcove(link);
+    if (brightcoveInfo) {
+      const posterUrl = await getBrightcovePoster(brightcoveInfo);
+      if (posterUrl) {
+        const img = document.createElement('img');
+        img.src = posterUrl;
+        img.alt = config.placeholderAlt || config.overlayTitle || '';
+        img.loading = 'lazy';
+        img.classList.add('video-poster-img');
+        const picture = document.createElement('picture');
+        picture.classList.add('video-poster');
+        picture.append(img);
+        media.append(picture);
+        block.classList.add('has-poster');
+        derivedPoster = picture;
+      }
+    }
+  }
+
   if (placeholderClone) {
     const poster = placeholderClone.tagName === 'PICTURE'
       ? placeholderClone
@@ -361,7 +470,7 @@ export default async function decorate(block) {
 
   // Set up lazy-load observer when there is no poster (video loads on scroll),
   // or when autoplay is enabled (video starts on viewport entry).
-  if (!placeholderClone || autoplay) {
+  if ((!placeholderClone && !derivedPoster) || autoplay) {
     const observer = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
         observer.disconnect();
