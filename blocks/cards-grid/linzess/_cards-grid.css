@@ -444,7 +444,10 @@
 /* Desktop: promo card heading 24px / body 16px to match live (mobile keeps
    the smaller 18px/14px which already matches live's mobile). */
 @media (width >= 768px) {
-  .cards-grid.cards-grid-homepage-content .abbv-image-text-display-v2 .heading-2 {
+  /* The grid also carries .cards-grid-icon-image-card, whose `… p { margin:0 }`
+     rule (0,4,1) outranks this one and pushes the capped heading left. Match
+     the same .abbv-image-text-v2 chain to outrank it and re-center the box. */
+  .cards-grid.cards-grid-homepage-content .abbv-image-text-v2 .abbv-image-text-display-v2 .heading-2 {
     font-size: 24px;
     line-height: normal;
     max-width: 330px;
