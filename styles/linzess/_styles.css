@@ -1435,6 +1435,11 @@ body main .section:is(.resources-community, #communityresources),
 body main .section.resources-community.cards-grid-container.carousel-video-playlist-container {
   background: #f4f6fb;
   margin-top: -40px !important;
+
+  /* Sit above the wellness band's bottom dome (::after z-index:1); without this
+     the dome paints over the eyebrow, leaving a white bar on the published page. */
+  position: relative;
+  z-index: 2;
 }
 
 /* Section header: eyebrow → divider → heading → intro */
