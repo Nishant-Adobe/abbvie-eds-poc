@@ -5156,11 +5156,13 @@ body main .section.columns-container .columns.columns-resources-gutcheck {
   display: grid !important;
   grid-template-columns: 440px 1fr;
   align-items: stretch;
+  height: 299px;
+  min-height: 299px !important;
   max-width: 998px;
   margin: 60px auto 0;
   background: #f4f6fb;
   border-radius: 16px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 body main .section .columns.columns-resources-gutcheck > .columns-item {
@@ -5169,35 +5171,38 @@ body main .section .columns.columns-resources-gutcheck > .columns-item {
   min-height: 0;
 }
 
-/* The image cell is the positioning context; the image fills it absolutely so
-   the photo's intrinsic height never inflates the card — only the copy drives
-   card height (matches live, where the content is the taller column). */
-body main .section .columns.columns-resources-gutcheck > .columns-item:has(.columns-item-image) {
-  position: relative;
-  overflow: hidden;
-}
-
+/* Image column: live renders a 440×324 photo that overhangs the card top by
+   25px and ends flush at the bottom, so the photo (not the copy) sets the
+   visible height. The image is bottom-aligned so its taller-than-card height
+   pushes the top above the card edge — a base rule zeroes any negative
+   margin-top, so we use align-self:end instead. The image carries the curved
+   right edge. */
 body main .section .columns.columns-resources-gutcheck .columns-item-image {
-  position: absolute;
-  inset: 0;
+  align-self: start;
+  height: auto;
 }
 
 body main .section .columns.columns-resources-gutcheck .columns-item-image,
 body main .section .columns.columns-resources-gutcheck .columns-item-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
 }
 
-/* Curved right edge on the image (live bakes this into the asset; the migrated
-   asset is a plain rectangle, so round its right edge to match). */
 body main .section .columns.columns-resources-gutcheck .columns-item-image img {
+  position: relative;
+  top: -25px;
+  height: 324px;
+  object-fit: cover;
   border-radius: 0 60px 60px 0;
 }
 
+/* Content column: no vertical padding (live uses padding-left only) and the
+   copy is vertically centered against the taller image column. */
 body main .section .columns.columns-resources-gutcheck .columns-item-content {
-  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px 0 56px;
   text-align: left;
 }
 
