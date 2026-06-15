@@ -80,8 +80,15 @@
 
 /* Collapsed: abbreviated content padding — matches live site */
 .safety-bar-abbreviated {
-  padding: var(--spacing-10) var(--spacing-25, 25px) 0;
+  padding: 0 var(--spacing-25, 25px);
   margin: auto;
+}
+
+/* Split (two-column collapsed): tighter gap + no top padding to match live */
+.safety-bar.split .safety-bar-abbreviated {
+  gap: var(--spacing-10);
+  padding-top: 0;
+  padding-right: var(--spacing-25, 25px);
 }
 
 
@@ -162,15 +169,23 @@
 
 /* h4 in safety-bar (collapsed + expanded) — purple bold */
 .safety-bar h4 {
-  font-family: var(--font-family-legal-bold);
+  font-family: var(--body-font-family);
   font-size: var(--font-size-legal);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--color-text-heading);
   line-height: normal;
   letter-spacing: normal;
   margin: var(--spacing-14) 0;
   text-transform: none;
   text-decoration: none;
+}
+
+/* Collapsed: h4 subheading (e.g. "Before you take LINZESS") — BasicCommercialLT-Black, matches live */
+.safety-bar-abbreviated h4 {
+  font-family: var(--font-family-legal-bold);
+  font-weight: normal;
+  line-height: var(--line-height-legal);
+  margin: 0;
 }
 
 /* h5 "Side Effects" in safety-bar — purple */
@@ -257,6 +272,7 @@
   .safety-bar.split .safety-bar-abbreviated {
     display: block;
     grid-template-columns: none;
+    height: 121px;
   }
 
   .safety-bar.split .safety-bar-col1 {
@@ -277,5 +293,13 @@
 
   .safety-bar-abbreviated h3 {
     font-size: var(--font-size-legal);
+    padding-top: var(--spacing-20, 2rem);
+  }
+}
+
+/* Tablet: add top padding to the split two-column collapsed bar to match live */
+@media (745px <= width <= 1023px) {
+  .safety-bar.split .safety-bar-abbreviated {
+    padding-top: 15px;
   }
 }
