@@ -1396,6 +1396,14 @@ body main .section.cards-grid-container.carousel-video-playlist-container > .def
   color: #fff;
 }
 
+/* Homepage stats band intro ("There are millions…"): live renders it at 16px /
+   normal line-height. The base p rule (1.6rem/2rem = 18px/24px) was too large.
+   Scoped to the homepage stats band so why-linzess/resources are untouched. */
+body main .section.cards-grid-container.carousel-video-playlist-container:has(.cards-grid-homepage-stats) > .default-content-wrapper:first-child > p:nth-child(2) {
+  font-size: 16px;
+  line-height: normal;
+}
+
 /* Footnote: "*Estimated IBS-C/CIC..." — first p in the content wrapper with h2 */
 
 body main .section.cards-grid-container.carousel-video-playlist-container > .default-content-wrapper:has(h2) > p:first-child,
