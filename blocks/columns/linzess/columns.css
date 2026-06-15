@@ -1164,6 +1164,26 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   color: var(--linz-dark-purple);
 }
 
+/* Homepage savings: white ::before fill over the off-white concave dome left by
+   the patient-experiences band above. That band's ::after dome was recolored to
+   #f4f6fb for the resources page, which shows as a seam on the homepage (white
+   savings section). Cover it with a white strip — homepage savings only. */
+
+.section.columns-container:has(.columns-homepage-savings) {
+  position: relative;
+}
+
+.section.columns-container:has(.columns-homepage-savings)::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: #fff;
+  z-index: 2;
+}
+
 /* Section heading "YOU COULD PAY AS LITTLE AS $30" */
 
 .columns-homepage-savings-container > .default-content-wrapper,
