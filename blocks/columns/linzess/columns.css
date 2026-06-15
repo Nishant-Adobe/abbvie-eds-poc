@@ -968,6 +968,31 @@
   }
 }
 
+/* Tablet (768-985): live's promo card is taller (~245px) with an 18px heading,
+   not the 24px desktop size. Match live's card height + image and dial the
+   heading back to 18px. */
+@media (width >= 768px) and (width < 986px) {
+  .columns.columns-homepage-promo,
+  .hero-container + .columns-container .columns {
+    min-height: 245px;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+    flex: 0 0 361px;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
+  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+    max-height: 245px;
+  }
+
+  .columns.columns-homepage-promo .columns-item-content p strong,
+  .hero-container + .columns-container .columns .columns-item-content p strong {
+    font-size: 18px;
+  }
+}
+
 @media (width < 768px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns {
@@ -1309,6 +1334,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     padding: 16px;
     text-align: center;
   }
+
+  /* Tighten the gap between the "Sign Up Now" CTA and the "Already have a
+     savings card?" line (live ~14px; the base button-container margin was too
+     large). */
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings .columns-item-content .button-container {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
 }
 
 @media (width < 768px) {
@@ -1498,8 +1531,6 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
    of 336.6px made it too tall). Mobile keeps the smaller sizes. */
 
 @media (width >= 768px) {
-  .hero-container + .columns-container .columns .columns-item-content p strong,
-  .columns.columns-homepage-promo .columns-item-content p strong,
   .columns.columns-homepage-gutcheck .columns-item-content p strong {
     font-size: 24px;
   }
@@ -1510,6 +1541,13 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 @media (width >= 986px) {
+  /* Promo heading is 18px through tablet (matching live) and only grows to 24px
+     on desktop. */
+  .hero-container + .columns-container .columns .columns-item-content p strong,
+  .columns.columns-homepage-promo .columns-item-content p strong {
+    font-size: 24px;
+  }
+
   .columns-container:not(.hero-container + .columns-container) .columns.columns-homepage-gutcheck {
     min-height: 299px;
   }
@@ -1517,6 +1555,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image),
   .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) img {
     max-height: 299px;
+  }
+
+  /* Match the gut-check card to the full width of the two content cards above
+     it (live aligns both edges). The content row is capped at 1038px by its
+     .demo-wrap; widen this card to the same. Higher specificity to beat the
+     982px cap on the generic columns rule. */
+  body main .section.columns-container .columns.columns-homepage-gutcheck.block {
+    max-width: 1038px;
   }
 }
 
