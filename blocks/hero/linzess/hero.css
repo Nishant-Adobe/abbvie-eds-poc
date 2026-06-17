@@ -1746,6 +1746,7 @@ color: inherit;
   /* ---- Color: Named Palette (from CSS vars) ---- */
   --linz-dark-purple: #422e83;
   --linz-purple: #60579e;
+  --linz-purple-muted: #948ebe;
   --linz-light-purple: #d9d7f9;
   --linz-light-purple-alt: #ecebfb;
   --linz-light-purple-translucent: rgb(217 215 249 / 60%);
@@ -1762,9 +1763,12 @@ color: inherit;
   --color-text-heading: #422e83;
   --color-text-on-dark: #fff;
   --color-text-muted: #555;
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
+  --color-background-primary: var(--linz-white);
   --color-background-light: #f4f6fb;
   --color-background-footer: #422e83;
   --color-background-footer-dark: #151b17;
@@ -1811,6 +1815,12 @@ color: inherit;
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
   --font-size-quote: 1.3125rem;
+
+  /* ---- Article (healthy-routines) sizes ---- */
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px; /* mobile + tablet; 16px at desktop (>=900px) */
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
@@ -1888,7 +1898,7 @@ color: inherit;
   /* ---- Gradient ---- */
   --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
   --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
-  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
+  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
 
@@ -2114,7 +2124,6 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--gradient-hero-overlay-dual);
   z-index: 1;
   pointer-events: none;
 }
