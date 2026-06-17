@@ -212,8 +212,10 @@ var CustomImportScript = (() => {
     if (!columns.length) return;
     const contentRow = columns.map((col) => buildCell(document, col));
     const emptyRow = columns.map(() => "");
+    const isSavingsTout = element.classList.contains("savings-card-tout") || element.querySelector(".savings-card-tout") || /savings\s*card/i.test(element.textContent) && /\$30/.test(element.textContent);
+    const header = isSavingsTout ? "Columns (columns homepage savings)" : "Columns";
     const cells = [
-      ["Columns"],
+      [header],
       emptyRow,
       contentRow
     ];

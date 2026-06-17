@@ -60,8 +60,18 @@ export default function parse(element, { document }) {
   const contentRow = columns.map((col) => buildCell(document, col));
   const emptyRow = columns.map(() => '');
 
+  // The Savings Card tout (live `.savings-card-tout`) maps to the brand
+  // `columns-homepage-savings` variant — matching the known-good why-linzess
+  // page. The block-title row carries the variant in parentheses so
+  // decorateBlock applies the `columns-homepage-savings` class. Other column
+  // touts (gut-check, bottom CTA) stay on the default Columns variant.
+  const isSavingsTout = element.classList.contains('savings-card-tout')
+    || element.querySelector('.savings-card-tout')
+    || /savings\s*card/i.test(element.textContent) && /\$30/.test(element.textContent);
+  const header = isSavingsTout ? 'Columns (columns homepage savings)' : 'Columns';
+
   const cells = [
-    ['Columns'],
+    [header],
     emptyRow,
     contentRow,
   ];
