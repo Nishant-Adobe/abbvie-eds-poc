@@ -176,6 +176,9 @@ function decorateLine4(card) {
   }
   lineDiv.replaceWith(span);
   unwrapDirectParagraph(span);
+  // Pediatric indication group continues the line-2 list, so it needs the same
+  // link/description split (<a></a><p></p>) for consistent structure & styling.
+  splitIndicationItems(span);
 }
 
 function removeLeadingEmptyLineDivs(container) {

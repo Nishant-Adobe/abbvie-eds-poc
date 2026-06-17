@@ -1,10 +1,10 @@
 import { getConfigValue } from '../../scripts/config.js';
 import { isUniversalEditor } from '../../scripts/utils.js';
 
-// Default tablet breakpoint at which the hero swaps from the mobile to the
-// desktop image. Linzess editorial-hero defers the swap to the desktop
-// breakpoint so its tall portrait image survives through tablet (matches live).
-const HERO_IMAGE_SWAP_BREAKPOINT = 744;
+// Default breakpoint at which the hero swaps from the mobile to the desktop
+// image. Linzess editorial-hero defers the swap to the desktop breakpoint so
+// its tall portrait image survives through tablet (matches live).
+const HERO_IMAGE_SWAP_BREAKPOINT = 985;
 const HERO_IMAGE_SWAP_BREAKPOINT_DESKTOP = 1024;
 const LINZESS_EDITORIAL_HERO_CLASS = 'linzess-behind-nav-linzess-editorial-hero';
 
