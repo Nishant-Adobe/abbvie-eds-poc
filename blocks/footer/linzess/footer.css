@@ -48,7 +48,8 @@
   border-top-left-radius: 0;
   max-width: none;
   margin: 0;
-  padding-block: var(--footer-spacing-padding-y);
+  padding-top: var(--spacing-14);
+  padding-bottom: var(--footer-spacing-padding-y);
   padding-inline: max(
     var(--footer-spacing-padding-x),
     calc((100% - var(--footer-content-max-width)) / 2)
@@ -1003,6 +1004,19 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+  /* ---- Header: No-hero arc ---- */
+  --header-z-index: 10;
+  --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --no-hero-arc-height: 80px;
+  --no-hero-h1-font-size: 40px;
+  --no-hero-h1-line-height: 36px;
+  --no-hero-h1-margin-bottom: 40px;
+  --no-hero-h1-font-size-mobile: 28px;
+  --no-hero-h1-line-height-mobile: 30px;
+  --no-hero-divider-width: 64px;
+  --no-hero-divider-height: var(--hero-divider-height);
+  --no-hero-divider-margin-bottom: 24px;
+
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
@@ -1068,7 +1082,7 @@
   --footer-font-size: var(--font-size-body-small);
   --footer-font-weight: var(--font-weight-body);
   --footer-font-weight-bold: var(--font-weight-extra-bold);
-  --footer-line-height: var(--line-height-body);
+  --footer-line-height: 16px;
 
   /* Footer-logos box dimensions for the AbbVie + Ironwood partner logos in
      the bottom row (small, equal heights, separated by a vertical divider). */
@@ -1076,7 +1090,18 @@
 
   /* Arc top decoration height — matches live `.abbv-footer:before { height: 255px }`.
      Block-scoped raw value (precedent: `--footer-content-max-width: 1200px` in base). */
-  --footer-arc-height: var(--spacing-255);
+  --footer-arc-height: 255px;
+
+  /* Negative top margin pulls the footer up beneath the arc so the curved
+     top sits flush against the preceding section — matches live
+     `.abbv-footer { margin-top: -10px }`. */
+  --footer-arc-overlap: 10px;
+
+  /* How far the arc pseudo is lifted above the footer's top edge. At a
+     shallower offset most of the curve stays hidden behind the footer and
+     reads as a flat top; -140px exposes enough of the rounded top to read
+     as an arc. Block-scoped raw value (no matching spacing token). */
+  --footer-arc-offset: 140px;
 }
 
 /* Curved arc top decoration — replicates the live `.abbv-footer:before`.
@@ -1085,20 +1110,36 @@
 
 .footer {
   overflow: visible;
+  margin-top: calc(-1 * var(--footer-arc-overlap));
+
+  /* Own stacking context so the arc's `z-index: -1` sits behind the footer's
+     own text but ABOVE the page's white content backdrop. Without this the
+     negative-z arc drops behind the white no-hero page background and the
+     curve is invisible (renders as a flat top edge). */
+  position: relative;
+  z-index: 0;
 }
 
 .footer::before {
   content: '';
   position: absolute;
-  top: -60px;
+  top: calc(-1 * 40px);
   left: 50%;
   transform: translateX(-50%);
-  width: 100.1%;
-  height: 75px;
+  width: 139vw;
+  height: var(--footer-arc-height);
   background-color: var(--footer-color-bg);
-  border-top-left-radius: 100%;
-  border-top-right-radius: 100%;
+  border-radius: 100% 100% 0 0;
   z-index: -1;
+}
+
+/* Mobile + tablet (<1024px): the narrower viewport needs a wider, shallower
+   arc so the curve reads correctly — match live's mobile arc geometry. */
+@media (width < 1024px) {
+  .footer::before {
+    top: calc(-1 * 38px);
+    width: 203vw;
+  }
 }
 
 /* ── Heading-based grid — mobile + tablet 2 cols (matches live
@@ -1201,7 +1242,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-16);
+  gap: var(--spacing-12);
 }
 
 .footer .footer-column li {
@@ -1218,7 +1259,7 @@
   font-family: var(--footer-font-family);
   font-size: var(--footer-font-size);
   font-weight: var(--footer-font-weight);
-  line-height: var(--footer-line-height);
+  line-height: 14px;
   text-decoration: none;
   white-space: normal;
 }
@@ -1240,35 +1281,33 @@
   margin-top: var(--spacing-40);
 }
 
-/* Horizontal sub-links UL — always row-wrap (mobile through desktop) so items
-   flow naturally across the available width. Matches live's
-   `.abbv-link-list ul li:after` `|` separator pattern.
+/* Live renders the sub-links as inline-block <li>s (not flex) packed tightly:
+   each li has 27px right padding holding the `|` separator and 16px bottom
+   margin for wrapped rows.
    Top border = separator between section 1 columns and section 2 sub-links. */
 
 .footer .footer-bottom ul {
   list-style: none;
   padding: var(--spacing-24) 0 0;
   margin: 0;
-  display: flex;
-  flex-flow: row wrap;
-
-  /* row-gap spaces wrapped lines; column-gap stays 0 (margin-right per <li>
-     handles the inline spacing so the `|` separator can sit between items). */
-  gap: var(--spacing-12) 0;
+  text-align: left;
   border-top: var(--separator-height-1) solid var(--footer-color-separator);
 }
 
-/* `|` separator after every item except the last */
-
-.footer .footer-bottom ul li:not(:last-child) {
-  margin-right: var(--spacing-24);
+.footer .footer-bottom ul li {
+  display: inline-block;
+  padding-right: 27px;
+  margin-bottom: var(--spacing-16);
   position: relative;
 }
+
+/* `|` separator after every item except the last, sitting in the 27px
+   right padding. */
 
 .footer .footer-bottom ul li:not(:last-child)::after {
   content: '|';
   position: absolute;
-  right: calc(-1 * var(--spacing-16));
+  right: var(--spacing-12);
   color: var(--footer-color-separator);
 }
 
@@ -1281,8 +1320,9 @@
 .footer-wrapper .footer .footer-bottom ul li a {
   color: var(--footer-color-text);
   font-family: var(--footer-font-family);
-  font-size: var(--footer-font-size);
+  font-size: 10px;
   font-weight: var(--footer-font-weight);
+  line-height: normal;
   text-decoration: underline;
 }
 
@@ -1292,16 +1332,24 @@
   text-decoration: none;
 }
 
-/* Legal text paragraphs — small, light text */
+/* Legal text paragraphs — small, light text. Live uses auto line-height in
+   the footer-bottom (only the columns use the 16px footer line-height). The
+   trademark/disclaimer copy (direct children of .footer-bottom) is 10px;
+   the copyright/job-code inside .footer-bottom-texts stays at the 12px
+   footer font size. */
 
 .footer .footer-bottom p {
   color: var(--footer-color-text);
   font-family: var(--footer-font-family);
   font-size: var(--footer-font-size);
   font-weight: var(--footer-font-weight);
-  line-height: var(--footer-line-height);
+  line-height: normal;
   margin: 0;
   text-align: left;
+}
+
+.footer .footer-bottom > p {
+  font-size: 10px;
 }
 
 /* Logo paragraphs sit inside the .footer-bottom-logos wrapper (created by
@@ -1400,4 +1448,36 @@
   .footer .footer-bottom > .footer-bottom-texts {
     grid-area: texts;
   }
+}
+
+/* ── Back to top button ── */
+
+.back-to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 196px;
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--linz-light-purple, #d9d7f9);
+  color: var(--color-brand-primary, #422e83);
+  border: none;
+  cursor: pointer;
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.back-to-top.is-visible {
+  display: flex;
+}
+
+.back-to-top::before {
+  content: '\e5d8';
+  font-family: var(--icon-font-family);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
 }
