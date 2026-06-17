@@ -1,6 +1,13 @@
 import { getConfigValue } from '../../scripts/config.js';
 import { isUniversalEditor } from '../../scripts/utils.js';
 
+// Default tablet breakpoint at which the hero swaps from the mobile to the
+// desktop image. Linzess editorial-hero defers the swap to the desktop
+// breakpoint so its tall portrait image survives through tablet (matches live).
+const HERO_IMAGE_SWAP_BREAKPOINT = 744;
+const HERO_IMAGE_SWAP_BREAKPOINT_DESKTOP = 1024;
+const LINZESS_EDITORIAL_HERO_CLASS = 'linzess-behind-nav-linzess-editorial-hero';
+
 function addSectionClasses(block, section) {
   if (!section) return;
   if (section.classList.contains('navy-overlap') && section.classList.contains('hero-container')) {
@@ -92,7 +99,7 @@ function detectEyebrow(textCell) {
   }
 }
 
-function mergeMobileImage(imageCell, mobileImageRow, swapMinWidth = 744) {
+function mergeMobileImage(imageCell, mobileImageRow, swapMinWidth = HERO_IMAGE_SWAP_BREAKPOINT) {
   if (!imageCell) return;
   let desktopPicture = null;
   let mobilePicture = null;
@@ -313,11 +320,11 @@ export default async function decorate(block) {
   absorbBreadcrumb(textCell, section);
   detectEyebrow(textCell);
   // Linzess editorial-hero keeps the tall mobile image through tablet and only
-  // swaps to the wide desktop image at >=1024px (matching the live site). All
-  // other heroes/brands keep the default 744px swap.
-  const heroSwapMinWidth = block.classList.contains('linzess-behind-nav-linzess-editorial-hero')
-    ? 1024
-    : 744;
+  // swaps to the wide desktop image at the desktop breakpoint (matching the
+  // live site). All other heroes/brands keep the default tablet swap.
+  const heroSwapMinWidth = block.classList.contains(LINZESS_EDITORIAL_HERO_CLASS)
+    ? HERO_IMAGE_SWAP_BREAKPOINT_DESKTOP
+    : HERO_IMAGE_SWAP_BREAKPOINT;
   mergeMobileImage(imageCell, mobileImageRow, heroSwapMinWidth);
   promoteImageLink(imageCell);
   if (block.classList.contains('full')) {

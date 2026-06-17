@@ -101,12 +101,16 @@ function groupBottomLogosAndTexts(bottom) {
   texts.append(copy, code);
 }
 
+// Fallback scroll distance (px) after which the back-to-top button appears when
+// there is no floating safety bar to gate its visibility.
+const BACK_TO_TOP_FALLBACK_SCROLL = 300;
+
 /**
  * Floating back-to-top button (live: circular up-arrow that smooth-scrolls to
  * the top). Appended to <body> so it floats above page content. It shows only
  * once the floating safety bar has hidden itself (i.e. the ISI/footer has
  * scrolled into view) so the two never overlap — matching live behaviour.
- * Falls back to a 300px scroll threshold when no safety bar is present.
+ * Falls back to a fixed scroll threshold when no safety bar is present.
  */
 function createBackToTop() {
   const btn = document.createElement('button');
@@ -119,7 +123,7 @@ function createBackToTop() {
     const safetyBar = document.querySelector('.safety-bar-section');
     const show = safetyBar
       ? safetyBar.classList.contains('is-hidden')
-      : window.scrollY > 300;
+      : window.scrollY > BACK_TO_TOP_FALLBACK_SCROLL;
     btn.classList.toggle('is-visible', show);
     ticking = false;
   };
