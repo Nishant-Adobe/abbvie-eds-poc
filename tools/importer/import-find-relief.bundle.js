@@ -222,9 +222,13 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/tabs.js
+  function fieldHint(document, name) {
+    return document.createComment(` field:${name} `);
+  }
   function makePicture(document, img) {
     const cell = document.createElement("div");
     if (img) {
+      cell.append(fieldHint(document, "image"));
       const picture = document.createElement("picture");
       const newImg = document.createElement("img");
       newImg.setAttribute("src", img.getAttribute("src"));
@@ -243,13 +247,14 @@ var CustomImportScript = (() => {
   }
   function flexboxTable(document, panel) {
     const steps = [...panel.querySelectorAll(".abbv-flex-item-v2")];
-    const rows = [["Flexbox (column)"], [""]];
+    const rows = [["Flexbox (column)"]];
     steps.forEach((step) => {
       const img = step.querySelector("img");
       const contentSrc = step.querySelector(".abbv-image-text-content-container-v2, .abbv-stretched-card-body") || step;
       const content = document.createElement("div");
+      content.append(fieldHint(document, "content"));
       [...contentSrc.querySelectorAll("p")].forEach((p) => content.append(p.cloneNode(true)));
-      rows.push(["", makePicture(document, img), content, ""]);
+      rows.push([makePicture(document, img), content, ""]);
     });
     return WebImporter.DOMUtils.createTable(rows, document);
   }

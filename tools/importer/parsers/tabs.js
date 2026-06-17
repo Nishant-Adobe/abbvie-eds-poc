@@ -15,11 +15,21 @@
  *   2. for each panel: <hr> + the panel heading + a `flexbox (column)` block
  *      + a `Section Metadata` table with `tab-name` = matching label
  *
- * Each flexbox row: [anchor(empty), image(picture), content(richtext), empty].
+ * flexbox-item model fields: image | imageAlt | content | itemClasses.
+ * After md2jcr field-grouping, imageAlt collapses into the image cell
+ * (Rule 2 suffix → <img alt>), so each item row is THREE cells:
+ *   [image(picture), content(richtext), itemClasses(width, empty=auto)]
+ * Cells with content carry a `<!-- field:NAME -->` hint (hinting Rule 4);
+ * the empty trailing itemClasses cell carries none (Rule 2).
  */
+function fieldHint(document, name) {
+  return document.createComment(` field:${name} `);
+}
+
 function makePicture(document, img) {
   const cell = document.createElement('div');
   if (img) {
+    cell.append(fieldHint(document, 'image'));
     const picture = document.createElement('picture');
     const newImg = document.createElement('img');
     newImg.setAttribute('src', img.getAttribute('src'));
@@ -43,14 +53,16 @@ function panelHeading(document, panel) {
 
 function flexboxTable(document, panel) {
   const steps = [...panel.querySelectorAll('.abbv-flex-item-v2')];
-  const rows = [['Flexbox (column)'], ['']];
+  const rows = [['Flexbox (column)']];
   steps.forEach((step) => {
     const img = step.querySelector('img');
     const contentSrc = step.querySelector('.abbv-image-text-content-container-v2, .abbv-stretched-card-body')
       || step;
     const content = document.createElement('div');
+    content.append(fieldHint(document, 'content'));
     [...contentSrc.querySelectorAll('p')].forEach((p) => content.append(p.cloneNode(true)));
-    rows.push(['', makePicture(document, img), content, '']);
+    // Row = [image, content, itemClasses]; itemClasses empty (auto width).
+    rows.push([makePicture(document, img), content, '']);
   });
   return WebImporter.DOMUtils.createTable(rows, document);
 }
