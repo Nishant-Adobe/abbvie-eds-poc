@@ -1,0 +1,107 @@
+{
+  "templates": [
+    {
+      "name": "find-relief",
+      "description": "LINZESS Find Relief content page and Gut Check (static) — DTC editorial layout with hero, jump-nav, video embeds, savings cards, dosing tabs, ISI and floating safety bar.",
+      "urls": [
+        "https://www.linzess.com/find-relief",
+        "https://www.linzess.com/find-relief/gutcheck"
+      ],
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            ".hero-container.abbv-image-text-v2"
+          ]
+        },
+        {
+          "name": "section-nav",
+          "instances": [
+            ".abbv-section-navigation"
+          ]
+        },
+        {
+          "name": "embed",
+          "instances": [
+            ".abbv-video-player"
+          ]
+        },
+        {
+          "name": "cards-grid",
+          "instances": [
+            ".abbv-flex-container-v2.flexbox-cards:not(.flexbox-video-cards)"
+          ]
+        },
+        {
+          "name": "tabs",
+          "instances": [
+            ".abbv-container.background-white.rounded-corners"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            ".abbv-row-container.image-text-wrapper",
+            ".abbv-flex-container-v2.flexbox-column-mobile:not(.flexbox-cards):not(.flexbox-video-cards)"
+          ]
+        },
+        {
+          "name": "text-container",
+          "instances": [
+            ".abbv-inline-use-isi"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-hero",
+          "name": "Hero",
+          "selector": ".abbv-background-container-image-swap-bg",
+          "style": "find-relief-hero",
+          "blocks": ["hero"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-talktoadoctor",
+          "name": "Talk to a Doctor",
+          "selector": ".abbv-container.background-white.background-white-arc",
+          "style": "find-relief-checklist",
+          "blocks": ["columns", "embed"],
+          "defaultContent": ["h2", "ul"]
+        },
+        {
+          "id": "section-howtotake",
+          "name": "How to Take + Savings",
+          "selector": ".abbv-container.background-off-white.background-off-white-arc",
+          "style": "find-relief-off-white",
+          "blocks": ["embed", "cards-grid", "columns"],
+          "defaultContent": ["h2"]
+        },
+        {
+          "id": "section-instructions",
+          "name": "Instructions tabs",
+          "selector": ".abbv-container.background-white.rounded-corners",
+          "style": "find-relief-off-white",
+          "blocks": ["tabs"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-bottomcta",
+          "name": "Bottom CTA",
+          "selector": ".abbv-container.background-dark-purple",
+          "style": "find-relief-dark-purple",
+          "blocks": ["columns"],
+          "defaultContent": []
+        },
+        {
+          "id": "section-isi",
+          "name": "Important Safety Information",
+          "selector": ".abbv-inline-use-isi",
+          "style": "find-relief-isi",
+          "blocks": ["text-container"],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

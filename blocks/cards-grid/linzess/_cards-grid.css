@@ -1566,3 +1566,100 @@ body main .section.cards-grid-container:has(.cards-grid.resources-explore)::befo
     top: -45px;
   }
 }
+
+/* ============================================================
+   EDS-structure icon-image-card (migrated find-relief)
+   The migrated cards-grid carries the variant class `icon-image-card`
+   (space-separated) and a flat positional cell structure — distinct
+   from the Platform-C `.cards-grid-icon-image-card` rules above. Live
+   renders these as rounded cards with an icon overlapping the top edge,
+   alternating dark/light-purple backgrounds, centered text.
+   Cell order per card: [0]=link/empty [1]=icon [2]=title [3]=body
+   [4]=cta-text [5]=empty
+   ============================================================ */
+.cards-grid.icon-image-card {
+  display: grid;
+  gap: var(--spacing-16);
+  max-width: 928px;
+  margin: var(--spacing-80) auto 0;
+  padding: 0 var(--spacing-16);
+}
+
+/* 2-up ("Already Prescribed?") vs 3-up (Savings) by child count */
+.cards-grid.icon-image-card:has(> div:nth-child(2):last-child) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.cards-grid.icon-image-card:has(> div:nth-child(3):last-child) {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cards-grid.icon-image-card > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: var(--linz-rounded-corner);
+  padding: 0 var(--spacing-24) var(--spacing-40);
+  margin-top: var(--spacing-50);
+}
+
+/* Alternating card colours (live authors dark/light per item) */
+.cards-grid.icon-image-card > div:nth-child(odd) {
+  background: var(--linz-light-purple);
+}
+
+.cards-grid.icon-image-card > div:nth-child(even) {
+  background: var(--linz-dark-purple);
+}
+
+.cards-grid.icon-image-card > div:nth-child(even) :is(p, strong, a) {
+  color: var(--color-text-on-dark);
+}
+
+.cards-grid.icon-image-card > div:nth-child(odd) :is(p, strong) {
+  color: var(--linz-dark-purple);
+}
+
+/* Cell 0 (link/empty) — hide the stray sms:/tel:/savings-card anchor cell */
+.cards-grid.icon-image-card > div > div:first-child {
+  display: none;
+}
+
+/* Cell 1 — icon overlapping the top edge */
+.cards-grid.icon-image-card > div > div:nth-child(2) {
+  margin-top: calc(-1 * var(--spacing-50));
+  margin-bottom: var(--spacing-16);
+}
+
+.cards-grid.icon-image-card > div > div:nth-child(2) img,
+.cards-grid.icon-image-card > div > div:nth-child(2) picture {
+  width: var(--spacing-110);
+  height: auto;
+}
+
+/* Cell 2 — title */
+.cards-grid.icon-image-card > div > div:nth-child(3) p {
+  margin: 0 0 var(--spacing-08);
+  font-weight: var(--font-weight-extra-bold);
+  font-size: var(--font-size-h2);
+}
+
+/* Cell 3 — body */
+.cards-grid.icon-image-card > div > div:nth-child(4) p {
+  margin: 0;
+}
+
+/* Cell 4 — cta text rendered as a button */
+.cards-grid.icon-image-card > div > div:nth-child(5):not(:empty) {
+  margin-top: var(--spacing-24);
+}
+
+@media (width < 986px) {
+  .cards-grid.icon-image-card:has(> div:nth-child(2):last-child),
+  .cards-grid.icon-image-card:has(> div:nth-child(3):last-child) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-80);
+  }
+}

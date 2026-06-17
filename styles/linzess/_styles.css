@@ -2211,6 +2211,231 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
   color: var(--color-brand-primary);
 }
 
+/* ---- Find Relief — full-bleed section bands ----
+   Live wraps the page in full-width colour bands: the "How to Take"
+   region (video cards → tabs → dosing → storage → savings) sits on an
+   off-white band (#f4f6fb = --linz-off-white) and the bottom CTA region
+   sits on a dark-purple band (#422e83 = --linz-dark-purple). The migrated
+   page splits this region into several EDS sections; tag the off-white
+   ones plus the two adjacent dosing flexbox sections (which inherit the
+   band on live but carry no metadata class), and the dark-purple CTA.
+   Full-bleed pattern matches the existing Side Effects band above. */
+body main .section.find-relief-off-white,
+body main .section.find-relief-off-white + .section.flexbox-container,
+body main .section.find-relief-off-white + .section.flexbox-container + .section.flexbox-container {
+  background-color: var(--linz-off-white);
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+body main .section.find-relief-dark-purple {
+  background-color: var(--linz-dark-purple);
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+body main .section.find-relief-dark-purple :is(h1, h2, h3, h4, p, strong, li),
+body main .section.find-relief-dark-purple a:not(.button) {
+  color: var(--color-text-on-dark);
+}
+
+/* ---- Find Relief — ISI region (regulatory legibility) ----
+   The ISI (USES / IMPORTANT RISK INFORMATION / job code) is authored as a
+   text-container that shares the dark-purple section. Live renders the ISI
+   as its own WHITE region with dark legible body copy. Carve the ISI block
+   out into a full-bleed white region so the regulated safety copy is
+   legible (grey-on-dark-purple is a compliance defect). */
+body main .section.find-relief-dark-purple .text-container {
+  position: relative;
+  background: var(--linz-white);
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: var(--linz-band-pad-btm) var(--spacing-20) var(--spacing-40);
+}
+
+/* White dome rising into the dark-purple band above the ISI. */
+body main .section.find-relief-dark-purple .text-container::before {
+  content: '';
+  position: absolute;
+  top: var(--linz-arc-overlap);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--linz-arc-width);
+  height: var(--linz-arc-height);
+  background: var(--linz-white);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: 0;
+}
+
+@media (width >= 900px) {
+  body main .section.find-relief-dark-purple .text-container::before {
+    height: var(--linz-arc-height-lg);
+  }
+}
+
+/* Restore legible ISI typography (override the dark-band white-text rule). */
+body main .section.find-relief-dark-purple .text-container :is(p, li, strong, span) {
+  position: relative;
+  z-index: 1;
+  color: var(--color-text-muted);
+}
+
+body main .section.find-relief-dark-purple .text-container :is(h2, h3, h4),
+body main .section.find-relief-dark-purple .text-container .linzess-isi-subtitle strong {
+  position: relative;
+  z-index: 1;
+  color: var(--linz-dark-purple);
+}
+
+body main .section.find-relief-dark-purple .text-container a {
+  position: relative;
+  z-index: 1;
+  color: var(--linz-dark-purple);
+  text-decoration: underline;
+}
+
+/* Bottom CTA buttons are orange on live (.bottom-nav .abbv-button-primary).
+   The two CTAs ("Learn More") render as button-styled anchors inside the
+   dark-purple band; override their dark-purple fill to orange with
+   dark-purple label. */
+body main .section.find-relief-dark-purple.columns-container .columns .button-container a.button {
+  background: var(--linz-orange);
+  color: var(--linz-dark-purple);
+}
+
+body main .section.find-relief-dark-purple.columns-container .columns .button-container a.button:hover {
+  background: var(--linz-off-white);
+  color: var(--linz-dark-purple);
+}
+
+/* ---- Find Relief — video poster (embed) frame ----
+   Live wraps each video in a light-purple rounded card, max 620px, centered
+   (.abbv-flex-item-v2.background-light-purple.rounded-corners.max-620). */
+body main .section:is(.find-relief-checklist, .find-relief-off-white) .embed {
+  max-width: 620px;
+  margin: 0 auto;
+  background: var(--linz-light-purple);
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+}
+
+body main .section:is(.find-relief-checklist, .find-relief-off-white) .embed img,
+body main .section:is(.find-relief-checklist, .find-relief-off-white) .embed picture {
+  border-radius: var(--linz-rounded-corner);
+}
+
+/* ---- Find Relief — section arc domes (live .background-arc:before) ----
+   Each colour band on live rises into the preceding section with a wide
+   colour-matched dome (border-top radius 100%, ~130% wide, pulled up via
+   negative top). The dome is the CURRENT band's colour so it carves a
+   curved edge on the section above. The off-white region starts at the
+   first find-relief-off-white section (right after the checklist); the
+   dark-purple band is a single section. Bottom padding on each band gives
+   the next band's dome room to overlap. */
+body main .section.find-relief-off-white,
+body main .section.find-relief-dark-purple {
+  position: relative;
+  z-index: 1;
+}
+
+/* Bottom padding only where a dome from the NEXT band overlaps: the last
+   off-white section (before the dark-purple band) and the dark-purple band
+   (before the ISI dome). Contiguous off-white dosing sections keep their
+   normal flow so no internal gaps appear. */
+body main .section.find-relief-off-white:has(+ .section.find-relief-dark-purple),
+body main .section.find-relief-dark-purple:not(:has(.text-container)) {
+  padding-bottom: var(--linz-band-pad-btm);
+}
+
+body main .section.find-relief-checklist + .section.find-relief-off-white::before,
+body main .section.find-relief-dark-purple::before {
+  content: '';
+  position: absolute;
+  top: var(--linz-arc-overlap);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--linz-arc-width);
+  height: var(--linz-arc-height);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+body main .section.find-relief-checklist + .section.find-relief-off-white::before {
+  background: var(--linz-off-white);
+}
+
+body main .section.find-relief-dark-purple::before {
+  background: var(--linz-dark-purple);
+}
+
+@media (width >= 900px) {
+  body main .section.find-relief-checklist + .section.find-relief-off-white::before,
+  body main .section.find-relief-dark-purple::before {
+    height: var(--linz-arc-height-lg);
+  }
+}
+
+/* ---- Find Relief — "What To Talk About" checklist card ----
+   Live renders the 4-item checklist (Discuss / List Out / Have a Plan /
+   Learn More) as a dark-purple rounded card with white text in a 2-up grid.
+   The migrated content authors this as a default-content <ul>, so style the
+   list under the find-relief-checklist section. */
+body main .section.find-relief-checklist .default-content-wrapper > ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-24) var(--spacing-40);
+  max-width: 928px; /* matches the 928px content-card width used across find-relief */
+  width: 100%;
+  margin: var(--spacing-24) auto 0;
+  padding: var(--spacing-40);
+  list-style: none;
+  background: var(--linz-dark-purple);
+  border-radius: var(--linz-rounded-corner);
+}
+
+body main .section.find-relief-checklist .default-content-wrapper > ul > li {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-on-dark);
+}
+
+/* Item heading (first paragraph) — orange-dot marker + bold label. */
+body main .section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child {
+  position: relative;
+  padding-left: var(--spacing-32);
+  margin: 0 0 var(--spacing-08);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-text-on-dark);
+}
+
+body main .section.find-relief-checklist .default-content-wrapper > ul > li > p:first-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  background-image: url("/content/dam/abbvie-eds-poc/linzess/images/icon-checkmark-orange.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+body main .section.find-relief-checklist .default-content-wrapper > ul > li > p {
+  color: var(--color-text-on-dark);
+}
+
+body main .section.find-relief-checklist .default-content-wrapper > ul > li a {
+  color: var(--color-text-on-dark);
+  text-decoration: underline;
+}
+
 /* Mobile/tablet: stack all card grids single column, 32px headings */
 @media (width < 986px) {
   .section:is(.resources-healthy-routines, .resources-wellness-tips, .resources-community, #healthyroutines, #wellnesstips, #communityresources) > .default-content-wrapper:first-child > p:nth-child(2),
@@ -2221,6 +2446,13 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
 
   body main .section .columns.columns-resources-gutcheck {
     grid-template-columns: 1fr;
+  }
+
+  /* Checklist card stacks to one column on mobile/tablet (matches live). */
+  body main .section.find-relief-checklist .default-content-wrapper > ul {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-24);
+    padding: var(--spacing-24);
   }
 
   /* Section-card headings drop to 18px on mobile/tablet to match live */

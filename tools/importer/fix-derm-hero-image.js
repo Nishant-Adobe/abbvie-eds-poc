@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /*
  * Surgical content transform: rewrite ONLY the dermatology hero (half-split-cta)
  * image cell from a single multi-source <picture> to two separate single images
@@ -26,7 +27,7 @@ const OLD_CELL = '<div><div><picture><source media="(min-width: 985px)" srcset="
 // Replacement: two image rows (desktop first = the hero image row, mobile second =
 // the mobileImage row that mergeMobileImage() consumes). Each is a plain single
 // <img> so markdown preserves both.
-const NEW_CELL = '<div><div><picture><img src="' + DESKTOP + '" alt="" height="542" width="2274" loading="lazy"></picture></div></div>\n    <div><div><picture><img src="' + MOBILE + '" alt="" height="542" width="2274" loading="lazy"></picture></div></div>';
+const NEW_CELL = `<div><div><picture><img src="${DESKTOP}" alt="" height="542" width="2274" loading="lazy"></picture></div></div>\n    <div><div><picture><img src="${MOBILE}" alt="" height="542" width="2274" loading="lazy"></picture></div></div>`;
 
 if (!src.includes(OLD_CELL)) {
   console.error('ERROR: expected hero image cell markup not found — aborting (no changes written).');

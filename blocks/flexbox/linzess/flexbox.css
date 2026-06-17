@@ -90,3 +90,47 @@
 /* No-wrap: don't stack on mobile */
 
 .flexbox.no-wrap .flexbox-item { flex: 1; }
+
+/* LINZESS — Flexbox brand overrides
+   Source: linzess.com/find-relief "How to Take" dosing steps.
+   Each dosing step is an icon + text row. The base block sets
+   `.flexbox-item-image img { width: 100% }`, which in the `column` variant
+   (full-width stacked items) balloons the ~106px icons to full container
+   width. Constrain the icon and lay each step out as icon-left / content-right.
+*/
+
+/* Block-scoped tokens */
+
+.flexbox.column {
+  --flexbox-icon-size: var(--spacing-110);
+  --flexbox-step-gap: var(--spacing-32);
+}
+
+/* Each dosing step: icon column (fixed) + content column (fills). */
+
+.flexbox.column .flexbox-item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--flexbox-step-gap);
+}
+
+/* Cap the icon at its natural size instead of stretching to 100%. */
+
+.flexbox.column .flexbox-item-image {
+  flex: 0 0 var(--flexbox-icon-size);
+  max-width: var(--flexbox-icon-size);
+}
+
+.flexbox.column .flexbox-item-image picture,
+.flexbox.column .flexbox-item-image img {
+  width: 100%;
+  height: auto;
+}
+
+/* Content takes the remaining space, left-aligned. */
+
+.flexbox.column .flexbox-item-content {
+  flex: 1 1 auto;
+  text-align: left;
+}

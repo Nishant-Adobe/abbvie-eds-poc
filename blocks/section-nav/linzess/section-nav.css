@@ -829,6 +829,17 @@
   --line-height-legal: 16px;
   --line-height-legal-large: 20px;
 
+  /* ---- Section arc (live .background-arc:before dome) ---- */
+  --linz-arc-height: 75px;
+  --linz-arc-height-lg: 255px;
+  --linz-arc-overlap: -60px;
+  --linz-arc-width: 130%;
+  --linz-band-pad-btm: 100px;
+
+  /* ---- Hero pull-up under transparent header (live .hero-container top) ---- */
+  --linz-hero-pullup: 138px;
+  --linz-hero-pullup-mobile: 147px;
+
   /* ---- Border: Radius ---- */
   --linz-rounded-corner: 16px;
   --linz-rounded-corner-sm: 8px;
@@ -1011,6 +1022,9 @@
   --section-nav-dropdown-text: var(--linz-dark-purple);
   --section-nav-radius: var(--linz-rounded-corner);
   --section-nav-mobile-width: 80vw;
+
+  /* Desktop pill overlaps the hero arc (live uses margin-top: -30px). */
+  --section-nav-hero-overlap: var(--spacing-30);
 
   border-bottom: none;
   border-radius: var(--section-nav-radius);
@@ -1216,18 +1230,26 @@
     background-color: transparent;
   }
 
-  /* Content-width dark-purple pill, centered via margin: 0 auto from base */
+  /* Content-width dark-purple pill, centered via margin: 0 auto from base.
+     Negative top margin lifts the pill so it straddles the hero's curved
+     bottom edge (≈half the pill overlaps the hero), matching the live site. */
   .section-nav nav {
     background-color: var(--section-nav-bg);
     border-radius: var(--section-nav-radius);
+    margin-top: calc(-1 * var(--section-nav-hero-overlap));
     max-width: fit-content;
     padding: 0;
+    position: relative;
+    transition: top var(--transition-duration-medium) var(--transition-easing-in-out);
+    z-index: 5;
   }
 
-  /* Flatten top corners of pill when stuck — live-site pattern */
+  /* When stuck to the top on scroll, the pill must sit flush (no overlap) and
+     flatten its top corners — live-site pattern. */
   .section-nav.sticky.is-stuck nav {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    margin-top: 0;
   }
 
   /* Links: 16px / 800 base weight (matches live) / line-height 50px for vertical centering */
