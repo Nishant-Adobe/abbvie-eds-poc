@@ -4673,6 +4673,80 @@ main > .section:has(> .default-content-wrapper > h3:first-child)::before {
   z-index: -5;
 }
 
+body.appear {
+  background-color: var(--color-brand-primary, #422e83);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body.linzess main > .section {
+  margin-bottom: 0;
+}
+
+/* Hero section — nudge down slightly so the photo isn't tucked as far under
+   the overlay header. The header is position:absolute (transparent gradient)
+   and floats over the hero top; a small top margin drops the image so more of
+   the scene shows below the header, matching live's framing. */
+main .section.abbvie-container.hero-container {
+  margin-top: var(--spacing-40);
+}
+
+/* Transcript section — outer container */
+.section.transcript,
+main > .section:first-of-type:not(.hero-container) {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  overflow: visible;
+  padding: 0 0 var(--spacing-100);
+  margin: var(--spacing-80) 0 0;
+  max-width: none;
+  width: 100%;
+}
+
+/* Arc/curve — white ellipse overlapping body */
+.section.transcript::before,
+main > .section:first-of-type:not(.hero-container)::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  .section.transcript::before,
+  main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
+
+/* ISI section arc */
+.abbv-inline-use-isi::before,
+.section.isi::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: #fff;
+  border-radius: 100% 100% 0 0;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
 @media (width >= 900px) {
   .section.isi::before,
   main > .section:has(> .default-content-wrapper > h3:first-child)::before {
@@ -4862,6 +4936,529 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
 /* Wellness Tips = full-bleed dark-purple band with white header text */
 body main .section:is(.resources-wellness-tips, #wellnesstips) {
   background: #422e83;
+  .abbv-inline-use-isi::before,
+  .section.isi::before {
+    height: 255px;
+    top: -80px;
+  }
+}
+
+.section.isi {
+  position: relative;
+  background: var(--color-background-primary, #fff);
+  z-index: 1;
+}
+
+/* Footer must paint above the white ISI section (z-index: 1) so its purple
+   curved arc (.footer::before) shows instead of being hidden behind it. */
+.footer-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* Transcript content wrapper — centered with 20px side padding (matches live) */
+.section.transcript .rich-text-wrapper,
+main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section.transcript + .section,
+main > .section:first-of-type:not(.hero-container) + .section {
+  border-radius: 0;
+}
+
+.section.transcript h1,
+main > .section .default-content-wrapper h1 {
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-text-heading);
+  text-align: center;
+  line-height: var(--spacing-30);
+  margin: 0;
+  padding: 0;
+}
+
+.section.transcript h1::before,
+main > .section .default-content-wrapper h1::before {
+  content: '';
+  display: block;
+  width: var(--spacing-64);
+  height: var(--spacing-05);
+  background-image: url('/icons/divider.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto var(--spacing-10);
+}
+
+.section.transcript .default-content-wrapper p,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-color);
+  margin: var(--spacing-16) 0;
+  padding: 0;
+}
+
+.section.transcript .default-content-wrapper strong,
+.section.transcript .default-content-wrapper b,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper strong,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper b {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.section.transcript .default-content-wrapper h2,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: 600;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: var(--spacing-16) 0;
+}
+
+.section.transcript .default-content-wrapper h2:first-of-type,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2:first-of-type {
+  margin: var(--spacing-40) 0 var(--spacing-16);
+}
+
+.section.transcript .default-content-wrapper ul,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper ul {
+  margin: var(--spacing-16) 0;
+  padding: 0 0 0 var(--spacing-40);
+}
+
+.section.transcript .default-content-wrapper li,
+main > .section:first-of-type:not(.hero-container) .default-content-wrapper li {
+  margin: 0;
+  padding: 0;
+}
+
+/* ISI section */
+.section.isi,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  padding: 0 var(--spacing-20) var(--spacing-80);
+  margin: 0 0 var(--spacing-20);
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Space below the ISI job code before the footer arc. The white ISI must
+   reach (and slightly overlap) the footer so the purple arc curves into white
+   — matching the OTC page. A bottom margin would leave a purple sliver in the
+   arc zone, so spacing lives entirely in padding-bottom. */
+body.linzess main > .section.abbvie-container.isi {
+  padding-bottom: var(--spacing-80);
+  margin-bottom: 0;
+}
+
+.section.isi .default-content-wrapper,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) .default-content-wrapper {
+  max-width: 124rem;
+  margin: 0 auto;
+}
+
+.section.isi h3,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  text-transform: none;
+  margin: var(--spacing-10) 0 0;
+  padding: 0;
+}
+
+.section.isi p,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi ul,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) ul {
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+.section.isi li,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.isi strong,
+.section.isi b,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) strong,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) b {
+  font-family: var(--font-family-legal-bold);
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* Live applies -0.02em tracking across the ISI legal copy (h3 -0.32px,
+   p/li/strong -0.28px). Apply it to all ISI text for parity. */
+.section.isi :is(h3, h4, h5, p, li, strong, b, a) {
+  letter-spacing: -0.02em;
+}
+
+.section.isi a,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) a {
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+/* ISI links sit inside <strong> blocks, so they inherit the black legal font
+   at 14px. Live renders them in the regular Roman face (not bold/black). */
+.section.isi strong a,
+.section.isi b a,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) :is(strong, b) a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+}
+
+.section.isi h4,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) h4 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
+}
+
+.section.isi h5,
+main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) h5 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: var(--line-height-legal);
+  letter-spacing: -0.028rem;
+  margin: var(--spacing-10) 0;
+  text-transform: none;
+  text-decoration: none;
+}
+
+/* Desktop — arc grows larger + font-size 16px */
+@media (min-width: 900px) {
+  .section.transcript::before,
+  main > .section:first-of-type:not(.hero-container)::before {
+    top: -60px;
+    width: 130%;
+    height: 255px;
+  }
+
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    max-width: var(--content-width-transcript, 998px);
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .section.transcript h1,
+  main > .section .default-content-wrapper h1 {
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
+  }
+
+  .section.transcript .default-content-wrapper p,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper p {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.transcript .default-content-wrapper h2,
+  main > .section:first-of-type:not(.hero-container) .default-content-wrapper h2 {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+}
+
+/* Mobile — transcript and ISI padding adjustments */
+@media (width <= 744px) {
+  .section.transcript .rich-text-wrapper,
+  main > .section:first-of-type:not(.hero-container) .rich-text-wrapper {
+    padding: 0;
+  }
+
+  .section.isi h3,
+  main > .section:nth-of-type(2):not(.safety-bar-container):not(.otc-intro-section):not(.triggers-section) h3 {
+    font-size: var(--font-size-legal);
+  }
+}
+
+/* ============================================================
+   DIAN-TEST PAGE — Scoped to .section.dian-test-body / .section.dian-test-isi
+   Mobile-first: base = mobile, @media (min-width: 900px) = desktop
+   ============================================================ */
+
+/* --- Section: Transcript body --- */
+.section.dian-test-body.abbvie-container {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  overflow: visible;
+  margin: 0;
+  margin-bottom: 0;
+  padding: 0;
+  max-width: none;
+  width: 100%;
+}
+
+.section.dian-test-body.abbvie-container + .section {
+  margin-top: 0;
+}
+
+.section.dian-test-body .rich-text-wrapper {
+  padding: 0 20px;
+}
+
+.section.dian-test-body h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--color-text-heading);
+  text-align: center;
+  line-height: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body h1::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 5px;
+  background-image: url('/icons/divider.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin: 0 auto 10px;
+}
+
+.section.dian-test-body h2 {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body h2:first-of-type {
+  margin-top: 40px;
+}
+
+.section.dian-test-body p {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-body, #4d4d4f);
+  line-height: normal;
+  margin: 14px 0;
+  padding: 0;
+}
+
+.section.dian-test-body strong {
+  font-weight: 700;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.section.dian-test-body em {
+  font-style: italic;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.section.dian-test-body ul {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  margin: 16px 0;
+  padding: 0 0 0 40px;
+}
+
+.section.dian-test-body li {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  margin: 0;
+  padding: 0;
+}
+
+.section.dian-test-body a {
+  font-family: 'Lato', sans-serif;
+  font-size: 16px;
+  color: var(--color-text-body, #4d4d4f);
+  text-decoration: underline;
+}
+
+.section.dian-test-body sup {
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+/* Arc/curve ::before */
+.section.dian-test-body::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 40px;
+  background-color: var(--color-background-primary, #fff);
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  z-index: -5;
+}
+
+/* --- Section: ISI --- */
+.section.dian-test-isi.abbvie-container {
+  background-color: var(--color-background-primary, #fff);
+  position: relative;
+  margin: 0 0 var(--spacing-20);
+  padding: 0 var(--spacing-20) var(--spacing-80);
+  max-width: 100%;
+  width: 100%;
+}
+
+.section.dian-test-isi h3 {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal-large);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  line-height: normal;
+  text-transform: none;
+  margin: var(--spacing-10) 0 0;
+  padding: 0;
+}
+
+.section.dian-test-isi p {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.dian-test-isi strong,
+.section.dian-test-isi b {
+  font-family: var(--font-family-legal-bold);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.section.dian-test-isi a {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+}
+
+.section.dian-test-isi ul {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0 0 0 var(--spacing-15);
+}
+
+.section.dian-test-isi li {
+  font-family: var(--font-family-legal);
+  font-size: var(--font-size-legal);
+  font-weight: 400;
+  line-height: var(--line-height-legal);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) 0;
+  padding: 0;
+}
+
+.section.dian-test-isi li strong {
+  font-family: var(--font-family-legal-bold);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.section.dian-test-isi sup {
+  font-size: 0.7em;
+  color: var(--color-text-muted);
+  line-height: 0;
+}
+
+/* --- Desktop (min-width: 900px) --- */
+@media (min-width: 900px) {
+  .section.dian-test-body.abbvie-container {
+    padding: 0 0 var(--spacing-100, 10rem);
+    margin-top: var(--spacing-80);
+  }
+
+  .section.dian-test-body::before {
+    top: calc(-1 * var(--spacing-60));
+    width: 130%;
+    height: var(--spacing-75, 7.5rem);
+  }
+
+  .section.dian-test-body h1 {
+    font-size: var(--heading-font-size-m, 4rem);
+    line-height: var(--line-height-36, 3.6rem);
+  }
+
+  .section.dian-test-body .rich-text-wrapper {
+    max-width: var(--content-width-transcript, 998px);
+    margin: 0 auto;
+    padding: 0 var(--spacing-48, 4.8rem);
+  }
+
+  .section.dian-test-body h2 {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.dian-test-body h2:first-of-type {
+    margin-top: var(--spacing-40);
+  }
+
+  .section.dian-test-body p {
+    font-size: var(--font-size-legal-large);
+    margin: var(--spacing-16) 0;
+  }
+
+  .section.dian-test-isi .default-content-wrapper {
+    max-width: var(--content-width-isi, 1240px);
+    margin: 0 auto;
+  }
+}
+
+/* ===== From develop: non-hero page arc + H1 (body.no-hero) ===== */
+/* Non-hero pages: purple downward arc + H1 styling */
+body.no-hero main > .section:first-child {
   position: relative;
   padding-bottom: 140px;
 }
@@ -5710,5 +6307,1092 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
   body main .section .cards-grid.resources-community .flexboxitem-v2 {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+}
+
+/* Transcript/ISI pages keep the white upward arc, not develop's purple downward arc.
+   Equal specificity to body.no-hero rule but declared later, so this wins. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section.isi,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: 0;
+}
+
+body.no-hero main > .section.transcript::before,
+body.no-hero main > .section.isi::before,
+body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+  top: -60px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  body.no-hero main > .section.transcript::before,
+  body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
+
+/* Transcript/experience pages: more breathing room above the h1 to match
+   live (~50px container-to-h1 gap vs our 14px). Scoped to no-hero so the
+   healthy-routines hero pages are untouched. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: var(--spacing-36, 36px);
+}
+
+/* Transcript/experience pages: deepen the footer arc to match live
+   (top -60px vs our -40px). Scoped to no-hero so hero pages keep the
+   shallower arc defined in the footer block. */
+body.no-hero .footer::before {
+  top: -60px;
+  width: 130vw;
+}
+
+/* ============================================================
+   Healthy-Routines article sections (OTC and Prescription Treatments)
+   Sections: otc-intro (white), what-is-linzess (purple),
+   more-like-this (white), cta-cards (purple). Each carries a
+   background-arc curved top edge (footer-arc recipe).
+   Body backdrop for this hero article page is off-white.
+   ============================================================ */
+body:has(.section.otc-intro-section),
+body:has(.section.triggers-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* navigation-content.css paints a debug grey background on .header-content for
+   its own preview; live header consumes those links into the eyebrow bar and
+   shows no grey. Neutralize the debug background. */
+body.linzess main .header-content {
+  background-color: transparent;
+}
+
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .triggers-section, .cheat-sheet-section) {
+  position: relative;
+  z-index: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--spacing-20) var(--spacing-100);
+  overflow: visible;
+}
+
+main > .section.cta-cards-section {
+  padding: var(--spacing-20) var(--spacing-20) var(--spacing-140);
+}
+
+/* Live leaves ~160px below the trigger icons before the purple arc (the icon
+   extends well below its overlapping label). Match that breathing room. */
+main > .section.triggers-section {
+  padding-bottom: 16rem;
+}
+
+/* White sections */
+main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section) {
+  background-color: var(--color-background-primary, #fff);
+}
+
+/* Purple sections */
+main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-section) {
+  background-color: var(--color-brand-primary);
+}
+
+/* Arc — curved top edge sitting above the previous section.
+   z-index matches live (-5): with the hero overlapping the first arc, -1
+   stacked the white arc at the wrong depth and produced a hard-edged seam
+   over the hero photo. Live places all four section arcs at z-index -5. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .triggers-section, .cheat-sheet-section)::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section)::before {
+  background-color: var(--color-background-primary, #fff);
+}
+
+main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-section)::before {
+  background-color: var(--color-brand-primary);
+}
+
+/* Tackling page uses live's deeper arc (255px tall, top -60px) for every
+   section boundary; scoped to this page so the OTC arc stays as approved.
+   Desktop only — live keeps the shallow base arc at mobile and tablet. */
+@media (min-width: 1024px) {
+  body:has(.section.triggers-section) main > .section:is(.triggers-section, .cheat-sheet-section, .more-like-this-section, .cta-cards-section)::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 25.5rem;
+  }
+}
+
+/* Section heading (Bebas Neue, 40px / line-height 36px).
+   The published page drops the authored `heading-1` class, so the heading is
+   also matched structurally: the first <p> of the section's first
+   default-content-wrapper. Both selectors are kept so styling holds whether or
+   not the class survives publish. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+  margin: 0 auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  letter-spacing: normal;
+  text-align: center;
+  text-transform: none;
+}
+
+/* Divider line (64x5 divider.svg) centered above every section heading.
+   Live authors it as an empty <p><span class="divider"> before each heading. */
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2)::before,
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child::before,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child::before {
+  content: "";
+  display: block;
+  width: var(--spacing-64);
+  height: var(--hero-divider-height, 5px);
+  margin: var(--spacing-16) auto var(--spacing-24);
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+}
+
+main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section) :is(.heading-1, h2),
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child {
+  color: var(--color-text-heading);
+}
+
+main > .section.what-is-linzess-section .heading-1,
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child,
+main > .section.cheat-sheet-section :is(.heading-1, h2) {
+  color: var(--color-text-on-dark);
+}
+
+/* Centered intro copy (live caps the rich-text at 920px) */
+main > .section.otc-intro-section > .default-content-wrapper {
+  max-width: 92rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Body copy = every intro paragraph except the heading (first child). Excludes
+   by both class and position so it never restyles the heading in either env. */
+main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1):not(:first-child) {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 2: How They Work (3 icon columns) ---- */
+main > .section.otc-intro-section .columns.how-they-work {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item {
+  text-align: center;
+}
+
+/* Icons preserve aspect ratio. Live caps the height uniformly at 20rem on
+   desktop. On mobile the first icon (Fiber) fills the column width with no
+   height cap, while the narrower Stimulant & Stool icons stay capped at
+   23.4rem. display:block removes the inline whitespace gap below the icon. */
+main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto var(--spacing-20);
+}
+
+/* Desktop (>=1024px): live caps all three icons uniformly at 20rem. */
+@media (width >= 1024px) {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item-image img {
+    max-height: 20rem;
+  }
+}
+
+/* Mobile + tablet (<1024px): live leaves the first icon (Fiber) uncapped so it
+   fills its column to the natural ratio (~251px at tablet), while the narrower
+   Stimulant & Stool icons are height-driven to 23.4rem. The Stimulant icon is
+   wider than tall, so live lets it overflow the column width (max-width:none)
+   to reach the shared 234px height — this keeps the Stimulant & Stool labels on
+   a common row. Constraining it with max-width:100% shrinks its height and lifts
+   its label, leaving a gap above it. */
+@media (width < 1024px) {
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(2) .columns-item-image img,
+  main > .section.otc-intro-section .columns.how-they-work .columns-item:nth-child(3) .columns-item-image img {
+    height: 23.4rem;
+    width: auto;
+    max-width: none;
+    max-height: none;
+  }
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item-content p:first-child strong,
+main > .section.otc-intro-section .columns.how-they-work .columns-item p strong {
+  display: block;
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+main > .section.otc-intro-section .columns.how-they-work .columns-item p {
+  margin: 0 0 var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* ---- Section 3: What Is LINZESS? (image + text/CTA) ---- */
+main > .section.what-is-linzess-section .columns.what-is-linzess {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  align-items: start;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image {
+  text-align: center;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+  width: auto;
+  max-width: 100%;
+  max-height: 36rem;
+  margin: 0 auto;
+}
+
+/* Mobile + tablet (<1024px): live shrinks the bottle to ~283px tall; our 36rem
+   cap is too tall below desktop. Cap to ~28.3rem under 1024px to match live
+   (the 36rem cap applies only at desktop where the 2-col layout has more room). */
+@media (width < 1024px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-image img {
+    max-height: 28.3rem;
+  }
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess :is(p, li) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: normal;
+  color: var(--color-text-on-dark);
+}
+
+/* Footnote inside the text column stays 12px (live), tighter 12px margins.
+   The published page drops the `footnote` class, so the footnote is also
+   matched structurally as the last paragraph of the text column. */
+main > .section.what-is-linzess-section .columns.what-is-linzess p.footnote,
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:last-child {
+  margin: var(--spacing-12, 12px) 0;
+  font-size: var(--font-size-body-small);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess p {
+  margin: var(--spacing-16) 0;
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess ul {
+  margin: var(--spacing-16) 0;
+  padding-left: var(--spacing-16);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess li {
+  margin-bottom: 0;
+}
+
+/* Bullet markers in brand purple (live: #60579e) */
+main > .section.what-is-linzess-section .columns.what-is-linzess li::marker {
+  color: var(--color-brand-primary-light);
+}
+
+main > .section.what-is-linzess-section .columns.what-is-linzess a {
+  position: relative;
+  display: inline-block;
+  margin-top: 0;
+  padding: 16px 59px 16px 24px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-background-primary, #fff);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
+main > .section.what-is-linzess-section .columns.what-is-linzess a::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: 23px;
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* Footnotes — left-aligned, 12px white, matching live (Sources block).
+   The published page drops the authored `footnote` class, so the Sources
+   block (last default-content-wrapper of the section: a <p>Sources:</p> plus a
+   reference list) is also matched structurally. Both selectors are kept so the
+   styling holds whether or not the class survives publish. */
+main > .section.what-is-linzess-section .footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(p, ol, ul) {
+  max-width: 99.8rem;
+  margin: var(--spacing-12, 12px) auto;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-body);
+  line-height: 1.4;
+  color: var(--color-text-on-dark);
+  text-align: left;
+}
+
+main > .section.what-is-linzess-section .footnote strong,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type strong {
+  font-weight: var(--font-weight-body);
+}
+
+main > .section.what-is-linzess-section ol.footnote,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type :is(ol, ul) {
+  padding-left: var(--spacing-10);
+  list-style-type: decimal;
+}
+
+main > .section.what-is-linzess-section ol.footnote li,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type li {
+  font-size: var(--font-size-body-small);
+  line-height: 1.6rem;
+  color: var(--color-text-on-dark);
+}
+
+/* Reference URLs in the Sources list are plain white citation text on live,
+   not the purple brand link color (which is invisible on the purple bg). */
+main > .section.what-is-linzess-section .footnote a,
+main > .section.what-is-linzess-section > .default-content-wrapper:last-of-type a {
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-on-dark);
+  text-decoration: none;
+}
+
+/* Hero eyebrow (live: Lato 12px/800, uppercase, 24px gap to H1) */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+  margin-bottom: var(--spacing-24);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  text-transform: uppercase;
+}
+
+/* Hero H1 line-height (live: 36px, not the editorial-hero default 0.95) and
+   letter-spacing normal (live has no tracking; the global h1 rule applies
+   -0.02em at >=1024px). */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  line-height: var(--no-hero-h1-line-height, 36px);
+  letter-spacing: normal;
+}
+
+/* Hero H1 wraps to two lines on live ("OTC & PRESCRIPTION" / "TREATMENTS") via
+   an authored <br>. Our content has no <br>, so cap the H1 width to force the
+   same break after "PRESCRIPTION". Line 1 measures ~6.2em at every breakpoint
+   (197px@32px mobile, 246px@40px desktop), so 8em fits line 1 but pushes the
+   longer "TREATMENTS" word to line 2 — matching live's break at all widths. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+  max-width: 8em;
+}
+
+/* The hero-text-container is a centered flex row, so its cmp-container child
+   shrink-wraps to the H1's 8em max-width and gets centered — pushing the text
+   off the left padding (85px instead of 20px at mobile). Force the cmp-container
+   to fill the row so the breadcrumb + H1 anchor to the left edge like live. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+  width: 100%;
+}
+
+/* Live biases the hero text block below the band's vertical center. At desktop
+   (615px band) it sits 247px from top / 217px from bottom; our flex-centered
+   container sits ~15px too high, so nudge it down — margin-top on a
+   center-aligned flex item shifts content down by half the value. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+  margin-top: var(--spacing-30, 3rem);
+}
+
+/* Tablet (744–1023px): nudge the hero text block down to match live's lower
+   placement in the shorter band. Mobile keeps the base 3rem nudge. */
+@media (width >= 744px) and (width <= 1023px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+    margin-top: var(--spacing-20, 2rem);
+  }
+}
+
+/* Mobile (<744px): live drops the hero text further down the shorter band, so
+   nudge the cmp-container down to match. */
+@media (width < 744px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero .cmp-container-x-large {
+    margin-top: var(--spacing-70, 7rem);
+  }
+}
+
+/* Hero bottom curve: the editorial-hero default draws a deep half-circle
+   scoop. Live's curve is actually the white intro section's arc painting up
+   over the hero (the .otc-intro-section::before, which already matches live:
+   130% wide, 255px tall, top radius 100% 100% 0 0). Remove the hero's
+   competing scoop so only the shallow intro arc shows. */
+main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero::before {
+  content: none;
+}
+
+/* Hero band is fluid (>=1024px, desktop image 2048x874): the block default is
+   a fixed 684px tall band, which over-zooms object-fit:cover as the viewport
+   narrows, enlarging the photo. Drive the band height by the desktop image
+   ratio so it shrinks with width and the full scene shows. At 1440 this
+   resolves to ~615px = the already-correct desktop view, so the verified 1440
+   layout is unchanged. Live only swaps to this wide image at >=1024px. */
+@media (width >= 1024px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
+    aspect-ratio: 2048 / 874;
+  }
+
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+/* Mobile + tablet (<1024px): live keeps the near-square mobile image (375x369)
+   through the whole tablet band and sizes the band to its ratio so the full
+   scene shows. The block default (420px fixed + object-fit:cover) crops it.
+   Match live's fluid fit. */
+@media (width < 1024px) {
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
+    aspect-ratio: 375 / 369;
+  }
+
+  main > .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
+
+/* More Like This heading — no bottom margin; columns margin-top provides the
+   ~40px gap to cards (matches live's 43px). Divider ::before keeps top space. */
+main > .section.more-like-this-section :is(.heading-1, h2) {
+  margin: 0 auto;
+}
+
+/* ---- Section 4: More Like This (3 article cards) ----
+   Live adds a 40px row margin below the cards (on top of the section's 100px
+   bottom padding) for ~140px clearance before the CTA section. */
+main > .section.more-like-this-section .columns.more-like-this {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  gap: var(--spacing-16);
+}
+
+/* Mobile: live insets each stacked card ~6px per side within the content
+   column (373px wide at 425px viewport vs our 385px). */
+@media (width < 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    padding: 0 var(--spacing-06);
+  }
+}
+
+/* Live caps each card at 300px and centers the group within the 998px row.
+   Mobile (<768px) keeps the base block's single-column stack. */
+@media (width >= 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    grid-template-columns: repeat(3, 30rem);
+    justify-content: center;
+  }
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item {
+  overflow: hidden;
+  background: var(--color-brand-primary-lighter);
+  border-radius: var(--linz-rounded-corner);
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item > div {
+  margin: 0;
+}
+
+/* Image paragraph fills full card width, flush to the top + side edges */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:has(picture) {
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item picture,
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+/* Compact card image — match live crop ratio (598:347) so cards stay short */
+main > .section.more-like-this-section .columns.more-like-this .columns-item img {
+  aspect-ratio: 598 / 347;
+  object-fit: cover;
+}
+
+/* Title + link text paragraphs sit below the image with card padding
+   (live: 16px horizontal, 20px top, 20px title→link gap, 20px bottom) */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)) {
+  margin: 0;
+  padding: 0 var(--spacing-16);
+}
+
+/* Card title = the paragraph with no image and no link. (Published DOM nests
+   the image, title, and link paragraphs in one cell, so :first-of-type would
+   match the image wrapper, not the title.) */
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
+  padding-top: var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+
+/* Live caps the card title at 16px on desktop — it does NOT follow the
+   section's 16px->18px body step-up that --font-size-article-body applies. */
+@media (width >= 900px) {
+  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
+    font-size: var(--font-size-legal-large);
+  }
+}
+
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):last-of-type {
+  padding-top: var(--spacing-20);
+  padding-bottom: var(--spacing-20);
+}
+
+/* EDS auto-promotes a standalone link to p.button-container > a.button (solid
+   pill). Live shows a plain underlined text link here — neutralize the pill. */
+main > .section.more-like-this-section .columns.more-like-this .button-container {
+  margin: 0;
+}
+
+main > .section.more-like-this-section .columns.more-like-this a,
+main > .section.more-like-this-section .columns.more-like-this a.button {
+  display: inline;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- Section 5: CTA cards (2 items) ---- */
+main > .section.cta-cards-section .columns.cta-cards {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+  margin: var(--spacing-24) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.cta-cards-section .columns.cta-cards a {
+  position: relative;
+  display: inline-block;
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: normal;
+  text-decoration: none;
+}
+
+/* Live's chevron is the abbv-iconFont glyph, absolutely pinned to the right
+   edge and vertically centered (not an inline character after the label). */
+main > .section.cta-cards-section .columns.cta-cards a::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-20);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+/* ============================================================
+   Tackling IBS-C Triggers — section 2: Common Triggers
+   White section. Centered intro + a row of 4 icon+label items.
+   Live: icons height-driven (~238px), 16px Lato purple labels,
+   row at >=1024px (gap 19px), stacked <1024px (gap 40px).
+   ============================================================ */
+main > .section.triggers-section > .default-content-wrapper {
+  max-width: 92rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child) {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+main > .section.triggers-section .columns.triggers {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-40);
+}
+
+main > .section.triggers-section .columns.triggers .columns-item {
+  text-align: center;
+}
+
+/* The image cell is the positioning context for the label overlay — its height
+   equals the image, so the label's top:% resolves against the image regardless
+   of any extra item-box height (e.g. the picture wrapper's default <p> margin
+   on the published DOM). */
+main > .section.triggers-section .columns.triggers .columns-item-image {
+  position: relative;
+}
+
+main > .section.triggers-section .columns.triggers .columns-item-image img {
+  display: block;
+  width: 21.8rem;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  object-fit: fill;
+}
+
+/* Neutralize the default bottom margin on the picture wrapper <p> so the image
+   cell stays exactly image-height (published DOM wraps the picture in its own
+   <p> which carries a ~30px bottom margin, inflating the box). */
+main > .section.triggers-section .columns.triggers .columns-item-image p:has(picture) {
+  margin: 0;
+}
+
+/* Label overlays the lower part of the icon's translucent blob (live sits it
+   below the illustration, in the empty lower-blob area). Live centers the text
+   at ~81% of the image height, leaving ~11% space below. Absolutely positioned
+   against the image cell. Scope to the label paragraph only — not the <p> that
+   wraps the icon picture. */
+main > .section.triggers-section .columns.triggers .columns-item-image p:not(:has(picture)) {
+  position: absolute;
+  top: 81%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  color: var(--color-brand-primary);
+}
+
+/* Desktop (>=1024px): 4 icons in a row, height-capped uniformly. */
+@media (width >= 1024px) {
+  main > .section.triggers-section .columns.triggers {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--spacing-20);
+  }
+
+  main > .section.triggers-section .columns.triggers .columns-item {
+    flex: 1 1 0;
+  }
+
+  main > .section.triggers-section .columns.triggers .columns-item-image img {
+    width: auto;
+    height: 24rem;
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
+   Tackling IBS-C Triggers — section 3: Your Trigger Cheat Sheet
+   Dark-purple section. Centered intro + 3 image+story cards
+   (image left / text right at >=1024px, stacked <1024px), then
+   a white-text Sources reference list.
+   ============================================================ */
+main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type {
+  max-width: 69rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child) {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  line-height: var(--line-height-body);
+  color: var(--color-text-on-dark);
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet {
+  max-width: 67rem;
+  margin: var(--spacing-40) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-40);
+}
+
+/* Card: single cell holding image, heading, story, and the "A Better Way"
+   strategies (one xwalk column item = one cell, so everything is authored in
+   the same cell and renders as flat siblings). Live shows a white sub-card for
+   the image/heading/story with a light-purple band for the strategies below;
+   recreate that two-tone look with a white card + a purple strategies band that
+   bleeds to the card edges. overflow:hidden clips the bleed to the card radius. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background-primary, #fff);
+  border-radius: var(--linz-rounded-corner);
+  overflow: hidden;
+}
+
+/* The local renderer wraps the whole cell in a single <p> (which contains the
+   picture); flatten ONLY that wrapper with display:contents so its children
+   become the card's flex items. Scope to :has(picture) so it never matches the
+   strategies lead-in <p> on the published DOM (where elements are direct
+   children and the lead-in <p> must keep its own box for the band/clear). */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: var(--spacing-24);
+  text-align: left;
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image > p:has(picture) {
+  display: contents;
+}
+
+/* Image is centered at the top of the card; heading/story below are
+   left-aligned (live). Spacing controlled by margins, not a flex gap, so the
+   heading-to-story gap stays tight (10px) while the image keeps breathing room. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image picture {
+  flex: 0 0 auto;
+  align-self: center;
+  margin-bottom: var(--spacing-24);
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image img {
+  display: block;
+  width: 18.2rem;
+  height: auto;
+  object-fit: fill;
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3 {
+  margin: 0 0 var(--spacing-10);
+  font-family: var(--body-font-family);
+  font-size: 1.872rem;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-body);
+  color: var(--color-brand-primary);
+  text-transform: none;
+}
+
+/* Story paragraph — body grey. Selectors use descendant `p` (not `> p p`) so
+   they match both the published DOM (elements directly in the cell) and the
+   local renderer (which wraps them in a single <p>). The picture-wrapper <p>
+   and the strategies lead-in <p> are excluded. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)) {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* "A Better Way…" lead-in (the <p> that holds a <strong>) — purple. It opens
+   the light-purple strategies band: negative margins bleed the band full-width
+   to the card edges (cancelling the cell's 24px padding), and top padding adds
+   the gap above the lead-in. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong) {
+  margin: var(--spacing-24) calc(-1 * var(--spacing-24)) 0;
+  padding: var(--spacing-24) var(--spacing-24) var(--spacing-10);
+  background-color: var(--color-brand-primary-lighter);
+  color: var(--color-brand-primary);
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p strong {
+  font-weight: var(--font-weight-bold);
+}
+
+/* List continues the light-purple band; negative margins match the lead-in so
+   the band reads as one block, and bottom padding closes it at the card edge. */
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image ul {
+  margin: 0 calc(-1 * var(--spacing-24)) calc(-1 * var(--spacing-24));
+  padding: 0 var(--spacing-24) var(--spacing-24) calc(var(--spacing-24) + var(--spacing-14));
+  background-color: var(--color-brand-primary-lighter);
+  list-style-type: disc;
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
+  margin: 0 0 var(--spacing-10);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li:last-child {
+  margin-bottom: 0;
+}
+
+/* Sources reference list (white, 12px, numbered) */
+main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type {
+  max-width: 92rem;
+  margin: var(--spacing-40) auto 0;
+}
+
+main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(p, li) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  line-height: 1.6rem;
+  color: var(--color-text-on-dark);
+}
+
+main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type p strong {
+  font-weight: var(--font-weight-body);
+}
+
+/* EDS auto-links the citation URLs; their default brand-purple matches the
+   dark-purple section background and renders invisible, and the base link
+   styles enlarge them. Match the surrounding citation text (live): white, same
+   small size/line-height, no underline. */
+main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(p, li) a {
+  color: var(--color-text-on-dark);
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+}
+
+main > .section.cheat-sheet-section > .default-content-wrapper:last-of-type :is(ol, ul) {
+  margin: var(--spacing-12) 0;
+  padding-left: var(--spacing-10);
+  list-style-type: decimal;
+}
+
+/* Desktop (>=1024px): image left, heading + story stacked tightly on the
+   right. The renderer flattens the cell into one <p> (display:contents), so
+   the picture/h3/story are siblings. Float the image so the text wraps to its
+   right and the heading sits directly above its story (no row distribution). */
+@media (width >= 1024px) {
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image {
+    display: block;
+    padding-top: 35px;
+  }
+
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image picture {
+    float: left;
+    width: 18.2rem;
+    margin-right: var(--spacing-24);
+    margin-bottom: 0;
+  }
+
+  /* overflow:hidden establishes a block formatting context so the heading and
+     story sit in the remaining column beside the float (a fixed ~416px width)
+     instead of wrapping back under the image. */
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image h3,
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)) {
+    overflow: hidden;
+    text-align: left;
+  }
+
+  /* The strategies band clears the floated image so it spans the full card
+     width below (live), rather than sitting in the narrow text column. */
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong) {
+    clear: both;
+  }
+}
+
+@media (width < 744px) {
+  main > .section.hero-container .hero:is(.linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  /* Mobile: section headings shrink 40px -> 32px to match live */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
+  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  /* Mobile: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px.
+     The cheat story/lead selectors mirror the base rules' specificity
+     (:not(:has(strong)) / :has(strong)) so they win inside this media query. */
+  main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
+  main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
+  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
+    font-size: var(--font-size-body);
+  }
+
+  /* Mobile: column labels (Fiber etc.) and CTA card titles shrink 24px -> 18px */
+  main > .section.otc-intro-section .columns.how-they-work .columns-item p strong,
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    font-size: var(--font-size-article-card-title);
+  }
+
+  /* Mobile: live centers the "How LINZESS Can Help" CTA button (desktop left) */
+  main > .section.what-is-linzess-section .columns.what-is-linzess p:has(> a) {
+    text-align: center;
+  }
+}
+
+/* Tablet (744–1023px): live keeps the mobile type scale through tablet and only
+   steps up to the larger desktop sizes at >=1024px. Our build otherwise jumps to
+   desktop sizes at >=744px, so the tablet headings/labels render too large.
+   Replicate live's measured tablet type (hero + section headings 32/30; pill
+   labels + CTA card titles 18px) — bounded so mobile (<744) and desktop (>=1024)
+   are untouched. */
+@media (width >= 744px) and (width <= 1023px) {
+  main > .section.hero-container .hero:is(.linzess-behind-nav-linzess-editorial-hero) h1 {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
+  main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+  main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+    font-size: var(--font-size-h2-hero);
+    line-height: var(--line-height-h2-hero);
+  }
+
+  /* Tablet: intro body + trigger labels + cheat card story/strategies shrink 16px -> 14px.
+     Story/lead selectors mirror the base rules' specificity so they win here. */
+  main > .section.triggers-section > .default-content-wrapper p:not(.heading-1):not(:first-child),
+  main > .section.triggers-section .columns.triggers .columns-item p:not(:has(picture)),
+  main > .section.cheat-sheet-section > .default-content-wrapper:first-of-type p:not(.heading-1):not(:first-child),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:not(:has(picture)):not(:has(strong)),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image p:has(strong),
+  main > .section.cheat-sheet-section .columns.cheat-sheet .columns-item-image li {
+    font-size: var(--font-size-body);
+  }
+
+  main > .section.otc-intro-section .columns.how-they-work .columns-item p strong,
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    font-size: var(--font-size-article-card-title);
+  }
+
+  /* Live stacks both card grids 1-up through the tablet band and only goes
+     multi-column at >=1024px. Our base columns block + linzess overrides go
+     multi-column at >=768px, so force single-column here to match live. */
+  main > .section.more-like-this-section .columns.more-like-this,
+  main > .section.cta-cards-section .columns.cta-cards {
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  /* Trigger icons stay stacked + centered through tablet (live). The base
+     columns block sets align-items:start at >=768px, which pins the flex-column
+     items left; re-center them here without affecting the desktop row layout. */
+  main > .section.triggers-section .columns.triggers {
+    align-items: center;
+  }
+}
+
+/* Stacked range (<1024px, mobile + tablet): live applies the same CTA spacing
+   across every stacked width — the divider drops 80px below the first card's
+   content, then a 60px grid gap to the second card (~160px inter-card rhythm),
+   an 18px title margin, and the Learn More pill carries no vertical margin with
+   24px left padding. Our base grid uses a 24px gap, 24px title margin, and a
+   12px margin + 32px left padding, which collapses the rhythm at mobile. */
+@media (width <= 1023px) {
+  main > .section.cta-cards-section .columns.cta-cards {
+    gap: var(--spacing-60);
+  }
+
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-right: none;
+    border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+    padding-bottom: var(--spacing-80);
+  }
+
+  main > .section.cta-cards-section .columns.cta-cards .columns-item p:not(:has(a)) {
+    margin: var(--spacing-18) 0;
+  }
+
+  main > .section.cta-cards-section .columns.cta-cards p:has(> a) {
+    margin: 0;
+  }
+
+  main > .section.cta-cards-section .columns.cta-cards a {
+    margin: 0;
+    padding-left: var(--spacing-24);
+  }
+}
+
+@media (width >= 768px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess {
+    gap: var(--spacing-48);
+  }
+}
+
+/* Vertical divider between the two CTA columns (live: 1px muted purple).
+   Only at desktop (>=1024px) where the CTA cards sit 2-up; the tablet band
+   stacks them 1-up with a horizontal divider (see the 744-1023px band). */
+@media (width >= 1024px) {
+  main > .section.cta-cards-section .columns.cta-cards .columns-item:first-child {
+    border-right: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+    border-bottom: none;
+  }
+}
+
+@media (width >= 900px) {
+  /* Desktop/laptop body text steps up to 16px (mobile + tablet stay 14px) */
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+    --font-size-article-body: 16px;
+  }
+
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 255px;
   }
 }
