@@ -2,7 +2,7 @@ import { resolveImageReference } from '../../scripts/scripts.js';
 import decorateExternalLinksUtility from '../../scripts/utils.js';
 
 // Promo card swaps to the desktop artwork at tablet (matches live). The savings
-// card keeps the curved mobile artwork all the way up to the 986px desktop
+// card keeps the curved mobile artwork all the way up to the 985px desktop
 // breakpoint, so it gets a wider media query.
 const MOBILE_IMAGE_MEDIA = '(max-width: 743px)';
 const SAVINGS_MOBILE_IMAGE_MEDIA = '(max-width: 985px)';
