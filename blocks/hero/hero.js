@@ -282,9 +282,35 @@ async function initVideo(videoRow, imageCell, block) {
   (imageCell || block.querySelector('div')).appendChild(container);
 }
 
+// The find-relief hero headline is authored as two lines via a <br>
+// ("Chronic Constipation<br>Calls for a Conversation"). The md2jcr publish
+// pipeline flattens headings to a single markdown line and drops the <br>,
+// fusing the words ("ConstipationCalls"). Re-insert the break at the
+// lowercase→uppercase seam, but only when no separator survived (idempotent —
+// skips if a <br> or whitespace is already present).
+function restoreFindReliefHeadingBreak(block) {
+  const heading = block.querySelector('h1');
+  if (!heading || heading.querySelector('br')) return;
+  const node = [...heading.childNodes].find(
+    (n) => n.nodeType === Node.TEXT_NODE && /[a-z][A-Z]/.test(n.textContent),
+  );
+  if (!node) return;
+  const match = node.textContent.match(/^(.*?[a-z])([A-Z].*)$/s);
+  if (!match) return;
+  const [, before, after] = match;
+  heading.insertBefore(document.createTextNode(before), node);
+  heading.insertBefore(document.createElement('br'), node);
+  heading.insertBefore(document.createTextNode(after), node);
+  node.remove();
+}
+
 export default async function decorate(block) {
   const section = block.closest('.section');
   addSectionClasses(block, section);
+
+  if (block.classList.contains(LINZESS_FIND_RELIEF_HERO_CLASS)) {
+    restoreFindReliefHeadingBreak(block);
+  }
 
   const {
     imageRow, textRow, videoRow, mobileImageRow, indicationRow, captionRow,
