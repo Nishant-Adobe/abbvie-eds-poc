@@ -1434,12 +1434,25 @@ body main .section.instructions-panel.columns-container .columns.instructions-ca
 .columns.instructions-cards .heading-2 {
   margin: 0 0 var(--spacing-08, 0.8rem);
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-h2-hero, 2.4rem);
+  font-size: 2.4rem;
   font-weight: 700;
+  line-height: 1.2;
   color: var(--linz-dark-purple, #422e83);
 }
 
-.columns.instructions-cards .footnote {
+/* Body copy: live uses 16px with tight 8px paragraph rhythm (not the 18px /
+   30px gap the base columns rule applies). Exclude the heading paragraph. */
+.columns.instructions-cards > .columns-item .columns-item-content p:not(.heading-2) {
+  margin: 0 0 var(--spacing-08, 0.8rem);
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.columns.instructions-cards > .columns-item .columns-item-content p:last-child {
+  margin-bottom: 0;
+}
+
+.columns.instructions-cards > .columns-item .columns-item-content p.footnote {
   font-size: var(--font-size-12, 1.2rem);
 }
 

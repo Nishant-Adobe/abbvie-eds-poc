@@ -1374,10 +1374,12 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
   border-right: 1px solid rgb(148 142 190);
 }
 
-/* Headings white, ~24px (override the per-column c-linz-dark-purple class). */
-.cards-grid.whylinzess-explore .heading-2,
-.cards-grid.whylinzess-explore .c-linz-dark-purple,
-.cards-grid.whylinzess-explore p:not(.cta) {
+/* Headings white, ~24px (override the per-column c-linz-dark-purple class).
+   Scoped through .abbv-image-text-display-v2 so it outranks the base
+   icon-image-card heading rule (which otherwise forces 18px). */
+.cards-grid.whylinzess-explore .abbv-image-text-display-v2 .heading-2,
+.cards-grid.whylinzess-explore .abbv-image-text-display-v2 .c-linz-dark-purple,
+.cards-grid.whylinzess-explore .abbv-image-text-display-v2 p:not(.cta) {
   color: #fff;
   font-family: var(--body-font-family);
   font-size: 24px;
