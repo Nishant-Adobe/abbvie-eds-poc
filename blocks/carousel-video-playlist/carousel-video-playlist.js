@@ -73,7 +73,14 @@ function buildThumbnailCard(item, index, isActive, isCardsLayout) {
 }
 
 function isItemRow(row) {
-  return row.children.length >= 2 && row.querySelector('picture');
+  // An item row has multiple cells (videoId, thumbnail, title, transcript, …),
+  // while every config row is a single-cell wrapper. Detect items by a picture
+  // OR by a Brightcove videoId (6+ digit number) in the first cell — the poster
+  // <picture> is rewritten to an <a> link on publish, so it cannot be required.
+  if (row.children.length < 2) return false;
+  if (row.querySelector('picture')) return true;
+  const firstCell = row.children[0]?.textContent?.trim() || '';
+  return /^\d{6,}$/.test(firstCell);
 }
 
 function readBlockConfig(block) {
