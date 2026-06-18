@@ -14,6 +14,9 @@ function normalize(value) {
 function getSectionIdentifier(section) {
   if (section.id) return section.id;
   if (section.dataset.aueLabel) return section.dataset.aueLabel;
+  if (section.dataset.tabname) return section.dataset.tabname;
+  if (section.dataset.tabName) return section.dataset.tabName;
+  if (section.dataset.name) return section.dataset.name;
 
   const meta = section.querySelector('.section-metadata');
   if (meta) {
@@ -101,8 +104,12 @@ export default async function decorate(block) {
       wrapper.setAttribute('aria-labelledby', button.id);
       wrapper.setAttribute('aria-hidden', !shouldActivate);
 
-      const insertBefore = matched[0];
-      main.insertBefore(wrapper, insertBefore);
+      const insertRef = matched[0];
+      if (insertRef.parentNode === main) {
+        main.insertBefore(wrapper, insertRef);
+      } else {
+        main.append(wrapper);
+      }
       matched.forEach((section) => {
         section.dataset.tabsGrid = 'true';
         if (shouldActivate) section.style.display = '';

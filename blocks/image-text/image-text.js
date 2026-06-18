@@ -24,7 +24,16 @@
 
 const MOBILE_MQ = '(max-width: 599px)';
 
-const ROW = {
+function getRowOffset(rows) {
+  const first = rows[0]?.firstElementChild;
+  if (!first) return 0;
+  if (first.querySelector('picture, img')) return 0;
+  const text = first.textContent.trim();
+  if (!text || text === '-') return 1;
+  return 0;
+}
+
+const BASE_ROW = {
   IMAGE: 0,
   MOBILE_IMAGE: 1,
   CONTENT: 2,
@@ -78,20 +87,25 @@ function extractPicture(row) {
 
 export default function decorate(block) {
   const rows = [...block.querySelectorAll(':scope > div')];
+  const offset = getRowOffset(rows);
+  const ROW = Object.fromEntries(
+    Object.entries(BASE_ROW).map(([k, v]) => [k, v + offset]),
+  );
 
   // --- Extract DOM nodes before clearing the block ---
   const picture = extractPicture(rows[ROW.IMAGE]);
   const mobilePicture = extractPicture(rows[ROW.MOBILE_IMAGE]);
   const contentCell = rows[ROW.CONTENT]?.firstElementChild;
 
-  // --- Extract text values ---
-  const ctaLabel = getCellText(rows[ROW.CTA_LABEL]);
+  // --- Extract text values (treat '-' as empty placeholder) ---
+  const raw = (r) => { const t = getCellText(r); return t === '-' ? '' : t; };
+  const ctaLabel = raw(rows[ROW.CTA_LABEL]);
   const ctaHrefLink = rows[ROW.CTA_HREF]?.querySelector('a');
-  const ctaHref = ctaHrefLink?.href || getCellText(rows[ROW.CTA_HREF]);
-  const ctaTarget = getCellText(rows[ROW.CTA_TARGET]) || '_self';
-  const modalId = getCellText(rows[ROW.MODAL_ID]);
-  const anchorId = getCellText(rows[ROW.ANCHOR_ID]);
-  const analyticsId = getCellText(rows[ROW.ANALYTICS_ID]);
+  const ctaHref = ctaHrefLink?.href || raw(rows[ROW.CTA_HREF]);
+  const ctaTarget = raw(rows[ROW.CTA_TARGET]) || '_self';
+  const modalId = raw(rows[ROW.MODAL_ID]);
+  const anchorId = raw(rows[ROW.ANCHOR_ID]);
+  const analyticsId = raw(rows[ROW.ANALYTICS_ID]);
 
   // --- Apply anchor ID to block ---
   if (anchorId) block.id = anchorId;

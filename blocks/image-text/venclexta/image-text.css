@@ -1,267 +1,101 @@
-/* ============================================================
-   Safety Bar - Base Styles
-   Variants: default (left-aligned), center, split (2-col collapsed)
-   All variants: bottom sticky, expandable with + / - toggle
-   ============================================================ */
+/* Image with Text — mobile-first two-column layout */
 
+/* ── Base: single-column stack on mobile ── */
 
-/* === Fixed section wrapper === */
-
-
-.safety-bar-section {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: var(--z-index-safety-bar);
-  pointer-events: none;
-  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
-}
-
-
-/* Hide the authored in-page safety bar source block at all times.
-   JS reads its content and renders the sticky clone separately. */
-
-
-.safety-bar-container {
-  display: none;
-}
-
-
-.safety-bar-section.is-hidden {
-  transform: translateY(110%);
-}
-
-
-/* === Core block - auto-sizes to content, no fixed height === */
-
-
-.safety-bar {
-  /* Block-scoped token defaults — override in brand _safety-bar.css */
-  --safety-bar-bg: var(--background-color);
-  --safety-bar-border: var(--color-border);
-  --safety-bar-toggle-bg: var(--background-color);
-  --safety-bar-toggle-color: currentcolor;
-  --safety-bar-toggle-expanded-bg: var(--color-navy-dark);
-  --safety-bar-toggle-expanded-color: var(--color-text-on-dark);
-  --safety-bar-max-height-expanded: 60vh;
-  --safety-bar-max-height-expanded-desktop: 50vh;
-
-  pointer-events: all;
-  background-color: var(--safety-bar-bg);
-  border-top: var(--border-width-thick) solid var(--safety-bar-border);
-  position: relative;
-  box-shadow: var(--shadow-safety-bar);
-}
-
-
-/* === Collapsed / abbreviated area === */
-
-
-.safety-bar-abbreviated {
-  padding: var(--spacing-12) var(--spacing-50) var(--spacing-12) var(--spacing-24);
-  font-size: var(--body-font-size-xs);
-  line-height: var(--line-height-relaxed);
-  position: relative;
-  text-align: left;
-}
-
-
-/* === Full ISI / expanded content === */
-
-
-.safety-bar-full {
-  padding: var(--spacing-16) var(--spacing-24);
-  font-size: var(--body-font-size-xs);
-  line-height: var(--line-height-loose);
-  display: none;
-  text-align: left;
-  max-height: var(--safety-bar-max-height-expanded);
-  overflow-y: auto;
-}
-
-
-/* === Toggle button: top-right, circle === */
-
-
-.safety-bar-toggle {
-  position: absolute;
-  top: var(--spacing-12);
-  right: var(--spacing-12);
-  background-color: var(--safety-bar-toggle-bg);
-  border: var(--border-width-default) solid var(--safety-bar-toggle-color);
-  color: var(--safety-bar-toggle-color);
-  cursor: pointer;
-  font-size: var(--spacing-18);
-  width: var(--spacing-18);
-  height: var(--spacing-18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  padding: 0;
-  line-height: 1;
-}
-
-
-/* Expanded: filled navy circle, white - */
-
-
-.safety-bar-toggle[aria-expanded='true'] {
-  background-color: var(--safety-bar-toggle-expanded-bg);
-  border-color: var(--safety-bar-toggle-expanded-bg);
-  color: var(--safety-bar-toggle-expanded-color);
-}
-
-
-.safety-bar-toggle::after {
-  align-self: end;
-  color: var(--color-background-footer);
-  content: '+';
-}
-
-
-.safety-bar-toggle[aria-expanded='true']::after {
-  color: var(--color-text-on-dark);
-  content: '-';
-  display: inline-block;
-  transform: scaleX(2);
-}
-
-
-/* ============================================================
-   Inline ISI - in-page instance shows only full ISI content
-   ============================================================ */
-
-
-.safety-bar-inline .safety-bar {
-  transform: none;
-  box-shadow: none;
-  position: static;
-}
-
-
-.safety-bar-inline .safety-bar-toggle {
-  display: none;
-}
-
-
-.safety-bar-inline .safety-bar-full {
-  display: block;
-  max-height: none;
-  overflow-y: visible;
-}
-
-
-.safety-bar-inline .safety-bar-abbreviated {
-  display: none;
-}
-
-
-.safety-bar-inline .safety-bar-abbreviated-col2 {
-  display: none;
-}
-
-
-.safety-bar-inline .safety-bar-abbreviated-col2-row {
-  display: none;
-}
-
-
-.safety-bar-inline.safety-bar-section {
-  position: static;
-}
-
-
-/* ============================================================
-   Variant: center - collapsed content is center aligned
-   ============================================================ */
-
-
-.safety-bar.center .safety-bar-abbreviated {
-  text-align: center;
-}
-
-
-/* ============================================================
-   Variant: split - collapsed is two-column grid
-   ============================================================ */
-
-
-.safety-bar.split .safety-bar-abbreviated {
+.image-text {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--spacing-24);
-  text-align: left;
-  padding-right: var(--spacing-50);
+  margin-bottom: var(--spacing-80);
+  position: relative;
 }
 
+/* Reset the .abbvie-container div { grid-column: 1 / span N } override
+   so our own grid places the two children side by side. */
 
-.safety-bar.split .safety-bar-col1,
-.safety-bar.split .safety-bar-col2 {
-  min-width: 0;
+.image-text > div {
+  grid-column: auto;
 }
 
+.image-text .image-text-image-col {
+  overflow: hidden;
+}
 
-.safety-bar.is-expanded .safety-bar-full {
+.image-text .image-text-image-col picture,
+.image-text .image-text-image-col img {
   display: block;
+  width: 100%;
+  height: auto;
 }
 
-
-.safety-bar.is-expanded .safety-bar-abbreviated {
-  display: none;
+.image-text .image-text-content-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-16);
 }
 
+/* ── Tablet+: two-column layout ──
+   Default DOM order: image-col first, content-col second.
+   Column 1 = image, Column 2 = content. */
 
-.safety-bar.split.is-expanded .safety-bar-abbreviated {
-  display: none;
-}
-
-
-/* ============================================================
-   Responsive breakpoints
-   ============================================================ */
-
-
-/* === Mobile: fixed collapsed/expanded heights === */
-
-
-@media (width < 1024px) {
-  .safety-bar-section:not(.safety-bar-inline) .safety-bar:not(.is-expanded) {
-    height: 100px;
-    overflow: hidden;
-  }
-
-  .safety-bar-section:not(.safety-bar-inline) .safety-bar.is-expanded {
-    height: 60vh;
-  }
-
-  .safety-bar.is-expanded .safety-bar-full {
-    max-height: 100%;
-    height: 100%;
+@media (width >= 744px) {
+  .image-text {
+    grid-template-columns: 1fr 1fr;     /* image=50%, content=50% */
+    gap: var(--spacing-32);
   }
 }
-
 
 @media (width >= 1024px) {
-  .safety-bar-abbreviated {
-    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
-  }
-
-  .safety-bar-toggle {
-    right: var(--spacing-16);
-  }
-
-  .safety-bar-full {
-    padding: var(--spacing-20) var(--spacing-55);
-    max-height: var(--safety-bar-max-height-expanded-desktop);
-  }
-
-  .safety-bar.split .safety-bar-abbreviated {
-    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
+  .image-text {
+    gap: var(--spacing-48);
   }
 }
 
+/* ── Image size variants (default layout: image col 1, content col 2) ── */
+
+@media (width >= 744px) {
+  .image-text.image-text-image-large  { grid-template-columns: 3fr 2fr; } /* image=60% */
+  .image-text.image-text-image-medium { grid-template-columns: 2fr 3fr; } /* image=40% */
+  .image-text.image-text-image-small  { grid-template-columns: 1fr 2fr; } /* image=33% */
+}
+
+/* ── Variant: Reverse (text left, image right) ──
+   JS appends content-col FIRST, image-col SECOND for this variant,
+   so col 1 = content, col 2 = image — no CSS `order` needed. */
+
+@media (width >= 744px) {
+  /* Size variants: col 1 = content track, col 2 = image track */
+  .image-text.image-text-reverse.image-text-image-large  { grid-template-columns: 2fr 3fr; } /* content=40%, image=60% */
+  .image-text.image-text-reverse.image-text-image-medium { grid-template-columns: 3fr 2fr; } /* content=60%, image=40% */
+  .image-text.image-text-reverse.image-text-image-small  { grid-template-columns: 2fr 1fr; } /* content=67%, image=33% */
+}
+
+/* ── Variant: Scale (CSS transform on image hover) ── */
+
+.image-text.image-text-scale .image-text-image-col img {
+  transition: transform 0.3s ease;
+}
+
+/* Use :hover on the block so the scale fires even when the stretched-link overlay
+   intercepts pointer events over the image column. */
+
+.image-text.image-text-scale:hover .image-text-image-col img {
+  transform: scale(1.05);
+}
+
+/* ── Variant: Stretched Link (entire card is the CTA link) ── */
+
+.image-text.image-text-stretched .button-container .button {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: none;
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+  z-index: 2;
+}
 
 /*
  * Copyright 2020 Adobe. All rights reserved.
@@ -275,19 +109,14 @@
  * governing permissions and limitations under the License.
  */
 
-
 /* Media Query Breakpoints (min-width, mobile-first)
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
-
 @custom-media --bp-tablet (min-width: 744px);
-
 
 @custom-media --bp-desktop (min-width: 1024px);
 
-
 @custom-media --bp-wide (min-width: 1440px);
-
 
 :root {
 /* -----------------------------------------------------------
@@ -722,7 +551,6 @@
   --cdp-letter-spacing-title: 0.02em;
 }
 
-
 @media (--bp-tablet) {
   :root {
     --border-top-radius: 6.4rem;
@@ -730,7 +558,6 @@
     --hero-tall-image-container-height: 41.6rem;
   }
 }
-
 
 @media (--bp-desktop) {
   :root {
@@ -740,14 +567,12 @@
   }
 }
 
-
 /* ============================================================
    VENCLEXTA DTC — Brand Token Overrides
    Source: venclexta.com/aml (Platform C)
    Framework Font: Graphik family
    Brand Font: Red Hat Display (brand-specific elements)
    ============================================================ */
-
 
 :root {
   /* ---- Color: Brand Primary ---- */
@@ -966,144 +791,50 @@
   --hero-link-decoration-thickness: 0.12rem;
 }
 
+/* Venclexta — Image Text overrides */
 
-/* Venclexta — Safety Bar Brand Overrides */
-
-
-.safety-bar-section {
-  max-width: 100vw;
-  width: 100%;
-}
-
-
-.safety-bar {
-  position: relative;
-  width: 100%;
-  max-width: none;
-  background-color: #fff;
-  border-top: 2px solid #999;
-  color: #404040;
-  font-family: 'Red Hat Display', sans-serif;
-  padding: 0;
-  margin: 0;
-}
-
-
-.safety-bar .safety-bar-abbreviated {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 10px 50px 10px 20px;
+.image-text,
+.image-with-text {
   display: flex;
+  align-items: flex-start;
   gap: 20px;
-  position: relative;
+  max-width: 1180px;
+  margin: 40px auto 0;
+  padding: 0 20px;
 }
 
-
-/* Collapsed-state fade overlay — solid #f3f3f3 at bottom fading to
-   transparent at top, matching live venclexta.com floating safety bar. */
-
-
-.safety-bar:not(.is-expanded) .safety-bar-abbreviated::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 50px;
-  background: linear-gradient(to top, #f3f3f3 0%, rgb(255 255 255 / 0%) 100%);
-  pointer-events: none;
+.image-text .image-text-image-col,
+.image-with-text .image-text-image-col {
+  flex: 0 0 auto;
+  width: 50px;
 }
 
+.image-text .image-text-image-col img,
+.image-with-text .image-text-image-col img {
+  width: 50px;
+  height: auto;
+}
 
-.safety-bar .safety-bar-abbreviated>div {
+.image-text .image-text-content-col,
+.image-with-text .image-text-content-col {
   flex: 1;
 }
 
-
-.safety-bar .safety-bar-full {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 16px 20px;
-}
-
-
-.safety-bar h3 {
-  font-size: 18.72px;
-  font-weight: 700;
-  color: #005272;
-  line-height: normal;
-  margin-bottom: 0;
-}
-
-
-.safety-bar h4 {
-  font-size: 16px;
-  font-weight: 700;
-  color: #005272;
-  line-height: normal;
-}
-
-
-.safety-bar p {
-  font-size: 14.4px;
-  font-weight: 400;
-  color: #404040;
-  line-height: 20.8px;
-  margin-bottom: 0;
-}
-
-
-.safety-bar-abbreviated h2,
-.safety-bar-abbreviated h3,
-.safety-bar-abbreviated strong,
-.safety-bar-abbreviated b {
-  color: #005272;
-}
-
-
-.safety-bar-toggle {
-  border-color: #005272;
-  color: #005272;
-}
-
-
-.safety-bar.is-expanded .safety-bar-full h2,
-.safety-bar.is-expanded .safety-bar-full h3 {
-  color: #005272;
+.image-text .image-text-content-col h2,
+.image-with-text .image-text-content-col h2 {
   font-family: 'Red Hat Display', sans-serif;
+  font-size: 24px;
   font-weight: 700;
-}
-
-
-.safety-bar.is-expanded .safety-bar-full strong,
-.safety-bar.is-expanded .safety-bar-full b {
   color: #005272;
+  margin: 0 0 15px;
+  line-height: 28px;
 }
 
-
-.safety-bar.split.block {
-  max-width: 1180px;
-  margin: 0 auto;
-}
-
-
-@media (width < 730px) {
-  .safety-bar.split .safety-bar-abbreviated {
-    grid-template-columns: 1fr;
-  }
-
-  .safety-bar-col1 {
-    display: none;
-  }
-
-  .safety-bar.split.block {
-    padding: 0 15px;
-  }
-}
-
-
-@media (width >=1024px) {
-  .safety-bar.split .safety-bar-abbreviated {
-    max-height: 140px;
-  }
+.image-text .image-text-content-col p,
+.image-with-text .image-text-content-col p {
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #404040;
+  margin: 0 0 10px;
 }
