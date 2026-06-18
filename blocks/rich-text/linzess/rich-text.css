@@ -861,7 +861,8 @@
 /* stylelint-disable no-descending-specificity */
 
 .rich-text.savings-heading,
-.rich-text.already-prescribed-heading {
+.rich-text.already-prescribed-heading,
+.rich-text.instructions-heading {
   max-width: 99.8rem;
   margin: 0 auto;
   text-align: center;
@@ -869,7 +870,8 @@
 }
 
 .rich-text.savings-heading .divider,
-.rich-text.already-prescribed-heading .divider {
+.rich-text.already-prescribed-heading .divider,
+.rich-text.instructions-heading .divider {
   display: block;
   width: 6.4rem;
   height: 0.5rem;
@@ -879,7 +881,8 @@
 }
 
 .rich-text.savings-heading .heading-1,
-.rich-text.already-prescribed-heading .heading-1 {
+.rich-text.already-prescribed-heading .heading-1,
+.rich-text.instructions-heading .heading-1 {
   margin: 0 0 var(--spacing-16, 1.6rem);
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
   font-size: var(--font-size-article-heading, 4rem);
@@ -901,7 +904,8 @@
 
 /* ── Footnote / legal copy (savings + tout disclaimers) ──────────────────
    Live: 12px gray Lato, left-aligned, normal leading, centered 998px column
-   with side padding. Scoped to the footnote rich-text variant. */
+   with side padding, and NO top border (base rich-text.footnote adds a blue
+   one — reset it). Scoped to the footnote rich-text variant. */
 
 /* stylelint-disable no-descending-specificity */
 
@@ -909,11 +913,12 @@
   max-width: 99.8rem;
   margin: 0 auto;
   padding: 0 var(--spacing-48, 4.8rem);
+  border-top: none;
   text-align: left;
 }
 
 .rich-text.footnote p {
-  margin: 0 0 var(--spacing-10, 1rem);
+  margin: 0 0 var(--font-size-12, 1.2rem);
   font-size: var(--font-size-12, 1.2rem);
   line-height: normal;
   color: var(--color-text-body, #4d4d4f);

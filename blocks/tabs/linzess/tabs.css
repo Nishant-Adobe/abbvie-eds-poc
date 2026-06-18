@@ -112,6 +112,57 @@
   max-width: none;
 }
 
+/* ============================================================
+   INSTRUCTIONS variant — title + tab bar + panels read as ONE
+   white rounded card (live: .abbv-container.background-white
+   .rounded-corners.max-auto.margin-top-40 — 998px, 16px radius)
+   ============================================================ */
+
+/* Card TOP: holds centered title + light-purple tab bar */
+.section.instructions-tabs.tabs-container {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  background: var(--background-color);
+  border-radius: var(--linz-rounded-corner) var(--linz-rounded-corner) 0 0;
+  padding: var(--spacing-48) var(--spacing-48) 0;
+}
+
+/* Card BOTTOM: the two tab panels (siblings of the container) */
+.section.instructions-tabs.tabs-container ~ .tabs-panel {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  background: var(--background-color);
+  border-radius: 0 0 var(--linz-rounded-corner) var(--linz-rounded-corner);
+  padding: var(--spacing-24) var(--spacing-48) var(--spacing-48);
+}
+
+/* Gap below the tab bar before the panel content */
+.section.instructions-tabs.tabs-container .tabs-wrapper {
+  margin-top: var(--spacing-30);
+}
+
+/* Dosing cards fill the card content area (no overflow past padding) */
+.section.instructions-tabs.tabs-container ~ .tabs-panel .columns.instructions-cards {
+  max-width: none;
+}
+
+/* Mobile (≤599px): card keeps 16px side gutters, tighter padding,
+   thin center-aligned tab bar (live: 358px card, 16px rich-text pad) */
+@media (width <= 599px) {
+  .section.instructions-tabs.tabs-container {
+    margin-left: var(--spacing-16);
+    margin-right: var(--spacing-16);
+    padding: var(--spacing-30) var(--spacing-16) 0;
+  }
+
+  .section.instructions-tabs.tabs-container ~ .tabs-panel {
+    width: auto;
+    margin-left: var(--spacing-16);
+    margin-right: var(--spacing-16);
+    padding: var(--spacing-16);
+  }
+}
+
 .tabs-panel > .section.abbvie-container > div {
   grid-column: unset;
 }

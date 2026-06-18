@@ -2231,3 +2231,80 @@ body main .section.prescribed-cards .columns.icon-cards-2col .heading-2 {
   font-size: 2.4rem;
   font-weight: 700;
 }
+
+/* ── Instructions dosing cards (Take LINZESS: Every Day / Once a Day / …) ──
+   Live: full-width off-white rounded cards STACKED vertically. Each card has
+   a 105px circular icon on the left that straddles the card's left edge
+   (~45px hangs outside), with heading + body to the right. On mobile the icon
+   centers above the text. Scoped to the instructions-cards variant. */
+
+.columns.instructions-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 2.4rem);
+  max-width: 92.8rem;
+  margin: 0 auto;
+}
+
+/* Specificity must beat the base
+   .columns-container:not(...) .columns:not(...) > .columns-item:has(.columns-item-image)
+   rule (7 classes) that sets a transparent background — so this selector also
+   carries .columns-container + .instructions-panel + .instructions-cards. */
+
+body main .section.instructions-panel.columns-container .columns.instructions-cards > .columns-item:has(.columns-item-image) {
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-24, 2.4rem);
+  padding: var(--spacing-24, 2.4rem) var(--spacing-32, 3.2rem);
+  background-color: var(--color-background-light, #f4f6fb);
+  border-radius: 1.6rem;
+  text-align: left;
+}
+
+/* Icon: 105px, sits left, overlaps the card's left edge */
+
+.section.instructions-panel .columns.instructions-cards > .columns-item .columns-item-image {
+  flex: 0 0 auto;
+  margin-left: calc(-1 * var(--spacing-40, 4rem));
+}
+
+.columns.instructions-cards > .columns-item .columns-item-image picture,
+.columns.instructions-cards > .columns-item .columns-item-image img {
+  width: 10.5rem;
+  height: 10.5rem;
+  object-fit: contain;
+}
+
+.columns.instructions-cards > .columns-item .columns-item-content {
+  flex: 1 1 auto;
+}
+
+.columns.instructions-cards .heading-2 {
+  margin: 0 0 var(--spacing-08, 0.8rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-h2-hero, 2.4rem);
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+.columns.instructions-cards .footnote {
+  font-size: var(--font-size-12, 1.2rem);
+}
+
+/* Mobile: icon centers above the text. Selector mirrors the desktop card
+   rule's specificity (body main + .columns-container) so it actually wins. */
+
+@media (width <= 743px) {
+  body main .section.instructions-panel.columns-container .columns.instructions-cards > .columns-item:has(.columns-item-image) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: var(--spacing-40, 4rem);
+  }
+
+  body main .section.instructions-panel.columns-container .columns.instructions-cards > .columns-item .columns-item-image {
+    margin-left: 0;
+    margin-top: calc(-1 * var(--spacing-40, 4rem));
+  }
+}
