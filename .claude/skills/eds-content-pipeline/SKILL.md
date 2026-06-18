@@ -125,14 +125,8 @@ Parent rows (in order): anchorId, barLabel, projectNumber, navLink1Label,
 navLink1Url, navLink2Label, navLink2Url, navLink3Label, navLink3Url,
 blockId, classes(empty), language
 
-Item cells: logo(img), logoAccessibleName, brandName, therapeuticArea,
+Item cells: logo(img+alt), logoAccessibleName, brandName, therapeuticArea,
 description, brandUrl, safetyContent, indications
-
-Note: `logoAccessibleName` is NOT collapsed with `logo` — "Name" is not a
-recognized md2jcr suffix (only Alt/MimeType/Type/Text/Title collapse). Each
-is a separate cell. Previously `logoAlt` WAS collapsed with `logo` (sharing
-1 cell), so the rename from `logoAlt` → `logoAccessibleName` increased item
-cells from 7 to 8.
 
 ## Verified Fix 7: Definition title must match html2md output
 
