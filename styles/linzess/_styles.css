@@ -199,12 +199,28 @@ main > .section.safety-bar-container {
    (max-width 1330px) so a plain background-color won't bleed edge-to-edge —
    each banded section paints a full-bleed off-white ::before behind its
    content, extended downward to cover the inter-section margin so the run
-   reads continuous. Scoped to .off-white-band (only used on find-relief). */
-main > .section.off-white-band {
+   reads continuous.
+
+   IMPORTANT (publish parity): the EDS delivery collapses a multi-word
+   `classes_customClass` value into ONE hyphen-joined class, so helper classes
+   like `off-white-band off-white-band-start` never arrive on the published
+   section. Each banded section is therefore authored with a SINGLE semantic
+   class and the band treatment is attached to that class here:
+     how-to-take      → band start (arc dome on top)
+     prescribed-cards → band middle
+     savings-cards    → band middle
+     store-linzess    → band end (stops at section bottom)            */
+main > .section.how-to-take,
+main > .section.prescribed-cards,
+main > .section.savings-cards,
+main > .section.store-linzess {
   position: relative;
 }
 
-main > .section.off-white-band::before {
+main > .section.how-to-take::before,
+main > .section.prescribed-cards::before,
+main > .section.savings-cards::before,
+main > .section.store-linzess::before {
   content: '';
   position: absolute;
   z-index: -1;
@@ -215,14 +231,14 @@ main > .section.off-white-band::before {
   background: var(--color-background-light, #f4f6fb);
 }
 
-/* Start of the band: a convex dome arcs up into the section above (live uses
-   a 255px-tall dome with radius 100% 100% 0 0). */
-main > .section.off-white-band-start::before {
+/* Band start (how-to-take): a convex dome arcs up into the video section
+   above (live uses a 255px-tall dome with radius 100% 100% 0 0). */
+main > .section.how-to-take::before {
   top: -60px;
   height: calc(100% + 80px + 60px);
 }
 
-main > .section.off-white-band-start::after {
+main > .section.how-to-take::after {
   content: '';
   position: absolute;
   z-index: -1;
@@ -235,9 +251,9 @@ main > .section.off-white-band-start::after {
   border-radius: 100% 100% 0 0 / 100% 100% 0 0;
 }
 
-/* End of the band: stop the off-white at the section's bottom edge so the
-   following (white) savings-tout / dark bottom-nav start clean. */
-main > .section.off-white-band-end::before {
+/* Band end (store-linzess): stop the off-white at the section's bottom edge so
+   the following (white) savings-tout / dark bottom-nav start clean. */
+main > .section.store-linzess::before {
   height: 100%;
 }
 
