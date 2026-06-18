@@ -5764,14 +5764,121 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
    Everything from the "LINZESS KEEP [ALL]" banner above down to here is
    load-bearing for the homepage / resources / why-linzess pages. */
 
-/* >>> DEVELOP RESTORE [transcript]: transcript-page styling dropped by the
-   merge-revert. Includes .section.transcript / .section.dian-test rules AND
-   the main > .section:first-of-type:not(.hero-container) fallback that styles
-   the (un-classed) transcript content section + its white dome arc. The
-   :not(.hero-container) guard makes the fallback safe: all 3 of our pages have
-   a .hero-container first section, so it never matches them (verified live: 0
-   matches on why-linzess). Generic develop selectors with no such guard were
-   deliberately excluded. postcss-verified 0 unscoped selectors. */
+/* >>> DEVELOP RESTORE [transcript-arc]: develop styles.css lines 599-690 VERBATIM.
+   Copied in develop order so the transcript white-dome ::before override
+   correctly supersedes the purple-arc backdrop (develop: "declared later, so
+   this wins"). All selectors are body.no-hero / .section.transcript / .isi /
+   :first-of-type:not(.hero-container) — none match our hero pages. */
+/* ===== From develop: non-hero page arc + H1 (body.no-hero) ===== */
+/* Non-hero pages: purple downward arc + H1 styling */
+body.no-hero main > .section:first-child {
+  position: relative;
+  padding-top: var(--no-hero-arc-height);
+}
+
+body.no-hero main > .section:first-child::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--no-hero-arc-height);
+  background-color: var(--color-brand-primary);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  z-index: 0;
+}
+
+body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
+  font-family: var(--heading-font-family);
+  font-size: var(--no-hero-h1-font-size);
+  line-height: var(--no-hero-h1-line-height);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-brand-primary);
+  margin-bottom: var(--no-hero-h1-margin-bottom);
+}
+
+body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1::before {
+  content: '';
+  display: block;
+  width: var(--no-hero-divider-width);
+  height: var(--no-hero-divider-height);
+  background: url("/icons/divider.svg") no-repeat center;
+  background-size: contain;
+  margin: 0 auto var(--no-hero-divider-margin-bottom);
+}
+
+@media (width < 768px) {
+  body.no-hero main > .section:first-child > .default-content-wrapper:first-child > h1 {
+    font-size: var(--no-hero-h1-font-size-mobile);
+    line-height: var(--no-hero-h1-line-height-mobile);
+  }
+}
+
+/* Transcript/ISI pages keep the white upward arc, not develop's purple downward arc.
+   Equal specificity to body.no-hero rule but declared later, so this wins. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section.isi,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: 0;
+}
+
+body.no-hero main > .section.transcript::before,
+body.no-hero main > .section.isi::before,
+body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+  top: -60px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: 130%;
+  height: 75px;
+  background-color: var(--color-background-primary, #fff);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+}
+
+@media (width >= 900px) {
+  body.no-hero main > .section.transcript::before,
+  body.no-hero main > .section:first-of-type:not(.hero-container)::before {
+    height: 255px;
+  }
+}
+
+/* Transcript/experience pages: more breathing room above the h1 to match
+   live (~50px container-to-h1 gap vs our 14px). Scoped to no-hero so the
+   healthy-routines hero pages are untouched. */
+body.no-hero main > .section.transcript,
+body.no-hero main > .section:first-of-type:not(.hero-container) {
+  padding-top: var(--spacing-36, 36px);
+}
+
+/* Transcript/experience pages: deepen the footer arc to match live
+   (top -60px vs our -40px). Scoped to no-hero so hero pages keep the
+   shallower arc defined in the footer block. */
+body.no-hero .footer::before {
+  top: -60px;
+  width: 130vw;
+}
+
+/* <<< DEVELOP RESTORE [transcript-arc] END */
+
+/* >>> DEVELOP RESTORE [transcript-backdrop]: the transcript white dome carves
+   into a purple backdrop. On develop that comes from a GLOBAL purple body
+   (body.appear). Our branch keeps a white body for the 3 hero pages, so we
+   scope the purple body to pages that actually contain a transcript/dian-test
+   section via :has(). Our homepage/resources/why-linzess have no such section
+   (only href/title text), so this never matches them. */
+body.appear:has(main > .section.transcript),
+body.appear:has(main > .section.dian-test-body),
+body.appear:has(main > .section.dian-test-isi) {
+  background-color: var(--color-brand-primary, #422e83);
+}
+/* <<< DEVELOP RESTORE [transcript-backdrop] END */
+
+/* >>> DEVELOP RESTORE [transcript-rules]: develop .section.transcript /
+   .section.dian-test / :first-of-type:not(.hero-container) scoped rules
+   (white section bg, content typography, arc). Pairs with the purple
+   backdrop above. All selectors scoped — never match our 3 hero pages. */
 
 .section.transcript,
 main > .section:first-of-type:not(.hero-container) {
@@ -6152,4 +6259,4 @@ body.no-hero main > .section:first-of-type:not(.hero-container)::before {
 body.no-hero main > .section.transcript,
 body.no-hero main > .section:first-of-type:not(.hero-container) {
   padding-top: var(--spacing-36, 36px);
-}/* <<< DEVELOP RESTORE [transcript] END */
+}/* <<< DEVELOP RESTORE [transcript-rules] END */
