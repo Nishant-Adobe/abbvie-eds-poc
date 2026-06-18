@@ -4738,18 +4738,38 @@ main > .section:has(> .default-content-wrapper > h3:first-child)::before {
 
 /* USES, IMPORTANT RISK INFORMATION, "Before you take...", "Side Effects"
    are all bold purple headings (BasicCommercialLT-Black). */
+/* ISI typography reverted to develop values: legal-bold headings at weight 400
+   (not 700), h4/h5 at 14px (not 16px), grey-400 bold safety copy via an explicit
+   strong/b rule, -0.02em tracking across all ISI text, and regular-face links
+   inside strong. Mirrors develop's .section.isi rules. */
 .section.isi h3,
-.section.isi h4,
-.section.isi h5,
-main > .section:has(> .default-content-wrapper > h3:first-child) h3,
-main > .section:has(> .default-content-wrapper > h3:first-child) h4,
-main > .section:has(> .default-content-wrapper > h3:first-child) h5 {
+main > .section:has(> .default-content-wrapper > h3:first-child) h3 {
   margin: 10px 0 0;
   font-family: var(--font-family-legal-bold);
   font-size: 16px;
-  font-weight: 700;
-  line-height: normal;
+  font-weight: 400;
   color: #422e83;
+  text-transform: none;
+  padding: 0;
+}
+
+.section.isi h4,
+.section.isi h5,
+main > .section:has(> .default-content-wrapper > h3:first-child) h4,
+main > .section:has(> .default-content-wrapper > h3:first-child) h5 {
+  margin: 10px 0;
+  font-family: var(--font-family-legal-bold);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.028rem;
+  color: #422e83;
+  text-transform: none;
+}
+
+.section.isi h5,
+main > .section:has(> .default-content-wrapper > h3:first-child) h5 {
+  text-decoration: none;
 }
 
 .section.isi p,
@@ -4771,18 +4791,42 @@ main > .section:has(> .default-content-wrapper > h3:first-child) p {
 .section.isi ul,
 main > .section:has(> .default-content-wrapper > h3:first-child) ul {
   margin: 10px 0;
-  padding-left: 20px;
+  padding-left: 15px;
 }
 
 .section.isi li,
 main > .section:has(> .default-content-wrapper > h3:first-child) li {
-  margin-bottom: 4px;
+  margin: 10px 0;
+}
+
+.section.isi strong,
+.section.isi b,
+main > .section:has(> .default-content-wrapper > h3:first-child) strong,
+main > .section:has(> .default-content-wrapper > h3:first-child) b {
+  font-family: var(--font-family-legal-bold);
+  color: #555;
+  font-weight: 400;
+}
+
+/* Live applies -0.02em tracking across the ISI legal copy. */
+.section.isi :is(h3, h4, h5, p, li, strong, b, a),
+main > .section:has(> .default-content-wrapper > h3:first-child) :is(h3, h4, h5, p, li, strong, b, a) {
+  letter-spacing: -0.02em;
 }
 
 .section.isi a,
 main > .section:has(> .default-content-wrapper > h3:first-child) a {
   color: #422e83;
   text-decoration: underline;
+}
+
+/* ISI links sit inside <strong> blocks, so they inherit the black legal font at
+   14px. Live renders them in the regular Roman face (not bold/black). */
+.section.isi strong a,
+.section.isi b a,
+main > .section:has(> .default-content-wrapper > h3:first-child) :is(strong, b) a {
+  font-family: var(--font-family-legal);
+  font-size: 14px;
 }
 
 /* why-linzess page only (identified by the How-LINZESS-Works timeline block):
