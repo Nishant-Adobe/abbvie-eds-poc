@@ -55,9 +55,9 @@
   --color-border-muted: #b8b8b8;
 
   /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgba(0, 0, 0, 0.8);
+  --color-overlay-dark: rgb(0 0 0 / 80%);
   --color-overlay-black-50: rgb(0 0 0 / 50%);
-  --color-overlay-muted: rgba(115, 133, 159, 0.75);
+  --color-overlay-muted: rgb(115 133 159 / 75%);
   --color-overlay-grey: rgb(204 204 204 / 80%);
   --color-overlay-white-10: rgb(255 255 255 / 10%);
   --color-overlay-white-15: rgb(255 255 255 / 15%);
@@ -179,13 +179,25 @@
   --modal-close-size: 28px;
   --modal-close-font-size: 1.25rem;
 
+  /* ---- Safety Bar (floating ISI) ---- */
+  --safety-bar-collapsed-height-mobile: 121px;   /* mobile single-column collapsed bar height (live find-relief) */
+  --safety-bar-padding-top-tablet: var(--spacing-15);
+  --safety-bar-expanded-viewport-offset: 215px;  /* viewport space reserved above maximized scroll area (live) */
+  --letter-spacing-legal-heading: -0.032rem;     /* live -0.32px on ISI headings */
+  --letter-spacing-legal-body: -0.028rem;        /* live -0.28px on ISI body/list copy */
+
   /* ---- Shadow ---- */
-  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
+  --shadow-safety-bar: rgb(0 0 0 / 25%) 0 0 10px 0;
   --shadow-section-nav-stuck: 0 4px 12px rgb(0 0 0 / 25%);
 
+  /* ---- Section Nav (find-relief "JUMP TO" pill) ---- */
+  --section-nav-height: var(--spacing-50);          /* 50px pill height (live) */
+  --section-nav-pullup: var(--spacing-30);           /* -30px overlap onto hero */
+  --section-nav-mobile-margin: 10vw;                 /* side gutter on mobile pill (≈39px @ 390) */
+
   /* ---- Gradient ---- */
-  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
-  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+  --gradient-hero-overlay: linear-gradient(rgb(0 0 0 / 80%), rgb(255 255 255 / 0%));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115 133 159) 100%);
   --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
@@ -227,6 +239,7 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+
   /* ---- Header: No-hero arc ---- */
   --header-z-index: 10;
   --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
@@ -250,6 +263,27 @@
   --linz-card-footnote-size: 12px;
   --linz-section-heading-size: 32px;
   --linz-section-heading-line-height: 30px;
+
+  /* ---- Flexbox: "Take LINZESS" dosing rows ---- */
+  --flexbox-icon-size: 105px;            /* live icon img scaled width */
+  --flexbox-icon-col-width: 105px;       /* desktop icon column width */
+  --linz-flexbox-heading-size: 18px;     /* mobile heading */
+  --linz-flexbox-heading-size-desktop: 24px;
+  --linz-flexbox-body-size: 14px;        /* mobile body */
+  --linz-flexbox-body-size-desktop: 16px;
+
+  /* ---- Columns: homepage savings card ---- */
+  --linz-savings-heading-size: 18px;
+  --linz-savings-img-radius: 16px;
+  --linz-columns-cta-heading-size: 24px; /* dark-purple CTA columns heading */
+
+  /* ---- Text-container: ISI small-print ---- */
+  --linz-isi-body-size: 14px;
+  --linz-isi-line-height: 16px;
+  --linz-isi-letter-spacing: -0.28px;
+  --linz-isi-heading-size: 16px;
+  --linz-isi-heading-letter-spacing: -0.32px;
+  --linz-isi-ul-indent: 15px;
 
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
@@ -286,4 +320,21 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* ---- Hero: editorial (find-relief) — middle-left text over full-bleed image ---- */
+  --hero-editorial-min-height: auto;
+  --hero-editorial-min-height-tablet: auto;
+  --hero-editorial-min-height-desktop: auto;
+  --hero-editorial-padding: var(--spacing-20);
+  --hero-editorial-padding-tablet: var(--spacing-20) 7rem;
+  --hero-editorial-padding-desktop: var(--spacing-20) 11rem;
+  --hero-editorial-text-max-width: none;
+  --hero-editorial-text-max-width-tablet: var(--hero-caption-max-width);
+  --hero-editorial-text-max-width-desktop: var(--hero-caption-max-width);
+  --hero-editorial-eyebrow-font-size: var(--font-size-body-small);
+  --hero-editorial-eyebrow-margin-bottom: var(--spacing-24);
+  --hero-editorial-h1-font-size: var(--font-size-h2-hero);
+  --hero-editorial-h1-line-height: var(--line-height-h2-hero);
+  --hero-editorial-h1-font-size-desktop: var(--no-hero-h1-font-size);
+  --hero-editorial-h1-line-height-desktop: var(--no-hero-h1-line-height);
 }

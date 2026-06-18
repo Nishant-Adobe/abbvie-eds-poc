@@ -1,1 +1,112 @@
-@import './tabs.css';
+@import '../tabs.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* ============================================================
+   LINZESS — Tabs brand overrides
+   Live: linzess.com/find-relief ("How to Take LINZESS")
+   Style: light-purple pill bar; active tab = dark purple with
+   inner-edge rounding; inactive = purple text on light purple.
+   ============================================================ */
+
+/* Component tokens (scoped to this block + brand) */
+.tabs {
+  --tabs-tab-font-size: var(--font-size-14);          /* 14px mobile (live) */
+  --tabs-tab-font-size-desktop: var(--font-size-16);  /* 16px >= 900px (live) */
+  --tabs-tab-line-height: 1.76rem;                    /* 17.6px (live, fixed) */
+  --tabs-tab-padding: var(--spacing-12);              /* 12px all sides (live) */
+  --tabs-bar-bg: var(--linz-light-purple);
+  --tabs-tab-text: var(--color-text-heading);
+  --tabs-tab-active-bg: var(--linz-dark-purple);
+  --tabs-tab-active-text: var(--color-text-on-dark);
+  --tabs-bar-border-radius: var(--linz-rounded-corner);
+  --tabs-panel-padding-y: var(--spacing-15);          /* 15px (live: 15px 0) */
+}
+
+/* ── Tab list = the pill bar ──
+   Light purple bar, fully rounded ends, overflow hidden so the
+   active dark-purple tab inherits the bar's outer corner radius. */
+.tabs-container .tabs .tabs-list {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--tabs-bar-bg);
+  border: none;
+  border-radius: var(--tabs-bar-border-radius);
+  overflow: hidden;
+}
+
+/* ── Tab buttons (inactive default) ──
+   Equal width, transparent on the bar, purple bold Lato text. */
+.tabs-container .tabs .tabs-list button.tabs-tab {
+  flex: 1 1 0;
+  margin: 0;
+  padding: var(--tabs-tab-padding);
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--tabs-tab-text);
+  font-family: var(--body-font-family);
+  font-size: var(--tabs-tab-font-size);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--tabs-tab-line-height);
+  text-align: center;
+  white-space: normal;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-duration-medium) var(--transition-easing-standard),
+    color var(--transition-duration-medium) var(--transition-easing-standard);
+}
+
+/* ── Active tab — dark purple fill, white extra-bold text ──
+   Default (second/last tab active): round the inner (left) edge. */
+.tabs-container .tabs .tabs-list button.tabs-tab[aria-selected='true'] {
+  background-color: var(--tabs-tab-active-bg);
+  color: var(--tabs-tab-active-text);
+  font-weight: var(--font-weight-extra-bold);
+  border-radius: var(--tabs-bar-border-radius) 0 0 var(--tabs-bar-border-radius);
+  cursor: default;
+}
+
+/* First tab active — round the inner (right) edge instead. */
+.tabs-container .tabs .tabs-list button.tabs-tab:first-child[aria-selected='true'] {
+  border-radius: 0 var(--tabs-bar-border-radius) var(--tabs-bar-border-radius) 0;
+}
+
+/* ── Panel — transparent, vertical padding only (live: 15px 0) ── */
+.tabs-panel {
+  display: block;
+  margin: 0;
+  padding: var(--tabs-panel-padding-y) 0;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+/* Sections inside the panel stay stacked, full width. */
+.tabs-panel > .section.abbvie-container {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+.tabs-panel > .section[data-tabs-grid] {
+  display: block;
+  gap: 0;
+}
+
+.tabs-panel > .section[data-tabs-grid].abbvie-container > div {
+  grid-column: unset;
+}
+
+/* ── Desktop (>= 900px): live bumps tab font to 16px ── */
+@media (width >= 900px) {
+  .tabs-container .tabs .tabs-list button.tabs-tab {
+    font-size: var(--tabs-tab-font-size-desktop);
+  }
+}

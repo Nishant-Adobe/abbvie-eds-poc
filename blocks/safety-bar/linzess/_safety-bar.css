@@ -80,7 +80,7 @@
 
 /* Collapsed: abbreviated content padding — matches live site */
 .safety-bar-abbreviated {
-  padding: 0 var(--spacing-25, 25px);
+  padding: 0 var(--spacing-25);
   margin: auto;
 }
 
@@ -88,7 +88,7 @@
 .safety-bar.split .safety-bar-abbreviated {
   gap: var(--spacing-10);
   padding-top: 0;
-  padding-right: var(--spacing-25, 25px);
+  padding-right: var(--spacing-25);
 }
 
 
@@ -100,7 +100,7 @@
   font-weight: normal;
   color: var(--color-text-heading);
   line-height: normal;
-  letter-spacing: -0.032rem;
+  letter-spacing: var(--letter-spacing-legal-heading);
   margin: var(--spacing-10) 0 0;
 }
 
@@ -111,7 +111,7 @@
   font-weight: 400;
   color: var(--color-text-muted);
   line-height: var(--line-height-legal);
-  letter-spacing: -0.028rem;
+  letter-spacing: var(--letter-spacing-legal-body);
   margin: var(--spacing-10) 0;
 }
 
@@ -147,7 +147,7 @@
   font-weight: 400;
   color: var(--color-text-muted);
   line-height: var(--line-height-legal);
-  letter-spacing: -0.028rem;
+  letter-spacing: var(--letter-spacing-legal-body);
   margin: var(--spacing-10) 0;
 }
 
@@ -163,7 +163,7 @@
   font-weight: normal;
   color: var(--color-text-heading);
   line-height: normal;
-  letter-spacing: -0.032rem;
+  letter-spacing: var(--letter-spacing-legal-heading);
   margin: var(--spacing-10) 0 0;
 }
 
@@ -208,7 +208,7 @@
   font-weight: 400;
   color: var(--color-text-muted);
   line-height: var(--line-height-legal);
-  letter-spacing: -0.028rem;
+  letter-spacing: var(--letter-spacing-legal-body);
   margin: var(--spacing-10) 0;
 }
 
@@ -234,7 +234,7 @@
   font-weight: 400;
   color: var(--color-text-muted);
   line-height: var(--line-height-legal);
-  letter-spacing: -0.028rem;
+  letter-spacing: var(--letter-spacing-legal-body);
   margin: var(--spacing-10) 0;
 }
 
@@ -251,7 +251,7 @@
   line-height: var(--line-height-legal);
   color: var(--color-brand-primary);
   text-decoration: underline;
-  letter-spacing: -0.028rem;
+  letter-spacing: var(--letter-spacing-legal-body);
 }
 
 /* Expanded: superscript (®) */
@@ -263,7 +263,7 @@
 
 /* Maximized height override */
 .safety-bar.is-expanded .safety-bar-full {
-  max-height: calc(100vh - 215px);
+  max-height: calc(100vh - var(--safety-bar-expanded-viewport-offset));
   overflow-y: auto;
 }
 
@@ -272,7 +272,7 @@
   .safety-bar.split .safety-bar-abbreviated {
     display: block;
     grid-template-columns: none;
-    height: 121px;
+    height: var(--safety-bar-collapsed-height-mobile);
   }
 
   .safety-bar.split .safety-bar-col1 {
@@ -293,13 +293,13 @@
 
   .safety-bar-abbreviated h3 {
     font-size: var(--font-size-legal);
-    padding-top: var(--spacing-20, 2rem);
+    padding-top: var(--spacing-20);
   }
 }
 
 /* Tablet: add top padding to the split two-column collapsed bar to match live */
 @media (745px <= width <= 1023px) {
   .safety-bar.split .safety-bar-abbreviated {
-    padding-top: 15px;
+    padding-top: var(--safety-bar-padding-top-tablet);
   }
 }

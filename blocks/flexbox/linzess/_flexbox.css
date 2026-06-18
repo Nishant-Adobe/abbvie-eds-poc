@@ -1,41 +1,79 @@
 @import '../flexbox.css';
+@import '../../../styles/linzess/tokens.css';
 
-/* LINZESS — Flexbox brand overrides
-   Source: linzess.com/find-relief "How to Take" dosing steps.
-   Each dosing step is an icon + text row. The base block sets
-   `.flexbox-item-image img { width: 100% }`, which in the `column` variant
-   (full-width stacked items) balloons the ~106px icons to full container
-   width. Constrain the icon and lay each step out as icon-left / content-right.
-*/
+/* ============================================================
+   Linzess — Flexbox brand override
+   Context: "Take LINZESS" dosing rows inside the How-to-Take tabs.
+   Live (.flexbox-row.icon-image-card-left): each row is an icon on the
+   left + heading/body content on the right, items vertically centered,
+   rows stacked vertically. Mobile stacks icon above content.
+   Heading: Lato 700, dark purple. Body: Lato 400, grey.
+   ============================================================ */
 
-/* Block-scoped tokens */
-.flexbox.column {
-  --flexbox-icon-size: var(--spacing-110);
-  --flexbox-step-gap: var(--spacing-32);
-}
-
-/* Each dosing step: icon column (fixed) + content column (fills). */
+/* Block authored as `.flexbox.column` → rows stack vertically.
+   Each flexbox-item pairs an icon with a content block. */
 .flexbox.column .flexbox-item {
-  align-items: center;
   display: flex;
-  flex-direction: row;
-  gap: var(--flexbox-step-gap);
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12) var(--spacing-00);
+  text-align: center;
 }
 
-/* Cap the icon at its natural size instead of stretching to 100%. */
-.flexbox.column .flexbox-item-image {
-  flex: 0 0 var(--flexbox-icon-size);
+/* Icon image — fixed visual size, never stretch full width */
+.flexbox.column .flexbox-item .flexbox-item-image {
+  flex: 0 0 auto;
+}
+
+.flexbox.column .flexbox-item .flexbox-item-image picture,
+.flexbox.column .flexbox-item .flexbox-item-image img {
+  width: auto;
   max-width: var(--flexbox-icon-size);
-}
-
-.flexbox.column .flexbox-item-image picture,
-.flexbox.column .flexbox-item-image img {
-  width: 100%;
   height: auto;
 }
 
-/* Content takes the remaining space, left-aligned. */
-.flexbox.column .flexbox-item-content {
+.flexbox.column .flexbox-item .flexbox-item-content {
   flex: 1 1 auto;
-  text-align: left;
+}
+
+/* Body paragraphs — Lato 400, grey */
+.flexbox.column .flexbox-item .flexbox-item-content p {
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-body);
+  font-size: var(--linz-flexbox-body-size);
+  color: var(--color-text-body);
+  line-height: var(--line-height-body);
+  margin: var(--spacing-00) var(--spacing-00) var(--spacing-08);
+}
+
+/* Heading (first paragraph) — Lato 700, dark purple */
+.flexbox.column .flexbox-item .flexbox-item-content p:first-child {
+  font-family: var(--body-font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--linz-flexbox-heading-size);
+  color: var(--color-brand-primary);
+  margin: var(--spacing-00) var(--spacing-00) var(--spacing-08);
+}
+
+/* Desktop: icon left, content right, vertically centered */
+@media (width >= 744px) {
+  .flexbox.column .flexbox-item {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-24);
+    text-align: left;
+  }
+
+  .flexbox.column .flexbox-item .flexbox-item-image {
+    flex: 0 0 var(--flexbox-icon-col-width);
+  }
+
+  .flexbox.column .flexbox-item .flexbox-item-content p {
+    font-size: var(--linz-flexbox-body-size-desktop);
+  }
+
+  .flexbox.column .flexbox-item .flexbox-item-content p:first-child {
+    font-size: var(--linz-flexbox-heading-size-desktop);
+  }
 }

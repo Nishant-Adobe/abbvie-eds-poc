@@ -48,7 +48,8 @@
   border-top-left-radius: 0;
   max-width: none;
   margin: 0;
-  padding-block: var(--footer-spacing-padding-y);
+  padding-top: var(--spacing-14);
+  padding-bottom: var(--footer-spacing-padding-y);
   padding-inline: max(
     var(--footer-spacing-padding-x),
     calc((100% - var(--footer-content-max-width)) / 2)
@@ -828,17 +829,11 @@
   /* ---- Color: Brand Accent ---- */
   --color-brand-accent: #faa633;
   --color-brand-accent-hover: #f2a94b;
-  --color-brand-accent-dark: #e8941e;
 
   /* ---- Color: Named Palette (from CSS vars) ---- */
   --linz-dark-purple: #422e83;
   --linz-purple: #60579e;
-  --linz-purple-muted: #948ebe;
   --linz-light-purple: #d9d7f9;
-  --linz-light-purple-alt: #ecebfb;
-  --linz-light-purple-translucent: rgb(217 215 249 / 60%);
-  --linz-purple-border: rgb(148 142 190);
-  --linz-purple-translucent: rgb(74 45 127 / 50%);
   --linz-orange: #faa633;
   --linz-grey: #4d4d4f;
   --linz-off-white: #f4f6fb;
@@ -850,12 +845,9 @@
   --color-text-heading: #422e83;
   --color-text-on-dark: #fff;
   --color-text-muted: #555;
-  --color-text-body: var(--linz-grey);
-  --color-text-default: var(--linz-black);
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
-  --color-background-primary: var(--linz-white);
   --color-background-light: #f4f6fb;
   --color-background-footer: #422e83;
   --color-background-footer-dark: #151b17;
@@ -866,15 +858,7 @@
 
   /* ---- Color: Overlay ---- */
   --color-overlay-dark: rgba(0, 0, 0, 0.8);
-  --color-overlay-black-50: rgb(0 0 0 / 50%);
   --color-overlay-muted: rgba(115, 133, 159, 0.75);
-  --color-overlay-grey: rgb(204 204 204 / 80%);
-  --color-overlay-white-10: rgb(255 255 255 / 10%);
-  --color-overlay-white-15: rgb(255 255 255 / 15%);
-  --color-overlay-white-85: rgb(255 255 255 / 85%);
-  --color-overlay-white-90: rgb(255 255 255 / 90%);
-  --color-overlay-off-white-50: rgb(244 246 251 / 50%);
-  --color-overlay-off-white-80: rgb(244 246 251 / 80%);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Lato', sans-serif;
@@ -903,12 +887,6 @@
   --font-size-md: 1.0625rem;
   --font-size-quote: 1.3125rem;
 
-  /* ---- Article (healthy-routines) sizes ---- */
-  --font-size-article-heading: 40px;
-  --font-size-article-card-title: 18px;
-  --font-size-article-cta-title: 24px;
-  --font-size-article-body: 14px; /* mobile + tablet; 16px at desktop (>=900px) */
-
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
   --font-weight-bold: 700;
@@ -921,17 +899,6 @@
   --line-height-h2-hero: 30px;
   --line-height-legal: 16px;
   --line-height-legal-large: 20px;
-
-  /* ---- Section arc (live .background-arc:before dome) ---- */
-  --linz-arc-height: 75px;
-  --linz-arc-height-lg: 255px;
-  --linz-arc-overlap: -60px;
-  --linz-arc-width: 130%;
-  --linz-band-pad-btm: 100px;
-
-  /* ---- Hero pull-up under transparent header (live .hero-container top) ---- */
-  --linz-hero-pullup: 138px;
-  --linz-hero-pullup-mobile: 147px;
 
   /* ---- Border: Radius ---- */
   --linz-rounded-corner: 16px;
@@ -996,7 +963,7 @@
   /* ---- Gradient ---- */
   --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
   --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
-  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
 
@@ -1053,13 +1020,6 @@
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
-
-  /* ---- Homepage Card Tokens ---- */
-  --linz-card-heading-size: 18px;
-  --linz-card-body-size: 14px;
-  --linz-card-footnote-size: 12px;
-  --linz-section-heading-size: 32px;
-  --linz-section-heading-line-height: 30px;
 
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
@@ -1151,7 +1111,6 @@
 .footer {
   overflow: visible;
   margin-top: calc(-1 * var(--footer-arc-overlap));
-  padding-top: var(--spacing-14);
 
   /* Own stacking context so the arc's `z-index: -1` sits behind the footer's
      own text but ABOVE the page's white content backdrop. Without this the
@@ -1176,7 +1135,6 @@
 
 /* Mobile + tablet (<1024px): the narrower viewport needs a wider, shallower
    arc so the curve reads correctly — match live's mobile arc geometry. */
-
 @media (width < 1024px) {
   .footer::before {
     top: calc(-1 * 38px);
@@ -1323,10 +1281,10 @@
   margin-top: var(--spacing-40);
 }
 
-/* Sub-links UL. Top border = separator between section 1 columns and section
-   2 sub-links. Live renders the sub-links as inline-block <li>s (not flex)
-   packed tightly: each li has 27px right padding holding the `|` separator
-   and 16px bottom margin for wrapped rows. */
+/* Live renders the sub-links as inline-block <li>s (not flex) packed tightly:
+   each li has 27px right padding holding the `|` separator and 16px bottom
+   margin for wrapped rows.
+   Top border = separator between section 1 columns and section 2 sub-links. */
 
 .footer .footer-bottom ul {
   list-style: none;

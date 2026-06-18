@@ -1,11 +1,12 @@
 @import '../section-nav.css';
 @import '../../../styles/linzess/tokens.css';
 
-/* LINZESS — Section Nav Brand Overrides
-   Desktop:        content-width dark-purple rounded pill, centered; active = weight 800, no underline
-   Mobile (base):  dark-purple pill with "JUMP TO: [current]" + chevron toggle
-   Mobile open:    purple toggle bar (top radius) + white dropdown (bottom radius)
-   Source:         linzess.com/find-relief section-navigation pattern
+/* LINZESS — Section Nav Brand Overrides  (find-relief "JUMP TO" pill)
+   Live source:  linzess.com/find-relief  .abbv-section-navigation
+   Mobile (base): purple pill, "JUMP TO: [current]" + chevron, white dropdown on open
+   Desktop:       content-width purple pill, centred, pulled -30px over hero;
+                  horizontal links, active/hover = weight 800, no separators
+   Stuck:         fixed top:0, flat top corners, rounded bottom corners
 */
 
 /* ── Block-scoped tokens ─────────────────────────────────────────────── */
@@ -13,44 +14,36 @@
 .section-nav {
   --section-nav-bg: var(--linz-dark-purple);
   --section-nav-text: var(--color-text-on-dark);
-  --section-nav-active: var(--linz-orange);
   --section-nav-dropdown-bg: var(--background-color);
   --section-nav-dropdown-text: var(--linz-dark-purple);
   --section-nav-radius: var(--linz-rounded-corner);
-  --section-nav-mobile-width: 80vw;
 
-  /* Desktop pill overlaps the hero arc (live uses margin-top: -30px). */
-  --section-nav-hero-overlap: var(--spacing-30);
-
+  background-color: var(--section-nav-bg);
   border-bottom: none;
   border-radius: var(--section-nav-radius);
-  margin: 0 auto;
+  height: var(--section-nav-height);
+  margin: calc(var(--section-nav-pullup) * -1) var(--section-nav-mobile-margin) 0;
   overflow: visible;
-  width: var(--section-nav-mobile-width);
-
-  /* Mobile pill: dark-purple bar background (matches live). Desktop (>=744px)
-     re-asserts its own background below. */
-  background-color: var(--section-nav-bg);
 }
 
-/* ── Links (mobile base) ─────────────────────────────────────────────── */
+/* ── Links (mobile base typography) ──────────────────────────────────── */
 
 .section-nav a {
+  border-bottom: none;
   color: var(--section-nav-text);
   font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-semibold);
   text-decoration: none;
 }
 
-.section-nav a:hover {
+.section-nav a:hover,
+.section-nav a:focus-visible {
   color: var(--section-nav-text);
-  opacity: 0.85;
+  font-weight: var(--font-weight-extra-bold);
 }
 
 .section-nav a:focus-visible {
-  color: var(--section-nav-text);
-  opacity: 0.85;
   outline: var(--border-width-default) solid var(--section-nav-text);
   outline-offset: var(--spacing-02);
 }
@@ -62,38 +55,38 @@
   text-decoration: none;
 }
 
-/* ── Sticky stuck ────────────────────────────────────────────────────── */
+/* ── Sticky stuck: keep centred pill, flat top / rounded bottom ──────── */
 
-/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
-   Override to keep the pill at --section-nav-mobile-width, centred. */
+.section-nav.sticky {
+  top: 0;
+}
+
 .section-nav.sticky.is-stuck {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  box-shadow: none;
+  box-shadow: var(--shadow-section-nav-stuck);
   left: 50%;
+  margin: 0;
   right: auto;
-  transform: translateX(-50%);
-  width: var(--section-nav-mobile-width);
-  z-index: 5;
   top: 0;
-  background-color: var(--section-nav-bg);
+  transform: translateX(-50%);
+  width: calc(100% - (var(--section-nav-mobile-margin) * 2));
 }
 
-/* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
+/* ── Mobile menu: hide hamburger + generic "Menu" label ──────────────── */
 
 .section-nav.mobile-menu .section-nav-hamburger,
 .section-nav.mobile-menu .section-nav-toggle-label {
   display: none;
 }
 
-/* Ensure nav fills block width so toggle + chevron never overflow screen */
 .section-nav.mobile-menu nav {
   box-sizing: border-box;
+  height: 100%;
   width: 100%;
 }
 
-/* ── Current section label ───────────────────────────────────────────── */
-
+/* Current-section label fills the bar */
 .section-nav.mobile-menu .section-nav-current-label {
   display: block;
   flex: 1;
@@ -103,7 +96,7 @@
   white-space: nowrap;
 }
 
-/* ── Toggle button ───────────────────────────────────────────────────── */
+/* ── Toggle button (mobile pill face) ────────────────────────────────── */
 
 .section-nav.mobile-menu .section-nav-toggle {
   align-items: center;
@@ -114,29 +107,28 @@
   cursor: pointer;
   display: flex;
   font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-body);
+  height: 100%;
   justify-content: flex-start;
   margin: 0;
-  padding: var(--spacing-12) var(--spacing-16) var(--spacing-12) var(--spacing-24);
+  padding: 0 var(--spacing-20);
   width: 100%;
 }
 
-/* When open, toggle loses bottom radius (dropdown continues below) */
 .section-nav.mobile-menu.is-open .section-nav-toggle {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-/* ── "JUMP TO: " static prefix ───────────────────────────────────────── */
-
+/* "JUMP TO: " static prefix */
 .section-nav.mobile-menu .section-nav-toggle::before {
   content: 'JUMP TO:\00a0';
   flex-shrink: 0;
+  font-weight: var(--font-weight-semibold);
 }
 
-/* ── Chevron icon ────────────────────────────────────────────────────── */
-
+/* Chevron icon */
 .section-nav.mobile-menu .section-nav-toggle::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -153,7 +145,7 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z'/%3E%3C/svg%3E");
 }
 
-/* ── Dropdown list ───────────────────────────────────────────────────── */
+/* ── Dropdown list (mobile open) ─────────────────────────────────────── */
 
 .section-nav.mobile-menu nav ul {
   background-color: var(--section-nav-dropdown-bg);
@@ -178,10 +170,10 @@
   color: var(--section-nav-dropdown-text);
   display: block;
   font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
-  padding: var(--spacing-12) var(--spacing-24);
-  text-align: center;
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-12) var(--spacing-20);
+  text-align: left;
   text-decoration: none;
   width: 100%;
 }
@@ -189,7 +181,7 @@
 .section-nav.mobile-menu nav a:hover,
 .section-nav.mobile-menu nav a:focus-visible {
   color: var(--section-nav-dropdown-text);
-  opacity: 0.8;
+  font-weight: var(--font-weight-extra-bold);
 }
 
 .section-nav.mobile-menu nav a.is-active {
@@ -197,128 +189,82 @@
   border-left: none;
   color: var(--section-nav-dropdown-text);
   font-weight: var(--font-weight-extra-bold);
-  padding-left: var(--spacing-24);
+  padding-left: var(--spacing-20);
   text-decoration: none;
 }
 
-/* ── Desktop ≥744px ──────────────────────────────────────────────────── */
+/* ── Desktop ≥744px: horizontal content-width pill ───────────────────── */
 
 @media (width >= 744px) {
-  /* Outer wrapper: transparent, full-width — pill lives on the nav element */
   .section-nav {
-    background-color: transparent;
-    border-radius: 0;
-    overflow-x: visible;
-    width: 100%;
+    margin: calc(var(--section-nav-pullup) * -1) auto 0;
+    width: fit-content;
   }
 
-  /* Restore base full-width stuck behaviour (undo mobile transform/width).
-     Keep the wrapper transparent — the purple pill lives on the nav element,
-     so the wrapper must NOT inherit the mobile stuck background. */
+  /* Restore centred fixed pill when stuck */
   .section-nav.sticky.is-stuck {
-    left: 0;
-    right: 0;
-    transform: none;
-    width: 100%;
-    background-color: transparent;
+    width: fit-content;
   }
 
-  /* Content-width dark-purple pill, centered via margin: 0 auto from base.
-     Negative top margin lifts the pill so it straddles the hero's curved
-     bottom edge (≈half the pill overlaps the hero), matching the live site. */
-  .section-nav nav {
-    background-color: var(--section-nav-bg);
-    border-radius: var(--section-nav-radius);
-    margin-top: calc(-1 * var(--section-nav-hero-overlap));
-    max-width: fit-content;
-    padding: 0;
-    position: relative;
-    transition: top var(--transition-duration-medium) var(--transition-easing-in-out);
-    z-index: 5;
+  /* Inner nav: centre links across the pill, content padding from live */
+  .section-nav.mobile-menu nav {
+    align-items: stretch;
+    flex-direction: row;
+    height: 100%;
+    padding: 0 var(--spacing-15);
+    width: auto;
   }
 
-  /* When stuck to the top on scroll, the pill must sit flush (no overlap) and
-     flatten its top corners — live-site pattern. */
-  .section-nav.sticky.is-stuck nav {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    margin-top: 0;
-  }
-
-  /* Links: 16px / 800 base weight (matches live) / line-height 50px for vertical centering */
-  .section-nav a {
-    font-size: 16px;
-    font-weight: var(--font-weight-extra-bold);
-    line-height: 50px;
-    opacity: 1;
-  }
-
-  /* Hover: weight 800 (visual zoom via boldness), colour stays white */
-  .section-nav a:hover,
-  .section-nav a:focus-visible {
-    color: var(--section-nav-text);
-    font-weight: var(--font-weight-extra-bold);
-    opacity: 1;
-  }
-
-  /* Active: weight 800, no underline */
-  .section-nav a.is-active {
-    border-bottom: none;
-    color: var(--section-nav-text);
-    font-weight: var(--font-weight-extra-bold);
-    text-decoration: none;
-  }
-
-  /* ── Mobile-menu: reset mobile-base overrides for desktop layout ── */
-
-  /* Hide toggle */
+  /* Hide mobile toggle on desktop */
   .section-nav.mobile-menu .section-nav-toggle {
     display: none;
   }
 
   /* Horizontal list */
   .section-nav.mobile-menu nav ul {
+    align-items: center;
     background-color: transparent;
     border-radius: 0;
     flex-direction: row;
+    height: 100%;
     overflow: visible;
     padding: 0;
     width: auto;
   }
 
-  /* Flex li */
   .section-nav.mobile-menu nav ul li {
+    align-items: center;
     display: flex;
+    height: 100%;
   }
 
-  /* Inline link — restore desktop padding and reset mobile overrides */
+  /* Inline link: padding 0 25px (live), full-height for vertical centring */
   .section-nav.mobile-menu nav a {
+    align-items: center;
     border-bottom: none;
     color: var(--section-nav-text);
-    display: inline-block;
-    font-size: 16px;
+    display: flex;
+    font-size: var(--font-size-16);
     font-weight: var(--font-weight-semibold);
-    line-height: 50px;
-    padding: 0 25px;
+    height: 100%;
+    padding: 0 var(--spacing-25);
     text-align: unset;
+    white-space: nowrap;
     width: auto;
   }
 
-  /* Override mobile hover rule (higher specificity bleeds through) */
   .section-nav.mobile-menu nav a:hover,
   .section-nav.mobile-menu nav a:focus-visible {
     color: var(--section-nav-text);
     font-weight: var(--font-weight-extra-bold);
-    opacity: 1;
   }
 
-  /* Active on desktop: weight 800, no underline */
   .section-nav.mobile-menu nav a.is-active {
     border-bottom: none;
     border-left: none;
     color: var(--section-nav-text);
     font-weight: var(--font-weight-extra-bold);
-    padding-left: var(--spacing-24);
+    padding-left: var(--spacing-25);
     text-decoration: none;
   }
 }

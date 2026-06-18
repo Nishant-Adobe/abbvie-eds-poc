@@ -1,0 +1,85 @@
+@import '../text-container.css';
+@import '../../../styles/linzess/tokens.css';
+
+/* ============================================================
+   Linzess — Text-container brand override
+   Context: find-relief ISI ("USES" / "IMPORTANT RISK INFORMATION").
+   Regulated safety copy — style only, never alter text.
+   Live ISI typography (.abbv-inline-use-isi):
+     - body/li: BasicCommercialLT-Roman, 14px / 16px line-height,
+       grey #555, letter-spacing -0.28px
+     - h3 headings: BasicCommercialLT-Black, dark purple #422e83,
+       16px, letter-spacing -0.32px
+     - ul: disc bullets, padding-left 15px
+     - links: dark purple, underlined
+   NOTE: The find-relief dark-purple section in styles/linzess/_styles.css
+   already carves the ISI into a white band, sets the dome, and applies
+   base ISI colors. This override refines the small-print typography
+   (font family, sizes, letter-spacing, list style) to match live exactly.
+   ============================================================ */
+
+.text-container {
+  font-family: var(--font-family-legal);
+  color: var(--color-text-muted);
+}
+
+/* Body copy + list items — legal font, small print */
+.text-container p,
+.text-container li {
+  font-family: var(--font-family-legal);
+  font-size: var(--linz-isi-body-size);
+  font-weight: var(--font-weight-body);
+  line-height: var(--linz-isi-line-height);
+  letter-spacing: var(--linz-isi-letter-spacing);
+  color: var(--color-text-muted);
+  margin: var(--spacing-10) var(--spacing-00);
+}
+
+/* Bold runs keep the black legal face */
+.text-container strong,
+.text-container b {
+  font-family: var(--font-family-legal-bold);
+  font-weight: var(--font-weight-body);
+}
+
+/* Section headings (USES / IMPORTANT RISK INFORMATION) */
+.text-container :is(h2, h3, h4) {
+  font-family: var(--font-family-legal-bold);
+  font-weight: var(--font-weight-body);
+  font-size: var(--linz-isi-heading-size);
+  letter-spacing: var(--linz-isi-heading-letter-spacing);
+  color: var(--color-brand-primary);
+  margin: var(--spacing-10) var(--spacing-00) var(--spacing-00);
+  text-transform: none;
+}
+
+/* Lists — disc bullets, live indent (override base custom-bullet reset) */
+.text-container ul {
+  list-style: disc;
+  padding-left: var(--linz-isi-ul-indent);
+  margin: var(--spacing-10) var(--spacing-00);
+}
+
+.text-container ul > li {
+  font-family: var(--font-family-legal);
+  font-size: var(--linz-isi-body-size);
+}
+
+/* Remove base custom ::before bullet so native disc shows */
+.text-container ul > li::before {
+  content: none;
+}
+
+/* Links — dark purple, underlined (override base highlight-underline style) */
+.text-container a,
+.text-container-text a {
+  all: revert;
+  font-family: var(--font-family-legal);
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.text-container a:hover {
+  color: var(--color-brand-primary-dark);
+}
