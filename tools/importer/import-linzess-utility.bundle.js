@@ -98,20 +98,12 @@ var CustomImportScript = (() => {
     const sourceUrl = ((_a = payload.params) == null ? void 0 : _a.originalURL) || payload.url || "";
     if (/reminder-terms-conditions/i.test(sourceUrl)) return;
     element.append(document.createElement("hr"));
-    const isiBlock = WebImporter.Blocks.createBlock(document, {
-      name: "text-container",
-      cells: [
-        ["isi"],
-        ["-"],
-        ["none"],
-        ["-"],
-        [frag(document, ISI_FULL)]
-      ]
-    });
-    element.append(isiBlock);
+    const isiContent = document.createElement("div");
+    isiContent.append(frag(document, ISI_FULL));
+    element.append(isiContent);
     element.append(WebImporter.DOMUtils.createTable([
       ["Section Metadata"],
-      ["style", "isi"]
+      ["classes_customClass", "isi"]
     ], document));
     element.append(document.createElement("hr"));
     const sbBlock = WebImporter.Blocks.createBlock(document, {

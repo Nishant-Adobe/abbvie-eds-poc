@@ -64,22 +64,20 @@ export default function transform(hookName, element, payload) {
   const sourceUrl = payload.params?.originalURL || payload.url || '';
   if (/reminder-terms-conditions/i.test(sourceUrl)) return;
 
-  // --- Inline ISI section (text-container: 4 parent rows + 1 item richtext) ---
+  // --- Inline ISI section (plain default content, NOT a text-container block) ---
+  // Authored exactly like the savings-card ISI: the verbatim ISI copy sits
+  // directly in a `.section.isi` section as default content (heading + paragraphs
+  // + lists), with Section Metadata classes_customClass=isi. This is required so
+  // develop's brand `.section.isi` rules style it identically to savings-card —
+  // wrapping it in a text-container block makes the block's own base CSS win
+  // (16px black body) and overrides the develop ISI treatment (14px gray #555).
   element.append(document.createElement('hr'));
-  const isiBlock = WebImporter.Blocks.createBlock(document, {
-    name: 'text-container',
-    cells: [
-      ['isi'],
-      ['-'],
-      ['none'],
-      ['-'],
-      [frag(document, ISI_FULL)],
-    ],
-  });
-  element.append(isiBlock);
+  const isiContent = document.createElement('div');
+  isiContent.append(frag(document, ISI_FULL));
+  element.append(isiContent);
   element.append(WebImporter.DOMUtils.createTable([
     ['Section Metadata'],
-    ['style', 'isi'],
+    ['classes_customClass', 'isi'],
   ], document));
 
   // --- Floating safety bar (split): collapsed col1 (USES), collapsed col2
