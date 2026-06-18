@@ -77,6 +77,24 @@
   color: var(--linz-dark-purple);
 }
 
+/* Pediatric cards mirror the difference layout: card 1 dark/white, card 2
+   light/purple (live reverses the default index colours here too). */
+.cards-grid.cards-grid-icon-image-card.understanding-pediatric .flexboxitem-v2:nth-child(1) .abbv-flex-item-v2 {
+  background-color: var(--linz-dark-purple);
+}
+
+.cards-grid.cards-grid-icon-image-card.understanding-pediatric .flexboxitem-v2:nth-child(1) :is(p, li, strong, .heading-2) {
+  color: var(--linz-white);
+}
+
+.cards-grid.cards-grid-icon-image-card.understanding-pediatric .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
+  background-color: var(--linz-light-purple);
+}
+
+.cards-grid.cards-grid-icon-image-card.understanding-pediatric .flexboxitem-v2:nth-child(2) :is(p, li, strong, .heading-2) {
+  color: var(--linz-dark-purple);
+}
+
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .text-align-center {
   text-align: center;
 }
