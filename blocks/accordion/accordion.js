@@ -13,7 +13,8 @@ function getIconImage(row) {
 }
 
 /**
- * Main accordion properties order:
+ * Main accordion properties order (xwalk: columns in first row,
+ * document-authoring: one row per field):
  * 0: blockHeading
  * 1: expandAllText
  * 2: collapseAllText
@@ -30,24 +31,32 @@ function getIconImage(row) {
  * 13: analyticsId (optional)
  */
 function gteConfigIcons(block) {
-  const headingText = block.children[0].textContent.trim();
-  const expandAllText = block.children[1].textContent.trim();
-  const collapseAllText = block.children[2].textContent.trim();
-  const expandAllIcon = `icon-${block.children[3].textContent.trim()}`;
-  const collapseAllIcon = `icon-${block.children[4].textContent.trim()}`;
-  const expandIcon = `item-icon-${block.children[5].textContent.trim()}`;
-  const collapseIcon = `item-icon-${block.children[6].textContent.trim()}`;
-  const expandAllIconImage = getIconImage(block.children[7]);
-  const collapseAllIconImage = getIconImage(block.children[8]);
-  const expandIconImage = getIconImage(block.children[9]);
-  const collapseIconImage = getIconImage(block.children[10]);
-  const ariaExpandAllLabel = block.children[11].textContent.trim();
-  const ariaCollapseAllLabel = block.children[12].textContent.trim();
-  const analyticsId = block.children[13]?.textContent.trim() || '';
+  // Detect classes row offset: if row[1] has single cell with '-' or empty and
+  // row[2] looks like expandAllLabel text, offset by 1 for the classes field group row.
+  const row1Text = block.children[1]?.textContent?.trim() || '';
+  const row2Text = block.children[2]?.textContent?.trim() || '';
+  const hasClassesRow = (row1Text === '-' || row1Text === '') && row2Text && row2Text !== '-';
+  const o = hasClassesRow ? 1 : 0;
 
-  // clean config rows
+  const headingText = block.children[0].textContent.trim();
+  const expandAllText = block.children[1 + o].textContent.trim();
+  const collapseAllText = block.children[2 + o].textContent.trim();
+  const expandAllIcon = `icon-${block.children[3 + o].textContent.trim()}`;
+  const collapseAllIcon = `icon-${block.children[4 + o].textContent.trim()}`;
+  const expandIcon = `item-icon-${block.children[5 + o].textContent.trim()}`;
+  const collapseIcon = `item-icon-${block.children[6 + o].textContent.trim()}`;
+  const expandAllIconImage = getIconImage(block.children[7 + o]);
+  const collapseAllIconImage = getIconImage(block.children[8 + o]);
+  const expandIconImage = getIconImage(block.children[9 + o]);
+  const collapseIconImage = getIconImage(block.children[10 + o]);
+  const ariaExpandAllLabel = block.children[11 + o].textContent.trim();
+  const ariaCollapseAllLabel = block.children[12 + o].textContent.trim();
+  const analyticsId = block.children[13 + o]?.textContent.trim() || '';
+
+  // clean config rows (0 through 13+offset)
+  const configEnd = 13 + o;
   [...block.children].forEach((child, index) => {
-    if (index <= 13) {
+    if (index <= configEnd) {
       child.remove();
     }
   });

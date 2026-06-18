@@ -910,9 +910,29 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+  /* ---- Header: No-hero arc ---- */
+  --header-z-index: 10;
+  --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --no-hero-arc-height: 80px;
+  --no-hero-h1-font-size: 40px;
+  --no-hero-h1-line-height: 36px;
+  --no-hero-h1-margin-bottom: 40px;
+  --no-hero-h1-font-size-mobile: 28px;
+  --no-hero-h1-line-height-mobile: 30px;
+  --no-hero-divider-width: 64px;
+  --no-hero-divider-height: var(--hero-divider-height);
+  --no-hero-divider-margin-bottom: 24px;
+
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
+
+  /* ---- Homepage Card Tokens ---- */
+  --linz-card-heading-size: 18px;
+  --linz-card-body-size: 14px;
+  --linz-card-footnote-size: 12px;
+  --linz-section-heading-size: 32px;
+  --linz-section-heading-line-height: 30px;
 
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
@@ -949,6 +969,20 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
 
 /* LINZESS — Section Nav Brand Overrides
@@ -967,13 +1001,17 @@
   --section-nav-dropdown-bg: var(--background-color);
   --section-nav-dropdown-text: var(--linz-dark-purple);
   --section-nav-radius: var(--linz-rounded-corner);
-  --section-nav-mobile-width: 70vw;
+  --section-nav-mobile-width: 80vw;
 
   border-bottom: none;
   border-radius: var(--section-nav-radius);
   margin: 0 auto;
   overflow: visible;
   width: var(--section-nav-mobile-width);
+
+  /* Mobile pill: dark-purple bar background (matches live). Desktop (>=744px)
+     re-asserts its own background below. */
+  background-color: var(--section-nav-bg);
 }
 
 /* ── Links (mobile base) ─────────────────────────────────────────────── */
@@ -1020,7 +1058,7 @@
   width: var(--section-nav-mobile-width);
   z-index: 5;
   top: 0;
-  background-color: transparent;
+  background-color: var(--section-nav-bg);
 }
 
 /* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
@@ -1158,12 +1196,15 @@
     width: 100%;
   }
 
-  /* Restore base full-width stuck behaviour (undo mobile transform/width) */
+  /* Restore base full-width stuck behaviour (undo mobile transform/width).
+     Keep the wrapper transparent — the purple pill lives on the nav element,
+     so the wrapper must NOT inherit the mobile stuck background. */
   .section-nav.sticky.is-stuck {
     left: 0;
     right: 0;
     transform: none;
     width: 100%;
+    background-color: transparent;
   }
 
   /* Content-width dark-purple pill, centered via margin: 0 auto from base */

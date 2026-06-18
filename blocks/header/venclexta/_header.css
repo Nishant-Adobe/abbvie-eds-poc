@@ -17,6 +17,13 @@
   --nav-utility-link-hover: var(--color-text-on-dark);
 }
 
+/* Hide leaked floating-ISI / eyebrow config defaults ("top", "See Full ISI",
+   "Collapse ISI") that base header JS collects into .nav-indication. These are
+   config values, not display content, and are never shown on venclexta.com. */
+header nav .nav-indication {
+  display: none;
+}
+
 /* Nav wrapper — white */
 header .nav-wrapper {
   background-color: var(--background-color);
@@ -32,7 +39,7 @@ header nav {
 
 /* Utility bar — teal bg overrides base gray */
 header .nav-utility {
-  background-color: var(--color-venclexta-teal);
+  background-color: var(--color-venclexta-teal-dark);
 }
 
 header .nav-utility > div {
@@ -722,3 +729,10 @@ header nav .nav-sections .default-content-wrapper > ul > li:hover { background-c
     display: flex;
   }
 }
+
+@media (width < 974px) {
+  header .nav-utility li + li::before {
+    content: " ";
+  }
+}
+

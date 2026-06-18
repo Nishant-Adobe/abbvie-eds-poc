@@ -8,7 +8,8 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Carousel",              
+              "name": "Carousel",
+              "model": "carousel",
               "filter": "carousel"
             }
           }
@@ -32,6 +33,18 @@
     }
   ],
   "models": [
+    {
+      "id": "carousel",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "classes",
+          "value": "",
+          "label": "Custom Classes"
+        }
+      ]
+    },
     {
       "id": "carousel-item",
       "fields": [

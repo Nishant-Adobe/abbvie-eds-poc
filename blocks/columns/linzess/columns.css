@@ -788,6 +788,20 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
 
 /* stylelint-disable no-descending-specificity */
@@ -798,14 +812,14 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.columns-homepage-promo,
-.hero-container + .columns-container .columns {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-light-purple);
   border-radius: var(--linz-rounded-corner);
   max-width: 802px;
   min-height: 173px;
-  margin: 80px auto 0;
+  margin: 24px auto 0;
   padding: 0;
   overflow: hidden;
   align-items: stretch;
@@ -813,18 +827,18 @@
 }
 
 .columns.columns-homepage-promo > .columns-item,
-.hero-container + .columns-container .columns > .columns-item {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item {
   padding: 0;
   grid-column: auto;
 }
 
 .columns.columns-homepage-promo > .columns-item:not(:has(img, strong, a)),
-.hero-container + .columns-container .columns > .columns-item:not(:has(img, strong, a)) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) {
   flex: 0 0 50%;
   background: transparent;
   padding: 0;
@@ -835,27 +849,27 @@
 /* Image visually on LEFT (order -1) */
 
 .columns.columns-homepage-promo > .columns-item .columns-item-image,
-.hero-container + .columns-container .columns > .columns-item .columns-item-image {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item .columns-item-image {
   order: -1;
 }
 
 /* Make the columns-item a flex row when it has both image + content */
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) picture,
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) picture {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) picture {
   display: block;
   height: 100%;
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -863,7 +877,7 @@
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
-.hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 0 16px;
   display: flex;
@@ -873,7 +887,7 @@
 }
 
 .columns.columns-homepage-promo .columns-item-content p strong,
-.hero-container + .columns-container .columns .columns-item-content p strong {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content p strong {
   font-family: var(--body-font-family);
   font-size: var(--linz-card-heading-size);
   font-weight: 700;
@@ -881,7 +895,7 @@
 }
 
 .columns.columns-homepage-promo .button-container a.button,
-.hero-container + .columns-container .columns .button-container a.button {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -899,14 +913,14 @@
 
 .columns.columns-homepage-promo .button-container a.button:hover,
 .columns.columns-homepage-promo .button-container a.button:focus,
-.hero-container + .columns-container .columns .button-container a.button:hover,
-.hero-container + .columns-container .columns .button-container a.button:focus {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button:hover,
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button:focus {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
 }
 
 .columns.columns-homepage-promo .button-container a.button::after,
-.hero-container + .columns-container .columns .button-container a.button::after {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -923,12 +937,12 @@
   /* Fixed-width image column (matches live's 322px) so the logo fills it and
      the text sits closer to center rather than being pushed far right. */
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) {
     flex: 0 0 322px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -938,55 +952,95 @@
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1;
     place-content: center flex-start;
     text-align: left;
   }
 
   .columns.columns-homepage-promo .button-container a.button,
-  .hero-container + .columns-container .columns .button-container a.button {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button {
     padding-left: 32px;
   }
 
   .columns.columns-homepage-promo .columns-item-content,
-  .hero-container + .columns-container .columns .columns-item-content {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content {
     text-align: left;
+    margin-top: 25px;
+    margin-left: 25px;
   }
 
   .columns.columns-homepage-promo .columns-item-content > p,
-  .hero-container + .columns-container .columns .columns-item-content > p {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content > p {
     margin-bottom: 0;
   }
 
   .columns.columns-homepage-promo .columns-item-content > p:first-child,
-  .hero-container + .columns-container .columns .columns-item-content > p:first-child {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content > p:first-child {
     margin-bottom: 16px;
+  }
+}
+
+/* Tablet (768-985): live's promo card is taller (~245px) with an 18px heading,
+   not the 24px desktop size. Match live's card height + image and dial the
+   heading back to 18px. */
+
+@media (width >= 768px) and (width < 986px) {
+  .columns.columns-homepage-promo,
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) {
+    min-height: 245px;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) {
+    flex: 0 0 361px;
+  }
+
+  .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) img {
+    max-height: 245px;
+  }
+
+  .columns.columns-homepage-promo .columns-item-content p strong,
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content p strong {
+    font-size: 18px;
   }
 }
 
 @media (width < 768px) {
   .columns.columns-homepage-promo,
-  .hero-container + .columns-container .columns {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) {
     flex-wrap: wrap;
     max-width: 100%;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image) img {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) img {
     margin-top: 0;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-content:not(:empty)) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
     padding: 16px;
     text-align: center;
+  }
+
+  /* Tighten the content spacing so the stacked card is ~316px tall like live
+     (the 30px heading + button margins otherwise push it ~31px taller). */
+  .columns.columns-homepage-promo .columns-item-content > p:first-child,
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content > p:first-child {
+    margin-bottom: 16px;
+  }
+
+  .columns.columns-homepage-promo .columns-item-content > p:last-child,
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content > p:last-child {
+    margin-bottom: 10px;
   }
 }
 
@@ -997,7 +1051,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.columns-homepage-savings,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-off-white);
@@ -1012,18 +1066,18 @@
 }
 
 .columns.columns-homepage-savings > .columns-item,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item {
   padding: 0;
   grid-column: auto;
 }
 
 .columns.columns-homepage-savings > .columns-item:not(:has(img, strong, a)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:not(:has(img, strong, a)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-image) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) {
   flex: 0 0 55%;
   background: transparent;
   padding: 0;
@@ -1055,7 +1109,7 @@
 
 main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .columns.columns-homepage-savings > div > div:first-child img,
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-image) img {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1064,7 +1118,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 32px 40px;
   display: flex;
@@ -1095,7 +1149,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button,
-.columns-container:not(.hero-container + .columns-container) .columns .button-container a.button {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -1109,7 +1163,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button::after,
-.columns-container:not(.hero-container + .columns-container) .columns .button-container a.button::after {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -1119,9 +1173,29 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button:hover,
-.columns-container:not(.hero-container + .columns-container) .columns .button-container a.button:hover {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .button-container a.button:hover {
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
+}
+
+/* Homepage savings: white ::before fill over the off-white concave dome left by
+   the patient-experiences band above. That band's ::after dome was recolored to
+   #f4f6fb for the resources page, which shows as a seam on the homepage (white
+   savings section). Cover it with a white strip — homepage savings only. */
+
+.section.columns-container:has(.columns-homepage-savings) {
+  position: relative;
+}
+
+.section.columns-container:has(.columns-homepage-savings)::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: #fff;
+  z-index: 2;
 }
 
 /* Section heading "YOU COULD PAY AS LITTLE AS $30" */
@@ -1238,6 +1312,16 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     text-decoration: underline;
   }
 
+  /* "YOU COULD PAY AS LITTLE…" band heading matches live's desktop type:
+     40px Bebas Neue, 36px line-height, no extra tracking. */
+  .columns-homepage-savings-container > .default-content-wrapper p strong,
+  .carousel-video-playlist-container ~ .columns-container > .default-content-wrapper p strong,
+  .section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper p strong {
+    font-size: 40px;
+    line-height: 36px;
+    letter-spacing: normal;
+  }
+
   /* More space between the eyebrow heading and the card (~75px live). */
   .columns-homepage-savings-container > .default-content-wrapper:first-child,
   .carousel-video-playlist-container ~ .columns-container > .default-content-wrapper:first-child,
@@ -1254,23 +1338,82 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
     margin-right: auto;
     margin-top: 8px;
   }
+
+  /* Homepage only: give the disclaimer a fixed height so the full footnote is
+     visible (the shared rule above also covers the why-linzess card via the
+     carousel sibling selector, so height is applied here to homepage selectors
+     only — why-linzess and resources are untouched). */
+  .columns-homepage-savings-container > .default-content-wrapper:last-child,
+  .section.columns-container:has(.columns-homepage-savings) > .default-content-wrapper:last-child {
+    height: 150px;
+  }
+}
+
+/* Tablet (768-985): live stacks the why-linzess savings card (image on top,
+   text below) until the 986px desktop breakpoint — it only goes side-by-side at
+   >=986px. The base card is flex-row, so force it to wrap/stack here. Scoped to
+   the why-linzess card (carousel-video-playlist-container) so the homepage card
+   is untouched. */
+
+@media (width >= 768px) and (width < 986px) {
+  .section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings {
+    flex-wrap: wrap;
+  }
+
+  .section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .section.carousel-video-playlist-container.columns-container .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1 1 100%;
+    padding: 16px;
+    text-align: center;
+  }
+
+  /* Homepage savings card stacks the same way on live's tablet (image on top,
+     centered copy below). The base card is a flex row, so wrap it and make both
+     the image + content cells full-width. Scoped to the homepage savings card
+     in a plain columns-container (not the why-linzess carousel one above). */
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings {
+    flex-wrap: wrap;
+  }
+
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)) {
+    flex: 1 1 100%;
+    padding: 16px;
+    text-align: center;
+  }
+
+  /* Tighten the gap between the "Sign Up Now" CTA and the "Already have a
+     savings card?" line (live ~14px; the base button-container margin was too
+     large). */
+  .section.columns-container:has(.columns-homepage-savings) .columns.columns-homepage-savings .columns-item-content .button-container {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
 }
 
 @media (width < 768px) {
   .columns.columns-homepage-savings,
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) {
     flex-wrap: wrap;
     max-width: 100%;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-image) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
     order: -1;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
     padding: 16px;
     text-align: center;
@@ -1443,8 +1586,6 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
    of 336.6px made it too tall). Mobile keeps the smaller sizes. */
 
 @media (width >= 768px) {
-  .hero-container + .columns-container .columns .columns-item-content p strong,
-  .columns.columns-homepage-promo .columns-item-content p strong,
   .columns.columns-homepage-gutcheck .columns-item-content p strong {
     font-size: 24px;
   }
@@ -1455,6 +1596,13 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 @media (width >= 986px) {
+  /* Promo heading is 18px through tablet (matching live) and only grows to 24px
+     on desktop. */
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) .columns-item-content p strong,
+  .columns.columns-homepage-promo .columns-item-content p strong {
+    font-size: 24px;
+  }
+
   .columns-container:not(.hero-container + .columns-container) .columns.columns-homepage-gutcheck {
     min-height: 299px;
   }
@@ -1462,6 +1610,14 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image),
   .columns.columns-homepage-gutcheck > .columns-item:has(.columns-item-image) img {
     max-height: 299px;
+  }
+
+  /* Match the gut-check card to the full width of the two content cards above
+     it (live aligns both edges). The content row is capped at 1038px by its
+     .demo-wrap; widen this card to the same. Higher specificity to beat the
+     982px cap on the generic columns rule. */
+  body main .section.columns-container .columns.columns-homepage-gutcheck.block {
+    max-width: 1038px;
   }
 }
 
@@ -1595,6 +1751,13 @@ body main .section .columns.whylinzess-mechanism-card {
   overflow: visible;
 }
 
+/* How-it-works timeline cards: equalize heights so the shorter pill card (card 1)
+   matches the taller gut card, like live. */
+
+body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card {
+  min-height: 150px;
+}
+
 body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
   background: var(--linz-light-purple);
 }
@@ -1608,7 +1771,7 @@ body main .section .columns-wrapper + .columns-wrapper .columns.whylinzess-mecha
 
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card {
   background: var(--color-brand-primary);
-  min-height: 120px;
+  min-height: 150px;
 }
 
 body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
@@ -1813,13 +1976,162 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
     gap: 60px;
   }
 
-  .columns.whylinzess-mechanism-card > .columns-item {
+  /* HOW LINZESS WORKS (timeline section): keep live's row/overlap layout —
+     icon half-outside the card on the left, text left-aligned — but shrink
+     the icon 105→96px and pull its offset inboard so it doesn't clip off the
+     left viewport edge. */
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card > .columns-item {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-image img {
+    left: -28px;
+    width: 96px;
+    height: 96px;
+  }
+
+  /* Live's 2nd card body wraps to fewer lines (so the card is ~195px, not
+     ~222px): its text column is wider than ours. Trim the content's right
+     padding and tighten the bullet gap so the copy wraps like live. */
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content {
+    padding-right: 16px;
+  }
+
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-content ul {
+    gap: 10px;
+  }
+
+  /* Narrow the timeline cards so there's left/right space like live (live card
+     ~331px in a 425 viewport vs our full content width); margin:auto centers. */
+  body main .section:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card {
+    max-width: 331px;
+  }
+
+  /* SIDE EFFECTS section (non-timeline): live centers the icon overlapping the
+     card's TOP edge (top half on the off-white section bg, bottom half on the
+     purple card) with centered text below. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card {
+    position: relative;
+    margin-top: 64px;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item {
     flex-direction: column;
     text-align: center;
   }
 
-  .columns.whylinzess-mechanism-card .columns-item-image {
+  /* Collapse the image column out of flow so it doesn't reserve a row, then
+     center the icon and pull it up to straddle the card's top edge. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+    position: absolute;
+    top: -48px;
+    left: 0;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image {
+    flex: 0 0 auto;
+    width: 100%;
+    justify-content: center;
     margin: 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image img {
+    position: static;
+    left: auto;
+    transform: none;
+    margin: 0 auto;
+    width: 96px;
+    height: 96px;
+  }
+
+  /* Make room at the top of the card for the lower half of the overlapping
+     icon (48px) plus breathing room. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content) {
+    padding-top: 41px;
+  }
+
+  /* Live drops the card's own vertical padding to 0 (the icon-overlap space is
+     handled by the content's padding-top above), so the cards aren't ~30-48px
+     taller than live. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card,
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* Card body copy: live uses 14px regular (not 16px/700-900). Match the
+     2nd-card bold and 3rd-card strong overrides too. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-content p,
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-content p strong {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  /* Stack the "Calms pain-sensing nerves / Accelerates bowel movements"
+     bullets in a single column on mobile (live does); the side-by-side
+     row was forcing the card wider than the viewport. */
+  .columns.whylinzess-mechanism-card .columns-item-content ul {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* 2nd side-effects card (Gas/belly/distension list) is shorter than live
+     (~201px). Raise its min-height to match; cards 1 & 3 already match live. */
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) > .columns-wrapper + .columns-wrapper .columns.whylinzess-mechanism-card {
+    min-height: 201px;
+  }
+}
+
+/* Tablet (768–985): live uses the same single-column card layout as mobile for
+   the Side Effects section — icon centered, straddling the card's top edge,
+   with centered text below and stacked bullets. The desktop icon-on-left row
+   only applies at >=986px. */
+
+@media (width >= 768px) and (width < 986px) {
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card {
+    position: relative;
+    margin-top: 64px;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-image) {
+    position: absolute;
+    top: -48px;
+    left: 0;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image {
+    flex: 0 0 auto;
+    width: 100%;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card .columns-item-image img {
+    position: static;
+    left: auto;
+    transform: none;
+    margin: 0 auto;
+    width: 96px;
+    height: 96px;
+  }
+
+  body main .section:has(.whylinzess-mechanism-card):not(:has(.whylinzess-timeline)) .columns.whylinzess-mechanism-card > .columns-item:has(.columns-item-content) {
+    padding-top: 56px;
+  }
+
+  .columns.whylinzess-mechanism-card .columns-item-content ul {
+    flex-direction: column;
+    gap: 12px;
   }
 }
 
@@ -1827,12 +2139,12 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
 
 @media (width < 768px) {
   .columns.columns-homepage-promo,
-  .hero-container + .columns-container .columns {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) {
     margin-top: 24px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
-  .hero-container + .columns-container .columns > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .understanding-comparison) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
     flex-direction: column;
   }
 }

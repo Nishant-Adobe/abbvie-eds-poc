@@ -15,21 +15,30 @@
   left: 0;
   z-index: var(--z-index-safety-bar);
   pointer-events: none;
-  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 1;
 }
 
 
-/* Hide the authored in-page safety bar source block at all times.
-   JS reads its content and renders the sticky clone separately. */
+/* Hide the safety-bar wrapper (content feeds the floating bar, never rendered).
+   The section hiding is handled by JS (section.hidden = true) when safety-bar
+   is the only block. CSS only hides the wrapper to prevent CLS. */
 
 
-.safety-bar-container {
+.safety-bar-wrapper {
   display: none;
+}
+
+
+.adobe-ue-edit .safety-bar-wrapper {
+  display: block;
 }
 
 
 .safety-bar-section.is-hidden {
   transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 
@@ -219,8 +228,39 @@
 
 
 /* ============================================================
+   Overlay (dark dimmer behind expanded safety bar)
+   ============================================================ */
+
+
+.safety-bar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 50%);
+  z-index: var(--safety-bar-overlay-z-index, 499);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+
+.safety-bar-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ============================================================
    Responsive breakpoints
    ============================================================ */
+
+
+@media (width <= 744px) {
+  .safety-bar.split .safety-bar-abbreviated {
+    display: block;
+    grid-template-columns: none;
+    height: 144px;
+  }
+}
 
 
 @media (width >= 1024px) {
@@ -233,13 +273,9 @@
   }
 
   .safety-bar-full {
-    padding: var(--spacing-20) var(--spacing-55);
     max-height: var(--safety-bar-max-height-expanded-desktop);
   }
 
-  .safety-bar.split .safety-bar-abbreviated {
-    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
-  }
 }
 
 
@@ -915,9 +951,29 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+  /* ---- Header: No-hero arc ---- */
+  --header-z-index: 10;
+  --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --no-hero-arc-height: 80px;
+  --no-hero-h1-font-size: 40px;
+  --no-hero-h1-line-height: 36px;
+  --no-hero-h1-margin-bottom: 40px;
+  --no-hero-h1-font-size-mobile: 28px;
+  --no-hero-h1-line-height-mobile: 30px;
+  --no-hero-divider-width: 64px;
+  --no-hero-divider-height: var(--hero-divider-height);
+  --no-hero-divider-margin-bottom: 24px;
+
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
+
+  /* ---- Homepage Card Tokens ---- */
+  --linz-card-heading-size: 18px;
+  --linz-card-body-size: 14px;
+  --linz-card-footnote-size: 12px;
+  --linz-section-heading-size: 32px;
+  --linz-section-heading-line-height: 30px;
 
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
@@ -954,6 +1010,20 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
 
 
@@ -1055,8 +1125,18 @@
 
 
 .safety-bar-abbreviated {
-  padding: var(--spacing-10) var(--spacing-25, 25px) 0;
+  padding: 0 var(--spacing-25, 25px);
   margin: auto;
+}
+
+
+/* Split (two-column collapsed): tighter gap + no top padding to match live */
+
+
+.safety-bar.split .safety-bar-abbreviated {
+  gap: var(--spacing-10);
+  padding-top: 0;
+  padding-right: var(--spacing-25, 25px);
 }
 
 
@@ -1172,6 +1252,17 @@
 }
 
 
+/* Collapsed: h4 subheading (e.g. "Before you take LINZESS") — BasicCommercialLT-Black, matches live */
+
+
+.safety-bar-abbreviated h4 {
+  font-family: var(--font-family-legal-bold);
+  font-weight: normal;
+  line-height: var(--line-height-legal);
+  margin: 0;
+}
+
+
 /* h5 "Side Effects" in safety-bar — purple */
 
 
@@ -1280,6 +1371,7 @@
   .safety-bar.split .safety-bar-abbreviated {
     display: block;
     grid-template-columns: none;
+    height: 121px;
   }
 
   .safety-bar.split .safety-bar-col1 {
@@ -1300,5 +1392,16 @@
 
   .safety-bar-abbreviated h3 {
     font-size: var(--font-size-legal);
+    padding-top: var(--spacing-20, 2rem);
+  }
+}
+
+
+/* Tablet: add top padding to the split two-column collapsed bar to match live */
+
+
+@media (745px <= width <= 1023px) {
+  .safety-bar.split .safety-bar-abbreviated {
+    padding-top: 15px;
   }
 }

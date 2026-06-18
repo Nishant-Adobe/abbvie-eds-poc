@@ -1975,6 +1975,20 @@ color: inherit;
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
 /* ============================================================
    LINZESS DTC — Hero Block Overrides (XWalk/UE preview)
@@ -2205,6 +2219,69 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   max-width: none;
   width: 100%;
 }
+/* Resources hero headline wraps to two lines like live
+   ("Helpful Information To Help" / "You Get Started"). */
+@media (width >= 1024px) {
+  .hero.resources-hero h1 {
+    max-width: 400px;
+    width: auto;
+  }
+}
+/* Hero band height tracks the active image's aspect-ratio (object-fit:fill) so
+   the photo scales fluidly and never over-zooms — instead of a fixed min-height.
+   The hero block (mergeMobileImage) swaps the picture source at 744px: mobile
+   image (750x738) below, desktop image (2048x874) at/above. Match live. */
+@media (width < 744px) {
+  .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
+    aspect-ratio: 750 / 738;
+  }
+
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+
+  /* Live mobile headline is 32px/30px (not the 40px desktop size). */
+  .hero.linzess-behind-nav-linzess-editorial-hero h1 {
+    font-size: 32px;
+    line-height: 30px;
+  }
+}
+/* Tablet (744–1023): the migrated content only ships the wide desktop image,
+   so the 2048/874 ratio would squash the band to ~328px. Live keeps a tall
+   hero (~756px) here, so use a fixed tall min-height and crop the wide image
+   with object-fit:cover instead of stretching it. */
+@media (width >= 744px) and (width < 1024px) {
+  /* .section.hero-container prefix raises specificity above the later
+     @media(>=744px) rules that set min-height:auto on these heroes. */
+  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 756px;
+    aspect-ratio: auto;
+  }
+
+  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
+  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+@media (width >= 1024px) {
+  .hero.linzess-behind-nav-linzess-editorial-hero {
+    min-height: 0;
+    aspect-ratio: 2048 / 874;
+  }
+
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
+    min-height: 0;
+    height: 100%;
+    object-fit: fill;
+  }
+}
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
   min-height: auto;
 }
@@ -2313,6 +2390,25 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     padding: var(--spacing-20);
     justify-content: center;
     height: 100%;
+  }
+
+  /* Editorial hero: live positions the eyebrow + headline in the lower half of
+     the banner so they sit BELOW the overlaid logo (header is ~152px tall).
+     Centering put the eyebrow at ~94px, overlapping the logo. Anchor the copy
+     to the bottom and clear the header with top padding. */
+  .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
+    justify-content: flex-end;
+    padding-top: 152px;
+    padding-bottom: var(--spacing-40);
+  }
+
+  /* Homepage CTA hero: same overlap as the editorial hero — vertically centered
+     copy collided with the overlaid logo. Anchor copy to the bottom and clear
+     the ~152px header. */
+  .hero.linzess-behind-nav-linzess-cta-hero .hero-text-container {
+    justify-content: flex-end;
+    padding-top: 152px;
+    padding-bottom: var(--spacing-40);
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
