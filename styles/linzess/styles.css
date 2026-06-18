@@ -6675,10 +6675,11 @@ body.no-hero main > .section.transcript {
   padding-top: var(--spacing-36, 36px);
 }
 body:has(.section.otc-intro-section),
-body:has(.section.triggers-section) {
+body:has(.section.triggers-section),
+body:has(.section.kit-touchpoints-section) {
   background-color: var(--color-background-primary, #fff);
 }
-main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .triggers-section, .cheat-sheet-section) {
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .triggers-section, .cheat-sheet-section, .kit-touchpoints-section, .kit-relief-section, .kit-conversation-section) {
   position: relative;
   z-index: 0;
   max-width: none;
@@ -6693,13 +6694,17 @@ main > .section.cta-cards-section {
 main > .section.triggers-section {
   padding-bottom: 16rem;
 }
-main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section) {
+main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section, .kit-touchpoints-section) {
   background-color: var(--color-background-primary, #fff);
 }
-main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-section) {
+main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-section, .kit-relief-section) {
   background-color: var(--color-brand-primary);
 }
-main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .triggers-section, .cheat-sheet-section)::before {
+/* keeping-in-touch: "Keep the Conversation Going" sits on a light-purple band. */
+main > .section.kit-conversation-section {
+  background-color: var(--linz-light-purple);
+}
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .triggers-section, .cheat-sheet-section, .kit-touchpoints-section, .kit-relief-section, .kit-conversation-section)::before {
   content: "";
   position: absolute;
   top: calc(-1 * var(--spacing-40));
@@ -6710,14 +6715,22 @@ main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this
   border-radius: 100% 100% 0 0;
   z-index: -5;
 }
-main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section)::before {
+main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section, .kit-touchpoints-section)::before {
   background-color: var(--color-background-primary, #fff);
 }
-main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-section)::before {
+main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-section, .kit-relief-section)::before {
   background-color: var(--color-brand-primary);
+}
+main > .section.kit-conversation-section::before {
+  background-color: var(--linz-light-purple);
 }
 @media (min-width: 1024px) {
   body:has(.section.triggers-section) main > .section:is(.triggers-section, .cheat-sheet-section, .more-like-this-section, .cta-cards-section)::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 25.5rem;
+  }
+  /* keeping-in-touch arcs deepen to 255px at desktop, matching the OTC family. */
+  body:has(.section.kit-touchpoints-section) main > .section:is(.kit-relief-section, .kit-conversation-section, .more-like-this-section, .cta-cards-section)::before {
     top: calc(-1 * var(--spacing-60));
     height: 25.5rem;
   }
@@ -6745,9 +6758,10 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-se
     top: -80px;
   }
 }
-main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section, .kit-touchpoints-section, .kit-relief-section, .kit-conversation-section) :is(.heading-1, h2),
 main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
-main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child,
+main > .section:is(.kit-touchpoints-section, .kit-relief-section, .kit-conversation-section) > .default-content-wrapper:first-of-type > p:first-child {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
@@ -6757,9 +6771,10 @@ main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type
   text-align: center;
   text-transform: none;
 }
-main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2)::before,
+main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section, .kit-touchpoints-section, .kit-relief-section, .kit-conversation-section) :is(.heading-1, h2)::before,
 main > .section.otc-intro-section > .default-content-wrapper > p:first-child::before,
-main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child::before {
+main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child::before,
+main > .section:is(.kit-touchpoints-section, .kit-relief-section, .kit-conversation-section) > .default-content-wrapper:first-of-type > p:first-child::before {
   content: "";
   display: block;
   width: var(--spacing-64);
@@ -6769,12 +6784,14 @@ main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type
   background-size: contain;
 }
 main > .section:is(.otc-intro-section, .more-like-this-section, .triggers-section) :is(.heading-1, h2),
-main > .section.otc-intro-section > .default-content-wrapper > p:first-child {
+main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
+main > .section:is(.kit-touchpoints-section, .kit-conversation-section) > .default-content-wrapper:first-of-type > p:first-child {
   color: var(--color-text-heading);
 }
 main > .section.what-is-linzess-section .heading-1,
 main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child,
-main > .section.cheat-sheet-section :is(.heading-1, h2) {
+main > .section.cheat-sheet-section :is(.heading-1, h2),
+main > .section.kit-relief-section > .default-content-wrapper:first-of-type > p:first-child {
   color: var(--color-text-on-dark);
 }
 main > .section.otc-intro-section > .default-content-wrapper {
@@ -7334,12 +7351,158 @@ main > .section.cta-cards-section .columns.cta-cards {
   }
 }
 @media (width >= 900px) {
-  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section) {
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .kit-touchpoints-section, .kit-relief-section, .kit-conversation-section) {
     --font-size-article-body: 16px;
   }
 
-  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section)::before {
+  main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .cta-cards-section, .kit-touchpoints-section, .kit-relief-section, .kit-conversation-section)::before {
     top: calc(-1 * var(--spacing-60));
     height: 255px;
   }
-}/* <<< DEVELOP RESTORE [article-pages-v2] END */
+}
+
+/* ============================================================
+   KEEPING-IN-TOUCH-WITH-YOUR-DOCTOR — page-specific section variants.
+   Mirrors the OTC article family (otc-intro / what-is-linzess) but adds:
+   - kit-touchpoints: white intro + 4 centered icon cards (Lato 24px/700 titles)
+   - kit-relief: dark-purple band, 2-col text + patient illustration, then a
+     second heading + side-effects block
+   - kit-conversation: light-purple band, 2-col text + thought-bubbles image
+   All selectors scoped to the kit-* section/columns classes so no other
+   Linzess page is affected.
+   ============================================================ */
+
+/* --- kit-touchpoints: intro copy --- */
+main > .section.kit-touchpoints-section > .default-content-wrapper {
+  max-width: 92rem;
+  margin: 0 auto;
+  text-align: center;
+}
+main > .section.kit-touchpoints-section > .default-content-wrapper p:not(:first-child) {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* --- kit-touchpoints: 4 icon cards --- */
+main > .section.kit-touchpoints-section .columns.kit-touchpoints {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+}
+@media (width >= 768px) {
+  main > .section.kit-touchpoints-section .columns.kit-touchpoints {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-24);
+  }
+}
+main > .section.kit-touchpoints-section .columns.kit-touchpoints .columns-item {
+  text-align: center;
+}
+main > .section.kit-touchpoints-section .columns.kit-touchpoints .columns-item-image img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 18rem;
+  margin: 0 auto var(--spacing-16);
+}
+main > .section.kit-touchpoints-section .columns.kit-touchpoints .columns-item-content p:first-child strong,
+main > .section.kit-touchpoints-section .columns.kit-touchpoints .columns-item p strong {
+  display: block;
+  margin: 0 0 var(--spacing-08);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+  color: var(--color-text-heading);
+}
+main > .section.kit-touchpoints-section .columns.kit-touchpoints .columns-item p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* --- kit-relief: dark-purple two-column text band --- */
+main > .section.kit-relief-section .columns.kit-relief {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto var(--spacing-40);
+  align-items: start;
+}
+@media (width >= 768px) {
+  main > .section.kit-relief-section .columns.kit-relief {
+    gap: var(--spacing-48);
+  }
+}
+main > .section.kit-relief-section .columns.kit-relief :is(p, li) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: normal;
+  color: var(--color-text-on-dark);
+}
+main > .section.kit-relief-section .columns.kit-relief p {
+  margin: var(--spacing-16) 0;
+}
+main > .section.kit-relief-section .columns.kit-relief ul {
+  margin: var(--spacing-16) 0;
+  padding-left: var(--spacing-16);
+}
+main > .section.kit-relief-section .columns.kit-relief li::marker {
+  color: var(--color-brand-primary-light);
+}
+/* second heading ("What are Some Common Side Effects?") + its body */
+main > .section.kit-relief-section > .default-content-wrapper:nth-of-type(2) p:first-child {
+  margin: var(--spacing-40) auto var(--spacing-24);
+  font-family: var(--heading-font-family);
+  font-size: var(--font-size-article-heading);
+  font-weight: var(--font-weight-body);
+  line-height: var(--no-hero-h1-line-height, 36px);
+  text-align: center;
+  color: var(--color-text-on-dark);
+}
+main > .section.kit-relief-section > .default-content-wrapper:nth-of-type(2) :is(p, li) {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: normal;
+  color: var(--color-text-on-dark);
+}
+main > .section.kit-relief-section > .default-content-wrapper:nth-of-type(2) :is(p, ul) {
+  max-width: 99.8rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+main > .section.kit-relief-section > .default-content-wrapper:nth-of-type(2) p:not(:first-child) {
+  margin: var(--spacing-16) auto;
+}
+main > .section.kit-relief-section > .default-content-wrapper:nth-of-type(2) ul {
+  margin: var(--spacing-16) auto;
+  padding-left: var(--spacing-32);
+}
+
+/* --- kit-conversation: light-purple band, text + thought-bubbles image --- */
+main > .section.kit-conversation-section .columns.kit-conversation {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto 0;
+  align-items: center;
+}
+@media (width >= 768px) {
+  main > .section.kit-conversation-section .columns.kit-conversation {
+    gap: var(--spacing-48);
+  }
+}
+main > .section.kit-conversation-section .columns.kit-conversation p {
+  margin: var(--spacing-16) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+main > .section.kit-conversation-section .columns.kit-conversation .columns-item-image img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+}
+/* <<< DEVELOP RESTORE [article-pages-v2] END */
