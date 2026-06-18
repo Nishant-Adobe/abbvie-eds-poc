@@ -29,7 +29,9 @@
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
 @custom-media --bp-tablet (min-width: 744px);
+
 @custom-media --bp-desktop (min-width: 1024px);
+
 @custom-media --bp-wide (min-width: 1440px);
 
 :root {
@@ -489,7 +491,6 @@
    Legal Font: BasicCommercialLT
    ============================================================ */
 
-/* stylelint-disable-next-line no-duplicate-selectors */
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #422e83;
@@ -528,8 +529,8 @@
   --color-border-muted: #b8b8b8;
 
   /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgb(0 0 0 / 80%);
-  --color-overlay-muted: rgb(115 133 159 / 75%);
+  --color-overlay-dark: rgba(0, 0, 0, 0.8);
+  --color-overlay-muted: rgba(115, 133, 159, 0.75);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Lato', sans-serif;
@@ -628,12 +629,12 @@
   --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
-  --shadow-safety-bar: rgb(0 0 0 / 25%) 0 0 10px 0;
+  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
   --shadow-section-nav-stuck: 0 4px 12px rgb(0 0 0 / 25%);
 
   /* ---- Gradient ---- */
-  --gradient-hero-overlay: linear-gradient(rgb(0 0 0 / 80%), rgb(255 255 255 / 0%));
-  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115 133 159) 100%);
+  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
   --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
@@ -675,7 +676,6 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
-
   /* ---- Header: No-hero arc ---- */
   --header-z-index: 10;
   --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
@@ -735,11 +735,24 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
 
 /* stylelint-disable selector-class-pattern, no-descending-specificity */
 
-/* stylelint-disable-next-line no-duplicate-selectors */
 .cards-grid {
   --cards-grid-img-text-overlay-bg: rgb(204 204 204 / 80%);
 }
@@ -1316,6 +1329,7 @@ body main .section.cards-grid-container.carousel-video-playlist-container {
 /* "HOW LINZESS WORKS" timeline band sits the eyebrow ~117px below the arc on
    live, not the 80px-padding default that pushes it to ~163px. Trim the top
    padding for the timeline variant of this dark band. */
+
 body main .section.cards-grid-container.carousel-video-playlist-container:has(.whylinzess-timeline) {
   padding-top: 34px;
 }
@@ -1444,6 +1458,7 @@ body main .section.cards-grid-container.carousel-video-playlist-container > .def
 /* Homepage stats band intro ("There are millions…"): live renders it at 16px /
    normal line-height. The base p rule (1.6rem/2rem = 18px/24px) was too large.
    Scoped to the homepage stats band so why-linzess/resources are untouched. */
+
 body main .section.cards-grid-container.carousel-video-playlist-container:has(.cards-grid-homepage-stats) > .default-content-wrapper:first-child > p:nth-child(2) {
   font-size: 16px;
   line-height: normal;
@@ -1499,6 +1514,7 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(#c
 
 /* Resources savings disclaimer link: live renders it inline with the 12px grey
    legal copy (not the 18px purple default link), underlined. */
+
 body main .section.cards-grid-container.carousel-video-playlist-container#communityresources > .default-content-wrapper a:not(.button),
 .cards-grid-container.carousel-video-playlist-container#communityresources > .default-content-wrapper a:not(.button) {
   font-size: 12px;
@@ -1748,6 +1764,7 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
 /* Tablet (768–1099): live shows the homepage stat cards as full-width single
    column rows (~716px), not the narrow ~350px-capped cards. Remove the
    max-width cap and let each card fill the column. Scoped to homepage stats. */
+
 @media (width >= 768px) and (width < 1100px) {
   .cards-grid.cards-grid-homepage-stats .savings-card-cards .flexboxitem-v2 {
     max-width: none;
@@ -2007,7 +2024,7 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
     gap: 72px;
   }
 
-  /* Once stacked, live drops the timeline card body copy 16->14px (desktop
+  /* Once stacked, live drops the timeline card body copy 16→14px (desktop
      side-by-side keeps 16px). */
   .cards-grid.cards-grid-stat-card.whylinzess-timeline .linz-stat-card-body p,
   .cards-grid.cards-grid-stat-card.whylinzess-timeline .linz-stat-card-body > p:last-child {
@@ -2362,4 +2379,23 @@ body main .section.cards-grid-container:has(.cards-grid.resources-explore)::befo
     height: 75px;
     top: -45px;
   }
+}
+
+/* ── Savings cards: bottom-align CTA buttons ─────────────────────────────
+   The three cards are equal height but their body copy differs in length,
+   so the CTA buttons would otherwise sit at varying heights. Make each card
+   a column flex and push the CTA to the bottom so all buttons align (live). */
+
+.cards-grid.cards-grid-icon-image-card .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2 {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--spacing-40, 4rem);
+}
+
+.cards-grid.cards-grid-icon-image-card .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2 .image-text-v2 {
+  flex: 1 0 auto;
+}
+
+.cards-grid.cards-grid-icon-image-card .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2 .cta {
+  margin-top: auto;
 }

@@ -1,249 +1,398 @@
-.section-nav {
-  --section-nav-bg: var(--background-color);
-  --section-nav-border: var(--color-border);
-  --section-nav-link-color: var(--text-color);
-  --section-nav-link-hover: var(--link-color);
-  --section-nav-active-color: var(--link-color);
+/* =====================================================
+   Brightcove Video Block
+   ===================================================== */
 
-  background-color: var(--section-nav-bg);
-  border-bottom: var(--border-width-thin) solid var(--section-nav-border);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.section-nav::-webkit-scrollbar {
-  display: none;
-}
-
-/* ── Sticky variant ─────────────────────────────────────────────────────── */
-
-.section-nav.sticky {
-  position: sticky;
-  top: var(--header-height);
-  z-index: var(--z-index-anchor-nav);
-}
-
-/* When the sentinel leaves viewport, switch to fixed so the nav persists
-   across sections (position:sticky only sticks within its own section height) */
-
-.section-nav.sticky.is-stuck {
-  box-shadow: var(--shadow-nav-stuck);
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: var(--header-height);
-}
-
-/* Zero-height sentinel used to detect sticky state; JS sets height when stuck
-   to reserve the layout space the nav vacates when it becomes position:fixed */
-
-.section-nav-sentinel {
-  height: 0;
-  pointer-events: none;
-}
-
-/* ── Nav inner layout ───────────────────────────────────────────────────── */
-
-.section-nav nav {
-  display: flex;
-  gap: 0;
-  margin: 0 auto;
-  max-width: var(--section-max-width);
-  padding: 0 var(--spacing-24);
-}
-
-/* ── Links ──────────────────────────────────────────────────────────────── */
-
-.section-nav a {
-  border-bottom: var(--border-width-default) solid transparent;
-  color: var(--section-nav-link-color);
-  font-size: var(--body-font-size-s);
-  font-weight: var(--font-weight-semibold);
-  padding: var(--spacing-12) var(--spacing-16);
-  text-decoration: none;
-  transition: border-color var(--transition-duration-fast) var(--transition-easing-standard),
-    color var(--transition-duration-fast) var(--transition-easing-standard);
-  white-space: nowrap;
-}
-
-.section-nav a:hover,
-.section-nav a:focus-visible {
-  color: var(--section-nav-link-hover);
-  outline: none;
-}
-
-.section-nav a:focus-visible {
-  outline: var(--border-width-default) solid var(--color-focus);
-  outline-offset: calc(var(--spacing-02) * -1);
-}
-
-.section-nav a.is-active {
-  border-bottom-color: var(--section-nav-active-color);
-  color: var(--section-nav-link-hover);
-}
-
-/* ── Mobile Menu variant — base = mobile (toggle visible, list collapsed) ── */
-
-.section-nav.mobile-menu {
-  overflow-x: visible;
-}
-
-.section-nav.mobile-menu nav {
-  flex-direction: column;
-  padding: 0;
-}
-
-/* Toggle button — visible by default (mobile base) */
-
-.section-nav.mobile-menu .section-nav-toggle {
-  align-items: center;
-  background: none;
-  border: none;
-  color: var(--section-nav-link-color);
-  cursor: pointer;
-  display: flex;
-  font-size: var(--body-font-size-s);
-  font-weight: var(--font-weight-semibold);
-  gap: var(--spacing-08);
-  justify-content: space-between;
-  padding: var(--spacing-12) var(--spacing-24);
+.brightcove-video {
   width: 100%;
+  max-width: 100%;
+  margin: var(--spacing-32) var(--spacing-00);
 }
 
-.section-nav.mobile-menu .section-nav-toggle:focus-visible {
-  outline: var(--border-width-default) solid var(--color-focus);
-  outline-offset: calc(var(--spacing-02) * -1);
+/* =====================================================
+   Main layout wrapper
+   ===================================================== */
+
+.brightcove-video .bcvideo-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16);
 }
 
-/* Hamburger icon (3 bars via box-shadow trick) */
+/* Content layout: left or right — side-by-side on desktop */
 
-.section-nav-hamburger {
-  background-color: currentcolor;
-  border-radius: var(--spacing-02);
-  display: block;
-  height: var(--spacing-02);
+.brightcove-video.bcvideo-content-left .bcvideo-main,
+.brightcove-video.bcvideo-content-right .bcvideo-main {
+  flex-direction: column;
+}
+
+@media (width >= 1024px) {
+  .brightcove-video.bcvideo-content-left .bcvideo-main,
+  .brightcove-video.bcvideo-content-right .bcvideo-main {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .brightcove-video.bcvideo-content-left .bcvideo-container,
+  .brightcove-video.bcvideo-content-right .bcvideo-container {
+    flex: 2;
+    min-width: var(--spacing-00);
+  }
+
+  .brightcove-video.bcvideo-content-left .bcvideo-content-area,
+  .brightcove-video.bcvideo-content-right .bcvideo-content-area {
+    flex: 1;
+    min-width: var(--spacing-00);
+  }
+}
+
+/* =====================================================
+   Video container (16:9 aspect ratio)
+   ===================================================== */
+
+.brightcove-video .bcvideo-container {
   position: relative;
-  transition: background-color var(--transition-duration-fast) var(--transition-easing-standard);
-  width: var(--spacing-20);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--border-radius-m);
+  overflow: hidden;
+  background: var(--form-border-hover-color);
 }
 
-.section-nav-hamburger::before,
-.section-nav-hamburger::after {
-  background-color: currentcolor;
-  border-radius: var(--spacing-02);
-  content: '';
-  display: block;
-  height: var(--spacing-02);
-  left: 0;
+/* =====================================================
+   Player iframe
+   ===================================================== */
+
+.brightcove-video .bcvideo-player {
   position: absolute;
-  transition: transform var(--transition-duration-fast) var(--transition-easing-standard);
+  inset: var(--spacing-00);
   width: 100%;
+  height: 100%;
+  border: none;
 }
 
-.section-nav-hamburger::before { top: calc(var(--spacing-06) * -1); }
+/* =====================================================
+   Overlay (pre-play state)
+   ===================================================== */
 
-.section-nav-hamburger::after  { top: var(--spacing-06); }
-
-/* Animate to × when menu is open */
-
-.section-nav.mobile-menu.is-open .section-nav-hamburger {
-  background-color: transparent;
-}
-
-.section-nav.mobile-menu.is-open .section-nav-hamburger::before {
-  transform: translateY(var(--spacing-06)) rotate(45deg);
-}
-
-.section-nav.mobile-menu.is-open .section-nav-hamburger::after {
-  transform: translateY(calc(var(--spacing-06) * -1)) rotate(-45deg);
-}
-
-/* Collapsible link list — hidden by default on mobile */
-
-.section-nav.mobile-menu nav ul {
-  border-top: var(--border-width-thin) solid var(--section-nav-border);
-  display: none;
-  flex-direction: column;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-.section-nav.mobile-menu.is-open nav ul {
+.brightcove-video .bcvideo-overlay {
+  position: absolute;
+  inset: var(--spacing-00);
+  z-index: var(--z-index-1);
   display: flex;
-}
-
-.section-nav.mobile-menu nav ul li {
   align-items: center;
-  border-bottom: var(--border-width-thin) solid var(--section-nav-border);
-  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--overlay-navy);
 }
 
-.section-nav.mobile-menu nav ul li:last-child {
-  border-bottom: none;
+.brightcove-video .bcvideo-playing .bcvideo-overlay {
+  display: none;
 }
 
-.section-nav.mobile-menu nav a {
-  border-bottom: none;
-  display: block;
-  padding: var(--spacing-12) var(--spacing-24);
+.brightcove-video .bcvideo-overlay-color {
+  background: none;
+}
+
+/* Custom poster image */
+
+.brightcove-video .bcvideo-poster {
+  position: absolute;
+  inset: var(--spacing-00);
+  z-index: var(--z-index-0);
+}
+
+.brightcove-video .bcvideo-poster picture,
+.brightcove-video .bcvideo-poster img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.section-nav.mobile-menu nav a.is-active {
-  border-bottom: none;
-  border-left: var(--border-width-thick) solid var(--section-nav-active-color);
-  padding-left: calc(var(--spacing-24) - var(--spacing-03));
+/* Overlay content (title, description, play button) */
+
+.brightcove-video .bcvideo-overlay-content {
+  position: relative;
+  z-index: var(--z-index-1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-16);
+  min-width: 100%;
 }
 
-/* ── Desktop ≥768px: horizontal flex list, toggle hidden ─────────────────── */
+.brightcove-video .bcvideo-overlay-title {
+  color: var(--background-color);
+  font-family: var(--heading-font-family-bold);
+  font-size: var(--font-size-24);
+  line-height: var(--line-height-36);
+  margin: var(--spacing-00) var(--spacing-00) var(--spacing-15);
+}
+
+.brightcove-video .bcvideo-overlay-desc {
+  color: var(--background-color);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-22);
+  margin: var(--spacing-00) var(--spacing-00) var(--spacing-24);
+  display: none;
+}
+
+/* =====================================================
+   Play button
+   ===================================================== */
+
+.brightcove-video .bcvideo-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-08);
+  padding: var(--spacing-12) var(--spacing-32);
+  border: var(--border-01) solid var(--background-color);
+  background: transparent;
+  color: var(--background-color);
+  font-family: var(--roboto-bold-font-family);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-700);
+  line-height: var(--line-height-20);
+  letter-spacing: var(--letter-spacing-wide-06);
+  text-transform: var(--font-uppercase);
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: var(--border-radius-00);
+  transition: background 0.2s ease;
+  min-width: fit-content;
+  margin: var(--spacing-00);
+}
+
+.brightcove-video .bcvideo-play-btn:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+.brightcove-video .bcvideo-play-btn:focus-visible {
+  outline: var(--border-02) solid var(--background-color);
+  outline-offset: var(--spacing-02);
+}
 
 @media (width >= 744px) {
-  .section-nav.mobile-menu {
-    overflow-x: auto;
+.brightcove-video .bcvideo-overlay-content {
+    min-width: 80%;
+}
+
+  .brightcove-video .bcvideo-overlay-title {
+    font-size: var(--font-size-30);
+    line-height: var(--line-height-36);
   }
 
-  .section-nav.mobile-menu nav {
+  .brightcove-video .bcvideo-overlay-desc {
+    display: block;
+    font-size: var(--font-size-18);
+    line-height: var(--line-height-24);
+    margin: var(--spacing-00) var(--spacing-00) var(--spacing-10);
+  }
+
+  .brightcove-video .bcvideo-play-btn {
+    font-size: var(--font-size-14);
+    line-height: var(--line-height-20);
+  }
+}
+
+@media (width >= 1024px) {
+    .brightcove-video .bcvideo-overlay-content {
+    min-width: 60%;
+    }
+
+  .brightcove-video .bcvideo-overlay-title {
+    font-size: var(--font-size-40);
+    line-height: var(--line-height-44);
+    margin: var(--spacing-00) var(--spacing-00) var(--spacing-24);
+  }
+
+  .brightcove-video .bcvideo-overlay-desc {
+    font-size: var(--font-size-20);
+    line-height: var(--line-height-24);
+    margin: var(--spacing-00) var(--spacing-00) var(--spacing-24);
+  }
+}
+
+/* =====================================================
+   Icon styles (font and image)
+   ===================================================== */
+
+.brightcove-video .bcvideo-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: var(--spacing-00);
+}
+
+.bcvideo-icon-font.icon-play::before {
+    color: inherit;
+    content: "\e90b";
+    font-family: var(--icon-font-family);
+    margin-left: var(--spacing-03);
+    transform: scale(.8);
+    transition: color .1s ease;
+}
+
+.brightcove-video .bcvideo-icon-image picture,
+.brightcove-video .bcvideo-icon-image img {
+  width: var(--spacing-16);
+  height: var(--spacing-16);
+  object-fit: contain;
+}
+
+/* =====================================================
+   Content area (below/beside video)
+   ===================================================== */
+
+.brightcove-video .bcvideo-content-area {
+  padding: var(--spacing-00);
+}
+
+/* Content layout: none — hide content area */
+
+.brightcove-video.bcvideo-content-none .bcvideo-content-area {
+  display: none;
+}
+
+.brightcove-video .bcvideo-content-title {
+  color: var(--text-color);
+  font-family: var(--heading-font-family-bold);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-20);
+  font-weight: var(--font-weight-700);
+  margin: var(--spacing-00) var(--spacing-00) var(--spacing-10);
+}
+
+.brightcove-video .bcvideo-content-desc {
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-13);
+  line-height: var(--line-height-20);
+  margin: var(--spacing-00) var(--spacing-00) var(--spacing-10);
+}
+
+.brightcove-video .bcvideo-content-desc p {
+  margin: var(--spacing-00) var(--spacing-00) var(--spacing-08);
+}
+
+@media (width >= 744px) {
+.brightcove-video .bcvideo-content-title {
+  font-size: var(--font-size-18);
+  line-height: var(--line-height-24);
+}
+
+.brightcove-video .bcvideo-content-desc {
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-22);
+}
+}
+
+@media (width >= 1024px) {
+.brightcove-video .bcvideo-content-title {
+  font-size: var(--font-size-20);
+  line-height: var(--line-height-24);
+}
+
+.brightcove-video .bcvideo-content-desc {
+  font-size: var(--font-size-18);
+  line-height: var(--line-height-24);
+}
+}
+
+/* =====================================================
+   Video caption
+   ===================================================== */
+
+.brightcove-video .bcvideo-caption {
+  color: var(--text-color-gray);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-18);
+  margin: var(--spacing-08) var(--spacing-00) var(--spacing-00);
+  font-style: italic;
+}
+
+/* =====================================================
+   Transcript
+   ===================================================== */
+
+.brightcove-video .bcvideo-transcript {
+  margin-top: var(--spacing-16);
+}
+
+.brightcove-video .bcvideo-transcript-toggle,
+.brightcove-video .bcvideo-transcript-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-06);
+  background: none;
+  border: none;
+  padding: var(--spacing-00);
+  color: var(--color-accent-blue);
+  font-family: var(--roboto-bold-font-family);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-700);
+  text-transform: var(--font-uppercase);
+  letter-spacing: var(--letter-spacing-wide-06);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.brightcove-video .bcvideo-transcript-toggle:hover,
+.brightcove-video .bcvideo-transcript-link:hover {
+  text-decoration: underline;
+}
+
+.brightcove-video .bcvideo-transcript-toggle:focus-visible,
+.brightcove-video .bcvideo-transcript-link:focus-visible {
+  outline: var(--border-02) solid var(--color-accent-blue);
+  outline-offset: var(--spacing-02);
+}
+
+.brightcove-video .bcvideo-transcript-show-label,
+.brightcove-video .bcvideo-transcript-hide-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-06);
+}
+
+.brightcove-video .bcvideo-transcript-panel {
+  margin-top: var(--spacing-12);
+  padding: var(--spacing-16);
+  background: var(--highlight-background-color);
+  border-radius: var(--border-radius-base);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-16);
+  line-height: var(--line-height-22);
+  color: var(--text-color);
+  max-height: var(--spacing-300);
+  overflow-y: auto;
+}
+
+/* =====================================================
+   Playlist layouts
+   ===================================================== */
+
+.brightcove-video.bcvideo-player-playlist .bcvideo-main {
+  flex-direction: column;
+}
+
+@media (width >= 1024px) {
+  .brightcove-video.bcvideo-playlist-layout-left .bcvideo-main,
+  .brightcove-video.bcvideo-playlist-layout-right .bcvideo-main {
     flex-direction: row;
-    padding: 0 var(--spacing-24);
   }
 
-  .section-nav.mobile-menu .section-nav-toggle {
-    display: none;
+  .brightcove-video.bcvideo-playlist-layout-left .bcvideo-container {
+    order: var(--order-2);
+    flex: var(--order-2);
   }
 
-  .section-nav.mobile-menu nav ul {
-    border-top: none;
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: auto;
-  }
-
-  .section-nav.mobile-menu nav ul li {
-    align-items: center;
-    border-bottom: none;
-    display: flex;
-  }
-
-  .section-nav.mobile-menu nav ul li:last-child {
-    border-bottom: none;
-  }
-
-  .section-nav.mobile-menu nav a {
-    border-bottom: var(--border-width-default) solid transparent;
-    display: inline-block;
-    padding: var(--spacing-12) var(--spacing-16);
-    width: auto;
-  }
-
-  .section-nav.mobile-menu nav a.is-active {
-    border-bottom-color: var(--section-nav-active-color);
-    border-left: none;
-    padding-left: var(--spacing-16);
+  .brightcove-video.bcvideo-playlist-layout-right .bcvideo-container {
+    order: var(--order-1);
+    flex: var(--order-2);
   }
 }
 
@@ -985,332 +1134,113 @@
   --linz-purple-muted: #948ebe;
 }
 
-/* LINZESS — Section Nav Brand Overrides
-   Desktop:        content-width dark-purple rounded pill, centered; active = weight 800, no underline
-   Mobile (base):  dark-purple pill with "JUMP TO: [current]" + chevron toggle
-   Mobile open:    purple toggle bar (top radius) + white dropdown (bottom radius)
-   Source:         linzess.com/find-relief section-navigation pattern
-*/
+/* ============================================================
+   LINZESS — Brightcove Video brand overrides
+   Live (linzess.com/find-relief):
+   - Play button: circular white disc with a purple triangle, no label text
+   - Caption bar: light-purple band beneath the video holding the video name
+     (left) and a "View Transcript" link (right)
+   Source: linzess.com/find-relief single-video pattern
+   ============================================================ */
 
-/* ── Block-scoped tokens ─────────────────────────────────────────────── */
+/* ── Circular white play button with purple triangle ─────────────────── */
 
-.section-nav {
-  --section-nav-bg: var(--linz-dark-purple);
-  --section-nav-text: var(--color-text-on-dark);
-  --section-nav-active: var(--linz-orange);
-  --section-nav-dropdown-bg: var(--background-color);
-  --section-nav-dropdown-text: var(--linz-dark-purple);
-  --section-nav-radius: var(--linz-rounded-corner);
-  --section-nav-mobile-width: 80vw;
-
-  border-bottom: none;
-  border-radius: var(--section-nav-radius);
-  margin: 0 auto;
-  overflow: visible;
-  width: var(--section-nav-mobile-width);
-
-  /* Mobile pill: dark-purple bar background (matches live). Desktop (>=744px)
-     re-asserts its own background below. */
-  background-color: var(--section-nav-bg);
-}
-
-/* ── Links (mobile base) ─────────────────────────────────────────────── */
-
-.section-nav a {
-  color: var(--section-nav-text);
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
-  text-decoration: none;
-}
-
-.section-nav a:hover {
-  color: var(--section-nav-text);
-  opacity: 0.85;
-}
-
-.section-nav a:focus-visible {
-  color: var(--section-nav-text);
-  opacity: 0.85;
-  outline: var(--border-width-default) solid var(--section-nav-text);
-  outline-offset: var(--spacing-02);
-}
-
-.section-nav a.is-active {
-  border-bottom: none;
-  color: var(--section-nav-text);
-  font-weight: var(--font-weight-extra-bold);
-  text-decoration: none;
-}
-
-/* ── Sticky stuck ────────────────────────────────────────────────────── */
-
-/* On mobile, position:fixed with left:0/right:0 (base) spans full viewport.
-   Override to keep the pill at --section-nav-mobile-width, centred. */
-
-.section-nav.sticky.is-stuck {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  box-shadow: none;
-  left: 50%;
-  right: auto;
-  transform: translateX(-50%);
-  width: var(--section-nav-mobile-width);
-  z-index: 5;
-  top: 0;
-  background-color: var(--section-nav-bg);
-}
-
-/* ── Mobile menu: hide hamburger + generic toggle label ──────────────── */
-
-.section-nav.mobile-menu .section-nav-hamburger,
-.section-nav.mobile-menu .section-nav-toggle-label {
-  display: none;
-}
-
-/* Ensure nav fills block width so toggle + chevron never overflow screen */
-
-.section-nav.mobile-menu nav {
-  box-sizing: border-box;
-  width: 100%;
-}
-
-/* ── Current section label ───────────────────────────────────────────── */
-
-.section-nav.mobile-menu .section-nav-current-label {
-  display: block;
-  flex: 1;
-  overflow: hidden;
-  text-align: left;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ── Toggle button ───────────────────────────────────────────────────── */
-
-.section-nav.mobile-menu .section-nav-toggle {
-  align-items: center;
-  background: none;
+.brightcove-video .bcvideo-play-btn {
+  width: 5.6rem;
+  height: 5.6rem;
+  min-width: 0;
+  padding: 0;
+  gap: 0;
   border: none;
-  border-radius: var(--section-nav-radius);
-  color: var(--section-nav-text);
-  cursor: pointer;
-  display: flex;
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
-  justify-content: flex-start;
-  margin: 0;
-  padding: var(--spacing-12) var(--spacing-16) var(--spacing-12) var(--spacing-24);
-  width: 100%;
+  border-radius: 50%;
+  background: rgb(244 246 251 / 80%);
 }
 
-/* When open, toggle loses bottom radius (dropdown continues below) */
-
-.section-nav.mobile-menu.is-open .section-nav-toggle {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.brightcove-video .bcvideo-play-btn:hover {
+  background: rgb(244 246 251 / 95%);
+  transform: scale(1.05);
 }
 
-/* ── "JUMP TO: " static prefix ───────────────────────────────────────── */
+/* Hide the "Watch Video" label — live shows icon only */
 
-.section-nav.mobile-menu .section-nav-toggle::before {
-  content: 'JUMP TO:\00a0';
-  flex-shrink: 0;
-}
-
-/* ── Chevron icon ────────────────────────────────────────────────────── */
-
-.section-nav.mobile-menu .section-nav-toggle::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
-  content: '';
-  display: block;
-  flex-shrink: 0;
-  height: var(--spacing-24);
-  margin-left: auto;
-  width: var(--spacing-24);
-}
-
-.section-nav.mobile-menu.is-open .section-nav-toggle::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41 1.41z'/%3E%3C/svg%3E");
-}
-
-/* ── Dropdown list ───────────────────────────────────────────────────── */
-
-.section-nav.mobile-menu nav ul {
-  background-color: var(--section-nav-dropdown-bg);
-  border-bottom-left-radius: var(--section-nav-radius);
-  border-bottom-right-radius: var(--section-nav-radius);
-  border-top: none;
+.brightcove-video .bcvideo-play-btn .bcvideo-play-btn-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  padding: var(--spacing-08) 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.section-nav.mobile-menu nav ul li {
-  border-bottom: none;
-  display: block;
+/* Purple triangle glyph, centered in the disc */
+
+.brightcove-video .bcvideo-play-btn .bcvideo-icon {
+  justify-content: center;
 }
 
-.section-nav.mobile-menu nav ul li + li::before {
-  display: none;
+.brightcove-video .bcvideo-icon-font.icon-play::before {
+  color: var(--linz-dark-purple, #422e83);
+  margin-left: 0.4rem;
+  transform: scale(1.4);
 }
 
-.section-nav.mobile-menu nav a {
-  border-bottom: none;
-  color: var(--section-nav-dropdown-text);
-  display: block;
-  font-family: var(--body-font-family);
-  font-size: var(--font-size-nav);
-  font-weight: var(--font-weight-bold);
-  padding: var(--spacing-12) var(--spacing-24);
-  text-align: center;
-  text-decoration: none;
-  width: 100%;
+/* ── Rounded video card: thumbnail (rounded top, clipped) + caption bar
+   (rounded bottom) form one 16px-radius card, matching the EDS reference. */
+
+.brightcove-video .bcvideo-container {
+  overflow: hidden;
+  border-radius: 1.6rem 1.6rem 0 0;
 }
 
-.section-nav.mobile-menu nav a:hover,
-.section-nav.mobile-menu nav a:focus-visible {
-  color: var(--section-nav-dropdown-text);
-  opacity: 0.8;
+/* ── Light-purple caption/transcript bar beneath the video ───────────── */
+
+.brightcove-video .bcvideo-content-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-08, 0.8rem) var(--spacing-16, 1.6rem);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-16, 1.6rem) var(--spacing-24, 2.4rem);
+  background-color: var(--linz-light-purple, #d9d7f9);
+  border-radius: 0 0 1.6rem 1.6rem;
 }
 
-.section-nav.mobile-menu nav a.is-active {
-  border-bottom: none;
-  border-left: none;
-  color: var(--section-nav-dropdown-text);
-  font-weight: var(--font-weight-extra-bold);
-  padding-left: var(--spacing-24);
-  text-decoration: none;
+/* When content layout is "none" the title sits in the caption row instead;
+   keep the bar visible to host the video name + transcript link. */
+
+.brightcove-video.bcvideo-content-none .bcvideo-content-area {
+  display: flex;
 }
 
-/* ── Desktop ≥744px ──────────────────────────────────────────────────── */
-
-@media (width >= 744px) {
-  /* Outer wrapper: transparent, full-width — pill lives on the nav element */
-  .section-nav {
-    background-color: transparent;
-    border-radius: 0;
-    overflow-x: visible;
-    width: 100%;
-  }
-
-  /* Restore base full-width stuck behaviour (undo mobile transform/width).
-     Keep the wrapper transparent — the purple pill lives on the nav element,
-     so the wrapper must NOT inherit the mobile stuck background. */
-  .section-nav.sticky.is-stuck {
-    left: 0;
-    right: 0;
-    transform: none;
-    width: 100%;
-    background-color: transparent;
-  }
-
-  /* Content-width dark-purple pill, centered via margin: 0 auto from base */
-  .section-nav nav {
-    background-color: var(--section-nav-bg);
-    border-radius: var(--section-nav-radius);
-    max-width: fit-content;
-    padding: 0;
-  }
-
-  /* Flatten top corners of pill when stuck — live-site pattern */
-  .section-nav.sticky.is-stuck nav {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-
-  /* Links: 16px / 800 base weight (matches live) / line-height 50px for vertical centering */
-  .section-nav a {
-    font-size: 16px;
-    font-weight: var(--font-weight-extra-bold);
-    line-height: 50px;
-    opacity: 1;
-  }
-
-  /* Hover: weight 800 (visual zoom via boldness), colour stays white */
-  .section-nav a:hover,
-  .section-nav a:focus-visible {
-    color: var(--section-nav-text);
-    font-weight: var(--font-weight-extra-bold);
-    opacity: 1;
-  }
-
-  /* Active: weight 800, no underline */
-  .section-nav a.is-active {
-    border-bottom: none;
-    color: var(--section-nav-text);
-    font-weight: var(--font-weight-extra-bold);
-    text-decoration: none;
-  }
-
-  /* ── Mobile-menu: reset mobile-base overrides for desktop layout ── */
-
-  /* Hide toggle */
-  .section-nav.mobile-menu .section-nav-toggle {
-    display: none;
-  }
-
-  /* Horizontal list */
-  .section-nav.mobile-menu nav ul {
-    background-color: transparent;
-    border-radius: 0;
-    flex-direction: row;
-    overflow: visible;
-    padding: 0;
-    width: auto;
-  }
-
-  /* Flex li */
-  .section-nav.mobile-menu nav ul li {
-    display: flex;
-  }
-
-  /* Inline link — restore desktop padding and reset mobile overrides */
-  .section-nav.mobile-menu nav a {
-    border-bottom: none;
-    color: var(--section-nav-text);
-    display: inline-block;
-    font-size: 16px;
-    font-weight: var(--font-weight-semibold);
-    line-height: 50px;
-    padding: 0 25px;
-    text-align: unset;
-    width: auto;
-  }
-
-  /* Override mobile hover rule (higher specificity bleeds through) */
-  .section-nav.mobile-menu nav a:hover,
-  .section-nav.mobile-menu nav a:focus-visible {
-    color: var(--section-nav-text);
-    font-weight: var(--font-weight-extra-bold);
-    opacity: 1;
-  }
-
-  /* Active on desktop: weight 800, no underline */
-  .section-nav.mobile-menu nav a.is-active {
-    border-bottom: none;
-    border-left: none;
-    color: var(--section-nav-text);
-    font-weight: var(--font-weight-extra-bold);
-    padding-left: var(--spacing-24);
-    text-decoration: none;
-  }
+.brightcove-video .bcvideo-content-title,
+.brightcove-video .bcvideo-caption {
+  margin: 0;
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-legal-large, 1.6rem);
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--linz-dark-purple, #422e83);
 }
 
-/* ── Scroll clearance for jump-nav targets ───────────────────────────────
-   When a sticky section-nav is present it pins to the top (~5rem tall) and
-   floats over content (z-index above sections). Give its in-page targets a
-   scroll-margin so anchor jumps stop below the pill, and a little top padding
-   on the first target section so its eyebrow is never hidden behind the pill
-   during passive scrolling. Scoped to pages that actually have the sticky nav. */
+/* Transcript link: purple underlined, right-aligned in the bar */
 
-body:has(.section-nav.sticky) main > .section.talk-to-doctor,
-body:has(.section-nav.sticky) main > .section.how-to-take {
-  scroll-margin-top: var(--section-nav-scroll-offset, 7rem);
+.brightcove-video .bcvideo-transcript {
+  margin: 0;
+  margin-left: auto;
 }
 
-body:has(.section-nav.sticky) main > .section.talk-to-doctor {
-  padding-top: var(--spacing-32, 3.2rem);
+.brightcove-video .bcvideo-transcript-link,
+.brightcove-video .bcvideo-transcript-toggle {
+  color: var(--linz-dark-purple, #422e83);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-12, 1.2rem);
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: normal;
+  text-decoration: underline;
 }

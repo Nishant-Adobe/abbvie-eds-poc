@@ -155,8 +155,11 @@ export default function decorate(block) {
     return parseFloat(val) || 0;
   };
 
-  // Smooth scroll offset = header height + this nav's height
-  const getOffset = () => getCssPx('--header-height') + block.offsetHeight;
+  // Smooth scroll offset = header height + this nav's height + a small gap so the
+  // target's first line (e.g. an eyebrow) clears the stuck nav instead of sitting
+  // flush against — and visually clipped by — its bottom edge.
+  const SCROLL_GAP = 24;
+  const getOffset = () => getCssPx('--header-height') + block.offsetHeight + SCROLL_GAP;
 
   // Href locked by a click — prevents the IO from clearing active during smooth scroll.
   // Cleared once the IO confirms the target section is actually in view.

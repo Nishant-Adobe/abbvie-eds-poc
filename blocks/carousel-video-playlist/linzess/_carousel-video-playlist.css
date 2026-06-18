@@ -975,3 +975,30 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
     transition: none;
   }
 }
+
+/* ── Find-Relief single-video sections ───────────────────────────────────
+   The .grid layout is built for the homepage patient-experiences DARK band
+   (multiple cards on purple). On find-relief each video sits alone on the
+   section's own (white / off-white) background, so neutralise the band:
+   transparent bg, no max-width cap or extra padding, and cap the lone card
+   to the single-video width (matches live find-relief). Scoped to the two
+   find-relief video sections only. */
+.section.video-section .carousel-video-playlist.grid,
+.section.how-to-take .carousel-video-playlist.grid {
+  max-width: none;
+  padding: 0;
+  background: none;
+  color: inherit;
+}
+
+.section.video-section .carousel-video-playlist.grid .cvp-grid,
+.section.how-to-take .carousel-video-playlist.grid .cvp-grid {
+  display: flex;
+  justify-content: center;
+}
+
+.section.video-section .carousel-video-playlist.grid .cvp-card,
+.section.how-to-take .carousel-video-playlist.grid .cvp-card {
+  width: 100%;
+  max-width: 62rem;
+}

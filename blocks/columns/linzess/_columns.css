@@ -1307,3 +1307,81 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
     flex-direction: column;
   }
 }
+
+/* ── Gut Check tout: "Actor Portrayal" overlay caption ───────────────────
+   The image cell holds the picture plus a small caption that floats over the
+   bottom-right corner of the photo (matches live). Scoped to the gut-check
+   tout row so it never affects other columns. */
+.columns.gut-check-tout-row .columns-item-image {
+  position: relative;
+}
+
+.columns.gut-check-tout-row .columns-item-image .tout-overlay {
+  position: absolute;
+  right: var(--spacing-16, 1.6rem);
+  bottom: var(--spacing-16, 1.6rem);
+  margin: 0;
+  font-size: var(--font-size-legal, 1.4rem);
+  color: var(--color-text-on-dark, #fff);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 45%);
+}
+
+/* ── Icon cards (Already-Prescribed: Refill / Keep Doctor Updated) ────────
+   Live: two rounded cards — card 1 dark-purple w/ white text, card 2
+   light-purple w/ dark text. Each centered, with a large circular icon at
+   the top. Selectors are prefixed with `body main .section.prescribed-cards`
+   to outrank the base `.columns-item:has(.columns-item-image)` rule that
+   otherwise forces a transparent background and left alignment. */
+body main .section.prescribed-cards .columns.icon-cards-2col {
+  gap: var(--spacing-24, 2.4rem);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-40, 4rem) var(--spacing-32, 3.2rem);
+  border-radius: 1.6rem;
+}
+
+/* Card 1 — dark purple, white text */
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:first-child {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--color-text-on-dark, #fff);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:first-child .heading-2,
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:first-child p {
+  color: var(--color-text-on-dark, #fff);
+}
+
+/* Card 2 — light purple, dark-purple heading */
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:nth-child(2) {
+  background-color: var(--linz-light-purple, #d9d7f9);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:nth-child(2) .heading-2 {
+  color: var(--linz-dark-purple, #422e83);
+}
+
+/* Large circular icon badge at the top of each card */
+body main .section.prescribed-cards .columns.icon-cards-2col .columns-item-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-16, 1.6rem);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col .columns-item-image picture,
+body main .section.prescribed-cards .columns.icon-cards-2col .columns-item-image img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: contain;
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col .heading-2 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+}

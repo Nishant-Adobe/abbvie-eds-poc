@@ -2,10 +2,11 @@ import { getConfigValue } from '../../scripts/config.js';
 import { isUniversalEditor } from '../../scripts/utils.js';
 
 // Default breakpoint at which the hero swaps from the mobile to the desktop
-// image. Linzess editorial-hero defers the swap to the desktop breakpoint so
-// its tall portrait image survives through tablet (matches live).
+// image. The linzess editorial-hero swaps at the tablet breakpoint (744px) so
+// the wide desktop image is used from tablet up — matching the live site and
+// the editorial-hero CSS, which sizes the tablet band around the wide image.
 const HERO_IMAGE_SWAP_BREAKPOINT = 985;
-const HERO_IMAGE_SWAP_BREAKPOINT_DESKTOP = 1024;
+const HERO_IMAGE_SWAP_BREAKPOINT_EDITORIAL = 744;
 const LINZESS_EDITORIAL_HERO_CLASS = 'linzess-behind-nav-linzess-editorial-hero';
 
 function addSectionClasses(block, section) {
@@ -341,7 +342,7 @@ export default async function decorate(block) {
   // swaps to the wide desktop image at the desktop breakpoint (matching the
   // live site). All other heroes/brands keep the default tablet swap.
   const heroSwapMinWidth = block.classList.contains(LINZESS_EDITORIAL_HERO_CLASS)
-    ? HERO_IMAGE_SWAP_BREAKPOINT_DESKTOP
+    ? HERO_IMAGE_SWAP_BREAKPOINT_EDITORIAL
     : HERO_IMAGE_SWAP_BREAKPOINT;
   mergeMobileImage(imageCell, mobileImageRow, heroSwapMinWidth);
   promoteImageLink(imageCell);

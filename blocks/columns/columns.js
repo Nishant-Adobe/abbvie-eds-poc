@@ -41,10 +41,20 @@ function applyMobileImageSource(cell, mediaQuery = MOBILE_IMAGE_MEDIA) {
 
 export default function decorate(block) {
   const rowData = [...block.children];
-  const anchorId = rowData[0]?.textContent.trim();
-  if (anchorId) {
-    block.id = anchorId;
-    rowData[0]?.remove();
+  // The optional first row is an anchorId config ONLY when it is a single cell
+  // holding plain text (no image/heading/link and no second column cell). A
+  // multi-cell row, or one containing media/markup, is a real content column
+  // and must NOT be consumed — otherwise the first column silently disappears
+  // (or an empty placeholder row becomes a phantom 0-width column).
+  const firstRow = rowData[0];
+  const firstCells = firstRow ? [...firstRow.children] : [];
+  const isAnchorRow = firstCells.length === 1
+    && !firstCells[0].querySelector('picture, img, h1, h2, h3, h4, h5, h6, a, ul, ol');
+  if (isAnchorRow) {
+    const anchorId = firstCells[0].textContent.trim();
+    if (anchorId) block.id = anchorId;
+    firstRow.remove();
+    rowData.shift();
   }
 
   // The savings card keeps its mobile artwork through the tablet breakpoint;

@@ -14,6 +14,11 @@ function normalize(value) {
 function getSectionIdentifier(section) {
   if (section.id) return section.id;
   if (section.dataset.aueLabel) return section.dataset.aueLabel;
+  // decorateSections() moves section-metadata keys onto the section dataset and
+  // removes the source rows, so the tabName/name value survives only here.
+  if (section.dataset.tabName) return section.dataset.tabName;
+  if (section.dataset.tabname) return section.dataset.tabname;
+  if (section.dataset.name) return section.dataset.name;
 
   const meta = section.querySelector('.section-metadata');
   if (meta) {

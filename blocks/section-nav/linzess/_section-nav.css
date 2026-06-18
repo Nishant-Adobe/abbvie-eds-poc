@@ -311,3 +311,18 @@
     text-decoration: none;
   }
 }
+
+/* ── Scroll clearance for jump-nav targets ───────────────────────────────
+   When a sticky section-nav is present it pins to the top (~5rem tall) and
+   floats over content (z-index above sections). Give its in-page targets a
+   scroll-margin so anchor jumps stop below the pill, and a little top padding
+   on the first target section so its eyebrow is never hidden behind the pill
+   during passive scrolling. Scoped to pages that actually have the sticky nav. */
+body:has(.section-nav.sticky) main > .section.talk-to-doctor,
+body:has(.section-nav.sticky) main > .section.how-to-take {
+  scroll-margin-top: var(--section-nav-scroll-offset, 7rem);
+}
+
+body:has(.section-nav.sticky) main > .section.talk-to-doctor {
+  padding-top: var(--spacing-32, 3.2rem);
+}

@@ -402,3 +402,252 @@
   }
 }
 /* stylelint-enable no-descending-specificity */
+
+/* ============ Checklist card (Talk To Your Doctor list) ============
+   Live: dark-purple rounded card, centered max-width, white text, two-column
+   grid of items each prefixed with an orange checkmark. Scoped to the
+   checkmark-list variant so it never affects other rich-text blocks. */
+/* stylelint-disable no-descending-specificity */
+.rich-text.checkmark-list {
+  max-width: 92.8rem;
+  margin: 0 auto;
+  padding: var(--spacing-40, 4rem) var(--spacing-48, 4.8rem);
+  background-color: var(--linz-dark-purple, #422e83);
+  border-radius: var(--border-radius-large, 1.6rem);
+  color: var(--color-text-on-dark, #fff);
+}
+
+.rich-text.checkmark-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rich-text.checkmark-list.checkmark-list-flex ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-32, 3.2rem) var(--spacing-48, 4.8rem);
+}
+
+@media (width >= 744px) {
+  .rich-text.checkmark-list.checkmark-list-flex ul {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rich-text.checkmark-list li {
+  position: relative;
+  padding-left: var(--spacing-40, 4rem);
+}
+
+.rich-text.checkmark-list.checkmark-list-orange li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  width: var(--spacing-24, 2.4rem);
+  height: var(--spacing-24, 2.4rem);
+
+  /* Two-colour icon (orange circle + purple check) — use the SVG as an image,
+     NOT a single-colour mask, so the inner check stays purple. */
+  background: url("/content/dam/linzess/images/icon-checkmark-orange.svg") no-repeat center / contain;
+}
+
+.rich-text.checkmark-list li .heading-2,
+.rich-text.checkmark-list li p {
+  color: var(--color-text-on-dark, #fff);
+}
+
+.rich-text.checkmark-list li .heading-2 {
+  margin: 0 0 var(--spacing-08, 0.8rem);
+}
+
+.rich-text.checkmark-list li a,
+.rich-text.checkmark-list li a b {
+  color: var(--color-text-on-dark, #fff);
+  text-decoration: underline;
+}
+/* stylelint-enable no-descending-specificity */
+
+/* ============ Talk-To-A-Doctor intro (centered eyebrow + divider + display heading) ============
+   Live: centered column — purple uppercase eyebrow, orange curved divider,
+   Bebas Neue display heading, gray body. Scoped to .talk-to-doctor-intro. */
+/* stylelint-disable no-descending-specificity */
+.rich-text.talk-to-doctor-intro {
+  max-width: 76.8rem;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-text-body, #4d4d4f);
+  font-size: var(--font-size-legal-large, 1.6rem);
+}
+
+.rich-text.talk-to-doctor-intro .eyebrow {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-legal, 1.4rem);
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+.rich-text.talk-to-doctor-intro .divider {
+  display: block;
+  width: 6.4rem;
+  height: 0.5rem;
+  margin: 0 auto var(--spacing-24, 2.4rem);
+  background: url("/content/dam/linzess/images/divider.svg") no-repeat center / contain;
+  font-size: 0;
+}
+
+.rich-text.talk-to-doctor-intro .heading-1 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
+  font-size: var(--font-size-article-heading, 4rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--linz-dark-purple, #422e83);
+}
+/* stylelint-enable no-descending-specificity */
+
+/* ============ Video-intro (centered eyebrow/divider/heading above a video) ============
+   Live: centered column — optional purple uppercase eyebrow, orange curved divider,
+   Bebas Neue display heading, gray sub-copy constrained to the video width.
+   Scoped to .video-intro so it never affects other rich-text blocks. */
+/* stylelint-disable no-descending-specificity */
+.rich-text.video-intro {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.rich-text.video-intro .eyebrow {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-legal, 1.4rem);
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+.rich-text.video-intro .divider {
+  display: block;
+  width: 6.4rem;
+  height: 0.5rem;
+  margin: 0 auto var(--spacing-24, 2.4rem);
+  background: url("/content/dam/linzess/images/divider.svg") no-repeat center / contain;
+  font-size: 0;
+}
+
+.rich-text.video-intro .heading-1 {
+  margin: var(--spacing-20, 2rem) 0 0;
+  font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
+  font-size: var(--font-size-article-heading, 4rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+.rich-text.video-intro .max-single-video {
+  max-width: 62rem;
+  margin: var(--spacing-20, 2rem) auto 0;
+  font-size: var(--font-size-legal-large, 1.6rem);
+  line-height: normal;
+}
+/* stylelint-enable no-descending-specificity */
+
+/* ── Video section: top spacing from the preceding gut-check tout ─────────
+   Live leaves ~99px between the gut-check card and the video-intro divider.
+   The video-section is the rich-text+brightcove band; add matching top padding. */
+.section.video-section {
+  padding-top: var(--spacing-96, 9.6rem);
+}
+
+/* ── Savings "Already have a savings card? Activate now." line ────────────
+   Live: centered, 16px gray Lato. Scoped to the savings-activate block. */
+/* stylelint-disable no-descending-specificity */
+.rich-text.savings-activate {
+  text-align: center;
+}
+
+.rich-text.savings-activate p {
+  margin: 0;
+  font-size: var(--font-size-legal-large, 1.6rem);
+  color: var(--color-text-body, #4d4d4f);
+}
+/* stylelint-enable no-descending-specificity */
+
+/* ── Centered section headings (savings + already-prescribed) ────────────
+   Live: orange divider on top, then a Bebas Neue display heading, optional
+   sub-heading, all centered. Scoped to these two heading blocks. */
+/* stylelint-disable no-descending-specificity */
+.rich-text.savings-heading,
+.rich-text.already-prescribed-heading {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.rich-text.savings-heading .divider,
+.rich-text.already-prescribed-heading .divider {
+  display: block;
+  width: 6.4rem;
+  height: 0.5rem;
+  margin: 0 auto var(--spacing-24, 2.4rem);
+  background: url("/content/dam/linzess/images/divider.svg") no-repeat center / contain;
+  font-size: 0;
+}
+
+.rich-text.savings-heading .heading-1,
+.rich-text.already-prescribed-heading .heading-1 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
+  font-size: var(--font-size-article-heading, 4rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+.rich-text.savings-heading .heading-2 {
+  margin: 0;
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: var(--font-size-h2-hero, 2.4rem);
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+}
+/* stylelint-enable no-descending-specificity */
+
+/* ── Footnote / legal copy (savings + tout disclaimers) ──────────────────
+   Live: 12px gray Lato, left-aligned, normal leading, centered 998px column
+   with side padding. Scoped to the footnote rich-text variant. */
+/* stylelint-disable no-descending-specificity */
+.rich-text.footnote {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-48, 4.8rem);
+  text-align: left;
+}
+
+.rich-text.footnote p {
+  margin: 0 0 var(--spacing-10, 1rem);
+  font-size: var(--font-size-12, 1.2rem);
+  line-height: normal;
+  color: var(--color-text-body, #4d4d4f);
+}
+
+.rich-text.footnote sup {
+  font-size: 0.85em;
+}
+
+.rich-text.footnote a {
+  font-size: var(--font-size-12, 1.2rem);
+  color: var(--linz-dark-purple, #422e83);
+  text-decoration: underline;
+}
+/* stylelint-enable no-descending-specificity */
