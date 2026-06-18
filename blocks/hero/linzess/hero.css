@@ -2423,6 +2423,17 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     aspect-ratio: 750 / 738;
   }
 
+  /* Pin the image container to a definite box so the picture/img height:100%
+     resolves. Without this the container's min-height:100% gives no definite
+     height for percentage resolution, so the img fell back to its intrinsic
+     ~166px and the white H1 dropped below the image and got clipped. Same fix
+     the tablet rule below already applies. */
+  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
   .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
   .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
     min-height: 0;
