@@ -804,6 +804,29 @@
   background-color: var(--linz-light-purple);
 }
 
+/* ───────────────────────────────────────────────────────────────────
+   UNDERSTANDING CONSTIPATION — "The Difference Between …" cards.
+   Live reverses the default index colours: card 1 (Occasional) is the
+   dark/white card, card 2 (Chronic) is the light/purple card. Scoped to
+   .understanding-difference so the index defaults stay intact elsewhere.
+   ─────────────────────────────────────────────────────────────────── */
+
+.cards-grid.cards-grid-icon-image-card.understanding-difference .flexboxitem-v2:nth-child(1) .abbv-flex-item-v2 {
+  background-color: var(--linz-dark-purple);
+}
+
+.cards-grid.cards-grid-icon-image-card.understanding-difference .flexboxitem-v2:nth-child(1) :is(p, li, strong, .heading-2) {
+  color: var(--linz-white);
+}
+
+.cards-grid.cards-grid-icon-image-card.understanding-difference .flexboxitem-v2:nth-child(2) .abbv-flex-item-v2 {
+  background-color: var(--linz-light-purple);
+}
+
+.cards-grid.cards-grid-icon-image-card.understanding-difference .flexboxitem-v2:nth-child(2) :is(p, li, strong, .heading-2) {
+  color: var(--linz-dark-purple);
+}
+
 :is(.cards-grid.cards-grid-icon-image-card, .cards-grid.cards-grid-article-cards) .text-align-center {
   text-align: center;
 }
@@ -2013,6 +2036,46 @@ body main .section.dark .cards-grid .savings-card-cards .cta {
   font-size: 16px;
   font-weight: var(--font-weight-body);
   color: var(--color-brand-primary);
+}
+
+/* ───────────────────────────────────────────────────────────────────
+   UNDERSTANDING CONSTIPATION — IBS-C / CIC prevalence stat cards.
+   Live renders a borderless, transparent card: a centered caption ABOVE
+   a full-width U.S.-map graphic (flex column-reverse). Scoped to the
+   .understanding-prevalence variant so the whylinzess stat layouts are
+   untouched.
+   ─────────────────────────────────────────────────────────────────── */
+
+.cards-grid.cards-grid-stat-card.understanding-prevalence .linz-stat-card {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 0;
+  text-align: center;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.cards-grid.cards-grid-stat-card.understanding-prevalence .linz-stat-card:nth-child(2) {
+  background-color: transparent;
+}
+
+.cards-grid.cards-grid-stat-card.understanding-prevalence .linz-stat-card-icon img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cards-grid.cards-grid-stat-card.understanding-prevalence .linz-stat-card-body {
+  margin: 0 0 16px;
+}
+
+.cards-grid.cards-grid-stat-card.understanding-prevalence .linz-stat-card-body p,
+.cards-grid.cards-grid-stat-card.understanding-prevalence .linz-stat-card-body > p:last-child {
+  margin: 0;
+  font-size: 16px;
+  font-weight: var(--font-weight-body);
+  color: var(--color-brand-primary);
+  text-align: center;
 }
 
 /* Live stacks the IBS-C / CIC stat cards into a single column below the 986px
