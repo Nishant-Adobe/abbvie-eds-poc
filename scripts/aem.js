@@ -483,7 +483,7 @@ function decorateIcons(element, prefix = '') {
 
 function applySectionStyleValue(section, value) {
   value
-    .split(',')
+    .split(/[\s,]+/)
     .map((style) => toClassName(style.trim()))
     .filter(Boolean)
     .forEach((style) => section.classList.add(style));
