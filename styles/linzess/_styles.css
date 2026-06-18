@@ -2338,6 +2338,7 @@ body main .section:is(.find-relief-checklist, .find-relief-off-white) .embed pic
    first find-relief-off-white section (right after the checklist); the
    dark-purple band is a single section. Bottom padding on each band gives
    the next band's dome room to overlap. */
+body main .section.find-relief-checklist,
 body main .section.find-relief-off-white,
 body main .section.find-relief-dark-purple {
   position: relative;
@@ -2353,6 +2354,7 @@ body main .section.find-relief-dark-purple:not(:has(.text-container)) {
   padding-bottom: var(--linz-band-pad-btm);
 }
 
+body main .section.hero-container + .section.find-relief-checklist::before,
 body main .section.find-relief-checklist + .section.find-relief-off-white::before,
 body main .section.find-relief-dark-purple::before {
   content: '';
@@ -2367,6 +2369,12 @@ body main .section.find-relief-dark-purple::before {
   z-index: -5;
 }
 
+/* First checklist section arcs a white dome over the hero bottom (live
+   .background-white::before — height 255px, top -60px). */
+body main .section.hero-container + .section.find-relief-checklist::before {
+  background: var(--linz-white);
+}
+
 body main .section.find-relief-checklist + .section.find-relief-off-white::before {
   background: var(--linz-off-white);
 }
@@ -2376,6 +2384,7 @@ body main .section.find-relief-dark-purple::before {
 }
 
 @media (width >= 900px) {
+  body main .section.hero-container + .section.find-relief-checklist::before,
   body main .section.find-relief-checklist + .section.find-relief-off-white::before,
   body main .section.find-relief-dark-purple::before {
     height: var(--linz-arc-height-lg);

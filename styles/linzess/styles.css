@@ -2466,6 +2466,7 @@ body main .section:is(.find-relief-checklist, .find-relief-off-white) .embed pic
    dark-purple band is a single section. Bottom padding on each band gives
    the next band's dome room to overlap. */
 
+body main .section.find-relief-checklist,
 body main .section.find-relief-off-white,
 body main .section.find-relief-dark-purple {
   position: relative;
@@ -2482,6 +2483,7 @@ body main .section.find-relief-dark-purple:not(:has(.text-container)) {
   padding-bottom: var(--linz-band-pad-btm);
 }
 
+body main .section.hero-container + .section.find-relief-checklist::before,
 body main .section.find-relief-checklist + .section.find-relief-off-white::before,
 body main .section.find-relief-dark-purple::before {
   content: '';
@@ -2496,6 +2498,13 @@ body main .section.find-relief-dark-purple::before {
   z-index: -5;
 }
 
+/* First checklist section arcs a white dome over the hero bottom (live
+   .background-white::before — height 255px, top -60px). */
+
+body main .section.hero-container + .section.find-relief-checklist::before {
+  background: var(--linz-white);
+}
+
 body main .section.find-relief-checklist + .section.find-relief-off-white::before {
   background: var(--linz-off-white);
 }
@@ -2505,6 +2514,7 @@ body main .section.find-relief-dark-purple::before {
 }
 
 @media (width >= 900px) {
+  body main .section.hero-container + .section.find-relief-checklist::before,
   body main .section.find-relief-checklist + .section.find-relief-off-white::before,
   body main .section.find-relief-dark-purple::before {
     height: var(--linz-arc-height-lg);
@@ -2690,7 +2700,7 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-se
    section boundary; scoped to this page so the OTC arc stays as approved.
    Desktop only — live keeps the shallow base arc at mobile and tablet. */
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   body:has(.section.triggers-section) main > .section:is(.triggers-section, .cheat-sheet-section, .more-like-this-section, .cta-cards-section)::before {
     top: calc(-1 * var(--spacing-60));
     height: 25.5rem;
@@ -2753,7 +2763,7 @@ main > .section.otc-intro-section > .default-content-wrapper {
 /* Body copy = every intro paragraph except the heading (first child). Excludes
    by both class and position so it never restyles the heading in either env. */
 
-main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1):not(:first-child) {
+main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1, :first-child) {
   margin: var(--spacing-16) 0;
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
@@ -3160,7 +3170,7 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
    the image, title, and link paragraphs in one cell, so :first-of-type would
    match the image wrapper, not the title.) */
 
-main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture), :has(a)) {
   padding-top: var(--spacing-20);
   font-family: var(--body-font-family);
   font-size: var(--font-size-article-body);
@@ -3172,7 +3182,7 @@ main > .section.more-like-this-section .columns.more-like-this .columns-item p:n
    section's 16px->18px body step-up that --font-size-article-body applies. */
 
 @media (width >= 900px) {
-  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
+  main > .section.more-like-this-section .columns.more-like-this .columns-item p:not(:has(picture), :has(a)) {
     font-size: var(--font-size-legal-large);
   }
 }

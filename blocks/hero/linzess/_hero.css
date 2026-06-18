@@ -247,71 +247,29 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-  min-height: var(--hero-editorial-min-height);
+  min-height: var(--hero-cta-min-height);
 }
 
-/* Live find-relief hero: text overlay is vertically centred (middle-left)
-   over the background image, not bottom-anchored. */
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-  max-width: none;
-  padding: var(--hero-editorial-padding);
+  padding-bottom: var(--hero-cta-padding-bottom);
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
-  width: 100%;
-  max-width: var(--hero-editorial-text-max-width);
-}
-
-/* Eyebrow ("Find Relief"): Lato, 12px/800, uppercase, white, no divider.
-   The empty authored <p> between eyebrow and h1 prevents the JS from adding
-   .hero-eyebrow, so target the first paragraph in the text container. */
-/* stylelint-disable-next-line no-descending-specificity */
-.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container p:first-child {
-  margin: 0 0 var(--hero-editorial-eyebrow-margin-bottom);
-  padding: 0;
-  color: var(--color-text-on-dark);
-  font-family: var(--body-font-family);
-  font-size: var(--hero-editorial-eyebrow-font-size);
-  font-weight: var(--font-weight-extra-bold);
-  letter-spacing: 0;
-  line-height: var(--line-height-body);
-  text-transform: uppercase;
-}
-
-/* No divider on the editorial eyebrow (live has none). */
-/* stylelint-disable-next-line no-descending-specificity */
-.hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container p:first-child::after,
-.hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
-  content: none;
-}
-
-/* Drop the empty spacer paragraph between eyebrow and h1. */
-/* stylelint-disable-next-line no-descending-specificity */
-.hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container p:empty {
-  display: none;
+  max-width: var(--hero-cta-text-max-width);
 }
 
 .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
-  margin: 0;
+  font-size: var(--font-size-40);
+  line-height: 0.95;
   max-width: none;
   width: 100%;
-  font-size: var(--hero-editorial-h1-font-size);
-  line-height: var(--hero-editorial-h1-line-height);
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
   min-height: auto;
 }
 
-.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero)::before {
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
   position: absolute;
   left: -5%;
   right: -5%;
@@ -334,15 +292,8 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: var(--hero-caption-max-width);
-  min-height: 0;
-  padding: 0;
+  width: min(100%, 72rem);
   padding-bottom: 7.6rem;
-  margin-inline: auto;
 }
 
 .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .cmp-container-x-large {
@@ -382,24 +333,41 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   color: var(--color-brand-primary);
 }
 
-/* Editorial eyebrow: when the JS does add .hero-eyebrow, keep it consistent
-   with the first-paragraph treatment (Lato 12px/800, uppercase, no divider). */
+.hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: var(--hero-caption-max-width);
+  min-height: 0;
+  padding: 0;
+  margin-inline: auto;
+}
+
 .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
   position: relative;
   z-index: 2;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  inset: unset;
   width: 100%;
-  max-width: none;
+  max-width: var(--hero-caption-max-width);
   min-height: auto;
-  margin: 0 0 var(--hero-editorial-eyebrow-margin-bottom);
   padding: 0;
-  font-size: var(--hero-editorial-eyebrow-font-size);
-  font-weight: var(--font-weight-extra-bold);
+  margin-inline: auto;
+  margin-bottom: var(--spacing-40);
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-body);
   text-transform: uppercase;
 }
 
 .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
-  content: none;
+  display: block;
+  margin-top: var(--spacing-24);
+  content: '';
+  background-image: url("/icons/divider.svg");
+  width: var(--spacing-64);
+  height: var(--hero-divider-height);
 }
 
 @media (width < 744px) {
@@ -420,7 +388,7 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     height: 100%;
   }
 
-  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero)::before {
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
     bottom: var(--hero-mobile-curve-bottom);
     height: var(--hero-mobile-curve-height);
   }
@@ -450,18 +418,16 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-    min-height: var(--hero-editorial-min-height-tablet);
+    min-height: auto;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
     width: 100%;
-    padding: var(--hero-editorial-padding-tablet);
+    padding: calc(var(--nav-height) + 6.2rem) 7rem 7rem;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
-    width: 100%;
-    max-width: var(--hero-editorial-text-max-width-tablet);
-    margin-inline: auto;
+    max-width: var(--hero-cmp-max-width-tablet);
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
@@ -488,30 +454,24 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) {
-    min-height: var(--hero-editorial-min-height-desktop);
+    min-height: auto;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
-    width: 100%;
-    padding: var(--hero-editorial-padding-desktop);
+    width: 90%;
+    padding: calc(var(--nav-height) + 27.8rem) 11.8rem 8rem;
   }
 
   .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) .cmp-container-x-large {
+    max-width: none;
     width: 100%;
-    max-width: var(--hero-editorial-text-max-width-desktop);
-    margin-inline: auto;
-  }
-
-  .hero:is(.linzess-editorial-hero, .linzess-behind-nav-linzess-editorial-hero) h1 {
-    font-size: var(--hero-editorial-h1-font-size-desktop);
-    line-height: var(--hero-editorial-h1-line-height-desktop);
   }
 
   .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) {
     min-height: auto;
   }
 
-  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero) .hero-text-container {
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero) .hero-text-container {
     position: absolute;
     display: flex;
     align-items: center;
@@ -526,7 +486,33 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     max-width: var(--hero-cmp-max-width-cta);
   }
 
-  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero)::before {
+  .hero.linzess-behind-nav-linzess-editorial-hero .hero-eyebrow {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    inset: unset;
+    width: 100%;
+    max-width: var(--hero-caption-max-width);
+    min-height: auto;
+    padding: 0;
+    margin-inline: auto;
+    margin-bottom: var(--spacing-40);
+    font-size: var(--font-size-legal-large);
+    font-weight: var(--font-weight-body);
+    text-transform: uppercase;
+  }
+
+  .hero.linzess-behind-nav-linzess-editorial-hero p.hero-eyebrow::after {
+    display: block;
+    margin-top: var(--spacing-24);
+    content: '';
+    background-image: url("/icons/divider.svg");
+    width: var(--spacing-64);
+    height: var(--hero-divider-height);
+  }
+
+  .hero:is(.linzess-cta-hero, .linzess-behind-nav-linzess-cta-hero, .linzess-behind-nav-linzess-editorial-hero)::before {
     display: block;
   }
 }
