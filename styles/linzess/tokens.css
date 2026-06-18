@@ -22,7 +22,6 @@
   /* ---- Color: Named Palette (from CSS vars) ---- */
   --linz-dark-purple: #422e83;
   --linz-purple: #60579e;
-  --linz-purple-muted: #948ebe;
   --linz-light-purple: #d9d7f9;
   --linz-orange: #faa633;
   --linz-grey: #4d4d4f;
@@ -35,12 +34,9 @@
   --color-text-heading: #422e83;
   --color-text-on-dark: #fff;
   --color-text-muted: #555;
-  --color-text-body: var(--linz-grey);
-  --color-text-default: var(--linz-black);
 
   /* ---- Color: Background ---- */
   --background-color: #fff;
-  --color-background-primary: var(--linz-white);
   --color-background-light: #f4f6fb;
   --color-background-footer: #422e83;
   --color-background-footer-dark: #151b17;
@@ -79,12 +75,6 @@
   --font-size-eyebrow: 0.75rem;
   --font-size-md: 1.0625rem;
   --font-size-quote: 1.3125rem;
-
-  /* ---- Article (healthy-routines) sizes ---- */
-  --font-size-article-heading: 40px;
-  --font-size-article-card-title: 18px;
-  --font-size-article-cta-title: 24px;
-  --font-size-article-body: 14px; /* mobile + tablet; 16px at desktop (>=900px) */
 
   /* ---- Font: Weight ---- */
   --font-weight-body: 400;
@@ -162,7 +152,7 @@
   /* ---- Gradient ---- */
   --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
   --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
-  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
+  --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
 
@@ -220,6 +210,13 @@
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
 
+  /* ---- Homepage Card Tokens ---- */
+  --linz-card-heading-size: 18px;
+  --linz-card-body-size: 14px;
+  --linz-card-footnote-size: 12px;
+  --linz-section-heading-size: 32px;
+  --linz-section-heading-line-height: 30px;
+
   /* ---- Hero: Linzess-specific ---- */
   --hero-behind-nav-min-height: 52rem;
   --hero-behind-nav-min-height-desktop: 62rem;
@@ -255,4 +252,18 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
