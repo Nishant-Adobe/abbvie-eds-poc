@@ -737,7 +737,9 @@
 .section.talk-to-doctor .rich-text:has(ul) li h3 {
   margin: 0 0 var(--spacing-08, 0.8rem);
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 2.4rem;
+
+  /* Live: Lato 18px (not 24px). */
+  font-size: 1.8rem;
   font-weight: 700;
   line-height: 1.3;
 }
@@ -767,29 +769,44 @@
   margin: 0 auto;
   text-align: center;
   color: var(--color-text-body, #4d4d4f);
-  font-size: var(--font-size-legal-large, 1.6rem);
+
+  /* Live body copy here is 14px Lato (not 16px). */
+  font-size: var(--font-size-legal, 1.4rem);
 }
 
+/* The `.eyebrow` class is stripped on publish, leaving a bare first <p> above
+   the h2. Target both the authored class and the surviving first paragraph so
+   the eyebrow keeps its purple uppercase styling after publish. */
+
 .rich-text.talk-to-doctor-intro .eyebrow,
-.section.talk-to-doctor .rich-text:not(:has(ul)) .eyebrow {
-  margin: 0 0 var(--spacing-16, 1.6rem);
+.section.talk-to-doctor .rich-text:not(:has(ul)) .eyebrow,
+.section.talk-to-doctor .rich-text:not(:has(ul)) > p:first-child {
+  /* Live: Lato 12px, weight 800, 24px below before the divider. */
+  margin: 0 0 var(--spacing-24, 2.4rem);
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-legal, 1.4rem);
-  font-weight: 700;
-  letter-spacing: 0.1rem;
+  font-size: var(--font-size-12, 1.2rem);
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--linz-dark-purple, #422e83);
 }
 
+/* These sections paint the divider arc via h2::before, so hide any authored
+   `.divider` span that survives the aemcoder publish path — otherwise the arc
+   renders twice (span + ::before). The md2jcr path drops the span entirely.
+   (video-section / how-to-take are excluded: they paint the arc FROM the span
+   and have no ::before, so their span must stay visible.) */
+
 .rich-text.talk-to-doctor-intro .divider,
-.section.talk-to-doctor .rich-text:not(:has(ul)) .divider {
-  display: block;
-  width: 6.4rem;
-  height: 0.5rem;
-  margin: 0 auto var(--spacing-24, 2.4rem);
-  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center / contain;
-  font-size: 0;
+.section.talk-to-doctor .rich-text:not(:has(ul)) .divider,
+.section.savings-cards .rich-text .divider,
+.section.prescribed-cards .rich-text .divider,
+.section.store-linzess .rich-text .divider,
+.section.instructions-tabs .rich-text .divider {
+  display: none;
 }
+
+/* Live: Bebas Neue 32px display heading (the all-caps face, so text-transform
+   stays none), tight line-height, purple. */
 
 .rich-text.talk-to-doctor-intro .heading-1,
 .rich-text.talk-to-doctor-intro h2,
@@ -797,15 +814,24 @@
 .section.talk-to-doctor .rich-text:not(:has(ul)) h2 {
   margin: 0 0 var(--spacing-16, 1.6rem);
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
-  font-size: var(--font-size-article-heading, 4rem);
+  font-size: var(--font-size-h2-hero, 3.2rem);
   font-weight: 400;
-  line-height: 0.9;
-  text-transform: uppercase;
+  line-height: 0.94;
   color: var(--linz-dark-purple, #422e83);
 }
 
-/* Divider arc above the heading — the authored `.divider` span is stripped on
-   publish, so render it as an ::before on the surviving h2 tag. */
+/* Body copy below the heading — live is 14px Lato gray (a base rule bumps
+   plain <p> to 16px, so pin the body paragraph explicitly). */
+
+.rich-text.talk-to-doctor-intro > div > p:last-child,
+.section.talk-to-doctor .rich-text:not(:has(ul)) > p:last-child {
+  font-size: var(--font-size-legal, 1.4rem);
+}
+
+/* Divider arc above the heading — the authored `.divider` span is dropped on
+   the md2jcr publish path, so render it as an ::before on the surviving h2.
+   When the span survives (aemcoder preview) it's hidden below, so the arc is
+   always drawn exactly once by this ::before. */
 
 .section.talk-to-doctor .rich-text:not(:has(ul)) h2::before {
   content: '';
@@ -838,9 +864,14 @@
   color: var(--color-text-body, #4d4d4f);
 }
 
+/* `.eyebrow` is stripped on publish. The eyebrow is the first <p> when it sits
+   above the h2 (how-to-take has one; video-section starts with the h2, so
+   p:first-child correctly matches nothing there). */
+
 .rich-text.video-intro .eyebrow,
 .section.video-section .rich-text .eyebrow,
-.section.how-to-take .rich-text .eyebrow {
+.section.how-to-take .rich-text .eyebrow,
+.section.how-to-take .rich-text:not(:has(ul)) > p:first-child {
   margin: 0 0 var(--spacing-16, 1.6rem);
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: var(--font-size-legal, 1.4rem);
@@ -869,9 +900,11 @@
 .section.how-to-take .rich-text h2 {
   margin: var(--spacing-20, 2rem) 0 0;
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
-  font-size: var(--font-size-article-heading, 4rem);
+
+  /* Live: Bebas 32px (not 40px). */
+  font-size: var(--font-size-h2-hero, 3.2rem);
   font-weight: 400;
-  line-height: 0.9;
+  line-height: 0.94;
   text-transform: uppercase;
   color: var(--linz-dark-purple, #422e83);
 }
@@ -953,15 +986,18 @@
 .section.store-linzess .rich-text h2 {
   margin: 0 0 var(--spacing-16, 1.6rem);
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
-  font-size: var(--font-size-article-heading, 4rem);
+
+  /* Live: Bebas 32px (not 40px). */
+  font-size: var(--font-size-h2-hero, 3.2rem);
   font-weight: 400;
-  line-height: 0.9;
+  line-height: 0.94;
   text-transform: uppercase;
   color: var(--linz-dark-purple, #422e83);
 }
 
-/* Divider arc above each heading — authored `.divider` span is stripped on
-   publish, so render it as an ::before on the surviving h2. */
+/* Divider arc above each heading — authored `.divider` span is dropped on the
+   md2jcr publish path, so render it as an ::before on the surviving h2. The
+   surviving span (aemcoder preview) is hidden below so the arc isn't doubled. */
 
 .section.savings-cards .rich-text h2::before,
 .section.prescribed-cards .rich-text h2::before,
@@ -993,8 +1029,48 @@
 .section.savings-cards .rich-text:has(h2) h3 {
   margin: 0;
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: 2.4rem;
+
+  /* Live: Lato 18px (not 24px). */
+  font-size: 1.8rem;
   font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+/* Instructions tabs section heading ("Instructions For Adults & Children").
+   The base h2 default (36px/800/gray) leaks through here — live is Bebas
+   32px/400/purple, centered with the orange divider arc above. */
+
+.section.instructions-tabs .rich-text h2 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
+  font-size: var(--font-size-h2-hero, 3.2rem);
+  font-weight: 400;
+  line-height: 0.94;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+.section.instructions-tabs .rich-text h2::before {
+  content: '';
+  display: block;
+  width: 6.4rem;
+  height: 0.5rem;
+  margin: 0 auto var(--spacing-24, 2.4rem);
+  background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNSIgdmlld0JveD0iMCAwIDY0IDUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjI4MDAzIDQuMjM5OTdWNC4yMTAzMkMxLjI4MDAzIDQuMjEwMzIgMTUuOTUgMS43MTk5NyAzMiAxLjcxOTk3QzQ4LjA4IDEuNzE5OTcgNjIuNzIgNC4yMTAzMiA2Mi43MiA0LjIxMDMyVjQuMjM5OTciIHN0cm9rZT0iI0ZBQTYzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K") no-repeat center / contain;
+}
+
+/* Dosing panel sub-heading ("Take LINZESS") — live is Lato 18px/700/purple,
+   centered, NOT the Bebas display heading the base h2 would apply. */
+
+.section.instructions-panel .rich-text h2 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: none;
+  text-align: center;
   color: var(--linz-dark-purple, #422e83);
 }
 
