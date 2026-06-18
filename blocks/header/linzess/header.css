@@ -2013,9 +2013,44 @@ header .nav-wrapper {
   position: relative;
 }
 
+/* No-hero pages: solid purple header (matches live .header-no-gradient) */
+
 header:has(.nav-utility ul) {
-  background: var(--header-eyebrow-gradient);
+  background: var(--color-brand-primary);
   height: auto;
+}
+
+/* Hero pages: dark eyebrow gradient overlays the hero image */
+
+body:has(main > .section.hero-container) header:has(.nav-utility ul) {
+  background: var(--header-eyebrow-gradient);
+}
+
+/* Hero pages: header overlays the hero image (live behavior) so the photo
+   shows through the eyebrow gradient instead of rendering as a flat band.
+   Scoped to hero pages only — no-hero/transcript headers stay in-flow. */
+
+/* stylelint-disable-next-line no-descending-specificity */
+body:has(main > .section.hero-container) header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--header-z-index, 10);
+  background: var(--header-overlay-gradient);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+body:has(main > .section.hero-container) header .nav-wrapper {
+  background-color: transparent;
+}
+
+/* No-hero pages: header sits in-flow (not a fixed overlay) so content follows it,
+   matching the live site. Lets the white arc curve up into the purple header. */
+
+/* stylelint-disable-next-line no-descending-specificity */
+body.no-hero header .nav-wrapper {
+  position: static;
 }
 
 /* Nav text — white */
@@ -2068,6 +2103,10 @@ header .nav-utility li:nth-child(n+3) { display: none; }
 /* Pipe separator — hidden on Linzess */
 
 header .nav-utility li + li::before { display: none; }
+
+/* Hide ISI toggle controls (top / See Full ISI / Collapse ISI) leaked into utility bar */
+
+header .nav-indication { display: none; }
 
 /* Hamburger — white bars on dark header */
 
@@ -2285,16 +2324,33 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
 
   header nav .mobile-cta-clone > a.nav-item-link,
   header nav .mobile-cta-clone > button {
+    position: relative;
     background-color: var(--color-brand-primary-lighter);
     border-radius: var(--border-radius-button-primary);
     color: var(--color-brand-primary);
     font-size: var(--font-size-body-small);
-    font-weight: var(--font-weight-600);
-    padding: var(--spacing-09) var(--spacing-24);
+    font-weight: var(--font-weight-800);
+    line-height: normal;
+    padding: var(--spacing-12) var(--spacing-42) var(--spacing-12) var(--spacing-24);
     text-decoration: none;
-    text-transform: uppercase;
-    width: var(--header-mobile-cta-width);
+    text-transform: none;
+    width: 13rem;
     margin-right: var(--spacing-15);
+  }
+
+  /* Live's chevron is the abbv-iconFont glyph pinned to the right edge,
+     vertically centered — purple, matching the desktop CTA. */
+  header nav .mobile-cta-clone > a.nav-item-link::after,
+  header nav .mobile-cta-clone > button::after {
+    content: '\e315';
+    position: absolute;
+    top: 50%;
+    right: var(--spacing-15);
+    font-family: var(--icon-font-family);
+    font-size: 2.08rem;
+    line-height: 1;
+    color: var(--color-brand-primary);
+    transform: translateY(-50%);
   }
 
   /* Utility clone — visible at bottom of open nav */
@@ -2598,34 +2654,4 @@ header.has-sticky-scrollback.show-nav.sticky-scrollback .header nav .nav-section
   }
 
   header.hide-nav .nav-wrapper:hover { background: var(--color-nav-dark); }
-}
-
-/* ── Header overlays hero ── */
-/* stylelint-disable-next-line no-descending-specificity */
-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: var(--header-z-index);
-  background: var(--header-overlay-gradient);
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-header nav a {
-  color: var(--color-text-on-dark);
-}
-
-/* Hide ISI toggle controls (top/See Full ISI/Collapse ISI) */
-header .nav-indication {
-  display: none;
-}
-
-/* Non-hero pages: solid purple header background (linzess only) */
-body.no-hero header {
-  background-color: var(--color-brand-primary);
-}
-
-body.no-hero header .nav-wrapper {
-  background-color: var(--color-brand-primary);
 }

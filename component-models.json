@@ -167,17 +167,6 @@
     ]
   },
   {
-    "id": "text",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "text",
-        "label": "Text",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "image",
     "fields": [
       {
@@ -231,6 +220,18 @@
             "value": "h6"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
@@ -4163,7 +4164,15 @@
   },
   {
     "id": "carousel",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "classes",
+        "value": "",
+        "label": "Custom Classes"
+      }
+    ]
   },
   {
     "id": "carousel-item",
@@ -4520,6 +4529,21 @@
         "name": "imageAlt",
         "value": "",
         "label": "Image Alt"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "mobileImage",
+        "label": "Column Image (Mobile)",
+        "description": "Optional. Shown on screens ≤767px; falls back to Column Image if empty.",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "mobileImageAlt",
+        "value": "",
+        "label": "Mobile Image Alt"
       }
     ]
   },
@@ -6471,6 +6495,73 @@
             "find-an-injector"
           ]
         }
+      }
+    ]
+  },
+  {
+    "id": "efficacy-tabs",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Variant",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "efficacy-tabs-row",
+    "fields": [
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "rowKind",
+        "label": "Row Type",
+        "value": "text",
+        "options": [
+          {
+            "name": "Outer tab",
+            "value": "outer"
+          },
+          {
+            "name": "Intro",
+            "value": "intro"
+          },
+          {
+            "name": "Inner tab",
+            "value": "inner"
+          },
+          {
+            "name": "Chart",
+            "value": "chart"
+          },
+          {
+            "name": "Text",
+            "value": "text"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "content",
+        "value": "",
+        "label": "Content"
       }
     ]
   },
@@ -8506,30 +8597,17 @@
           {
             "name": "Stretched Link (entire card clickable)",
             "value": "image-text-stretched"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "classes_imageSize",
-        "value": "",
-        "label": "Image Size",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Default (50/50)",
-            "value": ""
           },
           {
-            "name": "Large (60% image)",
+            "name": "Large image (60%)",
             "value": "image-text-image-large"
           },
           {
-            "name": "Medium (40% image)",
+            "name": "Medium image (40%)",
             "value": "image-text-image-medium"
           },
           {
-            "name": "Small (33% image)",
+            "name": "Small image (33%)",
             "value": "image-text-image-small"
           }
         ]
@@ -13765,7 +13843,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "tabTitle",
+        "name": "tabName",
         "value": "",
         "label": "Tab Name",
         "required": true,

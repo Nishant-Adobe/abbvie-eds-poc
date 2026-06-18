@@ -11,4 +11,9 @@ export default function decorate(block) {
     }
     row.remove();
   }
+  // Remove any remaining framework rows (classes placeholder, etc.)
+  [...block.querySelectorAll(':scope > div')].forEach((r) => {
+    const text = r.textContent.trim();
+    if (text === '-' || text === '' || text === 'none') r.remove();
+  });
 }
