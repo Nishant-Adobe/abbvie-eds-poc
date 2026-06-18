@@ -3523,6 +3523,17 @@ footer a {
 /* ---- Section Backgrounds ---- */
 .section.off-white-bg { background-color: var(--color-background-light); }
 
+/* Modal and safety-bar sections render no in-page content (modals open from
+   links; the safety bar is appended to <body> as a fixed bar). The base
+   `main > .section { margin-bottom: 8rem }` rule still applies to these empty
+   0-height sections, stacking up a large white gap before the footer. Collapse
+   their margins so the footer sits directly below the last visible section. */
+main > .section.modal-container,
+main > .section.safety-bar-container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 /* ---- Continuous off-white band (find-relief middle region) ----
    Live runs ONE full-bleed off-white band from the video/"What to Know"
    section down through "How to Store LINZESS". Our sections are centred
