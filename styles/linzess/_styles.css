@@ -1217,6 +1217,20 @@ main > .section:has(> .default-content-wrapper > h3:first-child)::before {
   }
 }
 
+/* why-linzess + resources: the white ISI dome that carves the bottom of the
+   explorer / two-panel CTA band (Check My Symptoms + Savings & Support) must
+   match the OTC/develop curve at -80px, not the branch global -150px. Scoped
+   via .section-nav-container, which is present on why-linzess + resources but
+   absent on the homepage, so the homepage ISI arc keeps its -150px. -80px is
+   develop's canonical value, so any other section-nav page only moves toward
+   develop. */
+@media (width >= 900px) {
+  body:has(.section-nav-container) .section.isi::before,
+  body:has(.section-nav-container) main > .section:has(> .default-content-wrapper > h3:first-child)::before {
+    top: -80px;
+  }
+}
+
 /* At >=1440px live insets the ISI body to a 1240px content column (100px each
    side). Match that with wider horizontal padding so the legal copy doesn't run
    full-bleed. */

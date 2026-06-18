@@ -6685,6 +6685,20 @@ main > .section:is(.what-is-linzess-section, .cta-cards-section, .cheat-sheet-se
     top: -80px;
   }
 }
+
+/* why-linzess + resources: the white ISI dome that carves the bottom of the
+   explorer / two-panel CTA band (Check My Symptoms + Savings & Support) must
+   match the OTC/develop curve at -80px, not the branch global -150px. Scoped
+   via .section-nav-container, which is present on why-linzess + resources but
+   absent on the homepage, so the homepage ISI arc keeps its -150px. -80px is
+   develop's canonical value, so any other section-nav page only moves toward
+   develop. */
+@media (width >= 900px) {
+  body:has(.section-nav-container) .section.isi::before,
+  body:has(.section-nav-container) main > .section:has(> .default-content-wrapper > h3:first-child)::before {
+    top: -80px;
+  }
+}
 main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this-section, .triggers-section, .cheat-sheet-section) :is(.heading-1, h2),
 main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
 main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child {
