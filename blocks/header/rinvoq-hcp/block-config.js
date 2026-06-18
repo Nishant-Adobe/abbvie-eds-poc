@@ -1,23 +1,5 @@
 const navClickCleanup = new WeakMap();
 
-// Normalize the current path to a brand-relative path so condition checks work
-// on every surface. Author/preview serve pages under /content/<brand>/... while
-// the published site serves them under /<brand>/... (e.g. /rinvoq-hcp/...).
-// Strip a leading /content/<brand> OR a leading /<brand> so the remaining path
-// starts at the condition segment (/dermatology, /atopic-dermatitis, ...).
-function getConditionPath() {
-  let path = window.location.pathname.replace(/\/$/, '') || '/';
-  path = path.replace(/^\/content\/[^/]+/, '');
-  // Strip the published brand prefix (the first segment) when it isn't itself
-  // a condition route. Known condition roots stay intact.
-  const conditionRoots = ['/dermatology', '/atopic-dermatitis'];
-  if (!conditionRoots.some((root) => path.startsWith(root))) {
-    const stripped = path.replace(/^\/[^/]+/, '');
-    if (conditionRoots.some((root) => stripped.startsWith(root))) path = stripped;
-  }
-  return path || '/';
-}
-
 function addSubmenuCategoryLabels(block) {
   block.querySelectorAll('.nav-sections .submenu-level-1 ul li a').forEach((a) => {
     const href = a.getAttribute('href') || '';
@@ -28,7 +10,9 @@ function addSubmenuCategoryLabels(block) {
 }
 
 function addIndicationText(block) {
-  const currentPath = getConditionPath();
+  let currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+  const brandPrefix = currentPath.match(/^\/content\/[^/]+/);
+  if (brandPrefix) currentPath = currentPath.slice(brandPrefix[0].length) || '/';
   if (!currentPath.startsWith('/dermatology') && !currentPath.startsWith('/atopic-dermatitis')) return;
   const navBrand = block.querySelector('.nav-brand .default-content-wrapper');
   if (!navBrand || navBrand.querySelector('.nav-brand-indication-text')) return;
@@ -39,23 +23,16 @@ function addIndicationText(block) {
 }
 
 function addActiveNavState(block) {
-  const currentPath = getConditionPath();
+  let currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+  const brandPrefix = currentPath.match(/^\/content\/[^/]+/);
+  if (brandPrefix) currentPath = currentPath.slice(brandPrefix[0].length) || '/';
   if (currentPath === '/') return;
 
   let exactMatch = null;
   const startsWithMatches = [];
 
   block.querySelectorAll('.nav-sections a').forEach((link) => {
-    let linkPath = new URL(link.href).pathname.replace(/\/$/, '') || '/';
-    // Nav links may be authored brand-relative (/atopic-dermatitis) or with the
-    // published brand prefix (/rinvoq-hcp/atopic-dermatitis); strip the prefix
-    // so they compare against the normalized current path.
-    linkPath = linkPath.replace(/^\/content\/[^/]+/, '');
-    const conditionRoots = ['/dermatology', '/atopic-dermatitis'];
-    if (!conditionRoots.some((root) => linkPath.startsWith(root))) {
-      const stripped = linkPath.replace(/^\/[^/]+/, '');
-      if (conditionRoots.some((root) => stripped.startsWith(root))) linkPath = stripped;
-    }
+    const linkPath = new URL(link.href).pathname.replace(/\/$/, '') || '/';
     if (currentPath === linkPath) {
       exactMatch = link;
     } else if (linkPath !== '/' && currentPath.startsWith(linkPath)) {
