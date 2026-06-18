@@ -1451,3 +1451,27 @@ h1.heading-1 {
     font-size: 14px !important;
   }
 }
+
+/* Re-assert label + body typography above the merged styles/linzess/styles.css
+   leak. That sheet carries a broad
+   `main > .section:nth-of-type(2):not(...) p` rule (specificity 0,5,2) for
+   default-content sections that overrides the accordion label/body color,
+   font-size, font-weight and font-family (turning the white purple-bar labels
+   grey and swapping Lato for the legal font). These selectors add the
+   section + container + item ancestors to push specificity to (0,6,x) so the
+   block's own design wins, without touching the global stylesheet. */
+main .section.accordion-container .accordion.block .accordion-item-label .accordion-item-label-text,
+main .section.accordion-container .accordion.block .accordion-item-label p {
+  color: var(--accordion-linzess-color-label);
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+main .section.centered.accordion-container .accordion.block .accordion-item-body .accordion-item-body-text,
+main .section.centered.accordion-container .accordion.block .accordion-item-body p {
+  color: var(--accordion-linzess-color-body);
+  font-family: "Lato", sans-serif;
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+}

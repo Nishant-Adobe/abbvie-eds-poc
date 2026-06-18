@@ -257,14 +257,21 @@ main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image img {
   object-fit: contain;
 }
 
-.flexbox.column .flexbox-item-content {
+/* Scope the card typography under `main .section.flexbox-container` to win the
+   cascade. The merged styles/linzess/styles.css carries a broad
+   `main > .section:nth-of-type(2):not(...) h3 / p` rule (specificity 0,5,2)
+   for default-content sections that otherwise leaks into these flexbox cards
+   and overrides their color / font-size / font-weight. The extra
+   section+container ancestors raise specificity above that leak without
+   touching the global stylesheet. */
+main .section.flexbox-container .flexbox.column.block .flexbox-item-content {
   flex: 1;
   color: #fff;
   text-align: left;
 }
 
-.flexbox.column .flexbox-item-content h2,
-.flexbox.column .flexbox-item-content h3 {
+main .section.flexbox-container .flexbox.column.block .flexbox-item-content h2,
+main .section.flexbox-container .flexbox.column.block .flexbox-item-content h3 {
   color: #fff;
   font-family: var(--body-font-family);
   font-size: 24px;
@@ -275,24 +282,25 @@ main:has(.columns.ftgsignup) .flexbox.column .flexbox-item-image img {
   letter-spacing: normal;
 }
 
-.flexbox.column .flexbox-item-content p {
+main .section.flexbox-container .flexbox.column.block .flexbox-item-content p {
   color: #fff;
+  font-family: var(--body-font-family);
   font-size: 16px;
   line-height: 1.5;
   margin: 0;
 }
 
 /* Even cards (light bg): dark text */
-.flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content {
+main .section.flexbox-container .flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content {
   color: var(--color-brand-primary, #3c1053);
 }
 
-.flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content h2,
-.flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content h3 {
+main .section.flexbox-container .flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content h2,
+main .section.flexbox-container .flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content h3 {
   color: var(--color-brand-primary, #3c1053);
 }
 
-.flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content p {
+main .section.flexbox-container .flexbox.column .flexbox-item:nth-child(even) .flexbox-item-content p {
   color: var(--text-color, #333);
 }
 
