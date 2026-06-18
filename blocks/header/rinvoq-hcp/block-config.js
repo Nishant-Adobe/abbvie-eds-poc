@@ -5,12 +5,14 @@ const navClickCleanup = new WeakMap();
 // the published site serves them under /<brand>/... (e.g. /rinvoq-hcp/...).
 // Strip a leading /content/<brand> OR a leading /<brand> so the remaining path
 // starts at the condition segment (/dermatology, /atopic-dermatitis, ...).
+const CONDITION_ROOTS = ['/dermatology', '/atopic-dermatitis', '/gastroenterology', '/crohns-disease', '/ulcerative-colitis'];
+
 function getConditionPath() {
   let path = window.location.pathname.replace(/\/$/, '') || '/';
   path = path.replace(/^\/content\/[^/]+/, '');
   // Strip the published brand prefix (the first segment) when it isn't itself
   // a condition route. Known condition roots stay intact.
-  const conditionRoots = ['/dermatology', '/atopic-dermatitis'];
+  const conditionRoots = CONDITION_ROOTS;
   if (!conditionRoots.some((root) => path.startsWith(root))) {
     const stripped = path.replace(/^\/[^/]+/, '');
     if (conditionRoots.some((root) => stripped.startsWith(root))) path = stripped;
@@ -27,14 +29,26 @@ function addSubmenuCategoryLabels(block) {
   });
 }
 
+const INDICATION_TEXT = {
+  derm: 'For adults and pediatric patients 12 years of age and older with refractory, moderate to severe atopic dermatitis (AD) whose disease is not adequately controlled with other systemic drug products, including biologics, or when use of those therapies are inadvisable<sup>1</sup>',
+  gastro: "For adults with moderate to severe Crohn's disease (CD) or ulcerative colitis (UC) after inadequate response to a TNFi or another approved systemic therapy if a TNFi is clinically inadvisable<sup>1</sup>",
+};
+
 function addIndicationText(block) {
   const currentPath = getConditionPath();
-  if (!currentPath.startsWith('/dermatology') && !currentPath.startsWith('/atopic-dermatitis')) return;
+  let text;
+  if (currentPath.startsWith('/dermatology') || currentPath.startsWith('/atopic-dermatitis')) {
+    text = INDICATION_TEXT.derm;
+  } else if (currentPath.startsWith('/gastroenterology') || currentPath.startsWith('/crohns-disease') || currentPath.startsWith('/ulcerative-colitis')) {
+    text = INDICATION_TEXT.gastro;
+  } else {
+    return;
+  }
   const navBrand = block.querySelector('.nav-brand .default-content-wrapper');
   if (!navBrand || navBrand.querySelector('.nav-brand-indication-text')) return;
   const indication = document.createElement('span');
   indication.className = 'nav-brand-indication-text';
-  indication.innerHTML = 'For adults and pediatric patients 12 years of age and older with refractory, moderate to severe atopic dermatitis (AD) whose disease is not adequately controlled with other systemic drug products, including biologics, or when use of those therapies are inadvisable<sup>1</sup>';
+  indication.innerHTML = text;
   navBrand.appendChild(indication);
 }
 
@@ -51,7 +65,7 @@ function addActiveNavState(block) {
     // published brand prefix (/rinvoq-hcp/atopic-dermatitis); strip the prefix
     // so they compare against the normalized current path.
     linkPath = linkPath.replace(/^\/content\/[^/]+/, '');
-    const conditionRoots = ['/dermatology', '/atopic-dermatitis'];
+    const conditionRoots = CONDITION_ROOTS;
     if (!conditionRoots.some((root) => linkPath.startsWith(root))) {
       const stripped = linkPath.replace(/^\/[^/]+/, '');
       if (conditionRoots.some((root) => stripped.startsWith(root))) linkPath = stripped;
