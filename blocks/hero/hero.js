@@ -8,6 +8,10 @@ import { isUniversalEditor } from '../../scripts/utils.js';
 const HERO_IMAGE_SWAP_BREAKPOINT = 985;
 const HERO_IMAGE_SWAP_BREAKPOINT_EDITORIAL = 744;
 const LINZESS_EDITORIAL_HERO_CLASS = 'linzess-behind-nav-linzess-editorial-hero';
+// find-relief's editorial hero keeps the tall mobile image through tablet and
+// only swaps to the wide desktop image at 985px (the homepage editorial hero
+// swaps earlier, at 744px, hence the separate constant).
+const LINZESS_FIND_RELIEF_HERO_CLASS = 'linzess-find-relief-hero';
 
 function addSectionClasses(block, section) {
   if (!section) return;
@@ -341,9 +345,13 @@ export default async function decorate(block) {
   // Linzess editorial-hero keeps the tall mobile image through tablet and only
   // swaps to the wide desktop image at the desktop breakpoint (matching the
   // live site). All other heroes/brands keep the default tablet swap.
-  const heroSwapMinWidth = block.classList.contains(LINZESS_EDITORIAL_HERO_CLASS)
-    ? HERO_IMAGE_SWAP_BREAKPOINT_EDITORIAL
-    : HERO_IMAGE_SWAP_BREAKPOINT;
+  let heroSwapMinWidth = HERO_IMAGE_SWAP_BREAKPOINT;
+  if (block.classList.contains(LINZESS_FIND_RELIEF_HERO_CLASS)) {
+    // mobile image through tablet, desktop only at >=985px (matches live)
+    heroSwapMinWidth = HERO_IMAGE_SWAP_BREAKPOINT;
+  } else if (block.classList.contains(LINZESS_EDITORIAL_HERO_CLASS)) {
+    heroSwapMinWidth = HERO_IMAGE_SWAP_BREAKPOINT_EDITORIAL;
+  }
   mergeMobileImage(imageCell, mobileImageRow, heroSwapMinWidth);
   promoteImageLink(imageCell);
   if (block.classList.contains('full')) {

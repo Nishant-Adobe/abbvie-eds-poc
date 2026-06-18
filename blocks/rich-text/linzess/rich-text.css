@@ -862,7 +862,8 @@
 
 .rich-text.savings-heading,
 .rich-text.already-prescribed-heading,
-.rich-text.instructions-heading {
+.rich-text.instructions-heading,
+.rich-text.store-linzess-text {
   max-width: 99.8rem;
   margin: 0 auto;
   text-align: center;
@@ -871,7 +872,8 @@
 
 .rich-text.savings-heading .divider,
 .rich-text.already-prescribed-heading .divider,
-.rich-text.instructions-heading .divider {
+.rich-text.instructions-heading .divider,
+.rich-text.store-linzess-text .divider {
   display: block;
   width: 6.4rem;
   height: 0.5rem;
@@ -882,7 +884,8 @@
 
 .rich-text.savings-heading .heading-1,
 .rich-text.already-prescribed-heading .heading-1,
-.rich-text.instructions-heading .heading-1 {
+.rich-text.instructions-heading .heading-1,
+.rich-text.store-linzess-text .heading-1 {
   margin: 0 0 var(--spacing-16, 1.6rem);
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
   font-size: var(--font-size-article-heading, 4rem);
@@ -890,6 +893,18 @@
   line-height: 0.9;
   text-transform: uppercase;
   color: var(--linz-dark-purple, #422e83);
+}
+
+/* Store-LINZESS body copy: 16px gray, centered, with ~20px gap before the
+   "Please see" line (matches live). */
+
+.rich-text.store-linzess-text p:not(.heading-1) {
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.rich-text.store-linzess-text p:not(.heading-1):last-child {
+  margin-top: var(--spacing-20, 2rem);
 }
 
 .rich-text.savings-heading .heading-2 {

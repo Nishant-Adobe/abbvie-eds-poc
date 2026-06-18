@@ -2246,6 +2246,25 @@ body main .section.prescribed-cards .columns.icon-cards-2col .heading-2 {
   margin: 0 auto;
 }
 
+/* The savings-card fallback selector (.columns-container:not(...) .columns:not(...))
+   also matches instructions-cards and paints the whole list off-white, which
+   hides the white box. Reset the LIST container to transparent so only the
+   individual cards are off-white (matches live). The left padding gives the
+   icon room to overhang the card while staying inside the white box. */
+
+body main .section.instructions-panel.columns-container .columns.instructions-cards {
+  background-color: transparent;
+  border-radius: 0;
+  max-width: none;
+  min-height: 0;
+  padding: 0 0 0 var(--spacing-40, 4rem);
+  overflow: visible;
+
+  /* Live: ~20px gap between cards on desktop. The savings fallback sets gap:0
+     and outranks the base .instructions-cards rule, so set it here. */
+  gap: var(--spacing-20, 2rem);
+}
+
 /* Specificity must beat the base
    .columns-container:not(...) .columns:not(...) > .columns-item:has(.columns-item-image)
    rule (7 classes) that sets a transparent background — so this selector also
@@ -2262,11 +2281,13 @@ body main .section.instructions-panel.columns-container .columns.instructions-ca
   text-align: left;
 }
 
-/* Icon: 105px, sits left, overlaps the card's left edge */
+/* Icon: 105px, sits left and HANGS ~45px outside the card's left border
+   (live: img left is 45px beyond the off-white card edge). The card has 4rem
+   left padding, so the margin must clear that padding plus the 4.5rem overhang. */
 
 .section.instructions-panel .columns.instructions-cards > .columns-item .columns-item-image {
   flex: 0 0 auto;
-  margin-left: calc(-1 * var(--spacing-40, 4rem));
+  margin-left: calc(-1 * (var(--spacing-40, 4rem) + 4.5rem));
 }
 
 .columns.instructions-cards > .columns-item .columns-item-image picture,
@@ -2306,10 +2327,18 @@ body main .section.instructions-panel.columns-container .columns.instructions-ca
   font-size: var(--font-size-12, 1.2rem);
 }
 
-/* Mobile: icon centers above the text. Selector mirrors the desktop card
-   rule's specificity (body main + .columns-container) so it actually wins. */
+/* Below 1000px: icon centers above the text (live keeps the stacked column
+   layout from mobile all the way to its ~1000px desktop breakpoint). Selector
+   mirrors the desktop card rule's specificity so it wins. */
 
-@media (width <= 743px) {
+@media (width <= 999px) {
+  /* Stacked layout: no icon overhang inset, so the cards span full width.
+     Live opens the gap to ~50px between the stacked cards. */
+  body main .section.instructions-panel.columns-container .columns.instructions-cards {
+    padding-left: 0;
+    gap: var(--spacing-50, 5rem);
+  }
+
   body main .section.instructions-panel.columns-container .columns.instructions-cards > .columns-item:has(.columns-item-image) {
     flex-direction: column;
     align-items: center;

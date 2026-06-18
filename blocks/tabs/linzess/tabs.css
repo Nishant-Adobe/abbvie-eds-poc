@@ -120,6 +120,7 @@
 
 /* Card TOP: holds centered title + light-purple tab bar */
 .section.instructions-tabs.tabs-container {
+  position: relative;
   max-width: 99.8rem;
   margin: var(--spacing-40) auto 0;
   background: var(--background-color);
@@ -129,11 +130,50 @@
 
 /* Card BOTTOM: the two tab panels (siblings of the container) */
 .section.instructions-tabs.tabs-container ~ .tabs-panel {
+  position: relative;
   max-width: 99.8rem;
   margin: 0 auto;
   background: var(--background-color);
   border-radius: 0 0 var(--linz-rounded-corner) var(--linz-rounded-corner);
   padding: var(--spacing-24) var(--spacing-48) var(--spacing-48);
+
+  /* The tabs base sets contain:layout, which creates a stacking context and
+     traps the z-index:-1 off-white ::before ABOVE the panel's own white
+     background (showing off-white over the white card). Reset it so the band
+     layers behind the background. */
+  contain: none;
+}
+
+/* Full-bleed off-white band behind the white card (live: the white 998px
+   card sits inside an off-white .background-off-white-arc section). Each
+   sibling paints its own full-width off-white layer behind the white box;
+   the container's layer extends up over its 40px top margin and ~80px below
+   the panel so the band is continuous. */
+.section.instructions-tabs.tabs-container::before,
+.section.instructions-tabs.tabs-container ~ .tabs-panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: calc(-50vw + 50%);
+  width: 100vw;
+  height: 100%;
+  background: var(--color-background-light, #f4f6fb);
+}
+
+.section.instructions-tabs.tabs-container::before {
+  top: calc(-1 * var(--spacing-40));
+  height: calc(100% + var(--spacing-40));
+}
+
+.section.instructions-tabs.tabs-container ~ .tabs-panel:last-of-type::before {
+  height: calc(100% + var(--spacing-80, 8rem));
+}
+
+/* Centered "Take LINZESS" heading inside each panel (live: 24px, centered) */
+.section.instructions-tabs.tabs-container ~ .tabs-panel .rich-text .heading-2 {
+  text-align: center;
+  font-size: 2.4rem;
 }
 
 /* Gap below the tab bar before the panel content */
