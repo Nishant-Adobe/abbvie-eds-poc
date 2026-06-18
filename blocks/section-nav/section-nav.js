@@ -140,8 +140,13 @@ export default function decorate(block) {
     }
     items.forEach((item, i) => {
       const id = item.href.slice(1);
-      const sec = following[i];
-      if (id && sec && !sec.id && !document.getElementById(id)) sec.id = id;
+      if (!id || document.getElementById(id)) return;
+      // Prefer a section explicitly tagged with `anchor-<id>` (authored intent),
+      // since sections aren't always consecutive after the nav. Fall back to
+      // positional document order when no tagged section exists.
+      const tagged = following.find((sec) => sec.classList.contains(`anchor-${id}`));
+      const sec = tagged || following[i];
+      if (sec && !sec.id) sec.id = id;
     });
   }
 

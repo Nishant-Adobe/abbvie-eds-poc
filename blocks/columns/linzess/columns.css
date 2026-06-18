@@ -82,9 +82,7 @@
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
 @custom-media --bp-tablet (min-width: 744px);
-
 @custom-media --bp-desktop (min-width: 1024px);
-
 @custom-media --bp-wide (min-width: 1440px);
 
 :root {
@@ -583,8 +581,8 @@
   --color-border-muted: #b8b8b8;
 
   /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgba(0, 0, 0, 0.8);
-  --color-overlay-muted: rgba(115, 133, 159, 0.75);
+  --color-overlay-dark: rgb(0 0 0 / 80%);
+  --color-overlay-muted: rgb(115 133 159 / 75%);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Lato', sans-serif;
@@ -683,12 +681,12 @@
   --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
-  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
+  --shadow-safety-bar: rgb(0 0 0 / 25%) 0 0 10px 0;
   --shadow-section-nav-stuck: 0 4px 12px rgb(0 0 0 / 25%);
 
   /* ---- Gradient ---- */
-  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
-  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+  --gradient-hero-overlay: linear-gradient(rgb(0 0 0 / 80%), rgb(255 255 255 / 0%));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115 133 159) 100%);
   --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
@@ -730,6 +728,7 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+
   /* ---- Header: No-hero arc ---- */
   --header-z-index: 10;
   --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
@@ -1037,7 +1036,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.columns-homepage-savings,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-off-white);
@@ -1052,18 +1051,18 @@
 }
 
 .columns.columns-homepage-savings > .columns-item,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item {
   padding: 0;
   grid-column: auto;
 }
 
 .columns.columns-homepage-savings > .columns-item:not(:has(img, strong, a)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:not(:has(img, strong, a)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-image) {
   flex: 0 0 55%;
   background: transparent;
   padding: 0;
@@ -1095,7 +1094,7 @@
 
 main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .columns.columns-homepage-savings > div > div:first-child img,
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image) img {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1104,7 +1103,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-content:not(:empty)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 32px 40px;
   display: flex;
@@ -1135,7 +1134,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) .button-container a.button {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -1149,7 +1148,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button::after,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) .button-container a.button::after {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -1159,7 +1158,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button:hover,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) .button-container a.button:hover {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) .button-container a.button:hover {
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
 }
@@ -1387,19 +1386,19 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 
 @media (width < 768px) {
   .columns.columns-homepage-savings,
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) {
     flex-wrap: wrap;
     max-width: 100%;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
     order: -1;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
     padding: 16px;
     text-align: center;
@@ -1410,6 +1409,387 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   .section.columns-container:has(.columns-homepage-savings) .columns-item-content p.button-container:has(a[href*="savings-card"]) {
     margin-bottom: 0;
   }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   INDEX SAVINGS PAGE — section vertical rhythm
+   The global `main > .section { margin-bottom: 8rem }` (styles/styles.css)
+   adds an 80px gap below every section. On live the savings sections sit
+   much closer: the "$30" eyebrow/heading block is only ~43px above the
+   savings card (live), not ~142px. Collapse the global 80px on the
+   savings intro so the heading hugs the card like live. The card's own
+   24px top margin + the heading wrapper supply the remaining gap.
+   Scoped to .savings-intro so only this page's heading block is affected.
+   ════════════════════════════════════════════════════════════════════ */
+main > .section.savings-intro {
+  margin-bottom: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Savings / Financial Support eyebrow — match live.
+   Live renders the "SAVINGS" / "FINANCIAL SUPPORT" eyebrow as 12px, weight
+   800, uppercase, dark-purple, with a short orange curved divider beneath it
+   (divider.svg, 64×5px). Locally the eyebrow was unstyled (18px grey, no
+   divider). Reproduce both, scoped to these savings sections only. */
+main > .section.savings-intro .eyebrow,
+main > .section.financial-table-section .eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0 0 20px;
+}
+
+/* Orange curved divider beneath the eyebrow (CSS replica of divider.svg). */
+main > .section.savings-intro .eyebrow::after,
+main > .section.financial-table-section .eyebrow::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 9px;
+  margin: 8px auto 0;
+  border-top: 3px solid var(--linz-orange, #faa633);
+  border-radius: 50%;
+}
+
+/* Section heading — match live's 40px Bebas Neue. The base `.heading-1` sets
+   `font-size: var(--heading1-font-size, 2.5rem) !important` AND
+   `line-height: var(--heading1-line-height, 2.25rem) !important` (accordion.css);
+   the default --heading1-line-height resolves to 22.5px (rem≈10px), which is
+   far tighter than the 40px font — so multi-line headings overlapped/clipped on
+   mobile. Override both variables on the section so the !important rules resolve
+   to 40px/36px. Scoped to these sections. */
+main > .section.savings-intro,
+main > .section.financial-table-section {
+  --heading1-font-size: 40px;
+  --heading1-line-height: 36px;
+}
+
+/* Mobile: 40px is too large here — these headings wrap to 2–3 lines on a
+   ~350px column and crowd the content below. Live drops them to ~32px/30px
+   on small screens. */
+@media (width < 768px) {
+  main > .section.savings-intro,
+  main > .section.financial-table-section {
+    --heading1-font-size: 32px;
+    --heading1-line-height: 30px;
+  }
+}
+
+main > .section.savings-intro .heading-1,
+main > .section.financial-table-section .heading-1 {
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   INDEX SAVINGS PAGE — image+text touts (savings-card-tout, doctor-tout)
+   The index/savings/financial-support pages author these as a single
+   columns-item holding both an image cell + a content cell. The broad
+   homepage-savings fallback selector
+   (.columns-container:not(.hero-container + .columns-container) .columns…)
+   was flattening them into a plain band. Re-style them as the rounded
+   image-left / text-right card live uses (same visual as the develop
+   resources page's columns-resources-savings / -gutcheck touts):
+   998px card, 50/50 split, 24px/16px type, dark-purple pill CTA.
+   Scoped through .savings-tout-section / .doctor-tout-section so only
+   these savings pages are affected — homepage/why-linzess/resources keep
+   their own savings-card rules above. Specificity (section + block) beats
+   the 0,3,0 homepage fallback.
+   ════════════════════════════════════════════════════════════════════ */
+main .section.savings-tout-section .columns.savings-card-tout,
+main .section.doctor-tout-section .columns.doctor-tout {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  max-width: 998px;
+  min-height: 0;
+  margin: 24px auto 0;
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout {
+  /* Live renders the savings card on the off-white row background (#f4f6fb,
+     .background-off-white), not pure white — the image's light-purple is
+     baked into the graphic itself. */
+  background-color: var(--linz-off-white, #f4f6fb);
+
+  /* Live leaves ~40px below the savings card before the sign-up block. The
+     shared shorthand above sets margin-bottom:0; restore it here (after the
+     shorthand) so only the savings card — not the doctor tout — gets the gap. */
+  margin-bottom: 40px;
+}
+
+main .section.doctor-tout-section .columns.doctor-tout {
+  background-color: var(--linz-white, #fff);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
+
+  /* The dark-purple section that follows draws a curved arc cap rising 60px
+     above its top edge (::before, top:-60px). With the card flush against that
+     section the arc overlapped the card's CTA. Add clearance below the card so
+     the arc rises over empty space, like live. */
+  margin-bottom: 80px;
+}
+
+/* Hide the empty anchorId config row (first columns-item). */
+main .section.savings-tout-section .columns.savings-card-tout > .columns-item:first-child:has(.columns-item-content:empty),
+main .section.doctor-tout-section .columns.doctor-tout > .columns-item:first-child:has(.columns-item-content:empty) {
+  display: none;
+}
+
+/* The single content item holds both the image + text cells side by side. */
+main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child),
+main .section.doctor-tout-section .columns.doctor-tout > .columns-item:not(:first-child) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  gap: 0;
+}
+
+/* The card sets border-radius:16px + overflow:hidden, but the stretched image
+   column's full-bleed graphic escaped the card's rounded bottom corners (the
+   classic flex-child / border-radius clipping quirk), so the bottom rendered
+   square. Re-clip the inner flex row to the same radius so all four corners
+   round. Savings-card-only so the doctor tout is untouched. */
+main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child) {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-image,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-content {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  text-align: left;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content p,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-content p {
+  color: var(--linz-grey, #4d4d4f);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content h2,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-content h2 {
+  color: var(--linz-dark-purple, #422e83);
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0 0 12px;
+}
+
+/* Gold/dark-purple pill CTA inside the touts (matches live's tout button). */
+main .section.savings-tout-section .columns.savings-card-tout a.button:any-link,
+main .section.doctor-tout-section .columns.doctor-tout a.button:any-link {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-white, #fff);
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-weight: 800;
+  font-size: 14.4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout a.button::after,
+main .section.doctor-tout-section .columns.doctor-tout a.button::after {
+  content: "\276F";
+  font-size: 14px;
+  font-weight: 400;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout a.button:hover,
+main .section.doctor-tout-section .columns.doctor-tout a.button:hover {
+  background-color: var(--linz-purple, #60579e);
+}
+
+/* Plain text link (e.g. "Activate now"). */
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content a:not(.button) {
+  color: var(--linz-dark-purple, #422e83);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Desktop: let the text column drive the card height and stretch the image
+   to fill its half (matches live — no whitespace bands above/below image). */
+@media (width >= 768px) {
+  main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child),
+  main .section.doctor-tout-section .columns.doctor-tout > .columns-item:not(:first-child) {
+    align-items: stretch;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+    position: relative;
+    align-self: stretch;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Vertically center the copy against the taller image column. */
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-content,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Doctor tout image carries an "Actor Portrayal" disclaimer overlaid at the
+   photo's bottom-right on live (imported only as alt text, so re-create it). */
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+  position: relative;
+}
+
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image::after {
+  content: "Actor Portrayal";
+  position: absolute;
+  bottom: 16px;
+  right: 24px;
+  color: var(--linz-white, #fff);
+  font-size: 14.4px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+/* Mobile: stack image over text. */
+@media (width < 768px) {
+  main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child),
+  main .section.doctor-tout-section .columns.doctor-tout > .columns-item:not(:first-child) {
+    flex-direction: column;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-content,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-content {
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+}
+
+/* Savings tout fine-tuning to match the develop resources tout exactly:
+   a wider 55% image column (540px of the 982px card) + narrower 45% copy
+   column with tighter padding, so the card lands at live's ~368px height
+   (not ~421px). Placed AFTER the shared 50/50 rules above so it wins at
+   equal specificity; desktop-only (>=768px) so mobile stacking is untouched.
+   Scoped to .savings-tout-section so the doctor tout keeps its 50/50 split. */
+@media (width >= 768px) {
+  /* Live sizes the savings image column at ~44% (440px of the 998px card) so
+     the graphic at its natural 880/599 ratio is ~300px tall — matching live's
+     card height. A wider column made the card too tall (~374px). */
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image {
+    flex: 0 0 44%;
+    max-width: 44%;
+  }
+
+  /* Show the full "90 DAYS FOR $30" graphic uncropped: render the image at
+     its natural ratio (no absolute cover) so it drives the card height, like
+     live. The image's own light-purple fills its half edge-to-edge. */
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img {
+    position: static;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    object-fit: fill;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-content {
+    flex: 0 0 56%;
+    max-width: 56%;
+
+    /* Bottom 3rem (vs 2rem top): the card height is driven by this copy column,
+       so a symmetric 2rem left the "Activate now" line flush against the card's
+       bottom edge. Live centers the copy with clear room below — restore that
+       clearance. Savings-card-only so the doctor tout is untouched. */
+    padding: 2rem 2.5rem 3rem;
+  }
+}
+
+/* Savings footnote disclaimer — match live: 14px / normal line-height, grey,
+   constrained to a centered ~1094px column (live insets it ~173px each side,
+   narrower than the full 1330px section width). The default p size leaked
+   18px/24px; live renders the footnote at 14px. */
+main .section.footnote-section .default-content-wrapper p.footnote {
+  font-size: 14px;
+  line-height: normal;
+  color: var(--linz-grey, #4d4d4f);
+  max-width: 1094px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Financial-support header content is constrained to a centered 998px column
+   on live (eyebrow, heading, body and the Insurance Information line), not the
+   full 1330px section width — keeps the body copy from spanning edge-to-edge. */
+main .section.financial-table-section > .default-content-wrapper {
+  max-width: 998px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Financial-support header copy — match live. The WAC body paragraph renders
+   16px grey (local leaked 18px); the "Insurance Information§" line is a 24px
+   bold dark-purple sub-heading (local rendered it as plain 18px body). The
+   eyebrow (p:first-child) keeps its own styling above. Live spaces the
+   heading, body and Insurance lines with a uniform 20px margin-top. */
+main .section.financial-table-section > .default-content-wrapper > p:not(:first-child) {
+  font-size: 16px;
+  line-height: normal;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 20px 0 0;
+}
+
+main .section.financial-table-section > .default-content-wrapper > h2 {
+  margin: 20px 0 0;
+}
+
+main .section.financial-table-section > .default-content-wrapper > p:last-child {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 20px 0 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -2133,4 +2513,1137 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
   .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
     flex-direction: column;
   }
+}
+
+/* ============================================================
+   RESTORED (post-develop-merge): From The Gut sign-up form +
+   section arc. develop's columns.css dropped all .columns.ftgsignup
+   and .section:has(.columns.ftgsignup) rules, regressing the
+   from-the-gut signup form (became an empty box) and its card band.
+   These selectors only match the from-the-gut page, so other pages
+   are unaffected. Re-added from feature/migration @ 68ba5497.
+   ============================================================ */
+
+/* ====================================================
+   Linzess: From The Gut — logo + heading above the
+   sign-up form. Section style class is dropped on this
+   project, so scope via the contained ftgsignup block.
+   Logo ~179px; heading Bebas Neue 32px, centered.
+   ==================================================== */
+
+/* Form section — full-screen-width off-white bg with a curved top arc,
+   matches live's .background-off-white.background-arc (padding 0 0 100px).
+   The section is content-width (margin 0 70px), so paint a full-bleed
+   background via a 100vw ::before positioned behind the content. */
+main .section:has(.columns.ftgsignup) {
+  position: relative;
+
+  /* z-index:0 (not 1) so this section's stacking context does not paint over
+     the following dark-purple CTA section's top arc (purple is z-index:0, arc
+     at -5). Its own ::before arc still layers correctly at z-index:-1. */
+  z-index: 0;
+  padding-bottom: 100px;
+  background-color: transparent;
+}
+
+main .section:has(.columns.ftgsignup)::before {
+  content: "";
+  position: absolute;
+  inset: -60px 50% 0;
+  width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background-color: var(--linz-off-white, #f4f6fb);
+  border-top-left-radius: 50% 60px;
+  border-top-right-radius: 50% 60px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper {
+  text-align: center;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper img {
+  width: 179px;
+  height: auto;
+  margin: 0 auto;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 36px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 20px 0 1.5rem;
+}
+
+@media (width < 744px) {
+  main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
+    font-size: 32px;
+    line-height: 30px;
+
+    /* Live mobile: heading sits directly above the form with no extra bottom
+       gap (mb 0); our base rule adds 1.5rem. */
+    margin-bottom: 0;
+  }
+
+  /* Sign Up button: live mobile is a compact auto-width pill (~113px) with
+     small side padding, not the wide 48px-padded / 144px-min button. Extra
+     `main` prefix raises specificity above the base rule defined later in
+     this file. */
+  main .columns.ftgsignup a.button:any-link {
+    padding: 14px 24px;
+    min-width: 0;
+  }
+}
+
+/* ====================================================
+   Linzess: From The Gut sign-up form (visual mockup)
+   columns.ftgsignup — labels with CSS-drawn input boxes,
+   radio chips, consent text, and Sign Up button.
+   Matches linzess.com/savings-and-support/from-the-gut.
+   Non-functional (no backend) — visual parity only.
+   ==================================================== */
+
+.columns.ftgsignup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Hide the anchor-id config row (first item) */
+.columns.ftgsignup > .columns-item:first-child {
+  display: none;
+}
+
+/* Each row of fields */
+.columns.ftgsignup > .columns-item {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+}
+
+.columns.ftgsignup > .columns-item > .columns-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Field label + CSS-drawn input box below it */
+.columns.ftgsignup .ftg-field {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup .ftg-field::after {
+  content: "";
+  display: block;
+  height: 56px;
+  margin-top: 10px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 16px;
+  background-color: #efedf5;
+}
+
+/* "Are you currently prescribed?" question label */
+.columns.ftgsignup .ftg-question {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0;
+}
+
+/* Radio options rendered as chips with a CSS circle */
+.columns.ftgsignup .ftg-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup .ftg-radio::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* Consent paragraph — matches live: 16px grey, 20px line-height */
+.columns.ftgsignup .ftg-consent {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 8px 0;
+  padding-left: 40px;
+  position: relative;
+  text-align: left;
+}
+
+/* CSS-drawn checkbox before the consent text — 24x24, radius 8px */
+.columns.ftgsignup .ftg-consent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 8px;
+}
+
+/* Consent links — grey + underlined (NOT purple), matches live */
+.columns.ftgsignup .ftg-consent a {
+  color: var(--linz-grey, #4d4d4f);
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  font-weight: 400;
+}
+
+/* Sign Up button row — center the button within its full-width cell */
+.columns.ftgsignup > .columns-item:last-child .columns-item-content {
+  text-align: center;
+}
+
+/* Sign Up button — gold pill, matches live */
+.columns.ftgsignup a.button:any-link {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-white, #fff);
+  border: none;
+  border-radius: 16px;
+  padding: 14px 48px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-weight: 800;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin: 0.5rem 0 0;
+  min-width: 144px;
+}
+
+.columns.ftgsignup a.button:any-link::after {
+  content: "❯";
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 12px;
+}
+
+.columns.ftgsignup a.button:hover {
+  background-color: var(--linz-purple, #60579e);
+}
+
+/* reCAPTCHA badge — replicates the Google badge widget:
+   white logo cell on the left, blue box with text on the right.
+   "protected by reCAPTCHA" on line 1, "Privacy - Terms" on line 2. */
+.columns.ftgsignup > .columns-item:has(.ftg-recaptcha) {
+  justify-content: center;
+}
+
+.columns.ftgsignup > .columns-item:has(.ftg-recaptcha) .columns-item-content {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.columns.ftgsignup .ftg-recaptcha {
+  display: block;
+  width: 256px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 12px 10px 12px 70px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  font-family: Roboto, var(--body-font-family, "Lato", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #fff;
+  text-align: left;
+}
+
+/* White logo cell — separate square box on the left */
+.columns.ftgsignup .ftg-recaptcha::before {
+  content: "Privacy - Terms";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  font-size: 7px;
+  color: #555;
+  white-space: nowrap;
+}
+
+/* Blue panel — separate box on the right, with a small gap from the white cell */
+.columns.ftgsignup .ftg-recaptcha::after {
+  content: "";
+  position: absolute;
+  left: 60px;
+  top: 0;
+  right: 0;
+  height: 60px;
+  background-color: #4a90e2;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  z-index: -1;
+}
+
+/* The recycle logo, sitting in the upper part of the white cell */
+.columns.ftgsignup .ftg-recaptcha img {
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.columns.ftgsignup .ftg-recaptcha strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Force the Privacy / Terms links onto a second line in the blue panel */
+.columns.ftgsignup .ftg-recaptcha a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.columns.ftgsignup .ftg-recaptcha a:first-of-type::before {
+  content: "";
+  display: block;
+  margin-top: 2px;
+}
+
+.columns.ftgsignup .ftg-recaptcha a:hover {
+  text-decoration: underline;
+}
+
+/* ---- reCAPTCHA badge: class-independent fallback (publish strips the
+   .ftg-recaptcha class, and EDS wraps the logo in <picture>). The badge
+   cell is routed to .columns-item-image because it contains an <img>. ---- */
+.columns.ftgsignup > .columns-item:has(img) {
+  justify-content: center;
+}
+
+.columns.ftgsignup .columns-item-image {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.columns.ftgsignup .columns-item-image > p {
+  display: block;
+  width: 256px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 12px 10px 12px 70px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  font-family: Roboto, var(--body-font-family, "Lato", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #fff;
+  text-align: left;
+}
+
+/* white logo cell + "Privacy - Terms" caption */
+.columns.ftgsignup .columns-item-image > p::before {
+  content: "Privacy - Terms";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  font-size: 7px;
+  color: #555;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* blue panel */
+.columns.ftgsignup .columns-item-image > p::after {
+  content: "";
+  position: absolute;
+  left: 60px;
+  top: 0;
+  right: 0;
+  height: 60px;
+  background-color: #4a90e2;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  z-index: -1;
+}
+
+/* the recycle logo — handle both bare <img> and <picture><img> (EDS) */
+.columns.ftgsignup .columns-item-image > p picture {
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  z-index: 2;
+  display: block;
+}
+
+.columns.ftgsignup .columns-item-image > p img {
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.columns.ftgsignup .columns-item-image > p picture img {
+  position: static;
+  left: auto;
+  top: auto;
+}
+
+.columns.ftgsignup .columns-item-image > p strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.columns.ftgsignup .columns-item-image > p a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.columns.ftgsignup .columns-item-image > p a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Field / radio / consent: class-independent fallbacks. Publish strips
+   the .ftg-field / .ftg-question / .ftg-radio / .ftg-consent classes, so the
+   input boxes, radio circles and checkbox never draw on the published page
+   (they only survive on the aemcoder preview). Rows are anchored from the END
+   of the form, which is stable regardless of whether the First Name row is
+   present: last = Sign Up, 2nd = reCAPTCHA, 3rd = consent, 4th = No, 5th = Yes,
+   6th = question, 7th-from-end and earlier = text input fields. ---- */
+
+/* Text input fields — label with a CSS-drawn box below it */
+.columns.ftgsignup > .columns-item:nth-last-child(n+7) .columns-item-content > p {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(n+7) .columns-item-content > p::after {
+  content: "";
+  display: block;
+  height: 56px;
+  margin-top: 10px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 16px;
+  background-color: #efedf5;
+}
+
+/* "Are you currently prescribed?" question label (6th from end) */
+.columns.ftgsignup > .columns-item:nth-last-child(6) .columns-item-content > p {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0;
+}
+
+/* Radio chips Yes (5th) / No (4th) — circle before the label text */
+.columns.ftgsignup > .columns-item:nth-last-child(4) .columns-item-content > p,
+.columns.ftgsignup > .columns-item:nth-last-child(5) .columns-item-content > p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(4) .columns-item-content > p::before,
+.columns.ftgsignup > .columns-item:nth-last-child(5) .columns-item-content > p::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* Consent paragraph (3rd from end) — checkbox before, grey underlined links */
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p {
+  position: relative;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 8px 0;
+  padding-left: 40px;
+  text-align: left;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 8px;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p a {
+  color: var(--linz-grey, #4d4d4f);
+  text-decoration: underline;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* The Sign Up row centers its button */
+.columns.ftgsignup > .columns-item:last-child {
+  justify-content: center;
+}
+
+/* Mobile: stack the two-up rows */
+@media (width < 600px) {
+  .columns.ftgsignup > .columns-item {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================================
+   Accordion sections — alternating white / off-white full-bleed
+   bands with a curved top arc, matching live's
+   .background-white-arc / .background-off-white-arc trio on the
+   faqs page (white #fff, off-white #f4f6fb; arc top -60px,
+   height 255px, width 130%, radius 100%, z-index -5; section
+   padding-bottom 100px, margin-bottom 24px). The section box is
+   content-width (.abbvie-container grid), so — like the
+   dark-purple band below — the colour is painted edge-to-edge by
+   a 100vw ::after fill and a 130% ::before arc cap, both behind
+   the content. Scoped to .accordion-container so only the FAQ-style
+   accordion sections are affected; other section types and pages
+   are untouched. The arc rises 60px above the section, covering
+   the 24px inter-section gap so transitions read as smooth curves.
+   ============================================================ */
+
+/* Base full-bleed band fill for every white/off-white savings section.
+   The body is white, so transparent white sections look fine, but the
+   off-white sections (footnote, support-cards, doctor-tout) wrongly showed
+   white. Paint each section's band colour edge-to-edge via a 100vw ::after
+   behind the content — matching live, where the whole savings region is
+   white (#fff) and the whole financial region is off-white (#f4f6fb).
+   Scoped to the savings page only (it has the section-nav jump bar). */
+main:has(.section.section-nav-container) .section:is(.white, .off-white) {
+  position: relative;
+  z-index: 0;
+}
+
+main:has(.section.section-nav-container) .section:is(.white, .off-white)::after {
+  content: "";
+  position: absolute;
+
+  /* Bleed the band fill up/down past the section box so the inter-section
+     margins (up to 80px) are covered — same-colour neighbours overlap and
+     read as one continuous band, like live (no white gaps in the off-white
+     region). The 24px gap before the dark-purple CTA is covered too; the
+     purple arc/fill (z-index -5/-6) still paints on top at the boundary. */
+  top: -80px;
+  bottom: -80px;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+
+  /* -1 keeps the fill behind the section's own content but ABOVE the white
+     body background, so the bleed into the inter-section margin gaps is
+     visible (z-index:-6 sat behind body and the white body covered the
+     off-white fill, leaving white stripes between off-white sections). */
+  z-index: -1;
+  pointer-events: none;
+}
+
+main:has(.section.section-nav-container) .section.white::after {
+  background-color: var(--linz-white, #fff);
+}
+
+main:has(.section.section-nav-container) .section.off-white::after {
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
+/* The savings-tout section's white band fill bleeds 80px up (top:-80px) and,
+   as a later sibling with its own stacking context, paints OVER the intro
+   heading above it ("You Could Pay as Little as $30…"), hiding the dark-purple
+   text behind white at every viewport. Drop the tout fill's upward bleed so it
+   can't cover the heading — the intro's own ::after still bleeds down +80px and
+   spans the gap, and both bands are white, so the continuous band is preserved.
+   Scoped to the index savings-tout-section; other sections/pages untouched. */
+main:has(.section.section-nav-container) .section.white.savings-tout-section::after {
+  top: 0;
+}
+
+main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section) {
+  position: relative;
+  z-index: 0;
+  background: transparent;
+  padding-bottom: 100px;
+  margin-bottom: 24px;
+  overflow: visible;
+}
+
+main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  z-index: -6;
+  pointer-events: none;
+}
+
+main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section)::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Span at least the full viewport so the elliptical arc's shoulders always
+     reach the screen edges. A fixed 130% was narrower than ultrawide screens
+     (>~2000px), so the rounded shoulders pulled inward and exposed dark-purple
+     wedges of the layer behind at the arc's top corners. max() keeps the 130%
+     curve depth on normal widths while guaranteeing full-bleed coverage. */
+  width: max(130%, 100vw);
+  height: 75px;
+  border-radius: 100%;
+  z-index: -5;
+  pointer-events: none;
+}
+
+/* Desktop deepens the arc to 255px (live switches at the 900px breakpoint);
+   mobile/tablet keep the shallow 75px cap. */
+@media (width >= 900px) {
+  main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section)::before {
+    height: 255px;
+  }
+}
+
+main .section.white:is(.accordion-container, .financial-table-section)::after,
+main .section.white:is(.accordion-container, .financial-table-section)::before {
+  background-color: var(--linz-white, #fff);
+}
+
+main .section.off-white:is(.accordion-container, .financial-table-section)::after,
+main .section.off-white:is(.accordion-container, .financial-table-section)::before {
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
+/* ============================================================
+   RESTORED (post-develop-merge): dark-purple CTA section + arc
+   + CTA buttons + following-ISI styling. develop's columns.css
+   dropped all .section.dark-purple rules, removing the purple
+   curved-arc CTA band and its orange buttons on the savings
+   pages. Arc/button values match the reference dark-purple CTA
+   section on /linzess/healthy-routines/otc-and-prescription-treatments
+   (arc top -60px / 255px / radius 100% 100% 0 0; button #faa633
+   on #422e83, radius 16px, Lato 14.4px/800). Selectors match only
+   .section.dark-purple, so pages without it are unaffected.
+   ============================================================ */
+main:not(:has(.section.section-nav-container)) .section:not(.off-white):has(+ .section.dark-purple) {
+  position: relative;
+  z-index: 0;
+}
+
+main:not(:has(.section.section-nav-container)) .section:not(.off-white):has(+ .section.dark-purple)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  background: var(--linz-white, #fff);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Dark-purple CTA section — same full-bleed background + curved arc cap as the
+   white/off-white sections (live: .background-dark-purple-arc). Section box stays
+   transparent; the purple is painted edge-to-edge by the ::after fill and the
+   curved ::before cap, both behind the content. overflow:visible so the arc that
+   rises above the section top (-60px) is not clipped. */
+main .section.dark-purple {
+  position: relative;
+  z-index: 0;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  overflow: visible !important;
+  max-width: 100% !important;
+}
+
+main .section.dark-purple::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  background-color: var(--color-brand-primary, #422e83);
+  z-index: -6;
+  pointer-events: none;
+}
+
+/* Arc geometry copied from develop's .cta-cards-section
+   (styles/linzess/styles.css): shallow base arc (top -spacing-40 / height
+   spacing-60), deepening to top -spacing-60 / 25.5rem at >=1024px. Background
+   uses --color-brand-primary, same token develop paints the band with. */
+main .section.dark-purple::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  background-color: var(--color-brand-primary, #422e83);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+  pointer-events: none;
+}
+
+@media (width >= 1024px) {
+  main .section.dark-purple::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 25.5rem;
+  }
+}
+
+/* Content wrapper — transparent now that the section paints itself full-bleed.
+   Vertical padding matches live's .background-dark-purple-arc.bottom-nav
+   (padding: 20px top / 140px bottom) so the cards sit high under the top arc
+   with generous space above the bottom edge. */
+main .section.dark-purple .columns-wrapper {
+  background-color: transparent !important;
+  color: #fff;
+  padding: 20px 3.5rem 140px !important;
+  margin: 0 !important;
+  border: none !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+main .section.dark-purple h1,
+main .section.dark-purple h2,
+main .section.dark-purple h3,
+main .section.dark-purple p,
+main .section.dark-purple a:not(.button) {
+  color: #fff;
+}
+
+main .section.dark-purple h2 {
+  font-family: var(--body-font-family);
+
+  /* 24px text, margin 24px 0 (top + bottom) to match develop's
+     .cta-cards-section .columns-item p:not(:has(a)) heading spacing, which
+     gives the card develop's ~184px height. */
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 24px 0;
+}
+
+/* Gold CTA buttons */
+
+/* CTA buttons — orange #faa633 fill with purple #422e83 text, matching the
+   reference dark-purple CTA section (otc-and-prescription-treatments). The
+   `.button-container` qualifier raises specificity to (0,4,1) so this wins over
+   develop's generic `.columns-container:not(...) .button-container a.button`
+   rule (0,4,2 set elsewhere) that would otherwise force purple-on-white. */
+
+/* Button styling copied from develop's .cta-cards-section .columns.cta-cards a
+   (styles/linzess/styles.css): accent fill, brand-primary text, rounded-corner
+   radius, button font tokens, padding 16px 59px 16px 32px. Selector is
+   qualified with the section's own classes so it outranks develop's generic
+   `.columns-container:not(...) .button-container a.button` rule (0,7,1). */
+main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button:any-link {
+  position: relative;
+  display: inline-block;
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  border: none;
+  border-radius: var(--linz-rounded-corner);
+  padding: 16px 59px 16px 32px;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: normal;
+  text-decoration: none;
+}
+
+main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button::after {
+  content: "❯";
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-20);
+  transform: translateY(-50%);
+  color: var(--color-brand-primary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button:hover {
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+}
+
+/* Columns layout inside dark-purple */
+main .section.dark-purple .columns {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  background: transparent !important;
+}
+
+main .section.dark-purple .columns > .columns-item:first-child {
+  display: none;
+}
+
+main .section.dark-purple .columns > .columns-item {
+  flex: 1;
+  text-align: center;
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: center;
+  border: none !important;
+}
+
+main .section.dark-purple .columns > .columns-item:nth-child(3) {
+  /* Match the reference dark-purple CTA divider (otc-and-prescription-treatments):
+     solid lavender #948ebe rather than translucent white, which over #422e83
+     rendered slightly brighter/cooler than the reference seam. */
+  border-left: 1px solid #948ebe !important;
+}
+
+@media (width < 1024px) {
+  main .section.dark-purple .columns > .columns-item:nth-child(3) {
+    border-left: none !important;
+  }
+}
+
+/* Desktop CTA cards: match live's two-up centered grid layout. */
+@media (width >= 1024px) {
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    max-width: 99.8rem;
+    width: 100%;
+    margin: 0 auto;
+
+    /* A leaked .columns-homepage-savings rule pins min-height: 336.6px on this
+       .columns, inflating the band to ~517px vs develop's ~344px. Clear it so
+       the band collapses to content height like develop's .cta-cards-section. */
+    min-height: 0 !important;
+  }
+
+  main .section.dark-purple .columns > .columns-item {
+    padding: 0 var(--spacing-48);
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Height match to develop's .cta-cards-section (section ~344px / card ~184px).
+     A leaked .columns-homepage-savings :has() rule forces 32px 40px vertical
+     padding and a 3rem button-container margin, inflating the card to ~337px.
+     Zero the vertical padding and button-row bottom margin (qualified with the
+     section's own classes to outrank that leak) so the band collapses to
+     develop's height. */
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns > .columns-item {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    text-align: center !important;
+  }
+
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns .button-container {
+    margin: 0 !important;
+
+    /* Centre the inline CTA button; a leaked rule left-aligns the item/container,
+       so force centring here to match develop's centered cards. */
+    text-align: center !important;
+  }
+}
+
+main .section.dark-purple .columns .columns-item-content:empty {
+  display: none;
+}
+
+main .section.dark-purple .columns .columns-item-content {
+  border: none !important;
+}
+
+main .section.dark-purple .columns-wrapper,
+main .section.dark-purple .columns-wrapper * {
+  border-left: none !important;
+  border-right: none !important;
+}
+
+/* Responsive: mobile/tablet stack. develop's .cta-cards-section stacks the two
+   CTA cards at <=1023px (border-right divider becomes border-bottom), so match
+   that breakpoint rather than <768px — otherwise the tablet range keeps the
+   cards side-by-side with a vertical divider, unlike develop. */
+@media (width < 1024px) {
+  main .section.dark-purple {
+    padding: 0 !important;
+  }
+
+  main .section.dark-purple .columns-wrapper {
+    padding: 3rem 1.5rem 95px !important;
+    border-radius: 0 !important;
+  }
+
+  /* Tablet/mobile stack matching develop's .cta-cards-section: cards in one
+     column with a 60px gap, each card padded 0 0 80px, divided by a lavender
+     #948ebe bottom border (not translucent white), heading 18px / margin 18px 0,
+     button left-pad 24px. */
+  main .section.dark-purple .columns {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-60);
+  }
+
+  main .section.dark-purple .columns > .columns-item {
+    width: 100%;
+
+    /* Centre the inline CTA button (and text) like develop's centered cards;
+       a leaked rule left-aligns the item, pushing the button off-centre. */
+    text-align: center;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid #948ebe !important;
+  }
+
+  /* High-specificity padding to outrank the leaked .columns-homepage-savings
+     :has() rule that pins 16px/32px-40px on the item. */
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns > .columns-item {
+    padding: 0 0 var(--spacing-80) !important;
+
+    /* A leaked rule keeps the item/button-container left-aligned, so the inline
+       button stays off-centre. Force centring on the high-specificity selector
+       (item + its button-container) to match develop's centered stacked cards. */
+    text-align: center !important;
+  }
+
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns > .columns-item .button-container {
+    text-align: center !important;
+  }
+
+  main .section.dark-purple .columns > .columns-item:last-child {
+    border-left: none !important;
+    border-bottom: none !important;
+  }
+
+  main .section.dark-purple .columns > .columns-item:nth-child(3) {
+    border-left: none !important;
+    border-bottom: none !important;
+  }
+
+  main .section.dark-purple h2 {
+    font-size: 18px;
+    margin: 18px 0;
+  }
+
+  main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button:any-link {
+    padding-left: var(--spacing-24);
+  }
+}
+
+/* ISI Section (follows dark-purple) */
+main .section.dark-purple + .section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
+/* Bottom arc: the white ISI dome that carves the bottom of the dark-purple CTA
+   band must sit at develop's -80px (matches .cta-cards-section), not the global
+   -150px ISI arc. Scoped to an ISI that DIRECTLY follows a dark-purple CTA via
+   the adjacent sibling combinator, so only the savings-page CTA→ISI transition
+   is affected — the homepage, OTC, transcript, why-linzess, and resources ISI
+   arcs (which don't follow a dark-purple section) keep their own -150px arc. */
+@media (width >= 900px) {
+  main .section.dark-purple + .section.isi::before {
+    top: -80px;
+  }
+}
+
+main .section.dark-purple + .section h3 {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 0;
+}
+
+main .section.dark-purple + .section h4 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 16px;
+  margin: 10px 0 4px;
+}
+
+main .section.dark-purple + .section p,
+main .section.dark-purple + .section li {
+  font-size: 14px;
+  color: rgb(85 85 85);
+  line-height: 16px;
+  margin: 0 0 10px;
+}
+
+main .section.dark-purple + .section ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+main .section.dark-purple + .section a {
+  color: rgb(66 46 131);
+  text-decoration: underline;
+  font-weight: 400;
+  font-size: inherit;
+  line-height: inherit;
+
+  /* Live renders ISI inline links at regular weight even inside bold (<strong>)
+     sentences, so force the regular legal font rather than inheriting the bold
+     BasicCommercialLT-Black from a surrounding <strong>. */
+  font-family: var(--font-family-legal, "BasicCommercialLT-Roman", sans-serif);
+}
+
+main .section.dark-purple + .section strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+
+/* Tablet: fix CTA button truncation */
+
+/* (Removed the old 768-1023px side-by-side tablet tuning: tablet now stacks via
+   the width < 1024px block above, matching develop's .cta-cards-section. The
+   stale gap/padding/h2-18px overrides here conflicted with that stacking and
+   shrank the heading below develop's 24px.) */
+
+/* ════════════════════════════════════════════════════════════════════
+   INDEX SAVINGS PAGE — "Choose how you want to sign up:" heading.
+   Live renders this at 24px/700 desktop, 18px/700 mobile (dark-purple,
+   centered). Our base .heading-2 leaked 18px/400 (desktop) and 16px/400
+   (mobile). Scope to the index signup-section so no other page/block moves.
+   ════════════════════════════════════════════════════════════════════ */
+main:has(.section.section-nav-container) .section.signup-section p.heading-2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+@media (width < 768px) {
+  main:has(.section.section-nav-container) .section.signup-section p.heading-2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+/* INDEX SAVINGS PAGE — terms accordion mobile width. The accordion block's
+   base rule (.section.accordion-container) applies 55px L/R padding until
+   1440px, so on mobile the accordion was squeezed to ~240px instead of
+   spanning the section like live (~full width, ~16px gutters). Trim the
+   horizontal padding to a live-matching gutter below 1024px and let the
+   wrapper/accordion fill the row. Scoped to the index terms-accordion so the
+   accordion block and other pages keep their own padding. */
+@media (width < 1024px) {
+  main:has(.section.section-nav-container) .section.terms-accordion.accordion-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  main:has(.section.section-nav-container) .section.terms-accordion .accordion-wrapper,
+  main:has(.section.section-nav-container) .section.terms-accordion .accordion {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Live has no top padding on the terms accordion section (the accordion sits
+   flush below the footnote above); ours inherited 80px top from the section
+   default, opening an oversized gap. Zero the top to match live. Scoped to the
+   index terms-accordion so other accordion sections keep their spacing. */
+main:has(.section.section-nav-container) .section.terms-accordion.accordion-container {
+  padding-top: 0;
 }

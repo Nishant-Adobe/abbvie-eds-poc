@@ -21,7 +21,7 @@
   border-spacing: 0;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0 0 0 / 8%);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
   font-size: 14px;
   text-align: left;
   width: 100%;
@@ -33,10 +33,12 @@
   border: none;
 }
 
-/* Header row (thead) — purple, white, bold, uppercase */
+/* Header row (thead) — purple, white, bold, uppercase. 16px matches live;
+   <strong> inside cells inherits this size. */
 .table.linzess-insurance.block table thead th {
   background-color: var(--linz-purple, #60579e);
   color: var(--linz-white, #fff);
+  font-size: 16px;
   font-weight: 800;
   text-transform: uppercase;
   vertical-align: middle;
@@ -52,6 +54,7 @@
   border: none;
   border-bottom: 1px solid #e6e6ea;
   line-height: 1.5;
+  font-size: 16px;
 }
 
 /* Label column (first cell) — light purple bg, dark-purple text */
@@ -80,15 +83,24 @@
   margin-bottom: 0;
 }
 
+/* The table block JS normalizes the imported markup to a clean 2-column
+   structure (real <thead> "If You Have:"/"You Could Pay:" + two <td> cells
+   per body row), so the rules above render the purple header + light-purple
+   label column correctly — no marker-hiding needed. */
+
 /* Purple emphasis inside value cells */
 .table.linzess-insurance.block table td .c-linz-dark-purple,
 .table.linzess-insurance.block table td strong.c-linz-dark-purple {
   color: var(--linz-dark-purple, #422e83);
 }
 
+/* Value-cell links — match live: dark-purple, 16px, weight 800, underline. */
 .table.linzess-insurance.block table td a {
   color: var(--linz-dark-purple, #422e83);
+  font-size: 16px;
+  font-weight: 800;
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .table.linzess-insurance.block table td sup {
@@ -96,72 +108,24 @@
   vertical-align: super;
 }
 
-/* ====================================================
-   Index savings-and-support: the imported table carries leaked
-   config markers — a <thead> "table-2-columns" row and a leading
-   "table-col-2" column in every <tbody> row. Live has only the two
-   real columns, with the first body row ("If You Have:" / "You Could
-   Pay:") acting as the purple header. Hide the markers and promote
-   that first row. Scoped to the index page (only page with a
-   section-nav-container) so other linzess tables are unaffected. */
-main:has(.section.section-nav-container) .table.linzess-insurance.block table thead {
-  display: none;
-}
-
-main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody td:first-child {
-  display: none;
-}
-
-/* First body row → purple header (overrides the generic label/value
-   backgrounds below). */
-main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:first-child td:nth-child(2),
-main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:first-child td:last-child {
-  background-color: var(--linz-purple, #60579e);
-  color: var(--linz-white, #fff);
-  font-weight: 800;
-  text-transform: uppercase;
-  vertical-align: middle;
-  border-bottom: none;
-}
-
-/* Label column is now the 2nd cell (first is hidden): light-purple bg. */
-main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:not(:first-child) td:nth-child(2) {
-  background-color: var(--linz-light-purple, #d9d7f9);
-  color: var(--linz-dark-purple, #422e83);
-  font-weight: 400;
-  width: 32%;
-}
-
-main:has(.section.section-nav-container) .table.linzess-insurance.block table tbody tr:not(:first-child) td:nth-child(2) strong {
-  color: var(--linz-dark-purple, #422e83);
-}
-
-/* Match live cell font-size: header, body, and bold emphasis all 16px. */
-main:has(.section.section-nav-container) .table.linzess-insurance.block table td,
-main:has(.section.section-nav-container) .table.linzess-insurance.block table td strong {
-  font-size: 16px;
-}
-
-/* Match live table link: 16px, weight 800, underline offset 3px. */
-main:has(.section.section-nav-container) .table.linzess-insurance.block table td a {
-  font-size: 16px;
-  font-weight: 800;
-  text-underline-offset: 3px;
-}
-
-/* Mobile: stack label above value */
-@media (width < 600px) {
-  .table.linzess-insurance.block table,
-  .table.linzess-insurance.block table tbody,
-  .table.linzess-insurance.block table tbody tr {
-    display: block;
-    width: 100%;
+/* Tablet & mobile: live keeps the 2-column layout (does NOT stack) — the
+   label/value columns stay side-by-side at every width. Live renders the
+   header, label and value cells at 14px with 16px padding below desktop, and
+   the label column widens to ~43%. */
+@media (width < 1024px) {
+  .table.linzess-insurance.block table td,
+  .table.linzess-insurance.block table th,
+  .table.linzess-insurance.block table td strong,
+  .table.linzess-insurance.block table td a {
+    font-size: 14px;
   }
 
-  .table.linzess-insurance.block table tbody td:first-child,
-  .table.linzess-insurance.block table tbody td:last-child {
-    display: block;
-    width: 100% !important;
-    box-sizing: border-box;
+  .table.linzess-insurance.block table thead th,
+  .table.linzess-insurance.block table tbody td {
+    padding: 16px;
+  }
+
+  .table.linzess-insurance.block table tbody td:first-child {
+    width: 43%;
   }
 }
