@@ -723,15 +723,23 @@
 }
 
 .rich-text.checkmark-list li .heading-2,
+.rich-text.checkmark-list li h3,
 .rich-text.checkmark-list li p,
 .section.talk-to-doctor .rich-text:has(ul) li .heading-2,
+.section.talk-to-doctor .rich-text:has(ul) li h3,
 .section.talk-to-doctor .rich-text:has(ul) li p {
   color: var(--color-text-on-dark, #fff);
 }
 
 .rich-text.checkmark-list li .heading-2,
-.section.talk-to-doctor .rich-text:has(ul) li .heading-2 {
+.rich-text.checkmark-list li h3,
+.section.talk-to-doctor .rich-text:has(ul) li .heading-2,
+.section.talk-to-doctor .rich-text:has(ul) li h3 {
   margin: 0 0 var(--spacing-08, 0.8rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .rich-text.checkmark-list li a,
@@ -784,7 +792,9 @@
 }
 
 .rich-text.talk-to-doctor-intro .heading-1,
-.section.talk-to-doctor .rich-text:not(:has(ul)) .heading-1 {
+.rich-text.talk-to-doctor-intro h2,
+.section.talk-to-doctor .rich-text:not(:has(ul)) .heading-1,
+.section.talk-to-doctor .rich-text:not(:has(ul)) h2 {
   margin: 0 0 var(--spacing-16, 1.6rem);
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
   font-size: var(--font-size-article-heading, 4rem);
@@ -792,6 +802,18 @@
   line-height: 0.9;
   text-transform: uppercase;
   color: var(--linz-dark-purple, #422e83);
+}
+
+/* Divider arc above the heading — the authored `.divider` span is stripped on
+   publish, so render it as an ::before on the surviving h2 tag. */
+
+.section.talk-to-doctor .rich-text:not(:has(ul)) h2::before {
+  content: '';
+  display: block;
+  width: 6.4rem;
+  height: 0.5rem;
+  margin: 0 auto var(--spacing-24, 2.4rem);
+  background: url("/content/dam/linzess/images/divider.svg") no-repeat center / contain;
 }
 
 /* stylelint-enable no-descending-specificity */
@@ -840,8 +862,11 @@
 }
 
 .rich-text.video-intro .heading-1,
+.rich-text.video-intro h2,
 .section.video-section .rich-text .heading-1,
-.section.how-to-take .rich-text .heading-1 {
+.section.video-section .rich-text h2,
+.section.how-to-take .rich-text .heading-1,
+.section.how-to-take .rich-text h2 {
   margin: var(--spacing-20, 2rem) 0 0;
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
   font-size: var(--font-size-article-heading, 4rem);
@@ -902,41 +927,30 @@
    publish-safe section style classes. Each is the heading rich-text (the one
    containing a .heading-1) within its section. */
 
+/* The heading rich-text is the one containing an h2 (publish strips the
+   .heading-1 class, but the h2 tag survives). Match :has(h2) for publish and
+   :has(.heading-1) for local/preview. */
+
 .rich-text.savings-heading,
 .rich-text.already-prescribed-heading,
 .rich-text.instructions-heading,
 .rich-text.store-linzess-text,
-.section.savings-cards .rich-text:has(.heading-1),
-.section.prescribed-cards .rich-text:has(.heading-1),
-.section.store-linzess .rich-text:has(.heading-1) {
+.section.savings-cards .rich-text:has(h2),
+.section.prescribed-cards .rich-text:has(h2),
+.section.store-linzess .rich-text:has(h2) {
   max-width: 99.8rem;
   margin: 0 auto;
   text-align: center;
   color: var(--color-text-body, #4d4d4f);
 }
 
-.rich-text.savings-heading .divider,
-.rich-text.already-prescribed-heading .divider,
-.rich-text.instructions-heading .divider,
-.rich-text.store-linzess-text .divider,
-.section.savings-cards .rich-text:has(.heading-1) .divider,
-.section.prescribed-cards .rich-text:has(.heading-1) .divider,
-.section.store-linzess .rich-text:has(.heading-1) .divider {
-  display: block;
-  width: 6.4rem;
-  height: 0.5rem;
-  margin: 0 auto var(--spacing-24, 2.4rem);
-  background: url("/content/dam/linzess/images/divider.svg") no-repeat center / contain;
-  font-size: 0;
-}
-
 .rich-text.savings-heading .heading-1,
 .rich-text.already-prescribed-heading .heading-1,
 .rich-text.instructions-heading .heading-1,
 .rich-text.store-linzess-text .heading-1,
-.section.savings-cards .rich-text .heading-1,
-.section.prescribed-cards .rich-text .heading-1,
-.section.store-linzess .rich-text .heading-1 {
+.section.savings-cards .rich-text h2,
+.section.prescribed-cards .rich-text h2,
+.section.store-linzess .rich-text h2 {
   margin: 0 0 var(--spacing-16, 1.6rem);
   font-family: var(--heading-font-family, 'Bebas Neue', sans-serif);
   font-size: var(--font-size-article-heading, 4rem);
@@ -946,25 +960,40 @@
   color: var(--linz-dark-purple, #422e83);
 }
 
+/* Divider arc above each heading — authored `.divider` span is stripped on
+   publish, so render it as an ::before on the surviving h2. */
+
+.section.savings-cards .rich-text h2::before,
+.section.prescribed-cards .rich-text h2::before,
+.section.store-linzess .rich-text h2::before {
+  content: '';
+  display: block;
+  width: 6.4rem;
+  height: 0.5rem;
+  margin: 0 auto var(--spacing-24, 2.4rem);
+  background: url("/content/dam/linzess/images/divider.svg") no-repeat center / contain;
+}
+
 /* Store-LINZESS body copy: 16px gray, centered, with ~20px gap before the
    "Please see" line (matches live). */
 
 .rich-text.store-linzess-text p:not(.heading-1),
-.section.store-linzess .rich-text:has(.heading-1) p:not(.heading-1) {
+.section.store-linzess .rich-text:has(h2) p {
   font-size: 1.6rem;
   line-height: 1.4;
 }
 
 .rich-text.store-linzess-text p:not(.heading-1):last-child,
-.section.store-linzess .rich-text:has(.heading-1) p:not(.heading-1):last-child {
+.section.store-linzess .rich-text:has(h2) p:last-child {
   margin-top: var(--spacing-20, 2rem);
 }
 
 .rich-text.savings-heading .heading-2,
-.section.savings-cards .rich-text:has(.heading-1) .heading-2 {
+.section.savings-cards .rich-text:has(h2) .heading-2,
+.section.savings-cards .rich-text:has(h2) h3 {
   margin: 0;
   font-family: var(--body-font-family, 'Lato', sans-serif);
-  font-size: var(--font-size-h2-hero, 2.4rem);
+  font-size: 2.4rem;
   font-weight: 700;
   color: var(--linz-dark-purple, #422e83);
 }

@@ -1312,6 +1312,19 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
    The image cell holds the picture plus a small caption that floats over the
    bottom-right corner of the photo (matches live). Scoped to the gut-check
    tout row so it never affects other columns. */
+
+/* Gut-check heading: the authored .heading-2 class is stripped on publish, so
+   target the surviving h3 tag too. */
+.columns.gut-check-tout-row .columns-item-content .heading-2,
+.columns.gut-check-tout-row .columns-item-content h3 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--linz-dark-purple, #422e83);
+}
+
 .columns.gut-check-tout-row .columns-item-image {
   position: relative;
 }
@@ -1451,7 +1464,8 @@ body main .section.instructions-panel.columns-container .columns.instructions-ca
   flex: 1 1 auto;
 }
 
-.columns.instructions-cards .heading-2 {
+.columns.instructions-cards .heading-2,
+.columns.instructions-cards h3 {
   margin: 0 0 var(--spacing-08, 0.8rem);
   font-family: var(--body-font-family, 'Lato', sans-serif);
   font-size: 2.4rem;
@@ -1461,8 +1475,9 @@ body main .section.instructions-panel.columns-container .columns.instructions-ca
 }
 
 /* Body copy: live uses 16px with tight 8px paragraph rhythm (not the 18px /
-   30px gap the base columns rule applies). Exclude the heading paragraph. */
-.columns.instructions-cards > .columns-item .columns-item-content p:not(.heading-2) {
+   30px gap the base columns rule applies). Heading is an h3, so all <p> here
+   are body copy. */
+.columns.instructions-cards > .columns-item .columns-item-content p {
   margin: 0 0 var(--spacing-08, 0.8rem);
   font-size: 1.6rem;
   line-height: 1.4;
