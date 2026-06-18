@@ -1244,6 +1244,7 @@ main > .section:has(> .default-content-wrapper > h3:first-child)::before {
 
 /* USES, IMPORTANT RISK INFORMATION, "Before you take...", "Side Effects"
    are all bold purple headings (BasicCommercialLT-Black). */
+
 /* ISI typography reverted to develop values: legal-bold headings at weight 400
    (not 700), h4/h5 at 14px (not 16px), grey-400 bold safety copy via an explicit
    strong/b rule, -0.02em tracking across all ISI text, and regular-face links
@@ -2308,5 +2309,228 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
   body main .section .cards-grid.resources-community .flexboxitem-v2 {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+}
+
+/* ============================================================
+   SAVINGS & SUPPORT page (/savings-and-support)
+   Section headers (eyebrow + heading + "Choose how" line) are
+   CENTERED on live; the savings/financial sections live in
+   .cards-grid-container / .table-container sections. Scope all
+   rules to those section signatures so other pages are untouched.
+   ============================================================ */
+
+/* Savings + Financial section header default-content (eyebrow + H2) centered */
+body main .section.accordion-container > .default-content-wrapper:first-child,
+body main .section.table-container > .default-content-wrapper:first-child {
+  text-align: center;
+}
+
+/* Eyebrow (first <p> of the section header): 12px / 800 / uppercase / purple */
+body main .section.accordion-container > .default-content-wrapper:first-child > p:first-child,
+body main .section.table-container > .default-content-wrapper:first-child > p:first-child {
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: normal;
+  color: #422e83;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* Section H2 heading: Bebas Neue 40px/36px, purple, NOT uppercase (live keeps mixed case) */
+body main .section.accordion-container > .default-content-wrapper:first-child > h2,
+body main .section.table-container > .default-content-wrapper:first-child > h2 {
+  font-size: 40px;
+  line-height: 36px;
+  text-transform: none;
+}
+
+/* "Choose how you want to sign up:" line — centered, 24px/700 Lato purple.
+   It is the default-content-wrapper immediately preceding the sign-up cards. */
+body main .section.accordion-container > .default-content-wrapper:has(+ .cards-grid-wrapper) {
+  text-align: center;
+}
+
+body main .section.accordion-container > .default-content-wrapper:has(+ .cards-grid-wrapper) > p {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  color: #422e83;
+  text-transform: none;
+}
+
+/* Sign-up card titles (Text / Call / Click): 24px on desktop to match live */
+body main .section .cards-grid.savings-signup .heading-2 {
+  font-size: 24px;
+}
+
+/* WAC paragraph + "Insurance Information§" centered (live centers them) */
+body main .section.table-container > .default-content-wrapper:first-child > p {
+  text-align: center;
+}
+
+/* ---- Insurance coverage table ---- */
+body main .section .table.insurance-table {
+  overflow-x: visible;
+}
+
+body main .section .table.insurance-table table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-radius: 16px;
+  overflow: hidden;
+  font-size: 16px;
+  margin-top: 24px;
+}
+
+/* Header row: purple #60579e, white, 800, uppercase, 16px 24px */
+body main .section .table.insurance-table thead tr,
+body main .section .table.insurance-table tbody tr {
+  border: 0;
+}
+
+body main .section .table.insurance-table th {
+  background: #60579e;
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 16px 24px;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Data cells: col0 light-purple/purple text, col1 white/grey. 24px pad, top-aligned */
+body main .section .table.insurance-table td {
+  padding: 24px;
+  vertical-align: top;
+  text-align: left;
+}
+
+body main .section .table.insurance-table td:first-child {
+  background: #d9d7f9;
+  color: #422e83;
+  font-weight: 700;
+  width: 30%;
+}
+
+body main .section .table.insurance-table td:last-child {
+  background: #fff;
+  color: #4d4d4f;
+}
+
+body main .section .table.insurance-table td p,
+body main .section .table.insurance-table th p {
+  margin: 0;
+}
+
+/* Financial footnotes left-aligned 12px (default-content-wrapper after the table) */
+body main .section.table-container .table-wrapper + .default-content-wrapper p,
+body main .section.table-container > .default-content-wrapper:nth-of-type(2) p {
+  font-size: 12px;
+  text-align: left;
+}
+
+/* ---- Financial info boxes (2-up rounded purple cards) ----
+   Authored as two rows (each .columns-item is one box). Lay them out
+   side-by-side via grid on the block and style per-row. */
+body main .section .columns.financial-info-boxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+  max-width: 998px;
+  margin: 24px auto 0;
+}
+
+body main .section .columns.financial-info-boxes > .columns-item {
+  width: auto;
+  border-radius: 16px;
+  padding: 32px;
+  overflow: hidden;
+}
+
+/* Box 1 dark purple (white text), box 2 light purple (dark text) */
+body main .section .columns.financial-info-boxes > .columns-item:first-child,
+body main .section .columns.financial-info-boxes > .columns-item:first-child p {
+  background: #422e83;
+  color: #fff;
+}
+
+body main .section .columns.financial-info-boxes > .columns-item:last-child,
+body main .section .columns.financial-info-boxes > .columns-item:last-child p {
+  background: #d9d7f9;
+  color: #4d4d4f;
+}
+
+/* Info-box titles: 24px/700 centered */
+body main .section .columns.financial-info-boxes > .columns-item p:first-child strong {
+  display: block;
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: none;
+  margin-bottom: 12px;
+}
+
+body main .section .columns.financial-info-boxes > .columns-item:first-child p:first-child strong {
+  color: #fff;
+}
+
+body main .section .columns.financial-info-boxes > .columns-item:last-child p:first-child strong {
+  color: #422e83;
+}
+
+/* Mobile/tablet: stack savings/financial layouts, drop headings to 32px */
+@media (width < 986px) {
+  body main .section.accordion-container > .default-content-wrapper:first-child > h2,
+  body main .section.table-container > .default-content-wrapper:first-child > h2 {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  body main .section .columns.financial-info-boxes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Explore band (dark-purple full-width, 2-up cards) ---- */
+body main .section.cards-grid-container:has(.cards-grid.savings-explore) {
+  background: #422e83;
+  padding: 56px 0 80px;
+  margin-top: 0;
+}
+
+/* White centered card titles */
+body main .section .cards-grid.savings-explore.cards-grid-icon-image-card .heading-2 {
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: none;
+  text-align: center;
+}
+
+/* CTA pills: orange accent bg, purple text */
+body main .section .cards-grid.savings-explore .abbv-button-primary,
+body main .section .cards-grid.savings-explore .abbv-button-primary:visited {
+  background: var(--color-brand-accent);
+  color: #422e83;
+}
+
+@media (width < 768px) {
+  body main .section .cards-grid.savings-signup .flexboxitem-v2 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  body main .section .table.insurance-table table {
+    font-size: 14px;
+  }
+
+  body main .section .table.insurance-table th,
+  body main .section .table.insurance-table td {
+    padding: 16px;
   }
 }
