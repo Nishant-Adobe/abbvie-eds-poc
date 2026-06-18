@@ -10,6 +10,33 @@
  * governing permissions and limitations under the License.
  */
 
+/* ============================================================================
+   MERGE-CONFLICT RESOLUTION LEGEND  —  READ BEFORE RESOLVING A develop MERGE
+   ----------------------------------------------------------------------------
+   This file diverges heavily from `develop` (develop's styles.css is ~1730
+   lines; this branch's is ~5700). A merge from develop WILL conflict across
+   most of the file. When resolving, DO NOT blanket-accept develop ("theirs")
+   over the blocks below — doing so silently deletes the rules that make the
+   Linzess homepage / resources / why-linzess pages render correctly and will
+   break those pages.
+
+   Load-bearing Linzess blocks are wrapped in guard banners:
+
+     /* >>> LINZESS KEEP [<page>]: <what> — keep ours during develop merge */
+     ...rules...
+     /* <<< LINZESS KEEP [<page>] END */
+
+   Resolution rule of thumb:
+   - Inside a KEEP block  -> keep OURS (this branch). If develop also changed
+     the same generic selector, prefer ours and re-scope develop's variant so
+     both survive (these pages rely on the exact values for pixel parity).
+   - Outside a KEEP block (base tokens / shared scaffolding above the
+     "LINZESS DTC — Theme Overrides" banner) -> take develop's newer version
+     unless it removes a token this file references.
+   - <page> tags: HOME = /linzess, RESOURCES = /linzess/resources,
+     WHY = /linzess/why-linzess, ALL = shared by all three.
+   ============================================================================ */
+
 /* ========================================================================
    AbbVie Design Tokens
    ======================================================================== */
@@ -3309,6 +3336,11 @@ main .section.highlight:has(#where-bold-science-meets-real-world-results) a {
 
 /* stylelint-disable no-descending-specificity, no-duplicate-selectors */
 
+/* >>> LINZESS KEEP [ALL]: brand theme + all page-specific styles below — keep ours during develop merge.
+   Everything from here to the end of this file is Linzess homepage / resources /
+   why-linzess work. develop has little or none of it; on a develop merge, KEEP
+   OURS for this whole region. Page sub-sections are tagged [HOME]/[RESOURCES]/[WHY]
+   with their own KEEP banners. Reverting any of this to develop breaks the pages. */
 /* ============================================================
    LINZESS DTC — Theme Overrides
    Primary: Purple #422E83 | Accent: Orange #FAA633
@@ -3514,6 +3546,10 @@ main > .section:has(.columns-homepage-savings) > .default-content-wrapper:last-c
   text-align: left;
 }
 
+/* >>> LINZESS KEEP [WHY]: why-linzess page section styles — keep ours during develop merge.
+   Scoped to whylinzess-* section-metadata classes (symptom cards, mechanism cards,
+   timeline, side-effects, patient experiences). develop has none of these selectors;
+   keep ours. */
 /* ═══════════════════════════════════════════════════════════════════
    WHY LINZESS PAGE — Section-specific styles
    Scoped to section-metadata classes to prevent cross-page conflicts
@@ -4136,6 +4172,8 @@ body main .section:has(.whylinzess-timeline) .carousel-video-playlist {
   justify-content: center;
 }
 
+/* >>> LINZESS KEEP [WHY]: patient-experiences featured-carousel section — keep ours.
+   Targets :has(.carousel-video-playlist.featured); develop lacks this. */
 /* ───────────────────────────────────────────────────────────────────
    WHY LINZESS — Patient Experiences section (white, centered eyebrow +
    heading + body, then video carousel). Mirrors the help/sideeffects
@@ -4566,6 +4604,12 @@ main > .section.carousel-video-playlist-container > .default-content-wrapper:fir
   text-transform: uppercase;
 }
 
+/* >>> LINZESS KEEP [HOME]: homepage brand-specific overrides — keep ours during develop merge.
+   Non-hero purple arc + H1, the regulated indication statement above the promo
+   card, the static inline .section.isi treatment, and the homepage savings card.
+   NOTE: develop DOES define generic .section.isi / body.no-hero rules. On a
+   merge, keep ours here (do not let develop's generic versions win) or the
+   homepage ISI/arc visually regresses. */
 /* LINZESS DTC — Brand-specific style overrides */
 
 /* Non-hero pages: purple downward arc + H1 styling */
@@ -4836,6 +4880,9 @@ main:has(.whylinzess-timeline) :is(p, li, a):not(:has(strong)) {
 }
 
 
+/* >>> LINZESS KEEP [RESOURCES]: resources page section styles — keep ours during develop merge.
+   Scoped to .resources-* / #healthyroutines / #wellnesstips / #communityresources;
+   develop has none of these. Keep ours through to the end of the file. */
 /* ═══════════════════════════════════════════════════════════════════
    RESOURCES PAGE — scoped to .resources-* variants only so the homepage
    and why-linzess pages are never affected. Explicit px per the Linzess
@@ -5712,3 +5759,7 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
     max-width: 100%;
   }
 }
+
+/* <<< LINZESS KEEP [ALL] END — end of Linzess brand + page-specific region.
+   Everything from the "LINZESS KEEP [ALL]" banner above down to here is
+   load-bearing for the homepage / resources / why-linzess pages. */
