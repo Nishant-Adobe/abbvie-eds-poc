@@ -7132,41 +7132,47 @@ main > .section.more-like-this-section .columns.more-like-this a.button {
    band, but live lays it out as TEXT-LEFT / image-RIGHT, with a green checkmark
    square before each of the 3 checklist sub-headings. The authored column order
    is image-first, so we re-order via grid placement and add the checkmark via
-   ::before on the bold sub-heading paragraphs. */
+   ::before on the bold sub-heading paragraphs.
+   IMPORTANT: gated on a content column that contains bold sub-headings
+   (:has(p:has(strong))) so these rules ONLY match the pantry checklist layout —
+   the otc-and-prescription-treatments page also uses .what-is-linzess-section
+   but its content column is a <ul> with no bold sub-headings, so it stays
+   image-left and is unaffected. */
 @media (width >= 1024px) {
-  main > .section.pro-tip-section .columns.what-is-linzess > .columns-item:has(.columns-item-image) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) > .columns-item:has(.columns-item-image) {
     grid-column: 2;
     grid-row: 1;
   }
-  main > .section.pro-tip-section .columns.what-is-linzess > .columns-item:has(.columns-item-content) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) > .columns-item:has(.columns-item-content) {
     grid-column: 1;
     grid-row: 1;
   }
 }
 /* Normalize all checklist copy to article body size (the shared what-is rule
-   shrinks the last <p> to body-small, which wrongly hits "Serving Sizes"). */
-main > .section.pro-tip-section .columns.what-is-linzess .columns-item-content p,
-main > .section.pro-tip-section .columns.what-is-linzess .columns-item-content p:last-child {
+   shrinks the last <p> to body-small, which wrongly hits "Serving Sizes").
+   Gated to the checklist layout only (see note above). */
+main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) .columns-item-content p,
+main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) .columns-item-content p:last-child {
   margin: var(--spacing-16) 0;
   font-size: var(--font-size-article-body);
 }
 /* The 3 sub-heading paragraphs (bold, not the intro) get a checkmark icon. */
-main > .section.pro-tip-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child) {
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child) {
   position: relative;
   margin-bottom: var(--spacing-08, 6px);
   padding-left: var(--spacing-40);
 }
-main > .section.pro-tip-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child)::before {
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child)::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   width: var(--spacing-24);
   height: var(--spacing-24);
-  background: url('/content/dam/abbvie-eds-poc/linzess/images/checkmark-square.svg') center / contain no-repeat;
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMzciIHZpZXdCb3g9IjAgMCA0MCAzNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzM3Ml80NzIyMikiPgo8cGF0aCBkPSJNMzEuNjY4NSAzNi43NTQ0SDEuOTM1NDZDMS4yNzk0NiAzNi43NTQ0IDAuNzUgMzYuMjIxNiAwLjc1IDM1LjU2ODlWNS44MzU4OEMwLjc1IDUuMTc5ODkgMS4yODI3OSA0LjY1MDQyIDEuOTM1NDYgNC42NTA0MkgzMS42Njg1QzMyLjMyNDUgNC42NTA0MiAzMi44NTQgNS4xNzk4OSAzMi44NTQgNS44MzU4OFYzNS41Njg5QzMyLjg1NCAzNi4yMjQ5IDMyLjMyMTIgMzYuNzU0NCAzMS42Njg1IDM2Ljc1NDRaTTMuMTI0MjUgMzQuMzgwMUgzMC40ODNWNy4wMjEzNEgzLjEyNDI1VjM0LjM4MDFaIiBmaWxsPSIjOTQ4RUJFIi8+CjxwYXRoIGQ9Ik0xNC43ODIyIDMyLjE1OTFDMTQuNzQ4OSAzMi4xNTkxIDE0LjcxODkgMzIuMTU5MSAxNC42ODU2IDMyLjE1OTFDMTQuMDQ2MyAzMi4xMTkxIDEzLjQ5MzUgMzEuNzAyOSAxMy4yODM3IDMxLjA5NjhDMTEuNDI1NiAyNS43MTU2IDguNjcxNzUgMjAuNjc0MSA1LjEwMjA2IDE2LjExMjFDNC41NjI2IDE1LjQyMjggNC42ODU4MSAxNC40MzA1IDUuMzcxNzggMTMuODkxQzYuMDU3NzUgMTMuMzUxNiA3LjA1MzQgMTMuNDc0OCA3LjU5Mjg1IDE0LjE2MDdDMTAuNjI5OCAxOC4wNDAxIDEzLjEwNzIgMjIuMjQ5MiAxNC45ODg3IDI2LjcxMTNDMjAuMzQ2NSAxNi44NzEzIDI3LjgzNTYgOC4wNjY5NSAzNi44MTk4IDEuMDg3MzlDMzcuNTA5MSAwLjU1MTI2OCAzOC41MDQ3IDAuNjc0NDc1IDM5LjA0MDggMS4zNjcxQzM5LjU3NjkgMi4wNTY0IDM5LjQ1MzcgMy4wNTIwNSAzOC43NjExIDMuNTg4MTdDMjkuMjAwOCAxMS4wMTM5IDIxLjQwMjEgMjAuNTg3NSAxNi4yMDc0IDMxLjI3QzE1Ljk0MSAzMS44MTYxIDE1LjM4ODIgMzIuMTU5MSAxNC43ODU1IDMyLjE1OTFIMTQuNzgyMloiIGZpbGw9IiNEOUQ3RjkiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF8zNzJfNDcyMjIiPgo8cmVjdCB3aWR0aD0iMzguNjI0IiBoZWlnaHQ9IjM2IiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC43NSAwLjc1NDM5NSkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K') center / contain no-repeat;
 }
 /* Tighten the description that follows each sub-heading. */
-main > .section.pro-tip-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child) + p {
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child) + p {
   margin-top: 0;
   padding-left: var(--spacing-40);
 }
