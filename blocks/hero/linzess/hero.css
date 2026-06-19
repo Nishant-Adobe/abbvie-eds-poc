@@ -2423,17 +2423,6 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     aspect-ratio: 750 / 738;
   }
 
-  /* Pin the image container to a definite box so the picture/img height:100%
-     resolves. Without this the container's min-height:100% gives no definite
-     height for percentage resolution, so the img fell back to its intrinsic
-     ~166px and the white H1 dropped below the image and got clipped. Same fix
-     the tablet rule below already applies. */
-  .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-  }
-
   .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
   .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
     min-height: 0;
@@ -2450,9 +2439,8 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
 
 /* Tablet (744–1023): the migrated content only ships the wide desktop image,
    so the 2048/874 ratio would squash the band to ~328px. Live keeps a tall
-   hero (~756px / AR 1.016) here. Match live exactly: fix the tall min-height
-   and stretch the wide image to fill with object-fit:fill — the SAME treatment
-   live uses at tablet (and that mobile/desktop already use), not cover. */
+   hero (~756px) here, so use a fixed tall min-height and crop the wide image
+   with object-fit:cover instead of stretching it. */
 @media (width >= 744px) and (width < 1024px) {
   /* .section.hero-container prefix raises specificity above the later
      @media(>=744px) rules that set min-height:auto on these heroes. */
@@ -2461,21 +2449,11 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
     aspect-ratio: auto;
   }
 
-  /* Absolutely fill the band: the container's height:100% can't resolve against
-     the hero's min-height (no definite height), so the img falls back to its
-     intrinsic ratio (~328px). Pinning the container to inset:0 gives it a
-     definite 756px box that the img then fills. */
-  .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-  }
-
   .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child picture,
   .section.hero-container .hero.linzess-behind-nav-linzess-editorial-hero > div:first-child img {
     min-height: 0;
     height: 100%;
-    object-fit: fill;
+    object-fit: cover;
   }
 }
 
@@ -2616,13 +2594,11 @@ body:has(.hero:is(.linzess-behind-nav, .linzess-behind-nav-linzess-editorial-her
   }
 
   /* Editorial hero: live positions the eyebrow + headline in the lower half of
-     the banner so they sit BELOW the overlaid logo (header is ~152px tall) and
-     flush-LEFT (text-align:start), matching the live mobile layout. The text
-     container is flex-direction:row, so justify-content controls the horizontal
-     axis — flex-end pushed the copy to the right; flex-start keeps it left.
-     Top padding clears the ~152px header; bottom padding anchors it lower. */
+     the banner so they sit BELOW the overlaid logo (header is ~152px tall).
+     Centering put the eyebrow at ~94px, overlapping the logo. Anchor the copy
+     to the bottom and clear the header with top padding. */
   .hero.linzess-behind-nav-linzess-editorial-hero .hero-text-container {
-    justify-content: flex-start;
+    justify-content: flex-end;
     padding-top: 152px;
     padding-bottom: var(--spacing-40);
   }

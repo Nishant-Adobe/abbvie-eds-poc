@@ -94,12 +94,7 @@ export default function decorate(block) {
         fullEl = document.createElement('div');
         fullEl.className = 'safety-bar-full';
         fullEl.id = 'safety-bar-full-content';
-        // Split safety bars keep the USES section (collapsed col1) separate from
-        // the expanded IRI row; live shows USES at the top of the expanded panel,
-        // so prepend it. Non-split bars are unaffected (collapsed is the teaser).
-        fullEl.innerHTML = (isSplit && collapsed)
-          ? collapsed.innerHTML + expanded.innerHTML
-          : expanded.innerHTML;
+        fullEl.innerHTML = expanded.innerHTML;
       }
 
       if (!stickyBlock.contains(fullEl)) {
