@@ -4595,6 +4595,25 @@ main > .section:has(.columns-homepage-savings) {
   padding-bottom: 80px;
 }
 
+/* Savings band top arc — a white dome rising into the dark patient-videos
+   band above, carving the transition into a curve (matches live + the page's
+   other white arcs). Without the border-radius this paints a flat white block
+   that reads as a straight seam. */
+main > .section.columns-container:has(.columns-homepage-savings)::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 75px;
+  background: var(--color-background-primary, #fff);
+  border-radius: 100% 100% 0 0;
+  z-index: 2;
+}
+main > .section.columns-container:has(.columns-homepage-savings) {
+  position: relative;
+}
+
 /* Stats/Videos section intro heading — Bebas Neue 32px to match live site */
 main > .section.carousel-video-playlist-container > .default-content-wrapper:first-child > p:first-child strong {
   font-family: var(--heading-font-family);
