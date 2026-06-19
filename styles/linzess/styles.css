@@ -4595,32 +4595,6 @@ main > .section:has(.columns-homepage-savings) {
   padding-bottom: 80px;
 }
 
-/* Savings band top arc — a white dome rising into the dark patient-videos
-   band above, carving the transition into a curve. Matches live geometry
-   (130%-wide centered dome): without the radius + width it reads as a flat
-   seam; with left/right:0 (100% wide) the curve is too steep/shallow. Live
-   desktop = 1872px wide on 1440 (130%), height 255px, top -60px. */
-main > .section.columns-container:has(.columns-homepage-savings) {
-  position: relative;
-}
-main > .section.columns-container:has(.columns-homepage-savings)::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130%;
-  height: 75px;
-  background: var(--color-background-primary, #fff);
-  border-radius: 100% 100% 0 0;
-  z-index: 2;
-}
-@media (width >= 1024px) {
-  main > .section.columns-container:has(.columns-homepage-savings)::before {
-    height: 255px;
-  }
-}
-
 /* Stats/Videos section intro heading — Bebas Neue 32px to match live site */
 main > .section.carousel-video-playlist-container > .default-content-wrapper:first-child > p:first-child strong {
   font-family: var(--heading-font-family);
