@@ -14,10 +14,19 @@ export default function transform(hookName, element, payload) {
     || element.querySelector('h1, h2, h3')?.textContent
     || '').trim();
 
+  // Prefer the live page's own meta description; fall back to the OG description,
+  // then to the first meaningful body paragraph, and finally to a title-derived
+  // sentence. PSI's SEO audit flags pages with no meta description, and some
+  // Linzess utility pages (e.g. the sitemap) ship none on the live site.
+  const firstParagraph = [...element.querySelectorAll('p')]
+    .map((p) => p.textContent.trim())
+    .find((t) => t.length > 40);
   const description = (
     document.querySelector('meta[name="description"]')?.getAttribute('content')
-    || ''
-  ).trim();
+    || document.querySelector('meta[property="og:description"]')?.getAttribute('content')
+    || firstParagraph
+    || (title ? `${title} — LINZESS® (linaclotide). Important Safety Information and full Prescribing Information.` : '')
+  ).trim().slice(0, 160);
 
   // Some utility pages (e.g. the SMS reminder terms & conditions) render on the
   // live site as standalone documents with NO header/footer. For those, omit the

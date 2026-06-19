@@ -127,12 +127,13 @@ var CustomImportScript = (() => {
 
   // tools/importer/transformers/linzess-utility-metadata.js
   function transform4(hookName, element, payload) {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     if (hookName !== "afterTransform") return;
     const { document } = payload;
     const title = (document.title || ((_a = document.querySelector("title")) == null ? void 0 : _a.textContent) || ((_b = element.querySelector("h1, h2, h3")) == null ? void 0 : _b.textContent) || "").trim();
-    const description = (((_c = document.querySelector('meta[name="description"]')) == null ? void 0 : _c.getAttribute("content")) || "").trim();
-    const sourceUrl = ((_d = payload.params) == null ? void 0 : _d.originalURL) || payload.url || "";
+    const firstParagraph = [...element.querySelectorAll("p")].map((p) => p.textContent.trim()).find((t) => t.length > 40);
+    const description = (((_c = document.querySelector('meta[name="description"]')) == null ? void 0 : _c.getAttribute("content")) || ((_d = document.querySelector('meta[property="og:description"]')) == null ? void 0 : _d.getAttribute("content")) || firstParagraph || (title ? `${title} \u2014 LINZESS\xAE (linaclotide). Important Safety Information and full Prescribing Information.` : "")).trim().slice(0, 160);
+    const sourceUrl = ((_e = payload.params) == null ? void 0 : _e.originalURL) || payload.url || "";
     const noChrome = /reminder-terms-conditions/i.test(sourceUrl);
     const cells = [
       ["Metadata"],
