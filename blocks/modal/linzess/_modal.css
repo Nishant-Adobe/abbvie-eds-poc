@@ -2,20 +2,6 @@
 
 /* stylelint-disable no-descending-specificity */
 
-/* no-trigger modals register a hidden dialog that opens from existing links —
-   they must NOT render a standalone in-page button. modal.js (at develop)
-   lacks the no-trigger branch and renders the button anyway, so hide it and
-   collapse its empty section. Matches live find-relief (no modal buttons in
-   the page body). This ships via code sync; the content still authors the
-   modal blocks until the page is re-imported. */
-.modal.no-trigger .modal-trigger {
-  display: none;
-}
-
-.section:has(> .modal-wrapper > .modal.no-trigger):not(:has(> :not(.modal-wrapper))) {
-  display: none;
-}
-
 /* Linzess DTC modal — Lato body, Bebas headings, purple/orange palette */
 
 .modal-overlay {
