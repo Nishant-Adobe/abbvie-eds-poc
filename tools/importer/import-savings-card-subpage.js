@@ -3,6 +3,7 @@
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/linzess-cleanup.js';
+import subpageSeoTransformer from './transformers/savings-card-subpage-seo.js';
 
 // PAGE TEMPLATE CONFIGURATION
 const PAGE_TEMPLATE = {
@@ -19,7 +20,8 @@ const PAGE_TEMPLATE = {
 
 // TRANSFORMER REGISTRY
 const transformers = [
-  cleanupTransformer,
+  cleanupTransformer, // beforeTransform: strip header/footer/cookie/scripts
+  subpageSeoTransformer, // afterTransform: promote lead heading to h1 + curated Metadata (brand/title/description)
 ];
 
 function executeTransformers(hookName, element, payload) {
@@ -49,17 +51,24 @@ export default {
     // 2. Execute afterTransform transformers (final cleanup)
     executeTransformers('afterTransform', main, payload);
 
-    // 3. Apply WebImporter built-in rules
-    const hr = document.createElement('hr');
-    main.appendChild(hr);
-    WebImporter.rules.createMetadata(main, document);
+    // 3. Apply WebImporter built-in rules.
+    // NOTE: metadata is appended explicitly by subpageSeoTransformer (curated
+    // brand/title/description), so we do NOT call WebImporter.rules.createMetadata
+    // here — it would emit a duplicate Metadata block and overwrite the curated
+    // description with the live page's (often empty/unreliable) <head> values.
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
-    // 4. Generate sanitized path
-    const path = WebImporter.FileUtils.sanitizePath(
-      new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html$/, '')
-    );
+    // 4. Generate sanitized path under the linzess brand folder. The live URL
+    // pathname is /savings-card/<slug>, but these pages are authored under
+    // /linzess/savings-card/<slug> in this project, so prefix the brand.
+    const slug = new URL(params.originalURL).pathname
+      .replace(/\/$/, '')
+      .replace(/\.html$/, '')
+      .split('/')
+      .filter(Boolean)
+      .pop() || 'index';
+    const path = WebImporter.FileUtils.sanitizePath(`/linzess/savings-card/${slug}`);
 
     return [{
       element: main,
