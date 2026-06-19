@@ -2,16 +2,11 @@ import { getConfigValue } from '../../scripts/config.js';
 import { isUniversalEditor } from '../../scripts/utils.js';
 
 // Default breakpoint at which the hero swaps from the mobile to the desktop
-// image. The linzess editorial-hero swaps at the tablet breakpoint (744px) so
-// the wide desktop image is used from tablet up — matching the live site and
-// the editorial-hero CSS, which sizes the tablet band around the wide image.
+// image. Linzess editorial-hero defers the swap to the desktop breakpoint so
+// its tall portrait image survives through tablet (matches live).
 const HERO_IMAGE_SWAP_BREAKPOINT = 985;
-const HERO_IMAGE_SWAP_BREAKPOINT_EDITORIAL = 744;
+const HERO_IMAGE_SWAP_BREAKPOINT_DESKTOP = 1024;
 const LINZESS_EDITORIAL_HERO_CLASS = 'linzess-behind-nav-linzess-editorial-hero';
-// find-relief's editorial hero keeps the tall mobile image through tablet and
-// only swaps to the wide desktop image at 985px (the homepage editorial hero
-// swaps earlier, at 744px, hence the separate constant).
-const LINZESS_FIND_RELIEF_HERO_CLASS = 'linzess-find-relief-hero';
 
 function addSectionClasses(block, section) {
   if (!section) return;
@@ -282,35 +277,9 @@ async function initVideo(videoRow, imageCell, block) {
   (imageCell || block.querySelector('div')).appendChild(container);
 }
 
-// The find-relief hero headline is authored as two lines via a <br>
-// ("Chronic Constipation<br>Calls for a Conversation"). The md2jcr publish
-// pipeline flattens headings to a single markdown line and drops the <br>,
-// fusing the words ("ConstipationCalls"). Re-insert the break at the
-// lowercase→uppercase seam, but only when no separator survived (idempotent —
-// skips if a <br> or whitespace is already present).
-function restoreFindReliefHeadingBreak(block) {
-  const heading = block.querySelector('h1');
-  if (!heading || heading.querySelector('br')) return;
-  const node = [...heading.childNodes].find(
-    (n) => n.nodeType === Node.TEXT_NODE && /[a-z][A-Z]/.test(n.textContent),
-  );
-  if (!node) return;
-  const match = node.textContent.match(/^(.*?[a-z])([A-Z].*)$/s);
-  if (!match) return;
-  const [, before, after] = match;
-  heading.insertBefore(document.createTextNode(before), node);
-  heading.insertBefore(document.createElement('br'), node);
-  heading.insertBefore(document.createTextNode(after), node);
-  node.remove();
-}
-
 export default async function decorate(block) {
   const section = block.closest('.section');
   addSectionClasses(block, section);
-
-  if (block.classList.contains(LINZESS_FIND_RELIEF_HERO_CLASS)) {
-    restoreFindReliefHeadingBreak(block);
-  }
 
   const {
     imageRow, textRow, videoRow, mobileImageRow, indicationRow, captionRow,
@@ -371,13 +340,9 @@ export default async function decorate(block) {
   // Linzess editorial-hero keeps the tall mobile image through tablet and only
   // swaps to the wide desktop image at the desktop breakpoint (matching the
   // live site). All other heroes/brands keep the default tablet swap.
-  let heroSwapMinWidth = HERO_IMAGE_SWAP_BREAKPOINT;
-  if (block.classList.contains(LINZESS_FIND_RELIEF_HERO_CLASS)) {
-    // mobile image through tablet, desktop only at >=985px (matches live)
-    heroSwapMinWidth = HERO_IMAGE_SWAP_BREAKPOINT;
-  } else if (block.classList.contains(LINZESS_EDITORIAL_HERO_CLASS)) {
-    heroSwapMinWidth = HERO_IMAGE_SWAP_BREAKPOINT_EDITORIAL;
-  }
+  const heroSwapMinWidth = block.classList.contains(LINZESS_EDITORIAL_HERO_CLASS)
+    ? HERO_IMAGE_SWAP_BREAKPOINT_DESKTOP
+    : HERO_IMAGE_SWAP_BREAKPOINT;
   mergeMobileImage(imageCell, mobileImageRow, heroSwapMinWidth);
   promoteImageLink(imageCell);
   if (block.classList.contains('full')) {
