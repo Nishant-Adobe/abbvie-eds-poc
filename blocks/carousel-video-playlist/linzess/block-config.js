@@ -69,26 +69,15 @@ function parseItems(block, isFeatured) {
       const cells = [...row.children];
       const getText = (i) => cells[i]?.textContent?.trim() ?? '';
 
-      // Grid schema authorings:
-      //  A) videoId | poster | title | transcriptHref | … (4+ cells — poster slot
-      //     present even when empty; on publish the <picture> becomes <a …jpg>)
-      //  B) videoId | title  | transcriptLink(a)        (3 cells, no poster slot)
-      // The poster slot (cell[1]) must never be read as the title: it may hold a
-      // <picture>, a rewritten image <a>, or be empty. Use cell count to pick the
-      // schema so the leaked DAM path can't land in the title.
+      // Grid schema, two authorings:
+      //  A) videoId | thumbnail(picture) | title | transcriptHref
+      //  B) videoId | title | transcriptLink(a) | ... (featured-style cells)
       if (!isFeatured) {
-        const posterCell = cells[1];
-        const posterMedia = posterCell?.querySelector('picture, img');
-        const posterLink = posterCell?.querySelector('a[href]');
-        const posterIsImageLink = /\.(?:jpe?g|png|webp|avif|gif|svg)(?:[?#]|$)/i
-          .test(posterLink?.getAttribute('href') || '');
-        const hasPosterSlot = cells.length >= 4 || !!posterMedia || posterIsImageLink;
-        if (hasPosterSlot) {
+        const hasThumb = !!cells[1]?.querySelector('picture, img');
+        if (hasThumb) {
           return {
             videoId: getText(0),
-            // Use surviving media when present; otherwise omit (Brightcove
-            // supplies its own poster) rather than leak the rewritten link.
-            thumbnail: posterMedia || null,
+            thumbnail: cells[1].querySelector('picture, img'),
             nameBanner: getText(2),
             transcriptHref: cells[3]?.querySelector('a')?.getAttribute('href') ?? getText(3),
             transcript: null,
