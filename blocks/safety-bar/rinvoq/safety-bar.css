@@ -15,30 +15,21 @@
   left: 0;
   z-index: var(--z-index-safety-bar);
   pointer-events: none;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-  opacity: 1;
+  transition: transform var(--transition-duration-medium) var(--transition-easing-standard);
 }
 
 
-/* Hide the safety-bar wrapper (content feeds the floating bar, never rendered).
-   The section hiding is handled by JS (section.hidden = true) when safety-bar
-   is the only block. CSS only hides the wrapper to prevent CLS. */
+/* Hide the authored in-page safety bar source block at all times.
+   JS reads its content and renders the sticky clone separately. */
 
 
-.safety-bar-wrapper {
+.safety-bar-container {
   display: none;
-}
-
-
-.adobe-ue-edit .safety-bar-wrapper {
-  display: block;
 }
 
 
 .safety-bar-section.is-hidden {
   transform: translateY(110%);
-  opacity: 0;
-  pointer-events: none;
 }
 
 
@@ -228,39 +219,8 @@
 
 
 /* ============================================================
-   Overlay (dark dimmer behind expanded safety bar)
-   ============================================================ */
-
-
-.safety-bar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgb(0 0 0 / 50%);
-  z-index: var(--safety-bar-overlay-z-index, 499);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-
-
-.safety-bar-overlay.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-
-/* ============================================================
    Responsive breakpoints
    ============================================================ */
-
-
-@media (width <= 744px) {
-  .safety-bar.split .safety-bar-abbreviated {
-    display: block;
-    grid-template-columns: none;
-    height: 144px;
-  }
-}
 
 
 @media (width >= 1024px) {
@@ -273,9 +233,13 @@
   }
 
   .safety-bar-full {
+    padding: var(--spacing-20) var(--spacing-55);
     max-height: var(--safety-bar-max-height-expanded-desktop);
   }
 
+  .safety-bar.split .safety-bar-abbreviated {
+    padding: var(--spacing-16) var(--spacing-60) var(--spacing-16) var(--spacing-55);
+  }
 }
 
 
@@ -354,11 +318,7 @@
   --color-text-compliance: #6c757d;
   --color-border-tabs: #dde1e6;
   --color-border: #e0e0e0;
-  --color-border-light: #ddd;
   --color-focus: var(--link-color);
-  --color-white-85: rgb(255 255 255 / 85%);
-  --color-shadow-sm: rgb(0 0 0 / 12%);
-  --color-gray-400: #999;
 
   /* Background Colors for Style Field Values */
   --color-white: #fff;
@@ -383,8 +343,6 @@
   --error-color: #cf451c;
   --warning-color: #f2dede;
   --success-color: #2f9ece;
-  --color-warning-bg: #fff4c2;
-  --color-warning-border: #fc3;
 
   /* Fonts */
   --body-font-family: 'Roboto Regular', helvetica, arial, sans-serif;
@@ -451,15 +409,12 @@
   --space-token-xxxl: calc(104 * var(--px-to-rem));
 
   /* Generalized Spacing Tokens */
-  --spacing-01: 0.1rem;
   --spacing-02: 0.2rem;
   --spacing-03: 0.3rem;
   --spacing-04: 0.4rem;
   --spacing-05: 0.5rem;
   --spacing-06: 0.6rem;
-  --spacing-07: 0.7rem;
   --spacing-08: 0.8rem;
-  --spacing-09: 0.9rem;
   --spacing-10: 1rem;
   --spacing-12: 1.2rem;
   --spacing-14: 1.4rem;
@@ -475,9 +430,7 @@
   --spacing-26: 2.6rem;
   --spacing-27: 2.7rem;
   --spacing-275: 2.75rem;
-  --spacing-28: 2.8rem;
   --spacing-30: 3rem;
-  --spacing-31: 3.1rem;
   --spacing-32: 3.2rem;
   --spacing-34: 3.4rem;
   --spacing-35: 3.5rem;
@@ -487,7 +440,6 @@
   --spacing-40: 4rem;
   --spacing-42: 4.2rem;
   --spacing-44: 4.4rem;
-  --spacing-45: 4.5rem;
   --spacing-46: 4.6rem;
   --spacing-48: 4.8rem;
   --spacing-50: 5rem;
@@ -513,11 +465,9 @@
   --spacing-168: 16.8rem;
   --spacing-180: 18rem;
   --spacing-200: 20rem;
-  --spacing-225: 22.5rem;
   --spacing-255: 25.5rem;
   --spacing-288: 28.8rem;
   --spacing-300: 30rem;
-  --spacing-full: 100%;
   --spacing-320: 32rem;
   --spacing-375: 37.5rem;
   --spacing-420: 42rem;
@@ -549,7 +499,6 @@
   /* Border Radius */
   --border-radius-base: 0.4rem;
   --border-radius-m: 0.8rem;
-  --border-radius-l: 1.6rem;
 
   /* Border Width */
   --border-width-thin: 1px;
@@ -563,10 +512,6 @@
   --z-index-2 : 2;
   --z-index-3 : 3;
   --z-index-10: 10;
-  --z-index-60: 60;
-
-  /* Opacity */
-  --opacity-full: 1;
   --z-index-anchor-nav: 100;
   --z-index-safety-bar: 500;
 
@@ -574,7 +519,6 @@
   --order-first: -1;
   --order-0: 0;
   --order-1: 1;
-  --order-2: 2;
   --order-unset: unset;
 
   /* Layout */
@@ -593,7 +537,6 @@
   --font-weight-650: 650;
   --font-weight-700: 700;
   --font-weight-800: 800;
-  --font-weight-900: 900;
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -619,7 +562,6 @@
   --line-height-26: 2.6rem;
   --line-height-28: 2.8rem;
   --line-height-30: 3rem;
-  --line-height-31-2: 3.12rem;
   --line-height-32: 3.2rem;
   --line-height-34: 3.4rem;
   --line-height-35: 3.5rem;
@@ -629,7 +571,6 @@
   --line-height-68: 6.8rem;
   --line-height-64: 6.4rem;
   --line-height-84: 8.4rem;
-  --line-height-icon: 0.55;
   --line-height-tight: 1.25;
   --line-height-relaxed: 1.5;
   --line-height-loose: 1.6;
@@ -637,10 +578,8 @@
   /* Shared Motion, Surface, Border, Text, Elevation, Focus, Tracking */
   --transition-duration-fast: 0.2s;
   --transition-duration-medium: 0.3s;
-  --transition-duration-slow: 0.8s;
   --transition-easing-standard: ease;
   --transition-easing-emphasized: ease-out;
-  --transition-easing-in-out: ease-in-out;
   --shadow-nav-stuck: 0 2px 8px rgb(0 0 0 / 12%);
   --shadow-safety-bar: 0 -2px 8px rgb(0 0 0 / 10%);
   --surface-background-default: var(--background-color);

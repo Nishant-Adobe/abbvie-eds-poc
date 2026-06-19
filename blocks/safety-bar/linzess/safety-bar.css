@@ -20,18 +20,12 @@
 }
 
 
-/* Hide the safety-bar wrapper (content feeds the floating bar, never rendered).
-   The section hiding is handled by JS (section.hidden = true) when safety-bar
-   is the only block. CSS only hides the wrapper to prevent CLS. */
+/* Hide the authored in-page safety bar source block at all times.
+   JS reads its content and renders the sticky clone separately. */
 
 
-.safety-bar-wrapper {
+.safety-bar-container {
   display: none;
-}
-
-
-.adobe-ue-edit .safety-bar-wrapper {
-  display: block;
 }
 
 
@@ -224,28 +218,6 @@
 
 .safety-bar.split.is-expanded .safety-bar-abbreviated {
   display: none;
-}
-
-
-/* ============================================================
-   Overlay (dark dimmer behind expanded safety bar)
-   ============================================================ */
-
-
-.safety-bar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgb(0 0 0 / 50%);
-  z-index: var(--safety-bar-overlay-z-index, 499);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-
-
-.safety-bar-overlay.is-visible {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 
@@ -951,19 +923,6 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
-  /* ---- Header: No-hero arc ---- */
-  --header-z-index: 10;
-  --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
-  --no-hero-arc-height: 80px;
-  --no-hero-h1-font-size: 40px;
-  --no-hero-h1-line-height: 36px;
-  --no-hero-h1-margin-bottom: 40px;
-  --no-hero-h1-font-size-mobile: 28px;
-  --no-hero-h1-line-height-mobile: 30px;
-  --no-hero-divider-width: 64px;
-  --no-hero-divider-height: var(--hero-divider-height);
-  --no-hero-divider-margin-bottom: 24px;
-
   /* ---- Cards Grid Block ---- */
   --linz-heading2-font-size: var(--font-size-h2);
   --linz-body-font-size: var(--font-size-body);
