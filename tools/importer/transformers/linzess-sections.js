@@ -2,106 +2,73 @@
 /* global WebImporter */
 
 /**
- * Transformer: Linzess section breaks and section-metadata insertion.
- * Uses payload.template.sections from page-templates.json to identify section boundaries
- * and insert <hr> breaks and Section Metadata blocks with style and anchorId properties.
+ * Transformer: linzess sections
+ * Inserts section breaks (<hr>) and Section Metadata blocks based on template sections.
+ * Runs in afterTransform only. Uses payload.template.sections from page-templates.json.
+ * All selectors validated against migration-work/cleaned.html.
  *
- * Improved features:
- * - Supports both CSS selectors and anchor-ID-based selectors (e.g., #talktoadoctor)
- * - Falls back to finding <a id="..."> anchor elements when direct querySelector fails
- * - Inserts anchorId in Section Metadata when section defines one
- * - Handles nested containers (uses parent container as section boundary)
+ * Section selectors from cleaned.html:
+ *   section-1: .savings-faq-hero (line 237)
+ *   section-2: .abbv-container.background-white.background-white-arc.mb24 (line 264, first match)
+ *   section-3: .abbv-container.background-off-white.background-off-white-arc.accordion-white-blades.mb24 (line 321, first match)
+ *   section-4: .abbv-container.background-white.background-white-arc.mb24 (line 408, second match)
+ *   section-5: .abbv-container.background-off-white.background-off-white-arc.accordion-white-blades.mb24 (line 507, second match)
+ *   section-6: .abbv-container.background-dark-purple.background-dark-purple-arc.bottom-nav (line 678)
+ *   section-7: .abbv-inline-use-isi (line 710)
  */
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };
-
-/**
- * Find the first element matching a section's selector(s).
- * Selectors can be a string or an array of strings (tried in order).
- * Supports special handling for anchor-based selectors (#id):
- *   - First tries querySelector directly
- *   - If that fails for # selectors, looks for <a id="..."> and uses its parent container
- */
-function findSectionElement(element, selector) {
-  const selectors = Array.isArray(selector) ? selector : [selector];
-  for (const sel of selectors) {
-    // Try direct querySelector first
-    try {
-      const el = element.querySelector(sel);
-      if (el) {
-        // If we matched an <a> anchor element (e.g., <a id="talktoadoctor">),
-        // use its parent container as the section boundary
-        if (el.tagName === 'A' && !el.href && el.id) {
-          const parent = el.closest('.abbv-container, .container.parbase, section, [class*="container"]');
-          if (parent) return parent;
-          // Fallback: use the anchor's direct parent
-          return el.parentElement;
-        }
-        return el;
-      }
-    } catch (e) {
-      // Invalid selector, try next
-    }
-
-    // For hash-based selectors, try finding anchor elements
-    if (sel.startsWith('#')) {
-      const anchorId = sel.substring(1);
-      // Look for <a id="anchorId"> elements
-      const anchor = element.querySelector(`a[id="${anchorId}"]`);
-      if (anchor) {
-        // Use the closest container parent as the section element
-        const parent = anchor.closest('.abbv-container, .container.parbase, section, [class*="container"]');
-        if (parent) return parent;
-        return anchor.parentElement;
-      }
-    }
-  }
-  return null;
-}
 
 export default function transform(hookName, element, payload) {
   if (hookName === TransformHook.afterTransform) {
     const { template } = payload;
     if (!template || !template.sections || template.sections.length < 2) return;
 
+    const { document } = element.ownerDocument ? { document: element.ownerDocument } : { document };
     const doc = element.ownerDocument || document;
-
     const sections = template.sections;
 
-    // Process sections in reverse order to preserve DOM positions
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const section = sections[i];
-      const sectionEl = findSectionElement(element, section.selector);
+    // Find the first element matching each section's selector, handling duplicates via index tracking
+    const selectorCounts = {};
+    const sectionElements = [];
 
-      if (!sectionEl) continue;
+    for (const section of sections) {
+      // Normalize selector to string (handle array format from page-templates.json)
+      const sel = Array.isArray(section.selector) ? section.selector[0] : section.selector;
 
-      // Build Section Metadata cells if style or anchorId is defined
-      const hasMeta = section.style || section.anchorId;
-      if (hasMeta) {
-        const metaCells = {};
-        if (section.style) {
-          metaCells.style = section.style;
+      // Track how many times we've seen this selector to handle duplicates
+      if (!selectorCounts[sel]) {
+        selectorCounts[sel] = 0;
+      }
+      const targetIndex = selectorCounts[sel];
+      selectorCounts[sel] += 1;
+
+      // Find all matches for this selector and pick the nth one
+      const matches = element.querySelectorAll(sel);
+      const el = matches[targetIndex] || null;
+      sectionElements.push({ section, el });
+    }
+
+    // Process sections in reverse order to avoid DOM position shifts
+    for (let i = sectionElements.length - 1; i >= 0; i--) {
+      const { section, el } = sectionElements[i];
+      if (!el) continue;
+
+      // Add Section Metadata block if the section has a style
+      if (section.style) {
+        const cells = [['Section Metadata'], ['style', section.style]];
+        const table = WebImporter.DOMUtils.createTable(cells, doc);
+        // Insert section metadata after the section element
+        if (el.nextSibling) {
+          el.parentNode.insertBefore(table, el.nextSibling);
+        } else {
+          el.parentNode.appendChild(table);
         }
-        if (section.anchorId) {
-          metaCells.anchorId = section.anchorId;
-        }
-        const sectionMetadata = WebImporter.Blocks.createBlock(doc, {
-          name: 'Section Metadata',
-          cells: metaCells,
-        });
-        sectionEl.after(sectionMetadata);
       }
 
-      // Insert <hr> before section element for all non-first sections
+      // Insert <hr> before section element (but not for the first section)
       if (i > 0) {
         const hr = doc.createElement('hr');
-        // If the section boundary is a container, look for a preceding anchor element
-        const prevAnchor = sectionEl.previousElementSibling;
-        if (prevAnchor && prevAnchor.tagName === 'A' && prevAnchor.id && !prevAnchor.href) {
-          // Place hr before the anchor, not the container
-          prevAnchor.before(hr);
-        } else {
-          sectionEl.before(hr);
-        }
+        el.parentNode.insertBefore(hr, el);
       }
     }
   }

@@ -2,104 +2,64 @@
 /* global WebImporter */
 
 /**
- * Transformer: Linzess site-wide cleanup.
- * Removes non-authorable content (header, footer, modals, safety bar, banners, tracking,
- * video player chrome, cookie consent, presentational elements).
- * All selectors validated against migration-work/cleaned.html for https://www.linzess.com/find-relief
+ * Transformer: linzess cleanup
+ * Removes non-authorable site chrome from LINZESS pages.
+ *
+ * Shared by every Linzess import family (utility/sitemap, savings-card subpages,
+ * FAQ, community-support). Keeps develop's two-hook structure (before/after
+ * transform, validated against migration-work/cleaned.html for the FAQ &
+ * community migrations) and additionally removes the broader generic chrome the
+ * utility/savings-card imports rely on.
  */
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };
 
 export default function transform(hookName, element, payload) {
   if (hookName === TransformHook.beforeTransform) {
-    // Remove modals that overlay content and could interfere with block parsing
-    WebImporter.DOMUtils.remove(element, [
-      '.abbv-modal',
-    ]);
+    // --- develop (FAQ/community) cleanup ---
+    // Modals (exit-site modals, WOL modals)
+    WebImporter.DOMUtils.remove(element, ['.abbv-modal']);
+    // OneTrust cookie consent banner
+    WebImporter.DOMUtils.remove(element, ['#onetrust-consent-sdk']);
+    // Floating safety bar (sticky ISI tray) — NOT the inline ISI content
+    WebImporter.DOMUtils.remove(element, ['.abbv-safety-bar']);
+    // Back-to-top button
+    WebImporter.DOMUtils.remove(element, ['.abbv-back-to-top']);
 
-    // Remove Brightcove video player chrome (keep .vjs-poster and .vjs-dock-text for content extraction)
-    WebImporter.DOMUtils.remove(element, [
-      '.vjs-control-bar',
-      '.vjs-modal-dialog',
-      '.vjs-text-track-settings',
-      '.vjs-error-display',
-      '.vjs-player-info-modal',
-      '.vjs-loading-spinner',
-      '.vjs-text-track-display',
-      '.vjs-dock-shelf',
-    ]);
+    // --- broader generic cleanup (utility/savings-card imports, which did all
+    //     of these in beforeTransform) ---
+    // Generic header / nav / footer / banner chrome
+    WebImporter.DOMUtils.remove(element, ['header', 'nav', '.abbv-header', '.abbv-nav', 'footer', '.abbv-footer', '.abbv-top-banner', '.abbv-eyebrow']);
+    // Generic modals/onetrust variants, floating ISI
+    WebImporter.DOMUtils.remove(element, ['[class*="modal"]', '.onetrust-pc-dark-filter', '[class*="onetrust"]', '.abbv-floating-isi']);
+    // Scripts, styles, noscript
+    WebImporter.DOMUtils.remove(element, ['script', 'style', 'noscript', 'link[rel="stylesheet"]']);
+    // Tracking / analytics
+    WebImporter.DOMUtils.remove(element, ['[class*="recaptcha"]', '.grecaptcha-badge']);
+    // AEM placeholder / loading elements
+    WebImporter.DOMUtils.remove(element, ['.cmp-adaptiveform-container-form-loading', '.abbv-animation-loading']);
 
-    // Remove video player form elements (caption settings)
-    const selects = element.querySelectorAll('video-js select, video-js fieldset');
-    selects.forEach((el) => el.remove());
-
-    // Remove tracking pixel images from Brightcove metrics
-    const allImgs = element.querySelectorAll('img');
-    const trackingDomains = ['metrics.brightcove.com', 'dpm.demdex.net', 'adservice.google.com', 'gstatic.com/recaptcha'];
-    allImgs.forEach((img) => {
-      const src = img.getAttribute('src') || '';
-      if (trackingDomains.some((domain) => src.includes(domain))) {
-        img.remove();
-      }
+    // Clean data attributes that aren't needed
+    element.querySelectorAll('[data-cmp-is], [data-sly-resource]').forEach((el) => {
+      el.removeAttribute('data-cmp-is');
+      el.removeAttribute('data-sly-resource');
     });
-
-    // Remove cookie consent elements
-    WebImporter.DOMUtils.remove(element, [
-      '[class*="onetrust"]',
-      '[id*="onetrust"]',
-      '[class*="optanon"]',
-      '#ot-sdk-btn-floating',
-    ]);
-
-    // Remove script and style tags
-    WebImporter.DOMUtils.remove(element, [
-      'script',
-      'style',
-    ]);
   }
 
   if (hookName === TransformHook.afterTransform) {
-    // Remove non-authorable site chrome and global elements
-    WebImporter.DOMUtils.remove(element, [
-      'header.abbv-header-v2',
-      'footer.abbv-footer',
-      '.linzess-top-banner',
-      '.header-v2.parbase',
-      '.footer.parbase',
-      '.safety-bar.parbase',
-      '.abbv-safety-bar',
-      '.abbv-skip-to-main-content',
-      '.abbv-sticky-anchor',
-    ]);
-
-    // Remove empty structural divs that are not authorable
-    WebImporter.DOMUtils.remove(element, [
-      '.newpar.new.section',
-      '.par.iparys_inherited',
-    ]);
-
-    // Remove non-content elements
-    WebImporter.DOMUtils.remove(element, [
-      'noscript',
-      'link',
-      'iframe',
-    ]);
-
-    // Remove modal-open trigger links (e.g., Healthcare Professionals modal trigger)
-    const modalLinks = element.querySelectorAll('a.abbv-modal-open');
-    modalLinks.forEach((link) => link.remove());
-
-    // Remove presentational line breaks (desktop-only, mobile-only)
-    const presentationalBrs = element.querySelectorAll('br.desktop-only, br.mobile-only');
-    presentationalBrs.forEach((br) => {
-      br.replaceWith(document.createTextNode(' '));
-    });
-
-    // Remove empty structural divs left over after cleanup
-    const emptyDivs = element.querySelectorAll('.vjs-dock-shelf, .abbv-inline-miscisi');
-    emptyDivs.forEach((div) => {
-      if (!div.textContent.trim() && !div.querySelector('img')) {
-        div.remove();
-      }
-    });
+    // --- develop (FAQ/community) cleanup ---
+    // Header / navigation
+    WebImporter.DOMUtils.remove(element, ['header.abbv-header-v2']);
+    // Top promotional banner
+    WebImporter.DOMUtils.remove(element, ['.linzess-top-banner']);
+    // Sticky anchor div
+    WebImporter.DOMUtils.remove(element, ['.abbv-sticky-anchor']);
+    // Footer
+    WebImporter.DOMUtils.remove(element, ['footer.abbv-footer']);
+    // Misc ISI anchor/container
+    WebImporter.DOMUtils.remove(element, ['.abbv-inline-miscisi']);
+    // Iframes (tracking, OneTrust text-resize)
+    WebImporter.DOMUtils.remove(element, ['iframe']);
+    // Empty structural divs that are not authorable
+    WebImporter.DOMUtils.remove(element, ['.newpar.new.section', '.par.iparys_inherited']);
   }
 }

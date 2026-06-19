@@ -8,7 +8,7 @@
    Variant: columns-homepage-promo (fallback: first columns after hero)
    ═══════════════════════════════════════════════════════════════════ */
 .columns.columns-homepage-promo,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-light-purple);
@@ -23,18 +23,18 @@
 }
 
 .columns.columns-homepage-promo > .columns-item,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item {
   padding: 0;
   grid-column: auto;
 }
 
 .columns.columns-homepage-promo > .columns-item:not(:has(img, strong, a)),
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:not(:has(img, strong, a)) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) {
   flex: 0 0 50%;
   background: transparent;
   padding: 0;
@@ -44,26 +44,26 @@
 
 /* Image visually on LEFT (order -1) */
 .columns.columns-homepage-promo > .columns-item .columns-item-image,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item .columns-item-image {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item .columns-item-image {
   order: -1;
 }
 
 /* Make the columns-item a flex row when it has both image + content */
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) picture,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) picture {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) picture {
   display: block;
   height: 100%;
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) img {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -71,7 +71,7 @@
 }
 
 .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 0 16px;
   display: flex;
@@ -81,7 +81,7 @@
 }
 
 .columns.columns-homepage-promo .columns-item-content p strong,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content p strong {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content p strong {
   font-family: var(--body-font-family);
   font-size: var(--linz-card-heading-size);
   font-weight: 700;
@@ -89,7 +89,7 @@
 }
 
 .columns.columns-homepage-promo .button-container a.button,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -106,14 +106,14 @@
    it white). */
 .columns.columns-homepage-promo .button-container a.button:hover,
 .columns.columns-homepage-promo .button-container a.button:focus,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button:hover,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button:focus {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button:hover,
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button:focus {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
 }
 
 .columns.columns-homepage-promo .button-container a.button::after,
-.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button::after {
+.hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -129,12 +129,12 @@
   /* Fixed-width image column (matches live's 322px) so the logo fills it and
      the text sits closer to center rather than being pushed far right. */
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) {
     flex: 0 0 322px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) img {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -144,31 +144,31 @@
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1;
     place-content: center flex-start;
     text-align: left;
   }
 
   .columns.columns-homepage-promo .button-container a.button,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button {
     padding-left: 32px;
   }
 
   .columns.columns-homepage-promo .columns-item-content,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content {
     text-align: left;
     margin-top: 25px;
     margin-left: 25px;
   }
 
   .columns.columns-homepage-promo .columns-item-content > p,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content > p {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content > p {
     margin-bottom: 0;
   }
 
   .columns.columns-homepage-promo .columns-item-content > p:first-child,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content > p:first-child {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content > p:first-child {
     margin-bottom: 16px;
   }
 }
@@ -178,45 +178,45 @@
    heading back to 18px. */
 @media (width >= 768px) and (width < 986px) {
   .columns.columns-homepage-promo,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) {
     min-height: 245px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) {
     flex: 0 0 361px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) img {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) img {
     max-height: 245px;
   }
 
   .columns.columns-homepage-promo .columns-item-content p strong,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content p strong {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content p strong {
     font-size: 18px;
   }
 }
 
 @media (width < 768px) {
   .columns.columns-homepage-promo,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) {
     flex-wrap: wrap;
     max-width: 100%;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image),
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image) img,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) img {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) img {
     margin-top: 0;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-content:not(:empty)),
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
     padding: 16px;
     text-align: center;
@@ -225,12 +225,12 @@
   /* Tighten the content spacing so the stacked card is ~316px tall like live
      (the 30px heading + button margins otherwise push it ~31px taller). */
   .columns.columns-homepage-promo .columns-item-content > p:first-child,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content > p:first-child {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content > p:first-child {
     margin-bottom: 16px;
   }
 
   .columns.columns-homepage-promo .columns-item-content > p:last-child,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content > p:last-child {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content > p:last-child {
     margin-bottom: 10px;
   }
 }
@@ -241,7 +241,7 @@
    Same approach as promo card — light purple bg, image cover, overflow hidden
    ═══════════════════════════════════════════════════════════════════ */
 .columns.columns-homepage-savings,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-off-white);
@@ -256,18 +256,18 @@
 }
 
 .columns.columns-homepage-savings > .columns-item,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item {
   padding: 0;
   grid-column: auto;
 }
 
 .columns.columns-homepage-savings > .columns-item:not(:has(img, strong, a)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:not(:has(img, strong, a)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) {
   flex: 0 0 55%;
   background: transparent;
   padding: 0;
@@ -297,7 +297,7 @@
 
 main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .columns.columns-homepage-savings > div > div:first-child img,
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) img {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -306,7 +306,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 32px 40px;
   display: flex;
@@ -336,7 +336,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -350,7 +350,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button::after,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button::after {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -360,7 +360,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button:hover,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .button-container a.button:hover {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .button-container a.button:hover {
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
 }
@@ -560,19 +560,19 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 
 @media (width < 768px) {
   .columns.columns-homepage-savings,
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) {
     flex-wrap: wrap;
     max-width: 100%;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
     order: -1;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
     padding: 16px;
     text-align: center;
@@ -751,7 +751,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 @media (width >= 986px) {
   /* Promo heading is 18px through tablet (matching live) and only grows to 24px
      on desktop. */
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) .columns-item-content p strong,
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) .columns-item-content p strong,
   .columns.columns-homepage-promo .columns-item-content p strong {
     font-size: 24px;
   }
@@ -1278,12 +1278,12 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
 /* Mobile: promo card — stack image above text. */
 @media (width < 768px) {
   .columns.columns-homepage-promo,
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) {
     margin-top: 24px;
   }
 
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
-  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .food-swaps) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
+  .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout, .food-swaps) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
     flex-direction: column;
   }
 }

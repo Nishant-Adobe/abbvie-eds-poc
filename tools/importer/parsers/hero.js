@@ -2,80 +2,88 @@
 /* global WebImporter */
 
 /**
- * Parser: hero
+ * Parser for hero variant.
  * Base block: hero
- * Source: https://www.linzess.com/find-relief
- * Selector: .hero-container.abbv-image-text-v2
- * Generated: 2026-06-09
+ * Source: https://www.linzess.com/savings-and-support/faqs
+ * Selector: .savings-faq-hero
+ * Generated: 2026-06-02
  *
- * UE Model fields (13 rows, excluding tabs):
- *  Row 0: image (reference), Row 1: imageAlt (text — collapsed into image, skip)
- *  Row 2: mobileImage (reference), Row 3: mobileImageAlt (text — collapsed, skip)
- *  Row 4: eyebrow (text), Row 5: indication (richtext)
- *  Row 6: text (richtext), Row 7: layers (richtext)
- *  Row 8: video (reference), Row 9: imageCaption (text)
- *  Row 10: textAlign (select — classes_textAlign suffix, skip)
- *  Row 11: textColor (select — classes_textColor suffix, skip)
- *  Row 12: customClass (text — classes_customClass suffix, skip)
+ * Target table structure (from block library):
+ *   | Hero |
+ *   | background-image |
+ *   | eyebrow text |
+ *   | heading |
+ *   | cta link (optional) |
  *
- * Per xwalk hinting: fields ending in Alt, Type, MimeType are collapsed into parent.
- * classes_* suffixed fields are collapsed into the block's classes attribute.
- * So actual rows in plain.html = image, mobileImage, eyebrow, indication, text, layers, video, imageCaption
- * = 8 content rows.
+ * UE Model fields: image, imageAlt, eyebrow, text
  */
 export default function parse(element, { document }) {
-  // Extract background image
-  const img = element.querySelector('.abbv-image-content-container-v2 img');
-  const imgSrc = img?.getAttribute('src') || '';
-  const imgAlt = img?.getAttribute('alt') || '';
+  // Extract background image from picture element or img
+  const bgImage = element.querySelector('.abbv-image-content-container-v2 img, picture img, img[class*="hero"], img');
 
   // Extract eyebrow text
-  const eyebrowEl = element.querySelector('.eyebrow, .eyebrow--white');
-  const eyebrow = eyebrowEl?.textContent?.trim() || '';
+  const eyebrow = element.querySelector('p.eyebrow, .eyebrow, [class*="eyebrow"]');
 
-  // Extract heading text (h1 or .heading-1)
-  const headingEl = element.querySelector('h1, .heading-1');
-  const headingText = headingEl?.textContent?.trim() || '';
+  // Extract heading (h1 primary, h2/h3 fallback)
+  const heading = element.querySelector('h1, h2, h3, [class*="heading"]');
 
-  // Extract image caption (e.g., "Actor Portrayal" overlay)
-  const captionEl = element.querySelector('.tout-overlay');
-  const imageCaption = captionEl?.textContent?.trim() || '';
+  // Extract CTA links (optional)
+  const ctaLinks = Array.from(element.querySelectorAll('a.cta, a.button, .abbv-stretched-card-body a, a[class*="btn"]'));
 
-  // Determine classes/variants from container
-  const classes = [];
-  if (element.classList.contains('uppercase')) classes.push('no-padding');
-  const contentContainer = element.querySelector('.abbv-image-text-content-container-v2');
-  if (contentContainer) {
-    if (contentContainer.classList.contains('middle-left')) classes.push('text-left');
-    else if (contentContainer.classList.contains('middle-center')) classes.push('text-center');
-    else if (contentContainer.classList.contains('middle-right')) classes.push('text-right');
+  // Build cells to match block library table structure
+  const cells = [];
+
+  // Row 1: Background image with field hint
+  if (bgImage) {
+    const imageCell = document.createElement('div');
+    const imageHint = document.createComment(' field: image ');
+    imageCell.appendChild(imageHint);
+    imageCell.appendChild(bgImage.cloneNode(true));
+    cells.push([imageCell]);
+  } else {
+    // Empty row required for xwalk even if no image
+    const emptyImageCell = document.createElement('div');
+    const imageHint = document.createComment(' field: image ');
+    emptyImageCell.appendChild(imageHint);
+    cells.push([emptyImageCell]);
   }
 
-  // Build the block name with variant classes
-  const blockName = classes.length > 0 ? `hero (${classes.join(', ')})` : 'hero';
+  // Row 2: Eyebrow text with field hint
+  const eyebrowCell = document.createElement('div');
+  const eyebrowHint = document.createComment(' field: eyebrow ');
+  eyebrowCell.appendChild(eyebrowHint);
+  if (eyebrow) {
+    eyebrowCell.appendChild(eyebrow.cloneNode(true));
+  }
+  cells.push([eyebrowCell]);
 
-  // Build image element for row
-  const imageEl = document.createElement('img');
-  imageEl.src = imgSrc;
-  if (imgAlt) imageEl.alt = imgAlt;
+  // Row 3: Heading (and optional body text / CTAs) with field hint
+  const textCell = document.createElement('div');
+  const textHint = document.createComment(' field: text ');
+  textCell.appendChild(textHint);
+  if (heading) {
+    const headingClone = heading.cloneNode(true);
+    // Markdown headings are single-line, so a mid-heading <br> is dropped on
+    // publish and the surrounding phrases concatenate (e.g. "QuestionsAbout").
+    // Replace each <br> with a space so the heading stays readable and wraps
+    // naturally on the rendered page.
+    headingClone.querySelectorAll('br').forEach((br) => {
+      br.replaceWith(document.createTextNode(' '));
+    });
+    textCell.appendChild(headingClone);
+  }
+  // Append CTA links if present
+  if (ctaLinks.length > 0) {
+    ctaLinks.forEach((link) => {
+      const p = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.appendChild(link.cloneNode(true));
+      p.appendChild(strong);
+      textCell.appendChild(p);
+    });
+  }
+  cells.push([textCell]);
 
-  // Build heading element
-  const h1 = document.createElement('h1');
-  h1.textContent = headingText;
-
-  // Build cells: each row is one field
-  // Row layout: image, mobileImage (empty), eyebrow, indication (empty), text, layers (empty), video (empty), imageCaption
-  const cells = [
-    [imageEl],                                    // image
-    [''],                                         // mobileImage (not available in source)
-    [eyebrow],                                    // eyebrow
-    [''],                                         // indication (not used on this page)
-    [h1],                                         // text (heading & body)
-    [''],                                         // layers (not used)
-    [''],                                         // video (not used)
-    [imageCaption],                               // imageCaption
-  ];
-
-  const block = WebImporter.Blocks.createBlock(document, { name: blockName, cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'hero', cells });
   element.replaceWith(block);
 }
