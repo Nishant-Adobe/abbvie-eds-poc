@@ -461,11 +461,6 @@ export default async function decorate(block) {
     return;
   }
 
-  // no-trigger: register the modal (already wired to modal:open / data-modal-id
-  // links above) but render no standalone in-page button. Used when the modal
-  // is opened from existing links elsewhere (footer, nav, ISI).
-  if (variants.includes('no-trigger')) return;
-
   // Standard: render trigger button
   const button = document.createElement('button');
   button.className = 'modal-trigger';
