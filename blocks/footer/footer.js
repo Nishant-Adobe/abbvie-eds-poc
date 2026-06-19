@@ -10,9 +10,6 @@ import { loadFragment } from '../fragment/fragment.js';
  */
 export async function loadFooterFragment() {
   const footerMeta = getMetadata('footer');
-  // Explicit opt-out: `footer: false` (or `none`) renders no footer at all,
-  // for standalone documents (e.g. SMS terms pages) that have no chrome.
-  if (footerMeta && /^(false|none)$/i.test(footerMeta.trim())) return null;
   const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   return loadFragment(footerPath);
 }
@@ -135,9 +132,6 @@ export function buildBottom(items) {
 export async function decorateBlock(block) {
   const fragment = await loadFooterFragment();
   block.textContent = '';
-
-  // Opt-out (footer: false/none) → no fragment, leave the footer empty.
-  if (!fragment) return;
 
   const sections = fragment.querySelectorAll('.section');
 
