@@ -130,17 +130,34 @@ var CustomImportScript = (() => {
     var _a, _b, _c, _d, _e;
     if (hookName !== "afterTransform") return;
     const { document } = payload;
-    const title = (document.title || ((_a = document.querySelector("title")) == null ? void 0 : _a.textContent) || ((_b = element.querySelector("h1, h2, h3")) == null ? void 0 : _b.textContent) || "").trim();
+    const sourceUrl = ((_a = payload.params) == null ? void 0 : _a.originalURL) || payload.url || "";
+    const slug = (() => {
+      try {
+        return new URL(sourceUrl).pathname.replace(/\/$/, "").split("/").filter(Boolean).pop() || "";
+      } catch (e) {
+        return "";
+      }
+    })();
+    const title = (document.title || ((_b = document.querySelector("title")) == null ? void 0 : _b.textContent) || ((_c = element.querySelector("h1, h2, h3")) == null ? void 0 : _c.textContent) || "").trim();
+    const PER_PAGE_DESCRIPTION = {
+      sitemap: "Browse the LINZESS\xAE (linaclotide) site map \u2014 quick links to Why LINZESS, Understanding Constipation, Find Relief, Resources, and Savings & Support."
+    };
     const firstParagraph = [...element.querySelectorAll("p")].map((p) => p.textContent.trim()).find((t) => t.length > 40);
-    const description = (((_c = document.querySelector('meta[name="description"]')) == null ? void 0 : _c.getAttribute("content")) || ((_d = document.querySelector('meta[property="og:description"]')) == null ? void 0 : _d.getAttribute("content")) || firstParagraph || (title ? `${title} \u2014 LINZESS\xAE (linaclotide). Important Safety Information and full Prescribing Information.` : "")).trim().slice(0, 160);
-    const sourceUrl = ((_e = payload.params) == null ? void 0 : _e.originalURL) || payload.url || "";
+    const description = (PER_PAGE_DESCRIPTION[slug] || ((_d = document.querySelector('meta[name="description"]')) == null ? void 0 : _d.getAttribute("content")) || ((_e = document.querySelector('meta[property="og:description"]')) == null ? void 0 : _e.getAttribute("content")) || firstParagraph || (title ? `${title} \u2014 LINZESS\xAE (linaclotide). Important Safety Information and full Prescribing Information.` : "")).trim().slice(0, 160);
+    let canonical = "";
+    try {
+      canonical = `https://www.linzess.com${new URL(sourceUrl).pathname.replace(/\/$/, "")}`;
+    } catch (e) {
+      canonical = "";
+    }
     const noChrome = /reminder-terms-conditions/i.test(sourceUrl);
     const cells = [
       ["Metadata"],
       ["brand", "linzess"],
       ...noChrome ? [["nav", "false"], ["footer", "false"]] : [["nav", "/linzess/nav"], ["footer", "/linzess/footer"]],
       ["title", title],
-      ["description", description]
+      ["description", description],
+      ["canonical", canonical]
     ].filter((row) => row.length === 1 || row[1]);
     const table = WebImporter.DOMUtils.createTable(cells, document);
     element.append(table);
