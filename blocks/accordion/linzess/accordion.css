@@ -180,11 +180,6 @@
 .accordion-dark .accordion-item-label h6 {
     color: var(--light-color);
 }
-.accordion-item-label.open .accordion-item-label-text,
-.accordion-item-label .accordion-item-label-text:hover {
-    font-family: var(--heading-font-family-bold);
-    font-weight: var(--font-weight-800);
-}
 .accordion summary::-webkit-details-marker {
     display: none;
 }
@@ -225,7 +220,14 @@
 }
 .accordion .accordion-item-label:focus,
 .accordion .accordion-item-label:hover {
-    background-color: transparent;
+    background-color: var(--accordion-linzess-bg-item) !important;
+    color: var(--accordion-linzess-color-label) !important;
+}
+
+.accordion .accordion-item:hover,
+.accordion .accordion-item:hover summary,
+.accordion .accordion-item:focus-within summary {
+    background-color: var(--accordion-linzess-bg-item) !important;
 }
 .accordion .accordion-item-body {
     padding: var(--spacing-24) var(--spacing-00) var(--spacing-24);
@@ -941,6 +943,8 @@
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #422e83;
+  --heading1-font-size: 2.5rem;
+  --heading1-line-height: 2.25rem;
   --color-brand-primary-dark: #422e83;
   --color-brand-primary-light: #60579e;
   --color-brand-primary-lighter: #d9d7f9;
@@ -1042,25 +1046,42 @@
   --transition-button: background 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 /* Linzess FAQ accordion — purple card style matching linzess.com/savings-and-support/faqs */
+/* Accordion container — no radius on wrapper */
 .accordion {
-    --accordion-linzess-bg-item: var(--linz-purple);
+    border-radius: 0 !important;
+    --accordion-linzess-bg-item: var(--linz-dark-purple);
     --accordion-linzess-bg-item-hover: var(--color-brand-primary);
     --accordion-linzess-color-label: var(--linz-white);
     --accordion-linzess-color-body: var(--text-color);
-    --accordion-linzess-radius: var(--linz-rounded-corner-sm);
-    --accordion-linzess-gap: var(--spacing-10);
+    --accordion-linzess-radius: 16px;
+    --accordion-linzess-gap: 24px;
     --footer-seperator-color: transparent;
     --highlight-dark-background-color: transparent;
 
     background: transparent;
 }
 /* Card-per-item — no bottom border, gap between cards */
-.accordion .accordion-item {
-    border-bottom: none;
+.accordion .accordion-item,
+.accordion details.accordion-item {
+    border-bottom: none !important;
     background: var(--accordion-linzess-bg-item);
-    border-radius: var(--accordion-linzess-radius);
+    border-radius: var(--accordion-linzess-radius) !important;
     overflow: hidden;
-    margin-bottom: var(--accordion-linzess-gap);
+    margin-bottom: 24px !important;
+}
+
+/* Accordion container — no radius on wrapper */
+.accordion {
+    border-radius: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+/* Hide leftover md2jcr parent-config rows. Real items render as <details>;
+   the unconsumed single-cell config <div>s remain in the DOM and would add
+   flex gaps. A bare child-div selector never matches <details>, so items stay. */
+.accordion > div {
+    display: none !important;
 }
 /* Summary row */
 .accordion summary,
@@ -1073,6 +1094,7 @@
     background: var(--accordion-linzess-bg-item);
     color: var(--accordion-linzess-color-label);
     cursor: pointer;
+    border-radius: 16px !important;
 }
 /* Focus */
 .accordion summary:focus-visible {
@@ -1088,9 +1110,9 @@
 .accordion .accordion-item-label h5,
 .accordion .accordion-item-label h6 {
     color: var(--accordion-linzess-color-label);
-    font-family: var(--body-font-family);
-    font-size: var(--body-font-size-m);
-    font-weight: var(--font-weight-bold);
+    font-family: "Lato", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
     text-transform: none;
     letter-spacing: normal;
     margin: 0;
@@ -1106,7 +1128,8 @@
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
     transition: transform 0.2s ease;
 }
-.accordion .accordion-item[open] summary::after {
+.accordion .accordion-item[open] summary::after,
+.accordion details[open] summary::after {
     transform: rotate(180deg);
 }
 /* Hide any icon-font icons so they don't double up */
@@ -1116,41 +1139,35 @@
 .accordion-icon-font .item-icon-minus::after {
     display: none !important;
 }
-/* Hover — darker purple, keep text unchanged */
-.accordion .accordion-item:hover summary {
-    background: var(--accordion-linzess-bg-item-hover);
-    color: var(--accordion-linzess-color-label);
+/* Hover — no visual change (matching live page) */
+/* No hover effect — matches live page */
+.accordion .accordion-item:hover summary,
+.accordion .accordion-item:hover {
+    background: inherit;
+    transform: none;
+    box-shadow: none;
 }
-.accordion .accordion-item:hover .accordion-item-label p,
-.accordion .accordion-item:hover .accordion-item-label h2,
-.accordion .accordion-item:hover .accordion-item-label h3,
-.accordion .accordion-item:hover .accordion-item-label h4,
-.accordion .accordion-item:hover .accordion-item-label h5,
-.accordion .accordion-item:hover .accordion-item-label h6 {
-    color: var(--accordion-linzess-color-label);
-    font-family: var(--body-font-family);
-    font-size: var(--body-font-size-m);
-    font-weight: var(--font-weight-bold);
-}
-.accordion .accordion-item-label.open .accordion-item-label-text,
-.accordion .accordion-item-label .accordion-item-label-text:hover {
-    font-family: var(--body-font-family);
-    font-size: var(--body-font-size-m);
-    font-weight: var(--font-weight-bold);
-    color: var(--accordion-linzess-color-label);
-}
+
+
+
+
+
+
+
 /* Open state — keep brand purple on header */
-.accordion .accordion-item[open] summary {
+.accordion .accordion-item[open] summary,
+.accordion details[open] summary {
     background: var(--accordion-linzess-bg-item);
 }
-/* Body — light greyish-purple background, padded */
+/* Body — light off-white panel with rounded corners (matches live) */
 .accordion .accordion-item-body {
-    background: var(--linz-off-white) !important;
+    background: var(--linz-off-white, #f4f6fb) !important;
+    border-radius: var(--linz-rounded-corner, 16px);
     padding: var(--spacing-16) var(--spacing-24) var(--spacing-24);
 }
 .accordion .accordion-item-body .accordion-item-body-text {
     color: var(--accordion-linzess-color-body);
-    font-family: var(--body-font-family);
+    font-family: "Lato", sans-serif;
     font-size: var(--body-font-size-s);
     line-height: 1.6;
 }
@@ -1177,9 +1194,284 @@
 /* Expand all button */
 .accordion .accordion-expand-all {
     color: var(--color-brand-primary);
-    font-family: var(--body-font-family);
-    font-weight: var(--font-weight-bold);
+    font-family: "Lato", sans-serif;
+    font-weight: 800;
 }
 .accordion .accordion-expand-all:focus {
     border-color: var(--color-brand-primary);
+}
+
+/* Section heading above accordion — centered, large, purple */
+.section.centered.accordion-container .default-content-wrapper p,
+.section.centered.accordion-container .default-content-wrapper h2 {
+  text-align: center !important;
+  color: var(--linz-dark-purple, #422e83) !important;
+  font-family: "Bebas Neue", sans-serif !important;
+  font-size: 4rem !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  line-height: 3.6rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: normal !important;
+  margin-top: 20px !important;
+  margin-bottom: 3.8rem !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Gold divider — centered above heading */
+.section.centered.accordion-container .default-content-wrapper::before {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 5px;
+  background-image: url("https://www.linzess.com/content/dam/linzess/images/divider.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 0 auto 1.5rem;
+}
+
+/* Section centered images */
+.section.centered picture {
+  display: inline-block;
+}
+
+.section.centered img {
+  display: inline-block;
+}
+
+/* Accordion items text: left-aligned (override section.centered) */
+.section.centered .accordion,
+.section.centered .accordion .accordion-item,
+.section.centered .accordion .accordion-item-label,
+.section.centered .accordion .accordion-item-body {
+  text-align: left;
+}
+
+/* Remove border-radius from accordion wrapper/container — only items should be rounded */
+.accordion-wrapper,
+.accordion.block,
+.section .accordion-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+}
+
+/* Force 16px radius on all accordion items */
+.accordion .accordion-item,
+.accordion details.accordion-item,
+.accordion details,
+details.accordion-item {
+    border-radius: 16px !important;
+}
+
+.accordion .accordion-item summary,
+.accordion details summary {
+    border-radius: 16px !important;
+}
+
+/* Reduce section spacing for FAQ accordion pages */
+.section.centered.accordion-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.section.centered.accordion-container + .section.centered.accordion-container {
+    padding-top: 1rem;
+}
+
+/* Reduce gap between section heading and first accordion item */
+.section.centered .accordion-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.section.centered .default-content-wrapper {
+    margin-bottom: 1rem;
+}
+
+.section.centered .default-content-wrapper + .accordion-wrapper {
+    margin-top: 0 !important;
+}
+
+/* Platform C utility classes for section headings */
+.heading-1,
+h1.heading-1 {
+  font-family: "Bebas Neue", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  font-size: var(--heading1-font-size, 2.5rem) !important;
+  line-height: var(--heading1-line-height, 2.25rem) !important;
+  margin-bottom: 24px;
+}
+
+.c-linz-dark-purple,
+.linzess-text-purple {
+  color: var(--linz-dark-purple, #422e83) !important;
+}
+
+.narrow-spacing p {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.margin-bottom-24 {
+  margin-bottom: 24px;
+}
+
+/* Override base accordion hover/open font changes — no visual change */
+.accordion-item-label.open .accordion-item-label-text,
+.accordion-item-label .accordion-item-label-text:hover {
+    font-family: "Lato", sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+    color: var(--accordion-linzess-color-label) !important;
+}
+
+/* Mobile fixes — match live page */
+@media (width < 768px) {
+  /* Accordion items full width on mobile */
+  .accordion .accordion-item,
+  .accordion details.accordion-item,
+  .accordion details {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 12px !important;
+  }
+
+  /* Reduce section spacing on mobile */
+  .section.centered.accordion-container {
+    padding: 1.5rem 0.5rem !important;
+  }
+
+  /* Section headings smaller on mobile */
+  .section.centered.accordion-container .default-content-wrapper p,
+  .section.centered.accordion-container .default-content-wrapper h2 {
+    font-size: 3.2rem !important;
+    line-height: 3rem !important;
+    margin-top: 10px !important;
+  }
+
+  /* Reduce gap between heading and accordion */
+  .section.centered.accordion-container .default-content-wrapper {
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Accordion title 14px / ~1.2 line spacing on mobile to match live */
+  .accordion summary,
+  .accordion .accordion-item-label,
+  .accordion .accordion-item-label p,
+  .accordion .accordion-item-label h2,
+  .accordion .accordion-item-label h3,
+  .accordion .accordion-item-label h4,
+  .accordion .accordion-item-label h5,
+  .accordion .accordion-item-label h6,
+  .accordion .accordion-item-label-text {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Accordion answer/body text 14px on mobile to match live (was 16px) */
+  .accordion .accordion-item-body,
+  .accordion .accordion-item-body .accordion-item-body-text,
+  .accordion .accordion-item-body p {
+    font-size: 14px !important;
+  }
+}
+
+/* FAQ-page accordion width — match live 998px centered blades.
+   Live linzess.com/.../faqs renders accordion bars at 998px, centered; the
+   migrated block stretches the full section width (1330px). Constrain only on
+   non-index savings pages (faqs) so the index "Program Terms" expander stays
+   full-width and from-the-gut is unaffected. Overrides the full-width rule and
+   the desktop margin: unset above. */
+@media (width >= 1024px) {
+  main:not(:has(.section.section-nav-container)) .section.accordion-container .accordion.block {
+    max-width: 998px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Tablet fixes */
+@media (width >= 768px) and (width < 1024px) {
+  .section.centered.accordion-container {
+    padding: 2rem 1.5rem !important;
+  }
+
+  .section.centered.accordion-container .default-content-wrapper p,
+  .section.centered.accordion-container .default-content-wrapper h2 {
+    font-size: 3.6rem !important;
+    line-height: 3.3rem !important;
+  }
+
+  /* Accordion title 14px / ~1.2 line spacing on tablet to match live */
+  .accordion summary,
+  .accordion .accordion-item-label,
+  .accordion .accordion-item-label p,
+  .accordion .accordion-item-label h2,
+  .accordion .accordion-item-label h3,
+  .accordion .accordion-item-label h4,
+  .accordion .accordion-item-label h5,
+  .accordion .accordion-item-label h6,
+  .accordion .accordion-item-label-text {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Accordion answer/body text 14px on tablet to match live (was 16px) */
+  .accordion .accordion-item-body,
+  .accordion .accordion-item-body .accordion-item-body-text,
+  .accordion .accordion-item-body p {
+    font-size: 14px !important;
+  }
+}
+
+/* Re-assert label + body typography above the merged styles/linzess/styles.css
+   leak. That sheet carries a broad
+   `main > .section:nth-of-type(2):not(...) p` rule (specificity 0,5,2) for
+   default-content sections that overrides the accordion label/body color,
+   font-size, font-weight and font-family (turning the white purple-bar labels
+   grey and swapping Lato for the legal font). These selectors add the
+   section + container + item ancestors to push specificity to (0,6,x) so the
+   block's own design wins, without touching the global stylesheet. */
+main .section.accordion-container .accordion.block .accordion-item-label .accordion-item-label-text,
+main .section.accordion-container .accordion.block .accordion-item-label p {
+  color: var(--accordion-linzess-color-label);
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+main .section.centered.accordion-container .accordion.block .accordion-item-body .accordion-item-body-text,
+main .section.centered.accordion-container .accordion.block .accordion-item-body p {
+  color: var(--accordion-linzess-color-body);
+  font-family: "Lato", sans-serif;
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
 }
