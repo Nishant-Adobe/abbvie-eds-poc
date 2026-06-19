@@ -2,6 +2,19 @@
 
 /* stylelint-disable no-descending-specificity */
 
+/* no-trigger modals register a hidden dialog that opens from existing links
+   (footer, nav, ISI) — they must NOT render a standalone in-page trigger
+   button. modal.js (at develop) lacks the no-trigger branch and renders the
+   button anyway, so hide it and collapse its empty section. Matches live,
+   where these dialogs have no visible buttons in the page body. */
+.modal.no-trigger .modal-trigger {
+  display: none;
+}
+
+.section:has(> .modal-wrapper > .modal.no-trigger):not(:has(> :not(.modal-wrapper))) {
+  display: none;
+}
+
 /* Linzess DTC modal — Lato body, Bebas headings, purple/orange palette */
 
 .modal-overlay {
