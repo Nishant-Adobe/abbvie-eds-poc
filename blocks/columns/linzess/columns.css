@@ -82,9 +82,7 @@
    Mobile: 0 – 743px | Tablet: 744px+ | Desktop: 1024px+ | Wide: 1440px+ */
 
 @custom-media --bp-tablet (min-width: 744px);
-
 @custom-media --bp-desktop (min-width: 1024px);
-
 @custom-media --bp-wide (min-width: 1440px);
 
 :root {
@@ -544,7 +542,6 @@
    Legal Font: BasicCommercialLT
    ============================================================ */
 
-/* stylelint-disable-next-line no-duplicate-selectors */
 :root {
   /* ---- Color: Brand Primary ---- */
   --color-brand-primary: #422e83;
@@ -583,8 +580,8 @@
   --color-border-muted: #b8b8b8;
 
   /* ---- Color: Overlay ---- */
-  --color-overlay-dark: rgba(0, 0, 0, 0.8);
-  --color-overlay-muted: rgba(115, 133, 159, 0.75);
+  --color-overlay-dark: rgb(0 0 0 / 80%);
+  --color-overlay-muted: rgb(115 133 159 / 75%);
 
   /* ---- Font: Family ---- */
   --body-font-family: 'Lato', sans-serif;
@@ -683,12 +680,12 @@
   --modal-close-font-size: 1.25rem;
 
   /* ---- Shadow ---- */
-  --shadow-safety-bar: rgba(0, 0, 0, 0.25) 0 0 10px 0;
+  --shadow-safety-bar: rgb(0 0 0 / 25%) 0 0 10px 0;
   --shadow-section-nav-stuck: 0 4px 12px rgb(0 0 0 / 25%);
 
   /* ---- Gradient ---- */
-  --gradient-hero-overlay: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0));
-  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115, 133, 159) 100%);
+  --gradient-hero-overlay: linear-gradient(rgb(0 0 0 / 80%), rgb(255 255 255 / 0%));
+  --gradient-section-fade: linear-gradient(-180deg, #fff 88%, rgb(115 133 159) 100%);
   --gradient-hero-nav-wrapper: linear-gradient(180deg, rgb(40 26 77 / 80%) 0%, rgb(40 26 77 / 42%) 58%, rgb(40 26 77 / 0%) 100%);
   --gradient-hero-overlay-dual: linear-gradient(90deg, rgb(33 20 53 / 72%) 0%, rgb(33 20 53 / 36%) 26%, rgb(33 20 53 / 0%) 58%),
     linear-gradient(180deg, rgb(26 15 44 / 48%) 0%, rgb(26 15 44 / 18%) 18%, rgb(26 15 44 / 0%) 42%);
@@ -730,6 +727,7 @@
   --header-submenu-link-font-size: 1.28rem;
   --shadow-submenu: 0 3px 5px 0 rgb(153 153 153);
   --icon-svg-home: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwIDIwdi02aDR2Nmg1di04aDNMMTIgMyAyIDEyaDN2OHoiLz48L3N2Zz4=");
+
   /* ---- Header: No-hero arc ---- */
   --header-z-index: 10;
   --header-overlay-gradient: linear-gradient(rgb(35 29 29 / 90%) 0%, rgb(35 29 29 / 0%) 100%);
@@ -789,6 +787,20 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
 
 /* stylelint-disable no-descending-specificity */
@@ -971,6 +983,7 @@
 /* Tablet (768-985): live's promo card is taller (~245px) with an 18px heading,
    not the 24px desktop size. Match live's card height + image and dial the
    heading back to 18px. */
+
 @media (width >= 768px) and (width < 986px) {
   .columns.columns-homepage-promo,
   .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) {
@@ -1037,7 +1050,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .columns.columns-homepage-savings,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) {
   display: flex;
   flex-wrap: nowrap;
   background-color: var(--linz-off-white);
@@ -1052,18 +1065,18 @@
 }
 
 .columns.columns-homepage-savings > .columns-item,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item {
   padding: 0;
   grid-column: auto;
 }
 
 .columns.columns-homepage-savings > .columns-item:not(:has(img, strong, a)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:not(:has(img, strong, a)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:not(:has(img, strong, a)) {
   display: none;
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-image) {
   flex: 0 0 55%;
   background: transparent;
   padding: 0;
@@ -1095,7 +1108,7 @@
 
 main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .columns.columns-homepage-savings > div > div:first-child img,
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-image) img,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image) img {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-image) img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1104,7 +1117,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-content:not(:empty)) {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-content:not(:empty)) {
   flex: 1;
   padding: 32px 40px;
   display: flex;
@@ -1135,7 +1148,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) .button-container a.button {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) .button-container a.button {
   background-color: var(--linz-dark-purple);
   color: var(--linz-white);
   border-radius: var(--linz-rounded-corner);
@@ -1149,7 +1162,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button::after,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) .button-container a.button::after {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) .button-container a.button::after {
   content: '\203A';
   position: absolute;
   right: 24px;
@@ -1159,7 +1172,7 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 }
 
 .columns.columns-homepage-savings .button-container a.button:hover,
-.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) .button-container a.button:hover {
+.columns-container:not(.hero-container + .columns-container) .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) .button-container a.button:hover {
   background-color: var(--linz-off-white);
   color: var(--linz-dark-purple);
 }
@@ -1367,19 +1380,19 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
 
 @media (width < 768px) {
   .columns.columns-homepage-savings,
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) {
     flex-wrap: wrap;
     max-width: 100%;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-image),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-image) {
     flex: 1 1 100%;
     order: -1;
   }
 
   .columns.columns-homepage-savings > .columns-item:has(.columns-item-content:not(:empty)),
-  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-content:not(:empty)) {
+  .columns-container:not(.hero-container + .columns-container) .columns:not(.whylinzess-symptoms, .whylinzess-timeline, .whylinzess-mechanism-card, .how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet, .savings-card-tout, .doctor-tout) > .columns-item:has(.columns-item-content:not(:empty)) {
     flex: 1 1 100%;
     padding: 16px;
     text-align: center;
@@ -1390,6 +1403,387 @@ main > .section.dark + .section.columns-container:not(.dark, .navy, .purple) .co
   .section.columns-container:has(.columns-homepage-savings) .columns-item-content p.button-container:has(a[href*="savings-card"]) {
     margin-bottom: 0;
   }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   INDEX SAVINGS PAGE — section vertical rhythm
+   The global `main > .section { margin-bottom: 8rem }` (styles/styles.css)
+   adds an 80px gap below every section. On live the savings sections sit
+   much closer: the "$30" eyebrow/heading block is only ~43px above the
+   savings card (live), not ~142px. Collapse the global 80px on the
+   savings intro so the heading hugs the card like live. The card's own
+   24px top margin + the heading wrapper supply the remaining gap.
+   Scoped to .savings-intro so only this page's heading block is affected.
+   ════════════════════════════════════════════════════════════════════ */
+main > .section.savings-intro {
+  margin-bottom: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   Savings / Financial Support eyebrow — match live.
+   Live renders the "SAVINGS" / "FINANCIAL SUPPORT" eyebrow as 12px, weight
+   800, uppercase, dark-purple, with a short orange curved divider beneath it
+   (divider.svg, 64×5px). Locally the eyebrow was unstyled (18px grey, no
+   divider). Reproduce both, scoped to these savings sections only. */
+main > .section.savings-intro .eyebrow,
+main > .section.financial-table-section .eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0 0 20px;
+}
+
+/* Orange curved divider beneath the eyebrow (CSS replica of divider.svg). */
+main > .section.savings-intro .eyebrow::after,
+main > .section.financial-table-section .eyebrow::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 9px;
+  margin: 8px auto 0;
+  border-top: 3px solid var(--linz-orange, #faa633);
+  border-radius: 50%;
+}
+
+/* Section heading — match live's 40px Bebas Neue. The base `.heading-1` sets
+   `font-size: var(--heading1-font-size, 2.5rem) !important` AND
+   `line-height: var(--heading1-line-height, 2.25rem) !important` (accordion.css);
+   the default --heading1-line-height resolves to 22.5px (rem≈10px), which is
+   far tighter than the 40px font — so multi-line headings overlapped/clipped on
+   mobile. Override both variables on the section so the !important rules resolve
+   to 40px/36px. Scoped to these sections. */
+main > .section.savings-intro,
+main > .section.financial-table-section {
+  --heading1-font-size: 40px;
+  --heading1-line-height: 36px;
+}
+
+/* Mobile: 40px is too large here — these headings wrap to 2–3 lines on a
+   ~350px column and crowd the content below. Live drops them to ~32px/30px
+   on small screens. */
+@media (width < 768px) {
+  main > .section.savings-intro,
+  main > .section.financial-table-section {
+    --heading1-font-size: 32px;
+    --heading1-line-height: 30px;
+  }
+}
+
+main > .section.savings-intro .heading-1,
+main > .section.financial-table-section .heading-1 {
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   INDEX SAVINGS PAGE — image+text touts (savings-card-tout, doctor-tout)
+   The index/savings/financial-support pages author these as a single
+   columns-item holding both an image cell + a content cell. The broad
+   homepage-savings fallback selector
+   (.columns-container:not(.hero-container + .columns-container) .columns…)
+   was flattening them into a plain band. Re-style them as the rounded
+   image-left / text-right card live uses (same visual as the develop
+   resources page's columns-resources-savings / -gutcheck touts):
+   998px card, 50/50 split, 24px/16px type, dark-purple pill CTA.
+   Scoped through .savings-tout-section / .doctor-tout-section so only
+   these savings pages are affected — homepage/why-linzess/resources keep
+   their own savings-card rules above. Specificity (section + block) beats
+   the 0,3,0 homepage fallback.
+   ════════════════════════════════════════════════════════════════════ */
+main .section.savings-tout-section .columns.savings-card-tout,
+main .section.doctor-tout-section .columns.doctor-tout {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  max-width: 998px;
+  min-height: 0;
+  margin: 24px auto 0;
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout {
+  /* Live renders the savings card on the off-white row background (#f4f6fb,
+     .background-off-white), not pure white — the image's light-purple is
+     baked into the graphic itself. */
+  background-color: var(--linz-off-white, #f4f6fb);
+
+  /* Live leaves ~40px below the savings card before the sign-up block. The
+     shared shorthand above sets margin-bottom:0; restore it here (after the
+     shorthand) so only the savings card — not the doctor tout — gets the gap. */
+  margin-bottom: 40px;
+}
+
+main .section.doctor-tout-section .columns.doctor-tout {
+  background-color: var(--linz-white, #fff);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
+
+  /* The dark-purple section that follows draws a curved arc cap rising 60px
+     above its top edge (::before, top:-60px). With the card flush against that
+     section the arc overlapped the card's CTA. Add clearance below the card so
+     the arc rises over empty space, like live. */
+  margin-bottom: 80px;
+}
+
+/* Hide the empty anchorId config row (first columns-item). */
+main .section.savings-tout-section .columns.savings-card-tout > .columns-item:first-child:has(.columns-item-content:empty),
+main .section.doctor-tout-section .columns.doctor-tout > .columns-item:first-child:has(.columns-item-content:empty) {
+  display: none;
+}
+
+/* The single content item holds both the image + text cells side by side. */
+main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child),
+main .section.doctor-tout-section .columns.doctor-tout > .columns-item:not(:first-child) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+  gap: 0;
+}
+
+/* The card sets border-radius:16px + overflow:hidden, but the stretched image
+   column's full-bleed graphic escaped the card's rounded bottom corners (the
+   classic flex-child / border-radius clipping quirk), so the bottom rendered
+   square. Re-clip the inner flex row to the same radius so all four corners
+   round. Savings-card-only so the doctor tout is untouched. */
+main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child) {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-image,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-content {
+  flex: 1;
+  padding: 2.5rem 3rem;
+  text-align: left;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content p,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-content p {
+  color: var(--linz-grey, #4d4d4f);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content h2,
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-content h2 {
+  color: var(--linz-dark-purple, #422e83);
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0 0 12px;
+}
+
+/* Gold/dark-purple pill CTA inside the touts (matches live's tout button). */
+main .section.savings-tout-section .columns.savings-card-tout a.button:any-link,
+main .section.doctor-tout-section .columns.doctor-tout a.button:any-link {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-white, #fff);
+  border: none;
+  border-radius: 16px;
+  padding: 16px 24px;
+  font-weight: 800;
+  font-size: 14.4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout a.button::after,
+main .section.doctor-tout-section .columns.doctor-tout a.button::after {
+  content: "\276F";
+  font-size: 14px;
+  font-weight: 400;
+}
+
+main .section.savings-tout-section .columns.savings-card-tout a.button:hover,
+main .section.doctor-tout-section .columns.doctor-tout a.button:hover {
+  background-color: var(--linz-purple, #60579e);
+}
+
+/* Plain text link (e.g. "Activate now"). */
+main .section.savings-tout-section .columns.savings-card-tout .columns-item-content a:not(.button) {
+  color: var(--linz-dark-purple, #422e83);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Desktop: let the text column drive the card height and stretch the image
+   to fill its half (matches live — no whitespace bands above/below image). */
+@media (width >= 768px) {
+  main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child),
+  main .section.doctor-tout-section .columns.doctor-tout > .columns-item:not(:first-child) {
+    align-items: stretch;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+    position: relative;
+    align-self: stretch;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Vertically center the copy against the taller image column. */
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-content,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+/* Doctor tout image carries an "Actor Portrayal" disclaimer overlaid at the
+   photo's bottom-right on live (imported only as alt text, so re-create it). */
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+  position: relative;
+}
+
+main .section.doctor-tout-section .columns.doctor-tout .columns-item-image::after {
+  content: "Actor Portrayal";
+  position: absolute;
+  bottom: 16px;
+  right: 24px;
+  color: var(--linz-white, #fff);
+  font-size: 14.4px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+/* Mobile: stack image over text. */
+@media (width < 768px) {
+  main .section.savings-tout-section .columns.savings-card-tout > .columns-item:not(:first-child),
+  main .section.doctor-tout-section .columns.doctor-tout > .columns-item:not(:first-child) {
+    flex-direction: column;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-image {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-content,
+  main .section.doctor-tout-section .columns.doctor-tout .columns-item-content {
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+}
+
+/* Savings tout fine-tuning to match the develop resources tout exactly:
+   a wider 55% image column (540px of the 982px card) + narrower 45% copy
+   column with tighter padding, so the card lands at live's ~368px height
+   (not ~421px). Placed AFTER the shared 50/50 rules above so it wins at
+   equal specificity; desktop-only (>=768px) so mobile stacking is untouched.
+   Scoped to .savings-tout-section so the doctor tout keeps its 50/50 split. */
+@media (width >= 768px) {
+  /* Live sizes the savings image column at ~44% (440px of the 998px card) so
+     the graphic at its natural 880/599 ratio is ~300px tall — matching live's
+     card height. A wider column made the card too tall (~374px). */
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image {
+    flex: 0 0 44%;
+    max-width: 44%;
+  }
+
+  /* Show the full "90 DAYS FOR $30" graphic uncropped: render the image at
+     its natural ratio (no absolute cover) so it drives the card height, like
+     live. The image's own light-purple fills its half edge-to-edge. */
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-image img {
+    position: static;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    object-fit: fill;
+  }
+
+  main .section.savings-tout-section .columns.savings-card-tout .columns-item-content {
+    flex: 0 0 56%;
+    max-width: 56%;
+
+    /* Bottom 3rem (vs 2rem top): the card height is driven by this copy column,
+       so a symmetric 2rem left the "Activate now" line flush against the card's
+       bottom edge. Live centers the copy with clear room below — restore that
+       clearance. Savings-card-only so the doctor tout is untouched. */
+    padding: 2rem 2.5rem 3rem;
+  }
+}
+
+/* Savings footnote disclaimer — match live: 14px / normal line-height, grey,
+   constrained to a centered ~1094px column (live insets it ~173px each side,
+   narrower than the full 1330px section width). The default p size leaked
+   18px/24px; live renders the footnote at 14px. */
+main .section.footnote-section .default-content-wrapper p.footnote {
+  font-size: 14px;
+  line-height: normal;
+  color: var(--linz-grey, #4d4d4f);
+  max-width: 1094px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Financial-support header content is constrained to a centered 998px column
+   on live (eyebrow, heading, body and the Insurance Information line), not the
+   full 1330px section width — keeps the body copy from spanning edge-to-edge. */
+main .section.financial-table-section > .default-content-wrapper {
+  max-width: 998px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Financial-support header copy — match live. The WAC body paragraph renders
+   16px grey (local leaked 18px); the "Insurance Information§" line is a 24px
+   bold dark-purple sub-heading (local rendered it as plain 18px body). The
+   eyebrow (p:first-child) keeps its own styling above. Live spaces the
+   heading, body and Insurance lines with a uniform 20px margin-top. */
+main .section.financial-table-section > .default-content-wrapper > p:not(:first-child) {
+  font-size: 16px;
+  line-height: normal;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 20px 0 0;
+}
+
+main .section.financial-table-section > .default-content-wrapper > h2 {
+  margin: 20px 0 0;
+}
+
+main .section.financial-table-section > .default-content-wrapper > p:last-child {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 20px 0 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -2112,5 +2506,1481 @@ main:has(.whylinzess-timeline) .columns.whylinzess-mechanism-card .columns-item-
   .columns.columns-homepage-promo > .columns-item:has(.columns-item-image):has(.columns-item-content),
   .hero-container + .columns-container .columns:not(.how-they-work, .what-is-linzess, .more-like-this, .cta-cards, .triggers, .cheat-sheet) > .columns-item:has(.columns-item-image):has(.columns-item-content) {
     flex-direction: column;
+  }
+}
+
+/* ============================================================
+   RESTORED (post-develop-merge): From The Gut sign-up form +
+   section arc. develop's columns.css dropped all .columns.ftgsignup
+   and .section:has(.columns.ftgsignup) rules, regressing the
+   from-the-gut signup form (became an empty box) and its card band.
+   These selectors only match the from-the-gut page, so other pages
+   are unaffected. Re-added from feature/migration @ 68ba5497.
+   ============================================================ */
+
+/* ====================================================
+   Linzess: From The Gut — logo + heading above the
+   sign-up form. Section style class is dropped on this
+   project, so scope via the contained ftgsignup block.
+   Logo ~179px; heading Bebas Neue 32px, centered.
+   ==================================================== */
+
+/* Form section — full-screen-width off-white bg with a curved top arc,
+   matches live's .background-off-white.background-arc (padding 0 0 100px).
+   The section is content-width (margin 0 70px), so paint a full-bleed
+   background via a 100vw ::before positioned behind the content. */
+main .section:has(.columns.ftgsignup) {
+  position: relative;
+
+  /* z-index:0 (not 1) so this section's stacking context does not paint over
+     the following dark-purple CTA section's top arc (purple is z-index:0, arc
+     at -5). Its own ::before arc still layers correctly at z-index:-1. */
+  z-index: 0;
+  padding-bottom: 100px;
+  background-color: transparent;
+}
+
+main .section:has(.columns.ftgsignup)::before {
+  content: "";
+  position: absolute;
+  inset: -60px 50% 0;
+  width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background-color: var(--linz-off-white, #f4f6fb);
+  border-top-left-radius: 50% 60px;
+  border-top-right-radius: 50% 60px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper {
+  text-align: center;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper img {
+  width: 179px;
+  height: auto;
+  margin: 0 auto;
+}
+
+main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 36px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 20px 0 1.5rem;
+}
+
+@media (width < 744px) {
+  main .section:has(.columns.ftgsignup) .default-content-wrapper h2 {
+    font-size: 32px;
+    line-height: 30px;
+
+    /* Live mobile: heading sits directly above the form with no extra bottom
+       gap (mb 0); our base rule adds 1.5rem. */
+    margin-bottom: 0;
+  }
+
+  /* Sign Up button: live mobile is a compact auto-width pill (~113px) with
+     small side padding, not the wide 48px-padded / 144px-min button. Extra
+     `main` prefix raises specificity above the base rule defined later in
+     this file. */
+  main .columns.ftgsignup a.button:any-link {
+    padding: 14px 24px;
+    min-width: 0;
+  }
+}
+
+/* ====================================================
+   Linzess: From The Gut sign-up form (visual mockup)
+   columns.ftgsignup — labels with CSS-drawn input boxes,
+   radio chips, consent text, and Sign Up button.
+   Matches linzess.com/savings-and-support/from-the-gut.
+   Non-functional (no backend) — visual parity only.
+   ==================================================== */
+
+.columns.ftgsignup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Hide the anchor-id config row (first item) */
+.columns.ftgsignup > .columns-item:first-child {
+  display: none;
+}
+
+/* Each row of fields */
+.columns.ftgsignup > .columns-item {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+}
+
+.columns.ftgsignup > .columns-item > .columns-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Field label + CSS-drawn input box below it */
+.columns.ftgsignup .ftg-field {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup .ftg-field::after {
+  content: "";
+  display: block;
+  height: 56px;
+  margin-top: 10px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 16px;
+  background-color: #efedf5;
+}
+
+/* "Are you currently prescribed?" question label */
+.columns.ftgsignup .ftg-question {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0;
+}
+
+/* Radio options rendered as chips with a CSS circle */
+.columns.ftgsignup .ftg-radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup .ftg-radio::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* Consent paragraph — matches live: 16px grey, 20px line-height */
+.columns.ftgsignup .ftg-consent {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 8px 0;
+  padding-left: 40px;
+  position: relative;
+  text-align: left;
+}
+
+/* CSS-drawn checkbox before the consent text — 24x24, radius 8px */
+.columns.ftgsignup .ftg-consent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 8px;
+}
+
+/* Consent links — grey + underlined (NOT purple), matches live */
+.columns.ftgsignup .ftg-consent a {
+  color: var(--linz-grey, #4d4d4f);
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  font-weight: 400;
+}
+
+/* Sign Up button row — center the button within its full-width cell */
+.columns.ftgsignup > .columns-item:last-child .columns-item-content {
+  text-align: center;
+}
+
+/* Sign Up button — gold pill, matches live */
+.columns.ftgsignup a.button:any-link {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--linz-white, #fff);
+  border: none;
+  border-radius: 16px;
+  padding: 14px 48px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-weight: 800;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin: 0.5rem 0 0;
+  min-width: 144px;
+}
+
+.columns.ftgsignup a.button:any-link::after {
+  content: "❯";
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 12px;
+}
+
+.columns.ftgsignup a.button:hover {
+  background-color: var(--linz-purple, #60579e);
+}
+
+/* reCAPTCHA badge — replicates the Google badge widget:
+   white logo cell on the left, blue box with text on the right.
+   "protected by reCAPTCHA" on line 1, "Privacy - Terms" on line 2. */
+.columns.ftgsignup > .columns-item:has(.ftg-recaptcha) {
+  justify-content: center;
+}
+
+.columns.ftgsignup > .columns-item:has(.ftg-recaptcha) .columns-item-content {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.columns.ftgsignup .ftg-recaptcha {
+  display: block;
+  width: 256px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 12px 10px 12px 70px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  font-family: Roboto, var(--body-font-family, "Lato", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #fff;
+  text-align: left;
+}
+
+/* White logo cell — separate square box on the left */
+.columns.ftgsignup .ftg-recaptcha::before {
+  content: "Privacy - Terms";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  font-size: 7px;
+  color: #555;
+  white-space: nowrap;
+}
+
+/* Blue panel — separate box on the right, with a small gap from the white cell */
+.columns.ftgsignup .ftg-recaptcha::after {
+  content: "";
+  position: absolute;
+  left: 60px;
+  top: 0;
+  right: 0;
+  height: 60px;
+  background-color: #4a90e2;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  z-index: -1;
+}
+
+/* The recycle logo, sitting in the upper part of the white cell */
+.columns.ftgsignup .ftg-recaptcha img {
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.columns.ftgsignup .ftg-recaptcha strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Force the Privacy / Terms links onto a second line in the blue panel */
+.columns.ftgsignup .ftg-recaptcha a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.columns.ftgsignup .ftg-recaptcha a:first-of-type::before {
+  content: "";
+  display: block;
+  margin-top: 2px;
+}
+
+.columns.ftgsignup .ftg-recaptcha a:hover {
+  text-decoration: underline;
+}
+
+/* ---- reCAPTCHA badge: class-independent fallback (publish strips the
+   .ftg-recaptcha class, and EDS wraps the logo in <picture>). The badge
+   cell is routed to .columns-item-image because it contains an <img>. ---- */
+.columns.ftgsignup > .columns-item:has(img) {
+  justify-content: center;
+}
+
+.columns.ftgsignup .columns-item-image {
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.columns.ftgsignup .columns-item-image > p {
+  display: block;
+  width: 256px;
+  height: 60px;
+  margin: 0 auto;
+  padding: 12px 10px 12px 70px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  font-family: Roboto, var(--body-font-family, "Lato", sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #fff;
+  text-align: left;
+}
+
+/* white logo cell + "Privacy - Terms" caption */
+.columns.ftgsignup .columns-item-image > p::before {
+  content: "Privacy - Terms";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  font-size: 7px;
+  color: #555;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* blue panel */
+.columns.ftgsignup .columns-item-image > p::after {
+  content: "";
+  position: absolute;
+  left: 60px;
+  top: 0;
+  right: 0;
+  height: 60px;
+  background-color: #4a90e2;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgb(0 0 0 / 17%);
+  z-index: -1;
+}
+
+/* the recycle logo — handle both bare <img> and <picture><img> (EDS) */
+.columns.ftgsignup .columns-item-image > p picture {
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  z-index: 2;
+  display: block;
+}
+
+.columns.ftgsignup .columns-item-image > p img {
+  position: absolute;
+  left: 17px;
+  top: 8px;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.columns.ftgsignup .columns-item-image > p picture img {
+  position: static;
+  left: auto;
+  top: auto;
+}
+
+.columns.ftgsignup .columns-item-image > p strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.columns.ftgsignup .columns-item-image > p a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.columns.ftgsignup .columns-item-image > p a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Field / radio / consent: class-independent fallbacks. Publish strips
+   the .ftg-field / .ftg-question / .ftg-radio / .ftg-consent classes, so the
+   input boxes, radio circles and checkbox never draw on the published page
+   (they only survive on the aemcoder preview). Rows are anchored from the END
+   of the form, which is stable regardless of whether the First Name row is
+   present: last = Sign Up, 2nd = reCAPTCHA, 3rd = consent, 4th = No, 5th = Yes,
+   6th = question, 7th-from-end and earlier = text input fields. ---- */
+
+/* Text input fields — label with a CSS-drawn box below it */
+.columns.ftgsignup > .columns-item:nth-last-child(n+7) .columns-item-content > p {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(n+7) .columns-item-content > p::after {
+  content: "";
+  display: block;
+  height: 56px;
+  margin-top: 10px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 16px;
+  background-color: #efedf5;
+}
+
+/* "Are you currently prescribed?" question label (6th from end) */
+.columns.ftgsignup > .columns-item:nth-last-child(6) .columns-item-content > p {
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--linz-dark-purple, #422e83);
+  margin: 0;
+}
+
+/* Radio chips Yes (5th) / No (4th) — circle before the label text */
+.columns.ftgsignup > .columns-item:nth-last-child(4) .columns-item-content > p,
+.columns.ftgsignup > .columns-item:nth-last-child(5) .columns-item-content > p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 0;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(4) .columns-item-content > p::before,
+.columns.ftgsignup > .columns-item:nth-last-child(5) .columns-item-content > p::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+/* Consent paragraph (3rd from end) — checkbox before, grey underlined links */
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p {
+  position: relative;
+  font-family: var(--body-font-family, "Lato", sans-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--linz-grey, #4d4d4f);
+  margin: 8px 0;
+  padding-left: 40px;
+  text-align: left;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--linz-purple, #60579e);
+  border-radius: 8px;
+}
+
+.columns.ftgsignup > .columns-item:nth-last-child(3) .columns-item-content > p a {
+  color: var(--linz-grey, #4d4d4f);
+  text-decoration: underline;
+  font-size: inherit;
+  font-weight: 400;
+}
+
+/* The Sign Up row centers its button */
+.columns.ftgsignup > .columns-item:last-child {
+  justify-content: center;
+}
+
+/* Mobile: stack the two-up rows */
+@media (width < 600px) {
+  .columns.ftgsignup > .columns-item {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================================
+   Accordion sections — alternating white / off-white full-bleed
+   bands with a curved top arc, matching live's
+   .background-white-arc / .background-off-white-arc trio on the
+   faqs page (white #fff, off-white #f4f6fb; arc top -60px,
+   height 255px, width 130%, radius 100%, z-index -5; section
+   padding-bottom 100px, margin-bottom 24px). The section box is
+   content-width (.abbvie-container grid), so — like the
+   dark-purple band below — the colour is painted edge-to-edge by
+   a 100vw ::after fill and a 130% ::before arc cap, both behind
+   the content. Scoped to .accordion-container so only the FAQ-style
+   accordion sections are affected; other section types and pages
+   are untouched. The arc rises 60px above the section, covering
+   the 24px inter-section gap so transitions read as smooth curves.
+   ============================================================ */
+
+/* Base full-bleed band fill for every white/off-white savings section.
+   The body is white, so transparent white sections look fine, but the
+   off-white sections (footnote, support-cards, doctor-tout) wrongly showed
+   white. Paint each section's band colour edge-to-edge via a 100vw ::after
+   behind the content — matching live, where the whole savings region is
+   white (#fff) and the whole financial region is off-white (#f4f6fb).
+   Scoped to the savings page only (it has the section-nav jump bar). */
+main:has(.section.section-nav-container) .section:is(.white, .off-white) {
+  position: relative;
+  z-index: 0;
+}
+
+main:has(.section.section-nav-container) .section:is(.white, .off-white)::after {
+  content: "";
+  position: absolute;
+
+  /* Bleed the band fill up/down past the section box so the inter-section
+     margins (up to 80px) are covered — same-colour neighbours overlap and
+     read as one continuous band, like live (no white gaps in the off-white
+     region). The 24px gap before the dark-purple CTA is covered too; the
+     purple arc/fill (z-index -5/-6) still paints on top at the boundary. */
+  top: -80px;
+  bottom: -80px;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+
+  /* -1 keeps the fill behind the section's own content but ABOVE the white
+     body background, so the bleed into the inter-section margin gaps is
+     visible (z-index:-6 sat behind body and the white body covered the
+     off-white fill, leaving white stripes between off-white sections). */
+  z-index: -1;
+  pointer-events: none;
+}
+
+main:has(.section.section-nav-container) .section.white::after {
+  background-color: var(--linz-white, #fff);
+}
+
+main:has(.section.section-nav-container) .section.off-white::after {
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
+/* The savings-tout section's white band fill bleeds 80px up (top:-80px) and,
+   as a later sibling with its own stacking context, paints OVER the intro
+   heading above it ("You Could Pay as Little as $30…"), hiding the dark-purple
+   text behind white at every viewport. Drop the tout fill's upward bleed so it
+   can't cover the heading — the intro's own ::after still bleeds down +80px and
+   spans the gap, and both bands are white, so the continuous band is preserved.
+   Scoped to the index savings-tout-section; other sections/pages untouched. */
+main:has(.section.section-nav-container) .section.white.savings-tout-section::after {
+  top: 0;
+}
+
+main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section) {
+  position: relative;
+  z-index: 0;
+  background: transparent;
+  padding-bottom: 100px;
+  margin-bottom: 24px;
+  overflow: visible;
+}
+
+main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  z-index: -6;
+  pointer-events: none;
+}
+
+main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section)::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* Span at least the full viewport so the elliptical arc's shoulders always
+     reach the screen edges. A fixed 130% was narrower than ultrawide screens
+     (>~2000px), so the rounded shoulders pulled inward and exposed dark-purple
+     wedges of the layer behind at the arc's top corners. max() keeps the 130%
+     curve depth on normal widths while guaranteeing full-bleed coverage. */
+  width: max(130%, 100vw);
+  height: 75px;
+  border-radius: 100%;
+  z-index: -5;
+  pointer-events: none;
+}
+
+/* Desktop deepens the arc to 255px (live switches at the 900px breakpoint);
+   mobile/tablet keep the shallow 75px cap. */
+@media (width >= 900px) {
+  main .section:is(.white, .off-white):is(.accordion-container, .financial-table-section)::before {
+    height: 255px;
+  }
+}
+
+main .section.white:is(.accordion-container, .financial-table-section)::after,
+main .section.white:is(.accordion-container, .financial-table-section)::before {
+  background-color: var(--linz-white, #fff);
+}
+
+main .section.off-white:is(.accordion-container, .financial-table-section)::after,
+main .section.off-white:is(.accordion-container, .financial-table-section)::before {
+  background-color: var(--linz-off-white, #f4f6fb);
+}
+
+/* ============================================================
+   RESTORED (post-develop-merge): dark-purple CTA section + arc
+   + CTA buttons + following-ISI styling. develop's columns.css
+   dropped all .section.dark-purple rules, removing the purple
+   curved-arc CTA band and its orange buttons on the savings
+   pages. Arc/button values match the reference dark-purple CTA
+   section on /linzess/healthy-routines/otc-and-prescription-treatments
+   (arc top -60px / 255px / radius 100% 100% 0 0; button #faa633
+   on #422e83, radius 16px, Lato 14.4px/800). Selectors match only
+   .section.dark-purple, so pages without it are unaffected.
+   ============================================================ */
+main:not(:has(.section.section-nav-container)) .section:not(.off-white):has(+ .section.dark-purple) {
+  position: relative;
+  z-index: 0;
+}
+
+main:not(:has(.section.section-nav-container)) .section:not(.off-white):has(+ .section.dark-purple)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  background: var(--linz-white, #fff);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Dark-purple CTA section — same full-bleed background + curved arc cap as the
+   white/off-white sections (live: .background-dark-purple-arc). Section box stays
+   transparent; the purple is painted edge-to-edge by the ::after fill and the
+   curved ::before cap, both behind the content. overflow:visible so the arc that
+   rises above the section top (-60px) is not clipped. */
+main .section.dark-purple {
+  position: relative;
+  z-index: 0;
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  overflow: visible !important;
+  max-width: 100% !important;
+}
+
+main .section.dark-purple::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+  background-color: var(--color-brand-primary, #422e83);
+  z-index: -6;
+  pointer-events: none;
+}
+
+/* Arc geometry copied from develop's .cta-cards-section
+   (styles/linzess/styles.css): shallow base arc (top -spacing-40 / height
+   spacing-60), deepening to top -spacing-60 / 25.5rem at >=1024px. Background
+   uses --color-brand-primary, same token develop paints the band with. */
+main .section.dark-purple::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--spacing-40));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130%;
+  height: var(--spacing-60);
+  background-color: var(--color-brand-primary, #422e83);
+  border-radius: 100% 100% 0 0;
+  z-index: -5;
+  pointer-events: none;
+}
+
+@media (width >= 1024px) {
+  main .section.dark-purple::before {
+    top: calc(-1 * var(--spacing-60));
+    height: 25.5rem;
+  }
+}
+
+/* Content wrapper — transparent now that the section paints itself full-bleed.
+   Vertical padding matches live's .background-dark-purple-arc.bottom-nav
+   (padding: 20px top / 140px bottom) so the cards sit high under the top arc
+   with generous space above the bottom edge. */
+main .section.dark-purple .columns-wrapper {
+  background-color: transparent !important;
+  color: #fff;
+  padding: 20px 3.5rem 140px !important;
+  margin: 0 !important;
+  border: none !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+main .section.dark-purple h1,
+main .section.dark-purple h2,
+main .section.dark-purple h3,
+main .section.dark-purple p,
+main .section.dark-purple a:not(.button) {
+  color: #fff;
+}
+
+main .section.dark-purple h2 {
+  font-family: var(--body-font-family);
+
+  /* 24px text, margin 24px 0 (top + bottom) to match develop's
+     .cta-cards-section .columns-item p:not(:has(a)) heading spacing, which
+     gives the card develop's ~184px height. */
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 24px 0;
+}
+
+/* Gold CTA buttons */
+
+/* CTA buttons — orange #faa633 fill with purple #422e83 text, matching the
+   reference dark-purple CTA section (otc-and-prescription-treatments). The
+   `.button-container` qualifier raises specificity to (0,4,1) so this wins over
+   develop's generic `.columns-container:not(...) .button-container a.button`
+   rule (0,4,2 set elsewhere) that would otherwise force purple-on-white. */
+
+/* Button styling copied from develop's .cta-cards-section .columns.cta-cards a
+   (styles/linzess/styles.css): accent fill, brand-primary text, rounded-corner
+   radius, button font tokens, padding 16px 59px 16px 32px. Selector is
+   qualified with the section's own classes so it outranks develop's generic
+   `.columns-container:not(...) .button-container a.button` rule (0,7,1). */
+main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button:any-link {
+  position: relative;
+  display: inline-block;
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  border: none;
+  border-radius: var(--linz-rounded-corner);
+  padding: 16px 59px 16px 32px;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: normal;
+  text-decoration: none;
+}
+
+main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button::after {
+  content: "❯";
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-20);
+  transform: translateY(-50%);
+  color: var(--color-brand-primary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button:hover {
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+}
+
+/* Columns layout inside dark-purple */
+main .section.dark-purple .columns {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  background: transparent !important;
+}
+
+main .section.dark-purple .columns > .columns-item:first-child {
+  display: none;
+}
+
+main .section.dark-purple .columns > .columns-item {
+  flex: 1;
+  text-align: center;
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: center;
+  border: none !important;
+}
+
+main .section.dark-purple .columns > .columns-item:nth-child(3) {
+  /* Match the reference dark-purple CTA divider (otc-and-prescription-treatments):
+     solid lavender #948ebe rather than translucent white, which over #422e83
+     rendered slightly brighter/cooler than the reference seam. */
+  border-left: 1px solid #948ebe !important;
+}
+
+@media (width < 1024px) {
+  main .section.dark-purple .columns > .columns-item:nth-child(3) {
+    border-left: none !important;
+  }
+}
+
+/* Desktop CTA cards: match live's two-up centered grid layout. */
+@media (width >= 1024px) {
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    max-width: 99.8rem;
+    width: 100%;
+    margin: 0 auto;
+
+    /* A leaked .columns-homepage-savings rule pins min-height: 336.6px on this
+       .columns, inflating the band to ~517px vs develop's ~344px. Clear it so
+       the band collapses to content height like develop's .cta-cards-section. */
+    min-height: 0 !important;
+  }
+
+  main .section.dark-purple .columns > .columns-item {
+    padding: 0 var(--spacing-48);
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Height match to develop's .cta-cards-section (section ~344px / card ~184px).
+     A leaked .columns-homepage-savings :has() rule forces 32px 40px vertical
+     padding and a 3rem button-container margin, inflating the card to ~337px.
+     Zero the vertical padding and button-row bottom margin (qualified with the
+     section's own classes to outrank that leak) so the band collapses to
+     develop's height. */
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns > .columns-item {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    text-align: center !important;
+  }
+
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns .button-container {
+    margin: 0 !important;
+
+    /* Centre the inline CTA button; a leaked rule left-aligns the item/container,
+       so force centring here to match develop's centered cards. */
+    text-align: center !important;
+  }
+}
+
+main .section.dark-purple .columns .columns-item-content:empty {
+  display: none;
+}
+
+main .section.dark-purple .columns .columns-item-content {
+  border: none !important;
+}
+
+main .section.dark-purple .columns-wrapper,
+main .section.dark-purple .columns-wrapper * {
+  border-left: none !important;
+  border-right: none !important;
+}
+
+/* Responsive: mobile/tablet stack. develop's .cta-cards-section stacks the two
+   CTA cards at <=1023px (border-right divider becomes border-bottom), so match
+   that breakpoint rather than <768px — otherwise the tablet range keeps the
+   cards side-by-side with a vertical divider, unlike develop. */
+@media (width < 1024px) {
+  main .section.dark-purple {
+    padding: 0 !important;
+  }
+
+  main .section.dark-purple .columns-wrapper {
+    padding: 3rem 1.5rem 95px !important;
+    border-radius: 0 !important;
+  }
+
+  /* Tablet/mobile stack matching develop's .cta-cards-section: cards in one
+     column with a 60px gap, each card padded 0 0 80px, divided by a lavender
+     #948ebe bottom border (not translucent white), heading 18px / margin 18px 0,
+     button left-pad 24px. */
+  main .section.dark-purple .columns {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-60);
+  }
+
+  main .section.dark-purple .columns > .columns-item {
+    width: 100%;
+
+    /* Centre the inline CTA button (and text) like develop's centered cards;
+       a leaked rule left-aligns the item, pushing the button off-centre. */
+    text-align: center;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid #948ebe !important;
+  }
+
+  /* High-specificity padding to outrank the leaked .columns-homepage-savings
+     :has() rule that pins 16px/32px-40px on the item. */
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns > .columns-item {
+    padding: 0 0 var(--spacing-80) !important;
+
+    /* A leaked rule keeps the item/button-container left-aligned, so the inline
+       button stays off-centre. Force centring on the high-specificity selector
+       (item + its button-container) to match develop's centered stacked cards. */
+    text-align: center !important;
+  }
+
+  main .section.abbvie-container.dark-purple.centered.columns-container .columns > .columns-item .button-container {
+    text-align: center !important;
+  }
+
+  main .section.dark-purple .columns > .columns-item:last-child {
+    border-left: none !important;
+    border-bottom: none !important;
+  }
+
+  main .section.dark-purple .columns > .columns-item:nth-child(3) {
+    border-left: none !important;
+    border-bottom: none !important;
+  }
+
+  main .section.dark-purple h2 {
+    font-size: 18px;
+    margin: 18px 0;
+  }
+
+  main .section.abbvie-container.dark-purple.centered.columns-container .button-container a.button:any-link {
+    padding-left: var(--spacing-24);
+  }
+}
+
+/* ISI Section (follows dark-purple) */
+main .section.dark-purple + .section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
+/* Bottom arc: the white ISI dome that carves the bottom of the dark-purple CTA
+   band must sit at develop's -80px (matches .cta-cards-section), not the global
+   -150px ISI arc. Scoped to an ISI that DIRECTLY follows a dark-purple CTA via
+   the adjacent sibling combinator, so only the savings-page CTA→ISI transition
+   is affected — the homepage, OTC, transcript, why-linzess, and resources ISI
+   arcs (which don't follow a dark-purple section) keep their own -150px arc. */
+@media (width >= 900px) {
+  main .section.dark-purple + .section.isi::before {
+    top: -80px;
+  }
+}
+
+main .section.dark-purple + .section h3 {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 0;
+}
+
+main .section.dark-purple + .section h4 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  color: rgb(66 46 131);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 16px;
+  margin: 10px 0 4px;
+}
+
+main .section.dark-purple + .section p,
+main .section.dark-purple + .section li {
+  font-size: 14px;
+  color: rgb(85 85 85);
+  line-height: 16px;
+  margin: 0 0 10px;
+}
+
+main .section.dark-purple + .section ul {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+
+main .section.dark-purple + .section a {
+  color: rgb(66 46 131);
+  text-decoration: underline;
+  font-weight: 400;
+  font-size: inherit;
+  line-height: inherit;
+
+  /* Live renders ISI inline links at regular weight even inside bold (<strong>)
+     sentences, so force the regular legal font rather than inheriting the bold
+     BasicCommercialLT-Black from a surrounding <strong>. */
+  font-family: var(--font-family-legal, "BasicCommercialLT-Roman", sans-serif);
+}
+
+main .section.dark-purple + .section strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+
+/* Tablet: fix CTA button truncation */
+
+/* (Removed the old 768-1023px side-by-side tablet tuning: tablet now stacks via
+   the width < 1024px block above, matching develop's .cta-cards-section. The
+   stale gap/padding/h2-18px overrides here conflicted with that stacking and
+   shrank the heading below develop's 24px.) */
+
+/* ════════════════════════════════════════════════════════════════════
+   INDEX SAVINGS PAGE — "Choose how you want to sign up:" heading.
+   Live renders this at 24px/700 desktop, 18px/700 mobile (dark-purple,
+   centered). Our base .heading-2 leaked 18px/400 (desktop) and 16px/400
+   (mobile). Scope to the index signup-section so no other page/block moves.
+   ════════════════════════════════════════════════════════════════════ */
+main:has(.section.section-nav-container) .section.signup-section p.heading-2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+@media (width < 768px) {
+  main:has(.section.section-nav-container) .section.signup-section p.heading-2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+/* INDEX SAVINGS PAGE — terms accordion mobile width. The accordion block's
+   base rule (.section.accordion-container) applies 55px L/R padding until
+   1440px, so on mobile the accordion was squeezed to ~240px instead of
+   spanning the section like live (~full width, ~16px gutters). Trim the
+   horizontal padding to a live-matching gutter below 1024px and let the
+   wrapper/accordion fill the row. Scoped to the index terms-accordion so the
+   accordion block and other pages keep their own padding. */
+@media (width < 1024px) {
+  main:has(.section.section-nav-container) .section.terms-accordion.accordion-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  main:has(.section.section-nav-container) .section.terms-accordion .accordion-wrapper,
+  main:has(.section.section-nav-container) .section.terms-accordion .accordion {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Live has no top padding on the terms accordion section (the accordion sits
+   flush below the footnote above); ours inherited 80px top from the section
+   default, opening an oversized gap. Zero the top to match live. Scoped to the
+   index terms-accordion so other accordion sections keep their spacing. */
+main:has(.section.section-nav-container) .section.terms-accordion.accordion-container {
+  padding-top: 0;
+}
+
+/* ── Gut Check tout: "Actor Portrayal" overlay caption ───────────────────
+   The image cell holds the picture plus a small caption that floats over the
+   bottom-right corner of the photo (matches live). Scoped to the gut-check
+   tout row so it never affects other columns. */
+
+/* Gut-check heading: the authored .heading-2 class is stripped on publish, so
+   target the surviving h3 tag too. */
+
+.columns.gut-check-tout-row .columns-item-content .heading-2,
+.columns.gut-check-tout-row .columns-item-content h3 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+.columns.gut-check-tout-row .columns-item-image {
+  position: relative;
+}
+
+.columns.gut-check-tout-row .columns-item-image .tout-overlay {
+  position: absolute;
+  right: var(--spacing-16, 1.6rem);
+  bottom: var(--spacing-16, 1.6rem);
+  margin: 0;
+  font-size: var(--font-size-legal, 1.4rem);
+  color: var(--color-text-on-dark, #fff);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 45%);
+}
+
+/* ── Reuse the homepage "Take the Gut Check Quiz" layout ──────────────────
+   Off-white rounded card, image left / text right, purple CTA with chevron —
+   matching .columns-homepage-gutcheck on the linzess homepage. Scoped to
+   gut-check-tout-row so other columns variants are untouched. */
+
+.columns.gut-check-tout-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  max-width: 1038px;
+  margin: 0 auto;
+  background-color: var(--linz-off-white);
+  border-radius: var(--linz-rounded-corner);
+}
+
+.columns.gut-check-tout-row > .columns-item {
+  padding: 0;
+  grid-column: auto;
+}
+
+.columns.gut-check-tout-row > .columns-item:has(.columns-item-image):not(:has(.columns-item-content)) {
+  flex: 0 0 50%;
+  order: -1;
+}
+
+.columns.gut-check-tout-row > .columns-item:has(.columns-item-image) .columns-item-image,
+.columns.gut-check-tout-row > .columns-item:has(.columns-item-image) .columns-item-image picture,
+.columns.gut-check-tout-row > .columns-item:has(.columns-item-image) .columns-item-image img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+}
+
+.columns.gut-check-tout-row > .columns-item:has(.columns-item-image) .columns-item-image img {
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.columns.gut-check-tout-row > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)) {
+  flex: 1;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.columns.gut-check-tout-row .columns-item-content a.button,
+.columns.gut-check-tout-row .columns-item-content a {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  border-radius: var(--linz-rounded-corner);
+  padding: 16px 59px 16px 24px;
+  font-weight: 800;
+  font-size: 14.4px;
+  font-family: var(--body-font-family);
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+}
+
+.columns.gut-check-tout-row .columns-item-content a.button::after {
+  content: '\203A';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 21px;
+}
+
+@media (width >= 986px) {
+  .columns.gut-check-tout-row,
+  .columns.gut-check-tout-row > .columns-item:has(.columns-item-image),
+  .columns.gut-check-tout-row > .columns-item:has(.columns-item-image) img {
+    max-height: 299px;
+  }
+}
+
+@media (width < 768px) {
+  .columns.gut-check-tout-row {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .columns.gut-check-tout-row > .columns-item:has(.columns-item-image) {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .columns.gut-check-tout-row > .columns-item:has(.columns-item-content:not(:empty)):not(:has(.columns-item-image)) {
+    flex: 1 1 100%;
+    padding: 16px;
+    text-align: center;
+  }
+}
+
+/* ── Icon cards (Already-Prescribed: Refill / Keep Doctor Updated) ────────
+   Live: two rounded cards — card 1 dark-purple w/ white text, card 2
+   light-purple w/ dark text. Each centered, with a large circular icon at
+   the top. Selectors are prefixed with `body main .section.prescribed-cards`
+   to outrank the base `.columns-item:has(.columns-item-image)` rule that
+   otherwise forces a transparent background and left alignment. */
+
+body main .section.prescribed-cards .columns.icon-cards-2col {
+  gap: var(--spacing-24, 2.4rem);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--spacing-40, 4rem) var(--spacing-32, 3.2rem);
+  border-radius: 1.6rem;
+}
+
+/* Card 1 — dark purple, white text */
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:first-child {
+  background-color: var(--linz-dark-purple, #422e83);
+  color: var(--color-text-on-dark, #fff);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:first-child .heading-2,
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:first-child p {
+  color: var(--color-text-on-dark, #fff);
+}
+
+/* Card 2 — light purple, dark-purple heading */
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:nth-child(2) {
+  background-color: var(--linz-light-purple, #d9d7f9);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col > .columns-item:nth-child(2) .heading-2 {
+  color: var(--linz-dark-purple, #422e83);
+}
+
+/* Large circular icon badge at the top of each card */
+
+body main .section.prescribed-cards .columns.icon-cards-2col .columns-item-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-16, 1.6rem);
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col .columns-item-image picture,
+body main .section.prescribed-cards .columns.icon-cards-2col .columns-item-image img {
+  width: 8rem;
+  height: 8rem;
+  object-fit: contain;
+}
+
+body main .section.prescribed-cards .columns.icon-cards-2col .heading-2 {
+  margin: 0 0 var(--spacing-16, 1.6rem);
+  font-family: var(--body-font-family, 'Lato', sans-serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+/* ── Instructions dosing cards (Take LINZESS: Every Day / Once a Day / …) ──
+   Live: full-width off-white rounded cards STACKED vertically. Each card has
+   a 105px circular icon on the left that straddles the card's left edge
+   (~45px hangs outside), with heading + body to the right. On mobile the icon
+   centers above the text. Scoped to the instructions-cards variant. */
+
+.columns.instructions-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 2.4rem);
+  max-width: 92.8rem;
+  margin: 0 auto;
+}
+
+/* The savings-card fallback selector (.columns-container:not(...) .columns:not(...))
+   also matches instructions-cards and paints the whole list off-white, which
+   hides the white box. Reset the LIST container to transparent so only the
+   individual cards are off-white (matches live). The left padding gives the
+   icon room to overhang the card while staying inside the white box. */
+
+body main .section.instructions-panel.columns-container .columns.instructions-cards {
+  background-color: transparent;
+  border-radius: 0;
+  max-width: none;
+  min-height: 0;
+  padding: 0 0 0 var(--spacing-40, 4rem);
+  overflow: visible;
+
+  /* Live: ~20px gap between cards on desktop. The savings fallback sets gap:0
+     and outranks the base .instructions-cards rule, so set it here. */
+  gap: var(--spacing-20, 2rem);
+}
+
+/* Dosing items are now content-only (icon image cells removed — DAM SVGs 404
+   on publish). Paint each off-white rounded card and render the icon as a
+   base64 ::before background so it survives publish, mirroring the
+   checkmark/divider approach. Specificity (body main + 3 section classes)
+   beats the savings-fallback rule that would otherwise paint the list. */
+
+body main .section.instructions-panel.columns-container .columns.instructions-cards > .columns-item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-24, 2.4rem);
+  padding: var(--spacing-24, 2.4rem) var(--spacing-32, 3.2rem);
+  background-color: var(--color-background-light, #f4f6fb);
+  border-radius: 1.6rem;
+  text-align: left;
+}
+
+/* The publish pipeline can leave an empty leading card (a stray blank cell that
+   columns.js still tags as .columns-item-content). Hide any card without a
+   heading so it neither paints an off-white box nor adds a stray icon slot.
+   Icon assignment counts from the end (nth-last-child) so the four real cards
+   stay correctly mapped whether or not this empty card is present. */
+
+body main .section.instructions-panel.columns-container .columns.instructions-cards > .columns-item:not(:has(h3)) {
+  display: none;
+}
+
+/* Icon: 105px circle that hangs ~45px outside the card left edge. The card has
+   4rem left padding, so the negative margin clears that padding plus overhang. */
+
+.section.instructions-panel .columns.instructions-cards > .columns-item::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 10.5rem;
+  height: 10.5rem;
+  margin-left: calc(-1 * (var(--spacing-40, 4rem) + 4.5rem));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.section.instructions-panel .columns.instructions-cards > .columns-item:nth-last-child(4)::before {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTA3IiBoZWlnaHQ9IjEwNiIgdmlld0JveD0iMCAwIDEwNyAxMDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUyLjUiIGN5PSI1Mi41Mjg4IiByPSI1Mi41IiBmaWxsPSIjRDlEN0Y5Ii8+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF82NzlfNjQxMCkiPgo8cGF0aCBkPSJNNDAuMTgxMyA3OC43NjAyQzM2LjY3ODkgNzguNzYwMiAzMy4zOTM3IDc3LjQwNDIgMzAuOTMyMiA3NC45NDQ3QzI1LjgzMzEgNjkuODQ1NiAyNS44MzMxIDYxLjU0NzQgMzAuOTMyMiA1Ni40NDg0TDU1LjQ0NzIgMzEuOTMzNEM1Ny45MDg2IDI5LjQ3MTkgNjEuMTkxOSAyOC4xMTc5IDY0LjY5NDMgMjguMTE3OUM2OC4xOTY4IDI4LjExNzkgNzEuNDgyIDI5LjQ3MzkgNzMuOTQxNSAzMS45MzM0Qzc5LjA0MDYgMzcuMDMyNSA3OS4wNDI1IDQ1LjMzMDYgNzMuOTQxNSA1MC40Mjk3TDQ5LjQyNjUgNzQuOTQ0N0M0Ni45NjUxIDc3LjQwNjEgNDMuNjgxOCA3OC43NjAyIDQwLjE3NzQgNzguNzYwMkg0MC4xODEzWiIgZmlsbD0iI0JERERGMCIvPgo8cGF0aCBkPSJNNjQuNjk2MiAyOS4yOTE4QzY3Ljc0ODYgMjkuMjkxOCA3MC43OTkgMzAuNDUwMiA3My4xMTM4IDMyLjc2MjlDNzcuNzQzMiAzNy4zOTI0IDc3Ljc0MzIgNDQuOTcwNSA3My4xMTM4IDQ5LjZMNDguNTk4OCA3NC4xMTVDNDYuMjg0MSA3Ni40Mjk3IDQzLjIzMTcgNzcuNTg4IDQwLjE3OTMgNzcuNTg4QzM3LjEyNjkgNzcuNTg4IDM0LjA3NjUgNzYuNDMxNiAzMS43NTk4IDc0LjExNUMyNy4xMzAzIDY5LjQ4NTUgMjcuMTMwMyA2MS45MDkzIDMxLjc1OTggNTcuMjc3OUw1Ni4yNzg3IDMyLjc2MjlDNTguNTkzNCAzMC40NDgyIDYxLjY0MzggMjkuMjkxOCA2NC42OTYyIDI5LjI5MThaTTY0LjY5NjIgMjYuOTQzOEM2MC44ODA3IDI2Ljk0MzggNTcuMyAyOC40MjExIDU0LjYxNzUgMzEuMTAzN0wzMC4xMDI1IDU1LjYxODdDMjQuNTQ1NiA2MS4xNzU2IDI0LjU0MzYgNzAuMjE5MyAzMC4xMDI1IDc1Ljc3NjJDMzIuNzg1MSA3OC40NTg3IDM2LjM2MzggNzkuOTM2IDQwLjE4MTIgNzkuOTM2QzQzLjk5ODcgNzkuOTM2IDQ3LjU3NzQgNzguNDU4NyA1MC4yNiA3NS43NzYyTDc0Ljc3NSA1MS4yNjEyQzc3LjQ1NzUgNDguNTc4NiA3OC45MzQ4IDQ0Ljk5OTkgNzguOTM0OCA0MS4xODI0Qzc4LjkzNDggMzcuMzY1IDc3LjQ1NzUgMzMuNzg2MyA3NC43NzUgMzEuMTAzN0M3Mi4wOTA0IDI4LjQyMTEgNjguNTExNyAyNi45NDM4IDY0LjY5NjIgMjYuOTQzOFoiIGZpbGw9IiM0MjJFODMiLz4KPHBhdGggZD0iTTQ0LjAyMDUgNDUuMDIxNkw1Ni4yNzcgMzIuNzY1MUM2MC45MDY1IDI4LjEzNTYgNjguNDgyNiAyOC4xMzU2IDczLjExNDEgMzIuNzY1MUM3Ny43NDU1IDM3LjM5NDUgNzcuNzQzNSA0NC45NzA3IDczLjExNDEgNDkuNjAwMUw2MC44NTc2IDYxLjg1NjdMNDQuMDIwNSA0NS4wMTk2VjQ1LjAyMTZaIiBmaWxsPSIjODRDMUUxIi8+CjxwYXRoIGQ9Ik03MC43MDc1IDM3Ljc3MDNDNzEuMDU3NyAzNy41OTgxIDcxLjQ4MjMgMzcuNzMzMSA3MS42NjgyIDM4LjA3NzRDNzIuNDI1NCAzOS40ODQzIDcyLjcxNSA0MS4xMjk4IDcyLjQ4MjEgNDIuNzEwOEM3Mi4yNDkzIDQ0LjI5MTggNzEuNDk3OSA0NS43ODQ3IDcwLjM2NSA0Ni45MTE4QzcwLjA4MTMgNDcuMTk1NSA2OS42MTk1IDQ3LjE5NTUgNjkuMzM1OCA0Ni45MTE4QzY5LjA1MjEgNDYuNjI4IDY5LjA1MjEgNDYuMTY2MyA2OS4zMzU4IDQ1Ljg4MjZDNzAuMjQ3NiA0NC45NzQ3IDcwLjg1MjIgNDMuNzcxMyA3MS4wNDAxIDQyLjQ5OTVDNzEuMjI3OSA0MS4yMjU3IDcwLjk5NTEgMzkuOTAxMSA3MC4zODQ2IDM4Ljc2ODFDNzAuMTk0OCAzOC40MTQgNzAuMzI1OSAzNy45NzM3IDcwLjY4MDEgMzcuNzgyQzcwLjY4NzkgMzcuNzc4MSA3MC42OTU3IDM3Ljc3NDIgNzAuNzAzNSAzNy43NzAzSDcwLjcwNzVaIiBmaWxsPSJ3aGl0ZSIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzY3OV82NDEwIj4KPHJlY3Qgd2lkdGg9IjUzIiBoZWlnaHQ9IjUyLjk5MDIiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNS45MzUxIDI2Ljk0MzgpIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==");
+}
+
+.section.instructions-panel .columns.instructions-cards > .columns-item:nth-last-child(3)::before {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTA3IiBoZWlnaHQ9IjEwNiIgdmlld0JveD0iMCAwIDEwNyAxMDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUyLjUiIGN5PSI1Mi41Mjg4IiByPSI1Mi41IiBmaWxsPSIjRDlEN0Y5Ii8+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF82NzlfNjQyNykiPgo8cGF0aCBkPSJNMzQuNTE3MyA3Ni4wMzE4QzMyLjQzNjMgNzYuMDMxOCAzMC43NDI3IDc0LjMzODIgMzAuNzQyNyA3Mi4yNTcyVjM4LjkxMzNDMzAuNzQyNyAzNi44MzIzIDMyLjQzNjMgMzUuMTM4NyAzNC41MTczIDM1LjEzODdINjkuNTIwNUw2OS41Nzg4IDM1LjEzMThINjkuNjE2NUM3Mi4wMzM0IDM1LjEzMTggNzMuMjYwOCAzNi40NjIgNzMuMjYwOCAzOS4wNzc4VjQyLjUzMDJMNzMuMTc1MSA1My44OTUxVjcyLjI1NzJDNzMuMTc1MSA3NC4zMzgyIDcxLjQ4MTUgNzYuMDMxOCA2OS40MDA1IDc2LjAzMThIMzQuNTE3M1oiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik02OS42ODg1IDM3Ljg3NzlDNjkuOTQ1NiAzNy44OTE2IDcwLjI0MzggMzcuOTY3IDcwLjM3NDEgMzguMDM1NkM3MC40MTE4IDM4LjEyODIgNzAuNTE4MSAzOC40MzMzIDcwLjUxODEgMzkuMDgxM1Y0Mi41MTNMNzAuNDMyNCA1My44Nzc5VjUzLjg5ODVWNTMuOTE5MVY3Mi4yNjA2QzcwLjQzMjQgNzIuODI5NyA2OS45Njk2IDczLjI5MjUgNjkuNDAwNSA3My4yOTI1SDM0LjUxNzJDMzMuOTQ4MSA3My4yOTI1IDMzLjQ4NTMgNzIuODI5NyAzMy40ODUzIDcyLjI2MDZWMzguOTEzM0MzMy40ODUzIDM4LjM0NDIgMzMuOTQ4MSAzNy44ODEzIDM0LjUxNzIgMzcuODgxM0g2OS40MDA1TDY5LjQyMSAzNy45MTIyTDY5LjY4ODUgMzcuODc3OVpNNjkuNjE2NSAzMi4zOTI2QzY5LjQ3NTkgMzIuMzkyNiA2OS40MDA1IDMyLjM5OTQgNjkuNDAwNSAzMi4zOTk0SDM0LjUxNzJDMzAuOTE3NSAzMi4zOTYgMjggMzUuMzEzNSAyOCAzOC45MTMzVjcyLjI1NzJDMjggNzUuODU2OSAzMC45MTc1IDc4Ljc3NDQgMzQuNTE3MiA3OC43NzQ0SDY5LjQwMDVDNzMuMDAwMiA3OC43NzQ0IDc1LjkxNzcgNzUuODU2OSA3NS45MTc3IDcyLjI1NzJWNTMuOTE1Nkw3Ni4wMDM0IDQyLjUzMDJWMzkuMDc3OEM3Ni4wMDM0IDMyLjczMiA3MC43NTgxIDMyLjM4OTIgNjkuNjE2NSAzMi4zODkyVjMyLjM5MjZaIiBmaWxsPSIjNDIyRTgzIi8+CjxwYXRoIGQ9Ik03My44Mjk3IDQxLjM4NTFWMzguODk5NkM3My44Mjk3IDM3LjQxMTcgNzMuMzk3NyAzNi4yNjY2IDcyLjU0NzUgMzUuNDk1M0M3MS4zOTkgMzQuNDU2NSA2OS44OTQgMzQuNTA3OSA2OS42MTYzIDM0LjUyNTFIMzQuMzU5NEMzMi4wNDE4IDM0LjUyNTEgMzAuMTU5NyAzNi40MzEyIDMwLjE1OTcgMzguNzc2MlY3Mi4zOTA5QzMwLjE1OTcgNzQuNzM1OSAzMi4wNDUyIDc2LjY0MiAzNC4zNTk0IDc2LjY0Mkg2OS42NDM3QzcxLjk2MTMgNzYuNjQyIDczLjg0MzQgNzQuNzM1OSA3My44NDM0IDcyLjM5MDlWNDEuMzg1MUg3My44Mjk3WiIgZmlsbD0iI0JERERGMCIvPgo8cGF0aCBkPSJNNjcuNjMxOCA3My45MzM3QzY3LjYzMTggNzMuOTMzNyA3MC45NTA1IDczLjkzMzcgNzAuOTUwNSA3MC40MTI4VjQ5LjU2NTIiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43MTQxNiIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBhdGggZD0iTTczLjg0MzQgNDUuNDM0TDczLjgyOTcgMzguODk5NkM3My44Mjk3IDM3LjQxMTcgNzMuMzk3NyAzNi4yNjY2IDcyLjU0NzUgMzUuNDk1M0M3MS4zOTkgMzQuNDU2NSA2OS44OTQgMzQuNTA3OSA2OS42MTYzIDM0LjUyNTFIMzQuMzU5NEMzMi4wNDE4IDM0LjUyNTEgMzAuMTU5NyAzNi40MzEyIDMwLjE1OTcgMzguNzc2MlY0NS40MzRINzMuODQzNFoiIGZpbGw9IiM4NEMxRTEiLz4KPHBhdGggZD0iTTQxLjg3MTEgMjkuMDQzMlYzOC41MDg4IiBzdHJva2U9IiM0MjJFODIiIHN0cm9rZS13aWR0aD0iMi4zOTk4MyIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBhdGggZD0iTTYyLjEzMjMgMjkuMDQzMlYzOC41MDg4IiBzdHJva2U9IiM0MjJFODIiIHN0cm9rZS13aWR0aD0iMi4zOTk4MyIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHBhdGggZD0iTTUxLjgyNjggNTguNDg1NkM1MS44MjY4IDU3Ljg0NzkgNTEuNzM3NyA1Ny40MjI4IDUxLjU2MjkgNTcuMjA2OEM1MS4zODggNTYuOTkwOCA1MS4wMjEyIDU2Ljg4NDYgNTAuNDY1OCA1Ni44ODQ2SDQ3Ljg4NzdWNTQuOTI3SDQ4LjM2NDJDNDkuMDgwOCA1NC45MjcgNDkuNjczOSA1NC44NTUgNTAuMTQzNSA1NC43MTFDNTAuNjEzMiA1NC41NjcgNTAuOTkzOCA1NC4zNjQ3IDUxLjI4ODYgNTQuMTAwOEM1MS41ODM0IDUzLjgzNjggNTEuODA5NyA1My41MjQ4IDUxLjk2NzQgNTMuMTU4QzUyLjEyNTEgNTIuNzkxMSA1Mi4yNTU0IDUyLjM4NjYgNTIuMzUxNCA1MS45NDA5SDU0Ljc0MDlWNjguMTgwOUg1MS44MjY4VjU4LjQ4NTZaIiBmaWxsPSIjNDIyRTgwIiBzdHJva2U9IiM0MzJFN0YiIHN0cm9rZS13aWR0aD0iMC42ODU2NjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzY3OV82NDI3Ij4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjUwLjkzMTIiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyOCAyNy44NDMzKSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM+Cjwvc3ZnPgo=");
+}
+
+.section.instructions-panel .columns.instructions-cards > .columns-item:nth-last-child(2)::before {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTA3IiBoZWlnaHQ9IjEwNiIgdmlld0JveD0iMCAwIDEwNyAxMDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUyLjUiIGN5PSI1Mi41Mjg4IiByPSI1Mi41IiBmaWxsPSIjRDlEN0Y5Ii8+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF82NzlfNjQ0MykiPgo8cGF0aCBkPSJNNjQuMDI4OCAyNi4xMjc5QzczLjA5ODMgMjYuMTI3OSA4MS45NjI3IDM1LjIzNTcgODEuOTYyNyA0Ni42MjM4QzgxLjk2MjcgNjQuMzY1NSA2MS4yODc1IDc5LjkyOTUgNDkuMTA1MyA3OS45Mjk1QzM2LjkyMzEgNzkuOTI5NSAzOS44NDM3IDc0LjY2NDcgMzMuMjMzOCA3NC42NjQ3QzMwLjkxNTIgNzQuNjY0NyAzMC43MjMxIDgwLjI2MjYgMzAuNzIzMSA4My43NzI1SDIzLjAzNzFDMjMuMDM3MSA2OS45MjUgMjQuMTY0NCA2My4yNzY2IDMzLjIzMzggNjMuMjc2NkMzOS40NzIyIDYzLjI3NjYgNDkuOTM3OSA2NS45MjgzIDQ5LjkzNzkgNTAuNDY2N0M0OS45Mzc5IDM3LjU2NzEgMzcuMTI4IDM4LjUxNTEgMzcuMTI4IDIyLjI4NDlINDQuODE0QzQ0LjgxNCAyNS4yMzEyIDQ3LjY4MzQgMjguMDc1IDUxLjM3MjYgMjguMDc1QzU3LjA4NTkgMjguMDc1IDU3Ljk4MjYgMjYuMTI3OSA2NC4wMjg4IDI2LjEyNzlaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNjQuMDI4OCAyNi4xMjc5QzczLjA5ODMgMjYuMTI3OSA4MS45NjI3IDM1LjIzNTcgODEuOTYyNyA0Ni42MjM4QzgxLjk2MjcgNjQuMzY1NSA2MS4yODc1IDc5LjkyOTUgNDkuMTA1MyA3OS45Mjk1QzM2LjkyMzEgNzkuOTI5NSAzOS44NDM3IDc0LjY2NDcgMzMuMjMzOCA3NC42NjQ3QzMwLjkxNTIgNzQuNjY0NyAzMC43MjMxIDgwLjI2MjYgMzAuNzIzMSA4My43NzI1SDIzLjAzNzFDMjMuMDM3MSA2OS45MjUgMjQuMTY0NCA2My4yNzY2IDMzLjIzMzggNjMuMjc2NkMzOS40NzIyIDYzLjI3NjYgNDkuOTM3OSA2NS45MjgzIDQ5LjkzNzkgNTAuNDY2N0M0OS45Mzc5IDM3LjU2NzEgMzcuMTI4IDM4LjUxNTEgMzcuMTI4IDIyLjI4NDlINDQuODE0QzQ0LjgxNCAyNS4yMzEyIDQ3LjY4MzQgMjguMDc1IDUxLjM3MjYgMjguMDc1QzU3LjA4NTkgMjguMDc1IDU3Ljk4MjYgMjYuMTI3OSA2NC4wMjg4IDI2LjEyNzlaIiBmaWxsPSIjQkREREYwIi8+CjxwYXRoIG9wYWNpdHk9IjAuNiIgZD0iTTczLjMyMzYgMjkuMzQ1OUM3My4zMjM2IDI5LjM0NTkgODEuOTYyNyAzNS43ODkzIDgxLjk2MjcgNDYuNjI0QzgxLjk2MjcgNjEuMDA0NCA2Ni44MDM0IDc5Ljc1NTUgNDcuODIxNyA3OS43NTU1QzQwLjc1ODMgNzkuNzU1NSAzNy43ODEyIDc2LjA4NjggMzcuNzgxMiA3Ni4wODY4QzYzLjE3NTYgNzEuMzQ5NyA3OS40MDMyIDYxLjAwNDQgNzMuMzI2MiAyOS4zNDU5IiBmaWxsPSIjODRDMUUxIi8+CjxwYXRoIGQ9Ik0zMS4zNjM1IDgzLjc3MjVIMzAuMDgyNUMzMC4wODI1IDc4Ljk1MzQgMzAuNDU2NiA3NC4wMjQyIDMzLjIzMzggNzQuMDI0MkMzNi4zMDU2IDc0LjAyNDIgMzcuNjIyNCA3NS4xMDUzIDM5LjAxNjIgNzYuMjUzMUM0MC43NDgxIDc3LjY3NSA0Mi43MTA1IDc5LjI4OSA0OS4xMDI3IDc5LjI4OUM1NS4wNTQyIDc5LjI4OSA2My4xMjcgNzUuNDMwNyA2OS42Njc3IDY5LjQ1NjJDNzcuMDcxOSA2Mi42OTc2IDgxLjMxOTYgNTQuMzczOCA4MS4zMTk2IDQ2LjYyMzhDODEuMzE5NiA0MS4zODQ1IDc5LjQwMDcgMzYuMzgzNSA3NS45MTkgMzIuNTM1NEM3Mi42MDEyIDI4Ljg2OTIgNjguMjY2MyAyNi43Njg0IDY0LjAyNjIgMjYuNzY4NEM2MS4wNTE4IDI2Ljc2ODQgNTkuNDEyMSAyNy4yMzk4IDU3LjY3NzYgMjcuNzM2OEM1Ni4wMDQ3IDI4LjIxODUgNTQuMjc1MyAyOC43MTU1IDUxLjM3IDI4LjcxNTVDNDcuNDY4MSAyOC43MTU1IDQ0LjE3MDkgMjUuNzY5MiA0NC4xNzA5IDIyLjI4NDlINDUuNDUxOUM0NS40NTE5IDI1LjMyMDkgNDguNTY5OCAyNy40MzQ1IDUxLjM3IDI3LjQzNDVDNTQuMTcwMyAyNy40MzQ1IDU1LjY2MzkgMjYuOTgzNiA1Ny4zMjQxIDI2LjUwNzFDNTkuMDY2MiAyNi4wMDQ5IDYwLjg2OTkgMjUuNDg3NCA2NC4wMjYyIDI1LjQ4NzRDNjguNjI3NiAyNS40ODc0IDczLjMwODMgMjcuNzQxOSA3Ni44Njk1IDMxLjY3NDZDODAuNTY2NCAzNS43NTg0IDgyLjYwMDYgNDEuMDY2OCA4Mi42MDA2IDQ2LjYyMzhDODIuNjAwNiA2NC43MDM3IDYxLjcyMyA4MC41NyA0OS4xMDI3IDgwLjU3QzQyLjI1MTkgODAuNTcgNDAuMDA1MSA3OC43MjU0IDM4LjIwMTQgNzcuMjQyQzM2Ljg4NDYgNzYuMTYwOSAzNS44NDQ0IDc1LjMwNTIgMzMuMjMxMiA3NS4zMDUyQzMyLjUzMTggNzUuMzA1MiAzMS4zNjA5IDc2LjQwNDMgMzEuMzYwOSA4My43NzI1SDMxLjM2MzVaIiBmaWxsPSIjNDIyRTgzIiBzdHJva2U9IiM0MjJFODMiIHN0cm9rZS13aWR0aD0iMC41MTIzOTciIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIvPgo8cGF0aCBkPSJNMjMuNjc3NSA4My43NzI1SDIyLjM5NjVDMjIuMzk2NSA3Ni42NzMzIDIyLjY4ODYgNzEuNTcyMyAyNC4xNDM4IDY4LjA4NTVDMjUuNjkzOCA2NC4zNjgxIDI4LjU4MzcgNjIuNjM2MiAzMy4yMzM3IDYyLjYzNjJDMzQuMDEgNjIuNjM2MiAzNC44Mzc1IDYyLjY3NDYgMzUuNzExMSA2Mi43MTgxQzM5LjM3NDcgNjIuODkyNCA0My41MzAzIDYzLjA5MjIgNDYuMjQ4NiA2MC41MDJDNDguMzAwNyA1OC41NDcyIDQ5LjI5NzMgNTUuMjY1MyA0OS4yOTczIDUwLjQ2NjdDNDkuMjk3MyA0NC42NDMzIDQ2LjUzODEgNDEuNzMwNCA0My42MTc0IDM4LjY0ODNDNDAuMjc0IDM1LjEyMDUgMzYuNDg3NCAzMS4xMjEyIDM2LjQ4NzQgMjIuMjg0OUgzNy43Njg0QzM3Ljc2ODQgMzAuNjExNCA0MS4yMTQzIDM0LjI0OTQgNDQuNTQ3NCAzNy43NjdDNDcuNjQ3NCA0MS4wNDEyIDUwLjU3ODMgNDQuMTMwOSA1MC41NzgzIDUwLjQ2NjdDNTAuNTc4MyA1NS42MzE3IDQ5LjQ1MSA1OS4yMTg1IDQ3LjEzMjQgNjEuNDI5NUM0NC4wMTcxIDY0LjM5ODggMzkuMzc3MyA2NC4xNzU5IDM1LjY0OTYgNjMuOTk5MUMzNC43OTE0IDYzLjk1ODEgMzMuOTc5MiA2My45MTk3IDMzLjIzMzcgNjMuOTE5N0MyNS4xMTk5IDYzLjkxOTcgMjMuNjc3NSA2OS4xMjMxIDIzLjY3NzUgODMuNzc1MVY4My43NzI1WiIgZmlsbD0iIzQyMkU4MyIgc3Ryb2tlPSIjNDIyRTgzIiBzdHJva2Utd2lkdGg9IjAuNTEyMzk3IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiLz4KPHBhdGggZD0iTTY1LjMxMDEgMzMuODE0QzY5LjIyOTkgMzMuODE0IDc0LjI3NyAzNy45MTMxIDc0LjI3NyA0NC4wNjE5IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIuNTYxOTgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzY3OV82NDQzIj4KPHJlY3Qgd2lkdGg9IjYwLjcxOSIgaGVpZ2h0PSI2MiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIyLjE0MDYgMjIuMDI4OCkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K");
+}
+
+.section.instructions-panel .columns.instructions-cards > .columns-item:nth-last-child(1)::before {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTA3IiBoZWlnaHQ9IjEwNiIgdmlld0JveD0iMCAwIDEwNyAxMDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUyLjUiIGN5PSI1Mi41Mjg4IiByPSI1Mi41IiBmaWxsPSIjRDlEN0Y5Ii8+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF82NzlfNjQ1NykiPgo8cGF0aCBkPSJNNjguODY0NSAyMy4xNjQ2SDM2LjMxMDFWMzYuNDAyOUg2OC44NjQ1VjIzLjE2NDZaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNjguODY0NCAzMS4wMzc5QzY4Ljg2NDQgMzEuMDM3OSA2OC42Nzg4IDI2LjU3NjMgNjQuMjU0MyAzMC4wNzE2QzU5LjgyOTggMzMuNTY2OCA1MS43MSAzNS44MjEzIDQ3LjUxNTUgMzMuMjk2NkM0My4zMjExIDMwLjc3MjkgNDcuMTEzMyAzNi4xNjg5IDQ3LjExMzMgMzYuMTY4OUw1NC44MTAzIDQxLjAzOTlMNjUuMDcyMiA0Mi4zMDQ0TDY4LjgwMDUgMzUuNTE5MUw2OC44NjQ0IDMxLjAzNzlaIiBmaWxsPSIjODRDMUUxIi8+CjxwYXRoIGQ9Ik0zNi42NTg3IDQyLjQxNzhMMzUuOTg4MyA0Mi45ODA5TDM2LjY1ODcgNDQuMzk1OUwzOC44MTkzIDc5LjIwOUw1My44NjI2IDgyLjcwMjJMNjYuODMwNyA3OC42OTMzTDY4Ljk5MjQgNDUuMzI1MUw2OS4yMDggNDMuNTAzOEw2OS43ODQ1IDQyLjY4MzhDNjkuNzg0NSA0Mi42ODM4IDY1LjU2MjEgNDEuMjMyNyA2Mi45NDM2IDQxLjMyNzZDNjAuMzI1IDQxLjQyMjUgNTYuMjI5NSA0MC41NzA2IDU0Ljk2NzEgNDAuODYyNUM1NC45NjcxIDQwLjg2MjUgNDUuMzMwMiA0MC43NDcgNDMuMTM1NSA0MS4yOTc3QzQzLjEzNTUgNDEuMjk3NyAzNy45NDg5IDQxLjY5MjcgMzYuNjU4NyA0Mi40MTc4WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTM3LjMwNTIgNzAuNTAzNEwzNy40NTg4IDcwLjk5MTJDMzcuNDAyMSA3MC43MjcyIDM3LjM1MDYgNzAuNDYyMSAzNy4zMDUyIDcwLjE5NlY3MC41MDM0WiIgZmlsbD0iI0JERERGMCIvPgo8cGF0aCBkPSJNMzkuOTkxNyA3OS4wMDc4TDQxLjg4NzMgNzkuMzM1OEM0MC40MDIyIDc3Ljg2ODIgMzkuMjY0NiA3Ni4wNzA1IDM4LjQ1NjEgNzQuMTQ1TDM5Ljk5MTcgNzkuMDA3OFoiIGZpbGw9IiNCRERERjAiLz4KPHBhdGggZD0iTTU4LjMzMTUgMzkuNTY4MkM1MC4wMTc4IDQwLjUyMTEgNDguODcxIDMzLjMxNjEgNDUuMzk4NCAzMS4zNDgzQzQzLjMzNTcgMzAuMTc5OCA0MC44Njc3IDMxLjc3MDIgMzkuMjAzMSAzMy4yNTQzQzQwLjAyNjEgMzMuMjcwOCA0MC44NDA5IDMzLjc1MDMgNDEuMTExMSAzNC42OTRDNDEuNTA4MiAzNi4wODIyIDQxLjkxNzYgMzcuNDcwNCA0MS45ODY3IDM4LjkyMTVDNDIuMDQ4NiA0MC4yMiA0Mi4xMTk4IDQxLjUxODQgNDIuMTk4MiA0Mi44MTY5QzQyLjQ2OTQgNDcuMzIzOSA0Mi42NjU0IDUxLjgzNzEgNDIuODk1MyA1Ni4zNDcxQzQzLjAxMTkgNTguNjM1NyA0My4xMjMzIDYwLjkyNDMgNDMuMjE0IDYzLjIxMzlDNDMuMjgyMSA2NC45MzIxIDQzLjI5MjQgNjYuNjU4NiA0My40ODYzIDY4LjM2ODVDNDMuNjc2MSA2OS41NTY2IDQzLjk3MSA3MC43MjIxIDQ0LjQwNDIgNzEuODQ1MkM0NC43NTA3IDcyLjU5MDkgNDUuMTYyMiA3My4zMDA0IDQ1LjY0MDggNzMuOTY4N0M0Ni4xNCA3NC41NjQ5IDQ2LjY5MTcgNzUuMTA1MyA0Ny4yNzk2IDc1LjYxODlDNDcuNDM3NCA3NS43NTYxIDQ3LjU5NDIgNzUuODkzMiA0Ny43NTYxIDc2LjAyNTJDNDcuNzYwMiA3Ni4wMjgzIDQ3Ljc2NTQgNzYuMDMxNCA0Ny43Njg1IDc2LjAzNDVDNDguMTQyOCA3Ni4zMDY4IDQ4LjUyOTYgNzYuNTYyNiA0OC45MjY3IDc2LjgwMThDNDkuMzU4OCA3Ny4wNjI4IDQ5LjgwMjMgNzcuMzA0MSA1MC4yNTQgNzcuNTI3OUM1MC40Njg1IDc3LjYzNDEgNTAuNjg1MSA3Ny43MzczIDUwLjkwMjcgNzcuODM2M0M1MC45NzM5IDc3Ljg2ODMgNTEuMDQ1IDc3Ljg5OTIgNTEuMTE2MiA3Ny45MzEyQzUyLjY0MjYgNzguNTM0NSA1NC4zMTk2IDc4Ljg1NTMgNTUuMTY4NCA4MC40MjVDNTUuMzkwMSA4MC44MzU0IDU1LjQ4OTEgODEuMjY3NiA1NS40Nzg4IDgxLjY4NzNMNTguMDQ3OSA4Mi4xMzE4TDY3LjQyMjggNzUuODgxOUw2OC41NTUzIDM3LjU0OThMNjguODY2NyAzMi40NDU3QzY4Ljg2NjcgMzIuNDQ1NyA2NS4zNTE5IDM4Ljc2MjcgNTguMzMyNSAzOS41NjcxTDU4LjMzMTUgMzkuNTY4MloiIGZpbGw9IiNCRERERjAiLz4KPHBhdGggZD0iTTM3LjkzOTYgNzIuNzcxM0MzOC4wOTMzIDczLjIzNDQgMzguMjY1NSA3My42OTIzIDM4LjQ1NTMgNzQuMTQ0TDM3LjQ1OSA3MC45OTEyQzM3LjU4NzkgNzEuNTg5NCAzNy43NDQ3IDcyLjE4MzUgMzcuOTM4NiA3Mi43NzEzSDM3LjkzOTZaIiBmaWxsPSIjQkREREYwIi8+CjxwYXRoIGQ9Ik00Mi43MjMxIDgwLjA5NTlDNDQuMTQ4NCA4MS4yODQgNDUuNzI1MyA4Mi4xNjI3IDQ3LjQyOTEgODIuODgxNUM0OC4yOTI0IDgzLjI0NTYgNDkuMTYzOCA4My41NzQ2IDUwLjA2MjEgODMuODQzOEM1MS40OTM3IDg0LjI3MjggNTIuOTU1MSA4NC42MDI4IDU0LjMwMyA4My43MjQxQzU1LjAzNjMgODMuMjQ1NiA1NS40NTgyIDgyLjQ4ODYgNTUuNDc4OCA4MS42ODcyTDQxLjg4NzcgNzkuMzM0N0M0Mi4xNTQ4IDc5LjU5ODcgNDIuNDMzMyA3OS44NTM1IDQyLjcyNDEgODAuMDk0OEw0Mi43MjMxIDgwLjA5NTlaIiBmaWxsPSIjQkREREYwIi8+CjxwYXRoIGQ9Ik00My41MjU2IDY4LjcxNEM0My41MTEyIDY4LjU5OTUgNDMuNDk5OCA2OC40ODQgNDMuNDg2NCA2OC4zNjk1QzQzLjQ1OTYgNjguMjAwNCA0My40MzM4IDY4LjAzMDIgNDMuNDExMSA2Ny44NjExQzQzLjQ0OTMgNjguMTQ1NyA0My40ODc1IDY4LjQzMDQgNDMuNTI1NiA2OC43MTVWNjguNzE0WiIgZmlsbD0iI0JERERGMCIvPgo8cGF0aCBkPSJNNDcuNzU4MSA3Ni4wMzQ0QzQ4LjIyNzQgNzYuMzk3NCA0Ny45MTE4IDc2LjE1MyA0Ny44MDM1IDc2LjA2NTNDNDcuNzg4IDc2LjA1MTkgNDcuNzcyNiA3Ni4wMzg1IDQ3Ljc1NjEgNzYuMDI2MUM0Ny42MzEzIDc1LjkzNDMgNDcuMjgxNiA3NS42NjYyIDQ3Ljc1ODEgNzYuMDM0NFoiIGZpbGw9IiNCRERERjAiLz4KPHBhdGggZD0iTTQ0LjU0ODQgNzIuMjEyM0M0NC40OTc5IDcyLjA5MDYgNDQuNDUxNSA3MS45Njg5IDQ0LjQwNCA3MS44NDYyQzQ0LjM0MjEgNzEuNzE0MSA0NC4yODMzIDcxLjU4MTEgNDQuMjI1NiA3MS40NDdDNDQuMzMyOCA3MS43MDE4IDQ0LjQ0MTEgNzEuOTU3NSA0NC41NDg0IDcyLjIxMjNaIiBmaWxsPSIjQkREREYwIi8+CjxwYXRoIGQ9Ik00NS45MTM4IDc0LjMzOUM0NS44MTk5IDc0LjIxNzMgNDUuNzI5MiA3NC4wOTQ2IDQ1LjYzOTQgNzMuOTY5OEM0NS41NjMxIDczLjg3OCA0NS40ODc4IDczLjc4NjIgNDUuNDEzNiA3My42OTI0QzQ1LjU4MDcgNzMuOTA3OSA0NS43NDY3IDc0LjEyMzUgNDUuOTEzOCA3NC4zMzlaIiBmaWxsPSIjQkREREYwIi8+CjxwYXRoIGQ9Ik01MS4yNjc3IDc3Ljk5ODFDNTEuMjE3MiA3Ny45NzU0IDUxLjE2NjcgNzcuOTUyNyA1MS4xMTYxIDc3LjkzMTFDNTEuMDk1NSA3Ny45MjI4IDUxLjA3NDkgNzcuOTE0NiA1MS4wNTQyIDc3LjkwNjNDNTAuNDc5OCA3Ny42NzUzIDUxLjU1NzUgNzguMTMxMiA1MS4yNjc3IDc3Ljk5ODFaIiBmaWxsPSIjQkREREYwIi8+CjxwYXRoIGQ9Ik00NC4zNjc3IDQ3LjYzOTVDNDQuODkxMiA0Ny42Mzk1IDQ1LjMxNTUgNDcuMjE1MiA0NS4zMTU1IDQ2LjY5MTdDNDUuMzE1NSA0Ni4xNjgyIDQ0Ljg5MTIgNDUuNzQzOSA0NC4zNjc3IDQ1Ljc0MzlDNDMuODQ0MyA0NS43NDM5IDQzLjQxOTkgNDYuMTY4MiA0My40MTk5IDQ2LjY5MTdDNDMuNDE5OSA0Ny4yMTUyIDQzLjg0NDMgNDcuNjM5NSA0NC4zNjc3IDQ3LjYzOTVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNDguMjMyNSA0NS41MzIzQzQ4Ljg2MjQgNDUuNTMyMyA0OS4zNzMxIDQ1LjAyMTYgNDkuMzczMSA0NC4zOTE2QzQ5LjM3MzEgNDMuNzYxNyA0OC44NjI0IDQzLjI1MSA0OC4yMzI1IDQzLjI1MUM0Ny42MDI1IDQzLjI1MSA0Ny4wOTE4IDQzLjc2MTcgNDcuMDkxOCA0NC4zOTE2QzQ3LjA5MTggNDUuMDIxNiA0Ny42MDI1IDQ1LjUzMjMgNDguMjMyNSA0NS41MzIzWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTUzLjA4NzkgMjcuMTg2OEg1My4wODU5QzQ5LjcxNDQgMjcuMTg2OCA0Ni4wMzk3IDI2Ljc1NjggNDIuNzQwNCAyNS45NzcxQzM5LjYwOTMgMjUuMjM3NiAzNy4zMjQ4IDI0LjI5NyAzNi40NzMgMjMuMzk3N0MzNi4xODkzIDIzLjA5NzUgMzYuMDUzMiAyMi43OTMzIDM2LjA2OTcgMjIuNDkyMUMzNi4xMjg1IDIxLjQxOTUgMzguMTM1NSAyMC41ODczIDQyLjIwNDEgMTkuOTQ2OEM0NS4zNjQyIDE5LjQ0OTcgNDkuNTI0NiAxOS4xNDIzIDUzLjA4NjkgMTkuMTQyM0M1My4xMTk5IDE5LjE0MjMgNTMuMTUyOSAxOS4xNDIzIDUzLjE4NTkgMTkuMTQyM0M1Ni43MjY1IDE5LjE0NzUgNjAuODc1NiAxOS40NiA2NC4wMTYxIDE5Ljk1ODFDNjUuNzg2OSAyMC4yMzg3IDY3LjE5NTcgMjAuNTY2NiA2OC4yMDM0IDIwLjkzMTdDNjkuNDQ4MiAyMS4zODI0IDcwLjA2OTEgMjEuODk0IDcwLjEwMjEgMjIuNDkzMkM3MC4xMTg2IDIyLjc5NDMgNjkuOTgzNSAyMy4wOTg2IDY5LjY5ODggMjMuMzk4N0M2OC44NDY5IDI0LjI5OCA2Ni41NjM1IDI1LjIzODYgNjMuNDMzNCAyNS45NzgxQzYwLjEzNDEgMjYuNzU3OCA1Ni40NjA1IDI3LjE4NzkgNTMuMDg3OSAyNy4xODc5VjI3LjE4NjhaTTUzLjA4NTkgMTkuNzYxMUM0OS41NTM1IDE5Ljc2MTEgNDUuNDMwMiAyMC4wNjU0IDQyLjI5OSAyMC41NTg0QzM3LjAxNTQgMjEuMzkwNyAzNi42OTc4IDIyLjM0NDcgMzYuNjg3NSAyMi41MjcyQzM2LjY3OTIgMjIuNjgxOSAzNi44MTAyIDIyLjg1NTIgMzYuOTIxNiAyMi45NzM4QzM4LjQ2MjQgMjQuNjAyMyA0Ni4wMTYgMjYuNTY5MSA1My4wODQ5IDI2LjU2OTFINTMuMDg2OUM1Ni40MTMgMjYuNTY5MSA2MC4wMzYxIDI2LjE0NTIgNjMuMjkgMjUuMzc2OEM2Ni4yNjEzIDI0LjY3NDUgNjguNDg5MSAyMy43NzYyIDY5LjI0ODEgMjIuOTczOEM2OS4zNTk1IDIyLjg1NjIgNjkuNDkwNSAyMi42ODI5IDY5LjQ4MjIgMjIuNTI4MkM2OS40NzE5IDIyLjM0NjcgNjkuMTU3NCAyMS40MDEgNjMuOTE3MSAyMC41NzA3QzYwLjgwNjUgMjAuMDc3OCA1Ni42OTM1IDE5Ljc2ODQgNTMuMTgyOCAxOS43NjMyQzUzLjE0OTggMTkuNzYzMiA1My4xMTc5IDE5Ljc2MzIgNTMuMDg0OSAxOS43NjMyTDUzLjA4NTkgMTkuNzYxMVoiIGZpbGw9IiM0MjJFODMiLz4KPHBhdGggZD0iTTU1LjE2NzEgODAuNDI0OUM1NC4zMTgzIDc4Ljg1NTIgNTIuNjQxMyA3OC41MzM0IDUxLjExNDkgNzcuOTMxMUM1MS4xNjU0IDc3Ljk1MjggNTEuMjE2IDc3Ljk3NTUgNTEuMjY2NSA3Ny45OTgxQzUxLjU1NjMgNzguMTMxMiA1MC40Nzg2IDc3LjY3NTMgNTEuMDUzIDc3LjkwNjRDNTEuMDczNyA3Ny45MTQ2IDUxLjA5NDMgNzcuOTIyOSA1MS4xMTQ5IDc3LjkzMTFDNTEuMDQzNyA3Ny45MDAyIDUwLjk3MjYgNzcuODY5MiA1MC45MDE0IDc3LjgzNjJDNTAuNjgzOCA3Ny43MzcyIDUwLjQ2NzIgNzcuNjM0MSA1MC4yNTI3IDc3LjUyNzlDNDkuODAxIDc3LjMwMyA0OS4zNTc1IDc3LjA2MTcgNDguOTI1NCA3Ni44MDE4QzQ4LjUyODMgNzYuNTYyNSA0OC4xNDE1IDc2LjMwNzggNDcuNzY3MiA3Ni4wMzQ1QzQ3Ljc2MyA3Ni4wMzE0IDQ3Ljc1ODkgNzYuMDI4MyA0Ny43NTQ4IDc2LjAyNTJDNDcuNzcwMyA3Ni4wMzg2IDQ3Ljc4NTcgNzYuMDUyIDQ3LjgwMjIgNzYuMDY0NEM0Ny45MTA1IDc2LjE1MiA0OC4yMjYxIDc2LjM5NjUgNDcuNzU2OCA3Ni4wMzM0QzQ3LjI4MTQgNzUuNjY1MiA0Ny42MyA3NS45MzM0IDQ3Ljc1NDggNzYuMDI1MkM0Ny41OTI5IDc1Ljg5MzIgNDcuNDM2MSA3NS43NTYgNDcuMjc4MyA3NS42MTg4QzQ2LjY4OTQgNzUuMTA1MiA0Ni4xMzg3IDc0LjU2NDggNDUuNjM5NSA3My45Njg3QzQ1LjcyODIgNzQuMDkzNSA0NS44MiA3NC4yMTYyIDQ1LjkxMzggNzQuMzM3OUM0NS43NDY3IDc0LjEyMjQgNDUuNTgwNyA3My45MDY4IDQ1LjQxMzYgNzMuNjkxMkM0NS40ODc5IDczLjc4NTEgNDUuNTYzMiA3My44Nzc5IDQ1LjYzOTUgNzMuOTY4N0M0NS4xNjA5IDczLjMwMDQgNDQuNzQ5NCA3Mi41OTA4IDQ0LjQwMjkgNzEuODQ1MUM0NC40NTAzIDcxLjk2NzkgNDQuNDk2OCA3Mi4wODk2IDQ0LjU0NzMgNzIuMjExM0M0NC40NCA3MS45NTY1IDQ0LjMzMTcgNzEuNzAwNyA0NC4yMjQ1IDcxLjQ0NkM0NC4yODIyIDcxLjU4MDEgNDQuMzQxIDcxLjcxMzEgNDQuNDAyOSA3MS44NDUxQzQzLjk2OTcgNzAuNzIzIDQzLjY3NDggNjkuNTU2NiA0My40ODUgNjguMzY4NUM0My40OTg0IDY4LjQ4MjkgNDMuNTA5OCA2OC41OTg1IDQzLjUyNDIgNjguNzEyOUM0My40ODYgNjguNDI4MyA0My40NDc5IDY4LjE0MzYgNDMuNDA5NyA2Ny44NTlDNDMuNDMyNCA2OC4wMjkxIDQzLjQ1ODIgNjguMTk4MyA0My40ODUgNjguMzY3NEM0My4yOTExIDY2LjY1NzUgNDMuMjgwOCA2NC45MzEgNDMuMjEyNyA2My4yMTI4QzQzLjEyMiA2MC45MjMyIDQzLjAxMDYgNTguNjM0NiA0Mi44OTQgNTYuMzQ2MUM0Mi42NjQxIDUxLjgzNiA0Mi40NjcxIDQ3LjMyMjggNDIuMTk2OSA0Mi44MTU4QzQyLjExODUgNDEuNTE3NCA0Mi4wNDIyIDQwLjIxOTkgNDEuOTg1NCAzOC45MjA0QzQxLjk0NjIgMzguMDE0OSA0MS44NTM0IDM1Ljc2NzYgNDEuMDE4IDM0LjMwMjFDNDAuNTMxMiAzMy40NDkxIDQwLjAyNTkgMzMuMjY4NiAzOS4yMDI5IDMzLjI1MzJDMzguMDY2MyAzNC4yNjcgMzcuMzA1MiAzNS4yMzAzIDM3LjMwNTIgMzUuMjMwM1Y3MC4xOTVDMzcuMzUxNiA3MC40NjExIDM3LjQwMjEgNzAuNzI2MSAzNy40NTg4IDcwLjk5MDJMMzguNDU1MSA3NC4xNDNDMzkuMjYyNyA3Ni4wNjg1IDQwLjQwMTMgNzcuODY2MSA0MS44ODY0IDc5LjMzMzdMNTUuNDc3NSA4MS42ODYyQzU1LjQ4NzggODEuMjY2NSA1NS4zODg4IDgwLjgzNDQgNTUuMTY3MSA4MC40MjM5VjgwLjQyNDlaIiBmaWxsPSIjODRDMUUxIi8+CjxwYXRoIGQ9Ik00Mi42MjE4IDQyLjU2NjJDNDMuMzY1NyA0Mi41NjYyIDQzLjk2ODggNDEuOTYzMSA0My45Njg4IDQxLjIxOTNDNDMuOTY4OCA0MC40NzU0IDQzLjM2NTcgMzkuODcyMyA0Mi42MjE4IDM5Ljg3MjNDNDEuODc3OSAzOS44NzIzIDQxLjI3NDkgNDAuNDc1NCA0MS4yNzQ5IDQxLjIxOTNDNDEuMjc0OSA0MS45NjMxIDQxLjg3NzkgNDIuNTY2MiA0Mi42MjE4IDQyLjU2NjJaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNTIuNzk1IDg0LjkyNThDNDcuMDg5NiA4NC45MjU4IDQyLjU0MjQgODMuMTEzNyAzOS43MzE5IDgxLjU5MzVDMzcuOTI5MSA4MC42MTc5IDM2Ljc2OTkgNzguNzM4OCAzNi43MDggNzYuNjg3NEMzNi41MTkzIDcwLjQ0MzYgMzYuMzI4NSA1OS45NTA3IDM2LjE0MzkgNDkuODA0M1Y0OS43ODE2QzM1Ljk1OTMgMzkuNjM4MyAzNS43Njg1IDI5LjE1MDYgMzUuNTgwOCAyMi45MzA1QzM1LjU4MDggMjIuOTE3MSAzNS41ODA4IDIyLjkwMzcgMzUuNTgxOCAyMi44OTAzQzM1LjU3NDYgMjIuODI2NCAzNS41NzI1IDIyLjc3MTcgMzUuNTc1NiAyMi43MjEyQzM1LjYzODUgMjEuNTM2MSAzNy42MzYyIDIwLjY2MzYgNDEuODYzNyAxOS45NzU3QzQ1LjA1ODggMTkuNDU0OSA0OS4yODUzIDE5LjEzMjEgNTIuODkxOSAxOS4xMzIxSDUyLjk5MDlDNTYuNTc4IDE5LjEzODMgNjAuNzgzOCAxOS40NjUyIDYzLjk2NDUgMTkuOTg3MUM2OC4xNTc5IDIwLjY3MzkgNzAuMTQwMiAyMS41NDIzIDcwLjIwMzEgMjIuNzIxMkM3MC4yMDYyIDIyLjc4NTEgNzAuMjAzMSAyMi44NTIxIDcwLjE5MjggMjIuOTI1NEM3MC4xOTQ4IDIyLjk0ODEgNzAuMTk1OSAyMi45Njg3IDcwLjE5NTkgMjIuOTkwM0w2OC44OTEyIDc2LjcwMzlDNjguODIgNzguNzQzOSA2Ny42NjI5IDgwLjYxMzcgNjUuODcyNSA4MS41ODQyQzYzLjA4MTYgODMuMDk3MiA1OC41NjMzIDg0LjkwNTIgNTIuODkwOSA4NC45MjU4SDUyLjc5MzlINTIuNzk1Wk0zNi40MzE2IDIyLjY4MkMzNi42NDEgMjMuMDMyNiAzNi45MTMzIDIzLjM0IDM3LjIzOTIgMjMuNTk2OEwzNy4yNzczIDIzLjYyNjdMMzguMDY3MyA2OC43MTJDMzguMTIzIDcwLjcxNDkgMzguOTA2OSA3Mi42MjcgNDAuMjczNCA3NC4wOTQ2QzQyLjU0NjUgNzYuNTMzNyA0Ni40MTQgNzkuNDc0MSA1MS45Mjc2IDc5LjYyNzhDNTIuMDc3MiA3OS42MzE5IDUyLjIyNTcgNzkuNjM0IDUyLjM3NDIgNzkuNjM0QzU3LjY2NiA3OS42MzQgNjIuNjk2OSA3Ni45ODg2IDY1LjgzMjIgNzIuNTU4OUM2Ni43NDUgNzEuMjY5OCA2Ny4yNjI3IDY5Ljc0ODUgNjcuMzI5NyA2OC4xNTkyQzY3LjUyMjYgNjMuNjA2OCA2Ny43MTc1IDU0LjgxNTYgNjcuOTA3MyA0Ni4zMTMyQzY4LjA4OTggMzguMTIyMyA2OC4yNzg2IDI5LjY2MjEgNjguNDYzMiAyNC45OTMyTDY4LjUxNzkgMjMuNjA2MUw2OC41NTQgMjMuNTc3MkM2OC44NTUxIDIzLjMyOTcgNjkuMTEwOSAyMy4wNDA5IDY5LjMxNDEgMjIuNzIxMkM2OS4zMjQ0IDIyLjcwNDcgNjkuMzM2NyAyMi42ODgyIDY5LjM0OTEgMjIuNjcyN0M2OS4yMTcxIDIyLjQwNzYgNjguNDM2NCAyMS41NTQ3IDYzLjgyOTQgMjAuODAwOEM2MC42ODc5IDIwLjI4NjIgNTYuNTMzNiAxOS45NjMzIDUyLjk4NjggMTkuOTU3Mkg1Mi44MTY2QzQ5LjI5NTYgMTkuOTU3MiA0NS4xNDg2IDIwLjI3NTggNDEuOTkyNyAyMC43ODk1QzM3LjMyNDggMjEuNTQ5NiAzNi41NTEzIDIyLjQxNTkgMzYuNDI0NCAyMi42NzM3QzM2LjQyNjUgMjIuNjc2OCAzNi40Mjc1IDIyLjY3ODkgMzYuNDI5NiAyMi42ODJIMzYuNDMxNloiIGZpbGw9IiM0MjJFODMiLz4KPHBhdGggZD0iTTUyLjg5MiAxOS4yMzUxQzUyLjkyNSAxOS4yMzUxIDUyLjk1OCAxOS4yMzUxIDUyLjk5MSAxOS4yMzUxQzU2LjU3MjkgMTkuMjQxMyA2MC43NzE1IDE5LjU2ODIgNjMuOTQ4MSAyMC4wODhDNjguMDI5MSAyMC43NTYzIDcwLjA0MTMgMjEuNjE5NiA3MC4xMDExIDIyLjcyNTJDNzAuMTA0MiAyMi43OTEyIDcwLjA5OSAyMi44NTcyIDcwLjA4ODcgMjIuOTIzMkM3MC4wOTE4IDIyLjk0MzggNzAuMDkyOCAyMi45NjU1IDcwLjA5MjggMjIuOTg3MUw2OC43ODgyIDc2LjcwMDdDNjguNzE4IDc4LjcwNDYgNjcuNTgyNSA4MC41Mzk0IDY1LjgyNDEgODEuNDkyM0M2My4wNDM2IDgzLjAwMDIgNTguNTQyOCA4NC44MDA5IDUyLjg5MSA4NC44MjE1QzUyLjg1OSA4NC44MjE1IDUyLjgyNzEgODQuODIxNSA1Mi43OTQxIDg0LjgyMTVDNDcuMTEzNCA4NC44MjE1IDQyLjU4NDggODMuMDE4NyAzOS43ODA1IDgxLjUwMTZDMzguMDA5NyA4MC41NDM1IDM2Ljg3MjEgNzguNjk3NCAzNi44MTEzIDc2LjY4MzJDMzYuNjIzNiA3MC40NTM4IDM2LjQzMTcgNTkuOTU0NyAzNi4yNDcxIDQ5LjgwMTFDMzYuMDYyNSAzOS42NTA2IDM1Ljg3MTcgMjkuMTUyNSAzNS42ODQgMjIuOTI3M0MzNS42ODQgMjIuOTEzOSAzNS42ODUgMjIuOTAxNSAzNS42ODYxIDIyLjg4ODFDMzUuNjc5OSAyMi44MzM0IDM1LjY3NTggMjIuNzc5OCAzNS42Nzg5IDIyLjcyNTJDMzUuNzM3NiAyMS42MTIzIDM3Ljc2NjMgMjAuNzQ2IDQxLjg4MDMgMjAuMDc2N0M0NS4wNzc1IDE5LjU1NTggNDkuMjg3NSAxOS4yMzUxIDUyLjg5MiAxOS4yMzUxWk01Mi4zNzY0IDc5LjczN0M1Ny43MTE1IDc5LjczNyA2Mi43NDc2IDc3LjA5ODggNjUuOTE5IDcyLjYxODZDNjYuODQzMSA3MS4zMTI5IDY3LjM2NyA2OS43NzMxIDY3LjQzNTEgNjguMTYzMkM2Ny42Mjc5IDYzLjYwOTggNjcuODIzOSA1NC44MTg2IDY4LjAxMjYgNDYuMzE1MVY0Ni4zMDU5QzY4LjE5NTIgMzguMTIzMiA2OC4zODM5IDI5LjY2MyA2OC41Njg1IDI0Ljk5NjJMNjguNjIyMSAyMy42NTU0QzY4LjkyNjQgMjMuNDA0OCA2OS4xOTI1IDIzLjEwNjggNjkuNDAzOSAyMi43NzU3QzY5LjQyMzUgMjIuNzQ1OCA2OS40NDYyIDIyLjcyIDY5LjQ3MyAyMi42OTczQzY5LjM5MDUgMjIuNDA3NSA2OC43Mjk0IDIxLjQ5NzkgNjMuODQ5MSAyMC42OTg2QzYwLjcwMjQgMjAuMTgyOSA1Ni41NDIgMTkuODU5IDUyLjk5MSAxOS44NTM5QzUyLjkzNDMgMTkuODUzOSA1Mi44Nzc2IDE5Ljg1MzkgNTIuODIwOSAxOS44NTM5QzQ5LjI2MDcgMTkuODUzOSA0NS4xMjYgMjAuMTc1NyA0MS45ODA0IDIwLjY4ODJDMzcuMTA2MiAyMS40ODAzIDM2LjQwNDkgMjIuMzg2OSAzNi4zMSAyMi42ODhDMzYuMzIyNCAyMi43MDI1IDM2LjMzMzggMjIuNzE3OSAzNi4zNDMgMjIuNzM0NEMzNi41NTk2IDIzLjA5NjQgMzYuODQ0MyAyMy40MTcyIDM3LjE3NTMgMjMuNjc4MUwzNy45NjQzIDY4LjcxNUMzOC4wMjEgNzAuNzQ0NyAzOC44MTQxIDcyLjY4MDUgNDAuMTk4MiA3NC4xNjU2QzQyLjQ4NDcgNzYuNjE5MiA0Ni4zNzYgNzkuNTc3MSA1MS45MjU3IDc5LjczMDhDNTIuMDc2MiA3OS43MzQ5IDUyLjIyNTggNzkuNzM3IDUyLjM3NTMgNzkuNzM3TTUyLjg5MiAxOS4wMjg4QzQ5LjI4MDMgMTkuMDI4OCA0NS4wNDc2IDE5LjM1MjcgNDEuODQ2MyAxOS44NzM1QzM3LjU2NDIgMjAuNTcwNyAzNS41Mzg2IDIxLjQ3MzEgMzUuNDcyNiAyMi43MTQ4QzM1LjQ2OTUgMjIuNzY5NSAzNS40NzE2IDIyLjgyNjIgMzUuNDc4OCAyMi44OTEyQzM1LjQ3ODggMjIuOTA0NiAzNS40Nzc3IDIyLjkxOSAzNS40Nzc3IDIyLjkzMzVDMzUuNjY1NCAyOS4xNjE4IDM1Ljg1NjIgMzkuNjU2OCAzNi4wNDE5IDQ5LjgwNjNDMzYuMjI2NSA1OS45NTk5IDM2LjQxODMgNzAuNDYgMzYuNjA2IDc2LjY5MDRDMzYuNjY4OSA3OC43Nzc4IDM3Ljg0NzggODAuNjkxIDM5LjY4MzYgODEuNjg0MkM0Mi41MDQzIDgzLjIxMDUgNDcuMDY5IDg1LjAyODggNTIuNzk1MSA4NS4wMjg4SDUyLjg4NDhINTIuODkyQzU4LjU4NjEgODUuMDA4MiA2My4xMjA5IDgzLjE5NCA2NS45MjIxIDgxLjY3NDlDNjcuNzQ0NSA4MC42ODY4IDY4LjkyMjMgNzguNzg0IDY4Ljk5NDQgNzYuNzA4OUw3MC4yOTkxIDIyLjk5MzNDNzAuMjk5MSAyMi45NzE2IDcwLjI5OTEgMjIuOTUgNzAuMjk3IDIyLjkyODNDNzAuMzA3NCAyMi44NTMgNzAuMzEwNCAyMi43ODI5IDcwLjMwNzQgMjIuNzE2OUM3MC4yNDEzIDIxLjQ4MjQgNjguMjMxMyAyMC41ODMgNjMuOTgyMSAxOS44ODY5QzYwLjc5NTIgMTkuMzYzIDU2LjU4NDIgMTkuMDM1IDUyLjk5MSAxOS4wMjg4SDUyLjg5MlpNMzYuNTQ3MiAyMi42NzI2QzM2LjcyMjYgMjIuNDExNiAzNy42MDg1IDIxLjYwODIgNDIuMDEyNCAyMC44OTE0QzQ1LjE2MzEgMjAuMzc4OCA0OS4zMDQgMjAuMDYwMiA1Mi44MTk4IDIwLjA2MDJINTIuOTg5QzU2LjUzMDYgMjAuMDY2MyA2MC42Nzg3IDIwLjM4OTIgNjMuODE1IDIwLjkwMjhDNjguMTQ2NyAyMS42MTIzIDY5LjA0NSAyMi4zOTcyIDY5LjIyODYgMjIuNjY3NEM2OS4wMzA1IDIyLjk3NzggNjguNzgzIDIzLjI1NzMgNjguNDkwMSAyMy40OTg3TDY4LjQxOSAyMy41NTc1TDY4LjQxNDggMjMuNjQ5Mkw2OC4zNjEyIDI0Ljk5QzY4LjE3NTYgMjkuNjU5OSA2Ny45ODY4IDM4LjEyMTEgNjcuODA1MyA0Ni4zMDI4VjQ2LjMxMjFDNjcuNjE1NSA1NC44MTM0IDY3LjQyMDYgNjMuNjA0NiA2Ny4yMjc3IDY4LjE1NkM2Ny4xNjE3IDY5LjcyNTcgNjYuNjUwMiA3MS4yMjg0IDY1Ljc0OTggNzIuNTAxQzY0LjIxNDIgNzQuNjcxIDYyLjE3ODMgNzYuNDYxNCA1OS44NjI5IDc3LjY3NzRDNTcuNTUxNyA3OC44OTEzIDU0Ljk2MyA3OS41MzI4IDUyLjM3NjQgNzkuNTMyOEM1Mi4yMjQ3IDc5LjUzMjggNTIuMDgwNCA3OS41MzA3IDUxLjkzMTggNzkuNTI2NkM0Ni40NTMzIDc5LjM3MzkgNDIuNjA5NSA3Ni40NTIxIDQwLjM0OTggNzQuMDI2NEMzOC45OTk4IDcyLjU3NzQgMzguMjI2MyA3MC42OSAzOC4xNzA2IDY4LjcxMDhMMzcuMzgyNiAyMy42NzRMMzcuMzgwNiAyMy41NzZMMzcuMzAzMiAyMy41MTUyQzM3LjAwMSAyMy4yNzY5IDM2Ljc0NjMgMjIuOTkzMyAzNi41NDcyIDIyLjY3MTVWMjIuNjcyNloiIGZpbGw9IiM0MjJFODMiLz4KPHBhdGggZD0iTTUzLjA4NTggMTkuNzYxQzQ5LjU1MzQgMTkuNzYxIDQ1LjQzMDEgMjAuMDY1MiA0Mi4yOTg5IDIwLjU1ODJDMzcuMDE1NCAyMS4zOTA1IDM2LjY5NzcgMjIuMzQ0NSAzNi42ODc0IDIyLjUyNzFDMzYuNjc5MSAyMi42ODE4IDM2LjgxMDEgMjIuODU1IDM2LjkyMTUgMjIuOTczNkMzOC40NjIzIDI0LjYwMjEgNDYuMDE1OSAyNi41Njg5IDUzLjA4NDggMjYuNTY4OUg1My4wODY4QzU2LjQxMjkgMjYuNTY4OSA2MC4wMzYgMjYuMTQ1IDYzLjI4OTkgMjUuMzc2N0M2Ni4yNjEyIDI0LjY3NDMgNjguNDg5IDIzLjc3NiA2OS4yNDggMjIuOTczNkM2OS4zNTk0IDIyLjg1NjEgNjkuNDkwNCAyMi42ODI4IDY5LjQ4MjEgMjIuNTI4MUM2OS40NzE4IDIyLjM0NjYgNjkuMTU3MyAyMS40MDA4IDYzLjkxNyAyMC41NzA2QzYwLjgwNjUgMjAuMDc3NiA1Ni42OTM0IDE5Ljc2ODIgNTMuMTgyNyAxOS43NjNDNTMuMTQ5NyAxOS43NjMgNTMuMTE3OCAxOS43NjMgNTMuMDg0OCAxOS43NjNMNTMuMDg1OCAxOS43NjFaIiBmaWxsPSJ3aGl0ZSIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzY3OV82NDU3Ij4KPHJlY3Qgd2lkdGg9IjM0LjgzNjgiIGhlaWdodD0iNjYiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNS40NzE3IDE5LjAyODgpIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==");
+}
+
+.columns.instructions-cards > .columns-item .columns-item-content {
+  flex: 1 1 auto;
+}
+
+.columns.instructions-cards .heading-2,
+.columns.instructions-cards h3 {
+  margin: 0 0 var(--spacing-08, 0.8rem);
+  font-family: var(--body-font-family, "Lato", sans-serif);
+
+  /* Live: Lato 18px (not 24px). */
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--linz-dark-purple, #422e83);
+}
+
+/* Body copy: live uses 16px with tight 8px paragraph rhythm (not the 18px /
+   30px gap the base columns rule applies). Heading is an h3, so all <p> here
+   are body copy. */
+
+.columns.instructions-cards > .columns-item .columns-item-content p {
+  margin: 0 0 var(--spacing-08, 0.8rem);
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.columns.instructions-cards > .columns-item .columns-item-content p:last-child {
+  margin-bottom: 0;
+}
+
+.columns.instructions-cards > .columns-item .columns-item-content p.footnote {
+  font-size: var(--font-size-12, 1.2rem);
+}
+
+/* Below 1000px: icon centers above the text (live keeps the stacked column
+   layout from mobile all the way to its ~1000px desktop breakpoint). */
+
+@media (width <= 999px) {
+  body main .section.instructions-panel.columns-container .columns.instructions-cards {
+    padding-left: 0;
+    gap: var(--spacing-50, 5rem);
+  }
+
+  body main .section.instructions-panel.columns-container .columns.instructions-cards > .columns-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: var(--spacing-40, 4rem);
+  }
+
+  .section.instructions-panel .columns.instructions-cards > .columns-item::before {
+    margin-left: 0;
+    margin-top: calc(-1 * var(--spacing-40, 4rem));
   }
 }

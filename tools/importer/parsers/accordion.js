@@ -2,70 +2,68 @@
 /* global WebImporter */
 
 /**
- * Parser for accordion variant.
- * Base block: accordion
- * Source: https://www.linzess.com/savings-card
- * Selector: .abbv-accordion.savings-accordion.abbv-accordion-single
+ * Parser: accordion
+ * Selector: .abbv-accordion-container
  *
- * XWalk model: accordion (parent) + accordion-item (child)
- * Parent config rows (14 rows, single value in col 0):
- *   0: blockHeading, 1: expandAllLabel, 2: collapseAllLabel,
- *   3: expandAllIcon, 4: collapseAllIcon, 5: expandIcon, 6: collapseIcon,
- *   7-10: icon images, 11-12: aria labels, 13: analyticsId
- * Child item rows (7 columns each):
- *   col 0: summary, col 1: text, col 2: fragmentPath,
- *   col 3: ariaExpandLabel, col 4: ariaCollapseLabel, col 5: anchorId, col 6: image
+ * XWalk container block: NO parent config rows (those are JCR node properties).
+ * Only item rows with 7 columns matching accordion-item model:
+ * summary | text | fragmentPath | ariaExpandLabel | ariaCollapseLabel | anchorId | image
+ *
+ * Skipped per hinting rules: classes_defaultOpen (classes prefix), imageAlt (collapsed suffix)
  */
 export default function parse(element, { document }) {
-  const blades = element.querySelectorAll('.abbv-accordion-blade');
+  if (element.dataset && element.dataset.accordionProcessed) return;
+  if (!element.closest || !element.parentElement) return;
 
-  const cells = [];
+  const section = element.closest('.abbv-container') || element.parentElement;
+  const allContainers = section.querySelectorAll('.abbv-accordion-container');
 
-  // 14 parent config rows
-  cells.push(['']);            // 0: blockHeading
-  cells.push(['Expand All']); // 1: expandAllLabel
-  cells.push(['Collapse All']); // 2: collapseAllLabel
-  cells.push(['plus']);        // 3: expandAllIcon
-  cells.push(['minus']);       // 4: collapseAllIcon
-  cells.push(['plus']);        // 5: expandIcon
-  cells.push(['minus']);       // 6: collapseIcon
-  cells.push(['']);            // 7: expandAllIconImage
-  cells.push(['']);            // 8: collapseAllIconImage
-  cells.push(['']);            // 9: expandIconImage
-  cells.push(['']);            // 10: collapseIconImage
-  cells.push(['']);            // 11: ariaExpandAllLabel
-  cells.push(['']);            // 12: ariaCollapseAllLabel
-  cells.push(['']);            // 13: analyticsId
+  if (!allContainers || allContainers.length === 0) return;
 
-  // Child item rows (7 columns each)
-  blades.forEach((blade) => {
-    const titleEl = blade.querySelector('.abbv-accordion-blade-text');
-    const contentEl = blade.querySelector('.abbv-accordion-content .abbv-rich-text, .abbv-accordion-content .rich-text, .abbv-accordion-content');
+  const itemRows = [];
+  allContainers.forEach((container) => {
+    const questionEl = container.querySelector('.abbv-accordion-blade-text');
+    const answerContainer = container.querySelector('.abbv-accordion-content .abbv-rich-text')
+      || container.querySelector('.abbv-accordion-content .rich-text');
 
     const summaryFrag = document.createDocumentFragment();
     summaryFrag.appendChild(document.createComment(' field:summary '));
-    if (titleEl) {
-      const text = document.createTextNode(titleEl.textContent.trim());
-      summaryFrag.appendChild(text);
+    if (questionEl) {
+      summaryFrag.appendChild(questionEl.cloneNode(true));
     }
 
     const textFrag = document.createDocumentFragment();
     textFrag.appendChild(document.createComment(' field:text '));
-    if (contentEl) {
-      textFrag.appendChild(contentEl.cloneNode(true));
+    if (answerContainer) {
+      textFrag.appendChild(answerContainer.cloneNode(true));
     }
 
-    cells.push([
-      summaryFrag,  // col 0: summary
-      textFrag,     // col 1: text
-      '',           // col 2: fragmentPath
-      '',           // col 3: ariaExpandLabel
-      '',           // col 4: ariaCollapseLabel
-      '',           // col 5: anchorId
-      '',           // col 6: image
+    // 7 columns: summary | text | fragmentPath | ariaExpandLabel | ariaCollapseLabel | anchorId | image
+    // Empty cells have no field hints per hinting Rule 4
+    itemRows.push([
+      summaryFrag,
+      textFrag,
+      '',
+      '',
+      '',
+      '',
+      '',
     ]);
+
+    container.setAttribute('data-accordion-processed', 'true');
   });
 
-  const block = WebImporter.Blocks.createBlock(document, { name: 'accordion', cells });
+  const block = WebImporter.Blocks.createBlock(document, { name: 'accordion', cells: itemRows });
   element.replaceWith(block);
+
+  allContainers.forEach((container) => {
+    if (container.parentElement) {
+      const parbase = container.closest('.accordion.parbase')
+        || container.closest('.abbv-accordion')
+        || container;
+      if (parbase && parbase.parentElement) {
+        parbase.remove();
+      }
+    }
+  });
 }
