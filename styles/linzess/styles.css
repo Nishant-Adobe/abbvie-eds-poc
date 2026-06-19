@@ -6864,6 +6864,16 @@ main > .section.otc-intro-section > .default-content-wrapper p:not(.heading-1):n
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
 }
+/* Food Swaps intro has no heading line — the lone paragraph is the body
+   copy, so reset the otc-intro p:first-child heading treatment to body
+   text (the orange arc ::before above it is preserved). */
+main > .section.food-swaps-intro > .default-content-wrapper > p:first-child {
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
 main > .section.otc-intro-section .columns.how-they-work {
   max-width: 99.8rem;
   margin: var(--spacing-40) auto 0;
@@ -7025,10 +7035,43 @@ main > .section.more-like-this-section .columns.more-like-this {
     justify-content: center;
   }
 }
+/* The base columns grid pins a single fixed row height (~273px), which
+   stretches the image paragraph and leaves a large empty gap before the
+   title. Switch to flexbox so each card sizes to its content and the
+   title/link sit directly under the image (matching live). */
+main > .section.more-like-this-section .columns.more-like-this {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: auto;
+}
+@media (width >= 768px) {
+  main > .section.more-like-this-section .columns.more-like-this {
+    flex-direction: row;
+    justify-content: center;
+  }
+  main > .section.more-like-this-section .columns.more-like-this > .columns-item {
+    flex: 0 1 30rem;
+  }
+}
 main > .section.more-like-this-section .columns.more-like-this .columns-item {
   overflow: hidden;
+  align-self: stretch;
   background: var(--color-brand-primary-lighter);
   border-radius: var(--linz-rounded-corner);
+}
+/* The card content lives in .columns-item-image; make it a flex column so
+   the image keeps its natural height and the title/link flow directly
+   below it (instead of the picture paragraph stretching and pushing the
+   text out of the clipped card). pad-bottom keeps the link off the edge. */
+main > .section.more-like-this-section .columns.more-like-this .columns-item > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: var(--spacing-20);
+}
+main > .section.more-like-this-section .columns.more-like-this .columns-item p:has(picture) {
+  flex: 0 0 auto;
 }
 main > .section.more-like-this-section .columns.more-like-this .columns-item > div {
   margin: 0;
@@ -7084,6 +7127,476 @@ main > .section.more-like-this-section .columns.more-like-this a.button {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* Pro Tip: Read the Label (pantry page) — reuses the purple what-is-linzess
+   band, but live lays it out as TEXT-LEFT / image-RIGHT, with a green checkmark
+   square before each of the 3 checklist sub-headings. The authored column order
+   is image-first, so we re-order via grid placement and add the checkmark via
+   ::before on the bold sub-heading paragraphs.
+   IMPORTANT: gated on a content column that contains bold sub-headings
+   (:has(p:has(strong))) so these rules ONLY match the pantry checklist layout —
+   the otc-and-prescription-treatments page also uses .what-is-linzess-section
+   but its content column is a <ul> with no bold sub-headings, so it stays
+   image-left and is unaffected. */
+@media (width >= 1024px) {
+  main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) > .columns-item:has(.columns-item-image) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) > .columns-item:has(.columns-item-content) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+/* Normalize all checklist copy to article body size (the shared what-is rule
+   shrinks the last <p> to body-small, which wrongly hits "Serving Sizes").
+   Gated to the checklist layout only (see note above). */
+main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) .columns-item-content p,
+main > .section.what-is-linzess-section .columns.what-is-linzess:has(.columns-item-content p:has(strong)) .columns-item-content p:last-child {
+  margin: var(--spacing-16) 0;
+  font-size: var(--font-size-article-body);
+}
+/* The 3 sub-heading paragraphs (bold, not the intro) get a checkmark icon. */
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child) {
+  position: relative;
+  margin-bottom: var(--spacing-08, 6px);
+  padding-left: var(--spacing-40);
+}
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMzciIHZpZXdCb3g9IjAgMCA0MCAzNyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzM3Ml80NzIyMikiPgo8cGF0aCBkPSJNMzEuNjY4NSAzNi43NTQ0SDEuOTM1NDZDMS4yNzk0NiAzNi43NTQ0IDAuNzUgMzYuMjIxNiAwLjc1IDM1LjU2ODlWNS44MzU4OEMwLjc1IDUuMTc5ODkgMS4yODI3OSA0LjY1MDQyIDEuOTM1NDYgNC42NTA0MkgzMS42Njg1QzMyLjMyNDUgNC42NTA0MiAzMi44NTQgNS4xNzk4OSAzMi44NTQgNS44MzU4OFYzNS41Njg5QzMyLjg1NCAzNi4yMjQ5IDMyLjMyMTIgMzYuNzU0NCAzMS42Njg1IDM2Ljc1NDRaTTMuMTI0MjUgMzQuMzgwMUgzMC40ODNWNy4wMjEzNEgzLjEyNDI1VjM0LjM4MDFaIiBmaWxsPSIjOTQ4RUJFIi8+CjxwYXRoIGQ9Ik0xNC43ODIyIDMyLjE1OTFDMTQuNzQ4OSAzMi4xNTkxIDE0LjcxODkgMzIuMTU5MSAxNC42ODU2IDMyLjE1OTFDMTQuMDQ2MyAzMi4xMTkxIDEzLjQ5MzUgMzEuNzAyOSAxMy4yODM3IDMxLjA5NjhDMTEuNDI1NiAyNS43MTU2IDguNjcxNzUgMjAuNjc0MSA1LjEwMjA2IDE2LjExMjFDNC41NjI2IDE1LjQyMjggNC42ODU4MSAxNC40MzA1IDUuMzcxNzggMTMuODkxQzYuMDU3NzUgMTMuMzUxNiA3LjA1MzQgMTMuNDc0OCA3LjU5Mjg1IDE0LjE2MDdDMTAuNjI5OCAxOC4wNDAxIDEzLjEwNzIgMjIuMjQ5MiAxNC45ODg3IDI2LjcxMTNDMjAuMzQ2NSAxNi44NzEzIDI3LjgzNTYgOC4wNjY5NSAzNi44MTk4IDEuMDg3MzlDMzcuNTA5MSAwLjU1MTI2OCAzOC41MDQ3IDAuNjc0NDc1IDM5LjA0MDggMS4zNjcxQzM5LjU3NjkgMi4wNTY0IDM5LjQ1MzcgMy4wNTIwNSAzOC43NjExIDMuNTg4MTdDMjkuMjAwOCAxMS4wMTM5IDIxLjQwMjEgMjAuNTg3NSAxNi4yMDc0IDMxLjI3QzE1Ljk0MSAzMS44MTYxIDE1LjM4ODIgMzIuMTU5MSAxNC43ODU1IDMyLjE1OTFIMTQuNzgyMloiIGZpbGw9IiNEOUQ3RjkiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF8zNzJfNDcyMjIiPgo8cmVjdCB3aWR0aD0iMzguNjI0IiBoZWlnaHQ9IjM2IiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC43NSAwLjc1NDM5NSkiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K') center / contain no-repeat;
+}
+/* Tighten the description that follows each sub-heading. */
+main > .section.what-is-linzess-section .columns.what-is-linzess .columns-item-content p:has(strong):not(:first-child) + p {
+  margin-top: 0;
+  padding-left: var(--spacing-40);
+}
+
+/* Gut-Friendly Diets — full-bleed lavender band behind the 4 diet circles
+   (live wraps this section in .background-light-purple = rgb(217 215 249)). */
+main > .section.gut-diets-section {
+  position: relative;
+}
+main > .section.otc-intro-section.gut-diets-section::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(-50vw + 50%);
+  width: 100vw;
+  height: auto;
+  background: var(--color-brand-primary-lighter);
+  border-radius: 0;
+  transform: none;
+}
+@media (width >= 900px) {
+  main > .section.otc-intro-section.gut-diets-section::before {
+    top: 0;
+    height: auto;
+  }
+}
+/* Sources footnote: the "Sources:" line is the first <p> of its own
+   default-content-wrapper, so the otc-intro p:first-child heading rule
+   wrongly enlarges it to a 40px display heading with an arc divider.
+   Reset it to small bold body copy and remove the arc (live shows it as
+   a plain footnote above the reference list). */
+/* The base columns grid pins a single fixed row height (~291px), but the
+   diet items (circle + caption) are taller (~382px) and overflow downward
+   with align-items:start, colliding with the Sources block below. Let the
+   grid row auto-size to its content. */
+main > .section.gut-diets-section .columns {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-24);
+  height: auto;
+}
+@media (width >= 768px) {
+  main > .section.gut-diets-section .columns {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  main > .section.gut-diets-section .columns > .columns-item {
+    flex: 1 1 0;
+  }
+}
+main > .section.gut-diets-section > .default-content-wrapper:has(ol) > p:first-child {
+  margin: 0 0 var(--spacing-10);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal, 12px);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+  text-align: left;
+}
+main > .section.gut-diets-section > .default-content-wrapper:has(ol) > p:first-child::before {
+  content: none;
+}
+main > .section.gut-diets-section > .default-content-wrapper:has(ol) {
+  max-width: 92rem;
+  margin: var(--spacing-24) auto 0;
+  text-align: left;
+}
+main > .section.gut-diets-section > .default-content-wrapper:has(ol) ol {
+  margin: 0;
+  padding-left: var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal, 12px);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
+/* Food Swaps — two-column "Try These / When Craving These" comparison.
+   Each column is a lavender panel with a purple header pill; each food
+   sits on a white circle. Callout bubble + copy are baked into the
+   -callout PNGs, so the authored <em> duplicate text is hidden. */
+main > .section.food-swaps-section .columns.food-swaps {
+  max-width: 80rem;
+  margin: var(--spacing-40) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24);
+}
+main > .section.food-swaps-section .columns.food-swaps .columns-item {
+  padding: 0 0 var(--spacing-40);
+  background: var(--color-brand-primary-lighter);
+  border-radius: var(--linz-rounded-corner);
+  text-align: center;
+}
+@media (width >= 768px) {
+  main > .section.food-swaps-section .columns.food-swaps {
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: var(--spacing-24);
+  }
+  main > .section.food-swaps-section .columns.food-swaps .columns-item {
+    flex: 1 1 0;
+  }
+}
+main > .section.food-swaps-section .columns.food-swaps .columns-item h3 {
+  margin: 0 0 var(--spacing-24);
+  padding: var(--spacing-15) var(--spacing-20);
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  text-transform: none;
+}
+main > .section.food-swaps-section .columns.food-swaps .columns-item p {
+  margin: 0 auto;
+}
+/* White circle behind each food image. */
+main > .section.food-swaps-section .columns.food-swaps .columns-item p:has(picture) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14rem;
+  height: 14rem;
+  margin: var(--spacing-24) auto 0;
+  background: var(--color-text-on-dark);
+  border-radius: 50%;
+}
+main > .section.food-swaps-section .columns.food-swaps .columns-item picture {
+  display: block;
+}
+main > .section.food-swaps-section .columns.food-swaps .columns-item img {
+  display: block;
+  width: 17rem;
+  height: auto;
+  margin: 0 auto;
+}
+/* Callout copy is baked into the -callout PNG; hide the authored
+   duplicate so it doesn't collide with the image text. */
+main > .section.food-swaps-section .columns.food-swaps .columns-item p:has(picture) em {
+  display: none;
+}
+/* Caption label below each image. */
+main > .section.food-swaps-section .columns.food-swaps .columns-item p:not(:has(picture)) {
+  margin: var(--spacing-10) auto 0;
+  max-width: 26rem;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-body);
+  color: var(--color-brand-primary);
+}
+
+/* Mapping Out a Low FODMAP Diet — full-bleed lavender band behind a single
+   centered infographic. The step labels + descriptions are baked into the
+   infographic PNG (THE FODMAP SWAP, READ THE LABELS, …), so the authored
+   duplicate text column is hidden (live shows only the image). */
+main > .section.fodmap-map-section {
+  position: relative;
+}
+main > .section.otc-intro-section.fodmap-map-section::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(-50vw + 50%);
+  width: 100vw;
+  height: auto;
+  background: var(--color-brand-primary-lighter);
+  border-radius: 0;
+  transform: none;
+}
+/* Single centered column: drop the base 2-col grid, hide the duplicate text
+   column whose copy is already baked into the infographic PNG. */
+main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  background: none;
+  border-radius: 0;
+}
+main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block > .columns-item:has(.columns-item-content) {
+  display: none;
+}
+main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block > .columns-item:has(.columns-item-image) {
+  flex: 0 1 auto;
+  max-width: 64rem;
+  padding: 0;
+}
+main > .section.fodmap-map-section .columns.fodmap-map img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Sources footnote: same as gut-diets — the "Sources:" line is the first <p>
+   of its own wrapper and wrongly inherits the otc-intro display heading. */
+main > .section.fodmap-map-section > .default-content-wrapper:has(ol) > p:first-child {
+  margin: 0 0 var(--spacing-10);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal, 12px);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+  text-align: left;
+}
+main > .section.fodmap-map-section > .default-content-wrapper:has(ol) > p:first-child::before {
+  content: none;
+}
+main > .section.fodmap-map-section > .default-content-wrapper:has(ol) {
+  max-width: 92rem;
+  margin: var(--spacing-24) auto 0;
+  text-align: left;
+}
+main > .section.fodmap-map-section > .default-content-wrapper:has(ol) ol {
+  margin: 0;
+  padding-left: var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal, 12px);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+/* Mobile/tablet (≤984px, matching live's breakpoint): live swaps the wide
+   desktop infographic for a TALL pin-only vertical infographic (558×4705) and
+   renders each step's heading + description as REAL text in the gap below its
+   pin. The desktop PNG has the captions baked in; the mobile one does NOT — so
+   we swap to the mobile asset via background-image (CSS can't change <img> src)
+   and reveal the authored text column, positioning each caption at its pin gap.
+   Pin centers sit at vertical fractions 0.136 / 0.289 / 0.439 / 0.591 / 0.742 /
+   0.893; captions go in the gaps just below each pin. */
+@media (width <= 984px) {
+  main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block {
+    position: relative;
+    display: block;
+    max-width: 34rem;
+    margin: var(--spacing-24) auto 0;
+  }
+  /* Image item becomes the tall pin-only infographic via background-image. */
+  main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block > .columns-item:has(.columns-item-image) {
+    display: block;
+    max-width: none;
+  }
+  main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block .columns-item-image {
+    aspect-ratio: 558 / 4705;
+    background: url('/content/dam/abbvie-eds-poc/linzess/images/4.2.4-m-your-map-to-a-low-fodmap-diet-map-infographic-no-bkg-2x.png') center top / contain no-repeat;
+  }
+  main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block .columns-item-image img {
+    display: none;
+  }
+  /* Reveal the authored text column and overlay it on the infographic. */
+  main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block > .columns-item:has(.columns-item-content) {
+    display: block;
+    position: absolute;
+    inset: 0;
+    padding: 0;
+  }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content {
+    position: relative;
+    height: 100%;
+  }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0 6%;
+    text-align: center;
+  }
+  /* Caption heading (purple) + description (gray), matching live mobile. */
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p strong {
+    display: block;
+    margin-bottom: var(--spacing-8, 6px);
+    font-family: var(--body-font-family);
+    font-size: var(--font-size-h5, 22px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading, 1.2);
+    color: var(--color-text-heading);
+  }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
+    font-family: var(--body-font-family);
+    font-size: var(--font-size-article-body, 16px);
+    line-height: var(--line-height-body);
+    color: var(--color-text-body, #4d4d4f);
+  }
+  /* Each caption sits in the gap just below its pin. */
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(1) { top: 20%; }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(2) { top: 35%; }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(3) { top: 50%; }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(4) { top: 65%; }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(5) { top: 80%; }
+  main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p:nth-child(6) { top: 94.5%; }
+}
+
+/* Recipe / strategy cards (cards-grid-recipe-cards) — live renders these as
+   one rounded off-white panel holding stacked rows; each row is a small
+   image on the LEFT and a purple heading + gray body on the RIGHT. */
+/* Live wraps these cards in a full-WIDTH off-white band (#f4f6fb) with a curved
+   arc top edge (background-off-white-arc), NOT a centered rounded-rectangle
+   panel. Make the band full-bleed; keep the card rows centered with max-width. */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards {
+  position: relative;
+  margin: var(--spacing-40) 0 0;
+  padding: var(--spacing-40) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-40);
+  background: var(--color-background-light, #f4f6fb);
+  border-radius: 0;
+}
+/* Full-bleed: stretch the off-white background edge-to-edge behind the band. */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: calc(-50vw + 50%);
+  width: 100vw;
+  background: var(--color-background-light, #f4f6fb);
+}
+/* Constrain the card rows (and their nesting container) to centered max-width. */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards > .container,
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards > .abbv-image-text {
+  width: 100%;
+  max-width: 92rem;
+  margin-inline: auto;
+  padding-inline: var(--spacing-40);
+}
+/* Some recipe pages nest all cards under a single intermediate container
+   (.abbv-container > .image-text wrappers) so the panel's own flex gap can't
+   separate them — re-apply a column gap at the nesting level. */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-40);
+}
+/* Each card: image-left / content-right row (stacks on mobile). */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  align-items: flex-start;
+}
+@media (width >= 768px) {
+  main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-text {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-32);
+  }
+}
+/* Image column — fixed ~180px, natural aspect. */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-content-container {
+  flex: 0 0 auto;
+}
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-content-container img {
+  display: block;
+  width: 18rem;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--linz-rounded-corner);
+}
+/* Content column — fills remaining width, left-aligned. */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-text-content-container {
+  flex: 1 1 auto;
+  text-align: left;
+}
+/* Card heading: purple, normal-case ~22px (NOT the Bebas display heading). */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-text-display h2 {
+  margin: 0 0 var(--spacing-10);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-h5, 22px);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading, 1.2);
+  color: var(--color-text-heading);
+  text-align: left;
+  text-transform: none;
+}
+/* No orange divider arc above per-card headings (live has none). */
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-text-display h2::before {
+  content: none;
+}
+main > .section.cards-grid-container .cards-grid.cards-grid-recipe-cards .abbv-image-text-display p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+  text-align: left;
+}
+/* Sources footnote in this section: the "Sources:" line is the first <p>
+   of its own wrapper and wrongly inherits the otc-intro heading treatment.
+   Reset to small bold body copy, remove the arc, left-align the list. */
+main > .section.cards-grid-container > .default-content-wrapper:has(ol) > p:first-child {
+  margin: 0 0 var(--spacing-10);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal, 12px);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+  text-align: left;
+}
+main > .section.cards-grid-container > .default-content-wrapper:has(ol) > p:first-child::before {
+  content: none;
+}
+main > .section.cards-grid-container > .default-content-wrapper:has(ol) {
+  max-width: 92rem;
+  margin: var(--spacing-24) auto 0;
+  text-align: left;
+}
+main > .section.cards-grid-container > .default-content-wrapper:has(ol) ol {
+  margin: 0;
+  padding-left: var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-legal, 12px);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+
 main > .section.cta-cards-section .columns.cta-cards {
   max-width: 99.8rem;
   margin: 0 auto;
