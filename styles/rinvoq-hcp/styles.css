@@ -5304,3 +5304,549 @@ main > .section.level-up-disease-control.columns-container:not(.dark):not(.navy)
     line-height: 26.88px;
   }
 }
+
+/* ============================================================
+   RHEUMATOID ARTHRITIS landing (/rheumatoid-arthritis)
+   Hero: full-bleed hiking photo, left-aligned image headline +
+   white eyebrow H2 + 2 plum-pill CTAs; coverage badge top-right.
+   Scoped to .section.ra-hero so no other page is affected.
+   ============================================================ */
+
+/* Contain the bg photo as a cover background (override the homepage
+   3100px-wide marquee rule that .section.hero-container applies). */
+.section.ra-hero .hero.no-padding {
+  overflow: hidden;
+  min-height: 488px;
+}
+
+.section.ra-hero.hero-container .hero.no-padding > div:first-child,
+.section.ra-hero .hero.no-padding > div:first-child {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.section.ra-hero.hero-container .hero.no-padding > div:first-child img,
+.section.ra-hero .hero.no-padding > div:first-child img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: none;
+}
+
+/* Content column: stack headline → eyebrow → CTAs, left-aligned. */
+.section.ra-hero .hero.no-padding .hero-text-container .cmp-container-x-large {
+  display: block;
+  position: relative;
+  min-height: 488px;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 64px 20px;
+}
+
+/* Headline image: desktop PNG ~541px; hide the duplicate mobile SVG. */
+.section.ra-hero .hero.no-padding .cmp-container-x-large > p:first-child {
+  margin: 0 0 24px;
+}
+
+.section.ra-hero .hero.no-padding .cmp-container-x-large > p:first-child img {
+  width: 541px;
+  max-width: 100%;
+  height: auto;
+}
+
+.section.ra-hero .hero.no-padding .cmp-container-x-large > p:first-child picture:nth-of-type(2) {
+  display: none;
+}
+
+/* White eyebrow H2: Graphik Semibold 13px/16.25px. */
+.section.ra-hero .hero.no-padding h2 {
+  max-width: 550px;
+  margin: 0 0 16px;
+  color: #fff;
+  font-family: var(--font-family-semibold);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16.25px;
+  text-transform: none;
+}
+
+.section.ra-hero .hero.no-padding h2 strong {
+  font-family: var(--font-family-semibold);
+  font-weight: 600;
+}
+
+/* ---- Indication callout (plain on live: no border/bg, Semibold 16px label) ---- */
+.section.ra-indication {
+  background: transparent;
+}
+
+/* Raise specificity above base `.text-container.boxed-warning h3:first-of-type`
+   (0,2,1) brushstroke rule — live RA indication heading is plain. */
+.section.ra-indication .text-container.boxed-warning h3,
+.section.ra-indication .text-container.boxed-warning h3:first-of-type,
+.section.ra-indication .text-container.boxed-warning h3:nth-of-type(2) {
+  font-family: var(--font-family-semibold);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--text-color);
+  text-transform: none;
+  margin: 0 0 4px;
+  background: none;
+  padding: 0;
+}
+
+.section.ra-indication .text-container.boxed-warning h3:first-of-type::after,
+.section.ra-indication .text-container.boxed-warning h3:first-of-type::before,
+.section.ra-indication .text-container.boxed-warning h3::after,
+.section.ra-indication .text-container.boxed-warning h3::before {
+  content: none;
+  display: none;
+}
+
+.section.ra-indication .text-container p,
+.section.ra-indication p {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-color);
+  margin: 0 0 16px;
+}
+
+/* CTAs: plum pill buttons stacked, left-aligned. Qualify with a.button so it
+   beats the hero's inherited link color (base-button-decoration-specificity). */
+.section.ra-hero .hero.no-padding .button-container {
+  margin: 0 0 12px;
+}
+
+.section.ra-hero .hero.no-padding .button-container a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-plum);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  padding: 16px 54px 16px 32px;
+  font-family: var(--font-family-medium);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  text-decoration: none;
+}
+
+.section.ra-hero .hero.no-padding .button-container a.button:hover,
+.section.ra-hero .hero.no-padding .button-container a.button:focus {
+  background: var(--color-charcoal);
+  color: #fff;
+}
+
+/* Coverage badge: absolute top-right over the photo. */
+.section.ra-hero .hero.no-padding .hero-badge {
+  display: block;
+  position: absolute;
+  top: 50px;
+  right: 40px;
+  margin: 0;
+  z-index: 2;
+}
+
+.section.ra-hero .hero.no-padding .hero-badge img {
+  width: 298px;
+  height: auto;
+}
+
+/* Tablet/mobile: keep the desktop overlay model (photo as full cover, content
+   overlaid) — robust against the EDS sibling-row DOM. Headline scales to the
+   mobile SVG, badge stays top-right, eyebrow H2 hidden (matches live), CTAs
+   centered. The photo's lower-left is darker, keeping the white headline legible. */
+@media (width < 986px) {
+  .section.ra-hero .hero.no-padding {
+    min-height: 420px;
+  }
+
+  /* Photo stays an absolute full-section cover (inherits desktop rule). */
+  .section.ra-hero .hero.no-padding > div:first-child img {
+    object-position: 70% 50%;
+  }
+
+  .section.ra-hero .hero.no-padding .hero-text-container .cmp-container-x-large {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 420px;
+    padding: 40px 20px;
+  }
+
+  /* Headline image: show mobile SVG, hide desktop PNG. */
+  .section.ra-hero .hero.no-padding .cmp-container-x-large > p:first-child {
+    margin: 0 0 20px;
+  }
+
+  .section.ra-hero .hero.no-padding .cmp-container-x-large > p:first-child picture:first-of-type {
+    display: none;
+  }
+
+  .section.ra-hero .hero.no-padding .cmp-container-x-large > p:first-child picture:nth-of-type(2) {
+    display: inline-block;
+  }
+
+  .section.ra-hero .hero.no-padding .cmp-container-x-large > p:first-child img {
+    width: 300px;
+    max-width: 80%;
+    height: auto;
+  }
+
+  /* Eyebrow H2 hidden below desktop (matches live tablet/mobile). */
+  .section.ra-hero .hero.no-padding h2 {
+    display: none;
+  }
+
+  .section.ra-hero .hero.no-padding .button-container {
+    margin: 0 0 10px;
+  }
+
+  /* Badge top-right, smaller. */
+  .section.ra-hero .hero.no-padding .hero-badge {
+    top: 24px;
+    right: 16px;
+  }
+
+  .section.ra-hero .hero.no-padding .hero-badge img {
+    width: 160px;
+  }
+}
+
+/* ===================================================================
+   BLOCK 3 — BENEFIT CARDS (.section.ra-benefits cards-grid-cta-card)
+   Live: 3-up white cards (377px, 1px #c9c9ca, radius 20px, shadow
+   0 4px 19px), left-aligned content, h3 24/30 600 #46484a with NO
+   brushstroke, disc bullets 16/22.4 #46484a, and a full-width plum
+   bottom bar (#90124a, 64px) that is the "See..." link.
+   =================================================================== */
+
+.section.ra-benefits .cards-grid.cards-grid-cta-card {
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.section.ra-benefits .cards-grid.cards-grid-cta-card > .card-grid-item {
+  flex: 1 1 300px;
+  max-width: 380px;
+}
+
+/* Tablet (601–984px): cards stack full content-width one per row,
+   matching the live site. */
+@media (min-width: 601px) and (max-width: 984px) {
+  .section.ra-benefits .cards-grid.cards-grid-cta-card > .card-grid-item {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Card shell: white, bordered, rounded, content stretched left, room at
+   the bottom for the plum bar (absolutely positioned). */
+.section.ra-benefits .cards-grid.cards-grid-cta-card .grid-card {
+  position: relative;
+  align-items: stretch;
+  text-align: left;
+  padding: 0 0 88px;
+  border: 1px solid #c9c9ca;
+  border-radius: 20px;
+  box-shadow: 0 4px 19px 0 rgb(0 0 0 / 7%);
+  background: #fff;
+}
+
+/* Heading: kill the inherited yellow brushstroke + negative offset. */
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
+  margin: 0;
+  padding: 25px 25px 0;
+  font-family: var(--font-family-semibold);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: #46484a;
+  background-image: none;
+  background-color: transparent;
+}
+
+/* Bullet list area. */
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-2 {
+  margin: 0;
+  padding: 0 25px;
+  text-align: left;
+}
+
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-2 ul {
+  margin: 12px 0 0;
+  padding: 0 0 0 24px;
+  list-style: disc;
+}
+
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-2 li {
+  margin: 0 0 4px;
+  padding: 0;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 22.4px;
+  color: #46484a;
+}
+
+/* "See..." link → full-width plum bottom bar. */
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: none;
+  height: 64px;
+  padding: 0 54px 0 24px;
+  background: var(--color-plum, #90124a);
+  border-radius: 0 0 20px 20px;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a:hover {
+  text-decoration: none;
+}
+
+/* White circle-arrow pinned right inside the plum bar. */
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  transform: translateY(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 18 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18ZM13 8.75L7.53978 14L6 12.5195L9.92044 8.75L6 4.9805L7.53978 3.5L13 8.75Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+/* Collapse the unused trailing cells (line-3 image, line-4 cta). */
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-3:empty,
+.section.ra-benefits .cards-grid.cards-grid-cta-card .card-grid-item-line-4:empty {
+  display: none;
+}
+
+/* -------------------------------------------------------------------
+   BLOCK 4a — ACCESS SUPPORT (default content below the benefit cards)
+   Live: plain "Exceptional Patient and Access Support" heading 24/600
+   #25282a, disc bullets 16/22.4 #46484a, two plain text CTA links
+   (#46484a, 700, plum circle-arrow) sitting side by side.
+   ------------------------------------------------------------------- */
+
+.section.ra-benefits .default-content-wrapper h3 {
+  margin: 0 0 16px;
+  font-family: var(--font-family-semibold);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: #25282a;
+}
+
+.section.ra-benefits .default-content-wrapper ul {
+  margin: 0 0 16px;
+  padding: 0 0 0 24px;
+  list-style: disc;
+}
+
+.section.ra-benefits .default-content-wrapper li {
+  margin: 0 0 4px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 22.4px;
+  color: #46484a;
+}
+
+/* Two CTA paragraphs sit side by side. */
+.section.ra-benefits .default-content-wrapper .button-container {
+  display: inline-block;
+  margin: 0 32px 0 0;
+}
+
+/* Plain text link with plum circle-arrow (override base plum pill). */
+.section.ra-benefits .default-content-wrapper .button-container a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: #46484a;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  text-decoration: none;
+}
+
+.section.ra-benefits .default-content-wrapper .button-container a.button:any-link::after {
+  content: '';
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  margin-left: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18ZM13 8.75L7.53978 14L6 12.5195L9.92044 8.75L6 4.9805L7.53978 3.5L13 8.75Z' fill='%2390124A'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+/* -------------------------------------------------------------------
+   BLOCK 4b — ISI LEAD-IN (.section.ra-isi-leadin)
+   Live: plain paragraph + plain text "Learn more…" link (#46484a, 700,
+   no pill).
+   ------------------------------------------------------------------- */
+
+.section.ra-isi-leadin p {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  color: #46484a;
+}
+
+.section.ra-isi-leadin .button-container a.button:any-link,
+.section.ra-isi-leadin p a.button:any-link {
+  display: inline;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: #46484a;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ===================================================================
+   BLOCK 5 — PRIMARY ENDPOINTS + STUDY CARDS (.section.ra-primary-endpoints)
+   Live study cards are PLAIN (no border/bg/shadow): 4-up flex row,
+   heading strong 16px Graphik Semibold #46484a, body 16/24 #46484a,
+   plain text "See Study Details" link (#46484a, 700, plum arrow).
+   =================================================================== */
+
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card {
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card > .card-grid-item {
+  flex: 1 1 0;
+  max-width: none;
+}
+
+/* Strip the white-card chrome — live study cards are plain text columns. */
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .grid-card {
+  display: block;
+  align-items: stretch;
+  text-align: left;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+}
+
+/* Heading: kill brushstroke; 16px Graphik Semibold #46484a. */
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .card-grid-item-line-1 {
+  margin: 0 0 12px;
+  padding: 0;
+  font-family: var(--font-family-semibold);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  color: #46484a;
+  background-image: none;
+  background-color: transparent;
+}
+
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .card-grid-item-line-2 {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .card-grid-item-line-2 p {
+  margin: 0 0 16px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  color: #46484a;
+}
+
+/* Plain text "See Study Details" link with plum arrow. */
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a {
+  display: inline-flex;
+  align-items: center;
+  max-width: none;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  color: #46484a;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  text-decoration: none;
+}
+
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .card-grid-item-line-2 a::after {
+  content: '';
+  position: static;
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  margin-left: 10px;
+  transform: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18ZM13 8.75L7.53978 14L6 12.5195L9.92044 8.75L6 4.9805L7.53978 3.5L13 8.75Z' fill='%2390124A'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .card-grid-item-line-3:empty,
+.section.ra-primary-endpoints .cards-grid.cards-grid-cta-card .card-grid-item-line-4:empty {
+  display: none;
+}
+
+/* Tablet/mobile: stack study cards full-width. */
+@media (max-width: 984px) {
+  .section.ra-primary-endpoints .cards-grid.cards-grid-cta-card > .card-grid-item {
+    flex-basis: 100%;
+  }
+}
+
+/* Standalone links in the primary-endpoints default content (e.g.
+   "See ACR Response Criteria", "HUMIRA Prescribing Information") are
+   plain text links on live, not plum pills. */
+.section.ra-primary-endpoints .default-content-wrapper .button-container a.button:any-link,
+.section.ra-primary-endpoints .default-content-wrapper p a.button:any-link {
+  display: inline;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  color: #46484a;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
