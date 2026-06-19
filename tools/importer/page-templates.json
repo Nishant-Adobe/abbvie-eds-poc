@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "linzess-healthy-routines-article",
+      "urls": [
+        "https://www.linzess.com/starting-linzess/healthy-routines/keeping-in-touch-with-your-doctor"
+      ],
+      "representativeUrl": "https://www.linzess.com/starting-linzess/healthy-routines/keeping-in-touch-with-your-doctor",
+      "coverageGaps": [],
+      "description": "Linzess DTC healthy-routines article page: behind-nav editorial hero, white intro + 4 icon cards, dark-purple relief/side-effects band (2-col text + patient illustration), light-purple conversation band, more-like-this article cards, cta-cards, inline ISI + safety-bar. Same family as otc-and-prescription-treatments and tackling-ibs-c-triggers.",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            "div.image-text-v2.parbase > div.hero-container.abbv-image-text-v2.abbv-image-swap"
+          ],
+          "section": "hero-container"
+        },
+        {
+          "name": "columns",
+          "instances": [
+            "div.abbv-container.linzess-keep-touch-doctor.background-white > div.columns.parbase",
+            "div.abbv-container.background-dark-purple.keep-in-touch-doctor > div.columns.parbase",
+            "div.abbv-container.background-dark-purple.keep-in-touch-doctor > div.image-text-v2.parbase",
+            "div.abbv-container.background-light-purple > div.image-text-v2.parbase",
+            "div.container.parbase:nth-of-type(5) div.flexbox-v2.parbase",
+            "div.container.parbase:nth-of-type(6) .abbv-container"
+          ]
+        },
+        {
+          "name": "safety-bar",
+          "instances": [
+            "div.abbv-inline-use-isi",
+            "div.abbv-fixed-isi"
+          ],
+          "section": "split"
+        }
+      ],
+      "sections": [
+        {
+          "id": "hero",
+          "name": "Hero",
+          "selector": "section > div.image-text-v2.parbase",
+          "style": null,
+          "blocks": [
+            "hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "touchpoints",
+          "name": "Touchpoints intro + icon cards",
+          "selector": "div.abbv-container.linzess-keep-touch-doctor.background-white",
+          "style": "kit-touchpoints-section",
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": [
+            "div.abbv-container.linzess-keep-touch-doctor.background-white > div.rich-text"
+          ]
+        },
+        {
+          "id": "relief",
+          "name": "Relief + Side Effects",
+          "selector": "div.abbv-container.background-dark-purple.keep-in-touch-doctor",
+          "style": "kit-relief-section",
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": [
+            "div.abbv-container.background-dark-purple.keep-in-touch-doctor > div.rich-text:nth-of-type(1)",
+            "div.abbv-container.background-dark-purple.keep-in-touch-doctor > div.rich-text:nth-of-type(3)"
+          ]
+        },
+        {
+          "id": "conversation",
+          "name": "Keep the Conversation Going",
+          "selector": "div.abbv-container.background-light-purple",
+          "style": "kit-conversation-section",
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": [
+            "div.abbv-container.background-light-purple > div.rich-text"
+          ]
+        },
+        {
+          "id": "more-like-this",
+          "name": "More Like This",
+          "selector": "div.container.parbase:nth-of-type(5) > div.abbv-container.background-white",
+          "style": "more-like-this-section",
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": [
+            "div.container.parbase:nth-of-type(5) > div.abbv-container.background-white > div.rich-text"
+          ]
+        },
+        {
+          "id": "cta-cards",
+          "name": "CTA Cards",
+          "selector": "div.container.parbase:nth-of-type(6)",
+          "style": "cta-cards-section",
+          "blocks": [
+            "columns"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "isi",
+          "name": "Inline ISI",
+          "selector": "div.abbv-inline-use-isi",
+          "style": "isi",
+          "blocks": [],
+          "defaultContent": [
+            "div.abbv-inline-use-isi > div.abbv-inline-use",
+            "div.abbv-inline-use-isi > div.abbv-inline-safety"
+          ]
+        }
+      ]
+    }
+  ]
+}

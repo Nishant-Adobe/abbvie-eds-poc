@@ -7481,6 +7481,25 @@ main > .section.kit-relief-section > .default-content-wrapper:nth-of-type(2) ul 
   padding-left: var(--spacing-32);
 }
 
+/* --- kit-side-effects: 2-col side-effects layout (patient image left, text right) --- */
+/* Live (1440): image col 281px, text col 669px, gap 48px, vertically centered; stacks on mobile. */
+main > .section.kit-relief-section .columns.kit-side-effects {
+  align-items: center;
+}
+@media (width >= 768px) {
+  main > .section.kit-relief-section .columns.kit-side-effects {
+    grid-template-columns: 281px 1fr;
+    gap: var(--spacing-48);
+  }
+}
+main > .section.kit-relief-section .columns.kit-side-effects .columns-item-image img {
+  display: block;
+  width: 100%;
+  max-width: 281px;
+  height: auto;
+  margin: 0 auto;
+}
+
 /* --- kit-conversation: light-purple band, text + thought-bubbles image --- */
 main > .section.kit-conversation-section .columns.kit-conversation {
   max-width: 99.8rem;

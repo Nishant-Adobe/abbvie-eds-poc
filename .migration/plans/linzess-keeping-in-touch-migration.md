@@ -5,14 +5,23 @@ Live source: https://www.linzess.com/starting-linzess/healthy-routines/keeping-i
 EDS path: /linzess/healthy-routines/keeping-in-touch-with-your-doctor
 AEM author: /content/abbvie-eds-poc/linzess/healthy-routines/keeping-in-touch-with-your-doctor
 
-## Status
-- [x] Phase 0 — branch off develop, access/config confirmed
-- [x] Phase 1 — live scrape + analysis (see import-work/keeping-in-touch/analysis.md); JS approach = author for develop's block JS as-is (verified OTC renders correctly on develop)
-- [x] Phase 2 — content authored: content/linzess/healthy-routines/keeping-in-touch-with-your-doctor.plain.html (local only — content/ is gitignored and goes to AEM author via upload)
-- [x] Phase 3 — kit-* scoped CSS variants added to styles/linzess/styles.css + columns exclusion lists in both columns.css/_columns.css
-- [ ] Phase 4 — verify >=90% vs live  **BLOCKED: clean URL proxies AEM author; needs upload first**
-- [ ] Phase 5 — md2jcr upload to author + Preview + Publish  **BLOCKED: no AEM auth in env**
-- [ ] Phase 6 — commit (CSS + this plan committed; content/images stay local per convention)
+## Status (refreshed 2026-06-18 — fresh rebuild via import-script pipeline)
+- [x] Phase 0 — branch confirmed (linzess-keeping-in-touch); xwalk project.json present; dev server renders
+- [x] Phase 1 — FRESH live scrape + computed styles at 1440/768/390 (import-work/keeping-in-touch/analysis.md); font audit (Bebas Neue + Lato all present in fonts/, no missing files)
+- [x] Phase 2 — reference reconciliation vs otc + tackling siblings; ISI/HERO/HEADER/FOOTER/safety-bar reuse confirmed
+- [x] Phase 3 — FULL import-script pipeline built (per user choice): page-templates.json, parsers (hero/columns/safety-bar), transformers (linzess-cleanup + linzess-sections), import-linzess-healthy-routines-article.js + bundle. Bulk import ran 1/1 success.
+      - DECISION: import draft diverged from clean sibling (regulated misc-ISI leak w/ rxabbvie links, hyphenated hero class, absolute img URLs, /starting-linzess/ paths). Per user, kept the clean hand-authored content/linzess/healthy-routines/keeping-in-touch-with-your-doctor.plain.html as live content; fixed pipeline for future runs (added .abbv-inline-miscisi removal to cleanup transformer; re-bundled).
+- [x] Phase 3b — PATIENT IMAGE fix applied to .plain.html: "What are Some Common Side Effects?" converted to 2-col columns.kit-relief.kit-side-effects (patient@2x left, text right), matching live (prior migration omitted it).
+- [x] Phase 4 — kit-side-effects scoped CSS added to styles/linzess/styles.css (grid 281px 1fr, gap 48px, align center, img max-width 281px), matching live computed values. Lint clean; diff = 19 additive lines, fully scoped (zero regression risk).
+- [ ] Phase 5 — DEFERRED (needs AEM auth): md2jcr upload of edited .plain.html to author + DAM image upload + Preview + Publish, then final pixel pass on .aem.page at 1440/768/390. Local decorated render not possible (clean URL proxies AEM author; .plain.html route is undecorated).
+- [ ] Phase 6 — commit pending explicit user approval (CSS + pipeline artifacts + plan; content/images stay local per convention)
+
+## Pipeline artifacts (this session)
+- tools/importer/page-templates.json (template linzess-healthy-routines-article, blocks + sections mapped)
+- tools/importer/parsers/{hero,columns,safety-bar}.js (columns handles all 6 variants incl. kit-side-effects patient-left)
+- tools/importer/transformers/{linzess-cleanup,linzess-sections}.js
+- tools/importer/import-linzess-healthy-routines-article.js (+ .bundle.js)
+- migration-work/{metadata,page-structure,authoring-analysis,visual-trees}.json, cleaned.html, screenshot.png
 
 ## Section map (matches OTC/triggers article family)
 1. Hero (behind-nav editorial) — article-intouch-desktop.jpg / -mobile.jpg
