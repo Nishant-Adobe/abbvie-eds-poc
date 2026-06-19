@@ -4,7 +4,12 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 let tabBlockCnt = 0;
 
 function normalize(value) {
-  return value?.trim().toLowerCase() || '';
+  // Slugify so a tab label ("Adults with IBS-C or CIC") matches a panel
+  // section's surviving identifier — its `id` attribute set via the
+  // `sectionId` section-metadata row (e.g. "adults-with-ibs-c-or-cic").
+  // The md2jcr delivery drops a `name`/`tabName` section-metadata row, but the
+  // section `id` survives, so sectionId is the reliable cross-publish match.
+  return value?.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || '';
 }
 
 /**

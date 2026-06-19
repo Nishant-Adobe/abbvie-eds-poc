@@ -134,15 +134,48 @@ export default function decorate(block) {
   // section has no ID of its own (so authored IDs are never overwritten).
   const navSection = block.closest('.section');
   if (navSection) {
-    const following = [];
-    for (let sib = navSection.nextElementSibling; sib; sib = sib.nextElementSibling) {
-      if (sib.classList?.contains('section')) following.push(sib);
-    }
-    items.forEach((item, i) => {
-      const id = item.href.slice(1);
-      const sec = following[i];
-      if (id && sec && !sec.id && !document.getElementById(id)) sec.id = id;
-    });
+    // Map each nav link to a scroll target. Authored anchor IDs (applied to a
+    // block during its own, possibly-lazy, decoration) are the source of truth;
+    // the positional fallback only fills in a target for migrated content that
+    // has none. Two hazards are handled:
+    //   1. A nav link whose target is authored deeper in the page must NOT be
+    //      positionally assigned to an earlier section (e.g. #howtotake landing
+    //      on the gut-check section). We skip assignment when any block carries
+    //      a matching authored ID.
+    //   2. Block decoration races this code, so an authored ID may not exist in
+    //      the DOM yet. We re-check on each animation frame for a short window
+    //      and remove any stray positional ID once the authored target appears.
+    const assignTargets = () => {
+      const following = [];
+      for (let sib = navSection.nextElementSibling; sib; sib = sib.nextElementSibling) {
+        if (sib.classList?.contains('section')) following.push(sib);
+      }
+      items.forEach((item, i) => {
+        const id = item.href.slice(1);
+        if (!id) return;
+        const owners = [...document.querySelectorAll(`[id="${id}"]`)];
+        const authoredOwner = owners.find((el) => !el.classList.contains('section'));
+        if (authoredOwner) {
+          // Authored target exists — drop any stray ID the positional fallback
+          // may have stamped onto the wrong section.
+          owners
+            .filter((el) => el !== authoredOwner && el.classList.contains('section'))
+            .forEach((el) => el.removeAttribute('id'));
+          return;
+        }
+        const sec = following[i];
+        if (sec && !sec.id && !owners.length) sec.id = id;
+      });
+    };
+
+    assignTargets();
+    let frames = 0;
+    const settle = () => {
+      assignTargets();
+      frames += 1;
+      if (frames < 30) requestAnimationFrame(settle);
+    };
+    requestAnimationFrame(settle);
   }
 
   // --header-height resolves to a rem value (e.g. "7.2rem"); parseInt would give 7, not 72.
@@ -155,8 +188,11 @@ export default function decorate(block) {
     return parseFloat(val) || 0;
   };
 
-  // Smooth scroll offset = header height + this nav's height
-  const getOffset = () => getCssPx('--header-height') + block.offsetHeight;
+  // Smooth scroll offset = header height + this nav's height + a small gap so the
+  // target's first line (e.g. an eyebrow) clears the stuck nav instead of sitting
+  // flush against — and visually clipped by — its bottom edge.
+  const SCROLL_GAP = 24;
+  const getOffset = () => getCssPx('--header-height') + block.offsetHeight + SCROLL_GAP;
 
   // Href locked by a click — prevents the IO from clearing active during smooth scroll.
   // Cleared once the IO confirms the target section is actually in view.
