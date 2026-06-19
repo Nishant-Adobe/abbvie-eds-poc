@@ -5737,14 +5737,14 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
 /* Drop the full-bleed purple band the .grid carousel paints by default, and
    cap the video to its live ~600px width, centered (single player, not the
    homepage 3-up grid). */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist.grid {
   background: transparent;
   width: 100%;
 }
 
 /* The carousel block is a flex container that shrink-wraps to its card's
    content width, so cap + center the wrapper at the live ~600px instead. */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist-wrapper {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist-wrapper {
   width: 100%;
   max-width: 600px;
   margin-left: auto;
@@ -5776,7 +5776,7 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
 /* Single video player (one column), not the homepage 3-up card grid. The
    grid wrapper is flex, so the single cvp-grid item must stretch to fill
    (otherwise it collapses to the card's content width). */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid .cvp-grid {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist.grid .cvp-grid {
   grid-template-columns: 1fr;
   flex: 1 1 auto;
   width: 100%;
@@ -5796,7 +5796,7 @@ body main .section:is(.resources-community, #communityresources) .carousel-video
 }
 
 /* Video title bar: light-purple band with dark-purple text. */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist .cvp-name-banner {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist .cvp-name-banner {
   background: #d9d7f9;
   color: #422e83;
 }
