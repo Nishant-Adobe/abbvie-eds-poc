@@ -613,14 +613,20 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(:h
   left: -30%;
   right: -30%;
   height: 80px;
-  background: #f4f6fb;
+  background: var(--linz-white);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   z-index: 1;
 }
 
-/* Resources page only: drop the -1px bottom offset on the concave arc. */
+/* Resources page only: drop the -1px bottom offset on the concave arc, and
+   keep the dome off-white (--linz-off-white) to match the community section
+   below it. The base ::after is --linz-white (for the homepage white savings
+   section); resources sits above the off-white community band, so a white dome
+   would show as a seam. Scoped via :has(.resources-community) so
+   homepage/why-linzess are unaffected. */
 body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)):has(.resources-community)::after {
   bottom: auto;
+  background: var(--linz-off-white);
 }
 
 .cards-grid-container.carousel-video-playlist-container {
