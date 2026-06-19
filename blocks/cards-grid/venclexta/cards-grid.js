@@ -156,7 +156,60 @@ function buildVenclextaCalloutCardColumnFromUeRow(wrapper) {
   return colItem;
 }
 
+function buildVenclextaIconCardColumn(wrapper) {
+  // cells: [0]=icon image, [1]=heading, [2]=body (richtext)
+  const cells = [...wrapper.querySelectorAll(':scope > div')];
+  const iconCell = cells[0];
+  const headingCell = cells[1];
+  const bodyCell = cells[2];
+
+  const col = document.createElement('div');
+  col.className = 'abbv-flex-item venclexta-icon-card';
+
+  const iconWrap = document.createElement('div');
+  iconWrap.className = 'venclexta-icon-card-icon';
+  const picture = iconCell?.querySelector('picture');
+  const loneImg = iconCell?.querySelector(':scope img, picture img');
+  if (picture) {
+    iconWrap.append(picture);
+  } else if (loneImg) {
+    iconWrap.append(loneImg);
+  }
+  col.append(iconWrap);
+
+  if (headingCell) {
+    const h = document.createElement('h3');
+    h.className = 'venclexta-icon-card-heading';
+    const hp = headingCell.querySelector('p');
+    h.textContent = (hp?.textContent || headingCell.textContent || '').trim();
+    col.append(h);
+  }
+
+  if (bodyCell) {
+    const body = document.createElement('div');
+    body.className = 'venclexta-icon-card-body';
+    [...bodyCell.childNodes].forEach((n) => body.append(n.cloneNode(true)));
+    col.append(body);
+  }
+
+  return col;
+}
+
 export default function decorate(block) {
+  if (block.classList.contains('cards-grid-icon-card')) {
+    const wrappers = [...block.querySelectorAll(':scope > div')];
+    if (wrappers.length === 0) return false;
+
+    const cols = wrappers.map((w) => buildVenclextaIconCardColumn(w));
+    wrappers.forEach((w) => w.remove());
+
+    const outer = document.createElement('div');
+    outer.className = 'venclexta-icon-card-grid';
+    cols.forEach((c) => outer.append(c));
+    block.append(outer);
+    return true;
+  }
+
   if (block.classList.contains('cards-grid-callout-cards')) {
     const wrappers = [...block.querySelectorAll(':scope > div')];
     if (wrappers.length === 0) return false;
