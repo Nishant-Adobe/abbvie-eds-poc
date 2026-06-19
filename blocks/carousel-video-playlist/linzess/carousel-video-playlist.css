@@ -1422,7 +1422,6 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
    three cards full-width vertically on live (not a cramped 3-up row). Scoped
    to the homepage grid (NOT the why-linzess timeline section) so why-linzess
    keeps its own tablet rules. */
-
 @media (width >= 768px) and (width < 986px) {
   body main .section:not(:has(.whylinzess-timeline)) .carousel-video-playlist.grid .cvp-grid {
     display: flex;
@@ -1525,32 +1524,4 @@ main:has(.whylinzess-timeline) .carousel-video-playlist.featured .cvp-thumb-titl
   .carousel-video-playlist .cvp-thumb {
     transition: none;
   }
-}
-
-/* ── Find-Relief single-video sections ───────────────────────────────────
-   The .grid layout paints the homepage patient-experiences DARK purple band
-   (multiple cards on var(--color-brand-primary)). On find-relief each video
-   sits alone on the section's own white background, so neutralise the band:
-   transparent bg, no max-width cap or extra padding, and centre the lone card
-   at single-video width (matches live find-relief). Scoped to the two
-   find-relief video sections only. */
-
-.section.video-section .carousel-video-playlist.grid,
-.section.how-to-take .carousel-video-playlist.grid {
-  max-width: none;
-  padding: 0;
-  background: none;
-  color: inherit;
-}
-
-.section.video-section .carousel-video-playlist.grid .cvp-grid,
-.section.how-to-take .carousel-video-playlist.grid .cvp-grid {
-  display: flex;
-  justify-content: center;
-}
-
-.section.video-section .carousel-video-playlist.grid .cvp-card,
-.section.how-to-take .carousel-video-playlist.grid .cvp-card {
-  width: 100%;
-  max-width: 62rem;
 }

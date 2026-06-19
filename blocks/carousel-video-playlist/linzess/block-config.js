@@ -70,26 +70,14 @@ function parseItems(block, isFeatured) {
       const getText = (i) => cells[i]?.textContent?.trim() ?? '';
 
       // Grid schema, two authorings:
-      //  A) videoId | poster | title | transcriptHref
-      //  B) videoId | title  | transcriptLink(a) | … (no poster cell)
-      // On publish the poster <picture> is rewritten to an <a href="…jpg">
-      // link, so the poster cell must be detected by an image link too —
-      // otherwise the leaked DAM path is read as the title. Cell positions do
-      // not shift on publish; only the poster cell's content type changes.
+      //  A) videoId | thumbnail(picture) | title | transcriptHref
+      //  B) videoId | title | transcriptLink(a) | ... (featured-style cells)
       if (!isFeatured) {
-        const posterCell = cells[1];
-        const posterMedia = posterCell?.querySelector('picture, img');
-        const posterLink = posterCell?.querySelector('a[href]');
-        const posterIsImageLink = /\.(?:jpe?g|png|webp|avif|gif|svg)(?:[?#]|$)/i
-          .test(posterLink?.getAttribute('href') || '');
-        const hasPosterCell = !!posterMedia || posterIsImageLink;
-        if (hasPosterCell) {
+        const hasThumb = !!cells[1]?.querySelector('picture, img');
+        if (hasThumb) {
           return {
             videoId: getText(0),
-            // Brightcove supplies its own poster (preload=none); when the
-            // poster survived as media use it, otherwise omit it rather than
-            // leak the rewritten link.
-            thumbnail: posterMedia || null,
+            thumbnail: cells[1].querySelector('picture, img'),
             nameBanner: getText(2),
             transcriptHref: cells[3]?.querySelector('a')?.getAttribute('href') ?? getText(3),
             transcript: null,
