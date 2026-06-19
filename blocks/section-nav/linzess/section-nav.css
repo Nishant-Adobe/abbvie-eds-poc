@@ -969,6 +969,20 @@
   --hero-mobile-curve-bottom: -1.4rem;
   --hero-mobile-curve-height: 3.8rem;
   --hero-mobile-min-height: 420px;
+
+  /* Article-page tokens (from develop) — consumed by the healthy-routines
+     article pages (otc-intro/what-is-linzess/more-like-this/cta-cards/
+     triggers/cheat-sheet). Our 3 PR pages don't reference these. Without them
+     var(--font-size-article-heading) was undefined, so article headings
+     collapsed to ~6px. */
+  --color-background-primary: var(--linz-white);
+  --color-text-body: var(--linz-grey);
+  --color-text-default: var(--linz-black);
+  --font-size-article-heading: 40px;
+  --font-size-article-card-title: 18px;
+  --font-size-article-cta-title: 24px;
+  --font-size-article-body: 14px;
+  --linz-purple-muted: #948ebe;
 }
 
 /* LINZESS — Section Nav Brand Overrides
@@ -1283,4 +1297,20 @@
     padding-left: var(--spacing-24);
     text-decoration: none;
   }
+}
+
+/* ── Scroll clearance for jump-nav targets ───────────────────────────────
+   When a sticky section-nav is present it pins to the top (~5rem tall) and
+   floats over content (z-index above sections). Give its in-page targets a
+   scroll-margin so anchor jumps stop below the pill, and a little top padding
+   on the first target section so its eyebrow is never hidden behind the pill
+   during passive scrolling. Scoped to pages that actually have the sticky nav. */
+
+body:has(.section-nav.sticky) main > .section.talk-to-doctor,
+body:has(.section-nav.sticky) main > .section.how-to-take {
+  scroll-margin-top: var(--section-nav-scroll-offset, 7rem);
+}
+
+body:has(.section-nav.sticky) main > .section.talk-to-doctor {
+  padding-top: var(--spacing-32, 3.2rem);
 }

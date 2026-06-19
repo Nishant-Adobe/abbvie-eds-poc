@@ -53,7 +53,7 @@ function buildCell(raw) {
 
 // Convert a run of consecutive pipe-delimited <p> rows into a single <table>.
 // The first row becomes <thead>, the rest <tbody>.
-function rebuildTables(contentEl) {
+export function rebuildTables(contentEl) {
   const children = [...contentEl.children];
   let rowEls = [];
 
@@ -127,49 +127,60 @@ export default async function decorate(block) {
         row.dataset.width = widthValue;
       }
     });
-  } else {
-    const widthValues = ['full', 'sixty', 'half', 'third', 'thirty', 'quarter'];
-    // Document authoring: rebuild DOM for clean markup, skip empty config rows
-    const items = rows.filter((row) => row.textContent.trim() || row.querySelector('picture')).map((row) => {
-      const cells = [...row.children];
-      const item = document.createElement('div');
-      item.className = 'flexbox-item';
 
-      const lastCell = cells[cells.length - 1];
-      const lastCellText = lastCell?.textContent?.trim().toLowerCase();
-      if (lastCell && widthValues.includes(lastCellText)) {
-        item.dataset.width = lastCellText;
-        cells.pop();
-      }
-
-      cells.forEach((cell) => {
-        const picture = cell.querySelector('picture');
-        if (picture) {
-          const imgWrap = document.createElement('div');
-          imgWrap.className = 'flexbox-item-image';
-          imgWrap.append(picture);
-          item.append(imgWrap);
-        } else if (cell.hasChildNodes()) {
-          const contentWrap = document.createElement('div');
-          contentWrap.className = 'flexbox-item-content';
-          [...cell.childNodes].forEach((node) => {
-            contentWrap.append(node.cloneNode(true));
-          });
-          rebuildTables(contentWrap);
-          item.append(contentWrap);
-        }
-      });
-
-      return item;
-    });
-
-    block.textContent = '';
-    items.forEach((item) => block.append(item));
+    try {
+      await renderBlock(block);
+    } catch {
+      // brand block-config failed; flexbox still renders
+    }
+    return;
   }
 
+  // Document authoring: give a brand block-config the first chance to build the
+  // items from the raw cells (renderBlock runs the brand decorate before we
+  // touch the DOM, mirroring cards-grid). If the brand built the items, stop.
   try {
     await renderBlock(block);
   } catch {
-    // brand block-config failed; flexbox still renders
+    // brand block-config failed; fall through to the base build
   }
+  if (block.querySelector('.flexbox-item')) return;
+
+  // Base document-authoring build: rebuild DOM for clean markup, skip empty rows.
+  const widthValues = ['full', 'sixty', 'half', 'third', 'thirty', 'quarter'];
+  const items = rows.filter((row) => row.textContent.trim() || row.querySelector('picture')).map((row) => {
+    const cells = [...row.children];
+    const item = document.createElement('div');
+    item.className = 'flexbox-item';
+
+    const lastCell = cells[cells.length - 1];
+    const lastCellText = lastCell?.textContent?.trim().toLowerCase();
+    if (lastCell && widthValues.includes(lastCellText)) {
+      item.dataset.width = lastCellText;
+      cells.pop();
+    }
+
+    cells.forEach((cell) => {
+      const picture = cell.querySelector('picture');
+      if (picture) {
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'flexbox-item-image';
+        imgWrap.append(picture);
+        item.append(imgWrap);
+      } else if (cell.hasChildNodes()) {
+        const contentWrap = document.createElement('div');
+        contentWrap.className = 'flexbox-item-content';
+        [...cell.childNodes].forEach((node) => {
+          contentWrap.append(node.cloneNode(true));
+        });
+        rebuildTables(contentWrap);
+        item.append(contentWrap);
+      }
+    });
+
+    return item;
+  });
+
+  block.textContent = '';
+  items.forEach((item) => block.append(item));
 }

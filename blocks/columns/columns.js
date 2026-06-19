@@ -41,9 +41,10 @@ function applyMobileImageSource(cell, mediaQuery = MOBILE_IMAGE_MEDIA) {
 
 export default function decorate(block) {
   const rowData = [...block.children];
-  const anchorId = rowData[0]?.textContent.trim();
-  if (anchorId) {
-    block.id = anchorId;
+  const firstRowText = rowData[0]?.textContent.trim();
+  const firstRowHasHTML = rowData[0]?.querySelector('a, img, picture, h1, h2, h3, h4, h5, h6, ul, ol, strong, em');
+  if (firstRowText && !firstRowHasHTML) {
+    block.id = firstRowText;
     rowData[0]?.remove();
   }
 

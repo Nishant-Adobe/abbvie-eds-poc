@@ -4,7 +4,12 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 let tabBlockCnt = 0;
 
 function normalize(value) {
-  return value?.trim().toLowerCase() || '';
+  // Slugify so a tab label ("Adults with IBS-C or CIC") matches a panel
+  // section's surviving identifier — its `id` attribute set via the
+  // `sectionId` section-metadata row (e.g. "adults-with-ibs-c-or-cic").
+  // The md2jcr delivery drops a `name`/`tabName` section-metadata row, but the
+  // section `id` survives, so sectionId is the reliable cross-publish match.
+  return value?.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || '';
 }
 
 /**
@@ -14,6 +19,9 @@ function normalize(value) {
 function getSectionIdentifier(section) {
   if (section.id) return section.id;
   if (section.dataset.aueLabel) return section.dataset.aueLabel;
+  if (section.dataset.tabname) return section.dataset.tabname;
+  if (section.dataset.tabName) return section.dataset.tabName;
+  if (section.dataset.name) return section.dataset.name;
 
   const meta = section.querySelector('.section-metadata');
   if (meta) {
@@ -101,8 +109,12 @@ export default async function decorate(block) {
       wrapper.setAttribute('aria-labelledby', button.id);
       wrapper.setAttribute('aria-hidden', !shouldActivate);
 
-      const insertBefore = matched[0];
-      main.insertBefore(wrapper, insertBefore);
+      const insertRef = matched[0];
+      if (insertRef.parentNode === main) {
+        main.insertBefore(wrapper, insertRef);
+      } else {
+        main.append(wrapper);
+      }
       matched.forEach((section) => {
         section.dataset.tabsGrid = 'true';
         if (shouldActivate) section.style.display = '';
