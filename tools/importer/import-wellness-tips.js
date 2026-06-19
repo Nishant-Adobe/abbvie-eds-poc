@@ -177,11 +177,11 @@ const TEMPLATES = {
       // (host-stripped) /content/dam URLs resolve locally and on delivery.
       const RDAM = '/content/dam/abbvie-eds-poc/linzess/images';
       const recipes = [
-        ['Prosciutto Wrapped Scallops with Spinach', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-scallops@2x.jpg`, 'Win over foodie friends with this tempting appetizer fit for any occasion. Make plenty&mdash;they&rsquo;ll definitely want seconds.', '/content/dam/linzess/pdf/14-comfort-food-classics.pdf#page=3'],
-        ['Moroccan-Style Stuffed Peppers', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-stuffed-peppers@2x.jpg`, 'Invite folks over for a memorable meal that&rsquo;s sure to impress. Aromatic cumin, currants, and cinnamon make this dish both sweet and savory.', '/content/dam/linzess/pdf/10-fast-and-fresh-recipes.pdf#page=3'],
-        ['Cheese &amp; Vegetable Rice Casserole', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-rice-casserole@2x.jpg`, 'This vegetarian recipe is perfect for taking on the road, and its mouth-watering mix of roasted peppers, corn, and chiles is sure to be a crowd-pleaser.', '/content/dam/linzess/pdf/14-comfort-food-classics.pdf#page=5'],
-        ['Maple-Roasted Sweet Potatoes', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-sweet-potatoes@2x.jpg`, 'They say the sides make the meal. Roasting makes it easy, and the sweet and savory glaze makes it unforgettable.', '/content/dam/linzess/pdf/9-new-recipes-to-tempt-your-taste-buds.pdf#page=9'],
-        ['Flourless Chocolate Cookies', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-cookies@2x.jpg`, 'They may look sinful, but these sweet treats are made with gut-friendly goodness. They&rsquo;re sure to delight any holiday sweet tooth.', '/content/dam/linzess/pdf/desserts-recipes.pdf#page=5'],
+        ['Prosciutto Wrapped Scallops with Spinach', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-scallops-2x.jpg`, 'Win over foodie friends with this tempting appetizer fit for any occasion. Make plenty&mdash;they&rsquo;ll definitely want seconds.', '/content/dam/linzess/pdf/14-comfort-food-classics.pdf#page=3'],
+        ['Moroccan-Style Stuffed Peppers', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-stuffed-peppers-2x.jpg`, 'Invite folks over for a memorable meal that&rsquo;s sure to impress. Aromatic cumin, currants, and cinnamon make this dish both sweet and savory.', '/content/dam/linzess/pdf/10-fast-and-fresh-recipes.pdf#page=3'],
+        ['Cheese &amp; Vegetable Rice Casserole', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-rice-casserole-2x.jpg`, 'This vegetarian recipe is perfect for taking on the road, and its mouth-watering mix of roasted peppers, corn, and chiles is sure to be a crowd-pleaser.', '/content/dam/linzess/pdf/14-comfort-food-classics.pdf#page=5'],
+        ['Maple-Roasted Sweet Potatoes', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-sweet-potatoes-2x.jpg`, 'They say the sides make the meal. Roasting makes it easy, and the sweet and savory glaze makes it unforgettable.', '/content/dam/linzess/pdf/9-new-recipes-to-tempt-your-taste-buds.pdf#page=9'],
+        ['Flourless Chocolate Cookies', `${RDAM}/4.2.1-d-5-holiday_low-fodmap-recipes-cookies-2x.jpg`, 'They may look sinful, but these sweet treats are made with gut-friendly goodness. They&rsquo;re sure to delight any holiday sweet tooth.', '/content/dam/linzess/pdf/desserts-recipes.pdf#page=5'],
       ];
       // cards-grid (cards-grid-recipe-cards): each grid-card = link / image /
       // line1=title / line2=description / line3=CTA. The linzess recipe-cards
@@ -269,7 +269,7 @@ const TEMPLATES = {
 <li>Eswaran, Shanti. &ldquo;Low-FODMAP (Fermentable, Oligo-, Di-, Mono-saccharides and Polyols) Diet.&rdquo; <em>American College of Gastroenterology</em>. Accessed 29 Sept. 2025. https://gi.org/topics/low-fodmap-diet/#tabs2</li>
 <li>&ldquo;Label reading - how to spot the FODMAPs.&rdquo; <em>Monash University</em>. Accessed March 2022. https://monashfodmap.com/blog/label-reading/</li>
 </ol>`);
-      section(document, main, [...proTipHeading, proTip, ...sources], [['classes_customClass', 'what-is-linzess-section']]);
+      section(document, main, [...proTipHeading, proTip, ...sources], [['classes_customClass', 'what-is-linzess-section, pro-tip-section']]);
 
       // 4. MORE LIKE THIS
       moreLikeThis(document, main, [
@@ -307,10 +307,10 @@ const TEMPLATES = {
 <p>Along with treatment, healthy diet and lifestyle habits can help with managing your symptoms. But when it&rsquo;s tough to stick to your routine, it doesn&rsquo;t hurt to be prepared. Consider these strategies so you can be confident and comfortable no matter what life throws your way.</p>`);
       const GDAM = '/content/dam/abbvie-eds-poc/linzess/images';
       const strategies = [
-        ['Don&rsquo;t Miss a Meal', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-meal@2x.png`, 'There&rsquo;s no need to fret when it comes to eating out. Check out the menu ahead of time, keep an eye on portion control, and consider passing on rich and fried foods. Many restaurants now offer gluten-free and dairy-free options&mdash;opt for one of these and indulge without the worry. Bon App&eacute;tit!'],
-        ['A Night on the Town', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-night_on_the_town@2x.png`, 'Hanging out with friends is a great way to blow off steam, and you don&rsquo;t have to miss out on the fun just because you have IBS-C. Yes, certain beverages can be triggers, but that&rsquo;s not to say they can&rsquo;t be enjoyed within reason. Swap sugary sodas for unsweetened cranberry juice, a Low FODMAP fave for cocktails (or mocktails!).'],
-        ['Stay on Track When You&rsquo;re on the Go-Go-Go', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-stay-on-track@2x.png`, 'Running around town with a full day of errands can throw your schedule&mdash;and eating habits&mdash;out of whack. There&rsquo;s no need to go hungry. In fact, it&rsquo;s much better for your digestion to eat small meals regularly. Pack a gut-friendly snack pack and remember to take quick meal breaks. Forgot to pack your healthy snacks? Swap the burger for a grilled chicken wrap at your local fast-food joint if you&rsquo;re in a pinch.'],
-        ['Manage Your Symptoms and Your Workload', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-workload@2x.png`, 'Staying on track while on the job shouldn&rsquo;t be a problem. Mid-morning slump? Keep in mind when heading to the coffee cart that caffeine can be a trigger. You might want to reconsider that second cup of coffee, or even better, swap it for green tea when you need a pick-me-up. And while you wait, deep breaths can be a great distraction, and a great de-stresser. Keep calm and work on.'],
+        ['Don&rsquo;t Miss a Meal', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-meal-2x.png`, 'There&rsquo;s no need to fret when it comes to eating out. Check out the menu ahead of time, keep an eye on portion control, and consider passing on rich and fried foods. Many restaurants now offer gluten-free and dairy-free options&mdash;opt for one of these and indulge without the worry. Bon App&eacute;tit!'],
+        ['A Night on the Town', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-night_on_the_town-2x.png`, 'Hanging out with friends is a great way to blow off steam, and you don&rsquo;t have to miss out on the fun just because you have IBS-C. Yes, certain beverages can be triggers, but that&rsquo;s not to say they can&rsquo;t be enjoyed within reason. Swap sugary sodas for unsweetened cranberry juice, a Low FODMAP fave for cocktails (or mocktails!).'],
+        ['Stay on Track When You&rsquo;re on the Go-Go-Go', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-stay-on-track-2x.png`, 'Running around town with a full day of errands can throw your schedule&mdash;and eating habits&mdash;out of whack. There&rsquo;s no need to go hungry. In fact, it&rsquo;s much better for your digestion to eat small meals regularly. Pack a gut-friendly snack pack and remember to take quick meal breaks. Forgot to pack your healthy snacks? Swap the burger for a grilled chicken wrap at your local fast-food joint if you&rsquo;re in a pinch.'],
+        ['Manage Your Symptoms and Your Workload', `${GDAM}/4.2.5-d-make-a-game-plan-for-ibsc-workload-2x.png`, 'Staying on track while on the job shouldn&rsquo;t be a problem. Mid-morning slump? Keep in mind when heading to the coffee cart that caffeine can be a trigger. You might want to reconsider that second cup of coffee, or even better, swap it for green tea when you need a pick-me-up. And while you wait, deep breaths can be a great distraction, and a great de-stresser. Keep calm and work on.'],
       ];
       // grid-card cells: [link] / image / line1=title / line2=description /
       // line3=CTA (left EMPTY — strategy rows have no CTA; the linzess
@@ -396,7 +396,7 @@ const TEMPLATES = {
         col.appendChild(el(document, `<h3>${header}</h3>`).firstChild);
         foods.forEach(([base, label, callout]) => {
           const altText = callout ? `${label}. ${callout}` : label;
-          const picture = img(document, `${FSDAM}/${FSP}-${base}@2x.png`, altText);
+          const picture = img(document, `${FSDAM}/${FSP}-${base}-2x.png`, altText);
           if (callout) {
             // Live overlays the bubble copy (white, centered) on the colored
             // circle baked into the -callout PNG. Keep the text in the same
@@ -424,10 +424,10 @@ const TEMPLATES = {
       const dietHeading = nodes(document, `<p class="heading-1">Some Common Gut-Friendly Diets</p>
 <p>Your meal plan should be about finding what works best for your needs, lifestyle&mdash;and taste. Always <a href="/linzess/find-relief#talktoadoctor">seek your doctor&rsquo;s advice</a> to determine which diet is best for you. Along with a treatment plan, there are a few IBS-C and CIC-friendly diets you might want to consider:</p>`);
       const diets = [
-        ['Low FODMAP diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-low-fodmap-diet@2x.png`, 'High FODMAP foods are difficult for your body to digest and often lead to flare-ups.'],
-        ['Gluten-free diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-gluten-free-diet@2x.png`, 'Cut out barley, rye, and wheat and look for a &ldquo;Certified Gluten-Free&rdquo; label.'],
-        ['High fiber diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-high-fiber-diet@2x.png`, 'Fiber helps move things along. It&rsquo;s best to eat 22&ndash;34 grams each day. (Most of us eat only 16!)'],
-        ['Low fat diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-low-fat-diet@2x.png`, 'High fat foods are usually low in fiber. Swap fatty foods for lean meats, fruits, and veggies.'],
+        ['Low FODMAP diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-low-fodmap-diet-2x.png`, 'High FODMAP foods are difficult for your body to digest and often lead to flare-ups.'],
+        ['Gluten-free diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-gluten-free-diet-2x.png`, 'Cut out barley, rye, and wheat and look for a &ldquo;Certified Gluten-Free&rdquo; label.'],
+        ['High fiber diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-high-fiber-diet-2x.png`, 'Fiber helps move things along. It&rsquo;s best to eat 22&ndash;34 grams each day. (Most of us eat only 16!)'],
+        ['Low fat diet', `${GDDAM}/4.2.2-d-good-for-your-gut-flavorful-food-swaps-low-fat-diet-2x.png`, 'High fat foods are usually low in fiber. Swap fatty foods for lean meats, fruits, and veggies.'],
       ];
       const dietItems = diets.map(([alt, src, body]) => {
         const div = document.createElement('div');
@@ -481,10 +481,10 @@ const TEMPLATES = {
       const LFDAM = '/content/dam/abbvie-eds-poc/linzess/images';
       const LFP = '4.2.4-d-your-map-to-a-low-fodmap-diet';
       const categories = [
-        ['Oligosaccharides', `${LFDAM}/${LFP}-oligosaccharides@2x.png`, 'Wheat, rye, legumes, and fruits and veggies such as garlic and onions.'],
-        ['Disaccharides', `${LFDAM}/${LFP}-disaccharides@2x.png`, 'Milk, yogurt, and soft cheese&mdash;lactose is the main carb here.'],
-        ['Monosaccharides', `${LFDAM}/${LFP}-monosaccharides@2x.png`, 'Fruits like apples and pears and sweeteners that are chock-full of fructose.'],
-        ['Polyols', `${LFDAM}/${LFP}-polyols@2x.png`, 'Fruits like peaches and blackberries and low-cal sweeteners that end in &ldquo;-ol.&rdquo;'],
+        ['Oligosaccharides', `${LFDAM}/${LFP}-oligosaccharides-2x.png`, 'Wheat, rye, legumes, and fruits and veggies such as garlic and onions.'],
+        ['Disaccharides', `${LFDAM}/${LFP}-disaccharides-2x.png`, 'Milk, yogurt, and soft cheese&mdash;lactose is the main carb here.'],
+        ['Monosaccharides', `${LFDAM}/${LFP}-monosaccharides-2x.png`, 'Fruits like apples and pears and sweeteners that are chock-full of fructose.'],
+        ['Polyols', `${LFDAM}/${LFP}-polyols-2x.png`, 'Fruits like peaches and blackberries and low-cal sweeteners that end in &ldquo;-ol.&rdquo;'],
       ];
       const categoryItems = categories.map(([title, src, body]) => {
         const div = document.createElement('div');
@@ -502,7 +502,7 @@ const TEMPLATES = {
       // Steps use <strong> titles (survive md2jcr) so the CSS can style them.
       const mapHeading = nodes(document, `<p class="heading-1">Mapping Out a Low FODMAP Diet</p>`);
       const mapImageCol = document.createElement('div');
-      mapImageCol.appendChild(img(document, `${LFDAM}/4.2.4-d-your-map-to-a-low-fodmap-diet-map-infographic-no-bkg@2x.png`, 'Low FODMAP diet map infographic'));
+      mapImageCol.appendChild(img(document, `${LFDAM}/4.2.4-d-your-map-to-a-low-fodmap-diet-map-infographic-no-bkg-2x.png`, 'Low FODMAP diet map infographic'));
       const steps = [
         ['The FODMAP Swap', 'Replace High FODMAPs with Low FODMAPs for 2&ndash;6 weeks. This part&rsquo;s only temporary.'],
         ['Read the Labels', 'Look for unexpected FODMAPs hidden in the ingredients of certain foods.'],
