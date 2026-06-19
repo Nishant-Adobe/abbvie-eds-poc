@@ -7824,3 +7824,145 @@ body:has(.columns.kit-touchpoints) .columns.kit-conversation .columns-item-image
   max-width: 100%;
   margin: 0 auto;
 }
+
+/* --- more-like-this (reused block) card internals, block-scoped --- */
+body:has(.columns.kit-touchpoints) .columns.more-like-this {
+  max-width: 99.8rem;
+  margin: var(--spacing-40) auto;
+  gap: var(--spacing-16);
+}
+@media (width < 768px) {
+  body:has(.columns.kit-touchpoints) .columns.more-like-this {
+    padding: 0 var(--spacing-06);
+  }
+}
+@media (width >= 768px) {
+  body:has(.columns.kit-touchpoints) .columns.more-like-this {
+    grid-template-columns: repeat(3, 30rem);
+    justify-content: center;
+  }
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item {
+  overflow: hidden;
+  background: var(--color-brand-primary-lighter);
+  border-radius: var(--linz-rounded-corner);
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item > div {
+  margin: 0;
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item p:has(picture) {
+  margin: 0;
+  padding: 0;
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item picture,
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item img {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item img {
+  aspect-ratio: 598 / 347;
+  object-fit: cover;
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item p:not(:has(picture)) {
+  margin: 0;
+  padding: 0 var(--spacing-16);
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
+  padding-top: var(--spacing-20);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-heading);
+}
+@media (width >= 900px) {
+  body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item p:not(:has(picture)):not(:has(a)) {
+    font-size: var(--font-size-legal-large);
+  }
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .columns-item p:not(:has(picture)):last-of-type {
+  padding-top: var(--spacing-20);
+  padding-bottom: var(--spacing-20);
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this .button-container {
+  margin: 0;
+}
+body:has(.columns.kit-touchpoints) .columns.more-like-this a,
+body:has(.columns.kit-touchpoints) .columns.more-like-this a.button {
+  display: inline;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-extra-bold);
+  color: var(--color-text-heading);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- cta-cards (reused block) card internals, block-scoped (dark band) --- */
+body:has(.columns.kit-touchpoints) .columns.cta-cards {
+  max-width: 99.8rem;
+  margin: 0 auto;
+  text-align: center;
+}
+body:has(.columns.kit-touchpoints) .columns.cta-cards .columns-item p:not(:has(a)) {
+  margin: var(--spacing-24) 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-cta-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-on-dark);
+}
+body:has(.columns.kit-touchpoints) .columns.cta-cards a {
+  position: relative;
+  display: inline-block;
+  padding: 16px 59px 16px 32px;
+  border-radius: var(--linz-rounded-corner);
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-extra-bold);
+  line-height: normal;
+  text-decoration: none;
+}
+body:has(.columns.kit-touchpoints) .columns.cta-cards a::after {
+  content: '\e315';
+  position: absolute;
+  top: 50%;
+  right: var(--spacing-20);
+  font-family: var(--icon-font-family);
+  font-size: 2.08rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+@media (width <= 1023px) {
+  body:has(.columns.kit-touchpoints) .columns.cta-cards {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-60);
+    justify-content: stretch;
+  }
+  body:has(.columns.kit-touchpoints) .columns.cta-cards .columns-item:first-child {
+    border-right: none;
+    border-bottom: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+    padding-bottom: var(--spacing-80);
+  }
+  body:has(.columns.kit-touchpoints) .columns.cta-cards .columns-item p:not(:has(a)) {
+    margin: var(--spacing-18) 0;
+  }
+  body:has(.columns.kit-touchpoints) .columns.cta-cards p:has(> a) {
+    margin: 0;
+  }
+  body:has(.columns.kit-touchpoints) .columns.cta-cards a {
+    margin: 0;
+    padding-left: var(--spacing-24);
+  }
+}
+@media (width >= 1024px) {
+  body:has(.columns.kit-touchpoints) .columns.cta-cards .columns-item:first-child {
+    border-right: var(--separator-height-1, 1px) solid var(--linz-purple-muted);
+    border-bottom: none;
+  }
+}
