@@ -182,6 +182,81 @@ footer a {
 /* ---- Section Backgrounds ---- */
 .section.off-white-bg { background-color: var(--color-background-light); }
 
+/* Modal and safety-bar sections render no in-page content (modals open from
+   links; the safety bar is appended to <body> as a fixed bar). The base
+   `main > .section { margin-bottom: 8rem }` rule still applies to these empty
+   0-height sections, stacking up a large white gap before the footer. Collapse
+   their margins so the footer sits directly below the last visible section. */
+main > .section.modal-container,
+main > .section.safety-bar-container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ---- Continuous off-white band (find-relief middle region) ----
+   Live runs ONE full-bleed off-white band from the video/"What to Know"
+   section down through "How to Store LINZESS". Our sections are centred
+   (max-width 1330px) so a plain background-color won't bleed edge-to-edge —
+   each banded section paints a full-bleed off-white ::before behind its
+   content, extended downward to cover the inter-section margin so the run
+   reads continuous.
+
+   IMPORTANT (publish parity): the EDS delivery collapses a multi-word
+   `classes_customClass` value into ONE hyphen-joined class, so helper classes
+   like `off-white-band off-white-band-start` never arrive on the published
+   section. Each banded section is therefore authored with a SINGLE semantic
+   class and the band treatment is attached to that class here:
+     how-to-take      → band start (arc dome on top)
+     prescribed-cards → band middle
+     savings-cards    → band middle
+     store-linzess    → band end (stops at section bottom)            */
+main > .section.how-to-take,
+main > .section.prescribed-cards,
+main > .section.savings-cards,
+main > .section.store-linzess {
+  position: relative;
+}
+
+main > .section.how-to-take::before,
+main > .section.prescribed-cards::before,
+main > .section.savings-cards::before,
+main > .section.store-linzess::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: calc(-50vw + 50%);
+  width: 100vw;
+  height: calc(100% + 80px); /* +80px covers the inter-section margin so bands meet */
+  background: var(--color-background-light, #f4f6fb);
+}
+
+/* Band start (how-to-take): a convex dome arcs up into the video section
+   above (live uses a 255px-tall dome with radius 100% 100% 0 0). */
+main > .section.how-to-take::before {
+  top: -60px;
+  height: calc(100% + 80px + 60px);
+}
+
+main > .section.how-to-take::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -255px;
+  left: 50%;
+  width: 130vw;
+  height: 255px;
+  transform: translateX(-50%);
+  background: var(--color-background-light, #f4f6fb);
+  border-radius: 100% 100% 0 0 / 100% 100% 0 0;
+}
+
+/* Band end (store-linzess): stop the off-white at the section's bottom edge so
+   the following (white) savings-tout / dark bottom-nav start clean. */
+main > .section.store-linzess::before {
+  height: 100%;
+}
+
 .section.purple-bg,
 body main .section.dark {
   background-color: var(--color-brand-primary);
@@ -1244,6 +1319,7 @@ main > .section:has(> .default-content-wrapper > h3:first-child)::before {
 
 /* USES, IMPORTANT RISK INFORMATION, "Before you take...", "Side Effects"
    are all bold purple headings (BasicCommercialLT-Black). */
+
 /* ISI typography reverted to develop values: legal-bold headings at weight 400
    (not 700), h4/h5 at 14px (not 16px), grey-400 bold safety copy via an explicit
    strong/b rule, -0.02em tracking across all ISI text, and regular-face links
@@ -2167,14 +2243,14 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
 /* Drop the full-bleed purple band the .grid carousel paints by default, and
    cap the video to its live ~600px width, centered (single player, not the
    homepage 3-up grid). */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist.grid {
   background: transparent;
   width: 100%;
 }
 
 /* The carousel block is a flex container that shrink-wraps to its card's
    content width, so cap + center the wrapper at the live ~600px instead. */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist-wrapper {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist-wrapper {
   width: 100%;
   max-width: 600px;
   margin-left: auto;
@@ -2206,7 +2282,7 @@ body main .section:is(.resources-community, #communityresources) > .default-cont
 /* Single video player (one column), not the homepage 3-up card grid. The
    grid wrapper is flex, so the single cvp-grid item must stretch to fill
    (otherwise it collapses to the card's content width). */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist.grid .cvp-grid {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist.grid .cvp-grid {
   grid-template-columns: 1fr;
   flex: 1 1 auto;
   width: 100%;
@@ -2226,7 +2302,7 @@ body main .section:is(.resources-community, #communityresources) .carousel-video
 }
 
 /* Video title bar: light-purple band with dark-purple text. */
-body main .section:is(.resources-community, #communityresources) .carousel-video-playlist .cvp-name-banner {
+body main .section:is(.resources-community, #communityresources, .video-section, .how-to-take) .carousel-video-playlist .cvp-name-banner {
   background: #d9d7f9;
   color: #422e83;
 }

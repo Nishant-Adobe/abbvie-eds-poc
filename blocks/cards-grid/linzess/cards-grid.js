@@ -38,6 +38,20 @@ const LINZESS_IMAGE_TEXT_ROOT_CLASSES = [
   'abbv-image-text-v2 abbv-image-scale',
 ];
 
+// Dark-first ordering (find-relief "Already Prescribed" cards): card 1 dark
+// w/ white text, card 2 light w/ dark heading — the reverse of the homepage.
+const LINZESS_FLEX_ITEM_CLASSES_DARK_FIRST = [
+  'abbv-flex-item-v2 background-dark-purple rounded-corners text-align-center col-2-card icon-image-card',
+  'abbv-flex-item-v2 background-light-purple rounded-corners text-align-center col-2-card icon-image-card',
+];
+
+const LINZESS_IMAGE_TEXT_ROOT_CLASSES_DARK_FIRST = [
+  'c-linz-white abbv-image-text-v2 abbv-image-scale',
+  'abbv-image-text-v2 abbv-image-scale',
+];
+
+const LINZESS_HEADING_CLASS_DARK_FIRST = ['heading-2', 'heading-2 c-linz-dark-purple'];
+
 const LINZESS_HEADING_CLASS = ['heading-2 c-linz-dark-purple', 'heading-2', 'heading-2 c-linz-dark-purple'];
 
 const LINZESS_BUTTON_CLASSES = [
@@ -224,7 +238,7 @@ function buildLinzessArticleCardColumn(wrapper) {
   return col;
 }
 
-function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
+function buildLinzessIconImageCardColumn(wrapper, columnIndex, darkFirst = false) {
   const directDivs = [...wrapper.children].filter((c) => c.tagName === 'DIV');
   const linkCell = directDivs[0];
   const pictureDiv = directDivs[1];
@@ -234,15 +248,22 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
 
   const href = resolveLinzessCtaHref(linkCell);
   const ctaP = ctaDiv?.querySelector('p');
-  const ctaLabel = ctaP?.textContent?.trim() || 'Sign up';
+  // CTA is optional — find-relief "Already Prescribed" cards have no button.
+  const ctaLabel = ctaP?.textContent?.trim() || '';
   const titleP = titleDiv?.querySelector('p');
   const bodyP = bodyDiv?.querySelector('p');
 
-  const linzIdx = columnIndex % LINZESS_FLEX_ITEM_CLASSES.length;
-  const flexItemClass = LINZESS_FLEX_ITEM_CLASSES[linzIdx];
-  const imageTextRootClass = LINZESS_IMAGE_TEXT_ROOT_CLASSES[linzIdx];
-  const headingClass = LINZESS_HEADING_CLASS[linzIdx];
-  const buttonClass = LINZESS_BUTTON_CLASSES[linzIdx];
+  const flexItemClasses = darkFirst
+    ? LINZESS_FLEX_ITEM_CLASSES_DARK_FIRST : LINZESS_FLEX_ITEM_CLASSES;
+  const rootClasses = darkFirst
+    ? LINZESS_IMAGE_TEXT_ROOT_CLASSES_DARK_FIRST : LINZESS_IMAGE_TEXT_ROOT_CLASSES;
+  const headingClasses = darkFirst
+    ? LINZESS_HEADING_CLASS_DARK_FIRST : LINZESS_HEADING_CLASS;
+  const linzIdx = columnIndex % flexItemClasses.length;
+  const flexItemClass = flexItemClasses[linzIdx];
+  const imageTextRootClass = rootClasses[linzIdx];
+  const headingClass = headingClasses[linzIdx];
+  const buttonClass = LINZESS_BUTTON_CLASSES[linzIdx % LINZESS_BUTTON_CLASSES.length];
 
   const col = document.createElement('div');
   col.className = 'flexboxitem-v2 parbase';
@@ -322,18 +343,22 @@ function buildLinzessIconImageCardColumn(wrapper, columnIndex) {
   rootImageText.append(imgContainer, outContainer);
   imageTextParbase.append(rootImageText);
 
-  const ctaWrap = document.createElement('div');
-  ctaWrap.className = 'cta parbase';
-  const ctaA = document.createElement('a');
-  ctaA.className = buttonClass;
-  ctaA.setAttribute('role', 'link');
-  ctaA.setAttribute('aria-label', ctaLabel);
-  ctaA.href = href;
-  ctaA.target = '_self';
-  ctaA.textContent = ctaLabel;
-
-  ctaWrap.append(ctaA);
-  flexItem.append(imageTextParbase, ctaWrap);
+  // CTA is optional: only render the button when a label was authored.
+  if (ctaLabel) {
+    const ctaWrap = document.createElement('div');
+    ctaWrap.className = 'cta parbase';
+    const ctaA = document.createElement('a');
+    ctaA.className = buttonClass;
+    ctaA.setAttribute('role', 'link');
+    ctaA.setAttribute('aria-label', ctaLabel);
+    ctaA.href = href;
+    ctaA.target = '_self';
+    ctaA.textContent = ctaLabel;
+    ctaWrap.append(ctaA);
+    flexItem.append(imageTextParbase, ctaWrap);
+  } else {
+    flexItem.append(imageTextParbase);
+  }
   col.append(flexItem);
 
   return col;
@@ -459,8 +484,12 @@ export default function decorate(block) {
     const flexContainer = document.createElement('div');
     flexContainer.className = LINZESS_FLEX_CONTAINER_CLASS;
 
+    // Dark-first colour order (card 1 dark, card 2 light) for the find-relief
+    // "Already Prescribed" cards; homepage stays light-first.
+    const darkFirst = block.classList.contains('cards-grid-prescribed');
+
     wrappers.forEach((wrapper, index) => {
-      flexContainer.append(buildLinzessIconImageCardColumn(wrapper, index));
+      flexContainer.append(buildLinzessIconImageCardColumn(wrapper, index, darkFirst));
       wrapper.remove();
     });
 

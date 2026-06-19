@@ -613,14 +613,20 @@ body main .section.cards-grid-container.carousel-video-playlist-container:not(:h
   left: -30%;
   right: -30%;
   height: 80px;
-  background: #f4f6fb;
+  background: var(--linz-white);
   border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   z-index: 1;
 }
 
-/* Resources page only: drop the -1px bottom offset on the concave arc. */
+/* Resources page only: drop the -1px bottom offset on the concave arc, and
+   keep the dome off-white (--linz-off-white) to match the community section
+   below it. The base ::after is --linz-white (for the homepage white savings
+   section); resources sits above the off-white community band, so a white dome
+   would show as a seam. Scoped via :has(.resources-community) so
+   homepage/why-linzess are unaffected. */
 body main .section.cards-grid-container.carousel-video-playlist-container:not(:has(.whylinzess-timeline)):has(.resources-community)::after {
   bottom: auto;
+  background: var(--linz-off-white);
 }
 
 .cards-grid-container.carousel-video-playlist-container {
@@ -1374,10 +1380,12 @@ body main .section.cards-grid-container:has(.cards-grid.whylinzess-explore)::bef
   border-right: 1px solid rgb(148 142 190);
 }
 
-/* Headings white, ~24px (override the per-column c-linz-dark-purple class). */
-.cards-grid.whylinzess-explore .heading-2,
-.cards-grid.whylinzess-explore .c-linz-dark-purple,
-.cards-grid.whylinzess-explore p:not(.cta) {
+/* Headings white, ~24px (override the per-column c-linz-dark-purple class).
+   Scoped through .abbv-image-text-display-v2 so it outranks the base
+   icon-image-card heading rule (which otherwise forces 18px). */
+.cards-grid.whylinzess-explore .abbv-image-text-display-v2 .heading-2,
+.cards-grid.whylinzess-explore .abbv-image-text-display-v2 .c-linz-dark-purple,
+.cards-grid.whylinzess-explore .abbv-image-text-display-v2 p:not(.cta) {
   color: #fff;
   font-family: var(--body-font-family);
   font-size: 24px;
@@ -1576,4 +1584,22 @@ body main .section.cards-grid-container:has(.cards-grid.resources-explore)::befo
     height: 75px;
     top: -45px;
   }
+}
+
+/* ── Savings cards: bottom-align CTA buttons ─────────────────────────────
+   The three cards are equal height but their body copy differs in length,
+   so the CTA buttons would otherwise sit at varying heights. Make each card
+   a column flex and push the CTA to the bottom so all buttons align (live). */
+.cards-grid.cards-grid-icon-image-card .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2 {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--spacing-40, 4rem);
+}
+
+.cards-grid.cards-grid-icon-image-card .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2 .image-text-v2 {
+  flex: 1 0 auto;
+}
+
+.cards-grid.cards-grid-icon-image-card .savings-card-cards .flexboxitem-v2 .abbv-flex-item-v2 .cta {
+  margin-top: auto;
 }
