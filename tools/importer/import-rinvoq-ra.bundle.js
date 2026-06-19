@@ -230,7 +230,7 @@ Ulcerative Colitis|https://www.humira.com/hcp/uc|moderate</div>
       {
         title: "Rapid Relief\xB9,\u2077,\u2078",
         body: `<ul>
-<li>ACR20 at Week 12 (primary endpoint), with response observed as early as Week 1 in SELECT-BEYOND</li>
+<li>ACR20 achieved at Week 12 (primary endpoint), with response seen as early as Week 1 in SELECT-BEYOND</li>
 <li>LDA (DAS28-CRP \u22643.2) at Week 12 in SELECT-SWITCH</li>
 </ul>`,
         cta: { text: "See Remission Data at Weeks 12 and 14", href: "/rheumatoid-arthritis/efficacy#remission-lda" }
@@ -264,11 +264,13 @@ Ulcerative Colitis|https://www.humira.com/hcp/uc|moderate</div>
       benefitCells.push(["", "", title, body, "", ""]);
     });
     out.append(table(benefitCells));
+    out.append(sectionMeta("ra-benefits"));
+    out.append(hr());
     out.append(heading("h3", "Exceptional Patient and Access Support\xB9\xB9"));
     out.append(fromHTML(`<ul>
-<li>~99% preferred coverage as of November 2025\xA7||</li>
-<li>1:1 support for your patients</li>
-<li>Streamlined RINVOQ Complete enrollment</li>
+<li>~99% preferred combined National commercial and Medicare Part D formulary coverage under the pharmacy benefit as of November 2025 in RA\xA7||</li>
+<li>1:1 support to help RA patients start and stay on track with their prescribed treatment plan</li>
+<li>Get patients started on RINVOQ Complete by downloading the enrollment form</li>
 </ul>`).firstElementChild);
     const accessCta1 = para("");
     accessCta1.append(anchor("/rheumatology/access", "Explore Access Information"));
@@ -276,11 +278,13 @@ Ulcerative Colitis|https://www.humira.com/hcp/uc|moderate</div>
     const accessCta2 = para("");
     accessCta2.append(anchor("/patient-support", "Learn About Patient Support"));
     out.append(accessCta2);
-    out.append(para("\u2021As of 08/2025."));
-    out.append(para("\xA7RINVOQ is on a preferred tier for ~99% of commercially covered lives."));
-    out.append(para("||Coverage requirements may apply and vary by plan."));
+    out.append(sectionMeta("ra-access-support"));
+    out.append(hr());
+    out.append(para("\u2021As of 08/2025: In PsA, ~6.4 years maximum exposure (~3.6 years median) to RINVOQ 15 mg; in AS, ~3.8 years maximum exposure (~1.8 years median) to RINVOQ 15 mg; in nr-axSpA, ~2.3 years maximum exposure (~1.0 years median) to RINVOQ 15 mg.\u2079"));
+    out.append(para("\xA7RINVOQ is on a preferred tier or otherwise has preferred status on the plan\u2019s formulary."));
+    out.append(para("||Coverage requirements and benefit designs vary by payer and may change over time. Please consult with payers directly for the most current reimbursement policies."));
     out.append(para("ACR20=20% improvement in American College of Rheumatology response criteria; CRP=C-reactive protein; DAS28-CRP=Disease Activity Score in 28 joints based on C-reactive protein; GCA=giant cell arteritis; LDA=low disease activity; MTX=methotrexate; TNFi=tumor necrosis factor inhibitor."));
-    out.append(sectionMeta("ra-benefits"));
+    out.append(sectionMeta("ra-access-footnotes"));
     out.append(hr());
     out.append(para("Please see Important Safety Information, including BOXED WARNING on Serious Infections, Mortality, Malignancies, Major Adverse Cardiovascular Events, and Thrombosis, below."));
     const leadInLink = para("");
@@ -289,17 +293,22 @@ Ulcerative Colitis|https://www.humira.com/hcp/uc|moderate</div>
     out.append(sectionMeta("ra-isi-leadin"));
     out.append(hr());
     out.append(heading("h2", "RINVOQ (upadacitinib) Met Its Primary Endpoints in 4 Trials Across Patient Populations and Comparators\xB9,\xB3,\u2077,\u2078,\xB9\xB2"));
+    out.append(sectionMeta("ra-endpoints-heading"));
+    out.append(hr());
     out.append(para("Primary Endpoint Results (Week 12 or 14)"));
     const chartP = para("");
     chartP.append(picture(`${DAM}/chart-ra-acr20-week12-desktop.png`, { alt: "Primary Endpoint Results (Week 12/14)." }));
     out.append(chartP);
     out.append(para("*NRI-MI (non-responder imputation incorporating multiple imputation). \u2020P\u22640.001 vs placebo. \u2021P&lt;0.001 vs HUMIRA. \xA7P=0.0001 vs methotrexate."));
-    out.append(para("RINVOQ is indicated for the treatment of adults with moderately to severely active rheumatoid arthritis (RA) who have had an inadequate response or intolerance to one or more TNF blockers."));
-    out.append(para("RINVOQ has a Boxed Warning for Serious Infections, Mortality, Malignancies, Major Adverse Cardiovascular Events, and Thrombosis."));
-    out.append(para("HUMIRA is indicated for reducing signs and symptoms, inducing major clinical response, inhibiting the progression of structural damage, and improving physical function in adult patients with moderately to severely active rheumatoid arthritis."));
-    out.append(para("Trials were not designed for direct comparison; comparisons across trials should be interpreted with caution."));
-    out.append(para("Different patient populations, trial designs, and endpoints limit cross-trial comparisons."));
-    out.append(para("<strong>Clinical decisions regarding treatment selection should be made by the healthcare provider based on the individual patient and the full Prescribing Information for each product, including the respective Boxed Warning and full PI.</strong>"));
+    const comparatorRich = fromHTML(`<div><div><p>RINVOQ is indicated for moderate to severe RA in adult TNFi-IR patients.<br>RINVOQ has a Boxed Warning on Serious Infections, Mortality, Malignancy, Major Adverse Cardiovascular Events, and Thrombosis.<br>HUMIRA is indicated in adults with moderate to severe active RA.<br>HUMIRA has a Boxed Warning for Serious Infections and Malignancy.<br>Details about these Boxed Warnings and other risks can be found throughout.</p></div></div>`);
+    out.append(table([
+      ["Text Container (boxed-warning)"],
+      ["-"],
+      ["none"],
+      ["-"],
+      [comparatorRich.firstElementChild]
+    ]));
+    out.append(para("<strong>Clinical decisions regarding treatment selection should take into account all relevant information, including full benefit/risk profiles in each product\u2019s PI.</strong>"));
     const humiraPiLink = para("");
     humiraPiLink.append(anchor("https://www.rxabbvie.com/pdf/humira.pdf", "HUMIRA Prescribing Information"));
     out.append(humiraPiLink);
