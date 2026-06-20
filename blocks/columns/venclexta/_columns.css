@@ -170,3 +170,77 @@ h2 {
     display: block;
   }
 }
+/* ───────────────────────────────────────────────────────────────────
+   AML "common treatments" — columns layout (6 items, 3-up desktop).
+   Each .columns-item is a treatment: icon + teal H3 title + body, on a
+   light card. Scoped to the .aml-treatments-section section class.
+   ─────────────────────────────────────────────────────────────────── */
+.section.aml-treatments-section .columns.aml-treatments {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 0;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.section.aml-treatments-section .columns.aml-treatments > .columns-item {
+  flex: 0 1 320px;
+  max-width: 343px;
+  margin: 10px 10px 30px;
+  padding: 20px;
+  text-align: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  align-items: stretch;
+}
+
+.section.aml-treatments-section .columns.aml-treatments > .columns-item > div {
+  width: 100%;
+}
+
+.section.aml-treatments-section .columns.aml-treatments > .columns-item img {
+  display: block;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 20px;
+  object-fit: contain;
+}
+
+.section.aml-treatments-section .columns.aml-treatments > .columns-item h3 {
+  margin: 0 0 5px;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #005272;
+}
+
+.section.aml-treatments-section .columns.aml-treatments > .columns-item h4 {
+  margin: 4px 0 12px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-default);
+}
+
+.section.aml-treatments-section .columns.aml-treatments > .columns-item p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.625;
+  color: var(--color-text-default);
+}
+
+/* Section heading: live renders the H2 at 32px (overrides the generic
+   24px columns h2 rule). Scoped to this section. */
+.section.aml-treatments-section > .default-content-wrapper h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #005272;
+  font-family: 'Red Hat Display', sans-serif;
+}
+
+@media (width >= 600px) and (width < 900px) {
+  .section.aml-treatments-section .columns.aml-treatments > .columns-item {
+    flex-basis: 45%;
+  }
+}
