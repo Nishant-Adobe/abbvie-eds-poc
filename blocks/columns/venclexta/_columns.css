@@ -170,6 +170,7 @@ h2 {
     display: block;
   }
 }
+
 /* ───────────────────────────────────────────────────────────────────
    AML "common treatments" — columns layout (6 items, 3-up desktop).
    Each .columns-item is a treatment: icon + teal H3 title + body, on a
@@ -179,16 +180,17 @@ h2 {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  gap: 0;
+  gap: 24px;
   max-width: 1180px;
   margin: 0 auto;
 }
 
 .section.aml-treatments-section .columns.aml-treatments > .columns-item {
-  flex: 0 1 320px;
-  max-width: 343px;
-  margin: 10px 10px 30px;
-  padding: 20px;
+  flex: 1 1 0;
+  min-width: 280px;
+  max-width: 360px;
+  margin: 0;
+  padding: 32px 28px;
   text-align: center;
   background-color: #f2f2f2;
   border-radius: 10px;
@@ -223,6 +225,7 @@ h2 {
   color: var(--color-text-default);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .section.aml-treatments-section .columns.aml-treatments > .columns-item p {
   margin: 0;
   font-size: 16px;
