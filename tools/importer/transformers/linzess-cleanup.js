@@ -4,62 +4,47 @@
 /**
  * Transformer: linzess cleanup
  * Removes non-authorable site chrome from LINZESS pages.
- *
- * Shared by every Linzess import family (utility/sitemap, savings-card subpages,
- * FAQ, community-support). Keeps develop's two-hook structure (before/after
- * transform, validated against migration-work/cleaned.html for the FAQ &
- * community migrations) and additionally removes the broader generic chrome the
- * utility/savings-card imports rely on.
+ * All selectors validated against migration-work/cleaned.html.
  */
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };
 
 export default function transform(hookName, element, payload) {
   if (hookName === TransformHook.beforeTransform) {
-    // --- develop (FAQ/community) cleanup ---
-    // Modals (exit-site modals, WOL modals)
+    // Remove modals (exit-site modals, WOL modals) - found at lines 987, 1040, 1093, 1177, 1228
     WebImporter.DOMUtils.remove(element, ['.abbv-modal']);
-    // OneTrust cookie consent banner
+
+    // Remove OneTrust cookie consent banner - found at line 2364
     WebImporter.DOMUtils.remove(element, ['#onetrust-consent-sdk']);
-    // Floating safety bar (sticky ISI tray) — NOT the inline ISI content
+
+    // Remove floating safety bar (sticky ISI tray) - found at line 2162
+    // This is the floating/sticky bar, NOT the inline ISI content (section 7)
     WebImporter.DOMUtils.remove(element, ['.abbv-safety-bar']);
-    // Back-to-top button
+
+    // Remove back-to-top button - found at line 980
     WebImporter.DOMUtils.remove(element, ['.abbv-back-to-top']);
-
-    // --- broader generic cleanup (utility/savings-card imports, which did all
-    //     of these in beforeTransform) ---
-    // Generic header / nav / footer / banner chrome
-    WebImporter.DOMUtils.remove(element, ['header', 'nav', '.abbv-header', '.abbv-nav', 'footer', '.abbv-footer', '.abbv-top-banner', '.abbv-eyebrow']);
-    // Generic modals/onetrust variants, floating ISI
-    WebImporter.DOMUtils.remove(element, ['[class*="modal"]', '.onetrust-pc-dark-filter', '[class*="onetrust"]', '.abbv-floating-isi']);
-    // Scripts, styles, noscript
-    WebImporter.DOMUtils.remove(element, ['script', 'style', 'noscript', 'link[rel="stylesheet"]']);
-    // Tracking / analytics
-    WebImporter.DOMUtils.remove(element, ['[class*="recaptcha"]', '.grecaptcha-badge']);
-    // AEM placeholder / loading elements
-    WebImporter.DOMUtils.remove(element, ['.cmp-adaptiveform-container-form-loading', '.abbv-animation-loading']);
-
-    // Clean data attributes that aren't needed
-    element.querySelectorAll('[data-cmp-is], [data-sly-resource]').forEach((el) => {
-      el.removeAttribute('data-cmp-is');
-      el.removeAttribute('data-sly-resource');
-    });
   }
 
   if (hookName === TransformHook.afterTransform) {
-    // --- develop (FAQ/community) cleanup ---
-    // Header / navigation
+    // Remove header/navigation - found at line 20
     WebImporter.DOMUtils.remove(element, ['header.abbv-header-v2']);
-    // Top promotional banner
+
+    // Remove top promotional banner - found at line 13
     WebImporter.DOMUtils.remove(element, ['.linzess-top-banner']);
-    // Sticky anchor div
+
+    // Remove sticky anchor div - found at line 229
     WebImporter.DOMUtils.remove(element, ['.abbv-sticky-anchor']);
-    // Footer
+
+    // Remove footer - found at line 795
     WebImporter.DOMUtils.remove(element, ['footer.abbv-footer']);
-    // Misc ISI anchor/container
+
+    // Remove misc ISI anchor/container - found at line 786
     WebImporter.DOMUtils.remove(element, ['.abbv-inline-miscisi']);
-    // Iframes (tracking, OneTrust text-resize)
+
+    // Remove iframes (tracking, OneTrust text-resize) - found at lines 1983, 2362, 2605
     WebImporter.DOMUtils.remove(element, ['iframe']);
-    // Empty structural divs that are not authorable
-    WebImporter.DOMUtils.remove(element, ['.newpar.new.section', '.par.iparys_inherited']);
+
+    // Remove empty structural divs that are not authorable
+    WebImporter.DOMUtils.remove(element, ['.newpar.new.section']);
+    WebImporter.DOMUtils.remove(element, ['.par.iparys_inherited']);
   }
 }
