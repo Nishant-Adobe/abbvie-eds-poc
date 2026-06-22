@@ -7352,20 +7352,19 @@ main > .section.otc-intro-section.fodmap-map-section::before {
   border-radius: 0;
   transform: none;
 }
-/* Single centered column: drop the base 2-col grid, hide the duplicate text
-   column whose copy is already baked into the infographic PNG. */
+/* Desktop: drop the base 2-col grid and stack vertically — the wide infographic
+   on top (its journey/pins are decorative), then the 6 step descriptions as a
+   readable 2-column text grid below it, matching live linzess.com. */
 main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   height: auto;
   background: none;
   border-radius: 0;
 }
-main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block > .columns-item:has(.columns-item-content) {
-  display: none;
-}
 main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block > .columns-item:has(.columns-item-image) {
-  flex: 0 1 auto;
+  width: 100%;
   max-width: 64rem;
   padding: 0;
 }
@@ -7373,6 +7372,34 @@ main > .section.fodmap-map-section .columns.fodmap-map img {
   display: block;
   width: 100%;
   height: auto;
+}
+/* The 6 step paragraphs render as a centered 2-column text grid below the map. */
+main > .section.abbvie-container.otc-intro-section.fodmap-map-section.columns-container .columns.fodmap-map.block > .columns-item:has(.columns-item-content) {
+  width: 100%;
+  max-width: 64rem;
+  padding: 0;
+}
+main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-24) var(--spacing-40);
+  margin-top: var(--spacing-24);
+}
+main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-article-body, 16px);
+  line-height: var(--line-height-body);
+  color: var(--color-text-body, #4d4d4f);
+}
+main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p strong {
+  display: block;
+  margin-bottom: var(--spacing-8, 6px);
+  font-family: var(--body-font-family);
+  font-size: var(--font-size-h5, 22px);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading, 1.2);
+  color: var(--color-text-heading);
 }
 /* Sources footnote: same as gut-diets — the "Sources:" line is the first <p>
    of its own wrapper and wrongly inherits the otc-intro display heading. */
@@ -7436,8 +7463,10 @@ main > .section.fodmap-map-section > .default-content-wrapper:has(ol) ol {
     padding: 0;
   }
   main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content {
+    display: block;
     position: relative;
     height: 100%;
+    margin-top: 0;
   }
   main > .section.fodmap-map-section .columns.fodmap-map .columns-item-content p {
     position: absolute;
