@@ -164,10 +164,13 @@
 }
 
 /* ============================================================
-   Savings-card "Program Terms" accordion — unique variant: savings-terms
-   The savings-card landing page authors its accordion as
-   `accordion savings-terms` so these tweaks apply ONLY there; the FAQ and
-   every other linzess accordion (plain `accordion`) keep develop's styling.
+   Savings-card "Program Terms" accordion — scoped via a UNIQUE SECTION class.
+   The savings-card LANDING page's accordion section is authored with
+   `classes_customClass = page-title, savings-terms-section`. Scoping these
+   tweaks under `.section.savings-terms-section .accordion` keeps the block
+   itself a plain `accordion` (so it round-trips cleanly through md2jcr/AEM)
+   and applies the styling ONLY to that accordion. The FAQ and every other
+   linzess accordion keep develop's base styling above.
    ============================================================ */
 
 /* stylelint-disable no-descending-specificity */
@@ -178,7 +181,7 @@
    border-radius }` never applies. Round + clip the bare <details> directly so
    the header/body read as one 16px card and the purple hover stays inside the
    corners. Live radius = 16px. */
-.accordion.savings-terms > details {
+.section.savings-terms-section .accordion > details {
     overflow: hidden;
     border-radius: 16px;
 }
@@ -187,7 +190,7 @@
    `.accordion .item-icon-plus::after { display: none !important }` (meant to
    suppress a separate icon-font glyph) also hides develop's CSS chevron on
    summary::after. Re-show it for this variant. The base SVG points down. */
-.accordion.savings-terms summary::after {
+.section.savings-terms-section .accordion summary::after {
     display: block !important;
 }
 
@@ -195,14 +198,14 @@
    `.accordion-item[open] summary::after`, but this bare <details> has no
    `accordion-item` class, so rotate on the <details>[open] directly:
    collapsed = down chevron, expanded = flipped up (matches live). */
-.accordion.savings-terms details[open] summary::after {
+.section.savings-terms-section .accordion details[open] summary::after {
     transform: rotate(180deg);
 }
 
 /* Header row — brand purple #422e83, left-aligned. Mobile-first: live mobile
    padding 16px 40px 16px 16px; desktop padding overridden below. Develop's base
    uses the lighter --linz-purple; live uses the darker brand primary. */
-.accordion.savings-terms summary {
+.section.savings-terms-section .accordion summary {
     background: var(--color-brand-primary, #422e83);
     padding: 16px 40px 16px 16px;
     border-radius: 0;
@@ -213,19 +216,19 @@
    bare <details> has no `.accordion-item` class, that transparent hover wins
    and the purple header (with white text) disappears. Re-assert purple on the
    summary's own hover/focus states. */
-.accordion.savings-terms summary:hover,
-.accordion.savings-terms summary:focus,
-.accordion.savings-terms .accordion-item-label:hover,
-.accordion.savings-terms .accordion-item-label:focus,
-.accordion.savings-terms .accordion-item:hover summary,
-.accordion.savings-terms details[open] summary {
+.section.savings-terms-section .accordion summary:hover,
+.section.savings-terms-section .accordion summary:focus,
+.section.savings-terms-section .accordion .accordion-item-label:hover,
+.section.savings-terms-section .accordion .accordion-item-label:focus,
+.section.savings-terms-section .accordion .accordion-item:hover summary,
+.section.savings-terms-section .accordion details[open] summary {
     background: var(--color-brand-primary, #422e83);
 }
 
 /* Label text — Lato, weight 800, white, left-aligned (live
    .abbv-accordion-blade-text). Mobile-first: 14px/20px; desktop below. */
-.accordion.savings-terms .accordion-item-label-text,
-.accordion.savings-terms .accordion-item-label p {
+.section.savings-terms-section .accordion .accordion-item-label-text,
+.section.savings-terms-section .accordion .accordion-item-label p {
     font-family: Lato, sans-serif;
     font-size: 14px;
     font-weight: 800;
@@ -237,14 +240,14 @@
 
 /* Expanded body — left-aligned grey Lato copy, light lavender background.
    Mobile-first: padding 0 16px 10px; desktop below. */
-.accordion.savings-terms .accordion-item-body {
+.section.savings-terms-section .accordion .accordion-item-body {
     background: rgb(244 246 251) !important;
     text-align: left;
     padding: 0 16px 10px;
 }
 
-.accordion.savings-terms .accordion-item-body .accordion-item-body-text,
-.accordion.savings-terms .accordion-item-body p {
+.section.savings-terms-section .accordion .accordion-item-body .accordion-item-body-text,
+.section.savings-terms-section .accordion .accordion-item-body p {
     color: rgb(77 77 79);
     font-family: Lato, sans-serif;
     font-size: 16px;
@@ -254,30 +257,30 @@
 }
 
 /* Body paragraphs — live margin 16px 0. */
-.accordion.savings-terms .accordion-item-body p {
+.section.savings-terms-section .accordion .accordion-item-body p {
     margin: 16px 0;
 }
 
 /* No gap between the header and the body: the first paragraph's top margin
    otherwise pushes the copy away from the purple header. Zero it so the body
    sits flush under the header (matches live). */
-.accordion.savings-terms .accordion-item-body > :first-child {
+.section.savings-terms-section .accordion .accordion-item-body > :first-child {
     margin-top: 0;
 }
 
 /* Desktop (>=986px) — live desktop values: larger padding + 16px text. */
 @media (width >= 986px) {
-    .accordion.savings-terms summary {
+    .section.savings-terms-section .accordion summary {
         padding: 20px 40px 20px 32px;
     }
 
-    .accordion.savings-terms .accordion-item-label-text,
-    .accordion.savings-terms .accordion-item-label p {
+    .section.savings-terms-section .accordion .accordion-item-label-text,
+    .section.savings-terms-section .accordion .accordion-item-label p {
         font-size: 16px;
         line-height: 1.43;
     }
 
-    .accordion.savings-terms .accordion-item-body {
+    .section.savings-terms-section .accordion .accordion-item-body {
         padding: 0 32px 10px;
     }
 }
