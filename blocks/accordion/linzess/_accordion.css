@@ -183,7 +183,7 @@
    corners. Live radius = 16px. */
 .section.savings-terms-section .accordion > details {
     overflow: hidden;
-    border-radius: 16px;
+    border-radius: var(--linz-rounded-corner);
 }
 
 /* Chevron: the summary here carries `item-icon-plus`, and the base rule
@@ -247,8 +247,8 @@
     background: rgb(244 246 251) !important;
     text-align: left;
     padding: 0 16px 10px;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: var(--linz-rounded-corner);
+    border-bottom-right-radius: var(--linz-rounded-corner);
 }
 
 .section.savings-terms-section .accordion .accordion-item-body .accordion-item-body-text,
@@ -288,6 +288,19 @@
     .section.savings-terms-section .accordion .accordion-item-body {
         padding: 0 32px 10px;
     }
+}
+
+/* Scoped --content-max-width override: redefine the variable ONLY on this
+   section's own element. Global styles.css consumes `max-width:
+   var(--content-max-width)` on `main > .section.accordion-container` (line
+   871/885), so overriding the variable here changes only this section's
+   max-width — :root and the global `.section` value are untouched, and no
+   other section/block/page is affected (scoped to the unique
+   `savings-terms-section` class). margin: 0 auto re-centers it. */
+main > .section.savings-terms-section.accordion-container {
+    --content-max-width: 96rem;
+
+    margin: 0 auto;
 }
 
 /* stylelint-enable no-descending-specificity */
