@@ -1506,11 +1506,16 @@
     margin: 0;
 }
 /* Expanded body — left-aligned grey Lato copy, light lavender background.
-   Mobile-first: padding 0 16px 10px; desktop below. */
+   Mobile-first: padding 0 16px 10px; desktop below. Round the body's own
+   bottom corners (16px) so the open card's bottom-left/right stay rounded —
+   the parent <details> overflow:hidden clip alone can leave the painted body
+   background with square bottom corners on open. */
 .section.savings-terms-section .accordion .accordion-item-body {
     background: rgb(244 246 251) !important;
     text-align: left;
     padding: 0 16px 10px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 }
 .section.savings-terms-section .accordion .accordion-item-body .accordion-item-body-text,
 .section.savings-terms-section .accordion .accordion-item-body p {
