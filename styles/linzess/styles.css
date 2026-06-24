@@ -7529,10 +7529,13 @@ main > .section.kit-conversation-section .columns.kit-conversation p {
 main > .section.kit-conversation-section .columns.kit-conversation > .columns-item:has(.columns-item-content) {
   max-width: 92rem;
 }
+/* Live shows the @2x thought-bubbles artwork at half its natural width
+   (944px source → 472px on screen). Cap it so it doesn't balloon to full size. */
 main > .section.kit-conversation-section .columns.kit-conversation .columns-item-image img {
   display: block;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
+  max-width: 47.2rem;
+  height: auto;
   margin: 0 auto;
 }
 /* <<< DEVELOP RESTORE [article-pages-v2] END */
@@ -7839,10 +7842,13 @@ body:has(.columns.kit-touchpoints) .columns.kit-conversation p {
 body:has(.columns.kit-touchpoints) .columns.kit-conversation > .columns-item:has(.columns-item-content) {
   max-width: 92rem;
 }
+/* Live shows the @2x thought-bubbles artwork at half its natural width
+   (944px source → 472px on screen). Cap it so it doesn't balloon to full size. */
 body:has(.columns.kit-touchpoints) .columns.kit-conversation .columns-item-image img {
   display: block;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
+  max-width: 47.2rem;
+  height: auto;
   margin: 0 auto;
 }
 
