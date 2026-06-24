@@ -7500,15 +7500,23 @@ main > .section.kit-relief-section .columns.kit-side-effects .columns-item-image
   margin: 0 auto;
 }
 
-/* --- kit-conversation: light-purple band, text + thought-bubbles image --- */
+/* --- kit-conversation: light-purple band, centered text + thought-bubbles image
+   Live stacks the intro paragraph (centered, width-capped) above the centered
+   thought-bubbles image as a single column — NOT the default 2-col columns row.
+   Force single-column at every width and override the base 768px auto-fit grid. --- */
 main > .section.kit-conversation-section .columns.kit-conversation {
+  display: grid;
+  grid-template-columns: 1fr;
   max-width: 99.8rem;
   margin: var(--spacing-40) auto 0;
   align-items: center;
+  justify-items: center;
+  text-align: center;
 }
 @media (width >= 768px) {
   main > .section.kit-conversation-section .columns.kit-conversation {
-    gap: var(--spacing-48);
+    grid-template-columns: 1fr;
+    gap: var(--spacing-24);
   }
 }
 main > .section.kit-conversation-section .columns.kit-conversation p {
@@ -7517,6 +7525,9 @@ main > .section.kit-conversation-section .columns.kit-conversation p {
   font-size: var(--font-size-article-body);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
+}
+main > .section.kit-conversation-section .columns.kit-conversation > .columns-item:has(.columns-item-content) {
+  max-width: 92rem;
 }
 main > .section.kit-conversation-section .columns.kit-conversation .columns-item-image img {
   display: block;
@@ -7800,15 +7811,22 @@ body:has(.columns.kit-touchpoints) .columns.kit-side-effects .columns-item-image
   margin: 0 auto;
 }
 
-/* --- kit-conversation: light-purple band, text + thought-bubbles image --- */
+/* --- kit-conversation: light-purple band, centered text + thought-bubbles image
+   Live stacks the centered, width-capped intro paragraph above the centered
+   image as a single column — override the base 768px auto-fit 2-col grid. --- */
 body:has(.columns.kit-touchpoints) .columns.kit-conversation {
+  display: grid;
+  grid-template-columns: 1fr;
   max-width: 99.8rem;
   margin: var(--spacing-40) auto 0;
   align-items: center;
+  justify-items: center;
+  text-align: center;
 }
 @media (width >= 768px) {
   body:has(.columns.kit-touchpoints) .columns.kit-conversation {
-    gap: var(--spacing-48);
+    grid-template-columns: 1fr;
+    gap: var(--spacing-24);
   }
 }
 body:has(.columns.kit-touchpoints) .columns.kit-conversation p {
@@ -7817,6 +7835,9 @@ body:has(.columns.kit-touchpoints) .columns.kit-conversation p {
   font-size: var(--font-size-article-body);
   line-height: var(--line-height-body);
   color: var(--color-text-body, #4d4d4f);
+}
+body:has(.columns.kit-touchpoints) .columns.kit-conversation > .columns-item:has(.columns-item-content) {
+  max-width: 92rem;
 }
 body:has(.columns.kit-touchpoints) .columns.kit-conversation .columns-item-image img {
   display: block;
