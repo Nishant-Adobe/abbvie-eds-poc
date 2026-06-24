@@ -7452,8 +7452,18 @@ main > .section.kit-relief-section .columns.kit-relief ul {
 main > .section.kit-relief-section .columns.kit-relief li::marker {
   color: var(--color-brand-primary-light);
 }
-/* second heading ("What are Some Common Side Effects?") + its body */
-main > .section.kit-relief-section > .default-content-wrapper:nth-of-type(2) p:first-child {
+/* "Remember to take LINZESS as follows" callout — light-purple rounded card. */
+main > .section.kit-relief-section .columns.kit-relief:not(.kit-side-effects) > .columns-item:last-child {
+  background-color: var(--color-brand-primary-light, #d9d7f9);
+  border-radius: 16px;
+  padding: var(--spacing-32);
+}
+main > .section.kit-relief-section .columns.kit-relief:not(.kit-side-effects) > .columns-item:last-child :is(p, li) {
+  color: var(--color-text-heading, #422e83);
+}
+/* second heading ("What are Some Common Side Effects?") + its body. Target the
+   default-content-wrapper that precedes the kit-side-effects columns-wrapper. */
+main > .section.kit-relief-section > .default-content-wrapper:has(+ .columns-wrapper > .columns.kit-side-effects) > p:first-child {
   margin: var(--spacing-40) auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
@@ -7784,9 +7794,22 @@ body:has(.columns.kit-touchpoints) .columns.kit-relief ul {
 body:has(.columns.kit-touchpoints) .columns.kit-relief li::marker {
   color: var(--color-brand-primary-light);
 }
-/* second heading ("What are Some Common Side Effects?") sits as the relief
-   section's 2nd default-content-wrapper. */
-body:has(.columns.kit-touchpoints) main > .section:has(> .columns-wrapper > .columns.kit-relief) > .default-content-wrapper:nth-of-type(2) p:first-child {
+/* "Remember to take LINZESS as follows" callout — the relief block's last
+   column-item (the one carrying the bullet list) is a light-purple rounded
+   card on live (#d9d7f9, 16px radius, 32px padding). */
+body:has(.columns.kit-touchpoints) .columns.kit-relief:not(.kit-side-effects) > .columns-item:last-child {
+  background-color: var(--color-brand-primary-light, #d9d7f9);
+  border-radius: 16px;
+  padding: var(--spacing-32);
+}
+body:has(.columns.kit-touchpoints) .columns.kit-relief:not(.kit-side-effects) > .columns-item:last-child :is(p, li) {
+  color: var(--color-text-heading, #422e83);
+}
+/* second heading ("What are Some Common Side Effects?") sits in the
+   default-content-wrapper that directly precedes the kit-side-effects
+   columns-wrapper. (nth-of-type(2) was wrong — it counted the columns-wrapper
+   DIV, not the heading wrapper.) */
+body:has(.columns.kit-touchpoints) main > .section:has(> .columns-wrapper > .columns.kit-relief) > .default-content-wrapper:has(+ .columns-wrapper > .columns.kit-side-effects) > p:first-child {
   margin: var(--spacing-40) auto var(--spacing-24);
   font-family: var(--heading-font-family);
   font-size: var(--font-size-article-heading);
