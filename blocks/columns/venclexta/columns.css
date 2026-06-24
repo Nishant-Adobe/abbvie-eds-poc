@@ -333,10 +333,14 @@ h2 {
   }
 }
 
-/* Tablet: one card per row (centered, content width capped by max-width). */
+/* Tablet + mobile: one full-width card per row (lift the desktop max-width cap
+   and the side margins so the card spans the full container width). */
 
-@media (width >= 600px) and (width < 900px) {
+@media (width < 900px) {
   .section.aml-treatments-section .columns.aml-treatments > .columns-item {
     flex-basis: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
 }
