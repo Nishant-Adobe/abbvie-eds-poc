@@ -247,9 +247,10 @@ h2 {
   font-family: 'Red Hat Display', sans-serif;
 }
 
-/* Desktop + tablet: equal-height cards across all rows (stretch only equalizes
-   within a row, so a shared min-height matches the tallest natural card). */
-@media (width >= 600px) {
+/* Desktop only: equal-height cards across all rows (stretch only equalizes
+   within a row, so a shared min-height matches the tallest natural card).
+   Tablet and mobile are single-column, so cards fit to content height. */
+@media (width >= 900px) {
   .section.aml-treatments-section .columns.aml-treatments > .columns-item {
     min-height: 389px;
   }
