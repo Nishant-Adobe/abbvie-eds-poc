@@ -188,7 +188,7 @@ h2 {
 .section.aml-treatments-section .columns.aml-treatments > .columns-item {
   flex: 1 1 300px;
   max-width: 363px;
-  align-self: flex-start;
+  align-self: stretch;
   margin: 10px 10px 30px;
   padding: 20px;
   text-align: center;
@@ -245,6 +245,14 @@ h2 {
   font-weight: 700;
   color: #005272;
   font-family: 'Red Hat Display', sans-serif;
+}
+
+/* Desktop + tablet: equal-height cards across all rows (stretch only equalizes
+   within a row, so a shared min-height matches the tallest natural card). */
+@media (width >= 600px) {
+  .section.aml-treatments-section .columns.aml-treatments > .columns-item {
+    min-height: 389px;
+  }
 }
 
 @media (width >= 600px) and (width < 900px) {
