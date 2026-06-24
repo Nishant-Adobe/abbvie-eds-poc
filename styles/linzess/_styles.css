@@ -2386,3 +2386,57 @@ body main .section .cards-grid.resources-community a.abbv-button-primary:focus {
     max-width: 100%;
   }
 }
+
+/* ============================================================
+   Savings-card "Program Terms" standalone page (/savings-card/terms)
+   Matches live linzess.com/savings-card/terms: a bare legal document —
+   Times New Roman 16px, black, left-aligned, heading rendered same as body
+   copy, full content width. Scoped to the unique `terms-content` section so
+   no other page/section/block is affected.
+   ============================================================ */
+main > .section.terms-content {
+  margin-top: 0;
+  max-width: none;
+}
+
+main > .section.abbvie-container.terms-content .default-content-wrapper h1,
+main > .section.abbvie-container.terms-content .default-content-wrapper p,
+main > .section.abbvie-container.terms-content .default-content-wrapper p strong,
+main > .section.abbvie-container.terms-content .default-content-wrapper p a,
+main > .section.abbvie-container.terms-content .default-content-wrapper sup {
+  font-family: "Times New Roman", serif;
+  font-size: 16px;
+  line-height: normal;
+  text-align: left;
+}
+
+main > .section.abbvie-container.terms-content .default-content-wrapper h1,
+main > .section.abbvie-container.terms-content .default-content-wrapper p {
+  font-weight: 400;
+  color: rgb(0 0 0);
+}
+
+/* Live renders the closing sentence as bold black text. */
+main > .section.abbvie-container.terms-content .default-content-wrapper p strong {
+  font-weight: 700;
+  color: rgb(0 0 0);
+}
+
+/* Live link = default browser blue, bold, underlined. */
+main > .section.abbvie-container.terms-content .default-content-wrapper p a {
+  font-weight: 700;
+  color: rgb(0 0 238);
+  text-decoration: underline;
+}
+
+main > .section.terms-content .default-content-wrapper sup {
+  font-size: 75%;
+}
+
+main > .section.terms-content .default-content-wrapper h1 {
+  margin: 0;
+}
+
+main > .section.terms-content .default-content-wrapper p {
+  margin: 16px 0;
+}
