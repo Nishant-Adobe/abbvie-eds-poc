@@ -448,12 +448,15 @@ main>.section:last-of-type:not([class*="-container"], .nav-cards, .gray-bg, .ven
   }
 }
 
-@media (width < 1024px) {
+/* Mobile only: stack nav-card CTAs full-width. Tablet keeps the 50/50 row. */
+@media (width < 768px) {
   .section.nav-cards .cta-wrapper {
     flex: 0 0 100%;
     max-width: 100%;
   }
+}
 
+@media (width < 1024px) {
   .section.ven-zone {
     flex-flow: column wrap;
     align-items: flex-start;
