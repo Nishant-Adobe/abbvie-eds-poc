@@ -1479,6 +1479,11 @@
     background: var(--color-brand-primary, #422e83);
     padding: 16px 40px 16px 16px;
     border-radius: 0;
+
+    /* Develop's base accordion.css sets `summary { overflow: auto }`, which
+       renders a stray horizontal scrollbar under this card's header. The
+       summary content (label + chevron) always fits, so suppress it. */
+    overflow: hidden;
 }
 /* Keep the purple header on hover/focus/open. Base accordion.css sets
    `.accordion-item-label:hover { background: transparent }`, and since this
