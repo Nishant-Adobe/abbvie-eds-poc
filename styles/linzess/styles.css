@@ -789,7 +789,7 @@ main > .section:is(.otc-intro-section, .what-is-linzess-section, .more-like-this
 main > .section.otc-intro-section > .default-content-wrapper > p:first-child,
 main > .section.what-is-linzess-section > .default-content-wrapper:first-of-type > p:first-child,
 main > .section.intouch-tips-section > .default-content-wrapper > p:first-child,
-main > .section.relief-side-effects-section > .default-content-wrapper:first-of-type > p:first-child,
+main > .section.relief-side-effects-section > .default-content-wrapper > p:first-child,
 main > .section.keep-conversation-section > .default-content-wrapper > p:first-child {
   margin: 0 auto var(--spacing-24);
   font-family: var(--heading-font-family);
@@ -1173,11 +1173,15 @@ main > .section.more-like-this-section .columns.more-like-this {
 }
 
 /* Live caps each card at 300px and centers the group within the 998px row.
-   Mobile (<768px) keeps the base block's single-column stack. */
+   Mobile (<768px) keeps the base block's single-column stack.
+   align-items:stretch equalizes card heights so a 2-line title (e.g. "Good for
+   Your Gut—Flavorful Food Swaps") doesn't make its card taller than the others
+   — live shows all three at the same height. */
 @media (width >= 768px) {
   main > .section.more-like-this-section .columns.more-like-this {
     grid-template-columns: repeat(3, 30rem);
     justify-content: center;
+    align-items: stretch;
   }
 }
 
@@ -1902,10 +1906,12 @@ main > .section.relief-side-effects-section .columns.side-effects .columns-item-
   height: auto;
 }
 
-/* The heading sits above each block; add space between the two blocks */
-main > .section.relief-side-effects-section > .default-content-wrapper :is(.heading-1, h2):not(:first-child),
-main > .section.relief-side-effects-section .heading-1 + .heading-1 {
-  margin-top: var(--spacing-60);
+/* Gap between the two blocks: live leaves ~146px from the expect-relief block
+   bottom to the "What are Some Common Side Effects?" heading (its divider +
+   margins included). The two headings live in separate default-content-wrappers
+   (one before each columns block), so target the section's 2nd wrapper. */
+main > .section.relief-side-effects-section > .default-content-wrapper:nth-of-type(2) {
+  margin-top: var(--spacing-100);
 }
 
 /* Desktop: 2-up. Relief = equal cols; side-effects = image left, text right. */
