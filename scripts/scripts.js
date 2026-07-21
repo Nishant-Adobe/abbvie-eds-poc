@@ -14,6 +14,7 @@ import {
 } from './aem.js';
 
 import { shouldRunOutsideAuthorEdit } from './utils.js';
+import loadDTM from './dtm.js';
 
 export function getMain() {
   return document.querySelector('main');
@@ -540,6 +541,7 @@ function processLocalMetadata() {
 async function loadEager(doc) {
   processLocalMetadata();
   document.documentElement.lang = 'en';
+  loadDTM();
   const brand = getMetadata('brand')?.trim();
   if (brand) {
     const hasTokens = [...document.querySelectorAll('link[rel="stylesheet"]')]
