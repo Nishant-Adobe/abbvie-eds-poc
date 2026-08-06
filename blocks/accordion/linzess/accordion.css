@@ -1438,3 +1438,135 @@
 .accordion .accordion-expand-all:focus {
     border-color: var(--color-brand-primary);
 }
+/* ============================================================
+   Savings-card "Program Terms" accordion — scoped via a UNIQUE SECTION class.
+   The savings-card LANDING page's accordion section is authored with
+   `classes_customClass = page-title, savings-terms-section`. Scoping these
+   tweaks under `.section.savings-terms-section .accordion` keeps the block
+   itself a plain `accordion` (so it round-trips cleanly through md2jcr/AEM)
+   and applies the styling ONLY to that accordion. The FAQ and every other
+   linzess accordion keep develop's base styling above.
+   ============================================================ */
+/* stylelint-disable no-descending-specificity */
+/* Single rounded card: the <details> here has no `accordion-item` class
+   (accordion.js derives that class from the content's classes cell, which is
+   empty on this page), so develop's `.accordion-item { overflow:hidden;
+   border-radius }` never applies. Round + clip the bare <details> directly so
+   the header/body read as one 16px card and the purple hover stays inside the
+   corners. Live radius = 16px. */
+.section.savings-terms-section .accordion > details {
+    overflow: hidden;
+    border-radius: var(--linz-rounded-corner);
+}
+/* Chevron: the summary here carries `item-icon-plus`, and the base rule
+   `.accordion .item-icon-plus::after { display: none !important }` (meant to
+   suppress a separate icon-font glyph) also hides develop's CSS chevron on
+   summary::after. Re-show it for this variant. The base SVG points down. */
+.section.savings-terms-section .accordion summary::after {
+    display: block !important;
+}
+/* Rotate the chevron on open. Develop's base rotation targets
+   `.accordion-item[open] summary::after`, but this bare <details> has no
+   `accordion-item` class, so rotate on the <details>[open] directly:
+   collapsed = down chevron, expanded = flipped up (matches live). */
+.section.savings-terms-section .accordion details[open] summary::after {
+    transform: rotate(180deg);
+}
+/* Header row — brand purple #422e83, left-aligned. Mobile-first: live mobile
+   padding 16px 40px 16px 16px; desktop padding overridden below. Develop's base
+   uses the lighter --linz-purple; live uses the darker brand primary. */
+.section.savings-terms-section .accordion summary {
+    background: var(--color-brand-primary, #422e83);
+    padding: 16px 40px 16px 16px;
+    border-radius: 0;
+
+    /* Develop's base accordion.css sets `summary { overflow: auto }`, which
+       renders a stray horizontal scrollbar under this card's header. The
+       summary content (label + chevron) always fits, so suppress it. */
+    overflow: hidden;
+}
+/* Keep the purple header on hover/focus/open. Base accordion.css sets
+   `.accordion-item-label:hover { background: transparent }`, and since this
+   bare <details> has no `.accordion-item` class, that transparent hover wins
+   and the purple header (with white text) disappears. Re-assert purple on the
+   summary's own hover/focus states. */
+.section.savings-terms-section .accordion summary:hover,
+.section.savings-terms-section .accordion summary:focus,
+.section.savings-terms-section .accordion .accordion-item-label:hover,
+.section.savings-terms-section .accordion .accordion-item-label:focus,
+.section.savings-terms-section .accordion .accordion-item:hover summary,
+.section.savings-terms-section .accordion details[open] summary {
+    background: var(--color-brand-primary, #422e83);
+}
+/* Label text — Lato, weight 800, white, left-aligned (live
+   .abbv-accordion-blade-text). Mobile-first: 14px/20px; desktop below. */
+.section.savings-terms-section .accordion .accordion-item-label-text,
+.section.savings-terms-section .accordion .accordion-item-label p {
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 20px;
+    color: var(--linz-white, #fff);
+    text-align: left;
+    margin: 0;
+}
+/* Expanded body — left-aligned grey Lato copy, light lavender background.
+   Mobile-first: padding 0 16px 10px; desktop below. Round the body's own
+   bottom corners (16px) so the open card's bottom-left/right stay rounded —
+   the parent <details> overflow:hidden clip alone can leave the painted body
+   background with square bottom corners on open. */
+.section.savings-terms-section .accordion .accordion-item-body {
+    background: rgb(244 246 251) !important;
+    text-align: left;
+    padding: 0 16px 10px;
+    border-bottom-left-radius: var(--linz-rounded-corner);
+    border-bottom-right-radius: var(--linz-rounded-corner);
+}
+.section.savings-terms-section .accordion .accordion-item-body .accordion-item-body-text,
+.section.savings-terms-section .accordion .accordion-item-body p {
+    color: rgb(77 77 79);
+    font-family: Lato, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.43;
+    text-align: left;
+}
+/* Body paragraphs — live margin 16px 0. */
+.section.savings-terms-section .accordion .accordion-item-body p {
+    margin: 16px 0;
+}
+/* No gap between the header and the body: the first paragraph's top margin
+   otherwise pushes the copy away from the purple header. Zero it so the body
+   sits flush under the header (matches live). */
+.section.savings-terms-section .accordion .accordion-item-body > :first-child {
+    margin-top: 0;
+}
+/* Desktop (>=986px) — live desktop values: larger padding + 16px text. */
+@media (width >= 986px) {
+    .section.savings-terms-section .accordion summary {
+        padding: 20px 40px 20px 32px;
+    }
+
+    .section.savings-terms-section .accordion .accordion-item-label-text,
+    .section.savings-terms-section .accordion .accordion-item-label p {
+        font-size: 16px;
+        line-height: 1.43;
+    }
+
+    .section.savings-terms-section .accordion .accordion-item-body {
+        padding: 0 32px 10px;
+    }
+}
+/* Scoped --content-max-width override: redefine the variable ONLY on this
+   section's own element. Global styles.css consumes `max-width:
+   var(--content-max-width)` on `main > .section.accordion-container` (line
+   871/885), so overriding the variable here changes only this section's
+   max-width — :root and the global `.section` value are untouched, and no
+   other section/block/page is affected (scoped to the unique
+   `savings-terms-section` class). margin: 0 auto re-centers it. */
+main > .section.savings-terms-section.accordion-container {
+    --content-max-width: 96rem;
+
+    margin: 0 auto;
+}
+/* stylelint-enable no-descending-specificity */
