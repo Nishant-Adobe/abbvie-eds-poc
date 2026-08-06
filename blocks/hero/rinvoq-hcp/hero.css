@@ -2163,3 +2163,186 @@ color: inherit;
     bottom: 0;
   }
 }
+/* Gastroenterology condition-landing hero — text-left heading with floating
+   expansion badge. Light background; charcoal heading; badge centered below
+   text on mobile, right-aligned on desktop (live swap at 985px). */
+.hero.gastro-hero {
+  display: flex;
+  flex-direction: column;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 12px 20px 0;
+  background: transparent;
+  position: relative;
+}
+.hero.gastro-hero > div:not(.hero-text-container) {
+  order: 2;
+  width: 175px;
+  margin: 0 auto 12px;
+}
+.hero.gastro-hero > div:not(.hero-text-container) div,
+.hero.gastro-hero > div:not(.hero-text-container) picture,
+.hero.gastro-hero > div:not(.hero-text-container) img {
+  display: block;
+  width: 175px;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+}
+.hero.gastro-hero .hero-text-container {
+  order: 1;
+  position: static;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+.hero.gastro-hero .cmp-container-x-large {
+  width: 100%;
+  max-width: 350px;
+  padding: 0;
+}
+.hero.gastro-hero .hero-text-container .cmp-container-x-large h1 {
+  font-family: "Graphik Bold", "Helvetica Neue", arial, helvetica, sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 27.6px;
+  color: #25282a;
+  text-transform: none;
+  margin: 0;
+}
+/* "IN CHECK" — yellow handwritten brush font (live: Upa Handwriting,
+   #ffd100, 100px desktop / line-height 0.8). Authored as <em> because
+   md2jcr drops <span class> inside headings; emphasis survives round-trip. */
+.hero.gastro-hero .hero-text-container .cmp-container-x-large h1 em {
+  display: inline-block;
+  font-family: "Upa Handwriting", serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 58px;
+  line-height: 0.8;
+  color: #ffd100;
+}
+/* "AND KEEP THEM THERE" — charcoal Graphik with a yellow brushstroke
+   underline (live: stroke--page-hero-tall.svg via ::after). Authored as
+   <strong> so the styling hook survives the md2jcr round-trip. */
+.hero.gastro-hero .hero-text-container .cmp-container-x-large h1 strong {
+  position: relative;
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 600;
+  color: #25282a;
+}
+.hero.gastro-hero .hero-text-container .cmp-container-x-large h1 strong::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  height: 14px;
+  background: url("/content/dam/abbvie-eds-poc/stroke--page-hero-tall.svg") no-repeat center / 100%;
+}
+.hero.gastro-hero .hero-regular-text {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #46484a;
+  margin: 32px 0 0;
+}
+.hero.gastro-hero .hero-indication {
+  position: static;
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #25282a;
+  background: transparent;
+  margin: 16px 0 0;
+  padding: 0;
+  max-width: none;
+}
+/* Tablet: "IN CHECK" scales to 64px (live: 768px viewport). */
+@media (width >= 601px) and (width <= 984px) {
+  .hero.gastro-hero .hero-text-container .cmp-container-x-large h1 em {
+    font-size: 64px;
+  }
+}
+@media (width >= 985px) {
+  .hero.gastro-hero {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 64px 20px 0;
+  }
+
+  /* Full-bleed faint brushstroke banner behind the hero (live: desktop only,
+     .container_hero-gastro::before with hero-gastro-large.png at 3100x692). */
+  .hero.gastro-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: 692px;
+    transform: translateX(-50%);
+    background-image: url("/content/dam/abbvie-eds-poc/hero-gastro-large.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 3100px 692px;
+    pointer-events: none;
+  }
+
+  .hero.gastro-hero > div:not(.hero-text-container) {
+    order: 2;
+    width: 220px;
+    margin: 0 120px 0 0;
+    overflow: visible;
+  }
+
+  .hero.gastro-hero > div:not(.hero-text-container) div,
+  .hero.gastro-hero > div:not(.hero-text-container) picture,
+  .hero.gastro-hero > div:not(.hero-text-container) img {
+    width: 220px;
+    height: auto;
+    max-width: none;
+  }
+
+  .hero.gastro-hero .hero-text-container {
+    order: 1;
+    width: auto;
+  }
+
+  .hero.gastro-hero .cmp-container-x-large {
+    max-width: none;
+  }
+
+  .hero.gastro-hero .hero-text-container .cmp-container-x-large h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .hero.gastro-hero .hero-text-container .cmp-container-x-large h1 em {
+    font-size: 100px;
+  }
+
+  .hero.gastro-hero .hero-text-container .cmp-container-x-large h1 strong {
+    font-size: 40px;
+  }
+
+  .hero.gastro-hero .hero-text-container .cmp-container-x-large h1 strong::after {
+    bottom: -15px;
+    height: 22px;
+  }
+
+  .hero.gastro-hero .hero-regular-text {
+    margin-top: 48px;
+  }
+
+  /* Indication paragraph: hidden on desktop (shown only via header injection
+     and on mobile), matching live's abbv-hide-desktop behavior. */
+  .hero.gastro-hero .hero-indication {
+    display: none;
+  }
+}

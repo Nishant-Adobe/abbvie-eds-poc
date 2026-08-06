@@ -236,3 +236,115 @@
 }
 
 /* stylelint-enable selector-class-pattern, no-descending-specificity */
+
+/* Gastroenterology treatment-area cards — full-bleed image cards with a
+   charcoal title and plum pill CTA (with circle-arrow icon) overlaid at the
+   bottom-left. Stacked on mobile, two-up row on desktop (live swap 985px). */
+.cards-grid.gastro-treatment-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1180px;
+  margin: 0 auto 24px;
+  padding: 0 20px;
+}
+
+/* Fixed-size card, centered in the stacked column (live: 350px mobile,
+   576px tablet, both 219px tall — not full-bleed). */
+.cards-grid.gastro-treatment-cards > div {
+  position: relative;
+  width: 350px;
+  max-width: 100%;
+  height: 219px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cards-grid.gastro-treatment-cards > div > div:first-child,
+.cards-grid.gastro-treatment-cards > div picture,
+.cards-grid.gastro-treatment-cards > div picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cards-grid.gastro-treatment-cards > div picture img {
+  object-fit: fill;
+}
+
+/* Title + CTA overlaid bottom-left; positioned to match live offsets
+   (title 63px from top, CTA 149px from top). */
+.cards-grid.gastro-treatment-cards > div > div:not(:first-child) {
+  position: absolute;
+  left: 20px;
+  z-index: 2;
+}
+
+.cards-grid.gastro-treatment-cards > div > div:nth-child(2) {
+  top: 63px;
+}
+
+.cards-grid.gastro-treatment-cards > div > div:nth-child(3) {
+  top: 149px;
+}
+
+.cards-grid.gastro-treatment-cards h3 {
+  font-family: Graphik, "Helvetica Neue", arial, helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 30px;
+  color: #25282a;
+  margin: 0;
+  text-transform: none;
+}
+
+.cards-grid.gastro-treatment-cards a {
+  display: inline-flex;
+  align-items: center;
+  font-family: "Graphik Medium", "Helvetica Neue", arial, helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  background: #90124a;
+  padding: 16px 54px 16px 32px;
+  border-radius: 100px;
+  text-decoration: none;
+  position: relative;
+}
+
+.cards-grid.gastro-treatment-cards a::after {
+  content: "";
+  position: absolute;
+  right: 22px;
+  width: 20px;
+  height: 20px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTlweCIgaGVpZ2h0PSIxOXB4IiB2aWV3Qm94PSIwIDAgMTkgMTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+aWNvbi1jaGV2cm9uX2NpcmNsZS13aGl0ZTwvdGl0bGU+CiAgICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iaWNvbi1jaGV2cm9uX2NpcmNsZS13aGl0ZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC41LCAwLjUpIiBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iPgogICAgICAgICAgICA8cGF0aCBkPSJNMCw5IEMwLDEzLjk3MDU2MjcgNC4wMjk0MzcyNiwxOCA5LDE4IEMxMy45NzA1NjI3LDE4IDE4LDEzLjk3MDU2MjcgMTgsOSBDMTgsNC4wMjk0MzcyNiAxMy45NzA1NjI3LDAgOSwwIEM0LjAyOTQzNzI2LDAgMCw0LjAyOTQzNzI2IDAsOSBaIE0xMy4xOTc4NTcyLDkgTDcuNTQwNzE0MzIsMTQuNjU3MTQyOCBMNi4wNzM3MTQyOCwxMy4yMDA0Mjg1IEwxMC4yNzQxNDI4LDkgTDYuMDczNzE0MjgsNC43OTk1NzE0MyBMNy41MzU1NzE0OCwzLjM0Mjg1NzE1IEwxMy4xOTc4NTcyLDkgWiIgaWQ9Imljb25zL2NoZXZyb24iPjwvcGF0aD4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==') no-repeat center / contain;
+}
+
+.cards-grid.gastro-treatment-cards a:hover {
+  background: #6e0e3a;
+}
+
+/* Tablet: still stacked + centered, but the wider 576px card (matches live). */
+@media (width >= 601px) {
+  .cards-grid.gastro-treatment-cards > div {
+    width: 576px;
+  }
+}
+
+@media (width >= 985px) {
+  .cards-grid.gastro-treatment-cards {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .cards-grid.gastro-treatment-cards > div {
+    flex: 1;
+    width: auto;
+    max-width: 576px;
+    height: 219px;
+    margin: 0;
+  }
+}
